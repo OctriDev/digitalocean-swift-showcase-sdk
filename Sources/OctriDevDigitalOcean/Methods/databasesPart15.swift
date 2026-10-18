@@ -6,29 +6,83 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DatabasesMethods {
-    /// Resets the password or authentication method for a user in a database cluster. For MySQL users, supply `mysql_settings.auth_plugin` to choose the authentication method. The response includes the updated user object and its standard database user attributes.
+public extension DatabasesMethods {
+    /// Resets the password or authentication method for a user in a database cluster. For MySQL users, supply
+    /// `mysql_settings.auth_plugin` to choose the authentication method. The response includes the updated user object
+    /// and its standard database user attributes.
     ///
-    /// To reset the password for a database user, send a POST request to `/v2/databases/$DATABASE_ID/users/$USERNAME/reset_auth`. For `mysql` databases, the authentication method can be specifying by including a key in the JSON body called `mysql_settings` with the `auth_plugin` value specified. The response will be a JSON object with a `user` key. This will be set to an object containing the standard database user attributes.
+    /// To reset the password for a database user, send a POST request to
+    /// `/v2/databases/$DATABASE_ID/users/$USERNAME/reset_auth`. For `mysql` databases, the authentication method can be
+    /// specifying by including a key in the JSON body called `mysql_settings` with the `auth_plugin` value specified.
+    /// The response will be a JSON object with a `user` key. This will be set to an object containing the standard
+    /// database user attributes.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - username: The name of the database user.
-    public static func databasesResetAuth(config: ClientConfig, databaseClusterUuid: String, username: String, mysqlSettings: MysqlSettings? = nil, requestOptions: RequestOptions? = nil) async throws -> UserResponse {
+    static func databasesResetAuth(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        username: String,
+        mysqlSettings: MysqlSettings? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UserResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
         let requestBody = DatabasesResetAuthRequestBody(mysqlSettings: mysqlSettings)
 
-        return try (await sdkRequest("POST", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/users/", sdkEncodePathSegment(sdkWireString(username)), "/reset_auth"].joined(), config: config, body: requestBody, decoder: .json, operationId: "databases_reset_auth", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            [
+                "/v2/databases/",
+                sdkEncodePathSegment(sdkWireString(databaseClusterUuid)),
+                "/users/",
+                sdkEncodePathSegment(sdkWireString(username)),
+                "/reset_auth",
+            ].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "databases_reset_auth",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To list all of the databases in a clusters, send a GET request to `/v2/databases/$DATABASE_ID/dbs`. The result will be a JSON object with a `dbs` key. This will be set to an array of database objects, each of which will contain the standard database attributes. Note: Database management is not supported for Caching or Valkey clusters.
+    /// To list all of the databases in a clusters, send a GET request to `/v2/databases/$DATABASE_ID/dbs`. The result
+    /// will be a JSON object with a `dbs` key. This will be set to an array of database objects, each of which will
+    /// contain the standard database attributes. Note: Database management is not supported for Caching or Valkey
+    /// clusters.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    public static func databasesList(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> Databases {
+    static func databasesList(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Databases {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/dbs"].joined(), config: config, decoder: .json, operationId: "databases_list", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/dbs"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "databases_list",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

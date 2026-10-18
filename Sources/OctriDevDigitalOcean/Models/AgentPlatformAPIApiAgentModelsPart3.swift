@@ -3,39 +3,58 @@
 
 import Foundation
 
-// AgentPlatformAPIApiAgent domain models
-extension ApiAgentTemplate {
-    public init(from decoder: Decoder) throws {
+/// AgentPlatformAPIApiAgent domain models
+public extension ApiAgentTemplate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.guardrails = try container.sdkDecodeIfPresent(.guardrails)
-        self.instruction = try container.sdkDecodeIfPresent(.instruction)
-        self.k = try container.sdkDecodeIfPresent(.k)
-        self.knowledgeBases = try container.sdkDecodeIfPresent(.knowledgeBases)
-        self.longDescription = try container.sdkDecodeIfPresent(.longDescription)
-        self.maxTokens = try container.sdkDecodeIfPresent(.maxTokens)
-        self.model = try container.sdkDecodeIfPresent(.model)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.shortDescription = try container.sdkDecodeIfPresent(.shortDescription)
-        self.summary = try container.sdkDecodeIfPresent(.summary)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.temperature = try container.sdkDecodeIfPresent(.temperature)
-        self.templateType = try container.sdkDecodeIfPresent(.templateType)
-        self.topP = try container.sdkDecodeIfPresent(.topP)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
-        if let value = self.createdAt {
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        description = try container.sdkDecodeIfPresent(.description)
+        guardrails = try container.sdkDecodeIfPresent(.guardrails)
+        instruction = try container.sdkDecodeIfPresent(.instruction)
+        k = try container.sdkDecodeIfPresent(.k)
+        knowledgeBases = try container.sdkDecodeIfPresent(.knowledgeBases)
+        longDescription = try container.sdkDecodeIfPresent(.longDescription)
+        maxTokens = try container.sdkDecodeIfPresent(.maxTokens)
+        model = try container.sdkDecodeIfPresent(.model)
+        name = try container.sdkDecodeIfPresent(.name)
+        shortDescription = try container.sdkDecodeIfPresent(.shortDescription)
+        summary = try container.sdkDecodeIfPresent(.summary)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        temperature = try container.sdkDecodeIfPresent(.temperature)
+        templateType = try container.sdkDecodeIfPresent(.templateType)
+        topP = try container.sdkDecodeIfPresent(.topP)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiAgentTemplate {
-    public init(createdAt: Date? = nil, description: String? = nil, guardrails: [ApiAgentTemplateGuardrail]? = nil, instruction: String? = nil, k: Int? = nil, knowledgeBases: [ApiKnowledgeBase]? = nil, longDescription: String? = nil, maxTokens: Int? = nil, model: ApiModel? = nil, name: String? = nil, shortDescription: String? = nil, summary: String? = nil, tags: [String]? = nil, temperature: Double? = nil, templateType: ApiAgentTemplateType? = nil, topP: Double? = nil, updatedAt: Date? = nil, uuid: String? = nil) throws {
+public extension ApiAgentTemplate {
+    init(
+        createdAt: Date? = nil,
+        description: String? = nil,
+        guardrails: [ApiAgentTemplateGuardrail]? = nil,
+        instruction: String? = nil,
+        k: Int? = nil,
+        knowledgeBases: [ApiKnowledgeBase]? = nil,
+        longDescription: String? = nil,
+        maxTokens: Int? = nil,
+        model: ApiModel? = nil,
+        name: String? = nil,
+        shortDescription: String? = nil,
+        summary: String? = nil,
+        tags: [String]? = nil,
+        temperature: Double? = nil,
+        templateType: ApiAgentTemplateType? = nil,
+        topP: Double? = nil,
+        updatedAt: Date? = nil,
+        uuid: String? = nil
+    ) throws {
         self.init()
         (self.createdAt, self.description) = (createdAt, description)
         (self.guardrails, self.instruction) = (guardrails, instruction)
@@ -70,20 +89,20 @@ public struct ApiAgentTemplateGuardrail: Codable {
     }
 
     init() {
-        (self.priority, self.uuid) = (nil, nil)
+        (priority, uuid) = (nil, nil)
     }
 }
 
-extension ApiAgentTemplateGuardrail {
-    public init(from decoder: Decoder) throws {
+public extension ApiAgentTemplateGuardrail {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.priority = try container.sdkDecodeIfPresent(.priority)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        priority = try container.sdkDecodeIfPresent(.priority)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
     }
 }
 
-extension ApiAgentTemplateGuardrail {
-    public init(priority: Int? = nil, uuid: String? = nil) {
+public extension ApiAgentTemplateGuardrail {
+    init(priority: Int? = nil, uuid: String? = nil) {
         self.init()
         (self.priority, self.uuid) = (priority, uuid)
     }
@@ -116,23 +135,29 @@ public struct ApiAgentChildRelationshipVerion: Codable {
     }
 
     init() {
-        (self.agentName, self.childAgentUuid, self.ifCase, self.isDeleted, self.routeName) = (nil, nil, nil, nil, nil)
+        (agentName, childAgentUuid, ifCase, isDeleted, routeName) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiAgentChildRelationshipVerion {
-    public init(from decoder: Decoder) throws {
+public extension ApiAgentChildRelationshipVerion {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agentName = try container.sdkDecodeIfPresent(.agentName)
-        self.childAgentUuid = try container.sdkDecodeIfPresent(.childAgentUuid)
-        self.ifCase = try container.sdkDecodeIfPresent(.ifCase)
-        self.isDeleted = try container.sdkDecodeIfPresent(.isDeleted)
-        self.routeName = try container.sdkDecodeIfPresent(.routeName)
+        agentName = try container.sdkDecodeIfPresent(.agentName)
+        childAgentUuid = try container.sdkDecodeIfPresent(.childAgentUuid)
+        ifCase = try container.sdkDecodeIfPresent(.ifCase)
+        isDeleted = try container.sdkDecodeIfPresent(.isDeleted)
+        routeName = try container.sdkDecodeIfPresent(.routeName)
     }
 }
 
-extension ApiAgentChildRelationshipVerion {
-    public init(agentName: String? = nil, childAgentUuid: String? = nil, ifCase: String? = nil, isDeleted: Bool? = nil, routeName: String? = nil) {
+public extension ApiAgentChildRelationshipVerion {
+    init(
+        agentName: String? = nil,
+        childAgentUuid: String? = nil,
+        ifCase: String? = nil,
+        isDeleted: Bool? = nil,
+        routeName: String? = nil
+    ) {
         self.init()
         (self.agentName, self.childAgentUuid) = (agentName, childAgentUuid)
         (self.ifCase, self.isDeleted) = (ifCase, isDeleted)
@@ -145,13 +170,16 @@ extension ApiAgentChildRelationshipVerion {
 public struct ApiAgentTemplateType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let agentTemplateTypeStandard = ApiAgentTemplateType(rawValue: "AGENT_TEMPLATE_TYPE_STANDARD")
     public static let agentTemplateTypeOneClick = ApiAgentTemplateType(rawValue: "AGENT_TEMPLATE_TYPE_ONE_CLICK")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -164,7 +192,10 @@ public struct ApiAgentTemplateType: RawRepresentable, Hashable, Codable, Sendabl
 public struct ApiAgentType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let agentTypeUnspecified = ApiAgentType(rawValue: "AGENT_TYPE_UNSPECIFIED")
     public static let agentTypeDefault = ApiAgentType(rawValue: "AGENT_TYPE_DEFAULT")
     public static let agentTypePlanner = ApiAgentType(rawValue: "AGENT_TYPE_PLANNER")
@@ -177,7 +208,7 @@ public struct ApiAgentType: RawRepresentable, Hashable, Codable, Sendable, SdkWi
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

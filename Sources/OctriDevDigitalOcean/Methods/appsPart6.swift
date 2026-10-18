@@ -6,25 +6,73 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AppsMethods {
-    /// Returns a websocket URL that allows sending/receiving console input and output to a component of the active deployment if one exists.
+public extension AppsMethods {
+    /// Returns a websocket URL that allows sending/receiving console input and output to a component of the active
+    /// deployment if one exists.
     ///
     /// - Parameters:
     /// - appId: The app ID
     /// - componentName: An optional component name. If set, logs will be limited to
     ///   this component only.
     /// - instanceName: The name of the actively running ephemeral compute instance
-    public static func appsGetExecActiveDeployment(config: ClientConfig, appId: String, componentName: String, instanceName: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsGetExecResponse {
-        return try (await sdkRequest("GET", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/components/", sdkEncodePathSegment(sdkWireString(componentName)), "/exec"].joined(), config: config, query: [
-            SdkQueryParameter("instance_name", value: instanceName),
-        ], decoder: .json, operationId: "apps_get_exec_active_deployment", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func appsGetExecActiveDeployment(
+        config: ClientConfig,
+        appId: String,
+        componentName: String,
+        instanceName: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppsGetExecResponse {
+        try await (sdkRequest(
+            "GET",
+            [
+                "/v2/apps/",
+                sdkEncodePathSegment(sdkWireString(appId)),
+                "/components/",
+                sdkEncodePathSegment(sdkWireString(componentName)),
+                "/exec",
+            ].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("instance_name", value: instanceName),
+            ],
+            decoder: .json,
+            operationId: "apps_get_exec_active_deployment",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Retrieve the list of running instances for a given application, including instance names and component types. Please note that these instances are ephemeral and may change over time. It is recommended not to make persistent changes or develop scripts that rely on their persistence.
+    /// Retrieve the list of running instances for a given application, including instance names and component types.
+    /// Please note that these instances are ephemeral and may change over time. It is recommended not to make
+    /// persistent changes or develop scripts that rely on their persistence.
     ///
     /// - Parameters:
     /// - appId: The app ID
-    public static func appsGetInstances(config: ClientConfig, appId: String, requestOptions: RequestOptions? = nil) async throws -> AppInstances {
-        return try (await sdkRequest("GET", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/instances"].joined(), config: config, decoder: .json, operationId: "apps_get_instances", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func appsGetInstances(
+        config: ClientConfig,
+        appId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppInstances {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/instances"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "apps_get_instances",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

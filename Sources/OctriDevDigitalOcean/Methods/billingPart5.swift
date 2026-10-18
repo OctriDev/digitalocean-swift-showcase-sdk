@@ -6,8 +6,11 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension BillingMethods {
-    /// This endpoint returns day-over-day changes in billing resource usage based on nightly invoice items, including total amount, region, SKU, and description for a specified date range. It is important to note that the daily resource usage may not reflect month-end billing totals when totaled for a given month as nightly invoice item estimates do not necessarily encompass all invoicing factors for the entire month.
+public extension BillingMethods {
+    /// This endpoint returns day-over-day changes in billing resource usage based on nightly invoice items, including
+    /// total amount, region, SKU, and description for a specified date range. It is important to note that the daily
+    /// resource usage may not reflect month-end billing totals when totaled for a given month as nightly invoice item
+    /// estimates do not necessarily encompass all invoicing factors for the entire month.
     ///
     /// - Parameters:
     /// - accountUrn: URN of the customer account, can be a team (do:team:uuid) or
@@ -17,26 +20,59 @@ extension BillingMethods {
     ///   within 31 days of start_date
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    public static func billingInsightsList(config: ClientConfig, accountUrn: String, startDate: String, endDate: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> BillingInsights {
+    static func billingInsightsList(
+        config: ClientConfig,
+        accountUrn: String,
+        startDate: String,
+        endDate: String,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> BillingInsights {
         try sdkValidateDate("start_date", startDate)
 
         try sdkValidateDate("end_date", endDate)
 
-        if let perPage = perPage {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page = page {
+        if let page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try (await sdkRequest("GET", ["/v2/billing/", sdkEncodePathSegment(sdkWireString(accountUrn)), "/insights/", sdkEncodePathSegment(sdkWireString(startDate)), "/", sdkEncodePathSegment(sdkWireString(endDate))].joined(), config: config, query: [
-            SdkQueryParameter("per_page", value: perPage),
-            SdkQueryParameter("page", value: page),
-        ], decoder: .json, operationId: "billingInsights_list", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            [
+                "/v2/billing/",
+                sdkEncodePathSegment(sdkWireString(accountUrn)),
+                "/insights/",
+                sdkEncodePathSegment(sdkWireString(startDate)),
+                "/",
+                sdkEncodePathSegment(sdkWireString(endDate)),
+            ].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("page", value: page),
+            ],
+            decoder: .json,
+            operationId: "billingInsights_list",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// This endpoint returns day-over-day changes in billing resource usage based on nightly invoice items, including total amount, region, SKU, and description for a specified date range. It is important to note that the daily resource usage may not reflect month-end billing totals when totaled for a given month as nightly invoice item estimates do not necessarily encompass all invoicing factors for the entire month.
+    /// This endpoint returns day-over-day changes in billing resource usage based on nightly invoice items, including
+    /// total amount, region, SKU, and description for a specified date range. It is important to note that the daily
+    /// resource usage may not reflect month-end billing totals when totaled for a given month as nightly invoice item
+    /// estimates do not necessarily encompass all invoicing factors for the entire month.
     ///
     /// - Parameters:
     /// - accountUrn: URN of the customer account, can be a team (do:team:uuid) or
@@ -46,17 +82,42 @@ extension BillingMethods {
     ///   within 31 days of start_date
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    public static func billingInsightsListPaginated(config: ClientConfig, accountUrn: String, startDate: String, endDate: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<BillingDataPoint, Swift.Error> {
-        return AsyncThrowingStream<BillingDataPoint, Swift.Error> { (continuation: AsyncThrowingStream<BillingDataPoint, Swift.Error>.Continuation) in
+    static func billingInsightsListPaginated(
+        config: ClientConfig,
+        accountUrn: String,
+        startDate: String,
+        endDate: String,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<BillingDataPoint, Swift.Error> {
+        AsyncThrowingStream<BillingDataPoint, Swift.Error> { (continuation: AsyncThrowingStream<
+            BillingDataPoint,
+            Swift.Error
+        >.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageNumber: Int = page ?? 1
                     while true {
-                        let pageResponse = try await billingInsightsList(config: config, accountUrn: accountUrn, startDate: startDate, endDate: endDate, perPage: perPage, page: pageNumber, requestOptions: requestOptions)
+                        let pageResponse = try await billingInsightsList(
+                            config: config,
+                            accountUrn: accountUrn,
+                            startDate: startDate,
+                            endDate: endDate,
+                            perPage: perPage,
+                            page: pageNumber,
+                            requestOptions: requestOptions
+                        )
                         let pageItems = pageResponse.dataPoints
-                        if pageItems.isEmpty { break }
-                        for item in pageItems { continuation.yield(item) }
-                        if pageNumber >= pageResponse.totalPages { break }
+                        if pageItems.isEmpty {
+                            break
+                        }
+                        for item in pageItems {
+                            continuation.yield(item)
+                        }
+                        if pageNumber >= pageResponse.totalPages {
+                            break
+                        }
                         pageNumber += 1
                     }
                 } catch {
@@ -69,24 +130,52 @@ extension BillingMethods {
         }
     }
 
-    public struct BillingInsightsListPage {
+    struct BillingInsightsListPage {
         public let data: BillingInsights
         public let items: [BillingDataPoint]
         public let hasMore: Bool
     }
 
-    public static func billingInsightsListPages(config: ClientConfig, accountUrn: String, startDate: String, endDate: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<BillingInsightsListPage, Swift.Error> {
-        return AsyncThrowingStream<BillingInsightsListPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<BillingInsightsListPage, Swift.Error>.Continuation) in
+    static func billingInsightsListPages(
+        config: ClientConfig,
+        accountUrn: String,
+        startDate: String,
+        endDate: String,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<BillingInsightsListPage, Swift.Error> {
+        AsyncThrowingStream<BillingInsightsListPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<
+            BillingInsightsListPage,
+            Swift.Error
+        >.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageNumber: Int = page ?? 1
                     while true {
-                        let pageResponse = try await billingInsightsList(config: config, accountUrn: accountUrn, startDate: startDate, endDate: endDate, perPage: perPage, page: pageNumber, requestOptions: requestOptions)
+                        let pageResponse = try await billingInsightsList(
+                            config: config,
+                            accountUrn: accountUrn,
+                            startDate: startDate,
+                            endDate: endDate,
+                            perPage: perPage,
+                            page: pageNumber,
+                            requestOptions: requestOptions
+                        )
                         let pageItems = pageResponse.dataPoints
-                        if pageItems.isEmpty { break }
-                        let hasMore = true && pageNumber + 1 != pageNumber && (pageNumber + 1 <= pageResponse.totalPages)
-                        pageContinuation.yield(BillingInsightsListPage(data: pageResponse, items: pageItems, hasMore: hasMore))
-                        if !hasMore { break }
+                        if pageItems.isEmpty {
+                            break
+                        }
+                        let hasMore = true && pageNumber + 1 != pageNumber &&
+                            (pageNumber + 1 <= pageResponse.totalPages)
+                        pageContinuation.yield(BillingInsightsListPage(
+                            data: pageResponse,
+                            items: pageItems,
+                            hasMore: hasMore
+                        ))
+                        if !hasMore {
+                            break
+                        }
                         pageNumber += 1
                     }
                 } catch {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ActionGateway domain models
+/// ActionGateway domain models
 public typealias EmptyResponse = [String: JSONValue]
 
 /// Provider of tools.
@@ -39,28 +39,35 @@ public struct Toolkit: Codable {
     }
 
     init() {
-        (self.id, self.name, self.description, self.categories, self.createdAt) = (nil, nil, nil, nil, nil)
-        self.providerKind = nil
+        (id, name, description, categories, createdAt) = (nil, nil, nil, nil, nil)
+        providerKind = nil
     }
 }
 
-extension Toolkit {
-    public init(from decoder: Decoder) throws {
+public extension Toolkit {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.categories = try container.sdkDecodeIfPresent(.categories)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.providerKind = try container.sdkDecodeIfPresent(.providerKind)
-        if let value = self.createdAt {
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        description = try container.sdkDecodeIfPresent(.description)
+        categories = try container.sdkDecodeIfPresent(.categories)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        providerKind = try container.sdkDecodeIfPresent(.providerKind)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-extension Toolkit {
-    public init(id: String? = nil, name: String? = nil, description: String? = nil, categories: [String]? = nil, createdAt: Date? = nil, providerKind: String? = nil) throws {
+public extension Toolkit {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        description: String? = nil,
+        categories: [String]? = nil,
+        createdAt: Date? = nil,
+        providerKind: String? = nil
+    ) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.description, self.categories) = (description, categories)
@@ -81,19 +88,19 @@ public struct DeleteConnectionResponse: Codable {
     }
 
     init() {
-        self.connection = nil
+        connection = nil
     }
 }
 
-extension DeleteConnectionResponse {
-    public init(from decoder: Decoder) throws {
+public extension DeleteConnectionResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.connection = try container.sdkDecodeIfPresent(.connection)
+        connection = try container.sdkDecodeIfPresent(.connection)
     }
 }
 
-extension DeleteConnectionResponse {
-    public init(connection: Connection? = nil) {
+public extension DeleteConnectionResponse {
+    init(connection: Connection? = nil) {
         self.init()
         self.connection = connection
     }
@@ -117,21 +124,21 @@ public struct CreateSessionResponse: Codable {
     }
 
     init() {
-        (self.session, self.mcpUrl, self.tools) = (nil, nil, nil)
+        (session, mcpUrl, tools) = (nil, nil, nil)
     }
 }
 
-extension CreateSessionResponse {
-    public init(from decoder: Decoder) throws {
+public extension CreateSessionResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.session = try container.sdkDecodeIfPresent(.session)
-        self.mcpUrl = try container.sdkDecodeIfPresent(.mcpUrl)
-        self.tools = try container.sdkDecodeIfPresent(.tools)
+        session = try container.sdkDecodeIfPresent(.session)
+        mcpUrl = try container.sdkDecodeIfPresent(.mcpUrl)
+        tools = try container.sdkDecodeIfPresent(.tools)
     }
 }
 
-extension CreateSessionResponse {
-    public init(session: Session? = nil, mcpUrl: String? = nil, tools: [String]? = nil) {
+public extension CreateSessionResponse {
+    init(session: Session? = nil, mcpUrl: String? = nil, tools: [String]? = nil) {
         self.init()
         (self.session, self.mcpUrl) = (session, mcpUrl)
         self.tools = tools
@@ -157,21 +164,21 @@ public struct Pagination: Codable {
     }
 
     init() {
-        (self.page, self.perPage, self.total) = (nil, nil, nil)
+        (page, perPage, total) = (nil, nil, nil)
     }
 }
 
-extension Pagination {
-    public init(from decoder: Decoder) throws {
+public extension Pagination {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.page = try container.sdkDecodeIfPresent(.page)
-        self.perPage = try container.sdkDecodeIfPresent(.perPage)
-        self.total = try container.sdkDecodeIfPresent(.total)
+        page = try container.sdkDecodeIfPresent(.page)
+        perPage = try container.sdkDecodeIfPresent(.perPage)
+        total = try container.sdkDecodeIfPresent(.total)
     }
 }
 
-extension Pagination {
-    public init(page: Int? = nil, perPage: Int? = nil, total: Int? = nil) {
+public extension Pagination {
+    init(page: Int? = nil, perPage: Int? = nil, total: Int? = nil) {
         self.init()
         (self.page, self.perPage) = (page, perPage)
         self.total = total
@@ -187,24 +194,30 @@ public struct SetActorLimits: Codable {
         case overrides
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SetActorLimits {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.overrides) else {
-            throw SdkValidationError(field: "overrides", code: "required", message: "Validation failed for 'overrides': value is required")
-        }
-        self.overrides = try container.sdkDecodeRequired(.overrides)
-            try validateItems("overrides", self.overrides, min: 1, max: nil)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SetActorLimits {
-    public init(overrides: [LimitOverride]) throws {
+public extension SetActorLimits {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.overrides) else {
+            throw SdkValidationError(
+                field: "overrides",
+                code: "required",
+                message: "Validation failed for 'overrides': value is required"
+            )
+        }
+        overrides = try container.sdkDecodeRequired(.overrides)
+        try validateItems("overrides", overrides, min: 1, max: nil)
+    }
+}
+
+public extension SetActorLimits {
+    init(overrides: [LimitOverride]) throws {
         self.overrides = overrides
-            try validateItems("overrides", self.overrides, min: 1, max: nil)
+        try validateItems("overrides", self.overrides, min: 1, max: nil)
     }
 }
 
@@ -272,50 +285,66 @@ public struct UserConnectionsItem: Codable {
     }
 
     init() {
-        (self.id, self.provider, self.providerDisplayName, self.userId, self.scopes) = (nil, nil, nil, nil, nil)
-        (self.status, self.grantedAt, self.revokedAt, self.createdAt, self.updatedAt) = (nil, nil, nil, nil, nil)
-        (self.connectionParameters, self.credentialKind, self.credentialId, self.network, self.owningUserId) = (nil, nil, nil, nil, nil)
+        (id, provider, providerDisplayName, userId, scopes) = (nil, nil, nil, nil, nil)
+        (status, grantedAt, revokedAt, createdAt, updatedAt) = (nil, nil, nil, nil, nil)
+        (connectionParameters, credentialKind, credentialId, network, owningUserId) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension UserConnectionsItem {
-    public init(from decoder: Decoder) throws {
+public extension UserConnectionsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.provider = try container.sdkDecodeIfPresent(.provider)
-        self.providerDisplayName = try container.sdkDecodeIfPresent(.providerDisplayName)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
-        self.scopes = try container.sdkDecodeIfPresent(.scopes)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.grantedAt = try container.sdkDecodeIfPresent(.grantedAt)
-        self.revokedAt = try container.sdkDecodeIfPresent(.revokedAt)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.connectionParameters = try container.sdkDecodeIfPresent(.connectionParameters)
-        self.credentialKind = try container.sdkDecodeIfPresent(.credentialKind)
-        self.credentialId = try container.sdkDecodeIfPresent(.credentialId)
-        self.network = try container.sdkDecodeIfPresent(.network)
-        self.owningUserId = try container.sdkDecodeIfPresent(.owningUserId)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        provider = try container.sdkDecodeIfPresent(.provider)
+        providerDisplayName = try container.sdkDecodeIfPresent(.providerDisplayName)
+        userId = try container.sdkDecodeIfPresent(.userId)
+        scopes = try container.sdkDecodeIfPresent(.scopes)
+        status = try container.sdkDecodeIfPresent(.status)
+        grantedAt = try container.sdkDecodeIfPresent(.grantedAt)
+        revokedAt = try container.sdkDecodeIfPresent(.revokedAt)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        connectionParameters = try container.sdkDecodeIfPresent(.connectionParameters)
+        credentialKind = try container.sdkDecodeIfPresent(.credentialKind)
+        credentialId = try container.sdkDecodeIfPresent(.credentialId)
+        network = try container.sdkDecodeIfPresent(.network)
+        owningUserId = try container.sdkDecodeIfPresent(.owningUserId)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
-        if let value = self.grantedAt {
+        if let value = grantedAt {
             try sdkValidateDateTime("granted_at", sdkWireString(value))
         }
-        if let value = self.revokedAt {
+        if let value = revokedAt {
             try sdkValidateDateTime("revoked_at", sdkWireString(value))
         }
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension UserConnectionsItem {
-    public init(id: String? = nil, provider: String? = nil, providerDisplayName: String? = nil, userId: String? = nil, scopes: [String]? = nil, status: UserConnectionsItemStatus? = nil, grantedAt: Date? = nil, revokedAt: Date? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, connectionParameters: [String: JSONValue]? = nil, credentialKind: UserConnectionsItemCredentialKind? = nil, credentialId: String? = nil, network: ConnectionNetwork? = nil, owningUserId: String? = nil) throws {
+public extension UserConnectionsItem {
+    init(
+        id: String? = nil,
+        provider: String? = nil,
+        providerDisplayName: String? = nil,
+        userId: String? = nil,
+        scopes: [String]? = nil,
+        status: UserConnectionsItemStatus? = nil,
+        grantedAt: Date? = nil,
+        revokedAt: Date? = nil,
+        createdAt: Date? = nil,
+        updatedAt: Date? = nil,
+        connectionParameters: [String: JSONValue]? = nil,
+        credentialKind: UserConnectionsItemCredentialKind? = nil,
+        credentialId: String? = nil,
+        network: ConnectionNetwork? = nil,
+        owningUserId: String? = nil
+    ) throws {
         self.init()
         (self.id, self.provider) = (id, provider)
         (self.providerDisplayName, self.userId) = (providerDisplayName, userId)
@@ -356,20 +385,20 @@ public struct ToolbeltsResponse: Codable {
     }
 
     init() {
-        (self.toolbelts, self.pagination) = (nil, nil)
+        (toolbelts, pagination) = (nil, nil)
     }
 }
 
-extension ToolbeltsResponse {
-    public init(from decoder: Decoder) throws {
+public extension ToolbeltsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.toolbelts = try container.sdkDecodeIfPresent(.toolbelts)
-        self.pagination = try container.sdkDecodeIfPresent(.pagination)
+        toolbelts = try container.sdkDecodeIfPresent(.toolbelts)
+        pagination = try container.sdkDecodeIfPresent(.pagination)
     }
 }
 
-extension ToolbeltsResponse {
-    public init(toolbelts: [ToolbeltSummary]? = nil, pagination: Pagination? = nil) {
+public extension ToolbeltsResponse {
+    init(toolbelts: [ToolbeltSummary]? = nil, pagination: Pagination? = nil) {
         self.init()
         (self.toolbelts, self.pagination) = (toolbelts, pagination)
     }
@@ -398,28 +427,28 @@ public struct UserSessionsItem: Codable {
     }
 
     init() {
-        (self.sessionUrn, self.name, self.createdAt, self.updatedAt) = (nil, nil, nil, nil)
+        (sessionUrn, name, createdAt, updatedAt) = (nil, nil, nil, nil)
     }
 }
 
-extension UserSessionsItem {
-    public init(from decoder: Decoder) throws {
+public extension UserSessionsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.sessionUrn = try container.sdkDecodeIfPresent(.sessionUrn)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = self.createdAt {
+        sessionUrn = try container.sdkDecodeIfPresent(.sessionUrn)
+        name = try container.sdkDecodeIfPresent(.name)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension UserSessionsItem {
-    public init(sessionUrn: String? = nil, name: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) throws {
+public extension UserSessionsItem {
+    init(sessionUrn: String? = nil, name: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) throws {
         self.init()
         (self.sessionUrn, self.name) = (sessionUrn, name)
         (self.createdAt, self.updatedAt) = (createdAt, updatedAt)
@@ -442,24 +471,30 @@ public struct ClearActorLimits: Codable {
         case categories
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ClearActorLimits {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.categories) else {
-            throw SdkValidationError(field: "categories", code: "required", message: "Validation failed for 'categories': value is required")
-        }
-        self.categories = try container.sdkDecodeRequired(.categories)
-            try validateItems("categories", self.categories, min: 1, max: nil)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ClearActorLimits {
-    public init(categories: [LimitCategory]) throws {
+public extension ClearActorLimits {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.categories) else {
+            throw SdkValidationError(
+                field: "categories",
+                code: "required",
+                message: "Validation failed for 'categories': value is required"
+            )
+        }
+        categories = try container.sdkDecodeRequired(.categories)
+        try validateItems("categories", categories, min: 1, max: nil)
+    }
+}
+
+public extension ClearActorLimits {
+    init(categories: [LimitCategory]) throws {
         self.categories = categories
-            try validateItems("categories", self.categories, min: 1, max: nil)
+        try validateItems("categories", self.categories, min: 1, max: nil)
     }
 }
 
@@ -484,22 +519,27 @@ public struct ResyncMcpServerResponse: Codable {
     }
 
     init() {
-        (self.mcpServer, self.tools, self.pending, self.authorization) = (nil, nil, nil, nil)
+        (mcpServer, tools, pending, authorization) = (nil, nil, nil, nil)
     }
 }
 
-extension ResyncMcpServerResponse {
-    public init(from decoder: Decoder) throws {
+public extension ResyncMcpServerResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.mcpServer = try container.sdkDecodeIfPresent(.mcpServer)
-        self.tools = try container.sdkDecodeIfPresent(.tools)
-        self.pending = try container.sdkDecodeIfPresent(.pending)
-        self.authorization = try container.sdkDecodeIfPresent(.authorization)
+        mcpServer = try container.sdkDecodeIfPresent(.mcpServer)
+        tools = try container.sdkDecodeIfPresent(.tools)
+        pending = try container.sdkDecodeIfPresent(.pending)
+        authorization = try container.sdkDecodeIfPresent(.authorization)
     }
 }
 
-extension ResyncMcpServerResponse {
-    public init(mcpServer: McpServer? = nil, tools: [McpServerTool]? = nil, pending: Bool? = nil, authorization: ConnectionAuthorization? = nil) {
+public extension ResyncMcpServerResponse {
+    init(
+        mcpServer: McpServer? = nil,
+        tools: [McpServerTool]? = nil,
+        pending: Bool? = nil,
+        authorization: ConnectionAuthorization? = nil
+    ) {
         self.init()
         (self.mcpServer, self.tools) = (mcpServer, tools)
         (self.pending, self.authorization) = (pending, authorization)
@@ -523,21 +563,21 @@ public struct User: Codable {
     }
 
     init() {
-        (self.userId, self.sessions, self.connections) = (nil, nil, nil)
+        (userId, sessions, connections) = (nil, nil, nil)
     }
 }
 
-extension User {
-    public init(from decoder: Decoder) throws {
+public extension User {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
-        self.sessions = try container.sdkDecodeIfPresent(.sessions)
-        self.connections = try container.sdkDecodeIfPresent(.connections)
+        userId = try container.sdkDecodeIfPresent(.userId)
+        sessions = try container.sdkDecodeIfPresent(.sessions)
+        connections = try container.sdkDecodeIfPresent(.connections)
     }
 }
 
-extension User {
-    public init(userId: String? = nil, sessions: [UserSessionsItem]? = nil, connections: [UserConnectionsItem]? = nil) {
+public extension User {
+    init(userId: String? = nil, sessions: [UserSessionsItem]? = nil, connections: [UserConnectionsItem]? = nil) {
         self.init()
         (self.userId, self.sessions) = (userId, sessions)
         self.connections = connections
@@ -548,14 +588,17 @@ extension User {
 public struct UserConnectionsItemCredentialKind: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let digitaloceanOauth = UserConnectionsItemCredentialKind(rawValue: "digitalocean_oauth")
     public static let privateOauth = UserConnectionsItemCredentialKind(rawValue: "private_oauth")
     public static let teamApiKey = UserConnectionsItemCredentialKind(rawValue: "team_api_key")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

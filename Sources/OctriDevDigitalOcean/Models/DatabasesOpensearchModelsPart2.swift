@@ -3,108 +3,348 @@
 
 import Foundation
 
-// DatabasesOpensearch domain models
+/// DatabasesOpensearch domain models
 extension OpensearchAdvancedConfig {
     func sdkValidateConstraintsPart1() throws {
-        if let value = self.httpMaxContentLengthBytes {
-            try validateRange("http_max_content_length_bytes", Double(value), min: 1, max: 2147483647, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = httpMaxContentLengthBytes {
+            try validateRange(
+                "http_max_content_length_bytes",
+                Double(value),
+                min: 1,
+                max: 2_147_483_647,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.httpMaxHeaderSizeBytes {
-            try validateRange("http_max_header_size_bytes", Double(value), min: 1024, max: 262144, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = httpMaxHeaderSizeBytes {
+            try validateRange(
+                "http_max_header_size_bytes",
+                Double(value),
+                min: 1024,
+                max: 262_144,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.httpMaxInitialLineLengthBytes {
-            try validateRange("http_max_initial_line_length_bytes", Double(value), min: 1024, max: 65536, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = httpMaxInitialLineLengthBytes {
+            try validateRange(
+                "http_max_initial_line_length_bytes",
+                Double(value),
+                min: 1024,
+                max: 65536,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.indicesQueryBoolMaxClauseCount {
-            try validateRange("indices_query_bool_max_clause_count", Double(value), min: 64, max: 4096, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = indicesQueryBoolMaxClauseCount {
+            try validateRange(
+                "indices_query_bool_max_clause_count",
+                Double(value),
+                min: 64,
+                max: 4096,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.indicesFielddataCacheSizePercentage {
-            try validateRange("indices_fielddata_cache_size_percentage", Double(value), min: 3, max: 100, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = indicesFielddataCacheSizePercentage {
+            try validateRange(
+                "indices_fielddata_cache_size_percentage",
+                Double(value),
+                min: 3,
+                max: 100,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.indicesMemoryIndexBufferSizePercentage {
-            try validateRange("indices_memory_index_buffer_size_percentage", Double(value), min: 3, max: 40, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = indicesMemoryIndexBufferSizePercentage {
+            try validateRange(
+                "indices_memory_index_buffer_size_percentage",
+                Double(value),
+                min: 3,
+                max: 40,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.indicesMemoryMinIndexBufferSizeMb {
-            try validateRange("indices_memory_min_index_buffer_size_mb", Double(value), min: 3, max: 2048, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = indicesMemoryMinIndexBufferSizeMb {
+            try validateRange(
+                "indices_memory_min_index_buffer_size_mb",
+                Double(value),
+                min: 3,
+                max: 2048,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.indicesMemoryMaxIndexBufferSizeMb {
-            try validateRange("indices_memory_max_index_buffer_size_mb", Double(value), min: 3, max: 2048, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = indicesMemoryMaxIndexBufferSizeMb {
+            try validateRange(
+                "indices_memory_max_index_buffer_size_mb",
+                Double(value),
+                min: 3,
+                max: 2048,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.indicesQueriesCacheSizePercentage {
-            try validateRange("indices_queries_cache_size_percentage", Double(value), min: 3, max: 40, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = indicesQueriesCacheSizePercentage {
+            try validateRange(
+                "indices_queries_cache_size_percentage",
+                Double(value),
+                min: 3,
+                max: 40,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.indicesRecoveryMaxMbPerSec {
-            try validateRange("indices_recovery_max_mb_per_sec", Double(value), min: 40, max: 400, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = indicesRecoveryMaxMbPerSec {
+            try validateRange(
+                "indices_recovery_max_mb_per_sec",
+                Double(value),
+                min: 40,
+                max: 400,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.indicesRecoveryMaxConcurrentFileChunks {
-            try validateRange("indices_recovery_max_concurrent_file_chunks", Double(value), min: 2, max: 5, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = indicesRecoveryMaxConcurrentFileChunks {
+            try validateRange(
+                "indices_recovery_max_concurrent_file_chunks",
+                Double(value),
+                min: 2,
+                max: 5,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.threadPoolSearchSize {
-            try validateRange("thread_pool_search_size", Double(value), min: 1, max: 128, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = threadPoolSearchSize {
+            try validateRange(
+                "thread_pool_search_size",
+                Double(value),
+                min: 1,
+                max: 128,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
 extension OpensearchAdvancedConfig {
     func sdkValidateConstraintsPart2() throws {
-        if let value = self.threadPoolSearchThrottledSize {
-            try validateRange("thread_pool_search_throttled_size", Double(value), min: 1, max: 128, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = threadPoolSearchThrottledSize {
+            try validateRange(
+                "thread_pool_search_throttled_size",
+                Double(value),
+                min: 1,
+                max: 128,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.threadPoolGetSize {
-            try validateRange("thread_pool_get_size", Double(value), min: 1, max: 128, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = threadPoolGetSize {
+            try validateRange(
+                "thread_pool_get_size",
+                Double(value),
+                min: 1,
+                max: 128,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.threadPoolAnalyzeSize {
-            try validateRange("thread_pool_analyze_size", Double(value), min: 1, max: 128, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = threadPoolAnalyzeSize {
+            try validateRange(
+                "thread_pool_analyze_size",
+                Double(value),
+                min: 1,
+                max: 128,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.threadPoolWriteSize {
-            try validateRange("thread_pool_write_size", Double(value), min: 1, max: 128, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = threadPoolWriteSize {
+            try validateRange(
+                "thread_pool_write_size",
+                Double(value),
+                min: 1,
+                max: 128,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.threadPoolForceMergeSize {
-            try validateRange("thread_pool_force_merge_size", Double(value), min: 1, max: 128, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = threadPoolForceMergeSize {
+            try validateRange(
+                "thread_pool_force_merge_size",
+                Double(value),
+                min: 1,
+                max: 128,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.threadPoolSearchQueueSize {
-            try validateRange("thread_pool_search_queue_size", Double(value), min: 10, max: 2000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = threadPoolSearchQueueSize {
+            try validateRange(
+                "thread_pool_search_queue_size",
+                Double(value),
+                min: 10,
+                max: 2000,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.threadPoolSearchThrottledQueueSize {
-            try validateRange("thread_pool_search_throttled_queue_size", Double(value), min: 10, max: 2000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = threadPoolSearchThrottledQueueSize {
+            try validateRange(
+                "thread_pool_search_throttled_queue_size",
+                Double(value),
+                min: 10,
+                max: 2000,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.threadPoolGetQueueSize {
-            try validateRange("thread_pool_get_queue_size", Double(value), min: 10, max: 2000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = threadPoolGetQueueSize {
+            try validateRange(
+                "thread_pool_get_queue_size",
+                Double(value),
+                min: 10,
+                max: 2000,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.threadPoolAnalyzeQueueSize {
-            try validateRange("thread_pool_analyze_queue_size", Double(value), min: 10, max: 2000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = threadPoolAnalyzeQueueSize {
+            try validateRange(
+                "thread_pool_analyze_queue_size",
+                Double(value),
+                min: 10,
+                max: 2000,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.threadPoolWriteQueueSize {
-            try validateRange("thread_pool_write_queue_size", Double(value), min: 10, max: 2000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = threadPoolWriteQueueSize {
+            try validateRange(
+                "thread_pool_write_queue_size",
+                Double(value),
+                min: 10,
+                max: 2000,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.ismHistoryMaxAgeHours {
-            try validateRange("ism_history_max_age_hours", Double(value), min: 1, max: 2147483647, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = ismHistoryMaxAgeHours {
+            try validateRange(
+                "ism_history_max_age_hours",
+                Double(value),
+                min: 1,
+                max: 2_147_483_647,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.ismHistoryMaxDocs {
-            try validateRange("ism_history_max_docs", Double(value), min: 1, max: 9223372036854775808, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = ismHistoryMaxDocs {
+            try validateRange(
+                "ism_history_max_docs",
+                Double(value),
+                min: 1,
+                max: 9_223_372_036_854_775_808,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
 extension OpensearchAdvancedConfig {
     func sdkValidateConstraintsPart3() throws {
-        if let value = self.ismHistoryRolloverCheckPeriodHours {
-            try validateRange("ism_history_rollover_check_period_hours", Double(value), min: 1, max: 2147483647, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = ismHistoryRolloverCheckPeriodHours {
+            try validateRange(
+                "ism_history_rollover_check_period_hours",
+                Double(value),
+                min: 1,
+                max: 2_147_483_647,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.ismHistoryRolloverRetentionPeriodDays {
-            try validateRange("ism_history_rollover_retention_period_days", Double(value), min: 1, max: 2147483647, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = ismHistoryRolloverRetentionPeriodDays {
+            try validateRange(
+                "ism_history_rollover_retention_period_days",
+                Double(value),
+                min: 1,
+                max: 2_147_483_647,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.searchMaxBuckets {
-            try validateRange("search_max_buckets", Double(value), min: 1, max: 1000000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = searchMaxBuckets {
+            try validateRange(
+                "search_max_buckets",
+                Double(value),
+                min: 1,
+                max: 1_000_000,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.clusterMaxShardsPerNode {
-            try validateRange("cluster_max_shards_per_node", Double(value), min: 100, max: 10000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = clusterMaxShardsPerNode {
+            try validateRange(
+                "cluster_max_shards_per_node",
+                Double(value),
+                min: 100,
+                max: 10000,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.clusterRoutingAllocationNodeConcurrentRecoveries {
-            try validateRange("cluster_routing_allocation_node_concurrent_recoveries", Double(value), min: 2, max: 16, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = clusterRoutingAllocationNodeConcurrentRecoveries {
+            try validateRange(
+                "cluster_routing_allocation_node_concurrent_recoveries",
+                Double(value),
+                min: 2,
+                max: 16,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.knnMemoryCircuitBreakerLimit {
-            try validateRange("knn_memory_circuit_breaker_limit", Double(value), min: 0, max: 100, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = knnMemoryCircuitBreakerLimit {
+            try validateRange(
+                "knn_memory_circuit_breaker_limit",
+                Double(value),
+                min: 0,
+                max: 100,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
@@ -140,25 +380,32 @@ public struct OpensearchConnection: Codable {
     }
 
     init() {
-        (self.uri, self.host, self.port, self.user, self.password) = (nil, nil, nil, nil, nil)
-        self.ssl = nil
+        (uri, host, port, user, password) = (nil, nil, nil, nil, nil)
+        ssl = nil
     }
 }
 
-extension OpensearchConnection {
-    public init(from decoder: Decoder) throws {
+public extension OpensearchConnection {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.uri = try container.sdkDecodeIfPresent(.uri)
-        self.host = try container.sdkDecodeIfPresent(.host)
-        self.port = try container.sdkDecodeIfPresent(.port)
-        self.user = try container.sdkDecodeIfPresent(.user)
-        self.password = try container.sdkDecodeIfPresent(.password)
-        self.ssl = try container.sdkDecodeIfPresent(.ssl)
+        uri = try container.sdkDecodeIfPresent(.uri)
+        host = try container.sdkDecodeIfPresent(.host)
+        port = try container.sdkDecodeIfPresent(.port)
+        user = try container.sdkDecodeIfPresent(.user)
+        password = try container.sdkDecodeIfPresent(.password)
+        ssl = try container.sdkDecodeIfPresent(.ssl)
     }
 }
 
-extension OpensearchConnection {
-    public init(uri: String? = nil, host: String? = nil, port: Int? = nil, user: String? = nil, password: String? = nil, ssl: Bool? = nil) {
+public extension OpensearchConnection {
+    init(
+        uri: String? = nil,
+        host: String? = nil,
+        port: Int? = nil,
+        user: String? = nil,
+        password: String? = nil,
+        ssl: Bool? = nil
+    ) {
         self.init()
         (self.uri, self.host) = (uri, host)
         (self.port, self.user) = (port, user)
@@ -181,20 +428,20 @@ public struct OpensearchIndexVariant1: Codable {
     }
 
     init() {
-        (self.status, self.health) = (nil, nil)
+        (status, health) = (nil, nil)
     }
 }
 
-extension OpensearchIndexVariant1 {
-    public init(from decoder: Decoder) throws {
+public extension OpensearchIndexVariant1 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.health = try container.sdkDecodeIfPresent(.health)
+        status = try container.sdkDecodeIfPresent(.status)
+        health = try container.sdkDecodeIfPresent(.health)
     }
 }
 
-extension OpensearchIndexVariant1 {
-    public init(status: OpensearchIndexVariant1Status? = nil, health: OpensearchIndexVariant1Health? = nil) {
+public extension OpensearchIndexVariant1 {
+    init(status: OpensearchIndexVariant1Status? = nil, health: OpensearchIndexVariant1Health? = nil) {
         self.init()
         (self.status, self.health) = (status, health)
     }
@@ -226,42 +473,84 @@ public struct OpensearchLogsink: Codable {
         case ca
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension OpensearchLogsink {
-    public init(from decoder: Decoder) throws {
+public extension OpensearchLogsink {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.url) else {
-            throw SdkValidationError(field: "url", code: "required", message: "Validation failed for 'url': value is required")
+            throw SdkValidationError(
+                field: "url",
+                code: "required",
+                message: "Validation failed for 'url': value is required"
+            )
         }
         guard container.contains(.indexPrefix) else {
-            throw SdkValidationError(field: "index_prefix", code: "required", message: "Validation failed for 'index_prefix': value is required")
+            throw SdkValidationError(
+                field: "index_prefix",
+                code: "required",
+                message: "Validation failed for 'index_prefix': value is required"
+            )
         }
-        self.url = try container.sdkDecodeRequired(.url)
-        self.indexPrefix = try container.sdkDecodeRequired(.indexPrefix)
-        self.indexDaysMax = try container.sdkDecodeIfPresent(.indexDaysMax)
-        self.timeout = try container.sdkDecodeIfPresent(.timeout)
-        self.ca = try container.sdkDecodeIfPresent(.ca)
-        if let value = self.indexDaysMax {
-            try validateRange("index_days_max", Double(value), min: 1, max: 10000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        url = try container.sdkDecodeRequired(.url)
+        indexPrefix = try container.sdkDecodeRequired(.indexPrefix)
+        indexDaysMax = try container.sdkDecodeIfPresent(.indexDaysMax)
+        timeout = try container.sdkDecodeIfPresent(.timeout)
+        ca = try container.sdkDecodeIfPresent(.ca)
+        if let value = indexDaysMax {
+            try validateRange(
+                "index_days_max",
+                Double(value),
+                min: 1,
+                max: 10000,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.timeout {
-            try validateRange("timeout", Double(value), min: 10, max: 120, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = timeout {
+            try validateRange(
+                "timeout",
+                Double(value),
+                min: 10,
+                max: 120,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
-extension OpensearchLogsink {
-    public init(url: String, indexPrefix: String, indexDaysMax: Int? = nil, timeout: Double? = nil, ca: String? = nil) throws {
+public extension OpensearchLogsink {
+    init(url: String, indexPrefix: String, indexDaysMax: Int? = nil, timeout: Double? = nil, ca: String? = nil) throws {
         (self.url, self.indexPrefix) = (url, indexPrefix)
         (self.indexDaysMax, self.timeout) = (indexDaysMax, timeout)
         self.ca = ca
         if let value = self.indexDaysMax {
-            try validateRange("index_days_max", Double(value), min: 1, max: 10000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "index_days_max",
+                Double(value),
+                min: 1,
+                max: 10000,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
         if let value = self.timeout {
-            try validateRange("timeout", Double(value), min: 10, max: 120, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "timeout",
+                Double(value),
+                min: 10,
+                max: 120,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
@@ -301,22 +590,22 @@ public struct OpensearchIndex: Codable {
     }
 
     init() {
-        (self.indexName, self.numberOfShards, self.numberOfReplicas, self.size, self.createdTime) = (nil, nil, nil, nil, nil)
-        (self.status, self.health) = (nil, nil)
+        (indexName, numberOfShards, numberOfReplicas, size, createdTime) = (nil, nil, nil, nil, nil)
+        (status, health) = (nil, nil)
     }
 }
 
-extension OpensearchIndex {
-    public init(from decoder: Decoder) throws {
+public extension OpensearchIndex {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.indexName = try container.sdkDecodeIfPresent(.indexName)
-        self.numberOfShards = try container.sdkDecodeIfPresent(.numberOfShards)
-        self.numberOfReplicas = try container.sdkDecodeIfPresent(.numberOfReplicas)
-        self.size = try container.sdkDecodeIfPresent(.size)
-        self.createdTime = try container.sdkDecodeIfPresent(.createdTime)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.health = try container.sdkDecodeIfPresent(.health)
-        if let value = self.createdTime {
+        indexName = try container.sdkDecodeIfPresent(.indexName)
+        numberOfShards = try container.sdkDecodeIfPresent(.numberOfShards)
+        numberOfReplicas = try container.sdkDecodeIfPresent(.numberOfReplicas)
+        size = try container.sdkDecodeIfPresent(.size)
+        createdTime = try container.sdkDecodeIfPresent(.createdTime)
+        status = try container.sdkDecodeIfPresent(.status)
+        health = try container.sdkDecodeIfPresent(.health)
+        if let value = createdTime {
             try sdkValidateDateTime("created_time", sdkWireString(value))
         }
     }

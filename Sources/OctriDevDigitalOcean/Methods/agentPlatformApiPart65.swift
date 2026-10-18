@@ -6,7 +6,7 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
+public extension AgentPlatformApiMethods {
     /// To create scheduled indexing for a knowledge base, send a POST request to `/v2/gen-ai/scheduled-indexing`.
     ///
     /// - Parameters:
@@ -14,25 +14,88 @@ extension AgentPlatformApiMethods {
     ///   e.g. Monday begins with 1 )
     /// - knowledgeBaseUuid: Knowledge base uuid for which the schedule is created
     /// - time: Time of execution (HH:MM) UTC
-    public static func genaiCreateScheduledIndexing(config: ClientConfig, days: [Int]? = nil, knowledgeBaseUuid: String? = nil, time: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiCreateScheduledIndexingOutput {
-        let requestBody = GenaiCreateScheduledIndexingRequestBody(days: days, knowledgeBaseUuid: knowledgeBaseUuid, time: time)
+    static func genaiCreateScheduledIndexing(
+        config: ClientConfig,
+        days: [Int]? = nil,
+        knowledgeBaseUuid: String? = nil,
+        time: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiCreateScheduledIndexingOutput {
+        let requestBody = GenaiCreateScheduledIndexingRequestBody(
+            days: days,
+            knowledgeBaseUuid: knowledgeBaseUuid,
+            time: time
+        )
 
-        return try (await sdkRequest("POST", "/v2/gen-ai/scheduled-indexing", config: config, body: requestBody, decoder: .json, operationId: "genai_create_scheduled_indexing", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/gen-ai/scheduled-indexing",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "genai_create_scheduled_indexing",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Get Scheduled Indexing for knowledge base using knoweldge base uuid, send a GET request to `/v2/gen-ai/scheduled-indexing/knowledge-base/{knowledge_base_uuid}`.
+    /// Get Scheduled Indexing for knowledge base using knoweldge base uuid, send a GET request to
+    /// `/v2/gen-ai/scheduled-indexing/knowledge-base/{knowledge_base_uuid}`.
     ///
     /// - Parameters:
     /// - knowledgeBaseUuid: UUID of the scheduled indexing entry
-    public static func genaiGetScheduledIndexing(config: ClientConfig, knowledgeBaseUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiGetScheduledIndexingOutput {
-        return try (await sdkRequest("GET", ["/v2/gen-ai/scheduled-indexing/knowledge-base/", sdkEncodePathSegment(sdkWireString(knowledgeBaseUuid))].joined(), config: config, decoder: .json, operationId: "genai_get_scheduled_indexing", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiGetScheduledIndexing(
+        config: ClientConfig,
+        knowledgeBaseUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiGetScheduledIndexingOutput {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/gen-ai/scheduled-indexing/knowledge-base/", sdkEncodePathSegment(sdkWireString(knowledgeBaseUuid))]
+                .joined(),
+            config: config,
+            decoder: .json,
+            operationId: "genai_get_scheduled_indexing",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
     /// Delete Scheduled Indexing for knowledge base, send a DELETE request to `/v2/gen-ai/scheduled-indexing/{uuid}`.
     ///
     /// - Parameters:
     /// - uuid: UUID of the scheduled indexing
-    public static func genaiDeleteScheduledIndexing(config: ClientConfig, uuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiDeleteScheduledIndexingOutput {
-        return try (await sdkRequest("DELETE", ["/v2/gen-ai/scheduled-indexing/", sdkEncodePathSegment(sdkWireString(uuid))].joined(), config: config, decoder: .json, operationId: "genai_delete_scheduled_indexing", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiDeleteScheduledIndexing(
+        config: ClientConfig,
+        uuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiDeleteScheduledIndexingOutput {
+        try await (sdkRequest(
+            "DELETE",
+            ["/v2/gen-ai/scheduled-indexing/", sdkEncodePathSegment(sdkWireString(uuid))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "genai_delete_scheduled_indexing",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

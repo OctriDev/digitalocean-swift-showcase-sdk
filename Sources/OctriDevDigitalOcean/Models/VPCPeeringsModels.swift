@@ -3,7 +3,7 @@
 
 import Foundation
 
-// VPCPeerings domain models
+/// VPCPeerings domain models
 public struct AllVpcPeeringsVariant0: Codable {
     public var vpcPeerings: [VpcPeering]?
 
@@ -12,19 +12,19 @@ public struct AllVpcPeeringsVariant0: Codable {
     }
 
     init() {
-        self.vpcPeerings = nil
+        vpcPeerings = nil
     }
 }
 
-extension AllVpcPeeringsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AllVpcPeeringsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.vpcPeerings = try container.sdkDecodeIfPresent(.vpcPeerings)
+        vpcPeerings = try container.sdkDecodeIfPresent(.vpcPeerings)
     }
 }
 
-extension AllVpcPeeringsVariant0 {
-    public init(vpcPeerings: [VpcPeering]? = nil) {
+public extension AllVpcPeeringsVariant0 {
+    init(vpcPeerings: [VpcPeering]? = nil) {
         self.init()
         self.vpcPeerings = vpcPeerings
     }
@@ -40,19 +40,19 @@ public struct ProvisioningVpcPeering: Codable {
     }
 
     init() {
-        self.vpcPeering = nil
+        vpcPeering = nil
     }
 }
 
-extension ProvisioningVpcPeering {
-    public init(from decoder: Decoder) throws {
+public extension ProvisioningVpcPeering {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.vpcPeering = try container.sdkDecodeIfPresent(.vpcPeering)
+        vpcPeering = try container.sdkDecodeIfPresent(.vpcPeering)
     }
 }
 
-extension ProvisioningVpcPeering {
-    public init(vpcPeering: VpcPeering? = nil) {
+public extension ProvisioningVpcPeering {
+    init(vpcPeering: VpcPeering? = nil) {
         self.init()
         self.vpcPeering = vpcPeering
     }
@@ -68,19 +68,19 @@ public struct ActiveVpcPeering: Codable {
     }
 
     init() {
-        self.vpcPeering = nil
+        vpcPeering = nil
     }
 }
 
-extension ActiveVpcPeering {
-    public init(from decoder: Decoder) throws {
+public extension ActiveVpcPeering {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.vpcPeering = try container.sdkDecodeIfPresent(.vpcPeering)
+        vpcPeering = try container.sdkDecodeIfPresent(.vpcPeering)
     }
 }
 
-extension ActiveVpcPeering {
-    public init(vpcPeering: VpcPeering? = nil) {
+public extension ActiveVpcPeering {
+    init(vpcPeering: VpcPeering? = nil) {
         self.init()
         self.vpcPeering = vpcPeering
     }
@@ -100,23 +100,29 @@ public struct AllVpcPeerings: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllVpcPeerings {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.vpcPeerings = try container.sdkDecodeIfPresent(.vpcPeerings)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllVpcPeerings {
-    public init(meta: MetaMeta, vpcPeerings: [VpcPeering]? = nil, links: PageLinks? = nil) {
+public extension AllVpcPeerings {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        vpcPeerings = try container.sdkDecodeIfPresent(.vpcPeerings)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllVpcPeerings {
+    init(meta: MetaMeta, vpcPeerings: [VpcPeering]? = nil, links: PageLinks? = nil) {
         (self.meta, self.vpcPeerings) = (meta, vpcPeerings)
         self.links = links
     }
@@ -132,19 +138,19 @@ public struct DeletingVpcPeering: Codable {
     }
 
     init() {
-        self.vpcPeering = nil
+        vpcPeering = nil
     }
 }
 
-extension DeletingVpcPeering {
-    public init(from decoder: Decoder) throws {
+public extension DeletingVpcPeering {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.vpcPeering = try container.sdkDecodeIfPresent(.vpcPeering)
+        vpcPeering = try container.sdkDecodeIfPresent(.vpcPeering)
     }
 }
 
-extension DeletingVpcPeering {
-    public init(vpcPeering: VpcPeering? = nil) {
+public extension DeletingVpcPeering {
+    init(vpcPeering: VpcPeering? = nil) {
         self.init()
         self.vpcPeering = vpcPeering
     }

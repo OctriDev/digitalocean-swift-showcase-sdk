@@ -6,31 +6,96 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
-    /// To retrieve results of an evaluation run, send a GET request to `/v2/gen-ai/evaluation_runs/{evaluation_run_uuid}/results`.
+public extension AgentPlatformApiMethods {
+    /// To retrieve results of an evaluation run, send a GET request to
+    /// `/v2/gen-ai/evaluation_runs/{evaluation_run_uuid}/results`.
     ///
     /// - Parameters:
     /// - evaluationRunUuid: Evaluation run UUID.
     /// - page: Page number.
     /// - perPage: Items per page.
-    public static func genaiGetEvaluationRunResults(config: ClientConfig, evaluationRunUuid: String, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiGetEvaluationRunResultsOutput {
-        return try (await sdkRequest("GET", ["/v2/gen-ai/evaluation_runs/", sdkEncodePathSegment(sdkWireString(evaluationRunUuid)), "/results"].joined(), config: config, query: [
-            SdkQueryParameter("page", value: page),
-            SdkQueryParameter("per_page", value: perPage),
-        ], decoder: .json, operationId: "genai_get_evaluation_run_results", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiGetEvaluationRunResults(
+        config: ClientConfig,
+        evaluationRunUuid: String,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiGetEvaluationRunResultsOutput {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/gen-ai/evaluation_runs/", sdkEncodePathSegment(sdkWireString(evaluationRunUuid)), "/results"]
+                .joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("page", value: page),
+                SdkQueryParameter("per_page", value: perPage),
+            ],
+            decoder: .json,
+            operationId: "genai_get_evaluation_run_results",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To retrieve results of an evaluation run, send a GET request to `/v2/gen-ai/evaluation_runs/{evaluation_run_uuid}/results/{prompt_id}`.
+    /// To retrieve results of an evaluation run, send a GET request to
+    /// `/v2/gen-ai/evaluation_runs/{evaluation_run_uuid}/results/{prompt_id}`.
     ///
     /// - Parameters:
     /// - evaluationRunUuid: Evaluation run UUID.
     /// - promptId: Prompt ID to get results for.
-    public static func genaiGetEvaluationRunPromptResults(config: ClientConfig, evaluationRunUuid: String, promptId: Int, requestOptions: RequestOptions? = nil) async throws -> ApiGetEvaluationRunPromptResultsOutput {
-        return try (await sdkRequest("GET", ["/v2/gen-ai/evaluation_runs/", sdkEncodePathSegment(sdkWireString(evaluationRunUuid)), "/results/", sdkEncodePathSegment(sdkWireString(promptId))].joined(), config: config, decoder: .json, operationId: "genai_get_evaluation_run_prompt_results", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiGetEvaluationRunPromptResults(
+        config: ClientConfig,
+        evaluationRunUuid: String,
+        promptId: Int,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiGetEvaluationRunPromptResultsOutput {
+        try await (sdkRequest(
+            "GET",
+            [
+                "/v2/gen-ai/evaluation_runs/",
+                sdkEncodePathSegment(sdkWireString(evaluationRunUuid)),
+                "/results/",
+                sdkEncodePathSegment(sdkWireString(promptId)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "genai_get_evaluation_run_prompt_results",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
     /// To list all evaluation test cases, send a GET request to `/v2/gen-ai/evaluation_test_cases`.
-    public static func genaiListEvaluationTestCases(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> ApiListEvaluationTestCasesOutput {
-        return try (await sdkRequest("GET", "/v2/gen-ai/evaluation_test_cases", config: config, decoder: .json, operationId: "genai_list_evaluation_test_cases", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiListEvaluationTestCases(
+        config: ClientConfig,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiListEvaluationTestCasesOutput {
+        try await (sdkRequest(
+            "GET",
+            "/v2/gen-ai/evaluation_test_cases",
+            config: config,
+            decoder: .json,
+            operationId: "genai_list_evaluation_test_cases",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

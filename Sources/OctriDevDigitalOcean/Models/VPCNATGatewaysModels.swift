@@ -3,7 +3,7 @@
 
 import Foundation
 
-// VPCNATGateways domain models
+/// VPCNATGateways domain models
 /// An optional object specifying the public egress IP address to assign to the VPC NAT gateway. Provide this only
 /// to use a specific address. If omitted, DigitalOcean allocates a public IP address automatically.
 public struct VpcNatGatewayCreateEgresses: Codable {
@@ -15,19 +15,19 @@ public struct VpcNatGatewayCreateEgresses: Codable {
     }
 
     init() {
-        self.publicGateways = nil
+        publicGateways = nil
     }
 }
 
-extension VpcNatGatewayCreateEgresses {
-    public init(from decoder: Decoder) throws {
+public extension VpcNatGatewayCreateEgresses {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.publicGateways = try container.sdkDecodeIfPresent(.publicGateways)
+        publicGateways = try container.sdkDecodeIfPresent(.publicGateways)
     }
 }
 
-extension VpcNatGatewayCreateEgresses {
-    public init(publicGateways: [VpcNatGatewayCreateEgressesPublicGatewaysItem]? = nil) {
+public extension VpcNatGatewayCreateEgresses {
+    init(publicGateways: [VpcNatGatewayCreateEgressesPublicGatewaysItem]? = nil) {
         self.init()
         self.publicGateways = publicGateways
     }
@@ -52,27 +52,27 @@ public struct VpcNatGatewayGetVpcsItem: Codable {
     }
 
     init() {
-        (self.vpcUuid, self.subnetUuid, self.gatewayIp) = (nil, nil, nil)
+        (vpcUuid, subnetUuid, gatewayIp) = (nil, nil, nil)
     }
 }
 
-extension VpcNatGatewayGetVpcsItem {
-    public init(from decoder: Decoder) throws {
+public extension VpcNatGatewayGetVpcsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        self.subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
-        self.gatewayIp = try container.sdkDecodeIfPresent(.gatewayIp)
-        if let value = self.vpcUuid {
+        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
+        gatewayIp = try container.sdkDecodeIfPresent(.gatewayIp)
+        if let value = vpcUuid {
             try sdkValidateUuid("vpc_uuid", value)
         }
-        if let value = self.subnetUuid {
+        if let value = subnetUuid {
             try sdkValidateUuid("subnet_uuid", value)
         }
     }
 }
 
-extension VpcNatGatewayGetVpcsItem {
-    public init(vpcUuid: String? = nil, subnetUuid: String? = nil, gatewayIp: String? = nil) throws {
+public extension VpcNatGatewayGetVpcsItem {
+    init(vpcUuid: String? = nil, subnetUuid: String? = nil, gatewayIp: String? = nil) throws {
         self.init()
         (self.vpcUuid, self.subnetUuid) = (vpcUuid, subnetUuid)
         self.gatewayIp = gatewayIp
@@ -106,20 +106,20 @@ public struct VpcNatGatewayCreateEgressesPublicGatewaysItem: Codable {
     }
 
     init() {
-        (self.ip, self.ipv4) = (nil, nil)
+        (ip, ipv4) = (nil, nil)
     }
 }
 
-extension VpcNatGatewayCreateEgressesPublicGatewaysItem {
-    public init(from decoder: Decoder) throws {
+public extension VpcNatGatewayCreateEgressesPublicGatewaysItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.ip = try container.sdkDecodeIfPresent(.ip)
-        self.ipv4 = try container.sdkDecodeIfPresent(.ipv4)
+        ip = try container.sdkDecodeIfPresent(.ip)
+        ipv4 = try container.sdkDecodeIfPresent(.ipv4)
     }
 }
 
-extension VpcNatGatewayCreateEgressesPublicGatewaysItem {
-    public init(ip: String? = nil, ipv4: String? = nil) {
+public extension VpcNatGatewayCreateEgressesPublicGatewaysItem {
+    init(ip: String? = nil, ipv4: String? = nil) {
         self.init()
         (self.ip, self.ipv4) = (ip, ipv4)
     }
@@ -166,41 +166,73 @@ public struct VpcNatGatewayCreate: Codable {
         case egresses
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension VpcNatGatewayCreate {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.region) else {
-            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
-        }
-        guard container.contains(.size) else {
-            throw SdkValidationError(field: "size", code: "required", message: "Validation failed for 'size': value is required")
-        }
-        guard container.contains(.vpcs) else {
-            throw SdkValidationError(field: "vpcs", code: "required", message: "Validation failed for 'vpcs': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.region = try container.sdkDecodeRequired(.region)
-        self.size = try container.sdkDecodeRequired(.size)
-        self.vpcs = try container.sdkDecodeRequired(.vpcs)
-        self.udpTimeoutSeconds = try container.sdkDecodeIfPresent(.udpTimeoutSeconds)
-        self.icmpTimeoutSeconds = try container.sdkDecodeIfPresent(.icmpTimeoutSeconds)
-        self.tcpTimeoutSeconds = try container.sdkDecodeIfPresent(.tcpTimeoutSeconds)
-        self.egresses = try container.sdkDecodeIfPresent(.egresses)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension VpcNatGatewayCreate {
-    public init(name: String, type: VpcNatGatewayCreateType, region: VpcNatGatewayCreateRegion, size: Int, vpcs: [VpcNatGatewayCreateVpcsItem], udpTimeoutSeconds: Int? = nil, icmpTimeoutSeconds: Int? = nil, tcpTimeoutSeconds: Int? = nil, egresses: VpcNatGatewayCreateEgresses? = nil) {
+public extension VpcNatGatewayCreate {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.region) else {
+            throw SdkValidationError(
+                field: "region",
+                code: "required",
+                message: "Validation failed for 'region': value is required"
+            )
+        }
+        guard container.contains(.size) else {
+            throw SdkValidationError(
+                field: "size",
+                code: "required",
+                message: "Validation failed for 'size': value is required"
+            )
+        }
+        guard container.contains(.vpcs) else {
+            throw SdkValidationError(
+                field: "vpcs",
+                code: "required",
+                message: "Validation failed for 'vpcs': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        type = try container.sdkDecodeRequired(.type)
+        region = try container.sdkDecodeRequired(.region)
+        size = try container.sdkDecodeRequired(.size)
+        vpcs = try container.sdkDecodeRequired(.vpcs)
+        udpTimeoutSeconds = try container.sdkDecodeIfPresent(.udpTimeoutSeconds)
+        icmpTimeoutSeconds = try container.sdkDecodeIfPresent(.icmpTimeoutSeconds)
+        tcpTimeoutSeconds = try container.sdkDecodeIfPresent(.tcpTimeoutSeconds)
+        egresses = try container.sdkDecodeIfPresent(.egresses)
+    }
+}
+
+public extension VpcNatGatewayCreate {
+    init(
+        name: String,
+        type: VpcNatGatewayCreateType,
+        region: VpcNatGatewayCreateRegion,
+        size: Int,
+        vpcs: [VpcNatGatewayCreateVpcsItem],
+        udpTimeoutSeconds: Int? = nil,
+        icmpTimeoutSeconds: Int? = nil,
+        tcpTimeoutSeconds: Int? = nil,
+        egresses: VpcNatGatewayCreateEgresses? = nil
+    ) {
         (self.name, self.type) = (name, type)
         (self.region, self.size) = (region, size)
         (self.vpcs, self.udpTimeoutSeconds) = (vpcs, udpTimeoutSeconds)
@@ -223,23 +255,29 @@ public struct VpcNatGateways: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension VpcNatGateways {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.vpcNatGateways = try container.sdkDecodeIfPresent(.vpcNatGateways)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension VpcNatGateways {
-    public init(meta: MetaMeta, vpcNatGateways: [VpcNatGatewayGet]? = nil, links: PageLinks? = nil) {
+public extension VpcNatGateways {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        vpcNatGateways = try container.sdkDecodeIfPresent(.vpcNatGateways)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension VpcNatGateways {
+    init(meta: MetaMeta, vpcNatGateways: [VpcNatGatewayGet]? = nil, links: PageLinks? = nil) {
         (self.meta, self.vpcNatGateways) = (meta, vpcNatGateways)
         self.links = links
     }
@@ -257,19 +295,19 @@ public struct VpcNatGatewayGetEgressesPublicGatewaysItem: Codable {
     }
 
     init() {
-        self.ipv4 = nil
+        ipv4 = nil
     }
 }
 
-extension VpcNatGatewayGetEgressesPublicGatewaysItem {
-    public init(from decoder: Decoder) throws {
+public extension VpcNatGatewayGetEgressesPublicGatewaysItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.ipv4 = try container.sdkDecodeIfPresent(.ipv4)
+        ipv4 = try container.sdkDecodeIfPresent(.ipv4)
     }
 }
 
-extension VpcNatGatewayGetEgressesPublicGatewaysItem {
-    public init(ipv4: String? = nil) {
+public extension VpcNatGatewayGetEgressesPublicGatewaysItem {
+    init(ipv4: String? = nil) {
         self.init()
         self.ipv4 = ipv4
     }
@@ -285,19 +323,19 @@ public struct VpcNatGateway: Codable {
     }
 
     init() {
-        self.vpcNatGateway = nil
+        vpcNatGateway = nil
     }
 }
 
-extension VpcNatGateway {
-    public init(from decoder: Decoder) throws {
+public extension VpcNatGateway {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.vpcNatGateway = try container.sdkDecodeIfPresent(.vpcNatGateway)
+        vpcNatGateway = try container.sdkDecodeIfPresent(.vpcNatGateway)
     }
 }
 
-extension VpcNatGateway {
-    public init(vpcNatGateway: VpcNatGatewayGet? = nil) {
+public extension VpcNatGateway {
+    init(vpcNatGateway: VpcNatGatewayGet? = nil) {
         self.init()
         self.vpcNatGateway = vpcNatGateway
     }
@@ -313,19 +351,19 @@ public struct VpcNatGatewayCreateResponse: Codable {
     }
 
     init() {
-        self.vpcNatGateway = nil
+        vpcNatGateway = nil
     }
 }
 
-extension VpcNatGatewayCreateResponse {
-    public init(from decoder: Decoder) throws {
+public extension VpcNatGatewayCreateResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.vpcNatGateway = try container.sdkDecodeIfPresent(.vpcNatGateway)
+        vpcNatGateway = try container.sdkDecodeIfPresent(.vpcNatGateway)
     }
 }
 
-extension VpcNatGatewayCreateResponse {
-    public init(vpcNatGateway: VpcNatGatewayCreate? = nil) {
+public extension VpcNatGatewayCreateResponse {
+    init(vpcNatGateway: VpcNatGatewayCreate? = nil) {
         self.init()
         self.vpcNatGateway = vpcNatGateway
     }
@@ -360,29 +398,46 @@ public struct VpcNatGatewayUpdate: Codable {
         case tcpTimeoutSeconds = "tcp_timeout_seconds"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension VpcNatGatewayUpdate {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.size) else {
-            throw SdkValidationError(field: "size", code: "required", message: "Validation failed for 'size': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.size = try container.sdkDecodeRequired(.size)
-        self.vpcs = try container.sdkDecodeIfPresent(.vpcs)
-        self.udpTimeoutSeconds = try container.sdkDecodeIfPresent(.udpTimeoutSeconds)
-        self.icmpTimeoutSeconds = try container.sdkDecodeIfPresent(.icmpTimeoutSeconds)
-        self.tcpTimeoutSeconds = try container.sdkDecodeIfPresent(.tcpTimeoutSeconds)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension VpcNatGatewayUpdate {
-    public init(name: String, size: Int, vpcs: [VpcNatGatewayUpdateVpcsItem]? = nil, udpTimeoutSeconds: Int? = nil, icmpTimeoutSeconds: Int? = nil, tcpTimeoutSeconds: Int? = nil) {
+public extension VpcNatGatewayUpdate {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.size) else {
+            throw SdkValidationError(
+                field: "size",
+                code: "required",
+                message: "Validation failed for 'size': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        size = try container.sdkDecodeRequired(.size)
+        vpcs = try container.sdkDecodeIfPresent(.vpcs)
+        udpTimeoutSeconds = try container.sdkDecodeIfPresent(.udpTimeoutSeconds)
+        icmpTimeoutSeconds = try container.sdkDecodeIfPresent(.icmpTimeoutSeconds)
+        tcpTimeoutSeconds = try container.sdkDecodeIfPresent(.tcpTimeoutSeconds)
+    }
+}
+
+public extension VpcNatGatewayUpdate {
+    init(
+        name: String,
+        size: Int,
+        vpcs: [VpcNatGatewayUpdateVpcsItem]? = nil,
+        udpTimeoutSeconds: Int? = nil,
+        icmpTimeoutSeconds: Int? = nil,
+        tcpTimeoutSeconds: Int? = nil
+    ) {
         (self.name, self.size) = (name, size)
         (self.vpcs, self.udpTimeoutSeconds) = (vpcs, udpTimeoutSeconds)
         (self.icmpTimeoutSeconds, self.tcpTimeoutSeconds) = (icmpTimeoutSeconds, tcpTimeoutSeconds)
@@ -399,19 +454,19 @@ public struct VpcNatGatewayUpdateResponse: Codable {
     }
 
     init() {
-        self.vpcNatGateway = nil
+        vpcNatGateway = nil
     }
 }
 
-extension VpcNatGatewayUpdateResponse {
-    public init(from decoder: Decoder) throws {
+public extension VpcNatGatewayUpdateResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.vpcNatGateway = try container.sdkDecodeIfPresent(.vpcNatGateway)
+        vpcNatGateway = try container.sdkDecodeIfPresent(.vpcNatGateway)
     }
 }
 
-extension VpcNatGatewayUpdateResponse {
-    public init(vpcNatGateway: VpcNatGatewayUpdate? = nil) {
+public extension VpcNatGatewayUpdateResponse {
+    init(vpcNatGateway: VpcNatGatewayUpdate? = nil) {
         self.init()
         self.vpcNatGateway = vpcNatGateway
     }
@@ -435,30 +490,36 @@ public struct VpcNatGatewayCreateVpcsItem: Codable {
         case defaultGateway = "default_gateway"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension VpcNatGatewayCreateVpcsItem {
-    public init(from decoder: Decoder) throws {
+public extension VpcNatGatewayCreateVpcsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.vpcUuid) else {
-            throw SdkValidationError(field: "vpc_uuid", code: "required", message: "Validation failed for 'vpc_uuid': value is required")
+            throw SdkValidationError(
+                field: "vpc_uuid",
+                code: "required",
+                message: "Validation failed for 'vpc_uuid': value is required"
+            )
         }
-        self.vpcUuid = try container.sdkDecodeRequired(.vpcUuid)
-        self.subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
-        self.defaultGateway = try container.sdkDecodeIfPresent(.defaultGateway)
-            try sdkValidateUuid("vpc_uuid", self.vpcUuid)
-        if let value = self.subnetUuid {
+        vpcUuid = try container.sdkDecodeRequired(.vpcUuid)
+        subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
+        defaultGateway = try container.sdkDecodeIfPresent(.defaultGateway)
+        try sdkValidateUuid("vpc_uuid", vpcUuid)
+        if let value = subnetUuid {
             try sdkValidateUuid("subnet_uuid", value)
         }
     }
 }
 
-extension VpcNatGatewayCreateVpcsItem {
-    public init(vpcUuid: String, subnetUuid: String? = nil, defaultGateway: Bool? = nil) throws {
+public extension VpcNatGatewayCreateVpcsItem {
+    init(vpcUuid: String, subnetUuid: String? = nil, defaultGateway: Bool? = nil) throws {
         (self.vpcUuid, self.subnetUuid) = (vpcUuid, subnetUuid)
         self.defaultGateway = defaultGateway
-            try sdkValidateUuid("vpc_uuid", self.vpcUuid)
+        try sdkValidateUuid("vpc_uuid", self.vpcUuid)
         if let value = self.subnetUuid {
             try sdkValidateUuid("subnet_uuid", value)
         }
@@ -524,32 +585,32 @@ public struct VpcNatGatewayGet: Codable {
     }
 
     init() {
-        (self.id, self.name, self.type, self.state, self.region) = (nil, nil, nil, nil, nil)
-        (self.size, self.vpcs, self.egresses, self.udpTimeoutSeconds, self.icmpTimeoutSeconds) = (nil, nil, nil, nil, nil)
-        (self.tcpTimeoutSeconds, self.createdAt, self.updatedAt) = (nil, nil, nil)
+        (id, name, type, state, region) = (nil, nil, nil, nil, nil)
+        (size, vpcs, egresses, udpTimeoutSeconds, icmpTimeoutSeconds) = (nil, nil, nil, nil, nil)
+        (tcpTimeoutSeconds, createdAt, updatedAt) = (nil, nil, nil)
     }
 }
 
-extension VpcNatGatewayGet {
-    public init(from decoder: Decoder) throws {
+public extension VpcNatGatewayGet {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.size = try container.sdkDecodeIfPresent(.size)
-        self.vpcs = try container.sdkDecodeIfPresent(.vpcs)
-        self.egresses = try container.sdkDecodeIfPresent(.egresses)
-        self.udpTimeoutSeconds = try container.sdkDecodeIfPresent(.udpTimeoutSeconds)
-        self.icmpTimeoutSeconds = try container.sdkDecodeIfPresent(.icmpTimeoutSeconds)
-        self.tcpTimeoutSeconds = try container.sdkDecodeIfPresent(.tcpTimeoutSeconds)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = self.createdAt {
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        type = try container.sdkDecodeIfPresent(.type)
+        state = try container.sdkDecodeIfPresent(.state)
+        region = try container.sdkDecodeIfPresent(.region)
+        size = try container.sdkDecodeIfPresent(.size)
+        vpcs = try container.sdkDecodeIfPresent(.vpcs)
+        egresses = try container.sdkDecodeIfPresent(.egresses)
+        udpTimeoutSeconds = try container.sdkDecodeIfPresent(.udpTimeoutSeconds)
+        icmpTimeoutSeconds = try container.sdkDecodeIfPresent(.icmpTimeoutSeconds)
+        tcpTimeoutSeconds = try container.sdkDecodeIfPresent(.tcpTimeoutSeconds)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }

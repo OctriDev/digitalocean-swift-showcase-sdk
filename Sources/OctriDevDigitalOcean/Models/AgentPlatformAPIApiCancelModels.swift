@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiCancel domain models
+/// AgentPlatformAPIApiCancel domain models
 /// Typed representation of the `ApiCancelModelEvaluationRunOutput` API schema.
 public struct ApiCancelModelEvaluationRunOutput: Codable {
     /// Model Evaluation Run Summary - lightweight view used in run history list.
@@ -14,19 +14,19 @@ public struct ApiCancelModelEvaluationRunOutput: Codable {
     }
 
     init() {
-        self.run = nil
+        run = nil
     }
 }
 
-extension ApiCancelModelEvaluationRunOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCancelModelEvaluationRunOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.run = try container.sdkDecodeIfPresent(.run)
+        run = try container.sdkDecodeIfPresent(.run)
     }
 }
 
-extension ApiCancelModelEvaluationRunOutput {
-    public init(run: ApiModelEvaluationRunSummary? = nil) {
+public extension ApiCancelModelEvaluationRunOutput {
+    init(run: ApiModelEvaluationRunSummary? = nil) {
         self.init()
         self.run = run
     }
@@ -45,19 +45,19 @@ public struct ApiCancelModelEvaluationRunInputPublic: Codable {
     }
 
     init() {
-        self.evalRunUuid = nil
+        evalRunUuid = nil
     }
 }
 
-extension ApiCancelModelEvaluationRunInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCancelModelEvaluationRunInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.evalRunUuid = try container.sdkDecodeIfPresent(.evalRunUuid)
+        evalRunUuid = try container.sdkDecodeIfPresent(.evalRunUuid)
     }
 }
 
-extension ApiCancelModelEvaluationRunInputPublic {
-    public init(evalRunUuid: String? = nil) {
+public extension ApiCancelModelEvaluationRunInputPublic {
+    init(evalRunUuid: String? = nil) {
         self.init()
         self.evalRunUuid = evalRunUuid
     }
@@ -74,19 +74,19 @@ public struct ApiCancelSimulationRunInputPublic: Codable {
     }
 
     init() {
-        self.runUuid = nil
+        runUuid = nil
     }
 }
 
-extension ApiCancelSimulationRunInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCancelSimulationRunInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.runUuid = try container.sdkDecodeIfPresent(.runUuid)
+        runUuid = try container.sdkDecodeIfPresent(.runUuid)
     }
 }
 
-extension ApiCancelSimulationRunInputPublic {
-    public init(runUuid: String? = nil) {
+public extension ApiCancelSimulationRunInputPublic {
+    init(runUuid: String? = nil) {
         self.init()
         self.runUuid = runUuid
     }
@@ -102,19 +102,19 @@ public struct ApiCancelSimulationRunOutput: Codable {
     }
 
     init() {
-        self.simulationRun = nil
+        simulationRun = nil
     }
 }
 
-extension ApiCancelSimulationRunOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCancelSimulationRunOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.simulationRun = try container.sdkDecodeIfPresent(.simulationRun)
+        simulationRun = try container.sdkDecodeIfPresent(.simulationRun)
     }
 }
 
-extension ApiCancelSimulationRunOutput {
-    public init(simulationRun: ApiSimulationRun? = nil) {
+public extension ApiCancelSimulationRunOutput {
+    init(simulationRun: ApiSimulationRun? = nil) {
         self.init()
         self.simulationRun = simulationRun
     }
@@ -130,19 +130,19 @@ public struct ApiCancelKnowledgeBaseIndexingJobOutput: Codable {
     }
 
     init() {
-        self.job = nil
+        job = nil
     }
 }
 
-extension ApiCancelKnowledgeBaseIndexingJobOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCancelKnowledgeBaseIndexingJobOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.job = try container.sdkDecodeIfPresent(.job)
+        job = try container.sdkDecodeIfPresent(.job)
     }
 }
 
-extension ApiCancelKnowledgeBaseIndexingJobOutput {
-    public init(job: ApiIndexingJob? = nil) {
+public extension ApiCancelKnowledgeBaseIndexingJobOutput {
+    init(job: ApiIndexingJob? = nil) {
         self.init()
         self.job = job
     }
@@ -159,19 +159,19 @@ public struct ApiCancelKnowledgeBaseIndexingJobInputPublic: Codable {
     }
 
     init() {
-        self.uuid = nil
+        uuid = nil
     }
 }
 
-extension ApiCancelKnowledgeBaseIndexingJobInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCancelKnowledgeBaseIndexingJobInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
     }
 }
 
-extension ApiCancelKnowledgeBaseIndexingJobInputPublic {
-    public init(uuid: String? = nil) {
+public extension ApiCancelKnowledgeBaseIndexingJobInputPublic {
+    init(uuid: String? = nil) {
         self.init()
         self.uuid = uuid
     }

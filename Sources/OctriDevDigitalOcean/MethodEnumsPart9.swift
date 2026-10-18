@@ -9,13 +9,16 @@ import Foundation
 public struct UsersListParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let asc = UsersListParameter(rawValue: "asc")
     public static let desc = UsersListParameter(rawValue: "desc")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -27,14 +30,17 @@ public struct UsersListParameter: RawRepresentable, Hashable, Codable, Sendable,
 public struct ToolbeltsListParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let active = ToolbeltsListParameter(rawValue: "active")
     public static let deprecated = ToolbeltsListParameter(rawValue: "deprecated")
     public static let all = ToolbeltsListParameter(rawValue: "all")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -46,7 +52,10 @@ public struct ToolbeltsListParameter: RawRepresentable, Hashable, Codable, Senda
 public struct VpcSubnetsListMembersParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let droplet = VpcSubnetsListMembersParameter(rawValue: "droplet")
     public static let loadbalancer = VpcSubnetsListMembersParameter(rawValue: "loadbalancer")
     public static let kubernetes = VpcSubnetsListMembersParameter(rawValue: "kubernetes")
@@ -57,7 +66,7 @@ public struct VpcSubnetsListMembersParameter: RawRepresentable, Hashable, Codabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -67,16 +76,20 @@ public struct VpcSubnetsListMembersParameter: RawRepresentable, Hashable, Codabl
 }
 
 /// The comparison operator used against the alert's threshold.
-public struct UptimeUpdateAlertRequestBodyComparison: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct UptimeUpdateAlertRequestBodyComparison: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let greaterThan = UptimeUpdateAlertRequestBodyComparison(rawValue: "greater_than")
     public static let lessThan = UptimeUpdateAlertRequestBodyComparison(rawValue: "less_than")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -90,7 +103,7 @@ struct ActorLimitsDeleteRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.categories, forKey: SdkCodingKey("categories"))
+        try keyedContainer.encode(categories, forKey: SdkCodingKey("categories"))
     }
 }
 
@@ -99,7 +112,7 @@ struct ActorLimitsUpdateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.overrides, forKey: SdkCodingKey("overrides"))
+        try keyedContainer.encode(overrides, forKey: SdkCodingKey("overrides"))
     }
 }
 
@@ -113,12 +126,12 @@ struct ConnectionsCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.provider, forKey: SdkCodingKey("provider"))
-        try keyedContainer.encode(self.userId, forKey: SdkCodingKey("user_id"))
-        try keyedContainer.encodeIfPresent(self.scopes, forKey: SdkCodingKey("scopes"))
-        try keyedContainer.encodeIfPresent(self.connectionParameters, forKey: SdkCodingKey("connection_parameters"))
-        try keyedContainer.encodeIfPresent(self.credential, forKey: SdkCodingKey("credential"))
-        try keyedContainer.encodeIfPresent(self.network, forKey: SdkCodingKey("network"))
+        try keyedContainer.encode(provider, forKey: SdkCodingKey("provider"))
+        try keyedContainer.encode(userId, forKey: SdkCodingKey("user_id"))
+        try keyedContainer.encodeIfPresent(scopes, forKey: SdkCodingKey("scopes"))
+        try keyedContainer.encodeIfPresent(connectionParameters, forKey: SdkCodingKey("connection_parameters"))
+        try keyedContainer.encodeIfPresent(credential, forKey: SdkCodingKey("credential"))
+        try keyedContainer.encodeIfPresent(network, forKey: SdkCodingKey("network"))
     }
 }
 
@@ -139,35 +152,38 @@ struct McpServersCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.serverRef, forKey: SdkCodingKey("serverRef"))
-        try keyedContainer.encode(self.endpoint, forKey: SdkCodingKey("endpoint"))
-        try keyedContainer.encodeIfPresent(self.transport, forKey: SdkCodingKey("transport"))
-        try keyedContainer.encodeIfPresent(self.credentialRefSource, forKey: SdkCodingKey("credentialRefSource"))
-        try keyedContainer.encodeIfPresent(self.description, forKey: SdkCodingKey("description"))
-        try keyedContainer.encodeIfPresent(self.credentialRef, forKey: SdkCodingKey("credentialRef"))
-        try keyedContainer.encodeIfPresent(self.apiKey, forKey: SdkCodingKey("api_key"))
-        try keyedContainer.encodeIfPresent(self.oauthClientId, forKey: SdkCodingKey("oauth_client_id"))
-        try keyedContainer.encodeIfPresent(self.oauthClientSecret, forKey: SdkCodingKey("oauth_client_secret"))
-        try keyedContainer.encodeIfPresent(self.oauthAuthorizeUrl, forKey: SdkCodingKey("oauth_authorize_url"))
-        try keyedContainer.encodeIfPresent(self.oauthTokenUrl, forKey: SdkCodingKey("oauth_token_url"))
-        try keyedContainer.encodeIfPresent(self.oauthScopes, forKey: SdkCodingKey("oauth_scopes"))
-        try keyedContainer.encodeIfPresent(self.oauthAuthorizationTtlSeconds, forKey: SdkCodingKey("oauth_authorization_ttl_seconds"))
+        try keyedContainer.encode(serverRef, forKey: SdkCodingKey("serverRef"))
+        try keyedContainer.encode(endpoint, forKey: SdkCodingKey("endpoint"))
+        try keyedContainer.encodeIfPresent(transport, forKey: SdkCodingKey("transport"))
+        try keyedContainer.encodeIfPresent(credentialRefSource, forKey: SdkCodingKey("credentialRefSource"))
+        try keyedContainer.encodeIfPresent(description, forKey: SdkCodingKey("description"))
+        try keyedContainer.encodeIfPresent(credentialRef, forKey: SdkCodingKey("credentialRef"))
+        try keyedContainer.encodeIfPresent(apiKey, forKey: SdkCodingKey("api_key"))
+        try keyedContainer.encodeIfPresent(oauthClientId, forKey: SdkCodingKey("oauth_client_id"))
+        try keyedContainer.encodeIfPresent(oauthClientSecret, forKey: SdkCodingKey("oauth_client_secret"))
+        try keyedContainer.encodeIfPresent(oauthAuthorizeUrl, forKey: SdkCodingKey("oauth_authorize_url"))
+        try keyedContainer.encodeIfPresent(oauthTokenUrl, forKey: SdkCodingKey("oauth_token_url"))
+        try keyedContainer.encodeIfPresent(oauthScopes, forKey: SdkCodingKey("oauth_scopes"))
+        try keyedContainer.encodeIfPresent(
+            oauthAuthorizationTtlSeconds,
+            forKey: SdkCodingKey("oauth_authorization_ttl_seconds")
+        )
     }
 
     init(options: ActionGatewayMethods.McpServersCreateOptions) {
-        self.serverRef = options.serverRef
-        self.endpoint = options.endpoint
-        self.transport = options.transport
-        self.credentialRefSource = options.credentialRefSource
-        self.description = options.description
-        self.credentialRef = options.credentialRef
-        self.apiKey = options.apiKey
-        self.oauthClientId = options.oauthClientId
-        self.oauthClientSecret = options.oauthClientSecret
-        self.oauthAuthorizeUrl = options.oauthAuthorizeUrl
-        self.oauthTokenUrl = options.oauthTokenUrl
-        self.oauthScopes = options.oauthScopes
-        self.oauthAuthorizationTtlSeconds = options.oauthAuthorizationTtlSeconds
+        serverRef = options.serverRef
+        endpoint = options.endpoint
+        transport = options.transport
+        credentialRefSource = options.credentialRefSource
+        description = options.description
+        credentialRef = options.credentialRef
+        apiKey = options.apiKey
+        oauthClientId = options.oauthClientId
+        oauthClientSecret = options.oauthClientSecret
+        oauthAuthorizeUrl = options.oauthAuthorizeUrl
+        oauthTokenUrl = options.oauthTokenUrl
+        oauthScopes = options.oauthScopes
+        oauthAuthorizationTtlSeconds = options.oauthAuthorizationTtlSeconds
     }
 }
 
@@ -176,7 +192,7 @@ struct McpServersPatchRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.description, forKey: SdkCodingKey("description"))
+        try keyedContainer.encodeIfPresent(description, forKey: SdkCodingKey("description"))
     }
 }
 
@@ -185,7 +201,7 @@ struct McpServersRunResyncRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.userId, forKey: SdkCodingKey("user_id"))
+        try keyedContainer.encodeIfPresent(userId, forKey: SdkCodingKey("user_id"))
     }
 }
 
@@ -195,7 +211,7 @@ struct McpServersUpdateToolsRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.enabledToolSlugs, forKey: SdkCodingKey("enabledToolSlugs"))
-        try keyedContainer.encodeIfPresent(self.userId, forKey: SdkCodingKey("user_id"))
+        try keyedContainer.encode(enabledToolSlugs, forKey: SdkCodingKey("enabledToolSlugs"))
+        try keyedContainer.encodeIfPresent(userId, forKey: SdkCodingKey("user_id"))
     }
 }

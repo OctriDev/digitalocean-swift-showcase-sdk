@@ -6,8 +6,13 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension KubernetesMethods {
-    /// Clusterlint helps operators conform to Kubernetes best practices around resources, security and reliability to avoid common problems while operating or upgrading the clusters. To request a clusterlint run on your cluster, send a POST request to `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/clusterlint`. This will run all checks present in the `doks` group by default, if a request body is not specified. Optionally specify the below attributes. For information about the available checks, please refer to [the clusterlint check documentation](https://github.com/digitalocean/clusterlint/blob/master/checks.md).
+public extension KubernetesMethods {
+    /// Clusterlint helps operators conform to Kubernetes best practices around resources, security and reliability to
+    /// avoid common problems while operating or upgrading the clusters. To request a clusterlint run on your cluster,
+    /// send a POST request to `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/clusterlint`. This will run all checks present
+    /// in the `doks` group by default, if a request body is not specified. Optionally specify the below attributes. For
+    /// information about the available checks, please refer to [the clusterlint check
+    /// documentation](https://github.com/digitalocean/clusterlint/blob/master/checks.md).
     ///
     /// - Parameters:
     /// - clusterId: A unique ID that can be used to reference a Kubernetes cluster.
@@ -19,11 +24,39 @@ extension KubernetesMethods {
     ///   clusterlint executes checks.
     /// - excludeChecks: An array of checks that will be run when clusterlint
     ///   executes checks.
-    public static func kubernetesRunClusterLint(config: ClientConfig, clusterId: String, includeGroups: [String]? = nil, includeChecks: [String]? = nil, excludeGroups: [String]? = nil, excludeChecks: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> ClusterlintRun {
+    static func kubernetesRunClusterLint(
+        config: ClientConfig,
+        clusterId: String,
+        includeGroups: [String]? = nil,
+        includeChecks: [String]? = nil,
+        excludeGroups: [String]? = nil,
+        excludeChecks: [String]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ClusterlintRun {
         try sdkValidateUuid("cluster_id", clusterId)
 
-        let requestBody = KubernetesRunClusterLintRequestBody(includeGroups: includeGroups, includeChecks: includeChecks, excludeGroups: excludeGroups, excludeChecks: excludeChecks)
+        let requestBody = KubernetesRunClusterLintRequestBody(
+            includeGroups: includeGroups,
+            includeChecks: includeChecks,
+            excludeGroups: excludeGroups,
+            excludeChecks: excludeChecks
+        )
 
-        return try (await sdkRequest("POST", ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(clusterId)), "/clusterlint"].joined(), config: config, body: requestBody, decoder: .json, operationId: "kubernetes_run_clusterLint", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(clusterId)), "/clusterlint"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "kubernetes_run_clusterLint",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

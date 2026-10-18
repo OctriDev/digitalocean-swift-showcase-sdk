@@ -6,38 +6,100 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension KubernetesMethods {
-    /// To immediately upgrade a Kubernetes cluster to a newer patch release of Kubernetes, send a POST request to `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/upgrade`. The body of the request must specify a version attribute. Available upgrade versions for a cluster can be fetched from `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/upgrades`.
+public extension KubernetesMethods {
+    /// To immediately upgrade a Kubernetes cluster to a newer patch release of Kubernetes, send a POST request to
+    /// `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/upgrade`. The body of the request must specify a version attribute.
+    /// Available upgrade versions for a cluster can be fetched from `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/upgrades`.
     ///
     /// - Parameters:
     /// - clusterId: A unique ID that can be used to reference a Kubernetes cluster.
     /// - version: The slug identifier for the version of Kubernetes that the
     ///   cluster will be upgraded to.
-    public static func kubernetesUpgradeCluster(config: ClientConfig, clusterId: String, version: String? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func kubernetesUpgradeCluster(
+        config: ClientConfig,
+        clusterId: String,
+        version: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("cluster_id", clusterId)
 
         let requestBody = KubernetesUpgradeClusterRequestBody(version: version)
 
-        return try (await sdkRequest("POST", ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(clusterId)), "/upgrade"].joined(), config: config, body: requestBody, decoder: .empty, operationId: "kubernetes_upgrade_cluster", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(clusterId)), "/upgrade"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .empty,
+            operationId: "kubernetes_upgrade_cluster",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To list all of the node pools in a Kubernetes clusters, send a GET request to `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/node_pools`.
+    /// To list all of the node pools in a Kubernetes clusters, send a GET request to
+    /// `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/node_pools`.
     ///
     /// - Parameters:
     /// - clusterId: A unique ID that can be used to reference a Kubernetes cluster.
-    public static func kubernetesListNodePools(config: ClientConfig, clusterId: String, requestOptions: RequestOptions? = nil) async throws -> AllNodePools {
+    static func kubernetesListNodePools(
+        config: ClientConfig,
+        clusterId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AllNodePools {
         try sdkValidateUuid("cluster_id", clusterId)
 
-        return try (await sdkRequest("GET", ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(clusterId)), "/node_pools"].joined(), config: config, decoder: .json, operationId: "kubernetes_list_nodePools", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(clusterId)), "/node_pools"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "kubernetes_list_nodePools",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To add an additional node pool to a Kubernetes clusters, send a POST request to `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/node_pools` with the following attributes.
+    /// To add an additional node pool to a Kubernetes clusters, send a POST request to
+    /// `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/node_pools` with the following attributes.
     ///
     /// - Parameters:
     /// - clusterId: A unique ID that can be used to reference a Kubernetes cluster.
-    public static func kubernetesAddNodePool(config: ClientConfig, clusterId: String, body: KubernetesNodePoolRequest, requestOptions: RequestOptions? = nil) async throws -> NodePoolCreate {
+    static func kubernetesAddNodePool(
+        config: ClientConfig,
+        clusterId: String,
+        body: KubernetesNodePoolRequest,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> NodePoolCreate {
         try sdkValidateUuid("cluster_id", clusterId)
 
-        return try (await sdkRequest("POST", ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(clusterId)), "/node_pools"].joined(), config: config, rawBody: (try sdkEncodeBody(body, contentType: "application/json")), decoder: .json, operationId: "kubernetes_add_nodePool", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(clusterId)), "/node_pools"].joined(),
+            config: config,
+            rawBody: sdkEncodeBody(body, contentType: "application/json"),
+            decoder: .json,
+            operationId: "kubernetes_add_nodePool",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

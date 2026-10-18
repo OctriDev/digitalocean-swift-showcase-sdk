@@ -3,18 +3,21 @@
 
 import Foundation
 
-// ActionGatewayDataPlane domain models
+/// ActionGatewayDataPlane domain models
 /// Optional enumerated value serialized in the `status` wire field.
 public struct ApprovalDecisionResponseStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let approved = ApprovalDecisionResponseStatus(rawValue: "approved")
     public static let denied = ApprovalDecisionResponseStatus(rawValue: "denied")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -27,7 +30,10 @@ public struct ApprovalDecisionResponseStatus: RawRepresentable, Hashable, Codabl
 public struct ErrorEnvelopeRecoveryHint: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let fixArgs = ErrorEnvelopeRecoveryHint(rawValue: "fix_args")
     public static let refreshAuth = ErrorEnvelopeRecoveryHint(rawValue: "refresh_auth")
     public static let retryLater = ErrorEnvelopeRecoveryHint(rawValue: "retry_later")
@@ -37,7 +43,7 @@ public struct ErrorEnvelopeRecoveryHint: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -50,13 +56,16 @@ public struct ErrorEnvelopeRecoveryHint: RawRepresentable, Hashable, Codable, Se
 public struct ApprovalDecisionDecision: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let approve = ApprovalDecisionDecision(rawValue: "approve")
     public static let deny = ApprovalDecisionDecision(rawValue: "deny")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

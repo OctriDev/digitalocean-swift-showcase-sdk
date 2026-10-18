@@ -6,8 +6,10 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
-    /// To dispatch goal-driven scenario generation, send a POST request to `/v2/gen-ai/scenario_sets/generate`. The scenario set is returned in the generating state. Poll the retrieve scenario set endpoint until the set reaches a ready, failed, or cancelled status.
+public extension AgentPlatformApiMethods {
+    /// To dispatch goal-driven scenario generation, send a POST request to `/v2/gen-ai/scenario_sets/generate`. The
+    /// scenario set is returned in the generating state. Poll the retrieve scenario set endpoint until the set reaches
+    /// a ready, failed, or cancelled status.
     ///
     /// - Parameters:
     /// - generatorModelUuid: Optional model to use for generation. Platform default
@@ -15,17 +17,62 @@ extension AgentPlatformApiMethods {
     /// - goalDescription: The goal that drives scenario generation.
     /// - name: The name of the scenario set to create.
     /// - numScenarios: Number of scenarios to generate. Defaults to 1 if unset.
-    public static func genaiCreateGeneratedScenarioSet(config: ClientConfig, generatorModelUuid: String? = nil, goalDescription: String? = nil, name: String? = nil, numScenarios: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiGenerateScenarioSetOutput {
-        let requestBody = GenaiCreateGeneratedScenarioSetRequestBody(generatorModelUuid: generatorModelUuid, goalDescription: goalDescription, name: name, numScenarios: numScenarios)
+    static func genaiCreateGeneratedScenarioSet(
+        config: ClientConfig,
+        generatorModelUuid: String? = nil,
+        goalDescription: String? = nil,
+        name: String? = nil,
+        numScenarios: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiGenerateScenarioSetOutput {
+        let requestBody = GenaiCreateGeneratedScenarioSetRequestBody(
+            generatorModelUuid: generatorModelUuid,
+            goalDescription: goalDescription,
+            name: name,
+            numScenarios: numScenarios
+        )
 
-        return try (await sdkRequest("POST", "/v2/gen-ai/scenario_sets/generate", config: config, body: requestBody, decoder: .json, operationId: "genai_create_generated_scenario_set", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/gen-ai/scenario_sets/generate",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "genai_create_generated_scenario_set",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
     /// To retrieve a scenario set, send a GET request to `/v2/gen-ai/scenario_sets/{scenario_set_uuid}`.
     ///
     /// - Parameters:
     /// - scenarioSetUuid: UUID of the scenario set.
-    public static func genaiGetScenarioSet(config: ClientConfig, scenarioSetUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiGetScenarioSetOutput {
-        return try (await sdkRequest("GET", ["/v2/gen-ai/scenario_sets/", sdkEncodePathSegment(sdkWireString(scenarioSetUuid))].joined(), config: config, decoder: .json, operationId: "genai_get_scenario_set", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiGetScenarioSet(
+        config: ClientConfig,
+        scenarioSetUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiGetScenarioSetOutput {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/gen-ai/scenario_sets/", sdkEncodePathSegment(sdkWireString(scenarioSetUuid))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "genai_get_scenario_set",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

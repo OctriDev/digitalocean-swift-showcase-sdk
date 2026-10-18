@@ -6,34 +6,108 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension LoadBalancersMethods {
-    /// To assign a Droplet to a load balancer instance, send a POST request to `/v2/load_balancers/$LOAD_BALANCER_ID/droplets`. In the body of the request, there should be a `droplet_ids` attribute containing a list of Droplet IDs. Individual Droplets can not be added to a load balancer configured with a Droplet tag. Attempting to do so will result in a "422 Unprocessable Entity" response from the API. No response body will be sent back, but the response code will indicate success. Specifically, the response code will be a 204, which means that the action was successful with no returned body data.
+public extension LoadBalancersMethods {
+    /// To assign a Droplet to a load balancer instance, send a POST request to
+    /// `/v2/load_balancers/$LOAD_BALANCER_ID/droplets`. In the body of the request, there should be a `droplet_ids`
+    /// attribute containing a list of Droplet IDs. Individual Droplets can not be added to a load balancer configured
+    /// with a Droplet tag. Attempting to do so will result in a "422 Unprocessable Entity" response from the API. No
+    /// response body will be sent back, but the response code will indicate success. Specifically, the response code
+    /// will be a 204, which means that the action was successful with no returned body data.
     ///
     /// - Parameters:
     /// - lbId: A unique identifier for a load balancer.
-    public static func loadBalancersAddDroplets(config: ClientConfig, lbId: String, body: LoadBalancersAddDropletsRequestBody, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try (await sdkRequest("POST", ["/v2/load_balancers/", sdkEncodePathSegment(sdkWireString(lbId)), "/droplets"].joined(), config: config, rawBody: (try sdkEncodeBody(body, contentType: "application/json")), decoder: .empty, operationId: "loadBalancers_add_droplets", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func loadBalancersAddDroplets(
+        config: ClientConfig,
+        lbId: String,
+        body: LoadBalancersAddDropletsRequestBody,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await (sdkRequest(
+            "POST",
+            ["/v2/load_balancers/", sdkEncodePathSegment(sdkWireString(lbId)), "/droplets"].joined(),
+            config: config,
+            rawBody: sdkEncodeBody(body, contentType: "application/json"),
+            decoder: .empty,
+            operationId: "loadBalancers_add_droplets",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To remove a Droplet from a load balancer instance, send a DELETE request to `/v2/load_balancers/$LOAD_BALANCER_ID/droplets`. In the body of the request, there should be a `droplet_ids` attribute containing a list of Droplet IDs. No response body will be sent back, but the response code will indicate success. Specifically, the response code will be a 204, which means that the action was successful with no returned body data.
+    /// To remove a Droplet from a load balancer instance, send a DELETE request to
+    /// `/v2/load_balancers/$LOAD_BALANCER_ID/droplets`. In the body of the request, there should be a `droplet_ids`
+    /// attribute containing a list of Droplet IDs. No response body will be sent back, but the response code will
+    /// indicate success. Specifically, the response code will be a 204, which means that the action was successful with
+    /// no returned body data.
     ///
     /// - Parameters:
     /// - lbId: A unique identifier for a load balancer.
-    public static func loadBalancersRemoveDroplets(config: ClientConfig, lbId: String, body: LoadBalancersRemoveDropletsRequestBody, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try (await sdkRequest("DELETE", ["/v2/load_balancers/", sdkEncodePathSegment(sdkWireString(lbId)), "/droplets"].joined(), config: config, rawBody: (try sdkEncodeBody(body, contentType: "application/json")), decoder: .empty, operationId: "loadBalancers_remove_droplets", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func loadBalancersRemoveDroplets(
+        config: ClientConfig,
+        lbId: String,
+        body: LoadBalancersRemoveDropletsRequestBody,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await (sdkRequest(
+            "DELETE",
+            ["/v2/load_balancers/", sdkEncodePathSegment(sdkWireString(lbId)), "/droplets"].joined(),
+            config: config,
+            rawBody: sdkEncodeBody(body, contentType: "application/json"),
+            decoder: .empty,
+            operationId: "loadBalancers_remove_droplets",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Adds one or more forwarding rules to a load balancer. Provide at least one rule in `forwarding_rules`, with the required entry and target protocols and ports. A 204 response confirms the rules were added and returns no body.
+    /// Adds one or more forwarding rules to a load balancer. Provide at least one rule in `forwarding_rules`, with the
+    /// required entry and target protocols and ports. A 204 response confirms the rules were added and returns no body.
     ///
-    /// To add an additional forwarding rule to a load balancer instance, send a POST request to `/v2/load_balancers/$LOAD_BALANCER_ID/forwarding_rules`. In the body of the request, there should be a `forwarding_rules` attribute containing an array of rules to be added. No response body will be sent back, but the response code will indicate success. Specifically, the response code will be a 204, which means that the action was successful with no returned body data.
+    /// To add an additional forwarding rule to a load balancer instance, send a POST request to
+    /// `/v2/load_balancers/$LOAD_BALANCER_ID/forwarding_rules`. In the body of the request, there should be a
+    /// `forwarding_rules` attribute containing an array of rules to be added. No response body will be sent back, but
+    /// the response code will indicate success. Specifically, the response code will be a 204, which means that the
+    /// action was successful with no returned body data.
     ///
     /// - Parameters:
     /// - lbId: A unique identifier for a load balancer.
-    public static func loadBalancersAddForwardingRules(config: ClientConfig, lbId: String, forwardingRules: [ForwardingRule], requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func loadBalancersAddForwardingRules(
+        config: ClientConfig,
+        lbId: String,
+        forwardingRules: [ForwardingRule],
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try validateItems("forwarding_rules", forwardingRules, min: 1)
 
         let requestBody = LoadBalancersAddForwardingRulesRequestBody(forwardingRules: forwardingRules)
 
-        return try (await sdkRequest("POST", ["/v2/load_balancers/", sdkEncodePathSegment(sdkWireString(lbId)), "/forwarding_rules"].joined(), config: config, body: requestBody, decoder: .empty, operationId: "loadBalancers_add_forwardingRules", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/v2/load_balancers/", sdkEncodePathSegment(sdkWireString(lbId)), "/forwarding_rules"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .empty,
+            operationId: "loadBalancers_add_forwardingRules",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiGenerate domain models
+/// AgentPlatformAPIApiGenerate domain models
 /// The url for the oauth2 flow
 public struct ApiGenerateOauth2URLOutput: Codable {
     /// The oauth2 url
@@ -15,19 +15,19 @@ public struct ApiGenerateOauth2URLOutput: Codable {
     }
 
     init() {
-        self.url = nil
+        url = nil
     }
 }
 
-extension ApiGenerateOauth2URLOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGenerateOauth2URLOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.url = try container.sdkDecodeIfPresent(.url)
+        url = try container.sdkDecodeIfPresent(.url)
     }
 }
 
-extension ApiGenerateOauth2URLOutput {
-    public init(url: String? = nil) {
+public extension ApiGenerateOauth2URLOutput {
+    init(url: String? = nil) {
         self.init()
         self.url = url
     }
@@ -56,22 +56,27 @@ public struct ApiGenerateScenarioSetInputPublic: Codable {
     }
 
     init() {
-        (self.generatorModelUuid, self.goalDescription, self.name, self.numScenarios) = (nil, nil, nil, nil)
+        (generatorModelUuid, goalDescription, name, numScenarios) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiGenerateScenarioSetInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiGenerateScenarioSetInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.generatorModelUuid = try container.sdkDecodeIfPresent(.generatorModelUuid)
-        self.goalDescription = try container.sdkDecodeIfPresent(.goalDescription)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.numScenarios = try container.sdkDecodeIfPresent(.numScenarios)
+        generatorModelUuid = try container.sdkDecodeIfPresent(.generatorModelUuid)
+        goalDescription = try container.sdkDecodeIfPresent(.goalDescription)
+        name = try container.sdkDecodeIfPresent(.name)
+        numScenarios = try container.sdkDecodeIfPresent(.numScenarios)
     }
 }
 
-extension ApiGenerateScenarioSetInputPublic {
-    public init(generatorModelUuid: String? = nil, goalDescription: String? = nil, name: String? = nil, numScenarios: Int? = nil) {
+public extension ApiGenerateScenarioSetInputPublic {
+    init(
+        generatorModelUuid: String? = nil,
+        goalDescription: String? = nil,
+        name: String? = nil,
+        numScenarios: Int? = nil
+    ) {
         self.init()
         (self.generatorModelUuid, self.goalDescription) = (generatorModelUuid, goalDescription)
         (self.name, self.numScenarios) = (name, numScenarios)
@@ -88,19 +93,19 @@ public struct ApiGenerateScenarioSetOutput: Codable {
     }
 
     init() {
-        self.scenarioSet = nil
+        scenarioSet = nil
     }
 }
 
-extension ApiGenerateScenarioSetOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGenerateScenarioSetOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.scenarioSet = try container.sdkDecodeIfPresent(.scenarioSet)
+        scenarioSet = try container.sdkDecodeIfPresent(.scenarioSet)
     }
 }
 
-extension ApiGenerateScenarioSetOutput {
-    public init(scenarioSet: ApiScenarioSet? = nil) {
+public extension ApiGenerateScenarioSetOutput {
+    init(scenarioSet: ApiScenarioSet? = nil) {
         self.init()
         self.scenarioSet = scenarioSet
     }

@@ -6,15 +6,40 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DatabasesMethods {
-    /// To show information about an existing connection pool for a PostgreSQL database cluster, send a GET request to `/v2/databases/$DATABASE_ID/pools/$POOL_NAME`. The response will be a JSON object with a `pool` key.
+public extension DatabasesMethods {
+    /// To show information about an existing connection pool for a PostgreSQL database cluster, send a GET request to
+    /// `/v2/databases/$DATABASE_ID/pools/$POOL_NAME`. The response will be a JSON object with a `pool` key.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - poolName: The name used to identify the connection pool.
-    public static func databasesGetConnectionPool(config: ClientConfig, databaseClusterUuid: String, poolName: String, requestOptions: RequestOptions? = nil) async throws -> ConnectionPoolResponse {
+    static func databasesGetConnectionPool(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        poolName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ConnectionPoolResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/pools/", sdkEncodePathSegment(sdkWireString(poolName))].joined(), config: config, decoder: .json, operationId: "databases_get_connectionPool", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            [
+                "/v2/databases/",
+                sdkEncodePathSegment(sdkWireString(databaseClusterUuid)),
+                "/pools/",
+                sdkEncodePathSegment(sdkWireString(poolName)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "databases_get_connectionPool",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

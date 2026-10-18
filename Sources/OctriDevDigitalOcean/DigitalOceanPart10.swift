@@ -3,42 +3,108 @@
 
 import Foundation
 
-extension DatabasesNamespace {
-/// To update the Schema Registry configuration for a Kafka cluster, send a PUT request to `/v2/databases/$DATABASE_ID/schema-registry/config`. The response is a JSON object with a `compatibility_level` key, which is set to an object containing any database configuration parameters.
-    public func updateKafkaSchemaConfig(databaseClusterUuid: String, compatibilityLevel: DatabasesUpdateKafkaSchemaConfigRequestBodyCompatibilityLevel, requestOptions: RequestOptions? = nil) async throws -> DatabaseSchemaRegistryConfig {
-        return try await DatabasesMethods.databasesUpdateKafkaSchemaConfig(config: config, databaseClusterUuid: databaseClusterUuid, compatibilityLevel: compatibilityLevel, requestOptions: requestOptions)
+public extension DatabasesNamespace {
+    /// To update the Schema Registry configuration for a Kafka cluster, send a PUT request to
+    /// `/v2/databases/$DATABASE_ID/schema-registry/config`. The response is a JSON object with a `compatibility_level`
+    /// key, which is set to an object containing any database configuration parameters.
+    func updateKafkaSchemaConfig(
+        databaseClusterUuid: String,
+        compatibilityLevel: DatabasesUpdateKafkaSchemaConfigRequestBodyCompatibilityLevel,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DatabaseSchemaRegistryConfig {
+        try await DatabasesMethods.databasesUpdateKafkaSchemaConfig(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            compatibilityLevel: compatibilityLevel,
+            requestOptions: requestOptions
+        )
     }
 
-/// To retrieve the Schema Registry configuration for a Subject of a Kafka cluster, send a GET request to `/v2/databases/$DATABASE_ID/schema-registry/config/$SUBJECT_NAME`. The response is a JSON object with a `compatibility_level` key, which is set to an object containing any database configuration parameters.
-    public func getKafkaSchemaSubjectConfig(databaseClusterUuid: String, subjectName: String, requestOptions: RequestOptions? = nil) async throws -> DatabaseSchemaRegistrySubjectConfig {
-        return try await DatabasesMethods.databasesGetKafkaSchemaSubjectConfig(config: config, databaseClusterUuid: databaseClusterUuid, subjectName: subjectName, requestOptions: requestOptions)
+    /// To retrieve the Schema Registry configuration for a Subject of a Kafka cluster, send a GET request to
+    /// `/v2/databases/$DATABASE_ID/schema-registry/config/$SUBJECT_NAME`. The response is a JSON object with a
+    /// `compatibility_level` key, which is set to an object containing any database configuration parameters.
+    func getKafkaSchemaSubjectConfig(
+        databaseClusterUuid: String,
+        subjectName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DatabaseSchemaRegistrySubjectConfig {
+        try await DatabasesMethods.databasesGetKafkaSchemaSubjectConfig(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            subjectName: subjectName,
+            requestOptions: requestOptions
+        )
     }
 
-/// To update the Schema Registry configuration for a Subject of a Kafka cluster, send a PUT request to `/v2/databases/$DATABASE_ID/schema-registry/config/$SUBJECT_NAME`. The response is a JSON object with a `compatibility_level` key, which is set to an object containing any database configuration parameters.
-    public func updateKafkaSchemaSubjectConfig(databaseClusterUuid: String, subjectName: String, compatibilityLevel: DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLevel, requestOptions: RequestOptions? = nil) async throws -> DatabaseSchemaRegistrySubjectConfig {
-        return try await DatabasesMethods.databasesUpdateKafkaSchemaSubjectConfig(config: config, databaseClusterUuid: databaseClusterUuid, subjectName: subjectName, compatibilityLevel: compatibilityLevel, requestOptions: requestOptions)
+    /// To update the Schema Registry configuration for a Subject of a Kafka cluster, send a PUT request to
+    /// `/v2/databases/$DATABASE_ID/schema-registry/config/$SUBJECT_NAME`. The response is a JSON object with a
+    /// `compatibility_level` key, which is set to an object containing any database configuration parameters.
+    func updateKafkaSchemaSubjectConfig(
+        databaseClusterUuid: String,
+        subjectName: String,
+        compatibilityLevel: DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLevel,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DatabaseSchemaRegistrySubjectConfig {
+        try await DatabasesMethods.databasesUpdateKafkaSchemaSubjectConfig(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            subjectName: subjectName,
+            compatibilityLevel: compatibilityLevel,
+            requestOptions: requestOptions
+        )
     }
 
-/// To show the credentials for all database clusters' metrics endpoints, send a GET request to `/v2/databases/metrics/credentials`. The result will be a JSON object with a `credentials` key.
-    public func getClusterMetricsCredentials(requestOptions: RequestOptions? = nil) async throws -> DatabaseMetricsAuth {
-        return try await DatabasesMethods.databasesGetClusterMetricsCredentials(config: config, requestOptions: requestOptions)
+    /// To show the credentials for all database clusters' metrics endpoints, send a GET request to
+    /// `/v2/databases/metrics/credentials`. The result will be a JSON object with a `credentials` key.
+    func getClusterMetricsCredentials(requestOptions: RequestOptions? = nil) async throws -> DatabaseMetricsAuth {
+        try await DatabasesMethods.databasesGetClusterMetricsCredentials(config: config, requestOptions: requestOptions)
     }
 
-/// Replaces the metrics endpoint credentials for all database clusters. Include `credentials` to set the basic-auth username and password using `basic_auth_username` and `basic_auth_password`; the request body is optional. A successful request returns 204 with no response body.
+    /// Replaces the metrics endpoint credentials for all database clusters. Include `credentials` to set the basic-auth
+    /// username and password using `basic_auth_username` and `basic_auth_password`; the request body is optional. A
+    /// successful request returns 204 with no response body.
     ///
-    /// To update the credentials for all database clusters' metrics endpoints, send a PUT request to `/v2/databases/metrics/credentials`. A successful request will receive a 204 No Content status code with no body in response.
-    public func updateClusterMetricsCredentials(body: DatabasesUpdateClusterMetricsCredentialsRequestBody? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await DatabasesMethods.databasesUpdateClusterMetricsCredentials(config: config, body: body, requestOptions: requestOptions)
+    /// To update the credentials for all database clusters' metrics endpoints, send a PUT request to
+    /// `/v2/databases/metrics/credentials`. A successful request will receive a 204 No Content status code with no body
+    /// in response.
+    func updateClusterMetricsCredentials(
+        body: DatabasesUpdateClusterMetricsCredentialsRequestBody? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await DatabasesMethods.databasesUpdateClusterMetricsCredentials(
+            config: config,
+            body: body,
+            requestOptions: requestOptions
+        )
     }
 
-/// To list all of a OpenSearch cluster's indexes, send a GET request to `/v2/databases/$DATABASE_ID/indexes`. The result will be a JSON object with a `indexes` key.
-    public func listOpeasearchIndexes(databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> OpensearchIndexes {
-        return try await DatabasesMethods.databasesListOpeasearchIndexes(config: config, databaseClusterUuid: databaseClusterUuid, requestOptions: requestOptions)
+    /// To list all of a OpenSearch cluster's indexes, send a GET request to `/v2/databases/$DATABASE_ID/indexes`. The
+    /// result will be a JSON object with a `indexes` key.
+    func listOpeasearchIndexes(
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> OpensearchIndexes {
+        try await DatabasesMethods.databasesListOpeasearchIndexes(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            requestOptions: requestOptions
+        )
     }
 
-/// To delete a single index within OpenSearch cluster, send a DELETE request to `/v2/databases/$DATABASE_ID/indexes/$INDEX_NAME`. A status of 204 will be given. This indicates that the request was processed successfully, but that no response body is needed.
-    public func deleteOpensearchIndex(databaseClusterUuid: String, indexName: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await DatabasesMethods.databasesDeleteOpensearchIndex(config: config, databaseClusterUuid: databaseClusterUuid, indexName: indexName, requestOptions: requestOptions)
+    /// To delete a single index within OpenSearch cluster, send a DELETE request to
+    /// `/v2/databases/$DATABASE_ID/indexes/$INDEX_NAME`. A status of 204 will be given. This indicates that the request
+    /// was processed successfully, but that no response body is needed.
+    func deleteOpensearchIndex(
+        databaseClusterUuid: String,
+        indexName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await DatabasesMethods.databasesDeleteOpensearchIndex(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            indexName: indexName,
+            requestOptions: requestOptions
+        )
     }
 }
 
@@ -48,71 +114,199 @@ public class DedicatedInferenceNamespace {
         self.config = config
     }
 
-/// Retrieve an existing Dedicated Inference by ID. Send a GET request to `/v2/dedicated-inferences/{dedicated_inference_id}`. The status in the response is one of active, new, provisioning, updating, deleting, or error.
-    public func get(dedicatedInferenceId: String, requestOptions: RequestOptions? = nil) async throws -> DedicatedInferenceResponse {
-        return try await DedicatedInferenceMethods.dedicatedInferencesGet(config: config, dedicatedInferenceId: dedicatedInferenceId, requestOptions: requestOptions)
+    /// Retrieve an existing Dedicated Inference by ID. Send a GET request to
+    /// `/v2/dedicated-inferences/{dedicated_inference_id}`. The status in the response is one of active, new,
+    /// provisioning, updating, deleting, or error.
+    public func get(
+        dedicatedInferenceId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DedicatedInferenceResponse {
+        try await DedicatedInferenceMethods.dedicatedInferencesGet(
+            config: config,
+            dedicatedInferenceId: dedicatedInferenceId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Update an existing Dedicated Inference. Send a PATCH request to `/v2/dedicated-inferences/{dedicated_inference_id}` with updated `spec` and/or `access_tokens`. Status will move to updating and return to active when done.
-    public func patch(dedicatedInferenceId: String, spec: DedicatedInferenceSpecRequest? = nil, accessTokens: DedicatedInferenceUpdateRequestRequestAccessTokens? = nil, requestOptions: RequestOptions? = nil) async throws -> DedicatedInferenceUpdateAccepted {
-        return try await DedicatedInferenceMethods.dedicatedInferencesPatch(config: config, dedicatedInferenceId: dedicatedInferenceId, spec: spec, accessTokens: accessTokens, requestOptions: requestOptions)
+    /// Update an existing Dedicated Inference. Send a PATCH request to
+    /// `/v2/dedicated-inferences/{dedicated_inference_id}` with updated `spec` and/or `access_tokens`. Status will move
+    /// to updating and return to active when done.
+    public func patch(
+        dedicatedInferenceId: String,
+        spec: DedicatedInferenceSpecRequest? = nil,
+        accessTokens: DedicatedInferenceUpdateRequestRequestAccessTokens? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DedicatedInferenceUpdateAccepted {
+        try await DedicatedInferenceMethods.dedicatedInferencesPatch(
+            config: config,
+            dedicatedInferenceId: dedicatedInferenceId,
+            spec: spec,
+            accessTokens: accessTokens,
+            requestOptions: requestOptions
+        )
     }
 
-/// Delete an existing Dedicated Inference. Send a DELETE request to `/v2/dedicated-inferences/{dedicated_inference_id}`. The response 202 Accepted indicates the request was accepted for processing.
-    public func delete(dedicatedInferenceId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await DedicatedInferenceMethods.dedicatedInferencesDelete(config: config, dedicatedInferenceId: dedicatedInferenceId, requestOptions: requestOptions)
+    /// Delete an existing Dedicated Inference. Send a DELETE request to
+    /// `/v2/dedicated-inferences/{dedicated_inference_id}`. The response 202 Accepted indicates the request was
+    /// accepted for processing.
+    public func delete(
+        dedicatedInferenceId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await DedicatedInferenceMethods.dedicatedInferencesDelete(
+            config: config,
+            dedicatedInferenceId: dedicatedInferenceId,
+            requestOptions: requestOptions
+        )
     }
 
-/// List all Dedicated Inference instances for your team. Send a GET request to `/v2/dedicated-inferences`. You may filter by region and use page and per_page for pagination.
-    public func list(perPage: Int? = nil, page: Int? = nil, region: DedicatedInferencesListParameter? = nil, requestOptions: RequestOptions? = nil) async throws -> AllDedicatedInferences {
-        return try await DedicatedInferenceMethods.dedicatedInferencesList(config: config, perPage: perPage, page: page, region: region, requestOptions: requestOptions)
+    /// List all Dedicated Inference instances for your team. Send a GET request to `/v2/dedicated-inferences`. You may
+    /// filter by region and use page and per_page for pagination.
+    public func list(
+        perPage: Int? = nil,
+        page: Int? = nil,
+        region: DedicatedInferencesListParameter? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AllDedicatedInferences {
+        try await DedicatedInferenceMethods.dedicatedInferencesList(
+            config: config,
+            perPage: perPage,
+            page: page,
+            region: region,
+            requestOptions: requestOptions
+        )
     }
 
-/// Create a new Dedicated Inference for your team. Send a POST request to `/v2/dedicated-inferences` with a `spec` object (version, name, region, vpc, enable_public_endpoint, model_deployments) and optional `access_tokens` (e.g. hugging_face_token for gated models). The response code 202 Accepted indicates the request was accepted for processing; it does not indicate success or failure. The token value is returned only on create; store it securely.
-    public func create(spec: DedicatedInferenceSpecRequest, accessTokens: [String: String]? = nil, requestOptions: RequestOptions? = nil) async throws -> DedicatedInferenceProvisioning {
-        return try await DedicatedInferenceMethods.dedicatedInferencesCreate(config: config, spec: spec, accessTokens: accessTokens, requestOptions: requestOptions)
+    /// Create a new Dedicated Inference for your team. Send a POST request to `/v2/dedicated-inferences` with a `spec`
+    /// object (version, name, region, vpc, enable_public_endpoint, model_deployments) and optional `access_tokens`
+    /// (e.g. hugging_face_token for gated models). The response code 202 Accepted indicates the request was accepted
+    /// for processing; it does not indicate success or failure. The token value is returned only on create; store it
+    /// securely.
+    public func create(
+        spec: DedicatedInferenceSpecRequest,
+        accessTokens: [String: String]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DedicatedInferenceProvisioning {
+        try await DedicatedInferenceMethods.dedicatedInferencesCreate(
+            config: config,
+            spec: spec,
+            accessTokens: accessTokens,
+            requestOptions: requestOptions
+        )
     }
 
-/// List all accelerators (GPUs) in use by a Dedicated Inference instance. Send a GET request to `/v2/dedicated-inferences/{dedicated_inference_id}/accelerators`. Optionally filter by slug and use page/per_page for pagination.
-    public func listAccelerators(dedicatedInferenceId: String, perPage: Int? = nil, page: Int? = nil, slug: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AcceleratorsList {
-        return try await DedicatedInferenceMethods.dedicatedInferencesListAccelerators(config: config, dedicatedInferenceId: dedicatedInferenceId, perPage: perPage, page: page, slug: slug, requestOptions: requestOptions)
+    /// List all accelerators (GPUs) in use by a Dedicated Inference instance. Send a GET request to
+    /// `/v2/dedicated-inferences/{dedicated_inference_id}/accelerators`. Optionally filter by slug and use
+    /// page/per_page for pagination.
+    public func listAccelerators(
+        dedicatedInferenceId: String,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        slug: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AcceleratorsList {
+        try await DedicatedInferenceMethods.dedicatedInferencesListAccelerators(
+            config: config,
+            dedicatedInferenceId: dedicatedInferenceId,
+            perPage: perPage,
+            page: page,
+            slug: slug,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieve a single accelerator by ID for a Dedicated Inference instance. Send a GET request to `/v2/dedicated-inferences/{dedicated_inference_id}/accelerators/{accelerator_id}`.
-    public func getAccelerator(dedicatedInferenceId: String, acceleratorId: String, requestOptions: RequestOptions? = nil) async throws -> DedicatedInferenceAccelerator {
-        return try await DedicatedInferenceMethods.dedicatedInferencesGetAccelerator(config: config, dedicatedInferenceId: dedicatedInferenceId, acceleratorId: acceleratorId, requestOptions: requestOptions)
+    /// Retrieve a single accelerator by ID for a Dedicated Inference instance. Send a GET request to
+    /// `/v2/dedicated-inferences/{dedicated_inference_id}/accelerators/{accelerator_id}`.
+    public func getAccelerator(
+        dedicatedInferenceId: String,
+        acceleratorId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DedicatedInferenceAccelerator {
+        try await DedicatedInferenceMethods.dedicatedInferencesGetAccelerator(
+            config: config,
+            dedicatedInferenceId: dedicatedInferenceId,
+            acceleratorId: acceleratorId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Get the CA certificate for a Dedicated Inference instance (base64-encoded). Required for private endpoint connectivity. Send a GET request to `/v2/dedicated-inferences/{dedicated_inference_id}/ca`.
-    public func getCa(dedicatedInferenceId: String, requestOptions: RequestOptions? = nil) async throws -> CaCertificate {
-        return try await DedicatedInferenceMethods.dedicatedInferencesGetCa(config: config, dedicatedInferenceId: dedicatedInferenceId, requestOptions: requestOptions)
+    /// Get the CA certificate for a Dedicated Inference instance (base64-encoded). Required for private endpoint
+    /// connectivity. Send a GET request to `/v2/dedicated-inferences/{dedicated_inference_id}/ca`.
+    public func getCa(
+        dedicatedInferenceId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CaCertificate {
+        try await DedicatedInferenceMethods.dedicatedInferencesGetCa(
+            config: config,
+            dedicatedInferenceId: dedicatedInferenceId,
+            requestOptions: requestOptions
+        )
     }
 }
 
-extension DedicatedInferenceNamespace {
-/// List all access tokens for a Dedicated Inference instance. Token values are not returned; only id, name, created_at, and is_managed. Send a GET request to `/v2/dedicated-inferences/{dedicated_inference_id}/tokens`.
-    public func listTokens(dedicatedInferenceId: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> TokensList {
-        return try await DedicatedInferenceMethods.dedicatedInferencesListTokens(config: config, dedicatedInferenceId: dedicatedInferenceId, perPage: perPage, page: page, requestOptions: requestOptions)
+public extension DedicatedInferenceNamespace {
+    /// List all access tokens for a Dedicated Inference instance. Token values are not returned; only id, name,
+    /// created_at, and is_managed. Send a GET request to `/v2/dedicated-inferences/{dedicated_inference_id}/tokens`.
+    func listTokens(
+        dedicatedInferenceId: String,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> TokensList {
+        try await DedicatedInferenceMethods.dedicatedInferencesListTokens(
+            config: config,
+            dedicatedInferenceId: dedicatedInferenceId,
+            perPage: perPage,
+            page: page,
+            requestOptions: requestOptions
+        )
     }
 
-/// Create a new access token for a Dedicated Inference instance. Send a POST request to `/v2/dedicated-inferences/{dedicated_inference_id}/tokens` with a `name`. The token value is returned only once in the response; store it securely.
-    public func createTokens(dedicatedInferenceId: String, name: String, requestOptions: RequestOptions? = nil) async throws -> TokenCreated {
-        return try await DedicatedInferenceMethods.dedicatedInferencesCreateTokens(config: config, dedicatedInferenceId: dedicatedInferenceId, name: name, requestOptions: requestOptions)
+    /// Create a new access token for a Dedicated Inference instance. Send a POST request to
+    /// `/v2/dedicated-inferences/{dedicated_inference_id}/tokens` with a `name`. The token value is returned only once
+    /// in the response; store it securely.
+    func createTokens(
+        dedicatedInferenceId: String,
+        name: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> TokenCreated {
+        try await DedicatedInferenceMethods.dedicatedInferencesCreateTokens(
+            config: config,
+            dedicatedInferenceId: dedicatedInferenceId,
+            name: name,
+            requestOptions: requestOptions
+        )
     }
 
-/// Revoke (delete) an access token for a Dedicated Inference instance. Send a DELETE request to `/v2/dedicated-inferences/{dedicated_inference_id}/tokens/{token_id}`.
-    public func deleteTokens(dedicatedInferenceId: String, tokenId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await DedicatedInferenceMethods.dedicatedInferencesDeleteTokens(config: config, dedicatedInferenceId: dedicatedInferenceId, tokenId: tokenId, requestOptions: requestOptions)
+    /// Revoke (delete) an access token for a Dedicated Inference instance. Send a DELETE request to
+    /// `/v2/dedicated-inferences/{dedicated_inference_id}/tokens/{token_id}`.
+    func deleteTokens(
+        dedicatedInferenceId: String,
+        tokenId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await DedicatedInferenceMethods.dedicatedInferencesDeleteTokens(
+            config: config,
+            dedicatedInferenceId: dedicatedInferenceId,
+            tokenId: tokenId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Get available Dedicated Inference sizes and pricing for supported GPUs. Send a GET request to `/v2/dedicated-inferences/sizes`.
-    public func listSizes(requestOptions: RequestOptions? = nil) async throws -> DedicatedInferenceSizesResponse {
-        return try await DedicatedInferenceMethods.dedicatedInferencesListSizes(config: config, requestOptions: requestOptions)
+    /// Get available Dedicated Inference sizes and pricing for supported GPUs. Send a GET request to
+    /// `/v2/dedicated-inferences/sizes`.
+    func listSizes(requestOptions: RequestOptions? = nil) async throws -> DedicatedInferenceSizesResponse {
+        try await DedicatedInferenceMethods.dedicatedInferencesListSizes(config: config, requestOptions: requestOptions)
     }
 
-/// Get supported GPU and model configurations for Dedicated Inference. Use this to discover supported GPU slugs and model slugs (e.g. Hugging Face). Send a GET request to `/v2/dedicated-inferences/gpu-model-config`.
-    public func getGpuModelConfig(requestOptions: RequestOptions? = nil) async throws -> DedicatedInferenceGpuModelConfigsResponse {
-        return try await DedicatedInferenceMethods.dedicatedInferencesGetGpuModelConfig(config: config, requestOptions: requestOptions)
+    /// Get supported GPU and model configurations for Dedicated Inference. Use this to discover supported GPU slugs and
+    /// model slugs (e.g. Hugging Face). Send a GET request to `/v2/dedicated-inferences/gpu-model-config`.
+    func getGpuModelConfig(requestOptions: RequestOptions? = nil) async throws
+        -> DedicatedInferenceGpuModelConfigsResponse {
+        try await DedicatedInferenceMethods.dedicatedInferencesGetGpuModelConfig(
+            config: config,
+            requestOptions: requestOptions
+        )
     }
 }
 
@@ -122,24 +316,44 @@ public class DomainsNamespace {
         self.config = config
     }
 
-/// To retrieve a list of all of the domains in your account, send a GET request to `/v2/domains`.
-    public func list(perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AllDomainsResponse {
-        return try await DomainsMethods.domainsList(config: config, perPage: perPage, page: page, requestOptions: requestOptions)
+    /// To retrieve a list of all of the domains in your account, send a GET request to `/v2/domains`.
+    public func list(
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AllDomainsResponse {
+        try await DomainsMethods.domainsList(
+            config: config,
+            perPage: perPage,
+            page: page,
+            requestOptions: requestOptions
+        )
     }
 
-/// To create a new domain, send a POST request to `/v2/domains`. Set the "name" attribute to the domain name you are adding. Optionally, you may set the "ip_address" attribute, and an A record will be automatically created pointing to the apex domain.
-    public func create(name: String? = nil, ipAddress: String? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateDomainResponse {
-        return try await DomainsMethods.domainsCreate(config: config, name: name, ipAddress: ipAddress, requestOptions: requestOptions)
+    /// To create a new domain, send a POST request to `/v2/domains`. Set the "name" attribute to the domain name you
+    /// are adding. Optionally, you may set the "ip_address" attribute, and an A record will be automatically created
+    /// pointing to the apex domain.
+    public func create(
+        name: String? = nil,
+        ipAddress: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateDomainResponse {
+        try await DomainsMethods.domainsCreate(
+            config: config,
+            name: name,
+            ipAddress: ipAddress,
+            requestOptions: requestOptions
+        )
     }
 
-/// To get details about a specific domain, send a GET request to `/v2/domains/$DOMAIN_NAME`.
+    /// To get details about a specific domain, send a GET request to `/v2/domains/$DOMAIN_NAME`.
     public func get(domainName: String, requestOptions: RequestOptions? = nil) async throws -> ExistingDomain {
-        return try await DomainsMethods.domainsGet(config: config, domainName: domainName, requestOptions: requestOptions)
+        try await DomainsMethods.domainsGet(config: config, domainName: domainName, requestOptions: requestOptions)
     }
 
-/// To delete a domain, send a DELETE request to `/v2/domains/$DOMAIN_NAME`.
+    /// To delete a domain, send a DELETE request to `/v2/domains/$DOMAIN_NAME`.
     public func delete(domainName: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await DomainsMethods.domainsDelete(config: config, domainName: domainName, requestOptions: requestOptions)
+        try await DomainsMethods.domainsDelete(config: config, domainName: domainName, requestOptions: requestOptions)
     }
 }
 
@@ -149,35 +363,105 @@ public class DomainRecordsNamespace {
         self.config = config
     }
 
-/// To get a listing of all records configured for a domain, send a GET request to `/v2/domains/$DOMAIN_NAME/records`. The list of records returned can be filtered by using the `name` and `type` query parameters. For example, to only include A records for a domain, send a GET request to `/v2/domains/$DOMAIN_NAME/records?type=A`. `name` must be a fully qualified record name. For example, to only include records matching `sub.example.com`, send a GET request to `/v2/domains/$DOMAIN_NAME/records?name=sub.example.com`. Both name and type may be used together.
-    public func domainsListRecords(domainName: String, name: String? = nil, type: DomainsListRecordsParameter? = nil, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AllDomainRecordsResponse {
-        return try await DomainRecordsMethods.domainsListRecords(config: config, domainName: domainName, name: name, type: type, perPage: perPage, page: page, requestOptions: requestOptions)
+    /// To get a listing of all records configured for a domain, send a GET request to
+    /// `/v2/domains/$DOMAIN_NAME/records`. The list of records returned can be filtered by using the `name` and `type`
+    /// query parameters. For example, to only include A records for a domain, send a GET request to
+    /// `/v2/domains/$DOMAIN_NAME/records?type=A`. `name` must be a fully qualified record name. For example, to only
+    /// include records matching `sub.example.com`, send a GET request to
+    /// `/v2/domains/$DOMAIN_NAME/records?name=sub.example.com`. Both name and type may be used together.
+    public func domainsListRecords(
+        domainName: String,
+        name: String? = nil,
+        type: DomainsListRecordsParameter? = nil,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AllDomainRecordsResponse {
+        try await DomainRecordsMethods.domainsListRecords(
+            config: config,
+            domainName: domainName,
+            name: name,
+            type: type,
+            perPage: perPage,
+            page: page,
+            requestOptions: requestOptions
+        )
     }
 
-/// Creates a DNS record for the specified domain. Supply `type` and the attributes required for that record type, such as `name` and `data` where applicable. The response includes the created record with its generated `id`.
+    /// Creates a DNS record for the specified domain. Supply `type` and the attributes required for that record type,
+    /// such as `name` and `data` where applicable. The response includes the created record with its generated `id`.
     ///
-    /// To create a new record to a domain, send a POST request to `/v2/domains/$DOMAIN_NAME/records`. The request must include all of the required fields for the domain record type being added. See the attribute table for details regarding record types and their respective required attributes.
-    public func domainsCreateRecord(domainName: String, body: DomainsCreateRecordRequestBody? = nil, requestOptions: RequestOptions? = nil) async throws -> CreatedDomainRecord {
-        return try await DomainRecordsMethods.domainsCreateRecord(config: config, domainName: domainName, body: body, requestOptions: requestOptions)
+    /// To create a new record to a domain, send a POST request to `/v2/domains/$DOMAIN_NAME/records`. The request must
+    /// include all of the required fields for the domain record type being added. See the attribute table for details
+    /// regarding record types and their respective required attributes.
+    public func domainsCreateRecord(
+        domainName: String,
+        body: DomainsCreateRecordRequestBody? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreatedDomainRecord {
+        try await DomainRecordsMethods.domainsCreateRecord(
+            config: config,
+            domainName: domainName,
+            body: body,
+            requestOptions: requestOptions
+        )
     }
 
-/// To retrieve a specific domain record, send a GET request to `/v2/domains/$DOMAIN_NAME/records/$RECORD_ID`.
-    public func domainsGetRecord(domainName: String, domainRecordId: Int, requestOptions: RequestOptions? = nil) async throws -> DomainRecordResponse {
-        return try await DomainRecordsMethods.domainsGetRecord(config: config, domainName: domainName, domainRecordId: domainRecordId, requestOptions: requestOptions)
+    /// To retrieve a specific domain record, send a GET request to `/v2/domains/$DOMAIN_NAME/records/$RECORD_ID`.
+    public func domainsGetRecord(
+        domainName: String,
+        domainRecordId: Int,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DomainRecordResponse {
+        try await DomainRecordsMethods.domainsGetRecord(
+            config: config,
+            domainName: domainName,
+            domainRecordId: domainRecordId,
+            requestOptions: requestOptions
+        )
     }
 
-/// To update an existing record, send a PATCH request to `/v2/domains/$DOMAIN_NAME/records/$DOMAIN_RECORD_ID`. Any attribute valid for the record type can be set to a new value for the record. See the attribute table for details regarding record types and their respective attributes.
-    public func domainsPatchRecord(options: DomainRecordsMethods.DomainsPatchRecordOptions, requestOptions: RequestOptions? = nil) async throws -> DomainRecordResponse {
-        return try await DomainRecordsMethods.domainsPatchRecord(config: config, options: options, requestOptions: requestOptions)
+    /// To update an existing record, send a PATCH request to `/v2/domains/$DOMAIN_NAME/records/$DOMAIN_RECORD_ID`. Any
+    /// attribute valid for the record type can be set to a new value for the record. See the attribute table for
+    /// details regarding record types and their respective attributes.
+    public func domainsPatchRecord(
+        options: DomainRecordsMethods.DomainsPatchRecordOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DomainRecordResponse {
+        try await DomainRecordsMethods.domainsPatchRecord(
+            config: config,
+            options: options,
+            requestOptions: requestOptions
+        )
     }
 
-/// To update an existing record, send a PUT request to `/v2/domains/$DOMAIN_NAME/records/$DOMAIN_RECORD_ID`. Any attribute valid for the record type can be set to a new value for the record. See the attribute table for details regarding record types and their respective attributes.
-    public func domainsUpdateRecord(options: DomainRecordsMethods.DomainsUpdateRecordOptions, requestOptions: RequestOptions? = nil) async throws -> DomainRecordResponse {
-        return try await DomainRecordsMethods.domainsUpdateRecord(config: config, options: options, requestOptions: requestOptions)
+    /// To update an existing record, send a PUT request to `/v2/domains/$DOMAIN_NAME/records/$DOMAIN_RECORD_ID`. Any
+    /// attribute valid for the record type can be set to a new value for the record. See the attribute table for
+    /// details regarding record types and their respective attributes.
+    public func domainsUpdateRecord(
+        options: DomainRecordsMethods.DomainsUpdateRecordOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DomainRecordResponse {
+        try await DomainRecordsMethods.domainsUpdateRecord(
+            config: config,
+            options: options,
+            requestOptions: requestOptions
+        )
     }
 
-/// To delete a record for a domain, send a DELETE request to `/v2/domains/$DOMAIN_NAME/records/$DOMAIN_RECORD_ID`. The record will be deleted and the response status will be a 204. This indicates a successful request with no body returned.
-    public func domainsDeleteRecord(domainName: String, domainRecordId: Int, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await DomainRecordsMethods.domainsDeleteRecord(config: config, domainName: domainName, domainRecordId: domainRecordId, requestOptions: requestOptions)
+    /// To delete a record for a domain, send a DELETE request to `/v2/domains/$DOMAIN_NAME/records/$DOMAIN_RECORD_ID`.
+    /// The record will be deleted and the response status will be a 204. This indicates a successful request with no
+    /// body returned.
+    public func domainsDeleteRecord(
+        domainName: String,
+        domainRecordId: Int,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await DomainRecordsMethods.domainsDeleteRecord(
+            config: config,
+            domainName: domainName,
+            domainRecordId: domainRecordId,
+            requestOptions: requestOptions
+        )
     }
 }

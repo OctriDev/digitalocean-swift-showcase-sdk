@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Security domain models
+/// Security domain models
 /// Typed representation of the `SuppressedResource` API schema.
 public struct SuppressedResource: Codable {
     /// Unique identifier for the suppressed resource.
@@ -31,23 +31,29 @@ public struct SuppressedResource: Codable {
     }
 
     init() {
-        (self.id, self.ruleUuid, self.ruleName, self.resourceId, self.resourceType) = (nil, nil, nil, nil, nil)
+        (id, ruleUuid, ruleName, resourceId, resourceType) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension SuppressedResource {
-    public init(from decoder: Decoder) throws {
+public extension SuppressedResource {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.ruleUuid = try container.sdkDecodeIfPresent(.ruleUuid)
-        self.ruleName = try container.sdkDecodeIfPresent(.ruleName)
-        self.resourceId = try container.sdkDecodeIfPresent(.resourceId)
-        self.resourceType = try container.sdkDecodeIfPresent(.resourceType)
+        id = try container.sdkDecodeIfPresent(.id)
+        ruleUuid = try container.sdkDecodeIfPresent(.ruleUuid)
+        ruleName = try container.sdkDecodeIfPresent(.ruleName)
+        resourceId = try container.sdkDecodeIfPresent(.resourceId)
+        resourceType = try container.sdkDecodeIfPresent(.resourceType)
     }
 }
 
-extension SuppressedResource {
-    public init(id: String? = nil, ruleUuid: String? = nil, ruleName: String? = nil, resourceId: String? = nil, resourceType: String? = nil) {
+public extension SuppressedResource {
+    init(
+        id: String? = nil,
+        ruleUuid: String? = nil,
+        ruleName: String? = nil,
+        resourceId: String? = nil,
+        resourceType: String? = nil
+    ) {
         self.init()
         (self.id, self.ruleUuid) = (id, ruleUuid)
         (self.ruleName, self.resourceId) = (ruleName, resourceId)
@@ -74,21 +80,21 @@ public struct AffectedResource: Codable {
     }
 
     init() {
-        (self.urn, self.name, self.type) = (nil, nil, nil)
+        (urn, name, type) = (nil, nil, nil)
     }
 }
 
-extension AffectedResource {
-    public init(from decoder: Decoder) throws {
+public extension AffectedResource {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.urn = try container.sdkDecodeIfPresent(.urn)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.type = try container.sdkDecodeIfPresent(.type)
+        urn = try container.sdkDecodeIfPresent(.urn)
+        name = try container.sdkDecodeIfPresent(.name)
+        type = try container.sdkDecodeIfPresent(.type)
     }
 }
 
-extension AffectedResource {
-    public init(urn: String? = nil, name: String? = nil, type: String? = nil) {
+public extension AffectedResource {
+    init(urn: String? = nil, name: String? = nil, type: String? = nil) {
         self.init()
         (self.urn, self.name) = (urn, name)
         self.type = type
@@ -103,19 +109,19 @@ public struct ScansVariant0: Codable {
     }
 
     init() {
-        self.scans = nil
+        scans = nil
     }
 }
 
-extension ScansVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension ScansVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.scans = try container.sdkDecodeIfPresent(.scans)
+        scans = try container.sdkDecodeIfPresent(.scans)
     }
 }
 
-extension ScansVariant0 {
-    public init(scans: [Scan]? = nil) {
+public extension ScansVariant0 {
+    init(scans: [Scan]? = nil) {
         self.init()
         self.scans = scans
     }
@@ -131,19 +137,19 @@ public struct AffectedResources: Codable {
     }
 
     init() {
-        self.affectedResources = nil
+        affectedResources = nil
     }
 }
 
-extension AffectedResources {
-    public init(from decoder: Decoder) throws {
+public extension AffectedResources {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.affectedResources = try container.sdkDecodeIfPresent(.affectedResources)
+        affectedResources = try container.sdkDecodeIfPresent(.affectedResources)
     }
 }
 
-extension AffectedResources {
-    public init(affectedResources: [AffectedResource]? = nil) {
+public extension AffectedResources {
+    init(affectedResources: [AffectedResource]? = nil) {
         self.init()
         self.affectedResources = affectedResources
     }
@@ -153,7 +159,10 @@ extension AffectedResources {
 public struct ScanStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let inProgress = ScanStatus(rawValue: "IN_PROGRESS")
     public static let completed = ScanStatus(rawValue: "COMPLETED")
     public static let failed = ScanStatus(rawValue: "FAILED")
@@ -162,7 +171,7 @@ public struct ScanStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWire
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -175,7 +184,10 @@ public struct ScanStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWire
 public struct ScanFindingsItemSeverity: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let critical = ScanFindingsItemSeverity(rawValue: "CRITICAL")
     public static let high = ScanFindingsItemSeverity(rawValue: "HIGH")
     public static let medium = ScanFindingsItemSeverity(rawValue: "MEDIUM")
@@ -183,7 +195,7 @@ public struct ScanFindingsItemSeverity: RawRepresentable, Hashable, Codable, Sen
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

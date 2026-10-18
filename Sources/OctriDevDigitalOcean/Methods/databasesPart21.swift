@@ -6,25 +6,71 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DatabasesMethods {
-    /// To delete a specific connection pool for a PostgreSQL database cluster, send a DELETE request to `/v2/databases/$DATABASE_ID/pools/$POOL_NAME`. A status of 204 will be given. This indicates that the request was processed successfully, but that no response body is needed.
+public extension DatabasesMethods {
+    /// To delete a specific connection pool for a PostgreSQL database cluster, send a DELETE request to
+    /// `/v2/databases/$DATABASE_ID/pools/$POOL_NAME`. A status of 204 will be given. This indicates that the request
+    /// was processed successfully, but that no response body is needed.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - poolName: The name used to identify the connection pool.
-    public static func databasesDeleteConnectionPool(config: ClientConfig, databaseClusterUuid: String, poolName: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func databasesDeleteConnectionPool(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        poolName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("DELETE", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/pools/", sdkEncodePathSegment(sdkWireString(poolName))].joined(), config: config, decoder: .empty, operationId: "databases_delete_connectionPool", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "DELETE",
+            [
+                "/v2/databases/",
+                sdkEncodePathSegment(sdkWireString(databaseClusterUuid)),
+                "/pools/",
+                sdkEncodePathSegment(sdkWireString(poolName)),
+            ].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "databases_delete_connectionPool",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To retrieve the configured eviction policy for an existing Caching or Valkey cluster, send a GET request to `/v2/databases/$DATABASE_ID/eviction_policy`. The response will be a JSON object with an `eviction_policy` key. This will be set to a string representing the eviction policy.
+    /// To retrieve the configured eviction policy for an existing Caching or Valkey cluster, send a GET request to
+    /// `/v2/databases/$DATABASE_ID/eviction_policy`. The response will be a JSON object with an `eviction_policy` key.
+    /// This will be set to a string representing the eviction policy.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    public static func databasesGetEvictionPolicy(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> EvictionPolicyResponse {
+    static func databasesGetEvictionPolicy(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> EvictionPolicyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/eviction_policy"].joined(), config: config, decoder: .json, operationId: "databases_get_evictionPolicy", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/eviction_policy"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "databases_get_evictionPolicy",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

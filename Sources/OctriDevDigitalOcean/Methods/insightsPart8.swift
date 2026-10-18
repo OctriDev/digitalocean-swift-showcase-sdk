@@ -6,8 +6,11 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InsightsMethods {
-    /// To update a notification channel, send a PUT request to `/v2/insights/notification-channels/{id}` with a `name` and exactly one of `email`, `slack`, or `webhook`. Sending a secret field rotates it; omitting the secret field keeps the existing value. Responses never return secret values; they include optional `*_status` objects when a secret is configured.
+public extension InsightsMethods {
+    /// To update a notification channel, send a PUT request to `/v2/insights/notification-channels/{id}` with a `name`
+    /// and exactly one of `email`, `slack`, or `webhook`. Sending a secret field rotates it; omitting the secret field
+    /// keeps the existing value. Responses never return secret values; they include optional `*_status` objects when a
+    /// secret is configured.
     ///
     /// - Parameters:
     /// - id: A unique identifier for a notification channel.
@@ -25,11 +28,40 @@ extension InsightsMethods {
     ///   `bearer_token.token`, `signature.secret`) are write-only: send the full
     ///   value to set or rotate. Omit a secret field on update to keep the existing
     ///   value. Responses return nested `*_status` objects instead of secret values.
-    public static func insightsUpdateNotificationChannel(config: ClientConfig, id: String, name: String, email: EmailNotificationConfig? = nil, slack: SlackNotificationConfigRequest? = nil, webhook: WebhookNotificationConfigRequest? = nil, requestOptions: RequestOptions? = nil) async throws -> NotificationChannelResponse {
+    static func insightsUpdateNotificationChannel(
+        config: ClientConfig,
+        id: String,
+        name: String,
+        email: EmailNotificationConfig? = nil,
+        slack: SlackNotificationConfigRequest? = nil,
+        webhook: WebhookNotificationConfigRequest? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> NotificationChannelResponse {
         try sdkValidateUuid("id", id)
 
-        let requestBody = InsightsUpdateNotificationChannelRequestBody(name: name, email: email, slack: slack, webhook: webhook)
+        let requestBody = InsightsUpdateNotificationChannelRequestBody(
+            name: name,
+            email: email,
+            slack: slack,
+            webhook: webhook
+        )
 
-        return try (await sdkRequest("PUT", ["/v2/insights/notification-channels/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, body: requestBody, decoder: .json, operationId: "insights_update_notificationChannel", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/v2/insights/notification-channels/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "insights_update_notificationChannel",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

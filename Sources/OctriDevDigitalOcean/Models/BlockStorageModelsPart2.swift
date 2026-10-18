@@ -3,9 +3,17 @@
 
 import Foundation
 
-// BlockStorage domain models
-extension VolumeBaseRead {
-    public init(id: String? = nil, dropletIds: [Int]? = nil, name: String? = nil, description: String? = nil, sizeGigabytes: Int? = nil, createdAt: String? = nil, tags: TagsArrayRead? = nil) {
+/// BlockStorage domain models
+public extension VolumeBaseRead {
+    init(
+        id: String? = nil,
+        dropletIds: [Int]? = nil,
+        name: String? = nil,
+        description: String? = nil,
+        sizeGigabytes: Int? = nil,
+        createdAt: String? = nil,
+        tags: TagsArrayRead? = nil
+    ) {
         self.init()
         (self.id, self.dropletIds) = (id, dropletIds)
         (self.name, self.description) = (name, description)
@@ -40,22 +48,22 @@ public struct VolumeBaseRequest: Codable {
     }
 
     init() {
-        (self.name, self.description, self.sizeGigabytes, self.tags) = (nil, nil, nil, nil)
+        (name, description, sizeGigabytes, tags) = (nil, nil, nil, nil)
     }
 }
 
-extension VolumeBaseRequest {
-    public init(from decoder: Decoder) throws {
+public extension VolumeBaseRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.sizeGigabytes = try container.sdkDecodeIfPresent(.sizeGigabytes)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
+        name = try container.sdkDecodeIfPresent(.name)
+        description = try container.sdkDecodeIfPresent(.description)
+        sizeGigabytes = try container.sdkDecodeIfPresent(.sizeGigabytes)
+        tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-extension VolumeBaseRequest {
-    public init(name: String? = nil, description: String? = nil, sizeGigabytes: Int? = nil, tags: TagsArray? = nil) {
+public extension VolumeBaseRequest {
+    init(name: String? = nil, description: String? = nil, sizeGigabytes: Int? = nil, tags: TagsArray? = nil) {
         self.init()
         (self.name, self.description) = (name, description)
         (self.sizeGigabytes, self.tags) = (sizeGigabytes, tags)
@@ -73,22 +81,28 @@ public struct VolumesExt4RequestVariant3: Codable {
         case filesystemLabel = "filesystem_label"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension VolumesExt4RequestVariant3 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.region) else {
-            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
-        }
-        self.region = try container.sdkDecodeRequired(.region)
-        self.filesystemLabel = try container.sdkDecodeIfPresent(.filesystemLabel)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension VolumesExt4RequestVariant3 {
-    public init(region: RegionSlug, filesystemLabel: VolumeWriteFileSystemLabel? = nil) {
+public extension VolumesExt4RequestVariant3 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.region) else {
+            throw SdkValidationError(
+                field: "region",
+                code: "required",
+                message: "Validation failed for 'region': value is required"
+            )
+        }
+        region = try container.sdkDecodeRequired(.region)
+        filesystemLabel = try container.sdkDecodeIfPresent(.filesystemLabel)
+    }
+}
+
+public extension VolumesExt4RequestVariant3 {
+    init(region: RegionSlug, filesystemLabel: VolumeWriteFileSystemLabel? = nil) {
         (self.region, self.filesystemLabel) = (region, filesystemLabel)
     }
 }
@@ -103,19 +117,19 @@ public struct VolumeSnapshot: Codable {
     }
 
     init() {
-        self.snapshot = nil
+        snapshot = nil
     }
 }
 
-extension VolumeSnapshot {
-    public init(from decoder: Decoder) throws {
+public extension VolumeSnapshot {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.snapshot = try container.sdkDecodeIfPresent(.snapshot)
+        snapshot = try container.sdkDecodeIfPresent(.snapshot)
     }
 }
 
-extension VolumeSnapshot {
-    public init(snapshot: Snapshots? = nil) {
+public extension VolumeSnapshot {
+    init(snapshot: Snapshots? = nil) {
         self.init()
         self.snapshot = snapshot
     }
@@ -129,19 +143,19 @@ public struct VolumeSnapshotsVariant0: Codable {
     }
 
     init() {
-        self.snapshots = nil
+        snapshots = nil
     }
 }
 
-extension VolumeSnapshotsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension VolumeSnapshotsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.snapshots = try container.sdkDecodeIfPresent(.snapshots)
+        snapshots = try container.sdkDecodeIfPresent(.snapshots)
     }
 }
 
-extension VolumeSnapshotsVariant0 {
-    public init(snapshots: [Snapshots]? = nil) {
+public extension VolumeSnapshotsVariant0 {
+    init(snapshots: [Snapshots]? = nil) {
         self.init()
         self.snapshots = snapshots
     }
@@ -158,19 +172,19 @@ public struct VolumeSnapshotId: Codable {
     }
 
     init() {
-        self.snapshotId = nil
+        snapshotId = nil
     }
 }
 
-extension VolumeSnapshotId {
-    public init(from decoder: Decoder) throws {
+public extension VolumeSnapshotId {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.snapshotId = try container.sdkDecodeIfPresent(.snapshotId)
+        snapshotId = try container.sdkDecodeIfPresent(.snapshotId)
     }
 }
 
-extension VolumeSnapshotId {
-    public init(snapshotId: String? = nil) {
+public extension VolumeSnapshotId {
+    init(snapshotId: String? = nil) {
         self.init()
         self.snapshotId = snapshotId
     }
@@ -231,29 +245,40 @@ public struct VolumeFull: Codable {
     }
 
     init() {
-        (self.id, self.dropletIds, self.name, self.description, self.sizeGigabytes) = (nil, nil, nil, nil, nil)
-        (self.createdAt, self.tags, self.region, self.filesystemType, self.filesystemLabel) = (nil, nil, nil, nil, nil)
+        (id, dropletIds, name, description, sizeGigabytes) = (nil, nil, nil, nil, nil)
+        (createdAt, tags, region, filesystemType, filesystemLabel) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension VolumeFull {
-    public init(from decoder: Decoder) throws {
+public extension VolumeFull {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.sizeGigabytes = try container.sdkDecodeIfPresent(.sizeGigabytes)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.filesystemType = try container.sdkDecodeIfPresent(.filesystemType)
-        self.filesystemLabel = try container.sdkDecodeIfPresent(.filesystemLabel)
+        id = try container.sdkDecodeIfPresent(.id)
+        dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
+        name = try container.sdkDecodeIfPresent(.name)
+        description = try container.sdkDecodeIfPresent(.description)
+        sizeGigabytes = try container.sdkDecodeIfPresent(.sizeGigabytes)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        region = try container.sdkDecodeIfPresent(.region)
+        filesystemType = try container.sdkDecodeIfPresent(.filesystemType)
+        filesystemLabel = try container.sdkDecodeIfPresent(.filesystemLabel)
     }
 }
 
-extension VolumeFull {
-    public init(id: String? = nil, dropletIds: [Int]? = nil, name: String? = nil, description: String? = nil, sizeGigabytes: Int? = nil, createdAt: String? = nil, tags: TagsArrayRead? = nil, region: Region? = nil, filesystemType: String? = nil, filesystemLabel: String? = nil) {
+public extension VolumeFull {
+    init(
+        id: String? = nil,
+        dropletIds: [Int]? = nil,
+        name: String? = nil,
+        description: String? = nil,
+        sizeGigabytes: Int? = nil,
+        createdAt: String? = nil,
+        tags: TagsArrayRead? = nil,
+        region: Region? = nil,
+        filesystemType: String? = nil,
+        filesystemLabel: String? = nil
+    ) {
         self.init()
         (self.id, self.dropletIds) = (id, dropletIds)
         (self.name, self.description) = (name, description)

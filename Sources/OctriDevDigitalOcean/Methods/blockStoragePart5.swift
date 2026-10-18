@@ -6,7 +6,7 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension BlockStorageMethods {
+public extension BlockStorageMethods {
     /// To create a snapshot from a volume, sent a POST request to `/v2/volumes/$VOLUME_ID/snapshots`.
     ///
     /// - Parameters:
@@ -15,11 +15,33 @@ extension BlockStorageMethods {
     /// - tags: A flat array of tag names as strings to be applied to the resource.
     ///   Tag names may be for either existing or new tags. Requires `tag:create`
     ///   scope.
-    public static func volumeSnapshotsCreate(config: ClientConfig, volumeId: String, name: String, tags: SdkOptional<TagsArray>? = nil, requestOptions: RequestOptions? = nil) async throws -> VolumeSnapshot {
+    static func volumeSnapshotsCreate(
+        config: ClientConfig,
+        volumeId: String,
+        name: String,
+        tags: SdkOptional<TagsArray>? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> VolumeSnapshot {
         try sdkValidateUuid("volume_id", volumeId)
 
         let requestBody = VolumeSnapshotsCreateRequestBody(name: name, tags: tags)
 
-        return try (await sdkRequest("POST", ["/v2/volumes/", sdkEncodePathSegment(sdkWireString(volumeId)), "/snapshots"].joined(), config: config, body: requestBody, decoder: .json, operationId: "volumeSnapshots_create", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/v2/volumes/", sdkEncodePathSegment(sdkWireString(volumeId)), "/snapshots"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "volumeSnapshots_create",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

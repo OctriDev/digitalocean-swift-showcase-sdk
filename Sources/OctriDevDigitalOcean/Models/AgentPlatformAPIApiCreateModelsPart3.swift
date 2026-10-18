@@ -3,16 +3,16 @@
 
 import Foundation
 
-// AgentPlatformAPIApiCreate domain models
-extension ApiCreateAnthropicAPIKeyOutput {
-    public init(from decoder: Decoder) throws {
+/// AgentPlatformAPIApiCreate domain models
+public extension ApiCreateAnthropicAPIKeyOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-extension ApiCreateAnthropicAPIKeyOutput {
-    public init(apiKeyInfo: ApiAnthropicAPIKeyInfo? = nil) {
+public extension ApiCreateAnthropicAPIKeyOutput {
+    init(apiKeyInfo: ApiAnthropicAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }
@@ -45,23 +45,29 @@ public struct ApiCreateModelRouterInputPublic: Codable {
     }
 
     init() {
-        (self.description, self.fallbackModels, self.name, self.policies, self.regions) = (nil, nil, nil, nil, nil)
+        (description, fallbackModels, name, policies, regions) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiCreateModelRouterInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateModelRouterInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.fallbackModels = try container.sdkDecodeIfPresent(.fallbackModels)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.policies = try container.sdkDecodeIfPresent(.policies)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
+        description = try container.sdkDecodeIfPresent(.description)
+        fallbackModels = try container.sdkDecodeIfPresent(.fallbackModels)
+        name = try container.sdkDecodeIfPresent(.name)
+        policies = try container.sdkDecodeIfPresent(.policies)
+        regions = try container.sdkDecodeIfPresent(.regions)
     }
 }
 
-extension ApiCreateModelRouterInputPublic {
-    public init(description: String? = nil, fallbackModels: [String]? = nil, name: String? = nil, policies: [ApiModelRouterTaskPolicy]? = nil, regions: [String]? = nil) {
+public extension ApiCreateModelRouterInputPublic {
+    init(
+        description: String? = nil,
+        fallbackModels: [String]? = nil,
+        name: String? = nil,
+        policies: [ApiModelRouterTaskPolicy]? = nil,
+        regions: [String]? = nil
+    ) {
         self.init()
         (self.description, self.fallbackModels) = (description, fallbackModels)
         (self.name, self.policies) = (name, policies)
@@ -84,20 +90,20 @@ public struct ApiCreateScenarioSetFromLibraryInputPublic: Codable {
     }
 
     init() {
-        (self.libraryScenarioUuid, self.name) = (nil, nil)
+        (libraryScenarioUuid, name) = (nil, nil)
     }
 }
 
-extension ApiCreateScenarioSetFromLibraryInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateScenarioSetFromLibraryInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.libraryScenarioUuid = try container.sdkDecodeIfPresent(.libraryScenarioUuid)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        libraryScenarioUuid = try container.sdkDecodeIfPresent(.libraryScenarioUuid)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ApiCreateScenarioSetFromLibraryInputPublic {
-    public init(libraryScenarioUuid: String? = nil, name: String? = nil) {
+public extension ApiCreateScenarioSetFromLibraryInputPublic {
+    init(libraryScenarioUuid: String? = nil, name: String? = nil) {
         self.init()
         (self.libraryScenarioUuid, self.name) = (libraryScenarioUuid, name)
     }
@@ -113,19 +119,19 @@ public struct ApiCreateSimulationRunOutput: Codable {
     }
 
     init() {
-        self.simulationRun = nil
+        simulationRun = nil
     }
 }
 
-extension ApiCreateSimulationRunOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateSimulationRunOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.simulationRun = try container.sdkDecodeIfPresent(.simulationRun)
+        simulationRun = try container.sdkDecodeIfPresent(.simulationRun)
     }
 }
 
-extension ApiCreateSimulationRunOutput {
-    public init(simulationRun: ApiSimulationRun? = nil) {
+public extension ApiCreateSimulationRunOutput {
+    init(simulationRun: ApiSimulationRun? = nil) {
         self.init()
         self.simulationRun = simulationRun
     }
@@ -141,19 +147,19 @@ public struct ApiCreateModelRouterOutput: Codable {
     }
 
     init() {
-        self.modelRouter = nil
+        modelRouter = nil
     }
 }
 
-extension ApiCreateModelRouterOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateModelRouterOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.modelRouter = try container.sdkDecodeIfPresent(.modelRouter)
+        modelRouter = try container.sdkDecodeIfPresent(.modelRouter)
     }
 }
 
-extension ApiCreateModelRouterOutput {
-    public init(modelRouter: ApiModelRouter? = nil) {
+public extension ApiCreateModelRouterOutput {
+    init(modelRouter: ApiModelRouter? = nil) {
         self.init()
         self.modelRouter = modelRouter
     }
@@ -169,19 +175,19 @@ public struct ApiCreateKnowledgeBaseOutput: Codable {
     }
 
     init() {
-        self.knowledgeBase = nil
+        knowledgeBase = nil
     }
 }
 
-extension ApiCreateKnowledgeBaseOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateKnowledgeBaseOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.knowledgeBase = try container.sdkDecodeIfPresent(.knowledgeBase)
+        knowledgeBase = try container.sdkDecodeIfPresent(.knowledgeBase)
     }
 }
 
-extension ApiCreateKnowledgeBaseOutput {
-    public init(knowledgeBase: ApiKnowledgeBase? = nil) {
+public extension ApiCreateKnowledgeBaseOutput {
+    init(knowledgeBase: ApiKnowledgeBase? = nil) {
         self.init()
         self.knowledgeBase = knowledgeBase
     }
@@ -204,21 +210,21 @@ public struct ApiCreateScenarioSetInputPublic: Codable {
     }
 
     init() {
-        (self.fileUploadScenarioSet, self.name, self.scenarios) = (nil, nil, nil)
+        (fileUploadScenarioSet, name, scenarios) = (nil, nil, nil)
     }
 }
 
-extension ApiCreateScenarioSetInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateScenarioSetInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.fileUploadScenarioSet = try container.sdkDecodeIfPresent(.fileUploadScenarioSet)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.scenarios = try container.sdkDecodeIfPresent(.scenarios)
+        fileUploadScenarioSet = try container.sdkDecodeIfPresent(.fileUploadScenarioSet)
+        name = try container.sdkDecodeIfPresent(.name)
+        scenarios = try container.sdkDecodeIfPresent(.scenarios)
     }
 }
 
-extension ApiCreateScenarioSetInputPublic {
-    public init(fileUploadScenarioSet: ApiFileUploadDataSource? = nil, name: String? = nil, scenarios: [ApiScenario]? = nil) {
+public extension ApiCreateScenarioSetInputPublic {
+    init(fileUploadScenarioSet: ApiFileUploadDataSource? = nil, name: String? = nil, scenarios: [ApiScenario]? = nil) {
         self.init()
         (self.fileUploadScenarioSet, self.name) = (fileUploadScenarioSet, name)
         self.scenarios = scenarios
@@ -240,20 +246,20 @@ public struct ApiCreateAgentAPIKeyInputPublic: Codable {
     }
 
     init() {
-        (self.agentUuid, self.name) = (nil, nil)
+        (agentUuid, name) = (nil, nil)
     }
 }
 
-extension ApiCreateAgentAPIKeyInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateAgentAPIKeyInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ApiCreateAgentAPIKeyInputPublic {
-    public init(agentUuid: String? = nil, name: String? = nil) {
+public extension ApiCreateAgentAPIKeyInputPublic {
+    init(agentUuid: String? = nil, name: String? = nil) {
         self.init()
         (self.agentUuid, self.name) = (agentUuid, name)
     }
@@ -278,21 +284,21 @@ public struct ApiCreateCustomEvaluationMetricInputPublic: Codable {
     }
 
     init() {
-        (self.config, self.description, self.metricName) = (nil, nil, nil)
+        (config, description, metricName) = (nil, nil, nil)
     }
 }
 
-extension ApiCreateCustomEvaluationMetricInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateCustomEvaluationMetricInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.config = try container.sdkDecodeIfPresent(.config)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.metricName = try container.sdkDecodeIfPresent(.metricName)
+        config = try container.sdkDecodeIfPresent(.config)
+        description = try container.sdkDecodeIfPresent(.description)
+        metricName = try container.sdkDecodeIfPresent(.metricName)
     }
 }
 
-extension ApiCreateCustomEvaluationMetricInputPublic {
-    public init(config: ApiCustomEvaluationMetricConfig? = nil, description: String? = nil, metricName: String? = nil) {
+public extension ApiCreateCustomEvaluationMetricInputPublic {
+    init(config: ApiCustomEvaluationMetricConfig? = nil, description: String? = nil, metricName: String? = nil) {
         self.init()
         (self.config, self.description) = (config, description)
         self.metricName = metricName
@@ -374,35 +380,57 @@ public struct ApiCreateModelEvaluationRunInputPublic: Codable {
     }
 
     init() {
-        (self.candidateInferenceConfig, self.candidateModelName, self.candidateModelSource, self.candidateModelUuid, self.datasetUuid) = (nil, nil, nil, nil, nil)
-        (self.epochs, self.evalPresetUuid, self.judgeModelUuid, self.metricUuids, self.name) = (nil, nil, nil, nil, nil)
-        (self.presetName, self.presetSaveSections, self.saveAsPreset, self.source, self.starMetric) = (nil, nil, nil, nil, nil)
+        (candidateInferenceConfig, candidateModelName, candidateModelSource, candidateModelUuid, datasetUuid) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (epochs, evalPresetUuid, judgeModelUuid, metricUuids, name) = (nil, nil, nil, nil, nil)
+        (presetName, presetSaveSections, saveAsPreset, source, starMetric) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiCreateModelEvaluationRunInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateModelEvaluationRunInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.candidateInferenceConfig = try container.sdkDecodeIfPresent(.candidateInferenceConfig)
-        self.candidateModelName = try container.sdkDecodeIfPresent(.candidateModelName)
-        self.candidateModelSource = try container.sdkDecodeIfPresent(.candidateModelSource)
-        self.candidateModelUuid = try container.sdkDecodeIfPresent(.candidateModelUuid)
-        self.datasetUuid = try container.sdkDecodeIfPresent(.datasetUuid)
-        self.epochs = try container.sdkDecodeIfPresent(.epochs)
-        self.evalPresetUuid = try container.sdkDecodeIfPresent(.evalPresetUuid)
-        self.judgeModelUuid = try container.sdkDecodeIfPresent(.judgeModelUuid)
-        self.metricUuids = try container.sdkDecodeIfPresent(.metricUuids)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.presetName = try container.sdkDecodeIfPresent(.presetName)
-        self.presetSaveSections = try container.sdkDecodeIfPresent(.presetSaveSections)
-        self.saveAsPreset = try container.sdkDecodeIfPresent(.saveAsPreset)
-        self.source = try container.sdkDecodeIfPresent(.source)
-        self.starMetric = try container.sdkDecodeIfPresent(.starMetric)
+        candidateInferenceConfig = try container.sdkDecodeIfPresent(.candidateInferenceConfig)
+        candidateModelName = try container.sdkDecodeIfPresent(.candidateModelName)
+        candidateModelSource = try container.sdkDecodeIfPresent(.candidateModelSource)
+        candidateModelUuid = try container.sdkDecodeIfPresent(.candidateModelUuid)
+        datasetUuid = try container.sdkDecodeIfPresent(.datasetUuid)
+        epochs = try container.sdkDecodeIfPresent(.epochs)
+        evalPresetUuid = try container.sdkDecodeIfPresent(.evalPresetUuid)
+        judgeModelUuid = try container.sdkDecodeIfPresent(.judgeModelUuid)
+        metricUuids = try container.sdkDecodeIfPresent(.metricUuids)
+        name = try container.sdkDecodeIfPresent(.name)
+        presetName = try container.sdkDecodeIfPresent(.presetName)
+        presetSaveSections = try container.sdkDecodeIfPresent(.presetSaveSections)
+        saveAsPreset = try container.sdkDecodeIfPresent(.saveAsPreset)
+        source = try container.sdkDecodeIfPresent(.source)
+        starMetric = try container.sdkDecodeIfPresent(.starMetric)
     }
 }
 
-extension ApiCreateModelEvaluationRunInputPublic {
-    public init(candidateInferenceConfig: ApiCandidateInferenceConfig? = nil, candidateModelName: String? = nil, candidateModelSource: ApiCandidateModelSource? = nil, candidateModelUuid: String? = nil, datasetUuid: String? = nil, epochs: Int? = nil, evalPresetUuid: String? = nil, judgeModelUuid: String? = nil, metricUuids: [String]? = nil, name: String? = nil, presetName: String? = nil, presetSaveSections: [ApiPresetSaveSection]? = nil, saveAsPreset: Bool? = nil, source: String? = nil, starMetric: ApiStarMetric? = nil) {
+public extension ApiCreateModelEvaluationRunInputPublic {
+    init(
+        candidateInferenceConfig: ApiCandidateInferenceConfig? = nil,
+        candidateModelName: String? = nil,
+        candidateModelSource: ApiCandidateModelSource? = nil,
+        candidateModelUuid: String? = nil,
+        datasetUuid: String? = nil,
+        epochs: Int? = nil,
+        evalPresetUuid: String? = nil,
+        judgeModelUuid: String? = nil,
+        metricUuids: [String]? = nil,
+        name: String? = nil,
+        presetName: String? = nil,
+        presetSaveSections: [ApiPresetSaveSection]? = nil,
+        saveAsPreset: Bool? = nil,
+        source: String? = nil,
+        starMetric: ApiStarMetric? = nil
+    ) {
         self.init()
         self.candidateInferenceConfig = candidateInferenceConfig
         (self.candidateModelName, self.candidateModelSource) = (candidateModelName, candidateModelSource)
@@ -425,19 +453,19 @@ public struct ApiCreateCustomEvaluationMetricOutput: Codable {
     }
 
     init() {
-        self.metric = nil
+        metric = nil
     }
 }
 
-extension ApiCreateCustomEvaluationMetricOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateCustomEvaluationMetricOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.metric = try container.sdkDecodeIfPresent(.metric)
+        metric = try container.sdkDecodeIfPresent(.metric)
     }
 }
 
-extension ApiCreateCustomEvaluationMetricOutput {
-    public init(metric: ApiEvaluationMetric? = nil) {
+public extension ApiCreateCustomEvaluationMetricOutput {
+    init(metric: ApiEvaluationMetric? = nil) {
         self.init()
         self.metric = metric
     }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// PartnerNetworkConnect domain models
+/// PartnerNetworkConnect domain models
 public indirect enum PartnerAttachmentUpdatable {
     case partnerAttachmentUpdatableVariant0(PartnerAttachmentUpdatableVariant0)
     case partnerAttachmentUpdatableVariant1(PartnerAttachmentUpdatableVariant1)
@@ -11,30 +11,41 @@ public indirect enum PartnerAttachmentUpdatable {
 }
 
 extension PartnerAttachmentUpdatable: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
+            if let value = Self.decodeLossless1(from: container, raw) {
+                self = value; return
+            }
         }
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for PartnerAttachmentUpdatable")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for PartnerAttachmentUpdatable"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension PartnerAttachmentUpdatable {
     static func decodeLossless1(from container: SingleValueDecodingContainer, _ raw: JSONValue) -> Self? {
-        if let value = try? container.decode(PartnerAttachmentUpdatableVariant0.self), sdkKeepsEveryKey(value, of: raw) {
+        if let value = try? container.decode(PartnerAttachmentUpdatableVariant0.self),
+           sdkKeepsEveryKey(value, of: raw) {
             return .partnerAttachmentUpdatableVariant0(value)
         }
-        if let value = try? container.decode(PartnerAttachmentUpdatableVariant1.self), sdkKeepsEveryKey(value, of: raw) {
+        if let value = try? container.decode(PartnerAttachmentUpdatableVariant1.self),
+           sdkKeepsEveryKey(value, of: raw) {
             return .partnerAttachmentUpdatableVariant1(value)
         }
-        if let value = try? container.decode(PartnerAttachmentUpdatableVariant2.self), sdkKeepsEveryKey(value, of: raw) {
+        if let value = try? container.decode(PartnerAttachmentUpdatableVariant2.self),
+           sdkKeepsEveryKey(value, of: raw) {
             return .partnerAttachmentUpdatableVariant2(value)
         }
         return nil
@@ -43,9 +54,18 @@ extension PartnerAttachmentUpdatable {
 
 extension PartnerAttachmentUpdatable {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(PartnerAttachmentUpdatableVariant0.self) { return .partnerAttachmentUpdatableVariant0(value) }
-        if let value = try? container.decode(PartnerAttachmentUpdatableVariant1.self) { return .partnerAttachmentUpdatableVariant1(value) }
-        if let value = try? container.decode(PartnerAttachmentUpdatableVariant2.self) { return .partnerAttachmentUpdatableVariant2(value) }
+        if let value = try? container
+            .decode(PartnerAttachmentUpdatableVariant0.self) {
+            return .partnerAttachmentUpdatableVariant0(value)
+        }
+        if let value = try? container
+            .decode(PartnerAttachmentUpdatableVariant1.self) {
+            return .partnerAttachmentUpdatableVariant1(value)
+        }
+        if let value = try? container
+            .decode(PartnerAttachmentUpdatableVariant2.self) {
+            return .partnerAttachmentUpdatableVariant2(value)
+        }
         return nil
     }
 }
@@ -69,19 +89,19 @@ public struct AllPartnerAttachmentRemoteRoutesVariant0: Codable {
     }
 
     init() {
-        self.remoteRoutes = nil
+        remoteRoutes = nil
     }
 }
 
-extension AllPartnerAttachmentRemoteRoutesVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AllPartnerAttachmentRemoteRoutesVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.remoteRoutes = try container.sdkDecodeIfPresent(.remoteRoutes)
+        remoteRoutes = try container.sdkDecodeIfPresent(.remoteRoutes)
     }
 }
 
-extension AllPartnerAttachmentRemoteRoutesVariant0 {
-    public init(remoteRoutes: [PartnerAttachmentRemoteRoute]? = nil) {
+public extension AllPartnerAttachmentRemoteRoutesVariant0 {
+    init(remoteRoutes: [PartnerAttachmentRemoteRoute]? = nil) {
         self.init()
         self.remoteRoutes = remoteRoutes
     }
@@ -101,23 +121,29 @@ public struct AllPartnerAttachmentRemoteRoutes: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllPartnerAttachmentRemoteRoutes {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.remoteRoutes = try container.sdkDecodeIfPresent(.remoteRoutes)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllPartnerAttachmentRemoteRoutes {
-    public init(meta: MetaMeta, remoteRoutes: [PartnerAttachmentRemoteRoute]? = nil, links: PageLinks? = nil) {
+public extension AllPartnerAttachmentRemoteRoutes {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        remoteRoutes = try container.sdkDecodeIfPresent(.remoteRoutes)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllPartnerAttachmentRemoteRoutes {
+    init(meta: MetaMeta, remoteRoutes: [PartnerAttachmentRemoteRoute]? = nil, links: PageLinks? = nil) {
         (self.meta, self.remoteRoutes) = (meta, remoteRoutes)
         self.links = links
     }
@@ -132,24 +158,30 @@ public struct PartnerAttachmentUpdatableVariant1: Codable {
         case vpcIds = "vpc_ids"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension PartnerAttachmentUpdatableVariant1 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.vpcIds) else {
-            throw SdkValidationError(field: "vpc_ids", code: "required", message: "Validation failed for 'vpc_ids': value is required")
-        }
-        self.vpcIds = try container.sdkDecodeRequired(.vpcIds)
-            try validateItems("vpc_ids", self.vpcIds, min: 1, max: nil)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension PartnerAttachmentUpdatableVariant1 {
-    public init(vpcIds: [String]) throws {
+public extension PartnerAttachmentUpdatableVariant1 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.vpcIds) else {
+            throw SdkValidationError(
+                field: "vpc_ids",
+                code: "required",
+                message: "Validation failed for 'vpc_ids': value is required"
+            )
+        }
+        vpcIds = try container.sdkDecodeRequired(.vpcIds)
+        try validateItems("vpc_ids", vpcIds, min: 1, max: nil)
+    }
+}
+
+public extension PartnerAttachmentUpdatableVariant1 {
+    init(vpcIds: [String]) throws {
         self.vpcIds = vpcIds
-            try validateItems("vpc_ids", self.vpcIds, min: 1, max: nil)
+        try validateItems("vpc_ids", self.vpcIds, min: 1, max: nil)
     }
 }
 
@@ -175,33 +207,51 @@ public struct PartnerAttachmentUpdatableVariant2Bgp: Codable {
         case authKey = "auth_key"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension PartnerAttachmentUpdatableVariant2Bgp {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.localRouterIp) else {
-            throw SdkValidationError(field: "local_router_ip", code: "required", message: "Validation failed for 'local_router_ip': value is required")
-        }
-        guard container.contains(.peerRouterIp) else {
-            throw SdkValidationError(field: "peer_router_ip", code: "required", message: "Validation failed for 'peer_router_ip': value is required")
-        }
-        guard container.contains(.peerRouterAsn) else {
-            throw SdkValidationError(field: "peer_router_asn", code: "required", message: "Validation failed for 'peer_router_asn': value is required")
-        }
-        guard container.contains(.authKey) else {
-            throw SdkValidationError(field: "auth_key", code: "required", message: "Validation failed for 'auth_key': value is required")
-        }
-        self.localRouterIp = try container.sdkDecodeRequired(.localRouterIp)
-        self.peerRouterIp = try container.sdkDecodeRequired(.peerRouterIp)
-        self.peerRouterAsn = try container.sdkDecodeRequired(.peerRouterAsn)
-        self.authKey = try container.sdkDecodeRequired(.authKey)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension PartnerAttachmentUpdatableVariant2Bgp {
-    public init(localRouterIp: String, peerRouterIp: String, peerRouterAsn: Int, authKey: String) {
+public extension PartnerAttachmentUpdatableVariant2Bgp {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.localRouterIp) else {
+            throw SdkValidationError(
+                field: "local_router_ip",
+                code: "required",
+                message: "Validation failed for 'local_router_ip': value is required"
+            )
+        }
+        guard container.contains(.peerRouterIp) else {
+            throw SdkValidationError(
+                field: "peer_router_ip",
+                code: "required",
+                message: "Validation failed for 'peer_router_ip': value is required"
+            )
+        }
+        guard container.contains(.peerRouterAsn) else {
+            throw SdkValidationError(
+                field: "peer_router_asn",
+                code: "required",
+                message: "Validation failed for 'peer_router_asn': value is required"
+            )
+        }
+        guard container.contains(.authKey) else {
+            throw SdkValidationError(
+                field: "auth_key",
+                code: "required",
+                message: "Validation failed for 'auth_key': value is required"
+            )
+        }
+        localRouterIp = try container.sdkDecodeRequired(.localRouterIp)
+        peerRouterIp = try container.sdkDecodeRequired(.peerRouterIp)
+        peerRouterAsn = try container.sdkDecodeRequired(.peerRouterAsn)
+        authKey = try container.sdkDecodeRequired(.authKey)
+    }
+}
+
+public extension PartnerAttachmentUpdatableVariant2Bgp {
+    init(localRouterIp: String, peerRouterIp: String, peerRouterAsn: Int, authKey: String) {
         (self.localRouterIp, self.peerRouterIp) = (localRouterIp, peerRouterIp)
         (self.peerRouterAsn, self.authKey) = (peerRouterAsn, authKey)
     }
@@ -258,43 +308,55 @@ public struct PartnerAttachment: Codable {
     }
 
     init() {
-        (self.id, self.name, self.state, self.connectionBandwidthInMbps, self.region) = (nil, nil, nil, nil, nil)
-        (self.naasProvider, self.vpcIds, self.bgp, self.createdAt, self.parentUuid) = (nil, nil, nil, nil, nil)
-        self.children = nil
+        (id, name, state, connectionBandwidthInMbps, region) = (nil, nil, nil, nil, nil)
+        (naasProvider, vpcIds, bgp, createdAt, parentUuid) = (nil, nil, nil, nil, nil)
+        children = nil
     }
 }
 
-extension PartnerAttachment {
-    public init(from decoder: Decoder) throws {
+public extension PartnerAttachment {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.connectionBandwidthInMbps = try container.sdkDecodeIfPresent(.connectionBandwidthInMbps)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.naasProvider = try container.sdkDecodeIfPresent(.naasProvider)
-        self.vpcIds = try container.sdkDecodeIfPresent(.vpcIds)
-        self.bgp = try container.sdkDecodeIfPresent(.bgp)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.parentUuid = try container.sdkDecodeIfPresent(.parentUuid)
-        self.children = try container.sdkDecodeIfPresent(.children)
-        if let value = self.name {
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        state = try container.sdkDecodeIfPresent(.state)
+        connectionBandwidthInMbps = try container.sdkDecodeIfPresent(.connectionBandwidthInMbps)
+        region = try container.sdkDecodeIfPresent(.region)
+        naasProvider = try container.sdkDecodeIfPresent(.naasProvider)
+        vpcIds = try container.sdkDecodeIfPresent(.vpcIds)
+        bgp = try container.sdkDecodeIfPresent(.bgp)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        parentUuid = try container.sdkDecodeIfPresent(.parentUuid)
+        children = try container.sdkDecodeIfPresent(.children)
+        if let value = name {
             try sdkValidatePattern("name", value, sdkPatternef0a913b6e4d)
         }
-        if let value = self.vpcIds {
+        if let value = vpcIds {
             try validateItems("vpc_ids", value, min: 1, max: nil)
         }
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.children {
+        if let value = children {
             try validateItems("children", value, min: 1, max: nil)
         }
     }
 }
 
-extension PartnerAttachment {
-    public init(id: String? = nil, name: String? = nil, state: String? = nil, connectionBandwidthInMbps: Int? = nil, region: String? = nil, naasProvider: String? = nil, vpcIds: [String]? = nil, bgp: PartnerAttachmentBgp? = nil, createdAt: Date? = nil, parentUuid: String? = nil, children: [String]? = nil) throws {
+public extension PartnerAttachment {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        state: String? = nil,
+        connectionBandwidthInMbps: Int? = nil,
+        region: String? = nil,
+        naasProvider: String? = nil,
+        vpcIds: [String]? = nil,
+        bgp: PartnerAttachmentBgp? = nil,
+        createdAt: Date? = nil,
+        parentUuid: String? = nil,
+        children: [String]? = nil
+    ) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.state, self.connectionBandwidthInMbps) = (state, connectionBandwidthInMbps)
@@ -328,19 +390,19 @@ public struct PartnerAttachmentRemoteRoute: Codable {
     }
 
     init() {
-        self.cidr = nil
+        cidr = nil
     }
 }
 
-extension PartnerAttachmentRemoteRoute {
-    public init(from decoder: Decoder) throws {
+public extension PartnerAttachmentRemoteRoute {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.cidr = try container.sdkDecodeIfPresent(.cidr)
+        cidr = try container.sdkDecodeIfPresent(.cidr)
     }
 }
 
-extension PartnerAttachmentRemoteRoute {
-    public init(cidr: String? = nil) {
+public extension PartnerAttachmentRemoteRoute {
+    init(cidr: String? = nil) {
         self.init()
         self.cidr = cidr
     }
@@ -354,19 +416,19 @@ public struct SinglePartnerAttachmentBgpAuthKeyVariant0: Codable {
     }
 
     init() {
-        self.bgpAuthKey = nil
+        bgpAuthKey = nil
     }
 }
 
-extension SinglePartnerAttachmentBgpAuthKeyVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension SinglePartnerAttachmentBgpAuthKeyVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.bgpAuthKey = try container.sdkDecodeIfPresent(.bgpAuthKey)
+        bgpAuthKey = try container.sdkDecodeIfPresent(.bgpAuthKey)
     }
 }
 
-extension SinglePartnerAttachmentBgpAuthKeyVariant0 {
-    public init(bgpAuthKey: [String: JSONValue]? = nil) {
+public extension SinglePartnerAttachmentBgpAuthKeyVariant0 {
+    init(bgpAuthKey: [String: JSONValue]? = nil) {
         self.init()
         self.bgpAuthKey = bgpAuthKey
     }
@@ -382,24 +444,30 @@ public struct PartnerAttachmentUpdatableVariant0: Codable {
         case name
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension PartnerAttachmentUpdatableVariant0 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-            try sdkValidatePattern("name", self.name, sdkPatternef0a913b6e4d)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension PartnerAttachmentUpdatableVariant0 {
-    public init(name: String) throws {
+public extension PartnerAttachmentUpdatableVariant0 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        try sdkValidatePattern("name", name, sdkPatternef0a913b6e4d)
+    }
+}
+
+public extension PartnerAttachmentUpdatableVariant0 {
+    init(name: String) throws {
         self.name = name
-            try sdkValidatePattern("name", self.name, sdkPatternef0a913b6e4d)
+        try sdkValidatePattern("name", self.name, sdkPatternef0a913b6e4d)
     }
 }
 
@@ -411,19 +479,19 @@ public struct SinglePartnerAttachmentDeletingVariant0: Codable {
     }
 
     init() {
-        self.partnerAttachment = nil
+        partnerAttachment = nil
     }
 }
 
-extension SinglePartnerAttachmentDeletingVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension SinglePartnerAttachmentDeletingVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.partnerAttachment = try container.sdkDecodeIfPresent(.partnerAttachment)
+        partnerAttachment = try container.sdkDecodeIfPresent(.partnerAttachment)
     }
 }
 
-extension SinglePartnerAttachmentDeletingVariant0 {
-    public init(partnerAttachment: PartnerAttachment? = nil) {
+public extension SinglePartnerAttachmentDeletingVariant0 {
+    init(partnerAttachment: PartnerAttachment? = nil) {
         self.init()
         self.partnerAttachment = partnerAttachment
     }
@@ -443,23 +511,29 @@ public struct AllPartnerAttachments: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllPartnerAttachments {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.partnerAttachments = try container.sdkDecodeIfPresent(.partnerAttachments)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllPartnerAttachments {
-    public init(meta: MetaMeta, partnerAttachments: [PartnerAttachment]? = nil, links: PageLinks? = nil) {
+public extension AllPartnerAttachments {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        partnerAttachments = try container.sdkDecodeIfPresent(.partnerAttachments)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllPartnerAttachments {
+    init(meta: MetaMeta, partnerAttachments: [PartnerAttachment]? = nil, links: PageLinks? = nil) {
         (self.meta, self.partnerAttachments) = (meta, partnerAttachments)
         self.links = links
     }
@@ -473,19 +547,19 @@ public struct AllPartnerAttachmentsVariant0: Codable {
     }
 
     init() {
-        self.partnerAttachments = nil
+        partnerAttachments = nil
     }
 }
 
-extension AllPartnerAttachmentsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AllPartnerAttachmentsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.partnerAttachments = try container.sdkDecodeIfPresent(.partnerAttachments)
+        partnerAttachments = try container.sdkDecodeIfPresent(.partnerAttachments)
     }
 }
 
-extension AllPartnerAttachmentsVariant0 {
-    public init(partnerAttachments: [PartnerAttachment]? = nil) {
+public extension AllPartnerAttachmentsVariant0 {
+    init(partnerAttachments: [PartnerAttachment]? = nil) {
         self.init()
         self.partnerAttachments = partnerAttachments
     }
@@ -529,5 +603,7 @@ public struct PartnerAttachmentWritable: Codable {
         case redundancyZone = "redundancy_zone"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }

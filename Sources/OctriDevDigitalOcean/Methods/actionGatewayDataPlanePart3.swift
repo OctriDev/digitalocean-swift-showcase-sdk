@@ -6,8 +6,12 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ActionGatewayDataPlaneMethods {
-    /// Finds the catalog tools that fit one or more use cases. This is the REST form of the `action_search` MCP tool. Each query is searched independently and returns its own result group, so you can see which tools serve which goal. Results include each tool's `inputSchema`, so you can call a tool with `POST /tools/invoke` without another lookup. Results include only tools that the session can call. If the session policy requires approval for `action_search`, the response is a failed result with `_meta.status` set to `requires_approval`.
+public extension ActionGatewayDataPlaneMethods {
+    /// Finds the catalog tools that fit one or more use cases. This is the REST form of the `action_search` MCP tool.
+    /// Each query is searched independently and returns its own result group, so you can see which tools serve which
+    /// goal. Results include each tool's `inputSchema`, so you can call a tool with `POST /tools/invoke` without
+    /// another lookup. Results include only tools that the session can call. If the session policy requires approval
+    /// for `action_search`, the response is a failed result with `_meta.status` set to `requires_approval`.
     ///
     /// - Parameters:
     /// - xSessionId: The session to act in: the UUID at the end of the session's
@@ -19,19 +23,51 @@ extension ActionGatewayDataPlaneMethods {
     /// - tags: Restricts every query to tools with these tags.
     /// - limit: The maximum number of tools returned per query. Values above 50 are
     ///   capped at 50.
-    public static func gatewayToolsListSearch(config: ClientConfig, xSessionId: String, queries: [SearchQuery], providers: [String]? = nil, tags: [String]? = nil, limit: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> DataPlaneSearchToolsResponse {
+    static func gatewayToolsListSearch(
+        config: ClientConfig,
+        xSessionId: String,
+        queries: [SearchQuery],
+        providers: [String]? = nil,
+        tags: [String]? = nil,
+        limit: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DataPlaneSearchToolsResponse {
         try sdkValidateUuid("X-Session-Id", xSessionId)
 
         try validateItems("queries", queries, min: 1, max: 5)
 
-        if let limit = limit {
+        if let limit {
             try validateRange("limit", Double(limit), min: 1)
         }
 
-        let requestBody = GatewayToolsListSearchRequestBody(queries: queries, providers: providers, tags: tags, limit: limit)
+        let requestBody = GatewayToolsListSearchRequestBody(
+            queries: queries,
+            providers: providers,
+            tags: tags,
+            limit: limit
+        )
 
-        return try (await sdkRequest("POST", "/tools/search", config: config, body: requestBody, decoder: .json, operationId: "gatewayTools_list_search", extraHeaders: sdkHeaders([
-            ("X-Session-Id", sdkHeaderValue(xSessionId)),
-        ]), options: requestOptions, errors: ["400": ToolResultError.self, "401": Error2.self, "403": Forbidden.self, "412": ToolResultError.self, "413": ToolResultError.self, "429": ToolResultError.self, "500": ToolResultError.self, "503": ToolResultError.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/tools/search",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "gatewayTools_list_search",
+            extraHeaders: sdkHeaders([
+                ("X-Session-Id", sdkHeaderValue(xSessionId)),
+            ]),
+            options: requestOptions,
+            errors: [
+                "400": ToolResultError.self,
+                "401": Error2.self,
+                "403": Forbidden.self,
+                "412": ToolResultError.self,
+                "413": ToolResultError.self,
+                "429": ToolResultError.self,
+                "500": ToolResultError.self,
+                "503": ToolResultError.self,
+            ]
+        )).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ServerlessInferenceSpeech domain models
+/// ServerlessInferenceSpeech domain models
 /// JSON envelope for text-to-speech when the endpoint returns `application/json`. The live endpoint may instead
 /// return raw audio bytes with an `audio/*` Content-Type.
 public struct SpeechResponse: Codable {
@@ -18,25 +18,31 @@ public struct SpeechResponse: Codable {
         case created
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SpeechResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.data) else {
-            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
-        }
-        self.data = try container.sdkDecodeRequired(.data)
-        self.created = try container.sdkDecodeIfPresent(.created)
-            try validateItems("data", self.data, min: 1, max: nil)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SpeechResponse {
-    public init(data: [SpeechAudioItem], created: Int? = nil) throws {
+public extension SpeechResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.data) else {
+            throw SdkValidationError(
+                field: "data",
+                code: "required",
+                message: "Validation failed for 'data': value is required"
+            )
+        }
+        data = try container.sdkDecodeRequired(.data)
+        created = try container.sdkDecodeIfPresent(.created)
+        try validateItems("data", data, min: 1, max: nil)
+    }
+}
+
+public extension SpeechResponse {
+    init(data: [SpeechAudioItem], created: Int? = nil) throws {
         (self.data, self.created) = (data, created)
-            try validateItems("data", self.data, min: 1, max: nil)
+        try validateItems("data", self.data, min: 1, max: nil)
     }
 }
 
@@ -50,21 +56,27 @@ public struct SpeechAudioItem: Codable {
         case b64Json = "b64_json"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SpeechAudioItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.b64Json) else {
-            throw SdkValidationError(field: "b64_json", code: "required", message: "Validation failed for 'b64_json': value is required")
-        }
-        self.b64Json = try container.sdkDecodeRequired(.b64Json)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SpeechAudioItem {
-    public init(b64Json: String) {
+public extension SpeechAudioItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.b64Json) else {
+            throw SdkValidationError(
+                field: "b64_json",
+                code: "required",
+                message: "Validation failed for 'b64_json': value is required"
+            )
+        }
+        b64Json = try container.sdkDecodeRequired(.b64Json)
+    }
+}
+
+public extension SpeechAudioItem {
+    init(b64Json: String) {
         self.b64Json = b64Json
     }
 }

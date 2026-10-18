@@ -6,14 +6,34 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InsightsMethods {
-    /// To retrieve a notification channel, send a GET request to `/v2/insights/notification-channels/{id}`. Secret credentials are never returned. When a secret is configured, the response includes an optional `*_status` object (for example `webhook_url_status`) with `configured: true`.
+public extension InsightsMethods {
+    /// To retrieve a notification channel, send a GET request to `/v2/insights/notification-channels/{id}`. Secret
+    /// credentials are never returned. When a secret is configured, the response includes an optional `*_status` object
+    /// (for example `webhook_url_status`) with `configured: true`.
     ///
     /// - Parameters:
     /// - id: A unique identifier for a notification channel.
-    public static func insightsGetNotificationChannel(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> NotificationChannelResponse {
+    static func insightsGetNotificationChannel(
+        config: ClientConfig,
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> NotificationChannelResponse {
         try sdkValidateUuid("id", id)
 
-        return try (await sdkRequest("GET", ["/v2/insights/notification-channels/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "insights_get_notificationChannel", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/insights/notification-channels/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "insights_get_notificationChannel",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

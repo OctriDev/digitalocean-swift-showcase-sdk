@@ -3,7 +3,7 @@
 
 import Foundation
 
-// HarnessRuntime domain models
+/// HarnessRuntime domain models
 /// PATCH body for /v2/agents/sessions/{session_id}: an allowlisted subset of session-scoped settings (never
 /// environment-spec / config mutation). At least one property below must be present; {} is 400. Unknown top-level
 /// keys are rejected with 400. New patchable fields will be added here as optional properties over time.
@@ -18,19 +18,19 @@ public struct PatchSessionRequest: Codable {
     }
 
     init() {
-        self.resumeOnTopoff = nil
+        resumeOnTopoff = nil
     }
 }
 
-extension PatchSessionRequest {
-    public init(from decoder: Decoder) throws {
+public extension PatchSessionRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.resumeOnTopoff = try container.sdkDecodeIfPresent(.resumeOnTopoff)
+        resumeOnTopoff = try container.sdkDecodeIfPresent(.resumeOnTopoff)
     }
 }
 
-extension PatchSessionRequest {
-    public init(resumeOnTopoff: Bool? = nil) {
+public extension PatchSessionRequest {
+    init(resumeOnTopoff: Bool? = nil) {
         self.init()
         self.resumeOnTopoff = resumeOnTopoff
     }
@@ -111,40 +111,57 @@ public struct StreamEvent: Codable {
     }
 
     init() {
-        (self.eventId, self.runId, self.tenantId, self.sessionId, self.traceParent) = (nil, nil, nil, nil, nil)
-        (self.timestamp, self.seq, self.sourceEventId, self.sourceEventType, self.sourceTenantId) = (nil, nil, nil, nil, nil)
-        (self.producer, self.definitionId, self.revisionId, self.credentialBindingSetId, self.type) = (nil, nil, nil, nil, nil)
-        self.data = nil
+        (eventId, runId, tenantId, sessionId, traceParent) = (nil, nil, nil, nil, nil)
+        (timestamp, seq, sourceEventId, sourceEventType, sourceTenantId) = (nil, nil, nil, nil, nil)
+        (producer, definitionId, revisionId, credentialBindingSetId, type) = (nil, nil, nil, nil, nil)
+        data = nil
     }
 }
 
-extension StreamEvent {
-    public init(from decoder: Decoder) throws {
+public extension StreamEvent {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.eventId = try container.sdkDecodeIfPresent(.eventId)
-        self.runId = try container.sdkDecodeIfPresent(.runId)
-        self.tenantId = try container.sdkDecodeIfPresent(.tenantId)
-        self.sessionId = try container.sdkDecodeIfPresent(.sessionId)
-        self.traceParent = try container.sdkDecodeIfPresent(.traceParent)
-        self.timestamp = try container.sdkDecodeIfPresent(.timestamp)
-        self.seq = try container.sdkDecodeIfPresent(.seq)
-        self.sourceEventId = try container.sdkDecodeIfPresent(.sourceEventId)
-        self.sourceEventType = try container.sdkDecodeIfPresent(.sourceEventType)
-        self.sourceTenantId = try container.sdkDecodeIfPresent(.sourceTenantId)
-        self.producer = try container.sdkDecodeIfPresent(.producer)
-        self.definitionId = try container.sdkDecodeIfPresent(.definitionId)
-        self.revisionId = try container.sdkDecodeIfPresent(.revisionId)
-        self.credentialBindingSetId = try container.sdkDecodeIfPresent(.credentialBindingSetId)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        if let value = self.timestamp {
+        eventId = try container.sdkDecodeIfPresent(.eventId)
+        runId = try container.sdkDecodeIfPresent(.runId)
+        tenantId = try container.sdkDecodeIfPresent(.tenantId)
+        sessionId = try container.sdkDecodeIfPresent(.sessionId)
+        traceParent = try container.sdkDecodeIfPresent(.traceParent)
+        timestamp = try container.sdkDecodeIfPresent(.timestamp)
+        seq = try container.sdkDecodeIfPresent(.seq)
+        sourceEventId = try container.sdkDecodeIfPresent(.sourceEventId)
+        sourceEventType = try container.sdkDecodeIfPresent(.sourceEventType)
+        sourceTenantId = try container.sdkDecodeIfPresent(.sourceTenantId)
+        producer = try container.sdkDecodeIfPresent(.producer)
+        definitionId = try container.sdkDecodeIfPresent(.definitionId)
+        revisionId = try container.sdkDecodeIfPresent(.revisionId)
+        credentialBindingSetId = try container.sdkDecodeIfPresent(.credentialBindingSetId)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
+        if let value = timestamp {
             try sdkValidateDateTime("timestamp", sdkWireString(value))
         }
     }
 }
 
-extension StreamEvent {
-    public init(eventId: String? = nil, runId: String? = nil, tenantId: String? = nil, sessionId: String? = nil, traceParent: String? = nil, timestamp: Date? = nil, seq: Int? = nil, sourceEventId: String? = nil, sourceEventType: String? = nil, sourceTenantId: String? = nil, producer: StreamEventProducer? = nil, definitionId: String? = nil, revisionId: String? = nil, credentialBindingSetId: String? = nil, type: StreamEventType? = nil, data: [String: JSONValue]? = nil) throws {
+public extension StreamEvent {
+    init(
+        eventId: String? = nil,
+        runId: String? = nil,
+        tenantId: String? = nil,
+        sessionId: String? = nil,
+        traceParent: String? = nil,
+        timestamp: Date? = nil,
+        seq: Int? = nil,
+        sourceEventId: String? = nil,
+        sourceEventType: String? = nil,
+        sourceTenantId: String? = nil,
+        producer: StreamEventProducer? = nil,
+        definitionId: String? = nil,
+        revisionId: String? = nil,
+        credentialBindingSetId: String? = nil,
+        type: StreamEventType? = nil,
+        data: [String: JSONValue]? = nil
+    ) throws {
         self.init()
         (self.eventId, self.runId) = (eventId, runId)
         (self.tenantId, self.sessionId) = (tenantId, sessionId)
@@ -186,23 +203,29 @@ public struct ResolvedRule: Codable {
     }
 
     init() {
-        (self.id, self.tool, self.match, self.action, self.enforcement) = (nil, nil, nil, nil, nil)
+        (id, tool, match, action, enforcement) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ResolvedRule {
-    public init(from decoder: Decoder) throws {
+public extension ResolvedRule {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.tool = try container.sdkDecodeIfPresent(.tool)
-        self.match = try container.sdkDecodeIfPresent(.match)
-        self.action = try container.sdkDecodeIfPresent(.action)
-        self.enforcement = try container.sdkDecodeIfPresent(.enforcement)
+        id = try container.sdkDecodeIfPresent(.id)
+        tool = try container.sdkDecodeIfPresent(.tool)
+        match = try container.sdkDecodeIfPresent(.match)
+        action = try container.sdkDecodeIfPresent(.action)
+        enforcement = try container.sdkDecodeIfPresent(.enforcement)
     }
 }
 
-extension ResolvedRule {
-    public init(id: String? = nil, tool: String? = nil, match: [String: String]? = nil, action: ResolvedRuleAction? = nil, enforcement: ResolvedRuleEnforcement? = nil) {
+public extension ResolvedRule {
+    init(
+        id: String? = nil,
+        tool: String? = nil,
+        match: [String: String]? = nil,
+        action: ResolvedRuleAction? = nil,
+        enforcement: ResolvedRuleEnforcement? = nil
+    ) {
         self.init()
         (self.id, self.tool) = (id, tool)
         (self.match, self.action) = (match, action)
@@ -229,24 +252,28 @@ public struct RotateSecretResponse: Codable {
     }
 
     init() {
-        (self.webhookSecret, self.previousSecretExpiresAt, self.previousSecretRevoked) = (nil, nil, nil)
+        (webhookSecret, previousSecretExpiresAt, previousSecretRevoked) = (nil, nil, nil)
     }
 }
 
-extension RotateSecretResponse {
-    public init(from decoder: Decoder) throws {
+public extension RotateSecretResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.webhookSecret = try container.sdkDecodeIfPresent(.webhookSecret)
-        self.previousSecretExpiresAt = try container.sdkDecodeIfPresent(.previousSecretExpiresAt)
-        self.previousSecretRevoked = try container.sdkDecodeIfPresent(.previousSecretRevoked)
-        if let value = self.previousSecretExpiresAt {
+        webhookSecret = try container.sdkDecodeIfPresent(.webhookSecret)
+        previousSecretExpiresAt = try container.sdkDecodeIfPresent(.previousSecretExpiresAt)
+        previousSecretRevoked = try container.sdkDecodeIfPresent(.previousSecretRevoked)
+        if let value = previousSecretExpiresAt {
             try sdkValidateDateTime("previous_secret_expires_at", sdkWireString(value))
         }
     }
 }
 
-extension RotateSecretResponse {
-    public init(webhookSecret: String? = nil, previousSecretExpiresAt: Date? = nil, previousSecretRevoked: Bool? = nil) throws {
+public extension RotateSecretResponse {
+    init(
+        webhookSecret: String? = nil,
+        previousSecretExpiresAt: Date? = nil,
+        previousSecretRevoked: Bool? = nil
+    ) throws {
         self.init()
         (self.webhookSecret, self.previousSecretExpiresAt) = (webhookSecret, previousSecretExpiresAt)
         self.previousSecretRevoked = previousSecretRevoked
@@ -266,19 +293,19 @@ public struct RollbackToCheckpointResponse: Codable {
     }
 
     init() {
-        self.session = nil
+        session = nil
     }
 }
 
-extension RollbackToCheckpointResponse {
-    public init(from decoder: Decoder) throws {
+public extension RollbackToCheckpointResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.session = try container.sdkDecodeIfPresent(.session)
+        session = try container.sdkDecodeIfPresent(.session)
     }
 }
 
-extension RollbackToCheckpointResponse {
-    public init(session: DefinitionsSession? = nil) {
+public extension RollbackToCheckpointResponse {
+    init(session: DefinitionsSession? = nil) {
         self.init()
         self.session = session
     }
@@ -303,23 +330,29 @@ public struct ResolveHitlRequest: Codable {
         case source
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ResolveHitlRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.outcome) else {
-            throw SdkValidationError(field: "outcome", code: "required", message: "Validation failed for 'outcome': value is required")
-        }
-        self.outcome = try container.sdkDecodeRequired(.outcome)
-        self.reason = try container.sdkDecodeIfPresent(.reason)
-        self.source = try container.sdkDecodeIfPresent(.source)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ResolveHitlRequest {
-    public init(outcome: HitlOutcome, reason: String? = nil, source: ResolutionSource? = nil) {
+public extension ResolveHitlRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.outcome) else {
+            throw SdkValidationError(
+                field: "outcome",
+                code: "required",
+                message: "Validation failed for 'outcome': value is required"
+            )
+        }
+        outcome = try container.sdkDecodeRequired(.outcome)
+        reason = try container.sdkDecodeIfPresent(.reason)
+        source = try container.sdkDecodeIfPresent(.source)
+    }
+}
+
+public extension ResolveHitlRequest {
+    init(outcome: HitlOutcome, reason: String? = nil, source: ResolutionSource? = nil) {
         (self.outcome, self.reason) = (outcome, reason)
         self.source = source
     }
@@ -350,22 +383,27 @@ public struct Permissions: Codable {
     }
 
     init() {
-        (self.defaultAction, self.rules, self.filesystem, self.network) = (nil, nil, nil, nil)
+        (defaultAction, rules, filesystem, network) = (nil, nil, nil, nil)
     }
 }
 
-extension Permissions {
-    public init(from decoder: Decoder) throws {
+public extension Permissions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.defaultAction = try container.sdkDecodeIfPresent(.defaultAction)
-        self.rules = try container.sdkDecodeIfPresent(.rules)
-        self.filesystem = try container.sdkDecodeIfPresent(.filesystem)
-        self.network = try container.sdkDecodeIfPresent(.network)
+        defaultAction = try container.sdkDecodeIfPresent(.defaultAction)
+        rules = try container.sdkDecodeIfPresent(.rules)
+        filesystem = try container.sdkDecodeIfPresent(.filesystem)
+        network = try container.sdkDecodeIfPresent(.network)
     }
 }
 
-extension Permissions {
-    public init(defaultAction: PermissionsDefaultAction? = nil, rules: [PermissionRule]? = nil, filesystem: PermissionFilesystem? = nil, network: PermissionNetwork? = nil) {
+public extension Permissions {
+    init(
+        defaultAction: PermissionsDefaultAction? = nil,
+        rules: [PermissionRule]? = nil,
+        filesystem: PermissionFilesystem? = nil,
+        network: PermissionNetwork? = nil
+    ) {
         self.init()
         (self.defaultAction, self.rules) = (defaultAction, rules)
         (self.filesystem, self.network) = (filesystem, network)
@@ -417,27 +455,36 @@ public struct ValidationResult: Codable {
     }
 
     init() {
-        (self.agent, self.version, self.ok, self.defaultAction, self.defaultActionVerdict) = (nil, nil, nil, nil, nil)
-        (self.defaultActionRendered, self.defaultActionReason, self.verdicts) = (nil, nil, nil)
+        (agent, version, ok, defaultAction, defaultActionVerdict) = (nil, nil, nil, nil, nil)
+        (defaultActionRendered, defaultActionReason, verdicts) = (nil, nil, nil)
     }
 }
 
-extension ValidationResult {
-    public init(from decoder: Decoder) throws {
+public extension ValidationResult {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agent = try container.sdkDecodeIfPresent(.agent)
-        self.version = try container.sdkDecodeIfPresent(.version)
-        self.ok = try container.sdkDecodeIfPresent(.ok)
-        self.defaultAction = try container.sdkDecodeIfPresent(.defaultAction)
-        self.defaultActionVerdict = try container.sdkDecodeIfPresent(.defaultActionVerdict)
-        self.defaultActionRendered = try container.sdkDecodeIfPresent(.defaultActionRendered)
-        self.defaultActionReason = try container.sdkDecodeIfPresent(.defaultActionReason)
-        self.verdicts = try container.sdkDecodeIfPresent(.verdicts)
+        agent = try container.sdkDecodeIfPresent(.agent)
+        version = try container.sdkDecodeIfPresent(.version)
+        ok = try container.sdkDecodeIfPresent(.ok)
+        defaultAction = try container.sdkDecodeIfPresent(.defaultAction)
+        defaultActionVerdict = try container.sdkDecodeIfPresent(.defaultActionVerdict)
+        defaultActionRendered = try container.sdkDecodeIfPresent(.defaultActionRendered)
+        defaultActionReason = try container.sdkDecodeIfPresent(.defaultActionReason)
+        verdicts = try container.sdkDecodeIfPresent(.verdicts)
     }
 }
 
-extension ValidationResult {
-    public init(agent: String? = nil, version: String? = nil, ok: Bool? = nil, defaultAction: ValidationResultDefaultAction? = nil, defaultActionVerdict: ValidationResultDefaultActionVerdict? = nil, defaultActionRendered: ValidationResultDefaultActionRendered? = nil, defaultActionReason: String? = nil, verdicts: [RuleVerdict]? = nil) {
+public extension ValidationResult {
+    init(
+        agent: String? = nil,
+        version: String? = nil,
+        ok: Bool? = nil,
+        defaultAction: ValidationResultDefaultAction? = nil,
+        defaultActionVerdict: ValidationResultDefaultActionVerdict? = nil,
+        defaultActionRendered: ValidationResultDefaultActionRendered? = nil,
+        defaultActionReason: String? = nil,
+        verdicts: [RuleVerdict]? = nil
+    ) {
         self.init()
         (self.agent, self.version) = (agent, version)
         (self.ok, self.defaultAction) = (ok, defaultAction)
@@ -485,31 +532,38 @@ public struct ReusableSession: Codable {
     }
 
     init() {
-        (self.sessionId, self.name, self.agentKind, self.status, self.createdAt) = (nil, nil, nil, nil, nil)
-        self.lastEventAt = nil
+        (sessionId, name, agentKind, status, createdAt) = (nil, nil, nil, nil, nil)
+        lastEventAt = nil
     }
 }
 
-extension ReusableSession {
-    public init(from decoder: Decoder) throws {
+public extension ReusableSession {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.sessionId = try container.sdkDecodeIfPresent(.sessionId)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.agentKind = try container.sdkDecodeIfPresent(.agentKind)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.lastEventAt = try container.sdkDecodeIfPresent(.lastEventAt)
-        if let value = self.createdAt {
+        sessionId = try container.sdkDecodeIfPresent(.sessionId)
+        name = try container.sdkDecodeIfPresent(.name)
+        agentKind = try container.sdkDecodeIfPresent(.agentKind)
+        status = try container.sdkDecodeIfPresent(.status)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        lastEventAt = try container.sdkDecodeIfPresent(.lastEventAt)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.lastEventAt {
+        if let value = lastEventAt {
             try sdkValidateDateTime("last_event_at", sdkWireString(value))
         }
     }
 }
 
-extension ReusableSession {
-    public init(sessionId: String? = nil, name: String? = nil, agentKind: AgentKind? = nil, status: SessionStatus? = nil, createdAt: Date? = nil, lastEventAt: Date? = nil) throws {
+public extension ReusableSession {
+    init(
+        sessionId: String? = nil,
+        name: String? = nil,
+        agentKind: AgentKind? = nil,
+        status: SessionStatus? = nil,
+        createdAt: Date? = nil,
+        lastEventAt: Date? = nil
+    ) throws {
         self.init()
         (self.sessionId, self.name) = (sessionId, name)
         (self.agentKind, self.status) = (agentKind, status)
@@ -542,6 +596,6 @@ public struct InsightsOptIn: Codable {
     }
 
     init() {
-        (self.metrics, self.logs, self.traces) = (nil, nil, nil)
+        (metrics, logs, traces) = (nil, nil, nil)
     }
 }

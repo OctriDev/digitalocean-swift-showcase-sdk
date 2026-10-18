@@ -3,7 +3,7 @@
 
 import Foundation
 
-// SharedRepository domain models
+/// SharedRepository domain models
 public struct RepositoryManifestsVariant0: Codable {
     public var manifests: [RepositoryManifest]?
 
@@ -12,19 +12,19 @@ public struct RepositoryManifestsVariant0: Codable {
     }
 
     init() {
-        self.manifests = nil
+        manifests = nil
     }
 }
 
-extension RepositoryManifestsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension RepositoryManifestsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.manifests = try container.sdkDecodeIfPresent(.manifests)
+        manifests = try container.sdkDecodeIfPresent(.manifests)
     }
 }
 
-extension RepositoryManifestsVariant0 {
-    public init(manifests: [RepositoryManifest]? = nil) {
+public extension RepositoryManifestsVariant0 {
+    init(manifests: [RepositoryManifest]? = nil) {
         self.init()
         self.manifests = manifests
     }
@@ -69,30 +69,39 @@ public struct RepositoryManifest: Codable {
     }
 
     init() {
-        (self.registryName, self.repository, self.digest, self.compressedSizeBytes, self.sizeBytes) = (nil, nil, nil, nil, nil)
-        (self.updatedAt, self.tags, self.blobs) = (nil, nil, nil)
+        (registryName, repository, digest, compressedSizeBytes, sizeBytes) = (nil, nil, nil, nil, nil)
+        (updatedAt, tags, blobs) = (nil, nil, nil)
     }
 }
 
-extension RepositoryManifest {
-    public init(from decoder: Decoder) throws {
+public extension RepositoryManifest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.registryName = try container.sdkDecodeIfPresent(.registryName)
-        self.repository = try container.sdkDecodeIfPresent(.repository)
-        self.digest = try container.sdkDecodeIfPresent(.digest)
-        self.compressedSizeBytes = try container.sdkDecodeIfPresent(.compressedSizeBytes)
-        self.sizeBytes = try container.sdkDecodeIfPresent(.sizeBytes)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.blobs = try container.sdkDecodeIfPresent(.blobs)
-        if let value = self.updatedAt {
+        registryName = try container.sdkDecodeIfPresent(.registryName)
+        repository = try container.sdkDecodeIfPresent(.repository)
+        digest = try container.sdkDecodeIfPresent(.digest)
+        compressedSizeBytes = try container.sdkDecodeIfPresent(.compressedSizeBytes)
+        sizeBytes = try container.sdkDecodeIfPresent(.sizeBytes)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        blobs = try container.sdkDecodeIfPresent(.blobs)
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension RepositoryManifest {
-    public init(registryName: String? = nil, repository: String? = nil, digest: String? = nil, compressedSizeBytes: Int? = nil, sizeBytes: Int? = nil, updatedAt: Date? = nil, tags: [String]? = nil, blobs: [RepositoryBlob]? = nil) throws {
+public extension RepositoryManifest {
+    init(
+        registryName: String? = nil,
+        repository: String? = nil,
+        digest: String? = nil,
+        compressedSizeBytes: Int? = nil,
+        sizeBytes: Int? = nil,
+        updatedAt: Date? = nil,
+        tags: [String]? = nil,
+        blobs: [RepositoryBlob]? = nil
+    ) throws {
         self.init()
         (self.registryName, self.repository) = (registryName, repository)
         (self.digest, self.compressedSizeBytes) = (digest, compressedSizeBytes)
@@ -130,23 +139,29 @@ public struct RepositoryV2: Codable {
     }
 
     init() {
-        (self.registryName, self.name, self.latestManifest, self.tagCount, self.manifestCount) = (nil, nil, nil, nil, nil)
+        (registryName, name, latestManifest, tagCount, manifestCount) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension RepositoryV2 {
-    public init(from decoder: Decoder) throws {
+public extension RepositoryV2 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.registryName = try container.sdkDecodeIfPresent(.registryName)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.latestManifest = try container.sdkDecodeIfPresent(.latestManifest)
-        self.tagCount = try container.sdkDecodeIfPresent(.tagCount)
-        self.manifestCount = try container.sdkDecodeIfPresent(.manifestCount)
+        registryName = try container.sdkDecodeIfPresent(.registryName)
+        name = try container.sdkDecodeIfPresent(.name)
+        latestManifest = try container.sdkDecodeIfPresent(.latestManifest)
+        tagCount = try container.sdkDecodeIfPresent(.tagCount)
+        manifestCount = try container.sdkDecodeIfPresent(.manifestCount)
     }
 }
 
-extension RepositoryV2 {
-    public init(registryName: String? = nil, name: String? = nil, latestManifest: RepositoryManifest? = nil, tagCount: Int? = nil, manifestCount: Int? = nil) {
+public extension RepositoryV2 {
+    init(
+        registryName: String? = nil,
+        name: String? = nil,
+        latestManifest: RepositoryManifest? = nil,
+        tagCount: Int? = nil,
+        manifestCount: Int? = nil
+    ) {
         self.init()
         (self.registryName, self.name) = (registryName, name)
         (self.latestManifest, self.tagCount) = (latestManifest, tagCount)
@@ -168,23 +183,29 @@ public struct RepositoryManifests: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension RepositoryManifests {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.manifests = try container.sdkDecodeIfPresent(.manifests)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension RepositoryManifests {
-    public init(meta: MetaMeta, manifests: [RepositoryManifest]? = nil, links: PageLinks? = nil) {
+public extension RepositoryManifests {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        manifests = try container.sdkDecodeIfPresent(.manifests)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension RepositoryManifests {
+    init(meta: MetaMeta, manifests: [RepositoryManifest]? = nil, links: PageLinks? = nil) {
         (self.meta, self.manifests) = (meta, manifests)
         self.links = links
     }
@@ -198,19 +219,19 @@ public struct RepositoryTagsVariant0: Codable {
     }
 
     init() {
-        self.tags = nil
+        tags = nil
     }
 }
 
-extension RepositoryTagsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension RepositoryTagsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
+        tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-extension RepositoryTagsVariant0 {
-    public init(tags: [RepositoryTag]? = nil) {
+public extension RepositoryTagsVariant0 {
+    init(tags: [RepositoryTag]? = nil) {
         self.init()
         self.tags = tags
     }
@@ -252,29 +273,37 @@ public struct RepositoryTag: Codable {
     }
 
     init() {
-        (self.registryName, self.repository, self.tag, self.manifestDigest, self.compressedSizeBytes) = (nil, nil, nil, nil, nil)
-        (self.sizeBytes, self.updatedAt) = (nil, nil)
+        (registryName, repository, tag, manifestDigest, compressedSizeBytes) = (nil, nil, nil, nil, nil)
+        (sizeBytes, updatedAt) = (nil, nil)
     }
 }
 
-extension RepositoryTag {
-    public init(from decoder: Decoder) throws {
+public extension RepositoryTag {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.registryName = try container.sdkDecodeIfPresent(.registryName)
-        self.repository = try container.sdkDecodeIfPresent(.repository)
-        self.tag = try container.sdkDecodeIfPresent(.tag)
-        self.manifestDigest = try container.sdkDecodeIfPresent(.manifestDigest)
-        self.compressedSizeBytes = try container.sdkDecodeIfPresent(.compressedSizeBytes)
-        self.sizeBytes = try container.sdkDecodeIfPresent(.sizeBytes)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = self.updatedAt {
+        registryName = try container.sdkDecodeIfPresent(.registryName)
+        repository = try container.sdkDecodeIfPresent(.repository)
+        tag = try container.sdkDecodeIfPresent(.tag)
+        manifestDigest = try container.sdkDecodeIfPresent(.manifestDigest)
+        compressedSizeBytes = try container.sdkDecodeIfPresent(.compressedSizeBytes)
+        sizeBytes = try container.sdkDecodeIfPresent(.sizeBytes)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension RepositoryTag {
-    public init(registryName: String? = nil, repository: String? = nil, tag: String? = nil, manifestDigest: String? = nil, compressedSizeBytes: Int? = nil, sizeBytes: Int? = nil, updatedAt: Date? = nil) throws {
+public extension RepositoryTag {
+    init(
+        registryName: String? = nil,
+        repository: String? = nil,
+        tag: String? = nil,
+        manifestDigest: String? = nil,
+        compressedSizeBytes: Int? = nil,
+        sizeBytes: Int? = nil,
+        updatedAt: Date? = nil
+    ) throws {
         self.init()
         (self.registryName, self.repository) = (registryName, repository)
         (self.tag, self.manifestDigest) = (tag, manifestDigest)
@@ -300,23 +329,29 @@ public struct RepositoryTags: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension RepositoryTags {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension RepositoryTags {
-    public init(meta: MetaMeta, tags: [RepositoryTag]? = nil, links: PageLinks? = nil) {
+public extension RepositoryTags {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension RepositoryTags {
+    init(meta: MetaMeta, tags: [RepositoryTag]? = nil, links: PageLinks? = nil) {
         (self.meta, self.tags) = (meta, tags)
         self.links = links
     }
@@ -337,20 +372,20 @@ public struct RepositoryBlob: Codable {
     }
 
     init() {
-        (self.digest, self.compressedSizeBytes) = (nil, nil)
+        (digest, compressedSizeBytes) = (nil, nil)
     }
 }
 
-extension RepositoryBlob {
-    public init(from decoder: Decoder) throws {
+public extension RepositoryBlob {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.digest = try container.sdkDecodeIfPresent(.digest)
-        self.compressedSizeBytes = try container.sdkDecodeIfPresent(.compressedSizeBytes)
+        digest = try container.sdkDecodeIfPresent(.digest)
+        compressedSizeBytes = try container.sdkDecodeIfPresent(.compressedSizeBytes)
     }
 }
 
-extension RepositoryBlob {
-    public init(digest: String? = nil, compressedSizeBytes: Int? = nil) {
+public extension RepositoryBlob {
+    init(digest: String? = nil, compressedSizeBytes: Int? = nil) {
         self.init()
         (self.digest, self.compressedSizeBytes) = (digest, compressedSizeBytes)
     }

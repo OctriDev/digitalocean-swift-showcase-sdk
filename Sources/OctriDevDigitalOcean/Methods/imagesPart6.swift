@@ -6,17 +6,41 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ImagesMethods {
-    /// To decline an account transfer for an image, send a POST request to `/v2/images/$IMAGE_ID/account_transfer/decline`. Only the recipient of an image account transfer can decline the transfer. If the transfer is declined, the image will remain in the sender's account and will not be transferred to the recipient.
+public extension ImagesMethods {
+    /// To decline an account transfer for an image, send a POST request to
+    /// `/v2/images/$IMAGE_ID/account_transfer/decline`. Only the recipient of an image account transfer can decline the
+    /// transfer. If the transfer is declined, the image will remain in the sender's account and will not be transferred
+    /// to the recipient.
     ///
     /// - Parameters:
     /// - imageId: A unique number that can be used to identify and reference a
     ///   specific image.
     /// - transferId: A unique number that used to identify and reference an image
     ///   account transfer.
-    public static func imagesPostAccountTransferDecline(config: ClientConfig, imageId: Int, transferId: Int, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func imagesPostAccountTransferDecline(
+        config: ClientConfig,
+        imageId: Int,
+        transferId: Int,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         let requestBody = ImagesPostAccountTransferDeclineRequestBody(transferId: transferId)
 
-        return try (await sdkRequest("POST", ["/v2/images/", sdkEncodePathSegment(sdkWireString(imageId)), "/account_transfer/decline"].joined(), config: config, body: requestBody, decoder: .empty, operationId: "images_post_account_transfer_decline", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/v2/images/", sdkEncodePathSegment(sdkWireString(imageId)), "/account_transfer/decline"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .empty,
+            operationId: "images_post_account_transfer_decline",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

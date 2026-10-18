@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiCreate domain models
+/// AgentPlatformAPIApiCreate domain models
 /// Data to create a knowledge base data source
 public struct ApiCreateKnowledgeBaseDataSourceInputPublic: Codable {
     /// AWS S3 Data Source
@@ -31,25 +31,38 @@ public struct ApiCreateKnowledgeBaseDataSourceInputPublic: Codable {
     }
 
     init() {
-        (self.awsDataSource, self.chunkingAlgorithm, self.chunkingOptions, self.knowledgeBaseUuid, self.spacesDataSource) = (nil, nil, nil, nil, nil)
-        self.webCrawlerDataSource = nil
+        (awsDataSource, chunkingAlgorithm, chunkingOptions, knowledgeBaseUuid, spacesDataSource) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        webCrawlerDataSource = nil
     }
 }
 
-extension ApiCreateKnowledgeBaseDataSourceInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateKnowledgeBaseDataSourceInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.awsDataSource = try container.sdkDecodeIfPresent(.awsDataSource)
-        self.chunkingAlgorithm = try container.sdkDecodeIfPresent(.chunkingAlgorithm)
-        self.chunkingOptions = try container.sdkDecodeIfPresent(.chunkingOptions)
-        self.knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
-        self.spacesDataSource = try container.sdkDecodeIfPresent(.spacesDataSource)
-        self.webCrawlerDataSource = try container.sdkDecodeIfPresent(.webCrawlerDataSource)
+        awsDataSource = try container.sdkDecodeIfPresent(.awsDataSource)
+        chunkingAlgorithm = try container.sdkDecodeIfPresent(.chunkingAlgorithm)
+        chunkingOptions = try container.sdkDecodeIfPresent(.chunkingOptions)
+        knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
+        spacesDataSource = try container.sdkDecodeIfPresent(.spacesDataSource)
+        webCrawlerDataSource = try container.sdkDecodeIfPresent(.webCrawlerDataSource)
     }
 }
 
-extension ApiCreateKnowledgeBaseDataSourceInputPublic {
-    public init(awsDataSource: ApiAWSDataSource? = nil, chunkingAlgorithm: ApiChunkingAlgorithm? = nil, chunkingOptions: ApiChunkingOptions? = nil, knowledgeBaseUuid: String? = nil, spacesDataSource: ApiSpacesDataSource? = nil, webCrawlerDataSource: ApiWebCrawlerDataSource? = nil) {
+public extension ApiCreateKnowledgeBaseDataSourceInputPublic {
+    init(
+        awsDataSource: ApiAWSDataSource? = nil,
+        chunkingAlgorithm: ApiChunkingAlgorithm? = nil,
+        chunkingOptions: ApiChunkingOptions? = nil,
+        knowledgeBaseUuid: String? = nil,
+        spacesDataSource: ApiSpacesDataSource? = nil,
+        webCrawlerDataSource: ApiWebCrawlerDataSource? = nil
+    ) {
         self.init()
         (self.awsDataSource, self.chunkingAlgorithm) = (awsDataSource, chunkingAlgorithm)
         (self.chunkingOptions, self.knowledgeBaseUuid) = (chunkingOptions, knowledgeBaseUuid)
@@ -105,29 +118,40 @@ public struct ApiCreateKnowledgeBaseInputPublic: Codable {
     }
 
     init() {
-        (self.databaseId, self.datasources, self.embeddingModelUuid, self.name, self.projectId) = (nil, nil, nil, nil, nil)
-        (self.region, self.rerankingConfig, self.size, self.tags, self.vpcUuid) = (nil, nil, nil, nil, nil)
+        (databaseId, datasources, embeddingModelUuid, name, projectId) = (nil, nil, nil, nil, nil)
+        (region, rerankingConfig, size, tags, vpcUuid) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiCreateKnowledgeBaseInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateKnowledgeBaseInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.databaseId = try container.sdkDecodeIfPresent(.databaseId)
-        self.datasources = try container.sdkDecodeIfPresent(.datasources)
-        self.embeddingModelUuid = try container.sdkDecodeIfPresent(.embeddingModelUuid)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.projectId = try container.sdkDecodeIfPresent(.projectId)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.rerankingConfig = try container.sdkDecodeIfPresent(.rerankingConfig)
-        self.size = try container.sdkDecodeIfPresent(.size)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        databaseId = try container.sdkDecodeIfPresent(.databaseId)
+        datasources = try container.sdkDecodeIfPresent(.datasources)
+        embeddingModelUuid = try container.sdkDecodeIfPresent(.embeddingModelUuid)
+        name = try container.sdkDecodeIfPresent(.name)
+        projectId = try container.sdkDecodeIfPresent(.projectId)
+        region = try container.sdkDecodeIfPresent(.region)
+        rerankingConfig = try container.sdkDecodeIfPresent(.rerankingConfig)
+        size = try container.sdkDecodeIfPresent(.size)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
     }
 }
 
-extension ApiCreateKnowledgeBaseInputPublic {
-    public init(databaseId: String? = nil, datasources: [ApiKBDataSource]? = nil, embeddingModelUuid: String? = nil, name: String? = nil, projectId: String? = nil, region: String? = nil, rerankingConfig: ApiRerankingConfiguration? = nil, size: ApiOpenSearchPlanSize? = nil, tags: [String]? = nil, vpcUuid: String? = nil) {
+public extension ApiCreateKnowledgeBaseInputPublic {
+    init(
+        databaseId: String? = nil,
+        datasources: [ApiKBDataSource]? = nil,
+        embeddingModelUuid: String? = nil,
+        name: String? = nil,
+        projectId: String? = nil,
+        region: String? = nil,
+        rerankingConfig: ApiRerankingConfiguration? = nil,
+        size: ApiOpenSearchPlanSize? = nil,
+        tags: [String]? = nil,
+        vpcUuid: String? = nil
+    ) {
         self.init()
         (self.databaseId, self.datasources) = (databaseId, datasources)
         (self.embeddingModelUuid, self.name) = (embeddingModelUuid, name)
@@ -152,20 +176,20 @@ public struct ApiCreateAnthropicAPIKeyInputPublic: Codable {
     }
 
     init() {
-        (self.apiKey, self.name) = (nil, nil)
+        (apiKey, name) = (nil, nil)
     }
 }
 
-extension ApiCreateAnthropicAPIKeyInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateAnthropicAPIKeyInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKey = try container.sdkDecodeIfPresent(.apiKey)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        apiKey = try container.sdkDecodeIfPresent(.apiKey)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ApiCreateAnthropicAPIKeyInputPublic {
-    public init(apiKey: String? = nil, name: String? = nil) {
+public extension ApiCreateAnthropicAPIKeyInputPublic {
+    init(apiKey: String? = nil, name: String? = nil) {
         self.init()
         (self.apiKey, self.name) = (apiKey, name)
     }
@@ -189,21 +213,21 @@ public struct ApiCreateScheduledIndexingInputPublic: Codable {
     }
 
     init() {
-        (self.days, self.knowledgeBaseUuid, self.time) = (nil, nil, nil)
+        (days, knowledgeBaseUuid, time) = (nil, nil, nil)
     }
 }
 
-extension ApiCreateScheduledIndexingInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateScheduledIndexingInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.days = try container.sdkDecodeIfPresent(.days)
-        self.knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
-        self.time = try container.sdkDecodeIfPresent(.time)
+        days = try container.sdkDecodeIfPresent(.days)
+        knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
+        time = try container.sdkDecodeIfPresent(.time)
     }
 }
 
-extension ApiCreateScheduledIndexingInputPublic {
-    public init(days: [Int]? = nil, knowledgeBaseUuid: String? = nil, time: String? = nil) {
+public extension ApiCreateScheduledIndexingInputPublic {
+    init(days: [Int]? = nil, knowledgeBaseUuid: String? = nil, time: String? = nil) {
         self.init()
         (self.days, self.knowledgeBaseUuid) = (days, knowledgeBaseUuid)
         self.time = time
@@ -220,19 +244,19 @@ public struct ApiCreateAgentOutput: Codable {
     }
 
     init() {
-        self.agent = nil
+        agent = nil
     }
 }
 
-extension ApiCreateAgentOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateAgentOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agent = try container.sdkDecodeIfPresent(.agent)
+        agent = try container.sdkDecodeIfPresent(.agent)
     }
 }
 
-extension ApiCreateAgentOutput {
-    public init(agent: ApiAgent? = nil) {
+public extension ApiCreateAgentOutput {
+    init(agent: ApiAgent? = nil) {
         self.init()
         self.agent = agent
     }
@@ -253,20 +277,20 @@ public struct ApiCreateOpenAIAPIKeyInputPublic: Codable {
     }
 
     init() {
-        (self.apiKey, self.name) = (nil, nil)
+        (apiKey, name) = (nil, nil)
     }
 }
 
-extension ApiCreateOpenAIAPIKeyInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateOpenAIAPIKeyInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKey = try container.sdkDecodeIfPresent(.apiKey)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        apiKey = try container.sdkDecodeIfPresent(.apiKey)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ApiCreateOpenAIAPIKeyInputPublic {
-    public init(apiKey: String? = nil, name: String? = nil) {
+public extension ApiCreateOpenAIAPIKeyInputPublic {
+    init(apiKey: String? = nil, name: String? = nil) {
         self.init()
         (self.apiKey, self.name) = (apiKey, name)
     }
@@ -282,19 +306,19 @@ public struct ApiCreateDataSourceFileUploadPresignedUrlsInputPublic: Codable {
     }
 
     init() {
-        self.files = nil
+        files = nil
     }
 }
 
-extension ApiCreateDataSourceFileUploadPresignedUrlsInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateDataSourceFileUploadPresignedUrlsInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.files = try container.sdkDecodeIfPresent(.files)
+        files = try container.sdkDecodeIfPresent(.files)
     }
 }
 
-extension ApiCreateDataSourceFileUploadPresignedUrlsInputPublic {
-    public init(files: [ApiPresignedUrlFile]? = nil) {
+public extension ApiCreateDataSourceFileUploadPresignedUrlsInputPublic {
+    init(files: [ApiPresignedUrlFile]? = nil) {
         self.init()
         self.files = files
     }
@@ -311,19 +335,19 @@ public struct ApiCreateModelAPIKeyInputPublic: Codable {
     }
 
     init() {
-        self.name = nil
+        name = nil
     }
 }
 
-extension ApiCreateModelAPIKeyInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateModelAPIKeyInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ApiCreateModelAPIKeyInputPublic {
-    public init(name: String? = nil) {
+public extension ApiCreateModelAPIKeyInputPublic {
+    init(name: String? = nil) {
         self.init()
         self.name = name
     }
@@ -348,21 +372,21 @@ public struct ApiCreateWorkspaceInputPublic: Codable {
     }
 
     init() {
-        (self.agentUuids, self.description, self.name) = (nil, nil, nil)
+        (agentUuids, description, name) = (nil, nil, nil)
     }
 }
 
-extension ApiCreateWorkspaceInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateWorkspaceInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agentUuids = try container.sdkDecodeIfPresent(.agentUuids)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        agentUuids = try container.sdkDecodeIfPresent(.agentUuids)
+        description = try container.sdkDecodeIfPresent(.description)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ApiCreateWorkspaceInputPublic {
-    public init(agentUuids: [String]? = nil, description: String? = nil, name: String? = nil) {
+public extension ApiCreateWorkspaceInputPublic {
+    init(agentUuids: [String]? = nil, description: String? = nil, name: String? = nil) {
         self.init()
         (self.agentUuids, self.description) = (agentUuids, description)
         self.name = name
@@ -379,19 +403,19 @@ public struct ApiCreateOpenAIAPIKeyOutput: Codable {
     }
 
     init() {
-        self.apiKeyInfo = nil
+        apiKeyInfo = nil
     }
 }
 
-extension ApiCreateOpenAIAPIKeyOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateOpenAIAPIKeyOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-extension ApiCreateOpenAIAPIKeyOutput {
-    public init(apiKeyInfo: ApiOpenAIAPIKeyInfo? = nil) {
+public extension ApiCreateOpenAIAPIKeyOutput {
+    init(apiKeyInfo: ApiOpenAIAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }
@@ -407,19 +431,19 @@ public struct ApiCreateKnowledgeBaseDataSourceOutput: Codable {
     }
 
     init() {
-        self.knowledgeBaseDataSource = nil
+        knowledgeBaseDataSource = nil
     }
 }
 
-extension ApiCreateKnowledgeBaseDataSourceOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateKnowledgeBaseDataSourceOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.knowledgeBaseDataSource = try container.sdkDecodeIfPresent(.knowledgeBaseDataSource)
+        knowledgeBaseDataSource = try container.sdkDecodeIfPresent(.knowledgeBaseDataSource)
     }
 }
 
-extension ApiCreateKnowledgeBaseDataSourceOutput {
-    public init(knowledgeBaseDataSource: ApiKnowledgeBaseDataSource? = nil) {
+public extension ApiCreateKnowledgeBaseDataSourceOutput {
+    init(knowledgeBaseDataSource: ApiKnowledgeBaseDataSource? = nil) {
         self.init()
         self.knowledgeBaseDataSource = knowledgeBaseDataSource
     }
@@ -435,19 +459,19 @@ public struct ApiCreateWorkspaceOutput: Codable {
     }
 
     init() {
-        self.workspace = nil
+        workspace = nil
     }
 }
 
-extension ApiCreateWorkspaceOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateWorkspaceOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.workspace = try container.sdkDecodeIfPresent(.workspace)
+        workspace = try container.sdkDecodeIfPresent(.workspace)
     }
 }
 
-extension ApiCreateWorkspaceOutput {
-    public init(workspace: ApiWorkspace? = nil) {
+public extension ApiCreateWorkspaceOutput {
+    init(workspace: ApiWorkspace? = nil) {
         self.init()
         self.workspace = workspace
     }
@@ -467,20 +491,20 @@ public struct ApiCreateDataSourceFileUploadPresignedUrlsOutput: Codable {
     }
 
     init() {
-        (self.requestId, self.uploads) = (nil, nil)
+        (requestId, uploads) = (nil, nil)
     }
 }
 
-extension ApiCreateDataSourceFileUploadPresignedUrlsOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateDataSourceFileUploadPresignedUrlsOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.requestId = try container.sdkDecodeIfPresent(.requestId)
-        self.uploads = try container.sdkDecodeIfPresent(.uploads)
+        requestId = try container.sdkDecodeIfPresent(.requestId)
+        uploads = try container.sdkDecodeIfPresent(.uploads)
     }
 }
 
-extension ApiCreateDataSourceFileUploadPresignedUrlsOutput {
-    public init(requestId: String? = nil, uploads: [ApiFilePresignedUrlResponse]? = nil) {
+public extension ApiCreateDataSourceFileUploadPresignedUrlsOutput {
+    init(requestId: String? = nil, uploads: [ApiFilePresignedUrlResponse]? = nil) {
         self.init()
         (self.requestId, self.uploads) = (requestId, uploads)
     }
@@ -496,19 +520,19 @@ public struct ApiCreateScenarioSetFromLibraryOutput: Codable {
     }
 
     init() {
-        self.scenarioSet = nil
+        scenarioSet = nil
     }
 }
 
-extension ApiCreateScenarioSetFromLibraryOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateScenarioSetFromLibraryOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.scenarioSet = try container.sdkDecodeIfPresent(.scenarioSet)
+        scenarioSet = try container.sdkDecodeIfPresent(.scenarioSet)
     }
 }
 
-extension ApiCreateScenarioSetFromLibraryOutput {
-    public init(scenarioSet: ApiScenarioSet? = nil) {
+public extension ApiCreateScenarioSetFromLibraryOutput {
+    init(scenarioSet: ApiScenarioSet? = nil) {
         self.init()
         self.scenarioSet = scenarioSet
     }
@@ -525,19 +549,19 @@ public struct ApiCreateModelEvaluationRunOutput: Codable {
     }
 
     init() {
-        self.evalRunUuid = nil
+        evalRunUuid = nil
     }
 }
 
-extension ApiCreateModelEvaluationRunOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateModelEvaluationRunOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.evalRunUuid = try container.sdkDecodeIfPresent(.evalRunUuid)
+        evalRunUuid = try container.sdkDecodeIfPresent(.evalRunUuid)
     }
 }
 
-extension ApiCreateModelEvaluationRunOutput {
-    public init(evalRunUuid: String? = nil) {
+public extension ApiCreateModelEvaluationRunOutput {
+    init(evalRunUuid: String? = nil) {
         self.init()
         self.evalRunUuid = evalRunUuid
     }
@@ -553,19 +577,19 @@ public struct ApiCreateAgentAPIKeyOutput: Codable {
     }
 
     init() {
-        self.apiKeyInfo = nil
+        apiKeyInfo = nil
     }
 }
 
-extension ApiCreateAgentAPIKeyOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateAgentAPIKeyOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-extension ApiCreateAgentAPIKeyOutput {
-    public init(apiKeyInfo: ApiAgentAPIKeyInfo? = nil) {
+public extension ApiCreateAgentAPIKeyOutput {
+    init(apiKeyInfo: ApiAgentAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }
@@ -581,6 +605,6 @@ public struct ApiCreateAnthropicAPIKeyOutput: Codable {
     }
 
     init() {
-        self.apiKeyInfo = nil
+        apiKeyInfo = nil
     }
 }

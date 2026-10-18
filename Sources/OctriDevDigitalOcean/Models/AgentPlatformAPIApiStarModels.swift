@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiStar domain models
+/// AgentPlatformAPIApiStar domain models
 /// Typed representation of the `ApiStarMetric` API schema.
 public struct ApiStarMetric: Codable {
     /// Optional `string` value serialized in the `metric_uuid` wire field.
@@ -28,22 +28,27 @@ public struct ApiStarMetric: Codable {
     }
 
     init() {
-        (self.metricUuid, self.name, self.successThreshold, self.successThresholdPct) = (nil, nil, nil, nil)
+        (metricUuid, name, successThreshold, successThresholdPct) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiStarMetric {
-    public init(from decoder: Decoder) throws {
+public extension ApiStarMetric {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.metricUuid = try container.sdkDecodeIfPresent(.metricUuid)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.successThreshold = try container.sdkDecodeIfPresent(.successThreshold)
-        self.successThresholdPct = try container.sdkDecodeIfPresent(.successThresholdPct)
+        metricUuid = try container.sdkDecodeIfPresent(.metricUuid)
+        name = try container.sdkDecodeIfPresent(.name)
+        successThreshold = try container.sdkDecodeIfPresent(.successThreshold)
+        successThresholdPct = try container.sdkDecodeIfPresent(.successThresholdPct)
     }
 }
 
-extension ApiStarMetric {
-    public init(metricUuid: String? = nil, name: String? = nil, successThreshold: Double? = nil, successThresholdPct: Int? = nil) {
+public extension ApiStarMetric {
+    init(
+        metricUuid: String? = nil,
+        name: String? = nil,
+        successThreshold: Double? = nil,
+        successThresholdPct: Int? = nil
+    ) {
         self.init()
         (self.metricUuid, self.name) = (metricUuid, name)
         (self.successThreshold, self.successThresholdPct) = (successThreshold, successThresholdPct)
@@ -69,21 +74,21 @@ public struct ApiStarMetricSummary: Codable {
     }
 
     init() {
-        (self.metricName, self.metricUuid, self.threshold) = (nil, nil, nil)
+        (metricName, metricUuid, threshold) = (nil, nil, nil)
     }
 }
 
-extension ApiStarMetricSummary {
-    public init(from decoder: Decoder) throws {
+public extension ApiStarMetricSummary {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.metricName = try container.sdkDecodeIfPresent(.metricName)
-        self.metricUuid = try container.sdkDecodeIfPresent(.metricUuid)
-        self.threshold = try container.sdkDecodeIfPresent(.threshold)
+        metricName = try container.sdkDecodeIfPresent(.metricName)
+        metricUuid = try container.sdkDecodeIfPresent(.metricUuid)
+        threshold = try container.sdkDecodeIfPresent(.threshold)
     }
 }
 
-extension ApiStarMetricSummary {
-    public init(metricName: String? = nil, metricUuid: String? = nil, threshold: Double? = nil) {
+public extension ApiStarMetricSummary {
+    init(metricName: String? = nil, metricUuid: String? = nil, threshold: Double? = nil) {
         self.init()
         (self.metricName, self.metricUuid) = (metricName, metricUuid)
         self.threshold = threshold

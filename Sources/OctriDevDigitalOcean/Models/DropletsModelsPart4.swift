@@ -3,9 +3,15 @@
 
 import Foundation
 
-// Droplets domain models
-extension AssociatedResourcesList {
-    public init(reservedIps: [AssociatedResource]? = nil, floatingIps: [AssociatedResource]? = nil, snapshots: [AssociatedResource]? = nil, volumes: [AssociatedResource]? = nil, volumeSnapshots: [AssociatedResource]? = nil) {
+/// Droplets domain models
+public extension AssociatedResourcesList {
+    init(
+        reservedIps: [AssociatedResource]? = nil,
+        floatingIps: [AssociatedResource]? = nil,
+        snapshots: [AssociatedResource]? = nil,
+        volumes: [AssociatedResource]? = nil,
+        volumeSnapshots: [AssociatedResource]? = nil
+    ) {
         self.init()
         (self.reservedIps, self.floatingIps) = (reservedIps, floatingIps)
         (self.snapshots, self.volumes) = (snapshots, volumes)
@@ -21,19 +27,19 @@ public struct AllDropletBackupsVariant0: Codable {
     }
 
     init() {
-        self.backups = nil
+        backups = nil
     }
 }
 
-extension AllDropletBackupsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AllDropletBackupsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.backups = try container.sdkDecodeIfPresent(.backups)
+        backups = try container.sdkDecodeIfPresent(.backups)
     }
 }
 
-extension AllDropletBackupsVariant0 {
-    public init(backups: [DropletSnapshot]? = nil) {
+public extension AllDropletBackupsVariant0 {
+    init(backups: [DropletSnapshot]? = nil) {
         self.init()
         self.backups = backups
     }
@@ -53,23 +59,29 @@ public struct AllDroplets: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllDroplets {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.droplets = try container.sdkDecodeIfPresent(.droplets)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllDroplets {
-    public init(meta: MetaMeta, droplets: [Droplet]? = nil, links: PageLinks? = nil) {
+public extension AllDroplets {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        droplets = try container.sdkDecodeIfPresent(.droplets)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllDroplets {
+    init(meta: MetaMeta, droplets: [Droplet]? = nil, links: PageLinks? = nil) {
         (self.meta, self.droplets) = (meta, droplets)
         self.links = links
     }
@@ -99,25 +111,25 @@ public struct DestroyedAssociatedResource: Codable {
     }
 
     init() {
-        (self.id, self.name, self.destroyedAt, self.errorMessage) = (nil, nil, nil, nil)
+        (id, name, destroyedAt, errorMessage) = (nil, nil, nil, nil)
     }
 }
 
-extension DestroyedAssociatedResource {
-    public init(from decoder: Decoder) throws {
+public extension DestroyedAssociatedResource {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.destroyedAt = try container.sdkDecodeIfPresent(.destroyedAt)
-        self.errorMessage = try container.sdkDecodeIfPresent(.errorMessage)
-        if let value = self.destroyedAt {
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        destroyedAt = try container.sdkDecodeIfPresent(.destroyedAt)
+        errorMessage = try container.sdkDecodeIfPresent(.errorMessage)
+        if let value = destroyedAt {
             try sdkValidateDateTime("destroyed_at", sdkWireString(value))
         }
     }
 }
 
-extension DestroyedAssociatedResource {
-    public init(id: String? = nil, name: String? = nil, destroyedAt: Date? = nil, errorMessage: String? = nil) throws {
+public extension DestroyedAssociatedResource {
+    init(id: String? = nil, name: String? = nil, destroyedAt: Date? = nil, errorMessage: String? = nil) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.destroyedAt, self.errorMessage) = (destroyedAt, errorMessage)
@@ -133,22 +145,32 @@ public indirect enum DropletCreateRequestSshKeysItem {
 }
 
 extension DropletCreateRequestSshKeysItem: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for DropletCreateRequestSshKeysItem")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for DropletCreateRequestSshKeysItem"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension DropletCreateRequestSshKeysItem {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode(Int.self) { return .intValue(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode(Int.self) {
+            return .intValue(value)
+        }
         return nil
     }
 }
@@ -180,19 +202,19 @@ public struct DropletsCreateResponseVariant1Links: Codable {
     }
 
     init() {
-        self.actions = nil
+        actions = nil
     }
 }
 
-extension DropletsCreateResponseVariant1Links {
-    public init(from decoder: Decoder) throws {
+public extension DropletsCreateResponseVariant1Links {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.actions = try container.sdkDecodeIfPresent(.actions)
+        actions = try container.sdkDecodeIfPresent(.actions)
     }
 }
 
-extension DropletsCreateResponseVariant1Links {
-    public init(actions: [ActionLink]? = nil) {
+public extension DropletsCreateResponseVariant1Links {
+    init(actions: [ActionLink]? = nil) {
         self.init()
         self.actions = actions
     }
@@ -207,21 +229,27 @@ public struct DropletSnapshotVariant0: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DropletSnapshotVariant0 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DropletSnapshotVariant0 {
-    public init(id: Int) {
+public extension DropletSnapshotVariant0 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+    }
+}
+
+public extension DropletSnapshotVariant0 {
+    init(id: Int) {
         self.id = id
     }
 }
@@ -234,19 +262,19 @@ public struct AllDropletsVariant0: Codable {
     }
 
     init() {
-        self.droplets = nil
+        droplets = nil
     }
 }
 
-extension AllDropletsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AllDropletsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.droplets = try container.sdkDecodeIfPresent(.droplets)
+        droplets = try container.sdkDecodeIfPresent(.droplets)
     }
 }
 
-extension AllDropletsVariant0 {
-    public init(droplets: [Droplet]? = nil) {
+public extension AllDropletsVariant0 {
+    init(droplets: [Droplet]? = nil) {
         self.init()
         self.droplets = droplets
     }
@@ -260,19 +288,19 @@ public struct NeighborDropletsVariant0: Codable {
     }
 
     init() {
-        self.droplets = nil
+        droplets = nil
     }
 }
 
-extension NeighborDropletsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension NeighborDropletsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.droplets = try container.sdkDecodeIfPresent(.droplets)
+        droplets = try container.sdkDecodeIfPresent(.droplets)
     }
 }
 
-extension NeighborDropletsVariant0 {
-    public init(droplets: [Droplet]? = nil) {
+public extension NeighborDropletsVariant0 {
+    init(droplets: [Droplet]? = nil) {
         self.init()
         self.droplets = droplets
     }
@@ -367,39 +395,66 @@ public struct DropletCreate: Codable {
         case publicNetworking = "public_networking"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DropletCreate {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.size) else {
-            throw SdkValidationError(field: "size", code: "required", message: "Validation failed for 'size': value is required")
-        }
-        guard container.contains(.image) else {
-            throw SdkValidationError(field: "image", code: "required", message: "Validation failed for 'image': value is required")
-        }
-        self.size = try container.sdkDecodeRequired(.size)
-        self.image = try container.sdkDecodeRequired(.image)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.sshKeys = try container.sdkDecodeIfPresent(.sshKeys)
-        self.backups = try container.sdkDecodeIfPresent(.backups)
-        self.backupPolicy = try container.sdkDecodeIfPresent(.backupPolicy)
-        self.ipv6 = try container.sdkDecodeIfPresent(.ipv6)
-        self.monitoring = try container.sdkDecodeIfPresent(.monitoring)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.userData = try container.sdkDecodeIfPresent(.userData)
-        self.privateNetworking = try container.sdkDecodeIfPresent(.privateNetworking)
-        self.volumes = try container.sdkDecodeIfPresent(.volumes)
-        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        self.subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
-        self.withDropletAgent = try container.sdkDecodeIfPresent(.withDropletAgent)
-        self.publicNetworking = try container.sdkDecodeIfPresent(.publicNetworking)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DropletCreate {
-    public init(size: String, image: DropletCreateImage, region: String? = nil, sshKeys: [DropletCreateSshKeysItem]? = nil, backups: Bool? = nil, backupPolicy: DropletBackupPolicy? = nil, ipv6: Bool? = nil, monitoring: Bool? = nil, tags: [String]? = nil, userData: String? = nil, privateNetworking: Bool? = nil, volumes: [String]? = nil, vpcUuid: String? = nil, subnetUuid: String? = nil, withDropletAgent: Bool? = nil, publicNetworking: Bool? = nil) {
+public extension DropletCreate {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.size) else {
+            throw SdkValidationError(
+                field: "size",
+                code: "required",
+                message: "Validation failed for 'size': value is required"
+            )
+        }
+        guard container.contains(.image) else {
+            throw SdkValidationError(
+                field: "image",
+                code: "required",
+                message: "Validation failed for 'image': value is required"
+            )
+        }
+        size = try container.sdkDecodeRequired(.size)
+        image = try container.sdkDecodeRequired(.image)
+        region = try container.sdkDecodeIfPresent(.region)
+        sshKeys = try container.sdkDecodeIfPresent(.sshKeys)
+        backups = try container.sdkDecodeIfPresent(.backups)
+        backupPolicy = try container.sdkDecodeIfPresent(.backupPolicy)
+        ipv6 = try container.sdkDecodeIfPresent(.ipv6)
+        monitoring = try container.sdkDecodeIfPresent(.monitoring)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        userData = try container.sdkDecodeIfPresent(.userData)
+        privateNetworking = try container.sdkDecodeIfPresent(.privateNetworking)
+        volumes = try container.sdkDecodeIfPresent(.volumes)
+        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
+        withDropletAgent = try container.sdkDecodeIfPresent(.withDropletAgent)
+        publicNetworking = try container.sdkDecodeIfPresent(.publicNetworking)
+    }
+}
+
+public extension DropletCreate {
+    init(
+        size: String,
+        image: DropletCreateImage,
+        region: String? = nil,
+        sshKeys: [DropletCreateSshKeysItem]? = nil,
+        backups: Bool? = nil,
+        backupPolicy: DropletBackupPolicy? = nil,
+        ipv6: Bool? = nil,
+        monitoring: Bool? = nil,
+        tags: [String]? = nil,
+        userData: String? = nil,
+        privateNetworking: Bool? = nil,
+        volumes: [String]? = nil,
+        vpcUuid: String? = nil,
+        subnetUuid: String? = nil,
+        withDropletAgent: Bool? = nil,
+        publicNetworking: Bool? = nil
+    ) {
         (self.size, self.image) = (size, image)
         (self.region, self.sshKeys) = (region, sshKeys)
         (self.backups, self.backupPolicy) = (backups, backupPolicy)
@@ -432,23 +487,29 @@ public struct AssociatedResourcesListVariant0: Codable {
     }
 
     init() {
-        (self.reservedIps, self.floatingIps, self.snapshots, self.volumes, self.volumeSnapshots) = (nil, nil, nil, nil, nil)
+        (reservedIps, floatingIps, snapshots, volumes, volumeSnapshots) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension AssociatedResourcesListVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AssociatedResourcesListVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.reservedIps = try container.sdkDecodeIfPresent(.reservedIps)
-        self.floatingIps = try container.sdkDecodeIfPresent(.floatingIps)
-        self.snapshots = try container.sdkDecodeIfPresent(.snapshots)
-        self.volumes = try container.sdkDecodeIfPresent(.volumes)
-        self.volumeSnapshots = try container.sdkDecodeIfPresent(.volumeSnapshots)
+        reservedIps = try container.sdkDecodeIfPresent(.reservedIps)
+        floatingIps = try container.sdkDecodeIfPresent(.floatingIps)
+        snapshots = try container.sdkDecodeIfPresent(.snapshots)
+        volumes = try container.sdkDecodeIfPresent(.volumes)
+        volumeSnapshots = try container.sdkDecodeIfPresent(.volumeSnapshots)
     }
 }
 
-extension AssociatedResourcesListVariant0 {
-    public init(reservedIps: [AssociatedResource]? = nil, floatingIps: [AssociatedResource]? = nil, snapshots: [AssociatedResource]? = nil, volumes: [AssociatedResource]? = nil, volumeSnapshots: [AssociatedResource]? = nil) {
+public extension AssociatedResourcesListVariant0 {
+    init(
+        reservedIps: [AssociatedResource]? = nil,
+        floatingIps: [AssociatedResource]? = nil,
+        snapshots: [AssociatedResource]? = nil,
+        volumes: [AssociatedResource]? = nil,
+        volumeSnapshots: [AssociatedResource]? = nil
+    ) {
         self.init()
         (self.reservedIps, self.floatingIps) = (reservedIps, floatingIps)
         (self.snapshots, self.volumes) = (snapshots, volumes)
@@ -465,25 +526,35 @@ public struct DropletsCreateResponseVariant1: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DropletsCreateResponseVariant1 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.droplets) else {
-            throw SdkValidationError(field: "droplets", code: "required", message: "Validation failed for 'droplets': value is required")
-        }
-        guard container.contains(.links) else {
-            throw SdkValidationError(field: "links", code: "required", message: "Validation failed for 'links': value is required")
-        }
-        self.droplets = try container.sdkDecodeRequired(.droplets)
-        self.links = try container.sdkDecodeRequired(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DropletsCreateResponseVariant1 {
-    public init(droplets: [Droplet], links: DropletsCreateResponseVariant1Links) {
+public extension DropletsCreateResponseVariant1 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.droplets) else {
+            throw SdkValidationError(
+                field: "droplets",
+                code: "required",
+                message: "Validation failed for 'droplets': value is required"
+            )
+        }
+        guard container.contains(.links) else {
+            throw SdkValidationError(
+                field: "links",
+                code: "required",
+                message: "Validation failed for 'links': value is required"
+            )
+        }
+        droplets = try container.sdkDecodeRequired(.droplets)
+        links = try container.sdkDecodeRequired(.links)
+    }
+}
+
+public extension DropletsCreateResponseVariant1 {
+    init(droplets: [Droplet], links: DropletsCreateResponseVariant1Links) {
         (self.droplets, self.links) = (droplets, links)
     }
 }
@@ -496,19 +567,19 @@ public struct DropletsCreateResponseVariant0Links: Codable {
     }
 
     init() {
-        self.actions = nil
+        actions = nil
     }
 }
 
-extension DropletsCreateResponseVariant0Links {
-    public init(from decoder: Decoder) throws {
+public extension DropletsCreateResponseVariant0Links {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.actions = try container.sdkDecodeIfPresent(.actions)
+        actions = try container.sdkDecodeIfPresent(.actions)
     }
 }
 
-extension DropletsCreateResponseVariant0Links {
-    public init(actions: [ActionLink]? = nil) {
+public extension DropletsCreateResponseVariant0Links {
+    init(actions: [ActionLink]? = nil) {
         self.init()
         self.actions = actions
     }
@@ -519,13 +590,16 @@ extension DropletsCreateResponseVariant0Links {
 public struct DropletSnapshotVariant2Type: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let snapshot = DropletSnapshotVariant2Type(rawValue: "snapshot")
     public static let backup = DropletSnapshotVariant2Type(rawValue: "backup")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

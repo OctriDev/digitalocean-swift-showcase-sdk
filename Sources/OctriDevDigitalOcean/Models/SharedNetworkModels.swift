@@ -3,7 +3,7 @@
 
 import Foundation
 
-// SharedNetwork domain models
+/// SharedNetwork domain models
 /// Typed representation of the `NetworkV6` API schema.
 public struct NetworkV6: Codable {
     /// The IP address of the IPv6 network interface.
@@ -27,22 +27,22 @@ public struct NetworkV6: Codable {
     }
 
     init() {
-        (self.ipAddress, self.netmask, self.gateway, self.type) = (nil, nil, nil, nil)
+        (ipAddress, netmask, gateway, type) = (nil, nil, nil, nil)
     }
 }
 
-extension NetworkV6 {
-    public init(from decoder: Decoder) throws {
+public extension NetworkV6 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.ipAddress = try container.sdkDecodeIfPresent(.ipAddress)
-        self.netmask = try container.sdkDecodeIfPresent(.netmask)
-        self.gateway = try container.sdkDecodeIfPresent(.gateway)
-        self.type = try container.sdkDecodeIfPresent(.type)
+        ipAddress = try container.sdkDecodeIfPresent(.ipAddress)
+        netmask = try container.sdkDecodeIfPresent(.netmask)
+        gateway = try container.sdkDecodeIfPresent(.gateway)
+        type = try container.sdkDecodeIfPresent(.type)
     }
 }
 
-extension NetworkV6 {
-    public init(ipAddress: String? = nil, netmask: Int? = nil, gateway: String? = nil, type: NetworkV6Type? = nil) {
+public extension NetworkV6 {
+    init(ipAddress: String? = nil, netmask: Int? = nil, gateway: String? = nil, type: NetworkV6Type? = nil) {
         self.init()
         (self.ipAddress, self.netmask) = (ipAddress, netmask)
         (self.gateway, self.type) = (gateway, type)
@@ -73,22 +73,22 @@ public struct NetworkV4: Codable {
     }
 
     init() {
-        (self.ipAddress, self.netmask, self.gateway, self.type) = (nil, nil, nil, nil)
+        (ipAddress, netmask, gateway, type) = (nil, nil, nil, nil)
     }
 }
 
-extension NetworkV4 {
-    public init(from decoder: Decoder) throws {
+public extension NetworkV4 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.ipAddress = try container.sdkDecodeIfPresent(.ipAddress)
-        self.netmask = try container.sdkDecodeIfPresent(.netmask)
-        self.gateway = try container.sdkDecodeIfPresent(.gateway)
-        self.type = try container.sdkDecodeIfPresent(.type)
+        ipAddress = try container.sdkDecodeIfPresent(.ipAddress)
+        netmask = try container.sdkDecodeIfPresent(.netmask)
+        gateway = try container.sdkDecodeIfPresent(.gateway)
+        type = try container.sdkDecodeIfPresent(.type)
     }
 }
 
-extension NetworkV4 {
-    public init(ipAddress: String? = nil, netmask: String? = nil, gateway: String? = nil, type: NetworkV4Type? = nil) {
+public extension NetworkV4 {
+    init(ipAddress: String? = nil, netmask: String? = nil, gateway: String? = nil, type: NetworkV4Type? = nil) {
         self.init()
         (self.ipAddress, self.netmask) = (ipAddress, netmask)
         (self.gateway, self.type) = (gateway, type)
@@ -99,12 +99,15 @@ extension NetworkV4 {
 public struct NetworkV6Type: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let `public` = NetworkV6Type(rawValue: "public")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -117,13 +120,16 @@ public struct NetworkV6Type: RawRepresentable, Hashable, Codable, Sendable, SdkW
 public struct NetworkV4Type: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let `public` = NetworkV4Type(rawValue: "public")
     public static let `private` = NetworkV4Type(rawValue: "private")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

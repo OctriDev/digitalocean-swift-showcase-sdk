@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AppsMethods {
-    /// Retrieves a specific job invocation for an app. Use `job_invocation_id` to select the invocation and optionally provide `job_name` to specify the job associated with it.
+public extension AppsMethods {
+    /// Retrieves a specific job invocation for an app. Use `job_invocation_id` to select the invocation and optionally
+    /// provide `job_name` to specify the job associated with it.
     ///
     /// Get a specific job invocation for an app.
     ///
@@ -15,13 +16,41 @@ extension AppsMethods {
     /// - appId: The app ID
     /// - jobInvocationId: The ID of the job invocation to retrieve.
     /// - jobName: The job name to list job invocations for.
-    public static func appsGetJobInvocation(config: ClientConfig, appId: String, jobInvocationId: String, jobName: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AppJobInvocation {
-        return try (await sdkRequest("GET", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/job-invocations/", sdkEncodePathSegment(sdkWireString(jobInvocationId))].joined(), config: config, query: [
-            SdkQueryParameter("job_name", value: jobName),
-        ], decoder: .json, operationId: "apps_get_job_invocation", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func appsGetJobInvocation(
+        config: ClientConfig,
+        appId: String,
+        jobInvocationId: String,
+        jobName: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppJobInvocation {
+        try await (sdkRequest(
+            "GET",
+            [
+                "/v2/apps/",
+                sdkEncodePathSegment(sdkWireString(appId)),
+                "/job-invocations/",
+                sdkEncodePathSegment(sdkWireString(jobInvocationId)),
+            ].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("job_name", value: jobName),
+            ],
+            decoder: .json,
+            operationId: "apps_get_job_invocation",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Cancels a job invocation for a specified app. Use `app_id` and `job_invocation_id` to identify the invocation, and provide `job_name` to identify the associated job when needed. The response includes the invocation's phase and lifecycle timestamps.
+    /// Cancels a job invocation for a specified app. Use `app_id` and `job_invocation_id` to identify the invocation,
+    /// and provide `job_name` to identify the associated job when needed. The response includes the invocation's phase
+    /// and lifecycle timestamps.
     ///
     /// Cancel a specific job invocation for an app.
     ///
@@ -29,9 +58,36 @@ extension AppsMethods {
     /// - appId: The app ID
     /// - jobInvocationId: The ID of the job invocation to retrieve.
     /// - jobName: The job name to list job invocations for.
-    public static func appsCancelJobInvocation(config: ClientConfig, appId: String, jobInvocationId: String, jobName: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AppJobInvocation {
-        return try (await sdkRequest("POST", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/job-invocations/", sdkEncodePathSegment(sdkWireString(jobInvocationId)), "/cancel"].joined(), config: config, query: [
-            SdkQueryParameter("job_name", value: jobName),
-        ], decoder: .json, operationId: "apps_cancel_job_invocation", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func appsCancelJobInvocation(
+        config: ClientConfig,
+        appId: String,
+        jobInvocationId: String,
+        jobName: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppJobInvocation {
+        try await (sdkRequest(
+            "POST",
+            [
+                "/v2/apps/",
+                sdkEncodePathSegment(sdkWireString(appId)),
+                "/job-invocations/",
+                sdkEncodePathSegment(sdkWireString(jobInvocationId)),
+                "/cancel",
+            ].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("job_name", value: jobName),
+            ],
+            decoder: .json,
+            operationId: "apps_cancel_job_invocation",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

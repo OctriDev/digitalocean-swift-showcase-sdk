@@ -3,25 +3,35 @@
 
 import Foundation
 
-// AgentPlatformAPIApiModel domain models
+/// AgentPlatformAPIApiModel domain models
 /// Model Evaluation Run Statuses
 public struct ApiModelEvaluationRunStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
-    public static let modelEvaluationRunStatusUnspecified = ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_STATUS_UNSPECIFIED")
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let modelEvaluationRunStatusUnspecified =
+        ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_STATUS_UNSPECIFIED")
     public static let modelEvaluationRunQueued = ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_QUEUED")
-    public static let modelEvaluationRunRunningDataset = ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_RUNNING_DATASET")
-    public static let modelEvaluationRunEvaluatingResults = ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_EVALUATING_RESULTS")
-    public static let modelEvaluationRunCancelling = ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_CANCELLING")
-    public static let modelEvaluationRunCancelled = ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_CANCELLED")
-    public static let modelEvaluationRunSuccessful = ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_SUCCESSFUL")
-    public static let modelEvaluationRunPartiallySuccessful = ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_PARTIALLY_SUCCESSFUL")
+    public static let modelEvaluationRunRunningDataset =
+        ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_RUNNING_DATASET")
+    public static let modelEvaluationRunEvaluatingResults =
+        ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_EVALUATING_RESULTS")
+    public static let modelEvaluationRunCancelling =
+        ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_CANCELLING")
+    public static let modelEvaluationRunCancelled =
+        ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_CANCELLED")
+    public static let modelEvaluationRunSuccessful =
+        ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_SUCCESSFUL")
+    public static let modelEvaluationRunPartiallySuccessful =
+        ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_PARTIALLY_SUCCESSFUL")
     public static let modelEvaluationRunFailed = ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_FAILED")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -36,14 +46,17 @@ public struct ApiModelEvaluationRunStatus: RawRepresentable, Hashable, Codable, 
 public struct ApiModelCatalogSortBy: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let modelCatalogSortByCreatedAt = ApiModelCatalogSortBy(rawValue: "MODEL_CATALOG_SORT_BY_CREATED_AT")
     public static let modelCatalogSortByName = ApiModelCatalogSortBy(rawValue: "MODEL_CATALOG_SORT_BY_NAME")
     public static let modelCatalogSortByPrice = ApiModelCatalogSortBy(rawValue: "MODEL_CATALOG_SORT_BY_PRICE")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -57,14 +70,17 @@ public struct ApiModelCatalogSortBy: RawRepresentable, Hashable, Codable, Sendab
 public struct ApiModelBillingMode: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let modelBillingModeUnspecified = ApiModelBillingMode(rawValue: "MODEL_BILLING_MODE_UNSPECIFIED")
     public static let modelBillingModeInteractive = ApiModelBillingMode(rawValue: "MODEL_BILLING_MODE_INTERACTIVE")
     public static let modelBillingModeBatch = ApiModelBillingMode(rawValue: "MODEL_BILLING_MODE_BATCH")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -81,7 +97,10 @@ public struct ApiModelBillingMode: RawRepresentable, Hashable, Codable, Sendable
 public struct ApiModelUsecase: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let modelUsecaseUnknown = ApiModelUsecase(rawValue: "MODEL_USECASE_UNKNOWN")
     public static let modelUsecaseAgent = ApiModelUsecase(rawValue: "MODEL_USECASE_AGENT")
     public static let modelUsecaseFinetuned = ApiModelUsecase(rawValue: "MODEL_USECASE_FINETUNED")
@@ -97,7 +116,7 @@ public struct ApiModelUsecase: RawRepresentable, Hashable, Codable, Sendable, Sd
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -110,14 +129,17 @@ public struct ApiModelUsecase: RawRepresentable, Hashable, Codable, Sendable, Sd
 public struct ApiModelProvider: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let modelProviderDigitalocean = ApiModelProvider(rawValue: "MODEL_PROVIDER_DIGITALOCEAN")
     public static let modelProviderAnthropic = ApiModelProvider(rawValue: "MODEL_PROVIDER_ANTHROPIC")
     public static let modelProviderOpenai = ApiModelProvider(rawValue: "MODEL_PROVIDER_OPENAI")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -134,7 +156,10 @@ public struct ApiModelProvider: RawRepresentable, Hashable, Codable, Sendable, S
 public struct ApiModelPricingTier: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let modelPricingTierUnspecified = ApiModelPricingTier(rawValue: "MODEL_PRICING_TIER_UNSPECIFIED")
     public static let modelPricingTierStandard = ApiModelPricingTier(rawValue: "MODEL_PRICING_TIER_STANDARD")
     public static let modelPricingTierFastMode = ApiModelPricingTier(rawValue: "MODEL_PRICING_TIER_FAST_MODE")
@@ -144,7 +169,7 @@ public struct ApiModelPricingTier: RawRepresentable, Hashable, Codable, Sendable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -6,8 +6,15 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ActionGatewayDataPlaneMethods {
-    /// Runs Python code in an ephemeral sandbox and returns its `stdout`, `stderr`, and `exit_code`. This is the REST form of the `action_code` MCP tool. Use it for computation, parsing, and data processing, or to chain several catalog tools in one request. The sandbox provides `invoke_digitalocean_tool(name, arguments)`, which calls a catalog tool and returns a tool result. Those calls follow the session's tool selection and policy. Each request runs in a fresh sandbox, so state is not kept between requests. Execution, including tool calls, is time limited. Code that runs too long fails with a `timeout` error. A nonzero exit code is still a `succeeded` result; check `output.exit_code`. If the session policy requires approval for `action_code`, the response is a failed result with `_meta.status` set to `requires_approval`.
+public extension ActionGatewayDataPlaneMethods {
+    /// Runs Python code in an ephemeral sandbox and returns its `stdout`, `stderr`, and `exit_code`. This is the REST
+    /// form of the `action_code` MCP tool. Use it for computation, parsing, and data processing, or to chain several
+    /// catalog tools in one request. The sandbox provides `invoke_digitalocean_tool(name, arguments)`, which calls a
+    /// catalog tool and returns a tool result. Those calls follow the session's tool selection and policy. Each request
+    /// runs in a fresh sandbox, so state is not kept between requests. Execution, including tool calls, is time
+    /// limited. Code that runs too long fails with a `timeout` error. A nonzero exit code is still a `succeeded`
+    /// result; check `output.exit_code`. If the session policy requires approval for `action_code`, the response is a
+    /// failed result with `_meta.status` set to `requires_approval`.
     ///
     /// - Parameters:
     /// - xSessionId: The session to act in: the UUID at the end of the session's
@@ -16,13 +23,38 @@ extension ActionGatewayDataPlaneMethods {
     /// - code: Python source to run. The sandbox provides
     ///   `invoke_digitalocean_tool(name: str, arguments: dict) -> dict`, which calls
     ///   a catalog tool under the session's policy and returns a tool result.
-    public static func gatewayCodeRun(config: ClientConfig, xSessionId: String, code: String, requestOptions: RequestOptions? = nil) async throws -> ExecuteCodeResponse {
+    static func gatewayCodeRun(
+        config: ClientConfig,
+        xSessionId: String,
+        code: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExecuteCodeResponse {
         try sdkValidateUuid("X-Session-Id", xSessionId)
 
         let requestBody = GatewayCodeRunRequestBody(code: code)
 
-        return try (await sdkRequest("POST", "/code/execute", config: config, body: requestBody, decoder: .json, operationId: "gatewayCode_run", extraHeaders: sdkHeaders([
-            ("X-Session-Id", sdkHeaderValue(xSessionId)),
-        ]), options: requestOptions, errors: ["400": ToolResultError.self, "401": Error2.self, "403": Forbidden.self, "412": ToolResultError.self, "413": ToolResultError.self, "429": ToolResultError.self, "500": ToolResultError.self, "503": ToolResultError.self, "504": ToolResultError.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/code/execute",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "gatewayCode_run",
+            extraHeaders: sdkHeaders([
+                ("X-Session-Id", sdkHeaderValue(xSessionId)),
+            ]),
+            options: requestOptions,
+            errors: [
+                "400": ToolResultError.self,
+                "401": Error2.self,
+                "403": Forbidden.self,
+                "412": ToolResultError.self,
+                "413": ToolResultError.self,
+                "429": ToolResultError.self,
+                "500": ToolResultError.self,
+                "503": ToolResultError.self,
+                "504": ToolResultError.self,
+            ]
+        )).data
     }
 }

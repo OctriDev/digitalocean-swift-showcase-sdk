@@ -6,12 +6,32 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
-    /// To list all evaluation test cases by a workspace, send a GET request to `/v2/gen-ai/workspaces/{workspace_uuid}/evaluation_test_cases`.
+public extension AgentPlatformApiMethods {
+    /// To list all evaluation test cases by a workspace, send a GET request to
+    /// `/v2/gen-ai/workspaces/{workspace_uuid}/evaluation_test_cases`.
     ///
     /// - Parameters:
     /// - workspaceUuid: Workspace UUID.
-    public static func genaiListEvaluationTestCasesByWorkspace(config: ClientConfig, workspaceUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiListEvaluationTestCasesByWorkspaceOutput {
-        return try (await sdkRequest("GET", ["/v2/gen-ai/workspaces/", sdkEncodePathSegment(sdkWireString(workspaceUuid)), "/evaluation_test_cases"].joined(), config: config, decoder: .json, operationId: "genai_list_evaluation_test_cases_by_workspace", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiListEvaluationTestCasesByWorkspace(
+        config: ClientConfig,
+        workspaceUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiListEvaluationTestCasesByWorkspaceOutput {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/gen-ai/workspaces/", sdkEncodePathSegment(sdkWireString(workspaceUuid)), "/evaluation_test_cases"]
+                .joined(),
+            config: config,
+            decoder: .json,
+            operationId: "genai_list_evaluation_test_cases_by_workspace",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

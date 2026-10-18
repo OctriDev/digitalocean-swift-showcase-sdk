@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DedicatedInference domain models
+/// DedicatedInference domain models
 /// Available Dedicated Inference sizes and pricing.
 public struct DedicatedInferenceSizesResponse: Codable {
     /// Regions where Dedicated Inference is available.
@@ -18,20 +18,20 @@ public struct DedicatedInferenceSizesResponse: Codable {
     }
 
     init() {
-        (self.enabledRegions, self.sizes) = (nil, nil)
+        (enabledRegions, sizes) = (nil, nil)
     }
 }
 
-extension DedicatedInferenceSizesResponse {
-    public init(from decoder: Decoder) throws {
+public extension DedicatedInferenceSizesResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.enabledRegions = try container.sdkDecodeIfPresent(.enabledRegions)
-        self.sizes = try container.sdkDecodeIfPresent(.sizes)
+        enabledRegions = try container.sdkDecodeIfPresent(.enabledRegions)
+        sizes = try container.sdkDecodeIfPresent(.sizes)
     }
 }
 
-extension DedicatedInferenceSizesResponse {
-    public init(enabledRegions: [String]? = nil, sizes: [DedicatedInferenceSize]? = nil) {
+public extension DedicatedInferenceSizesResponse {
+    init(enabledRegions: [String]? = nil, sizes: [DedicatedInferenceSize]? = nil) {
         self.init()
         (self.enabledRegions, self.sizes) = (enabledRegions, sizes)
     }
@@ -45,19 +45,19 @@ public struct TokensListVariant0: Codable {
     }
 
     init() {
-        self.tokens = nil
+        tokens = nil
     }
 }
 
-extension TokensListVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension TokensListVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.tokens = try container.sdkDecodeIfPresent(.tokens)
+        tokens = try container.sdkDecodeIfPresent(.tokens)
     }
 }
 
-extension TokensListVariant0 {
-    public init(tokens: [DedicatedInferenceAccessToken]? = nil) {
+public extension TokensListVariant0 {
+    init(tokens: [DedicatedInferenceAccessToken]? = nil) {
         self.init()
         self.tokens = tokens
     }
@@ -73,19 +73,19 @@ public struct TokenCreated: Codable {
     }
 
     init() {
-        self.token = nil
+        token = nil
     }
 }
 
-extension TokenCreated {
-    public init(from decoder: Decoder) throws {
+public extension TokenCreated {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.token = try container.sdkDecodeIfPresent(.token)
+        token = try container.sdkDecodeIfPresent(.token)
     }
 }
 
-extension TokenCreated {
-    public init(token: DedicatedInferenceAccessToken? = nil) {
+public extension TokenCreated {
+    init(token: DedicatedInferenceAccessToken? = nil) {
         self.init()
         self.token = token
     }
@@ -104,20 +104,20 @@ public struct DedicatedInferenceUpdateRequest: Codable {
     }
 
     init() {
-        (self.spec, self.accessTokens) = (nil, nil)
+        (spec, accessTokens) = (nil, nil)
     }
 }
 
-extension DedicatedInferenceUpdateRequest {
-    public init(from decoder: Decoder) throws {
+public extension DedicatedInferenceUpdateRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.spec = try container.sdkDecodeIfPresent(.spec)
-        self.accessTokens = try container.sdkDecodeIfPresent(.accessTokens)
+        spec = try container.sdkDecodeIfPresent(.spec)
+        accessTokens = try container.sdkDecodeIfPresent(.accessTokens)
     }
 }
 
-extension DedicatedInferenceUpdateRequest {
-    public init(spec: DedicatedInferenceSpec? = nil, accessTokens: DedicatedInferenceUpdateRequestAccessTokens? = nil) {
+public extension DedicatedInferenceUpdateRequest {
+    init(spec: DedicatedInferenceSpec? = nil, accessTokens: DedicatedInferenceUpdateRequestAccessTokens? = nil) {
         self.init()
         (self.spec, self.accessTokens) = (spec, accessTokens)
     }
@@ -133,24 +133,30 @@ public struct PendingDeploymentSpecVpc: Codable {
         case uuid
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension PendingDeploymentSpecVpc {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.uuid) else {
-            throw SdkValidationError(field: "uuid", code: "required", message: "Validation failed for 'uuid': value is required")
-        }
-        self.uuid = try container.sdkDecodeRequired(.uuid)
-            try sdkValidateUuid("uuid", self.uuid)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension PendingDeploymentSpecVpc {
-    public init(uuid: String) throws {
+public extension PendingDeploymentSpecVpc {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.uuid) else {
+            throw SdkValidationError(
+                field: "uuid",
+                code: "required",
+                message: "Validation failed for 'uuid': value is required"
+            )
+        }
+        uuid = try container.sdkDecodeRequired(.uuid)
+        try sdkValidateUuid("uuid", uuid)
+    }
+}
+
+public extension PendingDeploymentSpecVpc {
+    init(uuid: String) throws {
         self.uuid = uuid
-            try sdkValidateUuid("uuid", self.uuid)
+        try sdkValidateUuid("uuid", self.uuid)
     }
 }
 
@@ -167,20 +173,20 @@ public struct DedicatedInferenceProvisioning: Codable {
     }
 
     init() {
-        (self.dedicatedInference, self.token) = (nil, nil)
+        (dedicatedInference, token) = (nil, nil)
     }
 }
 
-extension DedicatedInferenceProvisioning {
-    public init(from decoder: Decoder) throws {
+public extension DedicatedInferenceProvisioning {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.dedicatedInference = try container.sdkDecodeIfPresent(.dedicatedInference)
-        self.token = try container.sdkDecodeIfPresent(.token)
+        dedicatedInference = try container.sdkDecodeIfPresent(.dedicatedInference)
+        token = try container.sdkDecodeIfPresent(.token)
     }
 }
 
-extension DedicatedInferenceProvisioning {
-    public init(dedicatedInference: DedicatedInference? = nil, token: DedicatedInferenceAccessToken? = nil) {
+public extension DedicatedInferenceProvisioning {
+    init(dedicatedInference: DedicatedInference? = nil, token: DedicatedInferenceAccessToken? = nil) {
         self.init()
         (self.dedicatedInference, self.token) = (dedicatedInference, token)
     }
@@ -196,26 +202,32 @@ public struct DedicatedInferenceTokenCreateRequest: Codable {
         case name
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DedicatedInferenceTokenCreateRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-            try validateLength("name", self.name, min: nil, max: 255)
-            try sdkValidatePattern("name", self.name, sdkPatterna828669d9fe5)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DedicatedInferenceTokenCreateRequest {
-    public init(name: String) throws {
+public extension DedicatedInferenceTokenCreateRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        try validateLength("name", name, min: nil, max: 255)
+        try sdkValidatePattern("name", name, sdkPatterna828669d9fe5)
+    }
+}
+
+public extension DedicatedInferenceTokenCreateRequest {
+    init(name: String) throws {
         self.name = name
-            try validateLength("name", self.name, min: nil, max: 255)
-            try sdkValidatePattern("name", self.name, sdkPatterna828669d9fe5)
+        try validateLength("name", self.name, min: nil, max: 255)
+        try sdkValidatePattern("name", self.name, sdkPatterna828669d9fe5)
     }
 }
 
@@ -241,34 +253,64 @@ public struct AcceleratorConfigSpec: Codable {
         case status
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AcceleratorConfigSpec {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.scale) else {
-            throw SdkValidationError(field: "scale", code: "required", message: "Validation failed for 'scale': value is required")
-        }
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.acceleratorSlug) else {
-            throw SdkValidationError(field: "accelerator_slug", code: "required", message: "Validation failed for 'accelerator_slug': value is required")
-        }
-        self.scale = try container.sdkDecodeRequired(.scale)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.acceleratorSlug = try container.sdkDecodeRequired(.acceleratorSlug)
-        self.status = try container.sdkDecodeIfPresent(.status)
-            try validateRange("scale", Double(self.scale), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AcceleratorConfigSpec {
-    public init(scale: Int, type: String, acceleratorSlug: String, status: AcceleratorConfigSpecStatus? = nil) throws {
+public extension AcceleratorConfigSpec {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.scale) else {
+            throw SdkValidationError(
+                field: "scale",
+                code: "required",
+                message: "Validation failed for 'scale': value is required"
+            )
+        }
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.acceleratorSlug) else {
+            throw SdkValidationError(
+                field: "accelerator_slug",
+                code: "required",
+                message: "Validation failed for 'accelerator_slug': value is required"
+            )
+        }
+        scale = try container.sdkDecodeRequired(.scale)
+        type = try container.sdkDecodeRequired(.type)
+        acceleratorSlug = try container.sdkDecodeRequired(.acceleratorSlug)
+        status = try container.sdkDecodeIfPresent(.status)
+        try validateRange(
+            "scale",
+            Double(scale),
+            min: 1,
+            max: nil,
+            exclusiveMin: nil,
+            exclusiveMax: nil,
+            multipleOf: nil
+        )
+    }
+}
+
+public extension AcceleratorConfigSpec {
+    init(scale: Int, type: String, acceleratorSlug: String, status: AcceleratorConfigSpecStatus? = nil) throws {
         (self.scale, self.type) = (scale, type)
         (self.acceleratorSlug, self.status) = (acceleratorSlug, status)
-            try validateRange("scale", Double(self.scale), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        try validateRange(
+            "scale",
+            Double(self.scale),
+            min: 1,
+            max: nil,
+            exclusiveMin: nil,
+            exclusiveMax: nil,
+            multipleOf: nil
+        )
     }
 }
 
@@ -282,24 +324,30 @@ public struct DedicatedInferenceSpecRequestVpc: Codable {
         case uuid
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DedicatedInferenceSpecRequestVpc {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.uuid) else {
-            throw SdkValidationError(field: "uuid", code: "required", message: "Validation failed for 'uuid': value is required")
-        }
-        self.uuid = try container.sdkDecodeRequired(.uuid)
-            try sdkValidateUuid("uuid", self.uuid)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DedicatedInferenceSpecRequestVpc {
-    public init(uuid: String) throws {
+public extension DedicatedInferenceSpecRequestVpc {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.uuid) else {
+            throw SdkValidationError(
+                field: "uuid",
+                code: "required",
+                message: "Validation failed for 'uuid': value is required"
+            )
+        }
+        uuid = try container.sdkDecodeRequired(.uuid)
+        try sdkValidateUuid("uuid", uuid)
+    }
+}
+
+public extension DedicatedInferenceSpecRequestVpc {
+    init(uuid: String) throws {
         self.uuid = uuid
-            try sdkValidateUuid("uuid", self.uuid)
+        try sdkValidateUuid("uuid", self.uuid)
     }
 }
 
@@ -316,22 +364,28 @@ public struct DedicatedInferenceCreateRequestRequest: Codable {
         case accessTokens = "access_tokens"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DedicatedInferenceCreateRequestRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.spec) else {
-            throw SdkValidationError(field: "spec", code: "required", message: "Validation failed for 'spec': value is required")
-        }
-        self.spec = try container.sdkDecodeRequired(.spec)
-        self.accessTokens = try container.sdkDecodeIfPresent(.accessTokens)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DedicatedInferenceCreateRequestRequest {
-    public init(spec: DedicatedInferenceSpecRequest, accessTokens: [String: String]? = nil) {
+public extension DedicatedInferenceCreateRequestRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.spec) else {
+            throw SdkValidationError(
+                field: "spec",
+                code: "required",
+                message: "Validation failed for 'spec': value is required"
+            )
+        }
+        spec = try container.sdkDecodeRequired(.spec)
+        accessTokens = try container.sdkDecodeIfPresent(.accessTokens)
+    }
+}
+
+public extension DedicatedInferenceCreateRequestRequest {
+    init(spec: DedicatedInferenceSpecRequest, accessTokens: [String: String]? = nil) {
         (self.spec, self.accessTokens) = (spec, accessTokens)
     }
 }
@@ -347,19 +401,19 @@ public struct DedicatedInferenceUpdateRequestRequestAccessTokens: Codable {
     }
 
     init() {
-        self.huggingFaceToken = nil
+        huggingFaceToken = nil
     }
 }
 
-extension DedicatedInferenceUpdateRequestRequestAccessTokens {
-    public init(from decoder: Decoder) throws {
+public extension DedicatedInferenceUpdateRequestRequestAccessTokens {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.huggingFaceToken = try container.sdkDecodeIfPresent(.huggingFaceToken)
+        huggingFaceToken = try container.sdkDecodeIfPresent(.huggingFaceToken)
     }
 }
 
-extension DedicatedInferenceUpdateRequestRequestAccessTokens {
-    public init(huggingFaceToken: String? = nil) {
+public extension DedicatedInferenceUpdateRequestRequestAccessTokens {
+    init(huggingFaceToken: String? = nil) {
         self.init()
         self.huggingFaceToken = huggingFaceToken
     }
@@ -379,23 +433,29 @@ public struct AcceleratorsList: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AcceleratorsList {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.accelerators = try container.sdkDecodeIfPresent(.accelerators)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AcceleratorsList {
-    public init(meta: MetaMeta, accelerators: [DedicatedInferenceAccelerator]? = nil, links: PageLinks? = nil) {
+public extension AcceleratorsList {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        accelerators = try container.sdkDecodeIfPresent(.accelerators)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AcceleratorsList {
+    init(meta: MetaMeta, accelerators: [DedicatedInferenceAccelerator]? = nil, links: PageLinks? = nil) {
         (self.meta, self.accelerators) = (meta, accelerators)
         self.links = links
     }
@@ -415,23 +475,29 @@ public struct TokensList: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension TokensList {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.tokens = try container.sdkDecodeIfPresent(.tokens)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension TokensList {
-    public init(meta: MetaMeta, tokens: [DedicatedInferenceAccessToken]? = nil, links: PageLinks? = nil) {
+public extension TokensList {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        tokens = try container.sdkDecodeIfPresent(.tokens)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension TokensList {
+    init(meta: MetaMeta, tokens: [DedicatedInferenceAccessToken]? = nil, links: PageLinks? = nil) {
         (self.meta, self.tokens) = (meta, tokens)
         self.links = links
     }
@@ -447,19 +513,19 @@ public struct DedicatedInferenceGpuModelConfigsResponse: Codable {
     }
 
     init() {
-        self.gpuModelConfigs = nil
+        gpuModelConfigs = nil
     }
 }
 
-extension DedicatedInferenceGpuModelConfigsResponse {
-    public init(from decoder: Decoder) throws {
+public extension DedicatedInferenceGpuModelConfigsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.gpuModelConfigs = try container.sdkDecodeIfPresent(.gpuModelConfigs)
+        gpuModelConfigs = try container.sdkDecodeIfPresent(.gpuModelConfigs)
     }
 }
 
-extension DedicatedInferenceGpuModelConfigsResponse {
-    public init(gpuModelConfigs: [DedicatedInferenceGpuModelConfig]? = nil) {
+public extension DedicatedInferenceGpuModelConfigsResponse {
+    init(gpuModelConfigs: [DedicatedInferenceGpuModelConfig]? = nil) {
         self.init()
         self.gpuModelConfigs = gpuModelConfigs
     }
@@ -473,19 +539,19 @@ public struct AcceleratorsListVariant0: Codable {
     }
 
     init() {
-        self.accelerators = nil
+        accelerators = nil
     }
 }
 
-extension AcceleratorsListVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AcceleratorsListVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.accelerators = try container.sdkDecodeIfPresent(.accelerators)
+        accelerators = try container.sdkDecodeIfPresent(.accelerators)
     }
 }
 
-extension AcceleratorsListVariant0 {
-    public init(accelerators: [DedicatedInferenceAccelerator]? = nil) {
+public extension AcceleratorsListVariant0 {
+    init(accelerators: [DedicatedInferenceAccelerator]? = nil) {
         self.init()
         self.accelerators = accelerators
     }
@@ -506,29 +572,47 @@ public struct AllDedicatedInferences: Codable {
         case meta
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllDedicatedInferences {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.dedicatedInferences) else {
-            throw SdkValidationError(field: "dedicated_inferences", code: "required", message: "Validation failed for 'dedicated_inferences': value is required")
-        }
-        guard container.contains(.links) else {
-            throw SdkValidationError(field: "links", code: "required", message: "Validation failed for 'links': value is required")
-        }
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.dedicatedInferences = try container.sdkDecodeRequired(.dedicatedInferences)
-        self.links = try container.sdkDecodeRequired(.links)
-        self.meta = try container.sdkDecodeRequired(.meta)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllDedicatedInferences {
-    public init(dedicatedInferences: [DedicatedInference], links: AllDedicatedInferencesLinks, meta: AllDedicatedInferencesMeta) {
+public extension AllDedicatedInferences {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.dedicatedInferences) else {
+            throw SdkValidationError(
+                field: "dedicated_inferences",
+                code: "required",
+                message: "Validation failed for 'dedicated_inferences': value is required"
+            )
+        }
+        guard container.contains(.links) else {
+            throw SdkValidationError(
+                field: "links",
+                code: "required",
+                message: "Validation failed for 'links': value is required"
+            )
+        }
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        dedicatedInferences = try container.sdkDecodeRequired(.dedicatedInferences)
+        links = try container.sdkDecodeRequired(.links)
+        meta = try container.sdkDecodeRequired(.meta)
+    }
+}
+
+public extension AllDedicatedInferences {
+    init(
+        dedicatedInferences: [DedicatedInference],
+        links: AllDedicatedInferencesLinks,
+        meta: AllDedicatedInferencesMeta
+    ) {
         (self.dedicatedInferences, self.links) = (dedicatedInferences, links)
         self.meta = meta
     }
@@ -544,13 +628,13 @@ public struct DedicatedInferenceResponse: Codable {
     }
 
     init() {
-        self.dedicatedInference = nil
+        dedicatedInference = nil
     }
 }
 
-extension DedicatedInferenceResponse {
-    public init(from decoder: Decoder) throws {
+public extension DedicatedInferenceResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.dedicatedInference = try container.sdkDecodeIfPresent(.dedicatedInference)
+        dedicatedInference = try container.sdkDecodeIfPresent(.dedicatedInference)
     }
 }

@@ -6,10 +6,13 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
-    /// Adds a data source configuration to a knowledge base. Supply the source-specific settings for an AWS S3 bucket, Spaces bucket, or web crawler, and optionally configure chunking. Use this operation to add sources after creating a knowledge base or to attach a source during a later update.
+public extension AgentPlatformApiMethods {
+    /// Adds a data source configuration to a knowledge base. Supply the source-specific settings for an AWS S3 bucket,
+    /// Spaces bucket, or web crawler, and optionally configure chunking. Use this operation to add sources after
+    /// creating a knowledge base or to attach a source during a later update.
     ///
-    /// To add a data source to a knowledge base, send a POST request to `/v2/gen-ai/knowledge_bases/{knowledge_base_uuid}/data_sources`.
+    /// To add a data source to a knowledge base, send a POST request to
+    /// `/v2/gen-ai/knowledge_bases/{knowledge_base_uuid}/data_sources`.
     ///
     /// - Parameters:
     /// - knowledgeBaseUuid: Knowledge base id
@@ -21,9 +24,42 @@ extension AgentPlatformApiMethods {
     /// - knowledgeBaseUuid2: Knowledge base id
     /// - spacesDataSource: Spaces Bucket Data Source
     /// - webCrawlerDataSource: WebCrawlerDataSource
-    public static func genaiCreateKnowledgeBaseDataSource(config: ClientConfig, knowledgeBaseUuid: String, awsDataSource: ApiAWSDataSource? = nil, chunkingAlgorithm: ApiChunkingAlgorithm? = nil, chunkingOptions: ApiChunkingOptions? = nil, knowledgeBaseUuid2: String? = nil, spacesDataSource: ApiSpacesDataSource? = nil, webCrawlerDataSource: ApiWebCrawlerDataSource? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiCreateKnowledgeBaseDataSourceOutput {
-        let requestBody = GenaiCreateKnowledgeBaseDataSourceRequestBody(awsDataSource: awsDataSource, chunkingAlgorithm: chunkingAlgorithm, chunkingOptions: chunkingOptions, knowledgeBaseUuid2: knowledgeBaseUuid2, spacesDataSource: spacesDataSource, webCrawlerDataSource: webCrawlerDataSource)
+    static func genaiCreateKnowledgeBaseDataSource(
+        config: ClientConfig,
+        knowledgeBaseUuid: String,
+        awsDataSource: ApiAWSDataSource? = nil,
+        chunkingAlgorithm: ApiChunkingAlgorithm? = nil,
+        chunkingOptions: ApiChunkingOptions? = nil,
+        knowledgeBaseUuid2: String? = nil,
+        spacesDataSource: ApiSpacesDataSource? = nil,
+        webCrawlerDataSource: ApiWebCrawlerDataSource? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiCreateKnowledgeBaseDataSourceOutput {
+        let requestBody = GenaiCreateKnowledgeBaseDataSourceRequestBody(
+            awsDataSource: awsDataSource,
+            chunkingAlgorithm: chunkingAlgorithm,
+            chunkingOptions: chunkingOptions,
+            knowledgeBaseUuid2: knowledgeBaseUuid2,
+            spacesDataSource: spacesDataSource,
+            webCrawlerDataSource: webCrawlerDataSource
+        )
 
-        return try (await sdkRequest("POST", ["/v2/gen-ai/knowledge_bases/", sdkEncodePathSegment(sdkWireString(knowledgeBaseUuid)), "/data_sources"].joined(), config: config, body: requestBody, decoder: .json, operationId: "genai_create_knowledge_base_data_source", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/v2/gen-ai/knowledge_bases/", sdkEncodePathSegment(sdkWireString(knowledgeBaseUuid)), "/data_sources"]
+                .joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "genai_create_knowledge_base_data_source",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

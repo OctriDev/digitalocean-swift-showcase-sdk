@@ -3,12 +3,16 @@
 
 import Foundation
 
-// ServerlessInferenceCreate domain models
+/// ServerlessInferenceCreate domain models
 /// The reason the model stopped generating tokens. Only present in the final chunk.
-public struct CreateResponseStreamResponseChoicesItemFinishReason: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct CreateResponseStreamResponseChoicesItemFinishReason: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let stop = CreateResponseStreamResponseChoicesItemFinishReason(rawValue: "stop")
     public static let length = CreateResponseStreamResponseChoicesItemFinishReason(rawValue: "length")
     public static let toolCalls = CreateResponseStreamResponseChoicesItemFinishReason(rawValue: "tool_calls")
@@ -16,7 +20,7 @@ public struct CreateResponseStreamResponseChoicesItemFinishReason: RawRepresenta
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -26,17 +30,21 @@ public struct CreateResponseStreamResponseChoicesItemFinishReason: RawRepresenta
 }
 
 /// Optional enumerated value serialized in the `tool_choice` wire field.
-public struct CreateResponseRequestToolChoiceVariant0: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct CreateResponseRequestToolChoiceVariant0: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let none = CreateResponseRequestToolChoiceVariant0(rawValue: "none")
     public static let auto = CreateResponseRequestToolChoiceVariant0(rawValue: "auto")
     public static let required = CreateResponseRequestToolChoiceVariant0(rawValue: "required")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
