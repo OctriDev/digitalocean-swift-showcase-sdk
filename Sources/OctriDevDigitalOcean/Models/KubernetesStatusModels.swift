@@ -3,7 +3,7 @@
 
 import Foundation
 
-// KubernetesStatus domain models
+/// KubernetesStatus domain models
 /// Typed representation of the `StatusMessages` API schema.
 public struct StatusMessages: Codable {
     /// Status information about the cluster which impacts it's lifecycle.
@@ -19,23 +19,23 @@ public struct StatusMessages: Codable {
     }
 
     init() {
-        (self.message, self.timestamp) = (nil, nil)
+        (message, timestamp) = (nil, nil)
     }
 }
 
-extension StatusMessages {
-    public init(from decoder: Decoder) throws {
+public extension StatusMessages {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.message = try container.sdkDecodeIfPresent(.message)
-        self.timestamp = try container.sdkDecodeIfPresent(.timestamp)
-        if let value = self.timestamp {
+        message = try container.sdkDecodeIfPresent(.message)
+        timestamp = try container.sdkDecodeIfPresent(.timestamp)
+        if let value = timestamp {
             try sdkValidateDateTime("timestamp", sdkWireString(value))
         }
     }
 }
 
-extension StatusMessages {
-    public init(message: String? = nil, timestamp: Date? = nil) throws {
+public extension StatusMessages {
+    init(message: String? = nil, timestamp: Date? = nil) throws {
         self.init()
         (self.message, self.timestamp) = (message, timestamp)
         if let value = self.timestamp {
@@ -54,19 +54,19 @@ public struct StatusMessagesResponse: Codable {
     }
 
     init() {
-        self.messages = nil
+        messages = nil
     }
 }
 
-extension StatusMessagesResponse {
-    public init(from decoder: Decoder) throws {
+public extension StatusMessagesResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.messages = try container.sdkDecodeIfPresent(.messages)
+        messages = try container.sdkDecodeIfPresent(.messages)
     }
 }
 
-extension StatusMessagesResponse {
-    public init(messages: [StatusMessages]? = nil) {
+public extension StatusMessagesResponse {
+    init(messages: [StatusMessages]? = nil) {
         self.init()
         self.messages = messages
     }

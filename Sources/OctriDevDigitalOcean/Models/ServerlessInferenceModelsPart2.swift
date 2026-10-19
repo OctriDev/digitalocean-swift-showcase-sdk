@@ -3,12 +3,15 @@
 
 import Foundation
 
-// ServerlessInference domain models
+/// ServerlessInference domain models
 /// The size of the requested image.
 public struct ImageGenPartialImageEventSize: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let value1024x1024 = ImageGenPartialImageEventSize(rawValue: "1024x1024")
     public static let value1024x1536 = ImageGenPartialImageEventSize(rawValue: "1024x1536")
     public static let value1536x1024 = ImageGenPartialImageEventSize(rawValue: "1536x1024")
@@ -16,7 +19,7 @@ public struct ImageGenPartialImageEventSize: RawRepresentable, Hashable, Codable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -29,14 +32,17 @@ public struct ImageGenPartialImageEventSize: RawRepresentable, Hashable, Codable
 public struct ImageGenPartialImageEventBackground: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let transparent = ImageGenPartialImageEventBackground(rawValue: "transparent")
     public static let opaque = ImageGenPartialImageEventBackground(rawValue: "opaque")
     public static let auto = ImageGenPartialImageEventBackground(rawValue: "auto")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

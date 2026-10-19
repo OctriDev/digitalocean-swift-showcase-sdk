@@ -17,12 +17,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.toolbeltsGet(
-            name: decoded("\"search-toolbelt\""),
-            version: decoded("\"1\""),
-            pageSize: decoded("20"),
-            pageToken: decoded("\"ZXhhX3dlYl9zZWFyY2hAMQ\""),
-            search: decoded("\"search\"")
-        )
+                name: decoded("\"search-toolbelt\""),
+                version: decoded("\"1\""),
+                pageSize: decoded("20"),
+                pageToken: decoded("\"ZXhhX3dlYl9zZWFyY2hAMQ\""),
+                search: decoded("\"search\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -69,10 +69,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.toolbeltsList(
-            status: decoded("\"active\""),
-            page: decoded("1"),
-            perPage: decoded("20")
-        )
+                status: decoded("\"active\""),
+                page: decoded("1"),
+                perPage: decoded("20")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -121,12 +121,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.toolbeltsListProviders(
-            name: decoded("\"search-toolbelt\""),
-            version: decoded("\"1\""),
-            page: decoded("1"),
-            perPage: decoded("20"),
-            search: decoded("\"search\"")
-        )
+                name: decoded("\"search-toolbelt\""),
+                version: decoded("\"1\""),
+                page: decoded("1"),
+                perPage: decoded("20"),
+                search: decoded("\"search\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -176,13 +176,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.toolbeltsListProviderTools(
-            name: decoded("\"search-toolbelt\""),
-            provider: decoded("\"exa\""),
-            version: decoded("\"1\""),
-            page: decoded("1"),
-            perPage: decoded("20"),
-            search: decoded("\"search\"")
-        )
+                name: decoded("\"search-toolbelt\""),
+                provider: decoded("\"exa\""),
+                version: decoded("\"1\""),
+                page: decoded("1"),
+                perPage: decoded("20"),
+                search: decoded("\"search\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -230,11 +230,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.toolbeltsListSearch(
-            query: decoded("\"search\""),
-            status: decoded("\"active\""),
-            pageSize: decoded("20"),
-            pageToken: decoded("\"ZXhhX3dlYl9zZWFyY2hAMQ\"")
-        )
+                query: decoded("\"search\""),
+                status: decoded("\"active\""),
+                pageSize: decoded("20"),
+                pageToken: decoded("\"ZXhhX3dlYl9zZWFyY2hAMQ\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -281,10 +281,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.toolsGetHealth(
-            toolSlug: decoded("\"exa_web_search\""),
-            window: decoded("\"HEALTH_WINDOW_SEVEN_DAYS\""),
-            includeHistory: decoded("true")
-        )
+                toolSlug: decoded("\"exa_web_search\""),
+                window: decoded("\"HEALTH_WINDOW_SEVEN_DAYS\""),
+                includeHistory: decoded("true")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -331,10 +331,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.toolsList(
-            toolkitId: decoded("\"exa\""),
-            page: decoded("1"),
-            perPage: decoded("100")
-        )
+                toolkitId: decoded("\"exa\""),
+                page: decoded("1"),
+                perPage: decoded("100")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -382,11 +382,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.toolsListHealth(
-            provider: decoded("\"exa\""),
-            window: decoded("\"HEALTH_WINDOW_SEVEN_DAYS\""),
-            page: decoded("1"),
-            perPage: decoded("20")
-        )
+                provider: decoded("\"exa\""),
+                window: decoded("\"HEALTH_WINDOW_SEVEN_DAYS\""),
+                page: decoded("1"),
+                perPage: decoded("20")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -434,11 +434,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.toolsListHealthProviders(
-            provider: decoded("\"exa\""),
-            window: decoded("\"HEALTH_WINDOW_SEVEN_DAYS\""),
-            page: decoded("1"),
-            perPage: decoded("20")
-        )
+                provider: decoded("\"exa\""),
+                window: decoded("\"HEALTH_WINDOW_SEVEN_DAYS\""),
+                page: decoded("1"),
+                perPage: decoded("20")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -529,12 +529,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.toolsListSearch(
-            query: decoded("\"search\""),
-            provider: decoded("[\"exa\"]"),
-            toolbelt: decoded("\"search-toolbelt\""),
-            pageSize: decoded("20"),
-            pageToken: decoded("\"ZXhhX3dlYl9zZWFyY2hAMQ\"")
-        )
+                query: decoded("\"search\""),
+                provider: decoded("[\"exa\"]"),
+                toolbelt: decoded("\"search-toolbelt\""),
+                pageSize: decoded("20"),
+                pageToken: decoded("\"ZXhhX3dlYl9zZWFyY2hAMQ\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)

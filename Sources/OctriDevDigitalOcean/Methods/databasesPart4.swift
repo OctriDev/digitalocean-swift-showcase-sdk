@@ -6,39 +6,101 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DatabasesMethods {
-    /// Updates configuration settings for an existing database cluster. Supply `config` with the settings you want to change; the available settings depend on the cluster's database engine. Use the cluster's UUID to target the configuration.
+public extension DatabasesMethods {
+    /// Updates configuration settings for an existing database cluster. Supply `config` with the settings you want to
+    /// change; the available settings depend on the cluster's database engine. Use the cluster's UUID to target the
+    /// configuration.
     ///
-    /// To update the configuration for an existing database cluster, send a PATCH request to `/v2/databases/$DATABASE_ID/config`.
+    /// To update the configuration for an existing database cluster, send a PATCH request to
+    /// `/v2/databases/$DATABASE_ID/config`.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - config2: Optional API value serialized in the `config` wire field.
-    public static func databasesPatchConfig(config: ClientConfig, databaseClusterUuid: String, config2: DatabaseConfigConfig? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func databasesPatchConfig(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        config2: DatabaseConfigConfig? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
         let requestBody = DatabasesPatchConfigRequestBody(config2: config2)
 
-        return try (await sdkRequest("PATCH", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/config"].joined(), config: config, body: requestBody, decoder: .empty, operationId: "databases_patch_config", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PATCH",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/config"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .empty,
+            operationId: "databases_patch_config",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To retrieve the public certificate used to secure the connection to the database cluster send a GET request to `/v2/databases/$DATABASE_ID/ca`. The response will be a JSON object with a `ca` key. This will be set to an object containing the base64 encoding of the public key certificate.
+    /// To retrieve the public certificate used to secure the connection to the database cluster send a GET request to
+    /// `/v2/databases/$DATABASE_ID/ca`. The response will be a JSON object with a `ca` key. This will be set to an
+    /// object containing the base64 encoding of the public key certificate.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    public static func databasesGetCa(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> CaResponse {
+    static func databasesGetCa(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CaResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/ca"].joined(), config: config, decoder: .json, operationId: "databases_get_ca", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/ca"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "databases_get_ca",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To retrieve the status of the most recent online migration, send a GET request to `/v2/databases/$DATABASE_ID/online-migration`.
+    /// To retrieve the status of the most recent online migration, send a GET request to
+    /// `/v2/databases/$DATABASE_ID/online-migration`.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    public static func databasesGetMigrationStatus(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> OnlineMigration {
+    static func databasesGetMigrationStatus(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> OnlineMigration {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/online-migration"].joined(), config: config, decoder: .json, operationId: "databases_get_migrationStatus", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/online-migration"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "databases_get_migrationStatus",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

@@ -6,37 +6,102 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension NfsMethods {
-    /// To list access points for an NFS share, send a GET request to `/v2/nfs/shares/{share_id}/access_points`. You may use query parameters to filter by status. A successful request will return a list of NFS access points ordered with the default access point first, then by `created_at` ascending.
+public extension NfsMethods {
+    /// To list access points for an NFS share, send a GET request to `/v2/nfs/shares/{share_id}/access_points`. You may
+    /// use query parameters to filter by status. A successful request will return a list of NFS access points ordered
+    /// with the default access point first, then by `created_at` ascending.
     ///
     /// - Parameters:
     /// - shareId: The unique identifier of the NFS share.
     /// - status: Filter access points by status.
-    public static func nfsListAccessPoints(config: ClientConfig, shareId: String, status: NfsListAccessPointsParameter? = nil, requestOptions: RequestOptions? = nil) async throws -> AccessPointListResponse {
+    static func nfsListAccessPoints(
+        config: ClientConfig,
+        shareId: String,
+        status: NfsListAccessPointsParameter? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AccessPointListResponse {
         try sdkValidateUuid("share_id", shareId)
 
-        return try (await sdkRequest("GET", ["/v2/nfs/shares/", sdkEncodePathSegment(sdkWireString(shareId)), "/access_points"].joined(), config: config, query: [
-            SdkQueryParameter("status", value: status),
-        ], decoder: .json, operationId: "nfs_list_access_points", options: requestOptions, errors: ["400": NfsApiError.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/nfs/shares/", sdkEncodePathSegment(sdkWireString(shareId)), "/access_points"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("status", value: status),
+            ],
+            decoder: .json,
+            operationId: "nfs_list_access_points",
+            options: requestOptions,
+            errors: [
+                "400": NfsApiError.self,
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To get an NFS access point, send a GET request to `/v2/nfs/access_points/{access_point_id}`. A successful request will return the NFS access point.
+    /// To get an NFS access point, send a GET request to `/v2/nfs/access_points/{access_point_id}`. A successful
+    /// request will return the NFS access point.
     ///
     /// - Parameters:
     /// - accessPointId: The unique identifier of the NFS access point.
-    public static func nfsGetAccessPoint(config: ClientConfig, accessPointId: String, requestOptions: RequestOptions? = nil) async throws -> AccessPointGetResponse {
+    static func nfsGetAccessPoint(
+        config: ClientConfig,
+        accessPointId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AccessPointGetResponse {
         try sdkValidateUuid("access_point_id", accessPointId)
 
-        return try (await sdkRequest("GET", ["/v2/nfs/access_points/", sdkEncodePathSegment(sdkWireString(accessPointId))].joined(), config: config, decoder: .json, operationId: "nfs_get_access_point", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/nfs/access_points/", sdkEncodePathSegment(sdkWireString(accessPointId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "nfs_get_access_point",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To delete an NFS access point, send a DELETE request to `/v2/nfs/access_points/{access_point_id}`. A successful request will soft-delete the access point and return the deleted access point with status `ACCESS_POINT_DELETED` and an action object indicating the delete operation. The default access point (`is_default: true`) cannot be deleted. Access points already in `ACCESS_POINT_DELETED` or `ACCESS_POINT_FAILED` status return `400 Bad Request`.
+    /// To delete an NFS access point, send a DELETE request to `/v2/nfs/access_points/{access_point_id}`. A successful
+    /// request will soft-delete the access point and return the deleted access point with status `ACCESS_POINT_DELETED`
+    /// and an action object indicating the delete operation. The default access point (`is_default: true`) cannot be
+    /// deleted. Access points already in `ACCESS_POINT_DELETED` or `ACCESS_POINT_FAILED` status return `400 Bad
+    /// Request`.
     ///
     /// - Parameters:
     /// - accessPointId: The unique identifier of the NFS access point.
-    public static func nfsDeleteAccessPoint(config: ClientConfig, accessPointId: String, requestOptions: RequestOptions? = nil) async throws -> AccessPointActionResponse {
+    static func nfsDeleteAccessPoint(
+        config: ClientConfig,
+        accessPointId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AccessPointActionResponse {
         try sdkValidateUuid("access_point_id", accessPointId)
 
-        return try (await sdkRequest("DELETE", ["/v2/nfs/access_points/", sdkEncodePathSegment(sdkWireString(accessPointId))].joined(), config: config, decoder: .json, operationId: "nfs_delete_access_point", options: requestOptions, errors: ["400": NfsApiError.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "DELETE",
+            ["/v2/nfs/access_points/", sdkEncodePathSegment(sdkWireString(accessPointId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "nfs_delete_access_point",
+            options: requestOptions,
+            errors: [
+                "400": NfsApiError.self,
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

@@ -3,9 +3,37 @@
 
 import Foundation
 
-// AgentPlatformAPIApiUpdate domain models
-extension ApiUpdateAgentInputPublic {
-    public init(agentLogInsightsEnabled: Bool? = nil, allowedDomains: [String]? = nil, anthropicKeyUuid: String? = nil, clearMcpServers: Bool? = nil, conversationLogsEnabled: Bool? = nil, description: String? = nil, instruction: String? = nil, k: Int? = nil, maxTokens: Int? = nil, mcpServers: [ApiMcpServer]? = nil, modelProviderKeyUuid: String? = nil, modelRouterUuid: String? = nil, modelUuid: String? = nil, name: String? = nil, openAiKeyUuid: String? = nil, projectId: String? = nil, provideCitations: Bool? = nil, reasoningEffort: String? = nil, retrievalMethod: ApiRetrievalMethod? = nil, routerPresetSlug: String? = nil, tags: [String]? = nil, temperature: Double? = nil, thinkingTokenBudget: Int? = nil, topP: Double? = nil, uuid: String? = nil, webFetchEnabled: Bool? = nil, webSearchEnabled: Bool? = nil) {
+/// AgentPlatformAPIApiUpdate domain models
+public extension ApiUpdateAgentInputPublic {
+    init(
+        agentLogInsightsEnabled: Bool? = nil,
+        allowedDomains: [String]? = nil,
+        anthropicKeyUuid: String? = nil,
+        clearMcpServers: Bool? = nil,
+        conversationLogsEnabled: Bool? = nil,
+        description: String? = nil,
+        instruction: String? = nil,
+        k: Int? = nil,
+        maxTokens: Int? = nil,
+        mcpServers: [ApiMcpServer]? = nil,
+        modelProviderKeyUuid: String? = nil,
+        modelRouterUuid: String? = nil,
+        modelUuid: String? = nil,
+        name: String? = nil,
+        openAiKeyUuid: String? = nil,
+        projectId: String? = nil,
+        provideCitations: Bool? = nil,
+        reasoningEffort: String? = nil,
+        retrievalMethod: ApiRetrievalMethod? = nil,
+        routerPresetSlug: String? = nil,
+        tags: [String]? = nil,
+        temperature: Double? = nil,
+        thinkingTokenBudget: Int? = nil,
+        topP: Double? = nil,
+        uuid: String? = nil,
+        webFetchEnabled: Bool? = nil,
+        webSearchEnabled: Bool? = nil
+    ) {
         self.init()
         (self.agentLogInsightsEnabled, self.allowedDomains) = (agentLogInsightsEnabled, allowedDomains)
         (self.anthropicKeyUuid, self.clearMcpServers) = (anthropicKeyUuid, clearMcpServers)
@@ -34,19 +62,19 @@ public struct ApiUpdateAgentFunctionOutput: Codable {
     }
 
     init() {
-        self.agent = nil
+        agent = nil
     }
 }
 
-extension ApiUpdateAgentFunctionOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateAgentFunctionOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agent = try container.sdkDecodeIfPresent(.agent)
+        agent = try container.sdkDecodeIfPresent(.agent)
     }
 }
 
-extension ApiUpdateAgentFunctionOutput {
-    public init(agent: ApiAgent? = nil) {
+public extension ApiUpdateAgentFunctionOutput {
+    init(agent: ApiAgent? = nil) {
         self.init()
         self.agent = agent
     }
@@ -62,19 +90,19 @@ public struct ApiUpdateCustomEvaluationMetricOutput: Codable {
     }
 
     init() {
-        self.metric = nil
+        metric = nil
     }
 }
 
-extension ApiUpdateCustomEvaluationMetricOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateCustomEvaluationMetricOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.metric = try container.sdkDecodeIfPresent(.metric)
+        metric = try container.sdkDecodeIfPresent(.metric)
     }
 }
 
-extension ApiUpdateCustomEvaluationMetricOutput {
-    public init(metric: ApiEvaluationMetric? = nil) {
+public extension ApiUpdateCustomEvaluationMetricOutput {
+    init(metric: ApiEvaluationMetric? = nil) {
         self.init()
         self.metric = metric
     }
@@ -102,22 +130,27 @@ public struct ApiUpdateKnowledgeBaseDataSourceInputPublic: Codable {
     }
 
     init() {
-        (self.chunkingAlgorithm, self.chunkingOptions, self.dataSourceUuid, self.knowledgeBaseUuid) = (nil, nil, nil, nil)
+        (chunkingAlgorithm, chunkingOptions, dataSourceUuid, knowledgeBaseUuid) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiUpdateKnowledgeBaseDataSourceInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateKnowledgeBaseDataSourceInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.chunkingAlgorithm = try container.sdkDecodeIfPresent(.chunkingAlgorithm)
-        self.chunkingOptions = try container.sdkDecodeIfPresent(.chunkingOptions)
-        self.dataSourceUuid = try container.sdkDecodeIfPresent(.dataSourceUuid)
-        self.knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
+        chunkingAlgorithm = try container.sdkDecodeIfPresent(.chunkingAlgorithm)
+        chunkingOptions = try container.sdkDecodeIfPresent(.chunkingOptions)
+        dataSourceUuid = try container.sdkDecodeIfPresent(.dataSourceUuid)
+        knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
     }
 }
 
-extension ApiUpdateKnowledgeBaseDataSourceInputPublic {
-    public init(chunkingAlgorithm: ApiChunkingAlgorithm? = nil, chunkingOptions: ApiChunkingOptions? = nil, dataSourceUuid: String? = nil, knowledgeBaseUuid: String? = nil) {
+public extension ApiUpdateKnowledgeBaseDataSourceInputPublic {
+    init(
+        chunkingAlgorithm: ApiChunkingAlgorithm? = nil,
+        chunkingOptions: ApiChunkingOptions? = nil,
+        dataSourceUuid: String? = nil,
+        knowledgeBaseUuid: String? = nil
+    ) {
         self.init()
         (self.chunkingAlgorithm, self.chunkingOptions) = (chunkingAlgorithm, chunkingOptions)
         (self.dataSourceUuid, self.knowledgeBaseUuid) = (dataSourceUuid, knowledgeBaseUuid)
@@ -147,22 +180,22 @@ public struct ApiUpdateLinkedAgentOutput: Codable {
     }
 
     init() {
-        (self.childAgentUuid, self.parentAgentUuid, self.rollback, self.uuid) = (nil, nil, nil, nil)
+        (childAgentUuid, parentAgentUuid, rollback, uuid) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiUpdateLinkedAgentOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateLinkedAgentOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.childAgentUuid = try container.sdkDecodeIfPresent(.childAgentUuid)
-        self.parentAgentUuid = try container.sdkDecodeIfPresent(.parentAgentUuid)
-        self.rollback = try container.sdkDecodeIfPresent(.rollback)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        childAgentUuid = try container.sdkDecodeIfPresent(.childAgentUuid)
+        parentAgentUuid = try container.sdkDecodeIfPresent(.parentAgentUuid)
+        rollback = try container.sdkDecodeIfPresent(.rollback)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
     }
 }
 
-extension ApiUpdateLinkedAgentOutput {
-    public init(childAgentUuid: String? = nil, parentAgentUuid: String? = nil, rollback: Bool? = nil, uuid: String? = nil) {
+public extension ApiUpdateLinkedAgentOutput {
+    init(childAgentUuid: String? = nil, parentAgentUuid: String? = nil, rollback: Bool? = nil, uuid: String? = nil) {
         self.init()
         (self.childAgentUuid, self.parentAgentUuid) = (childAgentUuid, parentAgentUuid)
         (self.rollback, self.uuid) = (rollback, uuid)
@@ -184,20 +217,20 @@ public struct ApiUpdateModelAPIKeyInputPublic: Codable {
     }
 
     init() {
-        (self.apiKeyUuid, self.name) = (nil, nil)
+        (apiKeyUuid, name) = (nil, nil)
     }
 }
 
-extension ApiUpdateModelAPIKeyInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateModelAPIKeyInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKeyUuid = try container.sdkDecodeIfPresent(.apiKeyUuid)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        apiKeyUuid = try container.sdkDecodeIfPresent(.apiKeyUuid)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ApiUpdateModelAPIKeyInputPublic {
-    public init(apiKeyUuid: String? = nil, name: String? = nil) {
+public extension ApiUpdateModelAPIKeyInputPublic {
+    init(apiKeyUuid: String? = nil, name: String? = nil) {
         self.init()
         (self.apiKeyUuid, self.name) = (apiKeyUuid, name)
     }
@@ -218,20 +251,20 @@ public struct ApiUpdateSimulationRunInputPublic: Codable {
     }
 
     init() {
-        (self.name, self.runUuid) = (nil, nil)
+        (name, runUuid) = (nil, nil)
     }
 }
 
-extension ApiUpdateSimulationRunInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateSimulationRunInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.runUuid = try container.sdkDecodeIfPresent(.runUuid)
+        name = try container.sdkDecodeIfPresent(.name)
+        runUuid = try container.sdkDecodeIfPresent(.runUuid)
     }
 }
 
-extension ApiUpdateSimulationRunInputPublic {
-    public init(name: String? = nil, runUuid: String? = nil) {
+public extension ApiUpdateSimulationRunInputPublic {
+    init(name: String? = nil, runUuid: String? = nil) {
         self.init()
         (self.name, self.runUuid) = (name, runUuid)
     }
@@ -247,19 +280,19 @@ public struct ApiUpdateAgentDeploymentVisbilityOutput: Codable {
     }
 
     init() {
-        self.agent = nil
+        agent = nil
     }
 }
 
-extension ApiUpdateAgentDeploymentVisbilityOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateAgentDeploymentVisbilityOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agent = try container.sdkDecodeIfPresent(.agent)
+        agent = try container.sdkDecodeIfPresent(.agent)
     }
 }
 
-extension ApiUpdateAgentDeploymentVisbilityOutput {
-    public init(agent: ApiAgent? = nil) {
+public extension ApiUpdateAgentDeploymentVisbilityOutput {
+    init(agent: ApiAgent? = nil) {
         self.init()
         self.agent = agent
     }
@@ -281,20 +314,20 @@ public struct ApiUpdateModelEvaluationRunInputPublic: Codable {
     }
 
     init() {
-        (self.evalRunUuid, self.name) = (nil, nil)
+        (evalRunUuid, name) = (nil, nil)
     }
 }
 
-extension ApiUpdateModelEvaluationRunInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateModelEvaluationRunInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.evalRunUuid = try container.sdkDecodeIfPresent(.evalRunUuid)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        evalRunUuid = try container.sdkDecodeIfPresent(.evalRunUuid)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ApiUpdateModelEvaluationRunInputPublic {
-    public init(evalRunUuid: String? = nil, name: String? = nil) {
+public extension ApiUpdateModelEvaluationRunInputPublic {
+    init(evalRunUuid: String? = nil, name: String? = nil) {
         self.init()
         (self.evalRunUuid, self.name) = (evalRunUuid, name)
     }
@@ -319,21 +352,21 @@ public struct ApiUpdateOpenAIAPIKeyInputPublic: Codable {
     }
 
     init() {
-        (self.apiKey, self.apiKeyUuid, self.name) = (nil, nil, nil)
+        (apiKey, apiKeyUuid, name) = (nil, nil, nil)
     }
 }
 
-extension ApiUpdateOpenAIAPIKeyInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateOpenAIAPIKeyInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKey = try container.sdkDecodeIfPresent(.apiKey)
-        self.apiKeyUuid = try container.sdkDecodeIfPresent(.apiKeyUuid)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        apiKey = try container.sdkDecodeIfPresent(.apiKey)
+        apiKeyUuid = try container.sdkDecodeIfPresent(.apiKeyUuid)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ApiUpdateOpenAIAPIKeyInputPublic {
-    public init(apiKey: String? = nil, apiKeyUuid: String? = nil, name: String? = nil) {
+public extension ApiUpdateOpenAIAPIKeyInputPublic {
+    init(apiKey: String? = nil, apiKeyUuid: String? = nil, name: String? = nil) {
         self.init()
         (self.apiKey, self.apiKeyUuid) = (apiKey, apiKeyUuid)
         self.name = name
@@ -350,19 +383,19 @@ public struct ApiUpdateModelRouterOutput: Codable {
     }
 
     init() {
-        self.modelRouter = nil
+        modelRouter = nil
     }
 }
 
-extension ApiUpdateModelRouterOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateModelRouterOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.modelRouter = try container.sdkDecodeIfPresent(.modelRouter)
+        modelRouter = try container.sdkDecodeIfPresent(.modelRouter)
     }
 }
 
-extension ApiUpdateModelRouterOutput {
-    public init(modelRouter: ApiModelRouter? = nil) {
+public extension ApiUpdateModelRouterOutput {
+    init(modelRouter: ApiModelRouter? = nil) {
         self.init()
         self.modelRouter = modelRouter
     }
@@ -378,19 +411,19 @@ public struct ApiUpdateKnowledgeBaseDataSourceOutput: Codable {
     }
 
     init() {
-        self.knowledgeBaseDataSource = nil
+        knowledgeBaseDataSource = nil
     }
 }
 
-extension ApiUpdateKnowledgeBaseDataSourceOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateKnowledgeBaseDataSourceOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.knowledgeBaseDataSource = try container.sdkDecodeIfPresent(.knowledgeBaseDataSource)
+        knowledgeBaseDataSource = try container.sdkDecodeIfPresent(.knowledgeBaseDataSource)
     }
 }
 
-extension ApiUpdateKnowledgeBaseDataSourceOutput {
-    public init(knowledgeBaseDataSource: ApiKnowledgeBaseDataSource? = nil) {
+public extension ApiUpdateKnowledgeBaseDataSourceOutput {
+    init(knowledgeBaseDataSource: ApiKnowledgeBaseDataSource? = nil) {
         self.init()
         self.knowledgeBaseDataSource = knowledgeBaseDataSource
     }
@@ -436,27 +469,36 @@ public struct ApiUpdateCustomModelMetadataInputPublic: Codable {
     }
 
     init() {
-        (self.description, self.inputModalities, self.license, self.name, self.outputModalities) = (nil, nil, nil, nil, nil)
-        (self.parameters, self.tags, self.uuid) = (nil, nil, nil)
+        (description, inputModalities, license, name, outputModalities) = (nil, nil, nil, nil, nil)
+        (parameters, tags, uuid) = (nil, nil, nil)
     }
 }
 
-extension ApiUpdateCustomModelMetadataInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateCustomModelMetadataInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.inputModalities = try container.sdkDecodeIfPresent(.inputModalities)
-        self.license = try container.sdkDecodeIfPresent(.license)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.outputModalities = try container.sdkDecodeIfPresent(.outputModalities)
-        self.parameters = try container.sdkDecodeIfPresent(.parameters)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        description = try container.sdkDecodeIfPresent(.description)
+        inputModalities = try container.sdkDecodeIfPresent(.inputModalities)
+        license = try container.sdkDecodeIfPresent(.license)
+        name = try container.sdkDecodeIfPresent(.name)
+        outputModalities = try container.sdkDecodeIfPresent(.outputModalities)
+        parameters = try container.sdkDecodeIfPresent(.parameters)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
     }
 }
 
-extension ApiUpdateCustomModelMetadataInputPublic {
-    public init(description: String? = nil, inputModalities: [String]? = nil, license: String? = nil, name: String? = nil, outputModalities: [String]? = nil, parameters: String? = nil, tags: CustomModelTags? = nil, uuid: String? = nil) {
+public extension ApiUpdateCustomModelMetadataInputPublic {
+    init(
+        description: String? = nil,
+        inputModalities: [String]? = nil,
+        license: String? = nil,
+        name: String? = nil,
+        outputModalities: [String]? = nil,
+        parameters: String? = nil,
+        tags: CustomModelTags? = nil,
+        uuid: String? = nil
+    ) {
         self.init()
         (self.description, self.inputModalities) = (description, inputModalities)
         (self.license, self.name) = (license, name)
@@ -483,21 +525,21 @@ public struct ApiUpdateScenarioSetInputPublic: Codable {
     }
 
     init() {
-        (self.name, self.scenarioSetUuid, self.scenarios) = (nil, nil, nil)
+        (name, scenarioSetUuid, scenarios) = (nil, nil, nil)
     }
 }
 
-extension ApiUpdateScenarioSetInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateScenarioSetInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.scenarioSetUuid = try container.sdkDecodeIfPresent(.scenarioSetUuid)
-        self.scenarios = try container.sdkDecodeIfPresent(.scenarios)
+        name = try container.sdkDecodeIfPresent(.name)
+        scenarioSetUuid = try container.sdkDecodeIfPresent(.scenarioSetUuid)
+        scenarios = try container.sdkDecodeIfPresent(.scenarios)
     }
 }
 
-extension ApiUpdateScenarioSetInputPublic {
-    public init(name: String? = nil, scenarioSetUuid: String? = nil, scenarios: [ApiScenario]? = nil) {
+public extension ApiUpdateScenarioSetInputPublic {
+    init(name: String? = nil, scenarioSetUuid: String? = nil, scenarios: [ApiScenario]? = nil) {
         self.init()
         (self.name, self.scenarioSetUuid) = (name, scenarioSetUuid)
         self.scenarios = scenarios
@@ -514,19 +556,19 @@ public struct ApiUpdateAgentOutput: Codable {
     }
 
     init() {
-        self.agent = nil
+        agent = nil
     }
 }
 
-extension ApiUpdateAgentOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateAgentOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agent = try container.sdkDecodeIfPresent(.agent)
+        agent = try container.sdkDecodeIfPresent(.agent)
     }
 }
 
-extension ApiUpdateAgentOutput {
-    public init(agent: ApiAgent? = nil) {
+public extension ApiUpdateAgentOutput {
+    init(agent: ApiAgent? = nil) {
         self.init()
         self.agent = agent
     }
@@ -542,19 +584,19 @@ public struct ApiUpdateModelEvaluationRunOutput: Codable {
     }
 
     init() {
-        self.run = nil
+        run = nil
     }
 }
 
-extension ApiUpdateModelEvaluationRunOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateModelEvaluationRunOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.run = try container.sdkDecodeIfPresent(.run)
+        run = try container.sdkDecodeIfPresent(.run)
     }
 }
 
-extension ApiUpdateModelEvaluationRunOutput {
-    public init(run: ApiModelEvaluationRunSummary? = nil) {
+public extension ApiUpdateModelEvaluationRunOutput {
+    init(run: ApiModelEvaluationRunSummary? = nil) {
         self.init()
         self.run = run
     }

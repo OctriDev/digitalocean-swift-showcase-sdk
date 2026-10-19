@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-// Canonical uptime operation model declarations
+/// Canonical uptime operation model declarations
 public struct UptimeUpdateCheckRequestBody: Codable {
     /// A human-friendly display name.
     /// - Example: "Landing page check"
@@ -34,23 +34,29 @@ public struct UptimeUpdateCheckRequestBody: Codable {
     }
 
     init() {
-        (self.name, self.type, self.target, self.regions, self.enabled) = (nil, nil, nil, nil, nil)
+        (name, type, target, regions, enabled) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension UptimeUpdateCheckRequestBody {
-    public init(from decoder: Decoder) throws {
+public extension UptimeUpdateCheckRequestBody {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.target = try container.sdkDecodeIfPresent(.target)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
+        name = try container.sdkDecodeIfPresent(.name)
+        type = try container.sdkDecodeIfPresent(.type)
+        target = try container.sdkDecodeIfPresent(.target)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
     }
 }
 
-extension UptimeUpdateCheckRequestBody {
-    public init(name: String? = nil, type: CheckUpdatableType? = nil, target: String? = nil, regions: [CheckUpdatableRegionsItem]? = nil, enabled: Bool? = nil) {
+public extension UptimeUpdateCheckRequestBody {
+    init(
+        name: String? = nil,
+        type: CheckUpdatableType? = nil,
+        target: String? = nil,
+        regions: [CheckUpdatableRegionsItem]? = nil,
+        enabled: Bool? = nil
+    ) {
         self.init()
         (self.name, self.type) = (name, type)
         (self.target, self.regions) = (target, regions)

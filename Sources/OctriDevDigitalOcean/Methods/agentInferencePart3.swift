@@ -6,30 +6,30 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentInferenceMethods {
-    public struct AgentInferenceCreateChatCompletionStreamOptions {
+public extension AgentInferenceMethods {
+    struct AgentInferenceCreateChatCompletionStreamOptions {
         public var agent: Bool
         public var messages: [ChatMessage]
         public var model: String
         public var stream: Bool?
-        public var maxTokens: SdkOptional<Int>? = nil
-        public var maxCompletionTokens: SdkOptional<Int>? = nil
-        public var frequencyPenalty: SdkOptional<Double>? = nil
-        public var presencePenalty: SdkOptional<Double>? = nil
-        public var topLogprobs: SdkOptional<Int>? = nil
-        public var tools: [ChatCompletionTool]? = nil
-        public var toolChoice: ChatCompletionRequestToolChoice? = nil
-        public var stop: ChatCompletionRequestStop? = nil
-        public var logitBias: SdkOptional<[String: Int]>? = nil
-        public var logprobs: SdkOptional<Bool>? = nil
-        public var n: SdkOptional<Int>? = nil
-        public var streamOptions: SdkOptional<ChatCompletionRequestStreamOptions>? = nil
-        public var reasoningEffort: SdkOptional<ChatCompletionRequestReasoningEffort>? = nil
-        public var seed: SdkOptional<Int>? = nil
-        public var metadata: SdkOptional<[String: String]>? = nil
-        public var temperature: SdkOptional<Double>? = nil
-        public var topP: SdkOptional<Double>? = nil
-        public var user: String? = nil
+        public var maxTokens: SdkOptional<Int>?
+        public var maxCompletionTokens: SdkOptional<Int>?
+        public var frequencyPenalty: SdkOptional<Double>?
+        public var presencePenalty: SdkOptional<Double>?
+        public var topLogprobs: SdkOptional<Int>?
+        public var tools: [ChatCompletionTool]?
+        public var toolChoice: ChatCompletionRequestToolChoice?
+        public var stop: ChatCompletionRequestStop?
+        public var logitBias: SdkOptional<[String: Int]>?
+        public var logprobs: SdkOptional<Bool>?
+        public var n: SdkOptional<Int>?
+        public var streamOptions: SdkOptional<ChatCompletionRequestStreamOptions>?
+        public var reasoningEffort: SdkOptional<ChatCompletionRequestReasoningEffort>?
+        public var seed: SdkOptional<Int>?
+        public var metadata: SdkOptional<[String: String]>?
+        public var temperature: SdkOptional<Double>?
+        public var topP: SdkOptional<Double>?
+        public var user: String?
 
         public init(agent: Bool, messages: [ChatMessage], model: String, stream: Bool?) {
             self.agent = agent
@@ -109,9 +109,12 @@ extension AgentInferenceMethods {
     ///   temperature but not both.
     /// - user: A unique identifier representing your end-user, which can help
     ///   DigitalOcean to monitor and detect abuse.
-    public static func agentInferenceCreateChatCompletionStream(config: ClientConfig, options: AgentInferenceCreateChatCompletionStreamOptions, requestOptions: RequestOptions? = nil) async throws -> AsyncThrowingStream<ChatCompletionChunk, Swift.Error> {
+    static func agentInferenceCreateChatCompletionStream(
+        config: ClientConfig,
+        options: AgentInferenceCreateChatCompletionStreamOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AsyncThrowingStream<ChatCompletionChunk, Swift.Error> {
         let requestBody = AgentInferenceCreateChatCompletionStreamStreamRequestBody(options: options)
-
 
         let upstream = try await sdkStream(
             "POST",
@@ -136,8 +139,11 @@ extension AgentInferenceMethods {
                             continuation.finish()
                             return
                         }
-                        let payload = try sdkDecodeBody(Data(event.data.utf8)) { try sdkJsonDecoder().decode(ChatCompletionChunk.self, from: Data(event.data.utf8)) }
-                        
+                        let payload = try sdkDecodeBody(Data(event.data.utf8)) { try sdkJsonDecoder().decode(
+                            ChatCompletionChunk.self,
+                            from: Data(event.data.utf8)
+                        ) }
+
                         continuation.yield(payload)
                     }
                     continuation.finish()

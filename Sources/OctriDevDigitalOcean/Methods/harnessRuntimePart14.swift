@@ -6,8 +6,10 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension HarnessRuntimeMethods {
-    /// harness-api forwards the decision into the owning microVM via the inbound runtime.v1.OHR.ResolveHITL RPC (dialed through the guest-fronting proxy), which unblocks the gated agent action. The resolution is also echoed to all attached clients as a HITLResolved event on StreamSession. Returns 204 No Content on success.
+public extension HarnessRuntimeMethods {
+    /// harness-api forwards the decision into the owning microVM via the inbound runtime.v1.OHR.ResolveHITL RPC (dialed
+    /// through the guest-fronting proxy), which unblocks the gated agent action. The resolution is also echoed to all
+    /// attached clients as a HITLResolved event on StreamSession. Returns 204 No Content on success.
     ///
     /// - Parameters:
     /// - sessionId: The session UUID.
@@ -20,11 +22,45 @@ extension HarnessRuntimeMethods {
     ///   interpreted.
     /// - source: How a HITL resolution was triggered. Defaults to
     ///   RESOLUTION_SOURCE_OUT_OF_BAND when omitted.
-    public static func harnessPostSessionHitl(config: ClientConfig, sessionId: String, requestId: String, outcome: HitlOutcome, xDeviceUuid: String? = nil, reason: String? = nil, source: ResolutionSource? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func harnessPostSessionHitl(
+        config: ClientConfig,
+        sessionId: String,
+        requestId: String,
+        outcome: HitlOutcome,
+        xDeviceUuid: String? = nil,
+        reason: String? = nil,
+        source: ResolutionSource? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         let requestBody = HarnessPostSessionHitlRequestBody(outcome: outcome, reason: reason, source: source)
 
-        return try (await sdkRequest("POST", ["/v2/agents/sessions/", sdkEncodePathSegment(sdkWireString(sessionId)), "/hitl/", sdkEncodePathSegment(sdkWireString(requestId))].joined(), config: config, body: requestBody, decoder: .empty, operationId: "harness_post_session_hitl", extraHeaders: sdkHeaders([
-            ("X-Device-UUID", sdkHeaderValue(xDeviceUuid)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "402": Error2.self, "403": Error2.self, "404": Error2.self, "423": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            [
+                "/v2/agents/sessions/",
+                sdkEncodePathSegment(sdkWireString(sessionId)),
+                "/hitl/",
+                sdkEncodePathSegment(sdkWireString(requestId)),
+            ].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .empty,
+            operationId: "harness_post_session_hitl",
+            extraHeaders: sdkHeaders([
+                ("X-Device-UUID", sdkHeaderValue(xDeviceUuid)),
+            ]),
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "402": Error2.self,
+                "403": Error2.self,
+                "404": Error2.self,
+                "423": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

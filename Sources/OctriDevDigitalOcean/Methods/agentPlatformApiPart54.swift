@@ -6,7 +6,7 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
+public extension AgentPlatformApiMethods {
     /// To update an OpenAI API key, send a PUT request to `/v2/gen-ai/openai/keys/{api_key_uuid}`.
     ///
     /// - Parameters:
@@ -14,17 +14,57 @@ extension AgentPlatformApiMethods {
     /// - apiKey: OpenAI API key
     /// - apiKeyUuid2: API key ID
     /// - name: Name of the key
-    public static func genaiUpdateOpenaiApiKey(config: ClientConfig, apiKeyUuid: String, apiKey: String? = nil, apiKeyUuid2: String? = nil, name: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiUpdateOpenAIAPIKeyOutput {
+    static func genaiUpdateOpenaiApiKey(
+        config: ClientConfig,
+        apiKeyUuid: String,
+        apiKey: String? = nil,
+        apiKeyUuid2: String? = nil,
+        name: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiUpdateOpenAIAPIKeyOutput {
         let requestBody = GenaiUpdateOpenaiApiKeyRequestBody(apiKey: apiKey, apiKeyUuid2: apiKeyUuid2, name: name)
 
-        return try (await sdkRequest("PUT", ["/v2/gen-ai/openai/keys/", sdkEncodePathSegment(sdkWireString(apiKeyUuid))].joined(), config: config, body: requestBody, decoder: .json, operationId: "genai_update_openai_api_key", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/v2/gen-ai/openai/keys/", sdkEncodePathSegment(sdkWireString(apiKeyUuid))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "genai_update_openai_api_key",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
     /// To delete an OpenAI API key, send a DELETE request to `/v2/gen-ai/openai/keys/{api_key_uuid}`.
     ///
     /// - Parameters:
     /// - apiKeyUuid: API key ID
-    public static func genaiDeleteOpenaiApiKey(config: ClientConfig, apiKeyUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiDeleteOpenAIAPIKeyOutput {
-        return try (await sdkRequest("DELETE", ["/v2/gen-ai/openai/keys/", sdkEncodePathSegment(sdkWireString(apiKeyUuid))].joined(), config: config, decoder: .json, operationId: "genai_delete_openai_api_key", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiDeleteOpenaiApiKey(
+        config: ClientConfig,
+        apiKeyUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiDeleteOpenAIAPIKeyOutput {
+        try await (sdkRequest(
+            "DELETE",
+            ["/v2/gen-ai/openai/keys/", sdkEncodePathSegment(sdkWireString(apiKeyUuid))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "genai_delete_openai_api_key",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

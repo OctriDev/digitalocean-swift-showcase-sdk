@@ -3,7 +3,7 @@
 
 import Foundation
 
-// SharedFirewall domain models
+/// SharedFirewall domain models
 /// Required object value serialized in the `inbound_rules[]` wire field.
 public struct FirewallRulesInboundRulesItem: Codable {
     /// The type of traffic to be allowed. This may be one of `tcp`, `udp`, or `icmp`.
@@ -28,31 +28,50 @@ public struct FirewallRulesInboundRulesItem: Codable {
         case action
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension FirewallRulesInboundRulesItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.`protocol`) else {
-            throw SdkValidationError(field: "protocol", code: "required", message: "Validation failed for 'protocol': value is required")
-        }
-        guard container.contains(.ports) else {
-            throw SdkValidationError(field: "ports", code: "required", message: "Validation failed for 'ports': value is required")
-        }
-        guard container.contains(.sources) else {
-            throw SdkValidationError(field: "sources", code: "required", message: "Validation failed for 'sources': value is required")
-        }
-        self.`protocol` = try container.sdkDecodeRequired(.`protocol`)
-        self.ports = try container.sdkDecodeRequired(.ports)
-        self.sources = try container.sdkDecodeRequired(.sources)
-        self.action = try container.sdkDecodeIfPresent(.action)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension FirewallRulesInboundRulesItem {
-    public init(`protocol`: FirewallRulesInboundRulesItemProtocol, ports: String, sources: FirewallRuleTarget, action: FirewallRulesInboundRulesItemAction? = nil) {
-        (self.`protocol`, self.ports) = (`protocol`, ports)
+public extension FirewallRulesInboundRulesItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.protocol) else {
+            throw SdkValidationError(
+                field: "protocol",
+                code: "required",
+                message: "Validation failed for 'protocol': value is required"
+            )
+        }
+        guard container.contains(.ports) else {
+            throw SdkValidationError(
+                field: "ports",
+                code: "required",
+                message: "Validation failed for 'ports': value is required"
+            )
+        }
+        guard container.contains(.sources) else {
+            throw SdkValidationError(
+                field: "sources",
+                code: "required",
+                message: "Validation failed for 'sources': value is required"
+            )
+        }
+        self.protocol = try container.sdkDecodeRequired(.protocol)
+        ports = try container.sdkDecodeRequired(.ports)
+        sources = try container.sdkDecodeRequired(.sources)
+        action = try container.sdkDecodeIfPresent(.action)
+    }
+}
+
+public extension FirewallRulesInboundRulesItem {
+    init(
+        protocol: FirewallRulesInboundRulesItemProtocol,
+        ports: String,
+        sources: FirewallRuleTarget,
+        action: FirewallRulesInboundRulesItemAction? = nil
+    ) {
+        (self.protocol, self.ports) = (`protocol`, ports)
         (self.sources, self.action) = (sources, action)
     }
 }
@@ -84,33 +103,35 @@ public struct FirewallRuleTarget: Codable {
     }
 
     init() {
-        (self.addresses, self.dropletIds, self.loadBalancerUids, self.kubernetesIds, self.tags) = (nil, nil, nil, nil, nil)
+        (addresses, dropletIds, loadBalancerUids, kubernetesIds, tags) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension FirewallRuleTarget {
-    public init(from decoder: Decoder) throws {
+public extension FirewallRuleTarget {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.addresses = try container.sdkDecodeIfPresent(.addresses)
-        self.dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
-        self.loadBalancerUids = try container.sdkDecodeIfPresent(.loadBalancerUids)
-        self.kubernetesIds = try container.sdkDecodeIfPresent(.kubernetesIds)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
+        addresses = try container.sdkDecodeIfPresent(.addresses)
+        dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
+        loadBalancerUids = try container.sdkDecodeIfPresent(.loadBalancerUids)
+        kubernetesIds = try container.sdkDecodeIfPresent(.kubernetesIds)
+        tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-extension FirewallRuleTarget {
-    public init(addresses: [String]? = nil, dropletIds: [Int]? = nil, loadBalancerUids: [String]? = nil, kubernetesIds: [String]? = nil, tags: ExistingTagsArray? = nil) {
+public extension FirewallRuleTarget {
+    init(
+        addresses: [String]? = nil,
+        dropletIds: [Int]? = nil,
+        loadBalancerUids: [String]? = nil,
+        kubernetesIds: [String]? = nil,
+        tags: ExistingTagsArray? = nil
+    ) {
         self.init()
         (self.addresses, self.dropletIds) = (addresses, dropletIds)
         (self.loadBalancerUids, self.kubernetesIds) = (loadBalancerUids, kubernetesIds)
         self.tags = tags
     }
 }
-
-
-
-
 
 /// Required object value serialized in the `outbound_rules[]` wire field.
 public struct FirewallRulesOutboundRulesItem: Codable {
@@ -136,31 +157,50 @@ public struct FirewallRulesOutboundRulesItem: Codable {
         case action
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension FirewallRulesOutboundRulesItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.`protocol`) else {
-            throw SdkValidationError(field: "protocol", code: "required", message: "Validation failed for 'protocol': value is required")
-        }
-        guard container.contains(.ports) else {
-            throw SdkValidationError(field: "ports", code: "required", message: "Validation failed for 'ports': value is required")
-        }
-        guard container.contains(.destinations) else {
-            throw SdkValidationError(field: "destinations", code: "required", message: "Validation failed for 'destinations': value is required")
-        }
-        self.`protocol` = try container.sdkDecodeRequired(.`protocol`)
-        self.ports = try container.sdkDecodeRequired(.ports)
-        self.destinations = try container.sdkDecodeRequired(.destinations)
-        self.action = try container.sdkDecodeIfPresent(.action)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension FirewallRulesOutboundRulesItem {
-    public init(`protocol`: FirewallRulesOutboundRulesItemProtocol, ports: String, destinations: FirewallRuleTarget, action: FirewallRulesOutboundRulesItemAction? = nil) {
-        (self.`protocol`, self.ports) = (`protocol`, ports)
+public extension FirewallRulesOutboundRulesItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.protocol) else {
+            throw SdkValidationError(
+                field: "protocol",
+                code: "required",
+                message: "Validation failed for 'protocol': value is required"
+            )
+        }
+        guard container.contains(.ports) else {
+            throw SdkValidationError(
+                field: "ports",
+                code: "required",
+                message: "Validation failed for 'ports': value is required"
+            )
+        }
+        guard container.contains(.destinations) else {
+            throw SdkValidationError(
+                field: "destinations",
+                code: "required",
+                message: "Validation failed for 'destinations': value is required"
+            )
+        }
+        self.protocol = try container.sdkDecodeRequired(.protocol)
+        ports = try container.sdkDecodeRequired(.ports)
+        destinations = try container.sdkDecodeRequired(.destinations)
+        action = try container.sdkDecodeIfPresent(.action)
+    }
+}
+
+public extension FirewallRulesOutboundRulesItem {
+    init(
+        protocol: FirewallRulesOutboundRulesItemProtocol,
+        ports: String,
+        destinations: FirewallRuleTarget,
+        action: FirewallRulesOutboundRulesItemAction? = nil
+    ) {
+        (self.protocol, self.ports) = (`protocol`, ports)
         (self.destinations, self.action) = (destinations, action)
     }
 }
@@ -183,21 +223,21 @@ public struct FirewallVariant0PendingChangesItem: Codable {
     }
 
     init() {
-        (self.dropletId, self.removing, self.status) = (nil, nil, nil)
+        (dropletId, removing, status) = (nil, nil, nil)
     }
 }
 
-extension FirewallVariant0PendingChangesItem {
-    public init(from decoder: Decoder) throws {
+public extension FirewallVariant0PendingChangesItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.dropletId = try container.sdkDecodeIfPresent(.dropletId)
-        self.removing = try container.sdkDecodeIfPresent(.removing)
-        self.status = try container.sdkDecodeIfPresent(.status)
+        dropletId = try container.sdkDecodeIfPresent(.dropletId)
+        removing = try container.sdkDecodeIfPresent(.removing)
+        status = try container.sdkDecodeIfPresent(.status)
     }
 }
 
-extension FirewallVariant0PendingChangesItem {
-    public init(dropletId: Int? = nil, removing: Bool? = nil, status: String? = nil) {
+public extension FirewallVariant0PendingChangesItem {
+    init(dropletId: Int? = nil, removing: Bool? = nil, status: String? = nil) {
         self.init()
         (self.dropletId, self.removing) = (dropletId, removing)
         self.status = status
@@ -248,34 +288,44 @@ public struct Firewall: Codable {
     }
 
     init() {
-        (self.id, self.status, self.createdAt, self.pendingChanges, self.name) = (nil, nil, nil, nil, nil)
-        (self.dropletIds, self.tags, self.inboundRules, self.outboundRules) = (nil, nil, nil, nil)
+        (id, status, createdAt, pendingChanges, name) = (nil, nil, nil, nil, nil)
+        (dropletIds, tags, inboundRules, outboundRules) = (nil, nil, nil, nil)
     }
 }
 
-extension Firewall {
-    public init(from decoder: Decoder) throws {
+public extension Firewall {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.pendingChanges = try container.sdkDecodeIfPresent(.pendingChanges)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.inboundRules = try container.sdkDecodeIfPresent(.inboundRules)
-        self.outboundRules = try container.sdkDecodeIfPresent(.outboundRules)
-        if let value = self.createdAt {
+        id = try container.sdkDecodeIfPresent(.id)
+        status = try container.sdkDecodeIfPresent(.status)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        pendingChanges = try container.sdkDecodeIfPresent(.pendingChanges)
+        name = try container.sdkDecodeIfPresent(.name)
+        dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        inboundRules = try container.sdkDecodeIfPresent(.inboundRules)
+        outboundRules = try container.sdkDecodeIfPresent(.outboundRules)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.name {
+        if let value = name {
             try sdkValidatePattern("name", value, sdkPattern5867542e1667)
         }
     }
 }
 
-extension Firewall {
-    public init(id: String? = nil, status: FirewallVariant0Status? = nil, createdAt: Date? = nil, pendingChanges: [FirewallVariant0PendingChangesItem]? = nil, name: String? = nil, dropletIds: [Int]? = nil, tags: ExistingTagsArray? = nil, inboundRules: [FirewallRulesInboundRulesItem]? = nil, outboundRules: [FirewallRulesOutboundRulesItem]? = nil) throws {
+public extension Firewall {
+    init(
+        id: String? = nil,
+        status: FirewallVariant0Status? = nil,
+        createdAt: Date? = nil,
+        pendingChanges: [FirewallVariant0PendingChangesItem]? = nil,
+        name: String? = nil,
+        dropletIds: [Int]? = nil,
+        tags: ExistingTagsArray? = nil,
+        inboundRules: [FirewallRulesInboundRulesItem]? = nil,
+        outboundRules: [FirewallRulesOutboundRulesItem]? = nil
+    ) throws {
         self.init()
         (self.id, self.status) = (id, status)
         (self.createdAt, self.pendingChanges) = (createdAt, pendingChanges)
@@ -329,32 +379,40 @@ public struct FirewallVariant0: Codable {
     }
 
     init() {
-        (self.id, self.status, self.createdAt, self.pendingChanges, self.name) = (nil, nil, nil, nil, nil)
-        (self.dropletIds, self.tags) = (nil, nil)
+        (id, status, createdAt, pendingChanges, name) = (nil, nil, nil, nil, nil)
+        (dropletIds, tags) = (nil, nil)
     }
 }
 
-extension FirewallVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension FirewallVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.pendingChanges = try container.sdkDecodeIfPresent(.pendingChanges)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        if let value = self.createdAt {
+        id = try container.sdkDecodeIfPresent(.id)
+        status = try container.sdkDecodeIfPresent(.status)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        pendingChanges = try container.sdkDecodeIfPresent(.pendingChanges)
+        name = try container.sdkDecodeIfPresent(.name)
+        dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.name {
+        if let value = name {
             try sdkValidatePattern("name", value, sdkPattern5867542e1667)
         }
     }
 }
 
-extension FirewallVariant0 {
-    public init(id: String? = nil, status: FirewallVariant0Status? = nil, createdAt: Date? = nil, pendingChanges: [FirewallVariant0PendingChangesItem]? = nil, name: String? = nil, dropletIds: [Int]? = nil, tags: ExistingTagsArray? = nil) throws {
+public extension FirewallVariant0 {
+    init(
+        id: String? = nil,
+        status: FirewallVariant0Status? = nil,
+        createdAt: Date? = nil,
+        pendingChanges: [FirewallVariant0PendingChangesItem]? = nil,
+        name: String? = nil,
+        dropletIds: [Int]? = nil,
+        tags: ExistingTagsArray? = nil
+    ) throws {
         self.init()
         (self.id, self.status) = (id, status)
         (self.createdAt, self.pendingChanges) = (createdAt, pendingChanges)
@@ -382,20 +440,20 @@ public struct FirewallRules: Codable {
     }
 
     init() {
-        (self.inboundRules, self.outboundRules) = (nil, nil)
+        (inboundRules, outboundRules) = (nil, nil)
     }
 }
 
-extension FirewallRules {
-    public init(from decoder: Decoder) throws {
+public extension FirewallRules {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.inboundRules = try container.sdkDecodeIfPresent(.inboundRules)
-        self.outboundRules = try container.sdkDecodeIfPresent(.outboundRules)
+        inboundRules = try container.sdkDecodeIfPresent(.inboundRules)
+        outboundRules = try container.sdkDecodeIfPresent(.outboundRules)
     }
 }
 
-extension FirewallRules {
-    public init(inboundRules: [FirewallRulesInboundRulesItem]? = nil, outboundRules: [FirewallRulesOutboundRulesItem]? = nil) {
+public extension FirewallRules {
+    init(inboundRules: [FirewallRulesInboundRulesItem]? = nil, outboundRules: [FirewallRulesOutboundRulesItem]? = nil) {
         self.init()
         (self.inboundRules, self.outboundRules) = (inboundRules, outboundRules)
     }
@@ -406,13 +464,16 @@ extension FirewallRules {
 public struct FirewallRulesInboundRulesItemAction: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let allow = FirewallRulesInboundRulesItemAction(rawValue: "allow")
     public static let deny = FirewallRulesInboundRulesItemAction(rawValue: "deny")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -425,14 +486,17 @@ public struct FirewallRulesInboundRulesItemAction: RawRepresentable, Hashable, C
 public struct FirewallRulesInboundRulesItemProtocol: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let tcp = FirewallRulesInboundRulesItemProtocol(rawValue: "tcp")
     public static let udp = FirewallRulesInboundRulesItemProtocol(rawValue: "udp")
     public static let icmp = FirewallRulesInboundRulesItemProtocol(rawValue: "icmp")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -446,13 +510,16 @@ public struct FirewallRulesInboundRulesItemProtocol: RawRepresentable, Hashable,
 public struct FirewallRulesOutboundRulesItemAction: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let allow = FirewallRulesOutboundRulesItemAction(rawValue: "allow")
     public static let deny = FirewallRulesOutboundRulesItemAction(rawValue: "deny")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -466,14 +533,17 @@ public struct FirewallRulesOutboundRulesItemAction: RawRepresentable, Hashable, 
 public struct FirewallVariant0Status: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let waiting = FirewallVariant0Status(rawValue: "waiting")
     public static let succeeded = FirewallVariant0Status(rawValue: "succeeded")
     public static let failed = FirewallVariant0Status(rawValue: "failed")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -483,17 +553,21 @@ public struct FirewallVariant0Status: RawRepresentable, Hashable, Codable, Senda
 }
 
 /// The type of traffic to be allowed. This may be one of `tcp`, `udp`, or `icmp`.
-public struct FirewallRulesOutboundRulesItemProtocol: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct FirewallRulesOutboundRulesItemProtocol: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let tcp = FirewallRulesOutboundRulesItemProtocol(rawValue: "tcp")
     public static let udp = FirewallRulesOutboundRulesItemProtocol(rawValue: "udp")
     public static let icmp = FirewallRulesOutboundRulesItemProtocol(rawValue: "icmp")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

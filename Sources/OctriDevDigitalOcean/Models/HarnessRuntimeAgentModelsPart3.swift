@@ -3,7 +3,7 @@
 
 import Foundation
 
-// HarnessRuntimeAgent domain models
+/// HarnessRuntimeAgent domain models
 /// Optional object value serialized in the `spec` wire field.
 public struct AgentManifestSpec: Codable {
     /// Canonical adapter ids: claude-code | opencode | codex | cursor | hermes | codex-agentapi | custom.
@@ -69,36 +69,56 @@ public struct AgentManifestSpec: Codable {
         case serving
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension AgentManifestSpec {
-    public init(from decoder: Decoder) throws {
+public extension AgentManifestSpec {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.runtime) else {
-            throw SdkValidationError(field: "runtime", code: "required", message: "Validation failed for 'runtime': value is required")
+            throw SdkValidationError(
+                field: "runtime",
+                code: "required",
+                message: "Validation failed for 'runtime': value is required"
+            )
         }
-        self.runtime = try container.sdkDecodeRequired(.runtime)
-        self.permissions = try container.sdkDecodeIfPresent(.permissions)
-        self.mode = try container.sdkDecodeIfPresent(.mode)
-        self.workspace = try container.sdkDecodeIfPresent(.workspace)
-        self.sandbox = try container.sdkDecodeIfPresent(.sandbox)
-        self.model = try container.sdkDecodeIfPresent(.model)
-        self.tools = try container.sdkDecodeIfPresent(.tools)
-        self.skills = try container.sdkDecodeIfPresent(.skills)
-        self.env = try container.sdkDecodeIfPresent(.env)
-        self.memory = try container.sdkDecodeIfPresent(.memory)
-        self.secrets = try container.sdkDecodeIfPresent(.secrets)
-        self.defaults = try container.sdkDecodeIfPresent(.defaults)
-        self.serving = try container.sdkDecodeIfPresent(.serving)
-        if let value = self.skills {
+        runtime = try container.sdkDecodeRequired(.runtime)
+        permissions = try container.sdkDecodeIfPresent(.permissions)
+        mode = try container.sdkDecodeIfPresent(.mode)
+        workspace = try container.sdkDecodeIfPresent(.workspace)
+        sandbox = try container.sdkDecodeIfPresent(.sandbox)
+        model = try container.sdkDecodeIfPresent(.model)
+        tools = try container.sdkDecodeIfPresent(.tools)
+        skills = try container.sdkDecodeIfPresent(.skills)
+        env = try container.sdkDecodeIfPresent(.env)
+        memory = try container.sdkDecodeIfPresent(.memory)
+        secrets = try container.sdkDecodeIfPresent(.secrets)
+        defaults = try container.sdkDecodeIfPresent(.defaults)
+        serving = try container.sdkDecodeIfPresent(.serving)
+        if let value = skills {
             try validateItems("skills", value, min: nil, max: 32)
         }
     }
 }
 
-extension AgentManifestSpec {
-    public init(runtime: AgentManifestSpecRuntime, permissions: Permissions? = nil, mode: AgentManifestSpecMode? = nil, workspace: AgentManifestSpecWorkspace? = nil, sandbox: AgentManifestSpecSandbox? = nil, model: AgentManifestSpecModel? = nil, tools: AgentManifestSpecTools? = nil, skills: [AgentManifestSpecSkillsItem]? = nil, env: [String: String]? = nil, memory: AgentManifestSpecMemory? = nil, secrets: [AgentManifestSpecSecretsItem]? = nil, defaults: AgentManifestSpecDefaults? = nil, serving: AgentManifestSpecServing? = nil) throws {
+public extension AgentManifestSpec {
+    init(
+        runtime: AgentManifestSpecRuntime,
+        permissions: Permissions? = nil,
+        mode: AgentManifestSpecMode? = nil,
+        workspace: AgentManifestSpecWorkspace? = nil,
+        sandbox: AgentManifestSpecSandbox? = nil,
+        model: AgentManifestSpecModel? = nil,
+        tools: AgentManifestSpecTools? = nil,
+        skills: [AgentManifestSpecSkillsItem]? = nil,
+        env: [String: String]? = nil,
+        memory: AgentManifestSpecMemory? = nil,
+        secrets: [AgentManifestSpecSecretsItem]? = nil,
+        defaults: AgentManifestSpecDefaults? = nil,
+        serving: AgentManifestSpecServing? = nil
+    ) throws {
         (self.runtime, self.permissions) = (runtime, permissions)
         (self.mode, self.workspace) = (mode, workspace)
         (self.sandbox, self.model) = (sandbox, model)
@@ -134,22 +154,27 @@ public struct AgentManifestSpecServing: Codable {
     }
 
     init() {
-        (self.minReplicas, self.maxReplicas, self.targetConcurrency, self.scaleToZero) = (nil, nil, nil, nil)
+        (minReplicas, maxReplicas, targetConcurrency, scaleToZero) = (nil, nil, nil, nil)
     }
 }
 
-extension AgentManifestSpecServing {
-    public init(from decoder: Decoder) throws {
+public extension AgentManifestSpecServing {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.minReplicas = try container.sdkDecodeIfPresent(.minReplicas)
-        self.maxReplicas = try container.sdkDecodeIfPresent(.maxReplicas)
-        self.targetConcurrency = try container.sdkDecodeIfPresent(.targetConcurrency)
-        self.scaleToZero = try container.sdkDecodeIfPresent(.scaleToZero)
+        minReplicas = try container.sdkDecodeIfPresent(.minReplicas)
+        maxReplicas = try container.sdkDecodeIfPresent(.maxReplicas)
+        targetConcurrency = try container.sdkDecodeIfPresent(.targetConcurrency)
+        scaleToZero = try container.sdkDecodeIfPresent(.scaleToZero)
     }
 }
 
-extension AgentManifestSpecServing {
-    public init(minReplicas: Int? = nil, maxReplicas: Int? = nil, targetConcurrency: Int? = nil, scaleToZero: AgentManifestSpecServingScaleToZero? = nil) {
+public extension AgentManifestSpecServing {
+    init(
+        minReplicas: Int? = nil,
+        maxReplicas: Int? = nil,
+        targetConcurrency: Int? = nil,
+        scaleToZero: AgentManifestSpecServingScaleToZero? = nil
+    ) {
         self.init()
         (self.minReplicas, self.maxReplicas) = (minReplicas, maxReplicas)
         (self.targetConcurrency, self.scaleToZero) = (targetConcurrency, scaleToZero)
@@ -172,22 +197,28 @@ public struct AgentManifestSpecToolsMcpServersItemAuth: Codable {
         case header
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AgentManifestSpecToolsMcpServersItemAuth {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.secretRef) else {
-            throw SdkValidationError(field: "secretRef", code: "required", message: "Validation failed for 'secretRef': value is required")
-        }
-        self.secretRef = try container.sdkDecodeRequired(.secretRef)
-        self.header = try container.sdkDecodeIfPresent(.header)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AgentManifestSpecToolsMcpServersItemAuth {
-    public init(secretRef: String, header: String? = nil) {
+public extension AgentManifestSpecToolsMcpServersItemAuth {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.secretRef) else {
+            throw SdkValidationError(
+                field: "secretRef",
+                code: "required",
+                message: "Validation failed for 'secretRef': value is required"
+            )
+        }
+        secretRef = try container.sdkDecodeRequired(.secretRef)
+        header = try container.sdkDecodeIfPresent(.header)
+    }
+}
+
+public extension AgentManifestSpecToolsMcpServersItemAuth {
+    init(secretRef: String, header: String? = nil) {
         (self.secretRef, self.header) = (secretRef, header)
     }
 }
@@ -209,29 +240,35 @@ public struct AgentConfigCloneRequest: Codable {
         case oauthAssignments = "oauth_assignments"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AgentConfigCloneRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.secrets = try container.sdkDecodeIfPresent(.secrets)
-        self.oauthAssignments = try container.sdkDecodeIfPresent(.oauthAssignments)
-            try validateLength("name", self.name, min: 1, max: 64)
-            try sdkValidatePattern("name", self.name, sdkPatternd6415432f58a)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AgentConfigCloneRequest {
-    public init(name: String, secrets: [String: String]? = nil, oauthAssignments: [String: String]? = nil) throws {
+public extension AgentConfigCloneRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        secrets = try container.sdkDecodeIfPresent(.secrets)
+        oauthAssignments = try container.sdkDecodeIfPresent(.oauthAssignments)
+        try validateLength("name", name, min: 1, max: 64)
+        try sdkValidatePattern("name", name, sdkPatternd6415432f58a)
+    }
+}
+
+public extension AgentConfigCloneRequest {
+    init(name: String, secrets: [String: String]? = nil, oauthAssignments: [String: String]? = nil) throws {
         (self.name, self.secrets) = (name, secrets)
         self.oauthAssignments = oauthAssignments
-            try validateLength("name", self.name, min: 1, max: 64)
-            try sdkValidatePattern("name", self.name, sdkPatternd6415432f58a)
+        try validateLength("name", self.name, min: 1, max: 64)
+        try sdkValidatePattern("name", self.name, sdkPatternd6415432f58a)
     }
 }
 
@@ -249,20 +286,20 @@ public struct AgentManifestSpecTools: Codable {
     }
 
     init() {
-        (self.mcpServers, self.bundle) = (nil, nil)
+        (mcpServers, bundle) = (nil, nil)
     }
 }
 
-extension AgentManifestSpecTools {
-    public init(from decoder: Decoder) throws {
+public extension AgentManifestSpecTools {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.mcpServers = try container.sdkDecodeIfPresent(.mcpServers)
-        self.bundle = try container.sdkDecodeIfPresent(.bundle)
+        mcpServers = try container.sdkDecodeIfPresent(.mcpServers)
+        bundle = try container.sdkDecodeIfPresent(.bundle)
     }
 }
 
-extension AgentManifestSpecTools {
-    public init(mcpServers: [AgentManifestSpecToolsMcpServersItem]? = nil, bundle: String? = nil) {
+public extension AgentManifestSpecTools {
+    init(mcpServers: [AgentManifestSpecToolsMcpServersItem]? = nil, bundle: String? = nil) {
         self.init()
         (self.mcpServers, self.bundle) = (mcpServers, bundle)
     }
@@ -313,31 +350,38 @@ public struct AgentManifestSpecToolsMcpServersItem: Codable {
     }
 
     init() {
-        (self.ref, self.name, self.url, self.tools, self.preloadTools) = (nil, nil, nil, nil, nil)
-        self.auth = nil
+        (ref, name, url, tools, preloadTools) = (nil, nil, nil, nil, nil)
+        auth = nil
     }
 }
 
-extension AgentManifestSpecToolsMcpServersItem {
-    public init(from decoder: Decoder) throws {
+public extension AgentManifestSpecToolsMcpServersItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.ref = try container.sdkDecodeIfPresent(.ref)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.url = try container.sdkDecodeIfPresent(.url)
-        self.tools = try container.sdkDecodeIfPresent(.tools)
-        self.preloadTools = try container.sdkDecodeIfPresent(.preloadTools)
-        self.auth = try container.sdkDecodeIfPresent(.auth)
-        if let value = self.ref {
+        ref = try container.sdkDecodeIfPresent(.ref)
+        name = try container.sdkDecodeIfPresent(.name)
+        url = try container.sdkDecodeIfPresent(.url)
+        tools = try container.sdkDecodeIfPresent(.tools)
+        preloadTools = try container.sdkDecodeIfPresent(.preloadTools)
+        auth = try container.sdkDecodeIfPresent(.auth)
+        if let value = ref {
             try sdkValidatePattern("ref", value, sdkPattern564ad56a82e7)
         }
-        if let value = self.name {
+        if let value = name {
             try sdkValidatePattern("name", value, sdkPatterneb9e79b87e51)
         }
     }
 }
 
-extension AgentManifestSpecToolsMcpServersItem {
-    public init(ref: String? = nil, name: String? = nil, url: String? = nil, tools: [String]? = nil, preloadTools: [String]? = nil, auth: AgentManifestSpecToolsMcpServersItemAuth? = nil) throws {
+public extension AgentManifestSpecToolsMcpServersItem {
+    init(
+        ref: String? = nil,
+        name: String? = nil,
+        url: String? = nil,
+        tools: [String]? = nil,
+        preloadTools: [String]? = nil,
+        auth: AgentManifestSpecToolsMcpServersItemAuth? = nil
+    ) throws {
         self.init()
         (self.ref, self.name) = (ref, name)
         (self.url, self.tools) = (url, tools)
@@ -352,17 +396,21 @@ extension AgentManifestSpecToolsMcpServersItem {
 }
 
 /// Optional enumerated value serialized in the `onBreach` wire field.
-public struct AgentManifestSpecDefaultsBudgetOnBreach: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct AgentManifestSpecDefaultsBudgetOnBreach: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pause = AgentManifestSpecDefaultsBudgetOnBreach(rawValue: "pause")
     public static let humanInput = AgentManifestSpecDefaultsBudgetOnBreach(rawValue: "humanInput")
     public static let fail = AgentManifestSpecDefaultsBudgetOnBreach(rawValue: "fail")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -375,13 +423,16 @@ public struct AgentManifestSpecDefaultsBudgetOnBreach: RawRepresentable, Hashabl
 public struct AgentConfigCredentialSlotSource: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let tenantSecret = AgentConfigCredentialSlotSource(rawValue: "tenantSecret")
     public static let oauth = AgentConfigCredentialSlotSource(rawValue: "oauth")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -394,12 +445,15 @@ public struct AgentConfigCredentialSlotSource: RawRepresentable, Hashable, Codab
 public struct AgentManifestKind: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let agent = AgentManifestKind(rawValue: "Agent")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -412,7 +466,10 @@ public struct AgentManifestKind: RawRepresentable, Hashable, Codable, Sendable, 
 public struct AgentManifestSpecMemoryScope: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let tenant = AgentManifestSpecMemoryScope(rawValue: "tenant")
     public static let user = AgentManifestSpecMemoryScope(rawValue: "user")
     public static let agent = AgentManifestSpecMemoryScope(rawValue: "agent")
@@ -420,7 +477,7 @@ public struct AgentManifestSpecMemoryScope: RawRepresentable, Hashable, Codable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -433,13 +490,16 @@ public struct AgentManifestSpecMemoryScope: RawRepresentable, Hashable, Codable,
 public struct AgentManifestSpecSecretsItemSource: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let oauth = AgentManifestSpecSecretsItemSource(rawValue: "oauth")
     public static let tenantSecret = AgentManifestSpecSecretsItemSource(rawValue: "tenantSecret")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -454,12 +514,16 @@ public struct AgentManifestSpecSecretsItemSource: RawRepresentable, Hashable, Co
 public struct AgentManifestApiVersion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
-    public static let agentsDigitaloceanComV1alpha1 = AgentManifestApiVersion(rawValue: "agents.digitalocean.com/v1alpha1")
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let agentsDigitaloceanComV1alpha1 =
+        AgentManifestApiVersion(rawValue: "agents.digitalocean.com/v1alpha1")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -476,7 +540,10 @@ public struct AgentManifestApiVersion: RawRepresentable, Hashable, Codable, Send
 public struct AgentKind: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let agentKindUnspecified = AgentKind(rawValue: "AGENT_KIND_UNSPECIFIED")
     public static let agentKindClaudeCode = AgentKind(rawValue: "AGENT_KIND_CLAUDE_CODE")
     public static let agentKindOpencode = AgentKind(rawValue: "AGENT_KIND_OPENCODE")
@@ -491,7 +558,7 @@ public struct AgentKind: RawRepresentable, Hashable, Codable, Sendable, SdkWireC
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -504,7 +571,10 @@ public struct AgentKind: RawRepresentable, Hashable, Codable, Sendable, SdkWireC
 public struct AgentManifestSpecRuntimeAdapter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let claudeCode = AgentManifestSpecRuntimeAdapter(rawValue: "claude-code")
     public static let opencode = AgentManifestSpecRuntimeAdapter(rawValue: "opencode")
     public static let codex = AgentManifestSpecRuntimeAdapter(rawValue: "codex")
@@ -521,7 +591,7 @@ public struct AgentManifestSpecRuntimeAdapter: RawRepresentable, Hashable, Codab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -535,13 +605,16 @@ public struct AgentManifestSpecRuntimeAdapter: RawRepresentable, Hashable, Codab
 public struct AgentManifestSpecMode: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let interactive = AgentManifestSpecMode(rawValue: "interactive")
     public static let served = AgentManifestSpecMode(rawValue: "served")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -551,15 +624,19 @@ public struct AgentManifestSpecMode: RawRepresentable, Hashable, Codable, Sendab
 }
 
 /// Required enumerated value serialized in the `type` wire field.
-public struct AgentManifestSpecSandboxMountsItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct AgentManifestSpecSandboxMountsItemType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let s3fuse = AgentManifestSpecSandboxMountsItemType(rawValue: "s3fuse")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -6,37 +6,99 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DatabasesMethods {
-    /// To delete a specific schema by subject name for a Kafka cluster, send a DELETE request to `/v2/databases/$DATABASE_ID/schema-registry/$SUBJECT_NAME`.
+public extension DatabasesMethods {
+    /// To delete a specific schema by subject name for a Kafka cluster, send a DELETE request to
+    /// `/v2/databases/$DATABASE_ID/schema-registry/$SUBJECT_NAME`.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - subjectName: The name of the Kafka schema subject.
-    public static func databasesDeleteKafkaSchema(config: ClientConfig, databaseClusterUuid: String, subjectName: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func databasesDeleteKafkaSchema(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        subjectName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("DELETE", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/schema-registry/", sdkEncodePathSegment(sdkWireString(subjectName))].joined(), config: config, decoder: .empty, operationId: "databases_delete_kafka_schema", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self])).data
+        return try await (sdkRequest(
+            "DELETE",
+            [
+                "/v2/databases/",
+                sdkEncodePathSegment(sdkWireString(databaseClusterUuid)),
+                "/schema-registry/",
+                sdkEncodePathSegment(sdkWireString(subjectName)),
+            ].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "databases_delete_kafka_schema",
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self]
+        )).data
     }
 
-    /// To get a specific schema by subject name for a Kafka cluster, send a GET request to `/v2/databases/$DATABASE_ID/schema-registry/$SUBJECT_NAME/versions/$VERSION`.
+    /// To get a specific schema by subject name for a Kafka cluster, send a GET request to
+    /// `/v2/databases/$DATABASE_ID/schema-registry/$SUBJECT_NAME/versions/$VERSION`.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - subjectName: The name of the Kafka schema subject.
     /// - version: The version of the Kafka schema subject.
-    public static func databasesGetKafkaSchemaVersion(config: ClientConfig, databaseClusterUuid: String, subjectName: String, version: String, requestOptions: RequestOptions? = nil) async throws -> KafkaSchemaVersion {
+    static func databasesGetKafkaSchemaVersion(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        subjectName: String,
+        version: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> KafkaSchemaVersion {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/schema-registry/", sdkEncodePathSegment(sdkWireString(subjectName)), "/versions/", sdkEncodePathSegment(sdkWireString(version))].joined(), config: config, decoder: .json, operationId: "databases_get_kafka_schema_version", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            [
+                "/v2/databases/",
+                sdkEncodePathSegment(sdkWireString(databaseClusterUuid)),
+                "/schema-registry/",
+                sdkEncodePathSegment(sdkWireString(subjectName)),
+                "/versions/",
+                sdkEncodePathSegment(sdkWireString(version)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "databases_get_kafka_schema_version",
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self]
+        )).data
     }
 
-    /// To retrieve the Schema Registry configuration for a Kafka cluster, send a GET request to `/v2/databases/$DATABASE_ID/schema-registry/config`. The response is a JSON object with a `compatibility_level` key, which is set to an object containing any database configuration parameters.
+    /// To retrieve the Schema Registry configuration for a Kafka cluster, send a GET request to
+    /// `/v2/databases/$DATABASE_ID/schema-registry/config`. The response is a JSON object with a `compatibility_level`
+    /// key, which is set to an object containing any database configuration parameters.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    public static func databasesGetKafkaSchemaConfig(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> DatabaseSchemaRegistryConfig {
+    static func databasesGetKafkaSchemaConfig(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DatabaseSchemaRegistryConfig {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/schema-registry/config"].joined(), config: config, decoder: .json, operationId: "databases_get_kafka_schema_config", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/schema-registry/config"]
+                .joined(),
+            config: config,
+            decoder: .json,
+            operationId: "databases_get_kafka_schema_config",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

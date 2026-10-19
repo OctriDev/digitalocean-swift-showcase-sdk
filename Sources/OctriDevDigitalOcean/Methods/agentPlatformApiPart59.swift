@@ -6,7 +6,7 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
+public extension AgentPlatformApiMethods {
     /// To list scenario sets, send a GET request to `/v2/gen-ai/scenario_sets`.
     ///
     /// - Parameters:
@@ -35,15 +35,40 @@ extension AgentPlatformApiMethods {
     ///   SCENARIO_SET_SORT_FIELD_SCENARIO_COUNT: Sort by scenario_count. -
     ///   SCENARIO_SET_SORT_FIELD_UPDATED_AT: Sort by last update date.
     /// - sortDirection: Sort direction. Defaults to descending when unspecified.
-    public static func genaiListScenarioSets(config: ClientConfig, page: Int? = nil, perPage: Int? = nil, statuses: [GenaiListScenarioSetsParameterItem]? = nil, sourceKinds: [GenaiListScenarioSetsParameterItemXf0e0a240]? = nil, search: String? = nil, sortBy: GenaiListScenarioSetsParameter? = nil, sortDirection: GenaiListScenarioSetsParameterX88766728? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListScenarioSetsOutput {
-        return try (await sdkRequest("GET", "/v2/gen-ai/scenario_sets", config: config, query: [
-            SdkQueryParameter("page", value: page),
-            SdkQueryParameter("per_page", value: perPage),
-            SdkQueryParameter("statuses", values: statuses, style: "form", explode: true),
-            SdkQueryParameter("source_kinds", values: sourceKinds, style: "form", explode: true),
-            SdkQueryParameter("search", value: search),
-            SdkQueryParameter("sort_by", value: sortBy),
-            SdkQueryParameter("sort_direction", value: sortDirection),
-        ], decoder: .json, operationId: "genai_list_scenario_sets", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiListScenarioSets(
+        config: ClientConfig,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        statuses: [GenaiListScenarioSetsParameterItem]? = nil,
+        sourceKinds: [GenaiListScenarioSetsParameterItemXf0e0a240]? = nil,
+        search: String? = nil,
+        sortBy: GenaiListScenarioSetsParameter? = nil,
+        sortDirection: GenaiListScenarioSetsParameterX88766728? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiListScenarioSetsOutput {
+        try await (sdkRequest(
+            "GET",
+            "/v2/gen-ai/scenario_sets",
+            config: config,
+            query: [
+                SdkQueryParameter("page", value: page),
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("statuses", values: statuses, style: "form", explode: true),
+                SdkQueryParameter("source_kinds", values: sourceKinds, style: "form", explode: true),
+                SdkQueryParameter("search", value: search),
+                SdkQueryParameter("sort_by", value: sortBy),
+                SdkQueryParameter("sort_direction", value: sortDirection),
+            ],
+            decoder: .json,
+            operationId: "genai_list_scenario_sets",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

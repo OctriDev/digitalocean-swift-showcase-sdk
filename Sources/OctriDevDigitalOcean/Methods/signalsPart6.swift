@@ -6,21 +6,36 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension SignalsMethods {
-    /// To list signals export jobs for your team, send a GET request to `/v1/signals/exports`. Results are paginated using cursor-based pagination with `limit` and `after` parameters.
+public extension SignalsMethods {
+    /// To list signals export jobs for your team, send a GET request to `/v1/signals/exports`. Results are paginated
+    /// using cursor-based pagination with `limit` and `after` parameters.
     ///
     /// - Parameters:
     /// - limit: Maximum number of items to return per page.
     /// - after: An opaque cursor string returned from a previous page. Pass this
     ///   value to retrieve the next page of results.
-    public static func signalsListExports(config: ClientConfig, limit: Int? = nil, after: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListExportsResponse {
-        if let limit = limit {
+    static func signalsListExports(
+        config: ClientConfig,
+        limit: Int? = nil,
+        after: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListExportsResponse {
+        if let limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try (await sdkRequest("GET", "/v1/signals/exports", config: config, query: [
-            SdkQueryParameter("limit", value: limit),
-            SdkQueryParameter("after", value: after),
-        ], decoder: .json, operationId: "signals_list_exports", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/v1/signals/exports",
+            config: config,
+            query: [
+                SdkQueryParameter("limit", value: limit),
+                SdkQueryParameter("after", value: after),
+            ],
+            decoder: .json,
+            operationId: "signals_list_exports",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

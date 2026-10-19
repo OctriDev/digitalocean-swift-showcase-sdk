@@ -6,8 +6,13 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension TagsMethods {
-    /// Resources can be untagged by sending a DELETE request to `/v2/tags/$TAG_NAME/resources` with an array of json objects containing `resource_id` and `resource_type` attributes. Currently only untagging of Droplets, Databases, Images, Volumes, and Volume Snapshots is supported. `resource_type` is expected to be the string `droplet`, `database`, `image`, `volume` or `volume_snapshot`. `resource_id` is expected to be the ID of the resource as a string. In order to untag a resource, you must have both `tag:delete` and `<resource type>:update` scopes. For example, to untag a Droplet, you must have `tag:delete` and `droplet:update`.
+public extension TagsMethods {
+    /// Resources can be untagged by sending a DELETE request to `/v2/tags/$TAG_NAME/resources` with an array of json
+    /// objects containing `resource_id` and `resource_type` attributes. Currently only untagging of Droplets,
+    /// Databases, Images, Volumes, and Volume Snapshots is supported. `resource_type` is expected to be the string
+    /// `droplet`, `database`, `image`, `volume` or `volume_snapshot`. `resource_id` is expected to be the ID of the
+    /// resource as a string. In order to untag a resource, you must have both `tag:delete` and `<resource type>:update`
+    /// scopes. For example, to untag a Droplet, you must have `tag:delete` and `droplet:update`.
     ///
     /// - Parameters:
     /// - tagId: The name of the tag. Tags may contain letters, numbers, colons,
@@ -16,12 +21,32 @@ extension TagsMethods {
     ///   attributes. This response will only include resources that you are
     ///   authorized to see. For example, to see Droplets, include the `droplet:read`
     ///   scope.
-    public static func tagsUnassignResources(config: ClientConfig, tagId: String, resources: [TagsResourceResourcesItem], requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func tagsUnassignResources(
+        config: ClientConfig,
+        tagId: String,
+        resources: [TagsResourceResourcesItem],
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try validateLength("tag_id", tagId, max: 255)
         try sdkValidatePattern("tag_id", tagId, sdkPattern6b8f6cfdcfdf)
 
         let requestBody = TagsUnassignResourcesRequestBody(resources: resources)
 
-        return try (await sdkRequest("DELETE", ["/v2/tags/", sdkEncodePathSegment(sdkWireString(tagId)), "/resources"].joined(), config: config, body: requestBody, decoder: .empty, operationId: "tags_unassign_resources", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "DELETE",
+            ["/v2/tags/", sdkEncodePathSegment(sdkWireString(tagId)), "/resources"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .empty,
+            operationId: "tags_unassign_resources",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

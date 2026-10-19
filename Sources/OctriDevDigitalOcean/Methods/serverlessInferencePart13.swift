@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ServerlessInferenceMethods {
-    /// Convert text input to speech audio. The response may be raw audio bytes (`audio/mpeg`, `audio/wav`, and similar) or a JSON envelope with base64-encoded audio in `data[].b64_json`.
+public extension ServerlessInferenceMethods {
+    /// Convert text input to speech audio. The response may be raw audio bytes (`audio/mpeg`, `audio/wav`, and similar)
+    /// or a JSON envelope with base64-encoded audio in `data[].b64_json`.
     ///
     /// - Parameters:
     /// - model: The text-to-speech model to use.
@@ -17,30 +18,71 @@ extension ServerlessInferenceMethods {
     ///   and `wav`. The API may return raw audio bytes or a JSON envelope with
     ///   base64-encoded audio.
     /// - instructions: Optional style or delivery instructions for the synthesizer.
-    public static func inferenceCreateSpeech(config: ClientConfig, model: String, input: String, voice: String? = nil, responseFormat: String? = nil, instructions: String? = nil, requestOptions: RequestOptions? = nil) async throws -> SpeechResponse {
+    static func inferenceCreateSpeech(
+        config: ClientConfig,
+        model: String,
+        input: String,
+        voice: String? = nil,
+        responseFormat: String? = nil,
+        instructions: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SpeechResponse {
         try validateLength("input", input, min: 1)
 
-        let requestBody = InferenceCreateSpeechRequestBody(model: model, input: input, voice: voice, responseFormat: responseFormat, instructions: instructions)
+        let requestBody = InferenceCreateSpeechRequestBody(
+            model: model,
+            input: input,
+            voice: voice,
+            responseFormat: responseFormat,
+            instructions: instructions
+        )
 
-        return try (await sdkRequest("POST", "/v1/audio/speech", config: config, body: requestBody, decoder: .json, operationId: "inference_create_speech", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v1/audio/speech",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "inference_create_speech",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 
-    /// Start an asynchronous video generation job from a text prompt. Poll `GET /v1/videos/{video_id}` until the job reaches a terminal status, then download the MP4 with `GET /v1/videos/{video_id}/content` or from `output.url` when present.
+    /// Start an asynchronous video generation job from a text prompt. Poll `GET /v1/videos/{video_id}` until the job
+    /// reaches a terminal status, then download the MP4 with `GET /v1/videos/{video_id}/content` or from `output.url`
+    /// when present.
     ///
     /// - Parameters:
     /// - model: The video generation model to use.
     /// - prompt: A text description of the desired video.
     /// - size: The output resolution, for example `1280x720`.
     /// - fps: Frames per second for the generated video.
-    public static func inferenceCreateVideo(config: ClientConfig, model: String, prompt: String, size: String? = nil, fps: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> VideoGeneration {
+    static func inferenceCreateVideo(
+        config: ClientConfig,
+        model: String,
+        prompt: String,
+        size: String? = nil,
+        fps: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> VideoGeneration {
         try validateLength("prompt", prompt, min: 1)
 
-        if let fps = fps {
+        if let fps {
             try validateRange("fps", Double(fps), min: 1)
         }
 
         let requestBody = InferenceCreateVideoRequestBody(model: model, prompt: prompt, size: size, fps: fps)
 
-        return try (await sdkRequest("POST", "/v1/videos", config: config, body: requestBody, decoder: .json, operationId: "inference_create_video", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v1/videos",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "inference_create_video",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

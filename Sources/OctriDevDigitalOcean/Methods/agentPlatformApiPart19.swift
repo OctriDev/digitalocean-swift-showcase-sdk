@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
-    public struct GenaiImportCustomModelOptions: Codable {
+public extension AgentPlatformApiMethods {
+    struct GenaiImportCustomModelOptions: Codable {
         public var acceptHfTokenStorage: Bool?
         public var acceptTermsAndConditions: Bool?
         public var description: String?
@@ -33,17 +33,54 @@ extension AgentPlatformApiMethods {
     /// - sourceRef: Reference to the original source of the model
     /// - sourceType: Source from which the model was imported
     /// - tags: User-defined tags for organizing models
-    public static func genaiImportCustomModel(config: ClientConfig, options: GenaiImportCustomModelOptions, requestOptions: RequestOptions? = nil) async throws -> ApiImportCustomModelOutputPublic {
+    static func genaiImportCustomModel(
+        config: ClientConfig,
+        options: GenaiImportCustomModelOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiImportCustomModelOutputPublic {
         let requestBody = GenaiImportCustomModelRequestBody(options: options)
 
-        return try (await sdkRequest("POST", "/v2/gen-ai/custom_models/import", config: config, body: requestBody, decoder: .json, operationId: "genai_import_custom_model", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/gen-ai/custom_models/import",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "genai_import_custom_model",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
     /// To retrieve details of a custom model, send a GET request to `/v2/gen-ai/custom_models/{uuid}`.
     ///
     /// - Parameters:
     /// - uuid: UUID of the custom model to retrieve
-    public static func genaiGetCustomModel(config: ClientConfig, uuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiGetCustomModelOutputPublic {
-        return try (await sdkRequest("GET", ["/v2/gen-ai/custom_models/", sdkEncodePathSegment(sdkWireString(uuid))].joined(), config: config, decoder: .json, operationId: "genai_get_custom_model", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiGetCustomModel(
+        config: ClientConfig,
+        uuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiGetCustomModelOutputPublic {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/gen-ai/custom_models/", sdkEncodePathSegment(sdkWireString(uuid))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "genai_get_custom_model",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

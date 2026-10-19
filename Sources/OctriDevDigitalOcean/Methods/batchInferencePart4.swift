@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension BatchInferenceMethods {
-    /// Returns a cursor-paginated list of batch jobs, ordered newest first. Use `limit` to control page size and `after` to page forward using the `last_id` from the previous response.
+public extension BatchInferenceMethods {
+    /// Returns a cursor-paginated list of batch jobs, ordered newest first. Use `limit` to control page size and
+    /// `after` to page forward using the `last_id` from the previous response.
     ///
     /// - Parameters:
     /// - after: Cursor for pagination. Pass the `last_id` value from the previous
@@ -15,23 +16,45 @@ extension BatchInferenceMethods {
     /// - limit: Maximum number of batches to return per page.
     /// - status: Optional filter restricting results to batches in the given
     ///   lifecycle state.
-    public static func inferenceListBatches(config: ClientConfig, after: String? = nil, limit: Int? = nil, status: InferenceListBatchesParameter? = nil, requestOptions: RequestOptions? = nil) async throws -> BatchListResponse {
-        if let after = after {
+    static func inferenceListBatches(
+        config: ClientConfig,
+        after: String? = nil,
+        limit: Int? = nil,
+        status: InferenceListBatchesParameter? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> BatchListResponse {
+        if let after {
             try sdkValidateUuid("after", after)
         }
 
-        if let limit = limit {
+        if let limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try (await sdkRequest("GET", "/v1/batches", config: config, query: [
-            SdkQueryParameter("after", value: after),
-            SdkQueryParameter("limit", value: limit),
-            SdkQueryParameter("status", value: status),
-        ], decoder: .json, operationId: "inference_list_batches", options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/v1/batches",
+            config: config,
+            query: [
+                SdkQueryParameter("after", value: after),
+                SdkQueryParameter("limit", value: limit),
+                SdkQueryParameter("status", value: status),
+            ],
+            decoder: .json,
+            operationId: "inference_list_batches",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "403": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Returns a cursor-paginated list of batch jobs, ordered newest first. Use `limit` to control page size and `after` to page forward using the `last_id` from the previous response.
+    /// Returns a cursor-paginated list of batch jobs, ordered newest first. Use `limit` to control page size and
+    /// `after` to page forward using the `last_id` from the previous response.
     ///
     /// - Parameters:
     /// - after: Cursor for pagination. Pass the `last_id` value from the previous
@@ -39,18 +62,41 @@ extension BatchInferenceMethods {
     /// - limit: Maximum number of batches to return per page.
     /// - status: Optional filter restricting results to batches in the given
     ///   lifecycle state.
-    public static func inferenceListBatchesPaginated(config: ClientConfig, after: String? = nil, limit: Int? = nil, status: InferenceListBatchesParameter? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<Batch, Swift.Error> {
-        return AsyncThrowingStream<Batch, Swift.Error> { (continuation: AsyncThrowingStream<Batch, Swift.Error>.Continuation) in
+    static func inferenceListBatchesPaginated(
+        config: ClientConfig,
+        after: String? = nil,
+        limit: Int? = nil,
+        status: InferenceListBatchesParameter? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<Batch, Swift.Error> {
+        AsyncThrowingStream<Batch, Swift.Error> { (continuation: AsyncThrowingStream<
+            Batch,
+            Swift.Error
+        >.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = after
                     while true {
-                        let pageResponse = try await inferenceListBatches(config: config, after: pageCursor, limit: limit, status: status, requestOptions: requestOptions)
+                        let pageResponse = try await inferenceListBatches(
+                            config: config,
+                            after: pageCursor,
+                            limit: limit,
+                            status: status,
+                            requestOptions: requestOptions
+                        )
                         let pageItems = pageResponse.data
-                        if pageItems.isEmpty { break }
-                        for item in pageItems { continuation.yield(item) }
-                        if !pageResponse.hasMore { break }
-                        guard let nextCursor = pageResponse.lastId else { break }
+                        if pageItems.isEmpty {
+                            break
+                        }
+                        for item in pageItems {
+                            continuation.yield(item)
+                        }
+                        if !pageResponse.hasMore {
+                            break
+                        }
+                        guard let nextCursor = pageResponse.lastId else {
+                            break
+                        }
                         pageCursor = nextCursor
                     }
                 } catch {
@@ -63,25 +109,50 @@ extension BatchInferenceMethods {
         }
     }
 
-    public struct InferenceListBatchesPage {
+    struct InferenceListBatchesPage {
         public let data: BatchListResponse
         public let items: [Batch]
         public let hasMore: Bool
     }
 
-    public static func inferenceListBatchesPages(config: ClientConfig, after: String? = nil, limit: Int? = nil, status: InferenceListBatchesParameter? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<InferenceListBatchesPage, Swift.Error> {
-        return AsyncThrowingStream<InferenceListBatchesPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<InferenceListBatchesPage, Swift.Error>.Continuation) in
+    static func inferenceListBatchesPages(
+        config: ClientConfig,
+        after: String? = nil,
+        limit: Int? = nil,
+        status: InferenceListBatchesParameter? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<InferenceListBatchesPage, Swift.Error> {
+        AsyncThrowingStream<InferenceListBatchesPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<
+            InferenceListBatchesPage,
+            Swift.Error
+        >.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = after
                     while true {
-                        let pageResponse = try await inferenceListBatches(config: config, after: pageCursor, limit: limit, status: status, requestOptions: requestOptions)
+                        let pageResponse = try await inferenceListBatches(
+                            config: config,
+                            after: pageCursor,
+                            limit: limit,
+                            status: status,
+                            requestOptions: requestOptions
+                        )
                         let pageItems = pageResponse.data
-                        if pageItems.isEmpty { break }
+                        if pageItems.isEmpty {
+                            break
+                        }
                         let hasMore = pageResponse.hasMore && pageResponse.lastId != nil
-                        pageContinuation.yield(InferenceListBatchesPage(data: pageResponse, items: pageItems, hasMore: hasMore))
-                        if !hasMore { break }
-                        guard let nextCursor = pageResponse.lastId else { break }
+                        pageContinuation.yield(InferenceListBatchesPage(
+                            data: pageResponse,
+                            items: pageItems,
+                            hasMore: hasMore
+                        ))
+                        if !hasMore {
+                            break
+                        }
+                        guard let nextCursor = pageResponse.lastId else {
+                            break
+                        }
                         pageCursor = nextCursor
                     }
                 } catch {

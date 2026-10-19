@@ -6,26 +6,72 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
-    /// To list all evaluation runs by test case, send a GET request to `/v2/gen-ai/evaluation_test_cases/{evaluation_test_case_uuid}/evaluation_runs`.
+public extension AgentPlatformApiMethods {
+    /// To list all evaluation runs by test case, send a GET request to
+    /// `/v2/gen-ai/evaluation_test_cases/{evaluation_test_case_uuid}/evaluation_runs`.
     ///
     /// - Parameters:
     /// - evaluationTestCaseUuid: Evaluation run UUID.
     /// - evaluationTestCaseVersion: Version of the test case.
-    public static func genaiListEvaluationRunsByTestCase(config: ClientConfig, evaluationTestCaseUuid: String, evaluationTestCaseVersion: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListEvaluationRunsByTestCaseOutput {
-        return try (await sdkRequest("GET", ["/v2/gen-ai/evaluation_test_cases/", sdkEncodePathSegment(sdkWireString(evaluationTestCaseUuid)), "/evaluation_runs"].joined(), config: config, query: [
-            SdkQueryParameter("evaluation_test_case_version", value: evaluationTestCaseVersion),
-        ], decoder: .json, operationId: "genai_list_evaluation_runs_by_test_case", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiListEvaluationRunsByTestCase(
+        config: ClientConfig,
+        evaluationTestCaseUuid: String,
+        evaluationTestCaseVersion: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiListEvaluationRunsByTestCaseOutput {
+        try await (sdkRequest(
+            "GET",
+            [
+                "/v2/gen-ai/evaluation_test_cases/",
+                sdkEncodePathSegment(sdkWireString(evaluationTestCaseUuid)),
+                "/evaluation_runs",
+            ].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("evaluation_test_case_version", value: evaluationTestCaseVersion),
+            ],
+            decoder: .json,
+            operationId: "genai_list_evaluation_runs_by_test_case",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To retrive information about an existing evaluation test case, send a GET request to `/v2/gen-ai/evaluation_test_case/{test_case_uuid}`.
+    /// To retrive information about an existing evaluation test case, send a GET request to
+    /// `/v2/gen-ai/evaluation_test_case/{test_case_uuid}`.
     ///
     /// - Parameters:
     /// - testCaseUuid: The test case uuid to retrieve.
     /// - evaluationTestCaseVersion: Version of the test case.
-    public static func genaiGetEvaluationTestCase(config: ClientConfig, testCaseUuid: String, evaluationTestCaseVersion: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiGetEvaluationTestCaseOutput {
-        return try (await sdkRequest("GET", ["/v2/gen-ai/evaluation_test_cases/", sdkEncodePathSegment(sdkWireString(testCaseUuid))].joined(), config: config, query: [
-            SdkQueryParameter("evaluation_test_case_version", value: evaluationTestCaseVersion),
-        ], decoder: .json, operationId: "genai_get_evaluation_test_case", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiGetEvaluationTestCase(
+        config: ClientConfig,
+        testCaseUuid: String,
+        evaluationTestCaseVersion: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiGetEvaluationTestCaseOutput {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/gen-ai/evaluation_test_cases/", sdkEncodePathSegment(sdkWireString(testCaseUuid))].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("evaluation_test_case_version", value: evaluationTestCaseVersion),
+            ],
+            decoder: .json,
+            operationId: "genai_get_evaluation_test_case",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

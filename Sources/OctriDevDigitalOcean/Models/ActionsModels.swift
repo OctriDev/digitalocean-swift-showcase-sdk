@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Actions domain models
+/// Actions domain models
 public struct ActionsVariant0: Codable {
     public var actions: [Action]?
 
@@ -12,19 +12,19 @@ public struct ActionsVariant0: Codable {
     }
 
     init() {
-        self.actions = nil
+        actions = nil
     }
 }
 
-extension ActionsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension ActionsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.actions = try container.sdkDecodeIfPresent(.actions)
+        actions = try container.sdkDecodeIfPresent(.actions)
     }
 }
 
-extension ActionsVariant0 {
-    public init(actions: [Action]? = nil) {
+public extension ActionsVariant0 {
+    init(actions: [Action]? = nil) {
         self.init()
         self.actions = actions
     }
@@ -44,23 +44,29 @@ public struct Actions: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension Actions {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.actions = try container.sdkDecodeIfPresent(.actions)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension Actions {
-    public init(meta: MetaMeta, actions: [Action]? = nil, links: PageLinks? = nil) {
+public extension Actions {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        actions = try container.sdkDecodeIfPresent(.actions)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension Actions {
+    init(meta: MetaMeta, actions: [Action]? = nil, links: PageLinks? = nil) {
         (self.meta, self.actions) = (meta, actions)
         self.links = links
     }

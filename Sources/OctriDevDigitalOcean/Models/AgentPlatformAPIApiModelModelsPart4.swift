@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiModel domain models
+/// AgentPlatformAPIApiModel domain models
 /// Pricing per million tokens (aligns with existing ModelPrice pattern)
 public struct ApiModelPricing: Codable {
     /// Per-million cache read rate for standard chat models (token_type "cache read input"). Multimodal models use
@@ -91,40 +91,83 @@ public struct ApiModelPricing: Codable {
     }
 
     init() {
-        (self.cacheReadInputPricePerMillion, self.cacheWrite1hInputPricePerMillion, self.cacheWrite5mInputPricePerMillion, self.imageCacheReadInputPricePerMillion, self.imageInputPricePerMillion) = (nil, nil, nil, nil, nil)
-        (self.imageOutputPricePerMillion, self.inputCacheRead, self.inputPricePerMillion, self.outputPricePerMillion, self.pricePerAudio) = (nil, nil, nil, nil, nil)
-        (self.pricePerImage, self.pricePerMegapixel, self.pricePerSecond, self.pricePerThousandCharacters, self.pricePerVideo) = (nil, nil, nil, nil, nil)
-        (self.reasoningPricePerMillion, self.textCacheReadInputPricePerMillion, self.textInputPricePerMillion, self.textOutputPricePerMillion) = (nil, nil, nil, nil)
+        (
+            cacheReadInputPricePerMillion,
+            cacheWrite1hInputPricePerMillion,
+            cacheWrite5mInputPricePerMillion,
+            imageCacheReadInputPricePerMillion,
+            imageInputPricePerMillion
+        ) = (nil, nil, nil, nil, nil)
+        (imageOutputPricePerMillion, inputCacheRead, inputPricePerMillion, outputPricePerMillion, pricePerAudio) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (pricePerImage, pricePerMegapixel, pricePerSecond, pricePerThousandCharacters, pricePerVideo) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (
+            reasoningPricePerMillion,
+            textCacheReadInputPricePerMillion,
+            textInputPricePerMillion,
+            textOutputPricePerMillion
+        ) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiModelPricing {
-    public init(from decoder: Decoder) throws {
+public extension ApiModelPricing {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.cacheReadInputPricePerMillion = try container.sdkDecodeIfPresent(.cacheReadInputPricePerMillion)
-        self.cacheWrite1hInputPricePerMillion = try container.sdkDecodeIfPresent(.cacheWrite1hInputPricePerMillion)
-        self.cacheWrite5mInputPricePerMillion = try container.sdkDecodeIfPresent(.cacheWrite5mInputPricePerMillion)
-        self.imageCacheReadInputPricePerMillion = try container.sdkDecodeIfPresent(.imageCacheReadInputPricePerMillion)
-        self.imageInputPricePerMillion = try container.sdkDecodeIfPresent(.imageInputPricePerMillion)
-        self.imageOutputPricePerMillion = try container.sdkDecodeIfPresent(.imageOutputPricePerMillion)
-        self.inputCacheRead = try container.sdkDecodeIfPresent(.inputCacheRead)
-        self.inputPricePerMillion = try container.sdkDecodeIfPresent(.inputPricePerMillion)
-        self.outputPricePerMillion = try container.sdkDecodeIfPresent(.outputPricePerMillion)
-        self.pricePerAudio = try container.sdkDecodeIfPresent(.pricePerAudio)
-        self.pricePerImage = try container.sdkDecodeIfPresent(.pricePerImage)
-        self.pricePerMegapixel = try container.sdkDecodeIfPresent(.pricePerMegapixel)
-        self.pricePerSecond = try container.sdkDecodeIfPresent(.pricePerSecond)
-        self.pricePerThousandCharacters = try container.sdkDecodeIfPresent(.pricePerThousandCharacters)
-        self.pricePerVideo = try container.sdkDecodeIfPresent(.pricePerVideo)
-        self.reasoningPricePerMillion = try container.sdkDecodeIfPresent(.reasoningPricePerMillion)
-        self.textCacheReadInputPricePerMillion = try container.sdkDecodeIfPresent(.textCacheReadInputPricePerMillion)
-        self.textInputPricePerMillion = try container.sdkDecodeIfPresent(.textInputPricePerMillion)
-        self.textOutputPricePerMillion = try container.sdkDecodeIfPresent(.textOutputPricePerMillion)
+        cacheReadInputPricePerMillion = try container.sdkDecodeIfPresent(.cacheReadInputPricePerMillion)
+        cacheWrite1hInputPricePerMillion = try container.sdkDecodeIfPresent(.cacheWrite1hInputPricePerMillion)
+        cacheWrite5mInputPricePerMillion = try container.sdkDecodeIfPresent(.cacheWrite5mInputPricePerMillion)
+        imageCacheReadInputPricePerMillion = try container.sdkDecodeIfPresent(.imageCacheReadInputPricePerMillion)
+        imageInputPricePerMillion = try container.sdkDecodeIfPresent(.imageInputPricePerMillion)
+        imageOutputPricePerMillion = try container.sdkDecodeIfPresent(.imageOutputPricePerMillion)
+        inputCacheRead = try container.sdkDecodeIfPresent(.inputCacheRead)
+        inputPricePerMillion = try container.sdkDecodeIfPresent(.inputPricePerMillion)
+        outputPricePerMillion = try container.sdkDecodeIfPresent(.outputPricePerMillion)
+        pricePerAudio = try container.sdkDecodeIfPresent(.pricePerAudio)
+        pricePerImage = try container.sdkDecodeIfPresent(.pricePerImage)
+        pricePerMegapixel = try container.sdkDecodeIfPresent(.pricePerMegapixel)
+        pricePerSecond = try container.sdkDecodeIfPresent(.pricePerSecond)
+        pricePerThousandCharacters = try container.sdkDecodeIfPresent(.pricePerThousandCharacters)
+        pricePerVideo = try container.sdkDecodeIfPresent(.pricePerVideo)
+        reasoningPricePerMillion = try container.sdkDecodeIfPresent(.reasoningPricePerMillion)
+        textCacheReadInputPricePerMillion = try container.sdkDecodeIfPresent(.textCacheReadInputPricePerMillion)
+        textInputPricePerMillion = try container.sdkDecodeIfPresent(.textInputPricePerMillion)
+        textOutputPricePerMillion = try container.sdkDecodeIfPresent(.textOutputPricePerMillion)
     }
 }
 
-extension ApiModelPricing {
-    public init(cacheReadInputPricePerMillion: Double? = nil, cacheWrite1hInputPricePerMillion: Double? = nil, cacheWrite5mInputPricePerMillion: Double? = nil, imageCacheReadInputPricePerMillion: Double? = nil, imageInputPricePerMillion: Double? = nil, imageOutputPricePerMillion: Double? = nil, inputCacheRead: Double? = nil, inputPricePerMillion: Double? = nil, outputPricePerMillion: Double? = nil, pricePerAudio: Double? = nil, pricePerImage: Double? = nil, pricePerMegapixel: Double? = nil, pricePerSecond: Double? = nil, pricePerThousandCharacters: Double? = nil, pricePerVideo: Double? = nil, reasoningPricePerMillion: Double? = nil, textCacheReadInputPricePerMillion: Double? = nil, textInputPricePerMillion: Double? = nil, textOutputPricePerMillion: Double? = nil) {
+public extension ApiModelPricing {
+    init(
+        cacheReadInputPricePerMillion: Double? = nil,
+        cacheWrite1hInputPricePerMillion: Double? = nil,
+        cacheWrite5mInputPricePerMillion: Double? = nil,
+        imageCacheReadInputPricePerMillion: Double? = nil,
+        imageInputPricePerMillion: Double? = nil,
+        imageOutputPricePerMillion: Double? = nil,
+        inputCacheRead: Double? = nil,
+        inputPricePerMillion: Double? = nil,
+        outputPricePerMillion: Double? = nil,
+        pricePerAudio: Double? = nil,
+        pricePerImage: Double? = nil,
+        pricePerMegapixel: Double? = nil,
+        pricePerSecond: Double? = nil,
+        pricePerThousandCharacters: Double? = nil,
+        pricePerVideo: Double? = nil,
+        reasoningPricePerMillion: Double? = nil,
+        textCacheReadInputPricePerMillion: Double? = nil,
+        textInputPricePerMillion: Double? = nil,
+        textOutputPricePerMillion: Double? = nil
+    ) {
         self.init()
         self.cacheReadInputPricePerMillion = cacheReadInputPricePerMillion
         self.cacheWrite1hInputPricePerMillion = cacheWrite1hInputPricePerMillion
@@ -227,41 +270,62 @@ public struct ApiModelCatalogCard: Codable {
     }
 
     init() {
-        (self.availability, self.badges, self.benchmarkScore, self.capabilities, self.codeSnippets) = (nil, nil, nil, nil, nil)
-        (self.contextWindow, self.creator, self.description, self.huggingFaceId, self.id) = (nil, nil, nil, nil, nil)
-        (self.maxOutputTokens, self.modalities, self.modelId, self.name, self.parameterCount) = (nil, nil, nil, nil, nil)
-        (self.pricing, self.pricingDetail, self.provider, self.shortDescription, self.type) = (nil, nil, nil, nil, nil)
+        (availability, badges, benchmarkScore, capabilities, codeSnippets) = (nil, nil, nil, nil, nil)
+        (contextWindow, creator, description, huggingFaceId, id) = (nil, nil, nil, nil, nil)
+        (maxOutputTokens, modalities, modelId, name, parameterCount) = (nil, nil, nil, nil, nil)
+        (pricing, pricingDetail, provider, shortDescription, type) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiModelCatalogCard {
-    public init(from decoder: Decoder) throws {
+public extension ApiModelCatalogCard {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.availability = try container.sdkDecodeIfPresent(.availability)
-        self.badges = try container.sdkDecodeIfPresent(.badges)
-        self.benchmarkScore = try container.sdkDecodeIfPresent(.benchmarkScore)
-        self.capabilities = try container.sdkDecodeIfPresent(.capabilities)
-        self.codeSnippets = try container.sdkDecodeIfPresent(.codeSnippets)
-        self.contextWindow = try container.sdkDecodeIfPresent(.contextWindow)
-        self.creator = try container.sdkDecodeIfPresent(.creator)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.huggingFaceId = try container.sdkDecodeIfPresent(.huggingFaceId)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.maxOutputTokens = try container.sdkDecodeIfPresent(.maxOutputTokens)
-        self.modalities = try container.sdkDecodeIfPresent(.modalities)
-        self.modelId = try container.sdkDecodeIfPresent(.modelId)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.parameterCount = try container.sdkDecodeIfPresent(.parameterCount)
-        self.pricing = try container.sdkDecodeIfPresent(.pricing)
-        self.pricingDetail = try container.sdkDecodeIfPresent(.pricingDetail)
-        self.provider = try container.sdkDecodeIfPresent(.provider)
-        self.shortDescription = try container.sdkDecodeIfPresent(.shortDescription)
-        self.type = try container.sdkDecodeIfPresent(.type)
+        availability = try container.sdkDecodeIfPresent(.availability)
+        badges = try container.sdkDecodeIfPresent(.badges)
+        benchmarkScore = try container.sdkDecodeIfPresent(.benchmarkScore)
+        capabilities = try container.sdkDecodeIfPresent(.capabilities)
+        codeSnippets = try container.sdkDecodeIfPresent(.codeSnippets)
+        contextWindow = try container.sdkDecodeIfPresent(.contextWindow)
+        creator = try container.sdkDecodeIfPresent(.creator)
+        description = try container.sdkDecodeIfPresent(.description)
+        huggingFaceId = try container.sdkDecodeIfPresent(.huggingFaceId)
+        id = try container.sdkDecodeIfPresent(.id)
+        maxOutputTokens = try container.sdkDecodeIfPresent(.maxOutputTokens)
+        modalities = try container.sdkDecodeIfPresent(.modalities)
+        modelId = try container.sdkDecodeIfPresent(.modelId)
+        name = try container.sdkDecodeIfPresent(.name)
+        parameterCount = try container.sdkDecodeIfPresent(.parameterCount)
+        pricing = try container.sdkDecodeIfPresent(.pricing)
+        pricingDetail = try container.sdkDecodeIfPresent(.pricingDetail)
+        provider = try container.sdkDecodeIfPresent(.provider)
+        shortDescription = try container.sdkDecodeIfPresent(.shortDescription)
+        type = try container.sdkDecodeIfPresent(.type)
     }
 }
 
-extension ApiModelCatalogCard {
-    public init(availability: [String]? = nil, badges: [String]? = nil, benchmarkScore: [String: JSONValue]? = nil, capabilities: [String]? = nil, codeSnippets: ApiCodeSnippets? = nil, contextWindow: String? = nil, creator: String? = nil, description: String? = nil, huggingFaceId: String? = nil, id: String? = nil, maxOutputTokens: String? = nil, modalities: ApiModelModalities? = nil, modelId: String? = nil, name: String? = nil, parameterCount: Double? = nil, pricing: ApiModelPricing? = nil, pricingDetail: ApiModelPricingDetail? = nil, provider: ApiModelProvider? = nil, shortDescription: String? = nil, type: String? = nil) {
+public extension ApiModelCatalogCard {
+    init(
+        availability: [String]? = nil,
+        badges: [String]? = nil,
+        benchmarkScore: [String: JSONValue]? = nil,
+        capabilities: [String]? = nil,
+        codeSnippets: ApiCodeSnippets? = nil,
+        contextWindow: String? = nil,
+        creator: String? = nil,
+        description: String? = nil,
+        huggingFaceId: String? = nil,
+        id: String? = nil,
+        maxOutputTokens: String? = nil,
+        modalities: ApiModelModalities? = nil,
+        modelId: String? = nil,
+        name: String? = nil,
+        parameterCount: Double? = nil,
+        pricing: ApiModelPricing? = nil,
+        pricingDetail: ApiModelPricingDetail? = nil,
+        provider: ApiModelProvider? = nil,
+        shortDescription: String? = nil,
+        type: String? = nil
+    ) {
         self.init()
         (self.availability, self.badges) = (availability, badges)
         (self.benchmarkScore, self.capabilities) = (benchmarkScore, capabilities)
@@ -314,36 +378,45 @@ public struct ApiModelProviderKeyInfo: Codable {
     }
 
     init() {
-        (self.apiKeyUuid, self.createdAt, self.createdBy, self.deletedAt, self.models) = (nil, nil, nil, nil, nil)
-        (self.name, self.provider, self.updatedAt) = (nil, nil, nil)
+        (apiKeyUuid, createdAt, createdBy, deletedAt, models) = (nil, nil, nil, nil, nil)
+        (name, provider, updatedAt) = (nil, nil, nil)
     }
 }
 
-extension ApiModelProviderKeyInfo {
-    public init(from decoder: Decoder) throws {
+public extension ApiModelProviderKeyInfo {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKeyUuid = try container.sdkDecodeIfPresent(.apiKeyUuid)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.createdBy = try container.sdkDecodeIfPresent(.createdBy)
-        self.deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
-        self.models = try container.sdkDecodeIfPresent(.models)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.provider = try container.sdkDecodeIfPresent(.provider)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = self.createdAt {
+        apiKeyUuid = try container.sdkDecodeIfPresent(.apiKeyUuid)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        createdBy = try container.sdkDecodeIfPresent(.createdBy)
+        deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
+        models = try container.sdkDecodeIfPresent(.models)
+        name = try container.sdkDecodeIfPresent(.name)
+        provider = try container.sdkDecodeIfPresent(.provider)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.deletedAt {
+        if let value = deletedAt {
             try sdkValidateDateTime("deleted_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiModelProviderKeyInfo {
-    public init(apiKeyUuid: String? = nil, createdAt: Date? = nil, createdBy: String? = nil, deletedAt: Date? = nil, models: [ApiModel]? = nil, name: String? = nil, provider: ApiModelProvider? = nil, updatedAt: Date? = nil) throws {
+public extension ApiModelProviderKeyInfo {
+    init(
+        apiKeyUuid: String? = nil,
+        createdAt: Date? = nil,
+        createdBy: String? = nil,
+        deletedAt: Date? = nil,
+        models: [ApiModel]? = nil,
+        name: String? = nil,
+        provider: ApiModelProvider? = nil,
+        updatedAt: Date? = nil
+    ) throws {
         self.init()
         (self.apiKeyUuid, self.createdAt) = (apiKeyUuid, createdAt)
         (self.createdBy, self.deletedAt) = (createdBy, deletedAt)
@@ -418,35 +491,54 @@ public struct ApiModelEvaluationRunSummary: Codable {
     }
 
     init() {
-        (self.candidateModelName, self.candidateModelSource, self.candidateModelUuid, self.createdAt, self.datasetName) = (nil, nil, nil, nil, nil)
-        (self.datasetUuid, self.evalRunUuid, self.judgeModelName, self.judgeModelUuid, self.name) = (nil, nil, nil, nil, nil)
-        (self.progress, self.status) = (nil, nil)
+        (candidateModelName, candidateModelSource, candidateModelUuid, createdAt, datasetName) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (datasetUuid, evalRunUuid, judgeModelName, judgeModelUuid, name) = (nil, nil, nil, nil, nil)
+        (progress, status) = (nil, nil)
     }
 }
 
-extension ApiModelEvaluationRunSummary {
-    public init(from decoder: Decoder) throws {
+public extension ApiModelEvaluationRunSummary {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.candidateModelName = try container.sdkDecodeIfPresent(.candidateModelName)
-        self.candidateModelSource = try container.sdkDecodeIfPresent(.candidateModelSource)
-        self.candidateModelUuid = try container.sdkDecodeIfPresent(.candidateModelUuid)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.datasetName = try container.sdkDecodeIfPresent(.datasetName)
-        self.datasetUuid = try container.sdkDecodeIfPresent(.datasetUuid)
-        self.evalRunUuid = try container.sdkDecodeIfPresent(.evalRunUuid)
-        self.judgeModelName = try container.sdkDecodeIfPresent(.judgeModelName)
-        self.judgeModelUuid = try container.sdkDecodeIfPresent(.judgeModelUuid)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.progress = try container.sdkDecodeIfPresent(.progress)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        if let value = self.createdAt {
+        candidateModelName = try container.sdkDecodeIfPresent(.candidateModelName)
+        candidateModelSource = try container.sdkDecodeIfPresent(.candidateModelSource)
+        candidateModelUuid = try container.sdkDecodeIfPresent(.candidateModelUuid)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        datasetName = try container.sdkDecodeIfPresent(.datasetName)
+        datasetUuid = try container.sdkDecodeIfPresent(.datasetUuid)
+        evalRunUuid = try container.sdkDecodeIfPresent(.evalRunUuid)
+        judgeModelName = try container.sdkDecodeIfPresent(.judgeModelName)
+        judgeModelUuid = try container.sdkDecodeIfPresent(.judgeModelUuid)
+        name = try container.sdkDecodeIfPresent(.name)
+        progress = try container.sdkDecodeIfPresent(.progress)
+        status = try container.sdkDecodeIfPresent(.status)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiModelEvaluationRunSummary {
-    public init(candidateModelName: String? = nil, candidateModelSource: ApiCandidateModelSource? = nil, candidateModelUuid: String? = nil, createdAt: Date? = nil, datasetName: String? = nil, datasetUuid: String? = nil, evalRunUuid: String? = nil, judgeModelName: String? = nil, judgeModelUuid: String? = nil, name: String? = nil, progress: ApiModelEvaluationRunProgress? = nil, status: ApiModelEvaluationRunStatus? = nil) throws {
+public extension ApiModelEvaluationRunSummary {
+    init(
+        candidateModelName: String? = nil,
+        candidateModelSource: ApiCandidateModelSource? = nil,
+        candidateModelUuid: String? = nil,
+        createdAt: Date? = nil,
+        datasetName: String? = nil,
+        datasetUuid: String? = nil,
+        evalRunUuid: String? = nil,
+        judgeModelName: String? = nil,
+        judgeModelUuid: String? = nil,
+        name: String? = nil,
+        progress: ApiModelEvaluationRunProgress? = nil,
+        status: ApiModelEvaluationRunStatus? = nil
+    ) throws {
         self.init()
         (self.candidateModelName, self.candidateModelSource) = (candidateModelName, candidateModelSource)
         (self.candidateModelUuid, self.createdAt) = (candidateModelUuid, createdAt)

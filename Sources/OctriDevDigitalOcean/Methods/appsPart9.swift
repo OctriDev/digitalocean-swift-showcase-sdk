@@ -6,15 +6,41 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AppsMethods {
-    /// Cancels an in-progress deployment for a specific app. Use the app and deployment identifiers to select the deployment to stop. The response contains the deployment after it has been cancelled.
+public extension AppsMethods {
+    /// Cancels an in-progress deployment for a specific app. Use the app and deployment identifiers to select the
+    /// deployment to stop. The response contains the deployment after it has been cancelled.
     ///
     /// Immediately cancel an in-progress deployment.
     ///
     /// - Parameters:
     /// - appId: The app ID
     /// - deploymentId: The deployment ID
-    public static func appsCancelDeployment(config: ClientConfig, appId: String, deploymentId: String, requestOptions: RequestOptions? = nil) async throws -> AppsDeploymentResponse {
-        return try (await sdkRequest("POST", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/deployments/", sdkEncodePathSegment(sdkWireString(deploymentId)), "/cancel"].joined(), config: config, decoder: .json, operationId: "apps_cancel_deployment", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func appsCancelDeployment(
+        config: ClientConfig,
+        appId: String,
+        deploymentId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppsDeploymentResponse {
+        try await (sdkRequest(
+            "POST",
+            [
+                "/v2/apps/",
+                sdkEncodePathSegment(sdkWireString(appId)),
+                "/deployments/",
+                sdkEncodePathSegment(sdkWireString(deploymentId)),
+                "/cancel",
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "apps_cancel_deployment",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

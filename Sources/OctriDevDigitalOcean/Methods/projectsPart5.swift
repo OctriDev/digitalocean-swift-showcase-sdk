@@ -6,14 +6,32 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ProjectsMethods {
+public extension ProjectsMethods {
     /// To get a project, send a GET request to `/v2/projects/$PROJECT_ID`.
     ///
     /// - Parameters:
     /// - projectId: A unique identifier for a project.
-    public static func projectsGet(config: ClientConfig, projectId: String, requestOptions: RequestOptions? = nil) async throws -> ExistingProject {
+    static func projectsGet(
+        config: ClientConfig,
+        projectId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExistingProject {
         try sdkValidateUuid("project_id", projectId)
 
-        return try (await sdkRequest("GET", ["/v2/projects/", sdkEncodePathSegment(sdkWireString(projectId))].joined(), config: config, decoder: .json, operationId: "projects_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/projects/", sdkEncodePathSegment(sdkWireString(projectId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "projects_get",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

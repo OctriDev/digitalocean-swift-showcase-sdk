@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ReservedIPv6Actions domain models
+/// ReservedIPv6Actions domain models
 /// Typed representation of the `ReservedIpv6Action` API schema.
 public struct ReservedIpv6Action: Codable {
     /// Optional object value serialized in the `action` wire field.
@@ -14,19 +14,19 @@ public struct ReservedIpv6Action: Codable {
     }
 
     init() {
-        self.action = nil
+        action = nil
     }
 }
 
-extension ReservedIpv6Action {
-    public init(from decoder: Decoder) throws {
+public extension ReservedIpv6Action {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.action = try container.sdkDecodeIfPresent(.action)
+        action = try container.sdkDecodeIfPresent(.action)
     }
 }
 
-extension ReservedIpv6Action {
-    public init(action: ReservedIpv6ActionAction? = nil) {
+public extension ReservedIpv6Action {
+    init(action: ReservedIpv6ActionAction? = nil) {
         self.init()
         self.action = action
     }
@@ -75,34 +75,44 @@ public struct ReservedIpv6ActionAction: Codable {
     }
 
     init() {
-        (self.id, self.status, self.type, self.startedAt, self.completedAt) = (nil, nil, nil, nil, nil)
-        (self.resourceId, self.resourceType, self.region, self.regionSlug) = (nil, nil, nil, nil)
+        (id, status, type, startedAt, completedAt) = (nil, nil, nil, nil, nil)
+        (resourceId, resourceType, region, regionSlug) = (nil, nil, nil, nil)
     }
 }
 
-extension ReservedIpv6ActionAction {
-    public init(from decoder: Decoder) throws {
+public extension ReservedIpv6ActionAction {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        self.resourceId = try container.sdkDecodeIfPresent(.resourceId)
-        self.resourceType = try container.sdkDecodeIfPresent(.resourceType)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.regionSlug = try container.sdkDecodeIfPresent(.regionSlug)
-        if let value = self.startedAt {
+        id = try container.sdkDecodeIfPresent(.id)
+        status = try container.sdkDecodeIfPresent(.status)
+        type = try container.sdkDecodeIfPresent(.type)
+        startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        resourceId = try container.sdkDecodeIfPresent(.resourceId)
+        resourceType = try container.sdkDecodeIfPresent(.resourceType)
+        region = try container.sdkDecodeIfPresent(.region)
+        regionSlug = try container.sdkDecodeIfPresent(.regionSlug)
+        if let value = startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
-        if let value = self.completedAt {
+        if let value = completedAt {
             try sdkValidateDateTime("completed_at", sdkWireString(value))
         }
     }
 }
 
-extension ReservedIpv6ActionAction {
-    public init(id: Int? = nil, status: ReservedIpv6ActionActionStatus? = nil, type: String? = nil, startedAt: Date? = nil, completedAt: Date? = nil, resourceId: Int? = nil, resourceType: String? = nil, region: Region? = nil, regionSlug: String? = nil) throws {
+public extension ReservedIpv6ActionAction {
+    init(
+        id: Int? = nil,
+        status: ReservedIpv6ActionActionStatus? = nil,
+        type: String? = nil,
+        startedAt: Date? = nil,
+        completedAt: Date? = nil,
+        resourceId: Int? = nil,
+        resourceType: String? = nil,
+        region: Region? = nil,
+        regionSlug: String? = nil
+    ) throws {
         self.init()
         (self.id, self.status) = (id, status)
         (self.type, self.startedAt) = (type, startedAt)
@@ -129,30 +139,36 @@ public struct ReservedIpv6ActionUnassign: Codable {
         case type
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension ReservedIpv6ActionUnassign {
-    public init(from decoder: Decoder) throws {
+public extension ReservedIpv6ActionUnassign {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
         }
-        self.type = try container.sdkDecodeRequired(.type)
+        type = try container.sdkDecodeRequired(.type)
         additionalProperties = try decoder.sdkAdditionalProperties(besides: CodingKeys.self)
-            try sdkValidateRawEnum("type", self.type, ReservedIpv6ActionTypeType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", type, ReservedIpv6ActionTypeType.allCases.map(\.rawValue))
     }
 }
 
-extension ReservedIpv6ActionUnassign {
-    public init(type: ReservedIpv6ActionTypeType) throws {
+public extension ReservedIpv6ActionUnassign {
+    init(type: ReservedIpv6ActionTypeType) throws {
         self.type = type
-            try sdkValidateRawEnum("type", self.type, ReservedIpv6ActionTypeType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, ReservedIpv6ActionTypeType.allCases.map(\.rawValue))
     }
 }
 
-extension ReservedIpv6ActionUnassign {
-    public func encode(to encoder: Encoder) throws {
+public extension ReservedIpv6ActionUnassign {
+    func encode(to encoder: Encoder) throws {
         try encoder.sdkEncodeAdditionalProperties(additionalProperties)
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(type, forKey: .type)
@@ -168,24 +184,30 @@ public struct ReservedIpv6ActionType: Codable {
         case type
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ReservedIpv6ActionType {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-            try sdkValidateRawEnum("type", self.type, ReservedIpv6ActionTypeType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ReservedIpv6ActionType {
-    public init(type: ReservedIpv6ActionTypeType) throws {
+public extension ReservedIpv6ActionType {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        try sdkValidateRawEnum("type", type, ReservedIpv6ActionTypeType.allCases.map(\.rawValue))
+    }
+}
+
+public extension ReservedIpv6ActionType {
+    init(type: ReservedIpv6ActionTypeType) throws {
         self.type = type
-            try sdkValidateRawEnum("type", self.type, ReservedIpv6ActionTypeType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, ReservedIpv6ActionTypeType.allCases.map(\.rawValue))
     }
 }
 
@@ -202,28 +224,38 @@ public struct ReservedIpv6ActionAssign: Codable {
         case dropletId = "droplet_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ReservedIpv6ActionAssign {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.dropletId) else {
-            throw SdkValidationError(field: "droplet_id", code: "required", message: "Validation failed for 'droplet_id': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.dropletId = try container.sdkDecodeRequired(.dropletId)
-            try sdkValidateRawEnum("type", self.type, ReservedIpv6ActionTypeType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ReservedIpv6ActionAssign {
-    public init(type: ReservedIpv6ActionTypeType, dropletId: Int) throws {
+public extension ReservedIpv6ActionAssign {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.dropletId) else {
+            throw SdkValidationError(
+                field: "droplet_id",
+                code: "required",
+                message: "Validation failed for 'droplet_id': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        dropletId = try container.sdkDecodeRequired(.dropletId)
+        try sdkValidateRawEnum("type", type, ReservedIpv6ActionTypeType.allCases.map(\.rawValue))
+    }
+}
+
+public extension ReservedIpv6ActionAssign {
+    init(type: ReservedIpv6ActionTypeType, dropletId: Int) throws {
         (self.type, self.dropletId) = (type, dropletId)
-            try sdkValidateRawEnum("type", self.type, ReservedIpv6ActionTypeType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, ReservedIpv6ActionTypeType.allCases.map(\.rawValue))
     }
 }
 
@@ -236,21 +268,27 @@ public struct ReservedIpv6ActionAssignVariant1: Codable {
         case dropletId = "droplet_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ReservedIpv6ActionAssignVariant1 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.dropletId) else {
-            throw SdkValidationError(field: "droplet_id", code: "required", message: "Validation failed for 'droplet_id': value is required")
-        }
-        self.dropletId = try container.sdkDecodeRequired(.dropletId)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ReservedIpv6ActionAssignVariant1 {
-    public init(dropletId: Int) {
+public extension ReservedIpv6ActionAssignVariant1 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.dropletId) else {
+            throw SdkValidationError(
+                field: "droplet_id",
+                code: "required",
+                message: "Validation failed for 'droplet_id': value is required"
+            )
+        }
+        dropletId = try container.sdkDecodeRequired(.dropletId)
+    }
+}
+
+public extension ReservedIpv6ActionAssignVariant1 {
+    init(dropletId: Int) {
         self.dropletId = dropletId
     }
 }
@@ -278,14 +316,17 @@ public enum ReservedIpv6ActionTypeType: String, CaseIterable, Codable {
 public struct ReservedIpv6ActionActionStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let inProgress = ReservedIpv6ActionActionStatus(rawValue: "in-progress")
     public static let completed = ReservedIpv6ActionActionStatus(rawValue: "completed")
     public static let errored = ReservedIpv6ActionActionStatus(rawValue: "errored")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

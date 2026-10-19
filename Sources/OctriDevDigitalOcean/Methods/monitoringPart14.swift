@@ -6,32 +6,65 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension MonitoringMethods {
-    /// To retrieve frontend average percentage CPU utilization for a given load balancer, send a GET request to `/v2/monitoring/metrics/load_balancer/frontend_cpu_utilization`.
+public extension MonitoringMethods {
+    /// To retrieve frontend average percentage CPU utilization for a given load balancer, send a GET request to
+    /// `/v2/monitoring/metrics/load_balancer/frontend_cpu_utilization`.
     ///
     /// - Parameters:
     /// - lbId: A unique identifier for a load balancer.
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    public static func monitoringGetLbFrontendCpuUtilization(config: ClientConfig, lbId: String, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
-        return try (await sdkRequest("GET", "/v2/monitoring/metrics/load_balancer/frontend_cpu_utilization", config: config, query: [
-            SdkQueryParameter("lb_id", value: lbId),
-            SdkQueryParameter("start", value: start),
-            SdkQueryParameter("end", value: end),
-        ], decoder: .json, operationId: "monitoring_get_lb_frontend_cpu_utilization", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func monitoringGetLbFrontendCpuUtilization(
+        config: ClientConfig,
+        lbId: String,
+        start: String,
+        end: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Metrics {
+        try await (sdkRequest(
+            "GET",
+            "/v2/monitoring/metrics/load_balancer/frontend_cpu_utilization",
+            config: config,
+            query: [
+                SdkQueryParameter("lb_id", value: lbId),
+                SdkQueryParameter("start", value: start),
+                SdkQueryParameter("end", value: end),
+            ],
+            decoder: .json,
+            operationId: "monitoring_get_lb_frontend_cpu_utilization",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 
-    /// To retrieve firewall dropped bytes for a given load balancer, send a GET request to `/v2/monitoring/metrics/load_balancer/frontend_firewall_dropped_bytes`. This is currently only supported for network load balancers.
+    /// To retrieve firewall dropped bytes for a given load balancer, send a GET request to
+    /// `/v2/monitoring/metrics/load_balancer/frontend_firewall_dropped_bytes`. This is currently only supported for
+    /// network load balancers.
     ///
     /// - Parameters:
     /// - lbId: A unique identifier for a load balancer.
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    public static func monitoringGetLbFrontendFirewallDroppedBytes(config: ClientConfig, lbId: String, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
-        return try (await sdkRequest("GET", "/v2/monitoring/metrics/load_balancer/frontend_firewall_dropped_bytes", config: config, query: [
-            SdkQueryParameter("lb_id", value: lbId),
-            SdkQueryParameter("start", value: start),
-            SdkQueryParameter("end", value: end),
-        ], decoder: .json, operationId: "monitoring_get_lb_frontend_firewall_dropped_bytes", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func monitoringGetLbFrontendFirewallDroppedBytes(
+        config: ClientConfig,
+        lbId: String,
+        start: String,
+        end: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Metrics {
+        try await (sdkRequest(
+            "GET",
+            "/v2/monitoring/metrics/load_balancer/frontend_firewall_dropped_bytes",
+            config: config,
+            query: [
+                SdkQueryParameter("lb_id", value: lbId),
+                SdkQueryParameter("start", value: start),
+                SdkQueryParameter("end", value: end),
+            ],
+            decoder: .json,
+            operationId: "monitoring_get_lb_frontend_firewall_dropped_bytes",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

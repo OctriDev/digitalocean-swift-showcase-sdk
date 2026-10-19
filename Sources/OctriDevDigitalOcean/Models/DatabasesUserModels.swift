@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DatabasesUser domain models
+/// DatabasesUser domain models
 /// Required object value serialized in the `opensearch_acl[]` wire field.
 public struct UserSettingsUpdateOpensearchAclItem: Codable {
     /// A regex for matching the indexes that this ACL should apply to.
@@ -22,20 +22,20 @@ public struct UserSettingsUpdateOpensearchAclItem: Codable {
     }
 
     init() {
-        (self.index, self.permission) = (nil, nil)
+        (index, permission) = (nil, nil)
     }
 }
 
-extension UserSettingsUpdateOpensearchAclItem {
-    public init(from decoder: Decoder) throws {
+public extension UserSettingsUpdateOpensearchAclItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.index = try container.sdkDecodeIfPresent(.index)
-        self.permission = try container.sdkDecodeIfPresent(.permission)
+        index = try container.sdkDecodeIfPresent(.index)
+        permission = try container.sdkDecodeIfPresent(.permission)
     }
 }
 
-extension UserSettingsUpdateOpensearchAclItem {
-    public init(index: String? = nil, permission: UserSettingsUpdateOpensearchAclItemPermission? = nil) {
+public extension UserSettingsUpdateOpensearchAclItem {
+    init(index: String? = nil, permission: UserSettingsUpdateOpensearchAclItemPermission? = nil) {
         self.init()
         (self.index, self.permission) = (index, permission)
     }
@@ -61,20 +61,20 @@ public struct UserSettingsMongoUserSettings: Codable {
     }
 
     init() {
-        (self.databases, self.role) = (nil, nil)
+        (databases, role) = (nil, nil)
     }
 }
 
-extension UserSettingsMongoUserSettings {
-    public init(from decoder: Decoder) throws {
+public extension UserSettingsMongoUserSettings {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.databases = try container.sdkDecodeIfPresent(.databases)
-        self.role = try container.sdkDecodeIfPresent(.role)
+        databases = try container.sdkDecodeIfPresent(.databases)
+        role = try container.sdkDecodeIfPresent(.role)
     }
 }
 
-extension UserSettingsMongoUserSettings {
-    public init(databases: [String]? = nil, role: UserSettingsMongoUserSettingsRole? = nil) {
+public extension UserSettingsMongoUserSettings {
+    init(databases: [String]? = nil, role: UserSettingsMongoUserSettingsRole? = nil) {
         self.init()
         (self.databases, self.role) = (databases, role)
     }
@@ -101,26 +101,36 @@ public struct UserSettingsUpdateAclItem: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension UserSettingsUpdateAclItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.topic) else {
-            throw SdkValidationError(field: "topic", code: "required", message: "Validation failed for 'topic': value is required")
-        }
-        guard container.contains(.permission) else {
-            throw SdkValidationError(field: "permission", code: "required", message: "Validation failed for 'permission': value is required")
-        }
-        self.topic = try container.sdkDecodeRequired(.topic)
-        self.permission = try container.sdkDecodeRequired(.permission)
-        self.id = try container.sdkDecodeIfPresent(.id)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension UserSettingsUpdateAclItem {
-    public init(topic: String, permission: UserSettingsUpdateAclItemPermission, id: String? = nil) {
+public extension UserSettingsUpdateAclItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.topic) else {
+            throw SdkValidationError(
+                field: "topic",
+                code: "required",
+                message: "Validation failed for 'topic': value is required"
+            )
+        }
+        guard container.contains(.permission) else {
+            throw SdkValidationError(
+                field: "permission",
+                code: "required",
+                message: "Validation failed for 'permission': value is required"
+            )
+        }
+        topic = try container.sdkDecodeRequired(.topic)
+        permission = try container.sdkDecodeRequired(.permission)
+        id = try container.sdkDecodeIfPresent(.id)
+    }
+}
+
+public extension UserSettingsUpdateAclItem {
+    init(topic: String, permission: UserSettingsUpdateAclItemPermission, id: String? = nil) {
         (self.topic, self.permission) = (topic, permission)
         self.id = id
     }
@@ -147,21 +157,25 @@ public struct UserSettingsUpdate: Codable {
     }
 
     init() {
-        (self.pgAllowReplication, self.opensearchAcl, self.acl) = (nil, nil, nil)
+        (pgAllowReplication, opensearchAcl, acl) = (nil, nil, nil)
     }
 }
 
-extension UserSettingsUpdate {
-    public init(from decoder: Decoder) throws {
+public extension UserSettingsUpdate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.pgAllowReplication = try container.sdkDecodeIfPresent(.pgAllowReplication)
-        self.opensearchAcl = try container.sdkDecodeIfPresent(.opensearchAcl)
-        self.acl = try container.sdkDecodeIfPresent(.acl)
+        pgAllowReplication = try container.sdkDecodeIfPresent(.pgAllowReplication)
+        opensearchAcl = try container.sdkDecodeIfPresent(.opensearchAcl)
+        acl = try container.sdkDecodeIfPresent(.acl)
     }
 }
 
-extension UserSettingsUpdate {
-    public init(pgAllowReplication: Bool? = nil, opensearchAcl: [UserSettingsUpdateOpensearchAclItem]? = nil, acl: [UserSettingsUpdateAclItem]? = nil) {
+public extension UserSettingsUpdate {
+    init(
+        pgAllowReplication: Bool? = nil,
+        opensearchAcl: [UserSettingsUpdateOpensearchAclItem]? = nil,
+        acl: [UserSettingsUpdateAclItem]? = nil
+    ) {
         self.init()
         (self.pgAllowReplication, self.opensearchAcl) = (pgAllowReplication, opensearchAcl)
         self.acl = acl
@@ -186,20 +200,20 @@ public struct UserSettingsOpensearchAclItem: Codable {
     }
 
     init() {
-        (self.index, self.permission) = (nil, nil)
+        (index, permission) = (nil, nil)
     }
 }
 
-extension UserSettingsOpensearchAclItem {
-    public init(from decoder: Decoder) throws {
+public extension UserSettingsOpensearchAclItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.index = try container.sdkDecodeIfPresent(.index)
-        self.permission = try container.sdkDecodeIfPresent(.permission)
+        index = try container.sdkDecodeIfPresent(.index)
+        permission = try container.sdkDecodeIfPresent(.permission)
     }
 }
 
-extension UserSettingsOpensearchAclItem {
-    public init(index: String? = nil, permission: UserSettingsOpensearchAclItemPermission? = nil) {
+public extension UserSettingsOpensearchAclItem {
+    init(index: String? = nil, permission: UserSettingsOpensearchAclItemPermission? = nil) {
         self.init()
         (self.index, self.permission) = (index, permission)
     }
@@ -229,22 +243,27 @@ public struct UserSettings: Codable {
     }
 
     init() {
-        (self.pgAllowReplication, self.opensearchAcl, self.acl, self.mongoUserSettings) = (nil, nil, nil, nil)
+        (pgAllowReplication, opensearchAcl, acl, mongoUserSettings) = (nil, nil, nil, nil)
     }
 }
 
-extension UserSettings {
-    public init(from decoder: Decoder) throws {
+public extension UserSettings {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.pgAllowReplication = try container.sdkDecodeIfPresent(.pgAllowReplication)
-        self.opensearchAcl = try container.sdkDecodeIfPresent(.opensearchAcl)
-        self.acl = try container.sdkDecodeIfPresent(.acl)
-        self.mongoUserSettings = try container.sdkDecodeIfPresent(.mongoUserSettings)
+        pgAllowReplication = try container.sdkDecodeIfPresent(.pgAllowReplication)
+        opensearchAcl = try container.sdkDecodeIfPresent(.opensearchAcl)
+        acl = try container.sdkDecodeIfPresent(.acl)
+        mongoUserSettings = try container.sdkDecodeIfPresent(.mongoUserSettings)
     }
 }
 
-extension UserSettings {
-    public init(pgAllowReplication: Bool? = nil, opensearchAcl: [UserSettingsOpensearchAclItem]? = nil, acl: [UserSettingsAclItem]? = nil, mongoUserSettings: UserSettingsMongoUserSettings? = nil) {
+public extension UserSettings {
+    init(
+        pgAllowReplication: Bool? = nil,
+        opensearchAcl: [UserSettingsOpensearchAclItem]? = nil,
+        acl: [UserSettingsAclItem]? = nil,
+        mongoUserSettings: UserSettingsMongoUserSettings? = nil
+    ) {
         self.init()
         (self.pgAllowReplication, self.opensearchAcl) = (pgAllowReplication, opensearchAcl)
         (self.acl, self.mongoUserSettings) = (acl, mongoUserSettings)
@@ -260,21 +279,27 @@ public struct UserResponse: Codable {
         case user
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension UserResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.user) else {
-            throw SdkValidationError(field: "user", code: "required", message: "Validation failed for 'user': value is required")
-        }
-        self.user = try container.sdkDecodeRequired(.user)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension UserResponse {
-    public init(user: DatabaseUser) {
+public extension UserResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.user) else {
+            throw SdkValidationError(
+                field: "user",
+                code: "required",
+                message: "Validation failed for 'user': value is required"
+            )
+        }
+        user = try container.sdkDecodeRequired(.user)
+    }
+}
+
+public extension UserResponse {
+    init(user: DatabaseUser) {
         self.user = user
     }
 }
@@ -300,26 +325,36 @@ public struct UserSettingsAclItem: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension UserSettingsAclItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.topic) else {
-            throw SdkValidationError(field: "topic", code: "required", message: "Validation failed for 'topic': value is required")
-        }
-        guard container.contains(.permission) else {
-            throw SdkValidationError(field: "permission", code: "required", message: "Validation failed for 'permission': value is required")
-        }
-        self.topic = try container.sdkDecodeRequired(.topic)
-        self.permission = try container.sdkDecodeRequired(.permission)
-        self.id = try container.sdkDecodeIfPresent(.id)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension UserSettingsAclItem {
-    public init(topic: String, permission: UserSettingsAclItemPermission, id: String? = nil) {
+public extension UserSettingsAclItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.topic) else {
+            throw SdkValidationError(
+                field: "topic",
+                code: "required",
+                message: "Validation failed for 'topic': value is required"
+            )
+        }
+        guard container.contains(.permission) else {
+            throw SdkValidationError(
+                field: "permission",
+                code: "required",
+                message: "Validation failed for 'permission': value is required"
+            )
+        }
+        topic = try container.sdkDecodeRequired(.topic)
+        permission = try container.sdkDecodeRequired(.permission)
+        id = try container.sdkDecodeIfPresent(.id)
+    }
+}
+
+public extension UserSettingsAclItem {
+    init(topic: String, permission: UserSettingsAclItemPermission, id: String? = nil) {
         (self.topic, self.permission) = (topic, permission)
         self.id = id
     }
@@ -329,10 +364,14 @@ extension UserSettingsAclItem {
 /// write to the index. 'readwrite' allows for both 'read' and 'write' permission. 'deny'(default) restricts
 /// user from performing any operation over an index. 'admin' allows for 'readwrite' as well as any operations
 /// to administer the index.
-public struct UserSettingsUpdateOpensearchAclItemPermission: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct UserSettingsUpdateOpensearchAclItemPermission: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let deny = UserSettingsUpdateOpensearchAclItemPermission(rawValue: "deny")
     public static let admin = UserSettingsUpdateOpensearchAclItemPermission(rawValue: "admin")
     public static let read = UserSettingsUpdateOpensearchAclItemPermission(rawValue: "read")
@@ -341,7 +380,7 @@ public struct UserSettingsUpdateOpensearchAclItemPermission: RawRepresentable, H
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -355,14 +394,17 @@ public struct UserSettingsUpdateOpensearchAclItemPermission: RawRepresentable, H
 public struct UserSettingsMongoUserSettingsRole: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let readOnly = UserSettingsMongoUserSettingsRole(rawValue: "readOnly")
     public static let readWrite = UserSettingsMongoUserSettingsRole(rawValue: "readWrite")
     public static let dbAdmin = UserSettingsMongoUserSettingsRole(rawValue: "dbAdmin")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -378,7 +420,10 @@ public struct UserSettingsMongoUserSettingsRole: RawRepresentable, Hashable, Cod
 public struct UserSettingsUpdateAclItemPermission: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let admin = UserSettingsUpdateAclItemPermission(rawValue: "admin")
     public static let consume = UserSettingsUpdateAclItemPermission(rawValue: "consume")
     public static let produce = UserSettingsUpdateAclItemPermission(rawValue: "produce")
@@ -386,7 +431,7 @@ public struct UserSettingsUpdateAclItemPermission: RawRepresentable, Hashable, C
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -402,7 +447,10 @@ public struct UserSettingsUpdateAclItemPermission: RawRepresentable, Hashable, C
 public struct UserSettingsAclItemPermission: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let admin = UserSettingsAclItemPermission(rawValue: "admin")
     public static let consume = UserSettingsAclItemPermission(rawValue: "consume")
     public static let produce = UserSettingsAclItemPermission(rawValue: "produce")
@@ -410,7 +458,7 @@ public struct UserSettingsAclItemPermission: RawRepresentable, Hashable, Codable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -423,10 +471,14 @@ public struct UserSettingsAclItemPermission: RawRepresentable, Hashable, Codable
 /// write to the index. 'readwrite' allows for both 'read' and 'write' permission. 'deny'(default) restricts
 /// user from performing any operation over an index. 'admin' allows for 'readwrite' as well as any operations
 /// to administer the index.
-public struct UserSettingsOpensearchAclItemPermission: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct UserSettingsOpensearchAclItemPermission: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let deny = UserSettingsOpensearchAclItemPermission(rawValue: "deny")
     public static let admin = UserSettingsOpensearchAclItemPermission(rawValue: "admin")
     public static let read = UserSettingsOpensearchAclItemPermission(rawValue: "read")
@@ -435,7 +487,7 @@ public struct UserSettingsOpensearchAclItemPermission: RawRepresentable, Hashabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

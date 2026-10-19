@@ -3,14 +3,10 @@
 
 import Foundation
 
-// SharedImage domain models
+/// SharedImage domain models
 public typealias ImageDescription = String
 
 public typealias ImageName = String
-
-
-
-
 
 /// Typed representation of the `Image` API schema.
 public struct Image: Codable {
@@ -86,44 +82,67 @@ public struct Image: Codable {
     }
 
     init() {
-        (self.id, self.name, self.type, self.distribution, self.slug) = (nil, nil, nil, nil, nil)
-        (self.`public`, self.regions, self.createdAt, self.minDiskSize, self.sizeGigabytes) = (nil, nil, nil, nil, nil)
-        (self.description, self.tags, self.status, self.errorMessage) = (nil, nil, nil, nil)
+        (id, name, type, distribution, slug) = (nil, nil, nil, nil, nil)
+        (self.public, regions, createdAt, minDiskSize, sizeGigabytes) = (nil, nil, nil, nil, nil)
+        (description, tags, status, errorMessage) = (nil, nil, nil, nil)
     }
 }
 
-extension Image {
-    public init(from decoder: Decoder) throws {
+public extension Image {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.distribution = try container.sdkDecodeIfPresent(.distribution)
-        self.slug = try container.sdkDecodeIfPresent(.slug)
-        self.`public` = try container.sdkDecodeIfPresent(.`public`)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.minDiskSize = try container.sdkDecodeIfPresent(.minDiskSize)
-        self.sizeGigabytes = try container.sdkDecodeIfPresent(.sizeGigabytes)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.errorMessage = try container.sdkDecodeIfPresent(.errorMessage)
-        if let value = self.createdAt {
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        type = try container.sdkDecodeIfPresent(.type)
+        distribution = try container.sdkDecodeIfPresent(.distribution)
+        slug = try container.sdkDecodeIfPresent(.slug)
+        self.public = try container.sdkDecodeIfPresent(.public)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        minDiskSize = try container.sdkDecodeIfPresent(.minDiskSize)
+        sizeGigabytes = try container.sdkDecodeIfPresent(.sizeGigabytes)
+        description = try container.sdkDecodeIfPresent(.description)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        status = try container.sdkDecodeIfPresent(.status)
+        errorMessage = try container.sdkDecodeIfPresent(.errorMessage)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.minDiskSize {
-            try validateRange("min_disk_size", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = minDiskSize {
+            try validateRange(
+                "min_disk_size",
+                Double(value),
+                min: 0,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
-extension Image {
-    public init(id: Int? = nil, name: ImageName? = nil, type: ImageType? = nil, distribution: Distribution? = nil, slug: String? = nil, `public`: Bool? = nil, regions: RegionsArray? = nil, createdAt: Date? = nil, minDiskSize: Int? = nil, sizeGigabytes: Double? = nil, description: ImageDescription? = nil, tags: TagsArray? = nil, status: ImageStatus? = nil, errorMessage: String? = nil) throws {
+public extension Image {
+    init(
+        id: Int? = nil,
+        name: ImageName? = nil,
+        type: ImageType? = nil,
+        distribution: Distribution? = nil,
+        slug: String? = nil,
+        public: Bool? = nil,
+        regions: RegionsArray? = nil,
+        createdAt: Date? = nil,
+        minDiskSize: Int? = nil,
+        sizeGigabytes: Double? = nil,
+        description: ImageDescription? = nil,
+        tags: TagsArray? = nil,
+        status: ImageStatus? = nil,
+        errorMessage: String? = nil
+    ) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.type, self.distribution) = (type, distribution)
-        (self.slug, self.`public`) = (slug, `public`)
+        (self.slug, self.public) = (slug, `public`)
         (self.regions, self.createdAt) = (regions, createdAt)
         (self.minDiskSize, self.sizeGigabytes) = (minDiskSize, sizeGigabytes)
         (self.description, self.tags) = (description, tags)
@@ -132,7 +151,15 @@ extension Image {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
         if let value = self.minDiskSize {
-            try validateRange("min_disk_size", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "min_disk_size",
+                Double(value),
+                min: 0,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
@@ -144,7 +171,10 @@ extension Image {
 public struct ImageType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let base = ImageType(rawValue: "base")
     public static let snapshot = ImageType(rawValue: "snapshot")
     public static let backup = ImageType(rawValue: "backup")
@@ -153,7 +183,7 @@ public struct ImageType: RawRepresentable, Hashable, Codable, Sendable, SdkWireC
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -167,7 +197,10 @@ public struct ImageType: RawRepresentable, Hashable, Codable, Sendable, SdkWireC
 public struct ImageStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let new = ImageStatus(rawValue: "NEW")
     public static let available = ImageStatus(rawValue: "available")
     public static let pending = ImageStatus(rawValue: "pending")
@@ -176,7 +209,7 @@ public struct ImageStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWir
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

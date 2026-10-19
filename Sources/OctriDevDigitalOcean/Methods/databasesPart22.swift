@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DatabasesMethods {
-    /// To configure an eviction policy for an existing Caching or Valkey cluster, send a PUT request to `/v2/databases/$DATABASE_ID/eviction_policy` specifying the desired policy.
+public extension DatabasesMethods {
+    /// To configure an eviction policy for an existing Caching or Valkey cluster, send a PUT request to
+    /// `/v2/databases/$DATABASE_ID/eviction_policy` specifying the desired policy.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
@@ -19,21 +20,61 @@ extension DatabasesMethods {
     ///   first. - `volatile_random`: Evict keys with expiration only in a random
     ///   order. - `volatile_ttl`: Evict keys with expiration only, shortest
     ///   time-to-live (TTL) first.
-    public static func databasesUpdateEvictionPolicy(config: ClientConfig, databaseClusterUuid: String, evictionPolicy: EvictionPolicyModel, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func databasesUpdateEvictionPolicy(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        evictionPolicy: EvictionPolicyModel,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
         let requestBody = DatabasesUpdateEvictionPolicyRequestBody(evictionPolicy: evictionPolicy)
 
-        return try (await sdkRequest("PUT", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/eviction_policy"].joined(), config: config, body: requestBody, decoder: .empty, operationId: "databases_update_evictionPolicy", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/eviction_policy"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .empty,
+            operationId: "databases_update_evictionPolicy",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To retrieve the configured SQL modes for an existing MySQL cluster, send a GET request to `/v2/databases/$DATABASE_ID/sql_mode`. The response will be a JSON object with a `sql_mode` key. This will be set to a string representing the configured SQL modes.
+    /// To retrieve the configured SQL modes for an existing MySQL cluster, send a GET request to
+    /// `/v2/databases/$DATABASE_ID/sql_mode`. The response will be a JSON object with a `sql_mode` key. This will be
+    /// set to a string representing the configured SQL modes.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    public static func databasesGetSqlMode(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> SqlMode {
+    static func databasesGetSqlMode(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SqlMode {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/sql_mode"].joined(), config: config, decoder: .json, operationId: "databases_get_sql_mode", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/sql_mode"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "databases_get_sql_mode",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

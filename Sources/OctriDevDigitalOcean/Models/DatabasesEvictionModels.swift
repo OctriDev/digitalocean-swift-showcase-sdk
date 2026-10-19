@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DatabasesEviction domain models
+/// DatabasesEviction domain models
 /// Typed representation of the `EvictionPolicyResponse` API schema.
 public struct EvictionPolicyResponse: Codable {
     /// A string specifying the desired eviction policy for a Caching or Valkey cluster. - `noeviction`: Don't evict
@@ -18,21 +18,27 @@ public struct EvictionPolicyResponse: Codable {
         case evictionPolicy = "eviction_policy"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension EvictionPolicyResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.evictionPolicy) else {
-            throw SdkValidationError(field: "eviction_policy", code: "required", message: "Validation failed for 'eviction_policy': value is required")
-        }
-        self.evictionPolicy = try container.sdkDecodeRequired(.evictionPolicy)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension EvictionPolicyResponse {
-    public init(evictionPolicy: EvictionPolicyModel) {
+public extension EvictionPolicyResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.evictionPolicy) else {
+            throw SdkValidationError(
+                field: "eviction_policy",
+                code: "required",
+                message: "Validation failed for 'eviction_policy': value is required"
+            )
+        }
+        evictionPolicy = try container.sdkDecodeRequired(.evictionPolicy)
+    }
+}
+
+public extension EvictionPolicyResponse {
+    init(evictionPolicy: EvictionPolicyModel) {
         self.evictionPolicy = evictionPolicy
     }
 }
@@ -45,7 +51,10 @@ extension EvictionPolicyResponse {
 public struct EvictionPolicyModel: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let noeviction = EvictionPolicyModel(rawValue: "noeviction")
     public static let allkeysLru = EvictionPolicyModel(rawValue: "allkeys_lru")
     public static let allkeysRandom = EvictionPolicyModel(rawValue: "allkeys_random")
@@ -55,7 +64,7 @@ public struct EvictionPolicyModel: RawRepresentable, Hashable, Codable, Sendable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

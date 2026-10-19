@@ -3,22 +3,42 @@
 
 import Foundation
 
-// DropletAutoscalePools domain models
-extension AutoscalePoolStaticConfig {
-    public init(from decoder: Decoder) throws {
+/// DropletAutoscalePools domain models
+public extension AutoscalePoolStaticConfig {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.targetNumberInstances) else {
-            throw SdkValidationError(field: "target_number_instances", code: "required", message: "Validation failed for 'target_number_instances': value is required")
+            throw SdkValidationError(
+                field: "target_number_instances",
+                code: "required",
+                message: "Validation failed for 'target_number_instances': value is required"
+            )
         }
-        self.targetNumberInstances = try container.sdkDecodeRequired(.targetNumberInstances)
-            try validateRange("target_number_instances", Double(self.targetNumberInstances), min: 1, max: 1000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        targetNumberInstances = try container.sdkDecodeRequired(.targetNumberInstances)
+        try validateRange(
+            "target_number_instances",
+            Double(targetNumberInstances),
+            min: 1,
+            max: 1000,
+            exclusiveMin: nil,
+            exclusiveMax: nil,
+            multipleOf: nil
+        )
     }
 }
 
-extension AutoscalePoolStaticConfig {
-    public init(targetNumberInstances: Int) throws {
+public extension AutoscalePoolStaticConfig {
+    init(targetNumberInstances: Int) throws {
         self.targetNumberInstances = targetNumberInstances
-            try validateRange("target_number_instances", Double(self.targetNumberInstances), min: 1, max: 1000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        try validateRange(
+            "target_number_instances",
+            Double(self.targetNumberInstances),
+            min: 1,
+            max: 1000,
+            exclusiveMin: nil,
+            exclusiveMax: nil,
+            multipleOf: nil
+        )
     }
 }
 
@@ -56,50 +76,84 @@ public struct Member: Codable {
         case unhealthyReason = "unhealthy_reason"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension Member {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.dropletId) else {
-            throw SdkValidationError(field: "droplet_id", code: "required", message: "Validation failed for 'droplet_id': value is required")
-        }
-        guard container.contains(.createdAt) else {
-            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
-        }
-        guard container.contains(.updatedAt) else {
-            throw SdkValidationError(field: "updated_at", code: "required", message: "Validation failed for 'updated_at': value is required")
-        }
-        guard container.contains(.healthStatus) else {
-            throw SdkValidationError(field: "health_status", code: "required", message: "Validation failed for 'health_status': value is required")
-        }
-        guard container.contains(.status) else {
-            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
-        }
-        guard container.contains(.currentUtilization) else {
-            throw SdkValidationError(field: "current_utilization", code: "required", message: "Validation failed for 'current_utilization': value is required")
-        }
-        self.dropletId = try container.sdkDecodeRequired(.dropletId)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        self.healthStatus = try container.sdkDecodeRequired(.healthStatus)
-        self.status = try container.sdkDecodeRequired(.status)
-        self.currentUtilization = try container.sdkDecodeRequired(.currentUtilization)
-        self.unhealthyReason = try container.sdkDecodeIfPresent(.unhealthyReason)
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension Member {
-    public init(dropletId: Int, createdAt: Date, updatedAt: Date, healthStatus: MemberHealthStatus, status: MemberStatus, currentUtilization: MemberCurrentUtilization, unhealthyReason: String? = nil) throws {
+public extension Member {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.dropletId) else {
+            throw SdkValidationError(
+                field: "droplet_id",
+                code: "required",
+                message: "Validation failed for 'droplet_id': value is required"
+            )
+        }
+        guard container.contains(.createdAt) else {
+            throw SdkValidationError(
+                field: "created_at",
+                code: "required",
+                message: "Validation failed for 'created_at': value is required"
+            )
+        }
+        guard container.contains(.updatedAt) else {
+            throw SdkValidationError(
+                field: "updated_at",
+                code: "required",
+                message: "Validation failed for 'updated_at': value is required"
+            )
+        }
+        guard container.contains(.healthStatus) else {
+            throw SdkValidationError(
+                field: "health_status",
+                code: "required",
+                message: "Validation failed for 'health_status': value is required"
+            )
+        }
+        guard container.contains(.status) else {
+            throw SdkValidationError(
+                field: "status",
+                code: "required",
+                message: "Validation failed for 'status': value is required"
+            )
+        }
+        guard container.contains(.currentUtilization) else {
+            throw SdkValidationError(
+                field: "current_utilization",
+                code: "required",
+                message: "Validation failed for 'current_utilization': value is required"
+            )
+        }
+        dropletId = try container.sdkDecodeRequired(.dropletId)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        updatedAt = try container.sdkDecodeRequired(.updatedAt)
+        healthStatus = try container.sdkDecodeRequired(.healthStatus)
+        status = try container.sdkDecodeRequired(.status)
+        currentUtilization = try container.sdkDecodeRequired(.currentUtilization)
+        unhealthyReason = try container.sdkDecodeIfPresent(.unhealthyReason)
+        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        try sdkValidateDateTime("updated_at", sdkWireString(updatedAt))
+    }
+}
+
+public extension Member {
+    init(
+        dropletId: Int,
+        createdAt: Date,
+        updatedAt: Date,
+        healthStatus: MemberHealthStatus,
+        status: MemberStatus,
+        currentUtilization: MemberCurrentUtilization,
+        unhealthyReason: String? = nil
+    ) throws {
         (self.dropletId, self.createdAt) = (dropletId, createdAt)
         (self.updatedAt, self.healthStatus) = (updatedAt, healthStatus)
         (self.status, self.currentUtilization) = (status, currentUtilization)
         self.unhealthyReason = unhealthyReason
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+        try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
@@ -117,23 +171,29 @@ public struct AllMembers: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllMembers {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.droplets = try container.sdkDecodeIfPresent(.droplets)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllMembers {
-    public init(meta: MetaMeta, droplets: [Member]? = nil, links: PageLinks? = nil) {
+public extension AllMembers {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        droplets = try container.sdkDecodeIfPresent(.droplets)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllMembers {
+    init(meta: MetaMeta, droplets: [Member]? = nil, links: PageLinks? = nil) {
         (self.meta, self.droplets) = (meta, droplets)
         self.links = links
     }
@@ -156,29 +216,43 @@ public struct AutoscalePoolCreate: Codable {
         case dropletTemplate = "droplet_template"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AutoscalePoolCreate {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.config) else {
-            throw SdkValidationError(field: "config", code: "required", message: "Validation failed for 'config': value is required")
-        }
-        guard container.contains(.dropletTemplate) else {
-            throw SdkValidationError(field: "droplet_template", code: "required", message: "Validation failed for 'droplet_template': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.config = try container.sdkDecodeRequired(.config)
-        self.dropletTemplate = try container.sdkDecodeRequired(.dropletTemplate)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AutoscalePoolCreate {
-    public init(name: String, config: AutoscalePoolCreateConfig, dropletTemplate: AutoscalePoolDropletTemplate) {
+public extension AutoscalePoolCreate {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.config) else {
+            throw SdkValidationError(
+                field: "config",
+                code: "required",
+                message: "Validation failed for 'config': value is required"
+            )
+        }
+        guard container.contains(.dropletTemplate) else {
+            throw SdkValidationError(
+                field: "droplet_template",
+                code: "required",
+                message: "Validation failed for 'droplet_template': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        config = try container.sdkDecodeRequired(.config)
+        dropletTemplate = try container.sdkDecodeRequired(.dropletTemplate)
+    }
+}
+
+public extension AutoscalePoolCreate {
+    init(name: String, config: AutoscalePoolCreateConfig, dropletTemplate: AutoscalePoolDropletTemplate) {
         (self.name, self.config) = (name, config)
         self.dropletTemplate = dropletTemplate
     }
@@ -227,35 +301,47 @@ public struct AutoscalePool: Codable {
         case currentUtilization = "current_utilization"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AutoscalePool {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeRequired(.id)
-        self.name = try container.sdkDecodeRequired(.name)
-        self.config = try container.sdkDecodeRequired(.config)
-        self.dropletTemplate = try container.sdkDecodeRequired(.dropletTemplate)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        self.status = try container.sdkDecodeRequired(.status)
-        self.activeResourcesCount = try container.sdkDecodeRequired(.activeResourcesCount)
-        self.currentUtilization = try container.sdkDecodeIfPresent(.currentUtilization)
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AutoscalePool {
-    public init(id: String, name: String, config: AutoscalePoolConfig, dropletTemplate: AutoscalePoolDropletTemplate, createdAt: Date, updatedAt: Date, status: AutoscalePoolStatus, activeResourcesCount: Int, currentUtilization: CurrentUtilization? = nil) throws {
+public extension AutoscalePool {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.sdkDecodeRequired(.id)
+        name = try container.sdkDecodeRequired(.name)
+        config = try container.sdkDecodeRequired(.config)
+        dropletTemplate = try container.sdkDecodeRequired(.dropletTemplate)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        updatedAt = try container.sdkDecodeRequired(.updatedAt)
+        status = try container.sdkDecodeRequired(.status)
+        activeResourcesCount = try container.sdkDecodeRequired(.activeResourcesCount)
+        currentUtilization = try container.sdkDecodeIfPresent(.currentUtilization)
+        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        try sdkValidateDateTime("updated_at", sdkWireString(updatedAt))
+    }
+}
+
+public extension AutoscalePool {
+    init(
+        id: String,
+        name: String,
+        config: AutoscalePoolConfig,
+        dropletTemplate: AutoscalePoolDropletTemplate,
+        createdAt: Date,
+        updatedAt: Date,
+        status: AutoscalePoolStatus,
+        activeResourcesCount: Int,
+        currentUtilization: CurrentUtilization? = nil
+    ) throws {
         (self.id, self.name) = (id, name)
         (self.config, self.dropletTemplate) = (config, dropletTemplate)
         (self.createdAt, self.updatedAt) = (createdAt, updatedAt)
         (self.status, self.activeResourcesCount) = (status, activeResourcesCount)
         self.currentUtilization = currentUtilization
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+        try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
@@ -267,19 +353,19 @@ public struct HistoryEventsVariant0: Codable {
     }
 
     init() {
-        self.history = nil
+        history = nil
     }
 }
 
-extension HistoryEventsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension HistoryEventsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.history = try container.sdkDecodeIfPresent(.history)
+        history = try container.sdkDecodeIfPresent(.history)
     }
 }
 
-extension HistoryEventsVariant0 {
-    public init(history: [History]? = nil) {
+public extension HistoryEventsVariant0 {
+    init(history: [History]? = nil) {
         self.init()
         self.history = history
     }
@@ -319,53 +405,91 @@ public struct History: Codable {
         case updatedAt = "updated_at"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension History {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.historyEventId) else {
-            throw SdkValidationError(field: "history_event_id", code: "required", message: "Validation failed for 'history_event_id': value is required")
-        }
-        guard container.contains(.currentInstanceCount) else {
-            throw SdkValidationError(field: "current_instance_count", code: "required", message: "Validation failed for 'current_instance_count': value is required")
-        }
-        guard container.contains(.desiredInstanceCount) else {
-            throw SdkValidationError(field: "desired_instance_count", code: "required", message: "Validation failed for 'desired_instance_count': value is required")
-        }
-        guard container.contains(.reason) else {
-            throw SdkValidationError(field: "reason", code: "required", message: "Validation failed for 'reason': value is required")
-        }
-        guard container.contains(.status) else {
-            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
-        }
-        guard container.contains(.createdAt) else {
-            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
-        }
-        guard container.contains(.updatedAt) else {
-            throw SdkValidationError(field: "updated_at", code: "required", message: "Validation failed for 'updated_at': value is required")
-        }
-        self.historyEventId = try container.sdkDecodeRequired(.historyEventId)
-        self.currentInstanceCount = try container.sdkDecodeRequired(.currentInstanceCount)
-        self.desiredInstanceCount = try container.sdkDecodeRequired(.desiredInstanceCount)
-        self.reason = try container.sdkDecodeRequired(.reason)
-        self.status = try container.sdkDecodeRequired(.status)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension History {
-    public init(historyEventId: String, currentInstanceCount: Int, desiredInstanceCount: Int, reason: HistoryReason, status: HistoryStatus, createdAt: Date, updatedAt: Date) throws {
+public extension History {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.historyEventId) else {
+            throw SdkValidationError(
+                field: "history_event_id",
+                code: "required",
+                message: "Validation failed for 'history_event_id': value is required"
+            )
+        }
+        guard container.contains(.currentInstanceCount) else {
+            throw SdkValidationError(
+                field: "current_instance_count",
+                code: "required",
+                message: "Validation failed for 'current_instance_count': value is required"
+            )
+        }
+        guard container.contains(.desiredInstanceCount) else {
+            throw SdkValidationError(
+                field: "desired_instance_count",
+                code: "required",
+                message: "Validation failed for 'desired_instance_count': value is required"
+            )
+        }
+        guard container.contains(.reason) else {
+            throw SdkValidationError(
+                field: "reason",
+                code: "required",
+                message: "Validation failed for 'reason': value is required"
+            )
+        }
+        guard container.contains(.status) else {
+            throw SdkValidationError(
+                field: "status",
+                code: "required",
+                message: "Validation failed for 'status': value is required"
+            )
+        }
+        guard container.contains(.createdAt) else {
+            throw SdkValidationError(
+                field: "created_at",
+                code: "required",
+                message: "Validation failed for 'created_at': value is required"
+            )
+        }
+        guard container.contains(.updatedAt) else {
+            throw SdkValidationError(
+                field: "updated_at",
+                code: "required",
+                message: "Validation failed for 'updated_at': value is required"
+            )
+        }
+        historyEventId = try container.sdkDecodeRequired(.historyEventId)
+        currentInstanceCount = try container.sdkDecodeRequired(.currentInstanceCount)
+        desiredInstanceCount = try container.sdkDecodeRequired(.desiredInstanceCount)
+        reason = try container.sdkDecodeRequired(.reason)
+        status = try container.sdkDecodeRequired(.status)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        updatedAt = try container.sdkDecodeRequired(.updatedAt)
+        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        try sdkValidateDateTime("updated_at", sdkWireString(updatedAt))
+    }
+}
+
+public extension History {
+    init(
+        historyEventId: String,
+        currentInstanceCount: Int,
+        desiredInstanceCount: Int,
+        reason: HistoryReason,
+        status: HistoryStatus,
+        createdAt: Date,
+        updatedAt: Date
+    ) throws {
         (self.historyEventId, self.currentInstanceCount) = (historyEventId, currentInstanceCount)
         (self.desiredInstanceCount, self.reason) = (desiredInstanceCount, reason)
         (self.status, self.createdAt) = (status, createdAt)
         self.updatedAt = updatedAt
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+        try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
@@ -377,19 +501,19 @@ public struct AllAutoscalePoolsVariant0: Codable {
     }
 
     init() {
-        self.autoscalePools = nil
+        autoscalePools = nil
     }
 }
 
-extension AllAutoscalePoolsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AllAutoscalePoolsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.autoscalePools = try container.sdkDecodeIfPresent(.autoscalePools)
+        autoscalePools = try container.sdkDecodeIfPresent(.autoscalePools)
     }
 }
 
-extension AllAutoscalePoolsVariant0 {
-    public init(autoscalePools: [AutoscalePool]? = nil) {
+public extension AllAutoscalePoolsVariant0 {
+    init(autoscalePools: [AutoscalePool]? = nil) {
         self.init()
         self.autoscalePools = autoscalePools
     }
@@ -410,20 +534,20 @@ public struct MemberCurrentUtilization: Codable {
     }
 
     init() {
-        (self.memory, self.cpu) = (nil, nil)
+        (memory, cpu) = (nil, nil)
     }
 }
 
-extension MemberCurrentUtilization {
-    public init(from decoder: Decoder) throws {
+public extension MemberCurrentUtilization {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.memory = try container.sdkDecodeIfPresent(.memory)
-        self.cpu = try container.sdkDecodeIfPresent(.cpu)
+        memory = try container.sdkDecodeIfPresent(.memory)
+        cpu = try container.sdkDecodeIfPresent(.cpu)
     }
 }
 
-extension MemberCurrentUtilization {
-    public init(memory: Double? = nil, cpu: Double? = nil) {
+public extension MemberCurrentUtilization {
+    init(memory: Double? = nil, cpu: Double? = nil) {
         self.init()
         (self.memory, self.cpu) = (memory, cpu)
     }
@@ -444,33 +568,65 @@ public struct CurrentUtilization: Codable {
     }
 
     init() {
-        (self.memory, self.cpu) = (nil, nil)
+        (memory, cpu) = (nil, nil)
     }
 }
 
-extension CurrentUtilization {
-    public init(from decoder: Decoder) throws {
+public extension CurrentUtilization {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.memory = try container.sdkDecodeIfPresent(.memory)
-        self.cpu = try container.sdkDecodeIfPresent(.cpu)
-        if let value = self.memory {
-            try validateRange("memory", Double(value), min: 0, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        memory = try container.sdkDecodeIfPresent(.memory)
+        cpu = try container.sdkDecodeIfPresent(.cpu)
+        if let value = memory {
+            try validateRange(
+                "memory",
+                Double(value),
+                min: 0,
+                max: 1,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.cpu {
-            try validateRange("cpu", Double(value), min: 0, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = cpu {
+            try validateRange(
+                "cpu",
+                Double(value),
+                min: 0,
+                max: 1,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
-extension CurrentUtilization {
-    public init(memory: Double? = nil, cpu: Double? = nil) throws {
+public extension CurrentUtilization {
+    init(memory: Double? = nil, cpu: Double? = nil) throws {
         self.init()
         (self.memory, self.cpu) = (memory, cpu)
         if let value = self.memory {
-            try validateRange("memory", Double(value), min: 0, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "memory",
+                Double(value),
+                min: 0,
+                max: 1,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
         if let value = self.cpu {
-            try validateRange("cpu", Double(value), min: 0, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "cpu",
+                Double(value),
+                min: 0,
+                max: 1,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }

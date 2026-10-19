@@ -6,26 +6,72 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ImagesMethods {
-    /// To accept an account transfer for an image, send a POST request to `/v2/images/$IMAGE_ID/account_transfer/accept`.
+public extension ImagesMethods {
+    /// To accept an account transfer for an image, send a POST request to
+    /// `/v2/images/$IMAGE_ID/account_transfer/accept`.
     ///
     /// - Parameters:
     /// - imageId: A unique number that can be used to identify and reference a
     ///   specific image.
-    public static func imagesPostAccountTransferAccept(config: ClientConfig, imageId: Int, body: ImagesPostAccountTransferAccept, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try (await sdkRequest("POST", ["/v2/images/", sdkEncodePathSegment(sdkWireString(imageId)), "/account_transfer/accept"].joined(), config: config, rawBody: (try sdkEncodeBody(body, contentType: "application/json")), decoder: .empty, operationId: "images_post_account_transfer_accept", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func imagesPostAccountTransferAccept(
+        config: ClientConfig,
+        imageId: Int,
+        body: ImagesPostAccountTransferAccept,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await (sdkRequest(
+            "POST",
+            ["/v2/images/", sdkEncodePathSegment(sdkWireString(imageId)), "/account_transfer/accept"].joined(),
+            config: config,
+            rawBody: sdkEncodeBody(body, contentType: "application/json"),
+            decoder: .empty,
+            operationId: "images_post_account_transfer_accept",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To cancel an account transfer for an image, send a POST request to `/v2/images/$IMAGE_ID/account_transfer/cancel`. Only the sender of an image account transfer can cancel the transfer. If the transfer is canceled, the image will remain in the sender's account and will not be transferred to the recipient.
+    /// To cancel an account transfer for an image, send a POST request to
+    /// `/v2/images/$IMAGE_ID/account_transfer/cancel`. Only the sender of an image account transfer can cancel the
+    /// transfer. If the transfer is canceled, the image will remain in the sender's account and will not be transferred
+    /// to the recipient.
     ///
     /// - Parameters:
     /// - imageId: A unique number that can be used to identify and reference a
     ///   specific image.
     /// - transferId: A unique number that used to identify and reference an image
     ///   account transfer.
-    public static func imagesPostAccountTransferCancel(config: ClientConfig, imageId: Int, transferId: Int, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func imagesPostAccountTransferCancel(
+        config: ClientConfig,
+        imageId: Int,
+        transferId: Int,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         let requestBody = ImagesPostAccountTransferCancelRequestBody(transferId: transferId)
 
-        return try (await sdkRequest("POST", ["/v2/images/", sdkEncodePathSegment(sdkWireString(imageId)), "/account_transfer/cancel"].joined(), config: config, body: requestBody, decoder: .empty, operationId: "images_post_account_transfer_cancel", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/v2/images/", sdkEncodePathSegment(sdkWireString(imageId)), "/account_transfer/cancel"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .empty,
+            operationId: "images_post_account_transfer_cancel",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

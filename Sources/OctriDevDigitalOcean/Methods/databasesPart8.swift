@@ -6,32 +6,83 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DatabasesMethods {
-    /// To update the DigitalOcean-specific settings for a database cluster, send a PUT request to `/v2/databases/$DATABASE_ID/do_settings`. Currently, the only supported setting is `service_cnames`, which allows you to specify custom DNS names (CNAMEs) to be included in the TLS certificate Subject Alternative Names (SANs) for the database cluster nodes. This enables TLS verification when connecting via a custom hostname. After updating, the database nodes will be replaced to apply the new certificate. This process is performed as a rolling replacement and does not cause downtime. To clear all custom CNAMEs, send an empty array or omit the field.
+public extension DatabasesMethods {
+    /// To update the DigitalOcean-specific settings for a database cluster, send a PUT request to
+    /// `/v2/databases/$DATABASE_ID/do_settings`. Currently, the only supported setting is `service_cnames`, which
+    /// allows you to specify custom DNS names (CNAMEs) to be included in the TLS certificate Subject Alternative Names
+    /// (SANs) for the database cluster nodes. This enables TLS verification when connecting via a custom hostname.
+    /// After updating, the database nodes will be replaced to apply the new certificate. This process is performed as a
+    /// rolling replacement and does not cause downtime. To clear all custom CNAMEs, send an empty array or omit the
+    /// field.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - doSettings: DigitalOcean-specific settings for the database cluster.
-    public static func databasesUpdateDoSettings(config: ClientConfig, databaseClusterUuid: String, doSettings: DoSettings, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func databasesUpdateDoSettings(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        doSettings: DoSettings,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
         let requestBody = DatabasesUpdateDoSettingsRequestBody(doSettings: doSettings)
 
-        return try (await sdkRequest("PUT", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/do_settings"].joined(), config: config, body: requestBody, decoder: .empty, operationId: "databases_update_do_settings", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "422": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/do_settings"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .empty,
+            operationId: "databases_update_do_settings",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "404": Error2.self,
+                "422": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To configure the window when automatic maintenance should be performed for a database cluster, send a PUT request to `/v2/databases/$DATABASE_ID/maintenance`. A successful request will receive a 204 No Content status code with no body in response.
+    /// To configure the window when automatic maintenance should be performed for a database cluster, send a PUT
+    /// request to `/v2/databases/$DATABASE_ID/maintenance`. A successful request will receive a 204 No Content status
+    /// code with no body in response.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - day: The day of the week on which to apply maintenance updates.
     /// - hour: The hour in UTC at which maintenance updates will be applied in 24
     ///   hour format.
-    public static func databasesUpdateMaintenanceWindow(config: ClientConfig, databaseClusterUuid: String, day: String, hour: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func databasesUpdateMaintenanceWindow(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        day: String,
+        hour: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
         let requestBody = DatabasesUpdateMaintenanceWindowRequestBody(day: day, hour: hour)
 
-        return try (await sdkRequest("PUT", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/maintenance"].joined(), config: config, body: requestBody, decoder: .empty, operationId: "databases_update_maintenanceWindow", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/maintenance"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .empty,
+            operationId: "databases_update_maintenanceWindow",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

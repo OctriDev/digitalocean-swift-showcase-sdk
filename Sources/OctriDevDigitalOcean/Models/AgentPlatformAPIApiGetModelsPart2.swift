@@ -3,16 +3,16 @@
 
 import Foundation
 
-// AgentPlatformAPIApiGet domain models
-extension ApiGetScheduledIndexingOutput {
-    public init(from decoder: Decoder) throws {
+/// AgentPlatformAPIApiGet domain models
+public extension ApiGetScheduledIndexingOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.indexingInfo = try container.sdkDecodeIfPresent(.indexingInfo)
+        indexingInfo = try container.sdkDecodeIfPresent(.indexingInfo)
     }
 }
 
-extension ApiGetScheduledIndexingOutput {
-    public init(indexingInfo: ApiScheduledIndexingInfo? = nil) {
+public extension ApiGetScheduledIndexingOutput {
+    init(indexingInfo: ApiScheduledIndexingInfo? = nil) {
         self.init()
         self.indexingInfo = indexingInfo
     }
@@ -37,22 +37,27 @@ public struct ApiGetEvaluationRunResultsOutput: Codable {
     }
 
     init() {
-        (self.evaluationRun, self.links, self.meta, self.prompts) = (nil, nil, nil, nil)
+        (evaluationRun, links, meta, prompts) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiGetEvaluationRunResultsOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetEvaluationRunResultsOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.evaluationRun = try container.sdkDecodeIfPresent(.evaluationRun)
-        self.links = try container.sdkDecodeIfPresent(.links)
-        self.meta = try container.sdkDecodeIfPresent(.meta)
-        self.prompts = try container.sdkDecodeIfPresent(.prompts)
+        evaluationRun = try container.sdkDecodeIfPresent(.evaluationRun)
+        links = try container.sdkDecodeIfPresent(.links)
+        meta = try container.sdkDecodeIfPresent(.meta)
+        prompts = try container.sdkDecodeIfPresent(.prompts)
     }
 }
 
-extension ApiGetEvaluationRunResultsOutput {
-    public init(evaluationRun: ApiEvaluationRun? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil, prompts: [ApiPrompt]? = nil) {
+public extension ApiGetEvaluationRunResultsOutput {
+    init(
+        evaluationRun: ApiEvaluationRun? = nil,
+        links: ApiLinks? = nil,
+        meta: ApiMeta? = nil,
+        prompts: [ApiPrompt]? = nil
+    ) {
         self.init()
         (self.evaluationRun, self.links) = (evaluationRun, links)
         (self.meta, self.prompts) = (meta, prompts)
@@ -69,19 +74,19 @@ public struct ApiGetAgentOutput: Codable {
     }
 
     init() {
-        self.agent = nil
+        agent = nil
     }
 }
 
-extension ApiGetAgentOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetAgentOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agent = try container.sdkDecodeIfPresent(.agent)
+        agent = try container.sdkDecodeIfPresent(.agent)
     }
 }
 
-extension ApiGetAgentOutput {
-    public init(agent: ApiAgent? = nil) {
+public extension ApiGetAgentOutput {
+    init(agent: ApiAgent? = nil) {
         self.init()
         self.agent = agent
     }
@@ -102,23 +107,23 @@ public struct ApiGetModelEvaluationRunResultsDownloadURLOutput: Codable {
     }
 
     init() {
-        (self.downloadUrl, self.expiresAt) = (nil, nil)
+        (downloadUrl, expiresAt) = (nil, nil)
     }
 }
 
-extension ApiGetModelEvaluationRunResultsDownloadURLOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetModelEvaluationRunResultsDownloadURLOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.downloadUrl = try container.sdkDecodeIfPresent(.downloadUrl)
-        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
-        if let value = self.expiresAt {
+        downloadUrl = try container.sdkDecodeIfPresent(.downloadUrl)
+        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+        if let value = expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiGetModelEvaluationRunResultsDownloadURLOutput {
-    public init(downloadUrl: String? = nil, expiresAt: Date? = nil) throws {
+public extension ApiGetModelEvaluationRunResultsDownloadURLOutput {
+    init(downloadUrl: String? = nil, expiresAt: Date? = nil) throws {
         self.init()
         (self.downloadUrl, self.expiresAt) = (downloadUrl, expiresAt)
         if let value = self.expiresAt {
@@ -141,19 +146,19 @@ public struct ApiGetModelEvaluationPresetOutput: Codable {
     }
 
     init() {
-        self.preset = nil
+        preset = nil
     }
 }
 
-extension ApiGetModelEvaluationPresetOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetModelEvaluationPresetOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.preset = try container.sdkDecodeIfPresent(.preset)
+        preset = try container.sdkDecodeIfPresent(.preset)
     }
 }
 
-extension ApiGetModelEvaluationPresetOutput {
-    public init(preset: ApiModelEvaluationPreset? = nil) {
+public extension ApiGetModelEvaluationPresetOutput {
+    init(preset: ApiModelEvaluationPreset? = nil) {
         self.init()
         self.preset = preset
     }
@@ -169,19 +174,19 @@ public struct ApiGetChildrenOutput: Codable {
     }
 
     init() {
-        self.children = nil
+        children = nil
     }
 }
 
-extension ApiGetChildrenOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetChildrenOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.children = try container.sdkDecodeIfPresent(.children)
+        children = try container.sdkDecodeIfPresent(.children)
     }
 }
 
-extension ApiGetChildrenOutput {
-    public init(children: [ApiAgent]? = nil) {
+public extension ApiGetChildrenOutput {
+    init(children: [ApiAgent]? = nil) {
         self.init()
         self.children = children
     }
@@ -197,19 +202,19 @@ public struct ApiGetEvaluationRunOutput: Codable {
     }
 
     init() {
-        self.evaluationRun = nil
+        evaluationRun = nil
     }
 }
 
-extension ApiGetEvaluationRunOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetEvaluationRunOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.evaluationRun = try container.sdkDecodeIfPresent(.evaluationRun)
+        evaluationRun = try container.sdkDecodeIfPresent(.evaluationRun)
     }
 }
 
-extension ApiGetEvaluationRunOutput {
-    public init(evaluationRun: ApiEvaluationRun? = nil) {
+public extension ApiGetEvaluationRunOutput {
+    init(evaluationRun: ApiEvaluationRun? = nil) {
         self.init()
         self.evaluationRun = evaluationRun
     }
@@ -225,19 +230,19 @@ public struct ApiGetEvaluationTestCaseOutput: Codable {
     }
 
     init() {
-        self.evaluationTestCase = nil
+        evaluationTestCase = nil
     }
 }
 
-extension ApiGetEvaluationTestCaseOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetEvaluationTestCaseOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.evaluationTestCase = try container.sdkDecodeIfPresent(.evaluationTestCase)
+        evaluationTestCase = try container.sdkDecodeIfPresent(.evaluationTestCase)
     }
 }
 
-extension ApiGetEvaluationTestCaseOutput {
-    public init(evaluationTestCase: ApiEvaluationTestCase? = nil) {
+public extension ApiGetEvaluationTestCaseOutput {
+    init(evaluationTestCase: ApiEvaluationTestCase? = nil) {
         self.init()
         self.evaluationTestCase = evaluationTestCase
     }

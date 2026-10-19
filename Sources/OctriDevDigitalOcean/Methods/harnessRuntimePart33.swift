@@ -6,43 +6,80 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension HarnessRuntimeMethods {
-    /// Returns the team's sessions in status PAUSED, for binding a session_mode=reuse trigger. The item shape is the hosted-agents Session, so `agent_kind` and `status` use the AGENT_KIND_* / SESSION_STATUS_* spelling; `status` is always SESSION_STATUS_PAUSED here.
+public extension HarnessRuntimeMethods {
+    /// Returns the team's sessions in status PAUSED, for binding a session_mode=reuse trigger. The item shape is the
+    /// hosted-agents Session, so `agent_kind` and `status` use the AGENT_KIND_* / SESSION_STATUS_* spelling; `status`
+    /// is always SESSION_STATUS_PAUSED here.
     ///
     /// - Parameters:
     /// - pageSize: Page size. Defaults to 50 when omitted or non-positive;
     ///   server-clamped.
     /// - pageToken: Opaque keyset cursor returned by the previous page. Empty
     ///   starts from the beginning.
-    public static func harnessListReusableSessions(config: ClientConfig, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListReusableSessionsResponse {
-        if let pageSize = pageSize {
+    static func harnessListReusableSessions(
+        config: ClientConfig,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListReusableSessionsResponse {
+        if let pageSize {
             try validateRange("page_size", Double(pageSize), min: 1)
         }
 
-        return try (await sdkRequest("GET", "/v2/agents/triggers/reusable-sessions", config: config, query: [
-            SdkQueryParameter("page_size", value: pageSize),
-            SdkQueryParameter("page_token", value: pageToken),
-        ], decoder: .json, operationId: "harness_list_reusable_sessions", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/v2/agents/triggers/reusable-sessions",
+            config: config,
+            query: [
+                SdkQueryParameter("page_size", value: pageSize),
+                SdkQueryParameter("page_token", value: pageToken),
+            ],
+            decoder: .json,
+            operationId: "harness_list_reusable_sessions",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 
-    /// Returns the team's sessions in status PAUSED, for binding a session_mode=reuse trigger. The item shape is the hosted-agents Session, so `agent_kind` and `status` use the AGENT_KIND_* / SESSION_STATUS_* spelling; `status` is always SESSION_STATUS_PAUSED here.
+    /// Returns the team's sessions in status PAUSED, for binding a session_mode=reuse trigger. The item shape is the
+    /// hosted-agents Session, so `agent_kind` and `status` use the AGENT_KIND_* / SESSION_STATUS_* spelling; `status`
+    /// is always SESSION_STATUS_PAUSED here.
     ///
     /// - Parameters:
     /// - pageSize: Page size. Defaults to 50 when omitted or non-positive;
     ///   server-clamped.
     /// - pageToken: Opaque keyset cursor returned by the previous page. Empty
     ///   starts from the beginning.
-    public static func harnessListReusableSessionsPaginated(config: ClientConfig, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<ReusableSession, Swift.Error> {
-        return AsyncThrowingStream<ReusableSession, Swift.Error> { (continuation: AsyncThrowingStream<ReusableSession, Swift.Error>.Continuation) in
+    static func harnessListReusableSessionsPaginated(
+        config: ClientConfig,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<ReusableSession, Swift.Error> {
+        AsyncThrowingStream<ReusableSession, Swift.Error> { (continuation: AsyncThrowingStream<
+            ReusableSession,
+            Swift.Error
+        >.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await harnessListReusableSessions(config: config, pageSize: pageSize, pageToken: pageCursor, requestOptions: requestOptions)
+                        let pageResponse = try await harnessListReusableSessions(
+                            config: config,
+                            pageSize: pageSize,
+                            pageToken: pageCursor,
+                            requestOptions: requestOptions
+                        )
                         let pageItems = (pageResponse.sessions ?? [])
-                        if pageItems.isEmpty { break }
-                        for item in pageItems { continuation.yield(item) }
-                        guard let nextCursor = pageResponse.nextPageToken else { break }
+                        if pageItems.isEmpty {
+                            break
+                        }
+                        for item in pageItems {
+                            continuation.yield(item)
+                        }
+                        guard let nextCursor = pageResponse.nextPageToken else {
+                            break
+                        }
                         pageCursor = nextCursor
                     }
                 } catch {
@@ -55,25 +92,48 @@ extension HarnessRuntimeMethods {
         }
     }
 
-    public struct HarnessListReusableSessionsPage {
+    struct HarnessListReusableSessionsPage {
         public let data: ListReusableSessionsResponse
         public let items: [ReusableSession]
         public let hasMore: Bool
     }
 
-    public static func harnessListReusableSessionsPages(config: ClientConfig, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<HarnessListReusableSessionsPage, Swift.Error> {
-        return AsyncThrowingStream<HarnessListReusableSessionsPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<HarnessListReusableSessionsPage, Swift.Error>.Continuation) in
+    static func harnessListReusableSessionsPages(
+        config: ClientConfig,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<HarnessListReusableSessionsPage, Swift.Error> {
+        AsyncThrowingStream<HarnessListReusableSessionsPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<
+            HarnessListReusableSessionsPage,
+            Swift.Error
+        >.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await harnessListReusableSessions(config: config, pageSize: pageSize, pageToken: pageCursor, requestOptions: requestOptions)
+                        let pageResponse = try await harnessListReusableSessions(
+                            config: config,
+                            pageSize: pageSize,
+                            pageToken: pageCursor,
+                            requestOptions: requestOptions
+                        )
                         let pageItems = (pageResponse.sessions ?? [])
-                        if pageItems.isEmpty { break }
+                        if pageItems.isEmpty {
+                            break
+                        }
                         let hasMore = pageResponse.nextPageToken != nil
-                        pageContinuation.yield(HarnessListReusableSessionsPage(data: pageResponse, items: pageItems, hasMore: hasMore))
-                        if !hasMore { break }
-                        guard let nextCursor = pageResponse.nextPageToken else { break }
+                        pageContinuation.yield(HarnessListReusableSessionsPage(
+                            data: pageResponse,
+                            items: pageItems,
+                            hasMore: hasMore
+                        ))
+                        if !hasMore {
+                            break
+                        }
+                        guard let nextCursor = pageResponse.nextPageToken else {
+                            break
+                        }
                         pageCursor = nextCursor
                     }
                 } catch {

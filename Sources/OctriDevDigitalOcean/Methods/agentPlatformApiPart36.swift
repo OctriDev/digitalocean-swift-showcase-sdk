@@ -6,10 +6,13 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
-    /// Replaces the chunking configuration for a data source in a knowledge base. Supply `chunking_algorithm` and `chunking_options` to configure how the source is divided for indexing. Use the path identifiers to select the knowledge base and data source to update.
+public extension AgentPlatformApiMethods {
+    /// Replaces the chunking configuration for a data source in a knowledge base. Supply `chunking_algorithm` and
+    /// `chunking_options` to configure how the source is divided for indexing. Use the path identifiers to select the
+    /// knowledge base and data source to update.
     ///
-    /// To update a data source (e.g. chunking options), send a PUT request to `/v2/gen-ai/knowledge_bases/{knowledge_base_uuid}/data_sources/{data_source_uuid}`.
+    /// To update a data source (e.g. chunking options), send a PUT request to
+    /// `/v2/gen-ai/knowledge_bases/{knowledge_base_uuid}/data_sources/{data_source_uuid}`.
     ///
     /// - Parameters:
     /// - knowledgeBaseUuid: Knowledge Base ID (Path Parameter)
@@ -20,18 +23,77 @@ extension AgentPlatformApiMethods {
     ///   `chunking_options` wire field.
     /// - dataSourceUuid2: Data Source ID (Path Parameter)
     /// - knowledgeBaseUuid2: Knowledge Base ID (Path Parameter)
-    public static func genaiUpdateKnowledgeBaseDataSource(config: ClientConfig, knowledgeBaseUuid: String, dataSourceUuid: String, chunkingAlgorithm: ApiChunkingAlgorithm? = nil, chunkingOptions: ApiChunkingOptions? = nil, dataSourceUuid2: String? = nil, knowledgeBaseUuid2: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiUpdateKnowledgeBaseDataSourceOutput {
-        let requestBody = GenaiUpdateKnowledgeBaseDataSourceRequestBody(chunkingAlgorithm: chunkingAlgorithm, chunkingOptions: chunkingOptions, dataSourceUuid2: dataSourceUuid2, knowledgeBaseUuid2: knowledgeBaseUuid2)
+    static func genaiUpdateKnowledgeBaseDataSource(
+        config: ClientConfig,
+        knowledgeBaseUuid: String,
+        dataSourceUuid: String,
+        chunkingAlgorithm: ApiChunkingAlgorithm? = nil,
+        chunkingOptions: ApiChunkingOptions? = nil,
+        dataSourceUuid2: String? = nil,
+        knowledgeBaseUuid2: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiUpdateKnowledgeBaseDataSourceOutput {
+        let requestBody = GenaiUpdateKnowledgeBaseDataSourceRequestBody(
+            chunkingAlgorithm: chunkingAlgorithm,
+            chunkingOptions: chunkingOptions,
+            dataSourceUuid2: dataSourceUuid2,
+            knowledgeBaseUuid2: knowledgeBaseUuid2
+        )
 
-        return try (await sdkRequest("PUT", ["/v2/gen-ai/knowledge_bases/", sdkEncodePathSegment(sdkWireString(knowledgeBaseUuid)), "/data_sources/", sdkEncodePathSegment(sdkWireString(dataSourceUuid))].joined(), config: config, body: requestBody, decoder: .json, operationId: "genai_update_knowledge_base_data_source", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            [
+                "/v2/gen-ai/knowledge_bases/",
+                sdkEncodePathSegment(sdkWireString(knowledgeBaseUuid)),
+                "/data_sources/",
+                sdkEncodePathSegment(sdkWireString(dataSourceUuid)),
+            ].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "genai_update_knowledge_base_data_source",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To delete a data source from a knowledge base, send a DELETE request to `/v2/gen-ai/knowledge_bases/{knowledge_base_uuid}/data_sources/{data_source_uuid}`.
+    /// To delete a data source from a knowledge base, send a DELETE request to
+    /// `/v2/gen-ai/knowledge_bases/{knowledge_base_uuid}/data_sources/{data_source_uuid}`.
     ///
     /// - Parameters:
     /// - knowledgeBaseUuid: Knowledge base id
     /// - dataSourceUuid: Data source id
-    public static func genaiDeleteKnowledgeBaseDataSource(config: ClientConfig, knowledgeBaseUuid: String, dataSourceUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiDeleteKnowledgeBaseDataSourceOutput {
-        return try (await sdkRequest("DELETE", ["/v2/gen-ai/knowledge_bases/", sdkEncodePathSegment(sdkWireString(knowledgeBaseUuid)), "/data_sources/", sdkEncodePathSegment(sdkWireString(dataSourceUuid))].joined(), config: config, decoder: .json, operationId: "genai_delete_knowledge_base_data_source", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiDeleteKnowledgeBaseDataSource(
+        config: ClientConfig,
+        knowledgeBaseUuid: String,
+        dataSourceUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiDeleteKnowledgeBaseDataSourceOutput {
+        try await (sdkRequest(
+            "DELETE",
+            [
+                "/v2/gen-ai/knowledge_bases/",
+                sdkEncodePathSegment(sdkWireString(knowledgeBaseUuid)),
+                "/data_sources/",
+                sdkEncodePathSegment(sdkWireString(dataSourceUuid)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "genai_delete_knowledge_base_data_source",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

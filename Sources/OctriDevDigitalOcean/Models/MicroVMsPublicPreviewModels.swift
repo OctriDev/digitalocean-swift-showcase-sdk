@@ -3,7 +3,7 @@
 
 import Foundation
 
-// MicroVMsPublicPreview domain models
+/// MicroVMsPublicPreview domain models
 /// An HTTPS endpoint for one of the MicroVM's ports.
 public struct MicrovmUrl: Codable {
     /// The endpoint's hostname. Empty until provisioning finishes. Requests to the endpoint must include a
@@ -28,25 +28,25 @@ public struct MicrovmUrl: Codable {
     }
 
     init() {
-        (self.hostname, self.port, self.`default`, self.status) = (nil, nil, nil, nil)
+        (hostname, port, self.default, status) = (nil, nil, nil, nil)
     }
 }
 
-extension MicrovmUrl {
-    public init(from decoder: Decoder) throws {
+public extension MicrovmUrl {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.hostname = try container.sdkDecodeIfPresent(.hostname)
-        self.port = try container.sdkDecodeIfPresent(.port)
-        self.`default` = try container.sdkDecodeIfPresent(.`default`)
-        self.status = try container.sdkDecodeIfPresent(.status)
+        hostname = try container.sdkDecodeIfPresent(.hostname)
+        port = try container.sdkDecodeIfPresent(.port)
+        self.default = try container.sdkDecodeIfPresent(.default)
+        status = try container.sdkDecodeIfPresent(.status)
     }
 }
 
-extension MicrovmUrl {
-    public init(hostname: String? = nil, port: Int? = nil, `default`: Bool? = nil, status: MicrovmUrlStatus? = nil) {
+public extension MicrovmUrl {
+    init(hostname: String? = nil, port: Int? = nil, default: Bool? = nil, status: MicrovmUrlStatus? = nil) {
         self.init()
         (self.hostname, self.port) = (hostname, port)
-        (self.`default`, self.status) = (`default`, status)
+        (self.default, self.status) = (`default`, status)
     }
 }
 
@@ -73,23 +73,29 @@ public struct MicrovmOptions: Codable {
     }
 
     init() {
-        (self.defaultRegion, self.sizes, self.resourcePricing, self.accountLimits, self.features) = (nil, nil, nil, nil, nil)
+        (defaultRegion, sizes, resourcePricing, accountLimits, features) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension MicrovmOptions {
-    public init(from decoder: Decoder) throws {
+public extension MicrovmOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.defaultRegion = try container.sdkDecodeIfPresent(.defaultRegion)
-        self.sizes = try container.sdkDecodeIfPresent(.sizes)
-        self.resourcePricing = try container.sdkDecodeIfPresent(.resourcePricing)
-        self.accountLimits = try container.sdkDecodeIfPresent(.accountLimits)
-        self.features = try container.sdkDecodeIfPresent(.features)
+        defaultRegion = try container.sdkDecodeIfPresent(.defaultRegion)
+        sizes = try container.sdkDecodeIfPresent(.sizes)
+        resourcePricing = try container.sdkDecodeIfPresent(.resourcePricing)
+        accountLimits = try container.sdkDecodeIfPresent(.accountLimits)
+        features = try container.sdkDecodeIfPresent(.features)
     }
 }
 
-extension MicrovmOptions {
-    public init(defaultRegion: String? = nil, sizes: [MicrovmOptionsSizesItem]? = nil, resourcePricing: MicrovmOptionsResourcePricing? = nil, accountLimits: MicrovmOptionsAccountLimits? = nil, features: [MicrovmOptionsFeaturesItem]? = nil) {
+public extension MicrovmOptions {
+    init(
+        defaultRegion: String? = nil,
+        sizes: [MicrovmOptionsSizesItem]? = nil,
+        resourcePricing: MicrovmOptionsResourcePricing? = nil,
+        accountLimits: MicrovmOptionsAccountLimits? = nil,
+        features: [MicrovmOptionsFeaturesItem]? = nil
+    ) {
         self.init()
         (self.defaultRegion, self.sizes) = (defaultRegion, sizes)
         (self.resourcePricing, self.accountLimits) = (resourcePricing, accountLimits)
@@ -114,23 +120,23 @@ public struct MicrovmSource: Codable {
     }
 
     init() {
-        (self.ociRef, self.checkpointId) = (nil, nil)
+        (ociRef, checkpointId) = (nil, nil)
     }
 }
 
-extension MicrovmSource {
-    public init(from decoder: Decoder) throws {
+public extension MicrovmSource {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.ociRef = try container.sdkDecodeIfPresent(.ociRef)
-        self.checkpointId = try container.sdkDecodeIfPresent(.checkpointId)
-        if let value = self.checkpointId {
+        ociRef = try container.sdkDecodeIfPresent(.ociRef)
+        checkpointId = try container.sdkDecodeIfPresent(.checkpointId)
+        if let value = checkpointId {
             try sdkValidateUuid("checkpoint_id", value)
         }
     }
 }
 
-extension MicrovmSource {
-    public init(ociRef: String? = nil, checkpointId: String? = nil) throws {
+public extension MicrovmSource {
+    init(ociRef: String? = nil, checkpointId: String? = nil) throws {
         self.init()
         (self.ociRef, self.checkpointId) = (ociRef, checkpointId)
         if let value = self.checkpointId {
@@ -154,20 +160,20 @@ public struct MicrovmOptionsSizesItemPricing: Codable {
     }
 
     init() {
-        (self.pricePerHour, self.pricePerMonth) = (nil, nil)
+        (pricePerHour, pricePerMonth) = (nil, nil)
     }
 }
 
-extension MicrovmOptionsSizesItemPricing {
-    public init(from decoder: Decoder) throws {
+public extension MicrovmOptionsSizesItemPricing {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.pricePerHour = try container.sdkDecodeIfPresent(.pricePerHour)
-        self.pricePerMonth = try container.sdkDecodeIfPresent(.pricePerMonth)
+        pricePerHour = try container.sdkDecodeIfPresent(.pricePerHour)
+        pricePerMonth = try container.sdkDecodeIfPresent(.pricePerMonth)
     }
 }
 
-extension MicrovmOptionsSizesItemPricing {
-    public init(pricePerHour: Double? = nil, pricePerMonth: Double? = nil) {
+public extension MicrovmOptionsSizesItemPricing {
+    init(pricePerHour: Double? = nil, pricePerMonth: Double? = nil) {
         self.init()
         (self.pricePerHour, self.pricePerMonth) = (pricePerHour, pricePerMonth)
     }
@@ -247,52 +253,69 @@ public struct Microvm: Codable {
     }
 
     init() {
-        (self.id, self.name, self.region, self.size, self.source) = (nil, nil, nil, nil, nil)
-        (self.state, self.failureReason, self.networking, self.vpcUuid, self.autoPause) = (nil, nil, nil, nil, nil)
-        (self.autoResume, self.httpProtocol, self.ports, self.tags, self.urls) = (nil, nil, nil, nil, nil)
-        self.createdAt = nil
+        (id, name, region, size, source) = (nil, nil, nil, nil, nil)
+        (state, failureReason, networking, vpcUuid, autoPause) = (nil, nil, nil, nil, nil)
+        (autoResume, httpProtocol, ports, tags, urls) = (nil, nil, nil, nil, nil)
+        createdAt = nil
     }
 }
 
-extension Microvm {
-    public init(from decoder: Decoder) throws {
+public extension Microvm {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.size = try container.sdkDecodeIfPresent(.size)
-        self.source = try container.sdkDecodeIfPresent(.source)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.failureReason = try container.sdkDecodeIfPresent(.failureReason)
-        self.networking = try container.sdkDecodeIfPresent(.networking)
-        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        self.autoPause = try container.sdkDecodeIfPresent(.autoPause)
-        self.autoResume = try container.sdkDecodeIfPresent(.autoResume)
-        self.httpProtocol = try container.sdkDecodeIfPresent(.httpProtocol)
-        self.ports = try container.sdkDecodeIfPresent(.ports)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.urls = try container.sdkDecodeIfPresent(.urls)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        region = try container.sdkDecodeIfPresent(.region)
+        size = try container.sdkDecodeIfPresent(.size)
+        source = try container.sdkDecodeIfPresent(.source)
+        state = try container.sdkDecodeIfPresent(.state)
+        failureReason = try container.sdkDecodeIfPresent(.failureReason)
+        networking = try container.sdkDecodeIfPresent(.networking)
+        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        autoPause = try container.sdkDecodeIfPresent(.autoPause)
+        autoResume = try container.sdkDecodeIfPresent(.autoResume)
+        httpProtocol = try container.sdkDecodeIfPresent(.httpProtocol)
+        ports = try container.sdkDecodeIfPresent(.ports)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        urls = try container.sdkDecodeIfPresent(.urls)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
-        if let value = self.name {
+        if let value = name {
             try sdkValidatePattern("name", value, sdkPattern41dd286f4dc3)
         }
-        if let value = self.vpcUuid {
+        if let value = vpcUuid {
             try sdkValidateUuid("vpc_uuid", value)
         }
-        if let value = self.ports {
+        if let value = ports {
             try validateItems("ports", value, min: nil, max: 5)
         }
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-extension Microvm {
-    public init(id: String? = nil, name: String? = nil, region: String? = nil, size: MicrovmSize? = nil, source: MicrovmSource? = nil, state: MicrovmState? = nil, failureReason: String? = nil, networking: MicrovmNetworking? = nil, vpcUuid: String? = nil, autoPause: MicrovmAutoPause? = nil, autoResume: Bool? = nil, httpProtocol: MicrovmHttpProtocol? = nil, ports: [Int]? = nil, tags: [String]? = nil, urls: [MicrovmUrl]? = nil, createdAt: Date? = nil) throws {
+public extension Microvm {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        region: String? = nil,
+        size: MicrovmSize? = nil,
+        source: MicrovmSource? = nil,
+        state: MicrovmState? = nil,
+        failureReason: String? = nil,
+        networking: MicrovmNetworking? = nil,
+        vpcUuid: String? = nil,
+        autoPause: MicrovmAutoPause? = nil,
+        autoResume: Bool? = nil,
+        httpProtocol: MicrovmHttpProtocol? = nil,
+        ports: [Int]? = nil,
+        tags: [String]? = nil,
+        urls: [MicrovmUrl]? = nil,
+        createdAt: Date? = nil
+    ) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.region, self.size) = (region, size)
@@ -350,25 +373,32 @@ public struct MicrovmOptionsSizesItem: Codable {
     }
 
     init() {
-        (self.cpu, self.memory, self.disk, self.available, self.regions) = (nil, nil, nil, nil, nil)
-        self.pricing = nil
+        (cpu, memory, disk, available, regions) = (nil, nil, nil, nil, nil)
+        pricing = nil
     }
 }
 
-extension MicrovmOptionsSizesItem {
-    public init(from decoder: Decoder) throws {
+public extension MicrovmOptionsSizesItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.cpu = try container.sdkDecodeIfPresent(.cpu)
-        self.memory = try container.sdkDecodeIfPresent(.memory)
-        self.disk = try container.sdkDecodeIfPresent(.disk)
-        self.available = try container.sdkDecodeIfPresent(.available)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.pricing = try container.sdkDecodeIfPresent(.pricing)
+        cpu = try container.sdkDecodeIfPresent(.cpu)
+        memory = try container.sdkDecodeIfPresent(.memory)
+        disk = try container.sdkDecodeIfPresent(.disk)
+        available = try container.sdkDecodeIfPresent(.available)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        pricing = try container.sdkDecodeIfPresent(.pricing)
     }
 }
 
-extension MicrovmOptionsSizesItem {
-    public init(cpu: Int? = nil, memory: Int? = nil, disk: Int? = nil, available: Bool? = nil, regions: [String]? = nil, pricing: MicrovmOptionsSizesItemPricing? = nil) {
+public extension MicrovmOptionsSizesItem {
+    init(
+        cpu: Int? = nil,
+        memory: Int? = nil,
+        disk: Int? = nil,
+        available: Bool? = nil,
+        regions: [String]? = nil,
+        pricing: MicrovmOptionsSizesItemPricing? = nil
+    ) {
         self.init()
         (self.cpu, self.memory) = (cpu, memory)
         (self.disk, self.available) = (disk, available)
@@ -393,20 +423,20 @@ public struct MicrovmAutoPause: Codable {
     }
 
     init() {
-        (self.enabled, self.idleTimeout) = (nil, nil)
+        (enabled, idleTimeout) = (nil, nil)
     }
 }
 
-extension MicrovmAutoPause {
-    public init(from decoder: Decoder) throws {
+public extension MicrovmAutoPause {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
-        self.idleTimeout = try container.sdkDecodeIfPresent(.idleTimeout)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
+        idleTimeout = try container.sdkDecodeIfPresent(.idleTimeout)
     }
 }
 
-extension MicrovmAutoPause {
-    public init(enabled: Bool? = nil, idleTimeout: String? = nil) {
+public extension MicrovmAutoPause {
+    init(enabled: Bool? = nil, idleTimeout: String? = nil) {
         self.init()
         (self.enabled, self.idleTimeout) = (enabled, idleTimeout)
     }
@@ -427,20 +457,20 @@ public struct MicrovmOptionsFeaturesItem: Codable {
     }
 
     init() {
-        (self.name, self.enabled) = (nil, nil)
+        (name, enabled) = (nil, nil)
     }
 }
 
-extension MicrovmOptionsFeaturesItem {
-    public init(from decoder: Decoder) throws {
+public extension MicrovmOptionsFeaturesItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
+        name = try container.sdkDecodeIfPresent(.name)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
     }
 }
 
-extension MicrovmOptionsFeaturesItem {
-    public init(name: String? = nil, enabled: Bool? = nil) {
+public extension MicrovmOptionsFeaturesItem {
+    init(name: String? = nil, enabled: Bool? = nil) {
         self.init()
         (self.name, self.enabled) = (name, enabled)
     }
@@ -454,19 +484,19 @@ public struct AllMicrovmsVariant0: Codable {
     }
 
     init() {
-        self.microvms = nil
+        microvms = nil
     }
 }
 
-extension AllMicrovmsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AllMicrovmsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.microvms = try container.sdkDecodeIfPresent(.microvms)
+        microvms = try container.sdkDecodeIfPresent(.microvms)
     }
 }
 
-extension AllMicrovmsVariant0 {
-    public init(microvms: [Microvm]? = nil) {
+public extension AllMicrovmsVariant0 {
+    init(microvms: [Microvm]? = nil) {
         self.init()
         self.microvms = microvms
     }
@@ -482,19 +512,19 @@ public struct CheckpointResponse: Codable {
     }
 
     init() {
-        self.checkpoint = nil
+        checkpoint = nil
     }
 }
 
-extension CheckpointResponse {
-    public init(from decoder: Decoder) throws {
+public extension CheckpointResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.checkpoint = try container.sdkDecodeIfPresent(.checkpoint)
+        checkpoint = try container.sdkDecodeIfPresent(.checkpoint)
     }
 }
 
-extension CheckpointResponse {
-    public init(checkpoint: Checkpoint2? = nil) {
+public extension CheckpointResponse {
+    init(checkpoint: Checkpoint2? = nil) {
         self.init()
         self.checkpoint = checkpoint
     }
@@ -510,19 +540,19 @@ public struct MicrovmResponse: Codable {
     }
 
     init() {
-        self.microvm = nil
+        microvm = nil
     }
 }
 
-extension MicrovmResponse {
-    public init(from decoder: Decoder) throws {
+public extension MicrovmResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.microvm = try container.sdkDecodeIfPresent(.microvm)
+        microvm = try container.sdkDecodeIfPresent(.microvm)
     }
 }
 
-extension MicrovmResponse {
-    public init(microvm: Microvm? = nil) {
+public extension MicrovmResponse {
+    init(microvm: Microvm? = nil) {
         self.init()
         self.microvm = microvm
     }
@@ -542,25 +572,35 @@ public struct MicrovmError: Codable {
         case message
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension MicrovmError {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.code) else {
-            throw SdkValidationError(field: "code", code: "required", message: "Validation failed for 'code': value is required")
-        }
-        guard container.contains(.message) else {
-            throw SdkValidationError(field: "message", code: "required", message: "Validation failed for 'message': value is required")
-        }
-        self.code = try container.sdkDecodeRequired(.code)
-        self.message = try container.sdkDecodeRequired(.message)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension MicrovmError {
-    public init(code: String, message: String) {
+public extension MicrovmError {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.code) else {
+            throw SdkValidationError(
+                field: "code",
+                code: "required",
+                message: "Validation failed for 'code': value is required"
+            )
+        }
+        guard container.contains(.message) else {
+            throw SdkValidationError(
+                field: "message",
+                code: "required",
+                message: "Validation failed for 'message': value is required"
+            )
+        }
+        code = try container.sdkDecodeRequired(.code)
+        message = try container.sdkDecodeRequired(.message)
+    }
+}
+
+public extension MicrovmError {
+    init(code: String, message: String) {
         (self.code, self.message) = (code, message)
     }
 }

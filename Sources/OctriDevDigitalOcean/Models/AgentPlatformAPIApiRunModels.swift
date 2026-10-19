@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiRun domain models
+/// AgentPlatformAPIApiRun domain models
 /// Typed representation of the `ApiRunEvaluationTestCaseOutput` API schema.
 public struct ApiRunEvaluationTestCaseOutput: Codable {
     /// Optional array value serialized in the `evaluation_run_uuids` wire field.
@@ -15,19 +15,19 @@ public struct ApiRunEvaluationTestCaseOutput: Codable {
     }
 
     init() {
-        self.evaluationRunUuids = nil
+        evaluationRunUuids = nil
     }
 }
 
-extension ApiRunEvaluationTestCaseOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiRunEvaluationTestCaseOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.evaluationRunUuids = try container.sdkDecodeIfPresent(.evaluationRunUuids)
+        evaluationRunUuids = try container.sdkDecodeIfPresent(.evaluationRunUuids)
     }
 }
 
-extension ApiRunEvaluationTestCaseOutput {
-    public init(evaluationRunUuids: [String]? = nil) {
+public extension ApiRunEvaluationTestCaseOutput {
+    init(evaluationRunUuids: [String]? = nil) {
         self.init()
         self.evaluationRunUuids = evaluationRunUuids
     }
@@ -56,22 +56,27 @@ public struct ApiRunEvaluationTestCaseInputPublic: Codable {
     }
 
     init() {
-        (self.agentDeploymentNames, self.agentUuids, self.runName, self.testCaseUuid) = (nil, nil, nil, nil)
+        (agentDeploymentNames, agentUuids, runName, testCaseUuid) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiRunEvaluationTestCaseInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiRunEvaluationTestCaseInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agentDeploymentNames = try container.sdkDecodeIfPresent(.agentDeploymentNames)
-        self.agentUuids = try container.sdkDecodeIfPresent(.agentUuids)
-        self.runName = try container.sdkDecodeIfPresent(.runName)
-        self.testCaseUuid = try container.sdkDecodeIfPresent(.testCaseUuid)
+        agentDeploymentNames = try container.sdkDecodeIfPresent(.agentDeploymentNames)
+        agentUuids = try container.sdkDecodeIfPresent(.agentUuids)
+        runName = try container.sdkDecodeIfPresent(.runName)
+        testCaseUuid = try container.sdkDecodeIfPresent(.testCaseUuid)
     }
 }
 
-extension ApiRunEvaluationTestCaseInputPublic {
-    public init(agentDeploymentNames: [String]? = nil, agentUuids: [String]? = nil, runName: String? = nil, testCaseUuid: String? = nil) {
+public extension ApiRunEvaluationTestCaseInputPublic {
+    init(
+        agentDeploymentNames: [String]? = nil,
+        agentUuids: [String]? = nil,
+        runName: String? = nil,
+        testCaseUuid: String? = nil
+    ) {
         self.init()
         (self.agentDeploymentNames, self.agentUuids) = (agentDeploymentNames, agentUuids)
         (self.runName, self.testCaseUuid) = (runName, testCaseUuid)

@@ -6,39 +6,102 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DatabasesMethods {
-    /// To retrieve the autoscale configuration for an existing database cluster, send a GET request to `/v2/databases/$DATABASE_ID/autoscale`. The response will be a JSON object with autoscaling configuration details.
+public extension DatabasesMethods {
+    /// To retrieve the autoscale configuration for an existing database cluster, send a GET request to
+    /// `/v2/databases/$DATABASE_ID/autoscale`. The response will be a JSON object with autoscaling configuration
+    /// details.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    public static func databasesGetAutoscale(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> Autoscale {
+    static func databasesGetAutoscale(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Autoscale {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/autoscale"].joined(), config: config, decoder: .json, operationId: "databases_get_autoscale", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/autoscale"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "databases_get_autoscale",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Replaces the autoscaling configuration for an existing database cluster. Send the `storage` configuration to control storage autoscaling, including whether it is enabled. The successful response has no body.
+    /// Replaces the autoscaling configuration for an existing database cluster. Send the `storage` configuration to
+    /// control storage autoscaling, including whether it is enabled. The successful response has no body.
     ///
-    /// To configure autoscale settings for an existing database cluster, send a PUT request to `/v2/databases/$DATABASE_ID/autoscale`, specifying the autoscale configuration. A successful request will receive a 204 No Content status code with no body in response.
+    /// To configure autoscale settings for an existing database cluster, send a PUT request to
+    /// `/v2/databases/$DATABASE_ID/autoscale`, specifying the autoscale configuration. A successful request will
+    /// receive a 204 No Content status code with no body in response.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - storage: Storage autoscaling configuration
-    public static func databasesUpdateAutoscale(config: ClientConfig, databaseClusterUuid: String, storage: DatabaseStorageAutoscaleParams? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func databasesUpdateAutoscale(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        storage: DatabaseStorageAutoscaleParams? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
         let requestBody = DatabasesUpdateAutoscaleRequestBody(storage: storage)
 
-        return try (await sdkRequest("PUT", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/autoscale"].joined(), config: config, body: requestBody, decoder: .empty, operationId: "databases_update_autoscale", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/autoscale"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .empty,
+            operationId: "databases_update_autoscale",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "422": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To list all of a Kafka cluster's topics, send a GET request to `/v2/databases/$DATABASE_ID/topics`. The result will be a JSON object with a `topics` key.
+    /// To list all of a Kafka cluster's topics, send a GET request to `/v2/databases/$DATABASE_ID/topics`. The result
+    /// will be a JSON object with a `topics` key.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    public static func databasesListKafkaTopics(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> KafkaTopics {
+    static func databasesListKafkaTopics(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> KafkaTopics {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/topics"].joined(), config: config, decoder: .json, operationId: "databases_list_kafka_topics", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/topics"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "databases_list_kafka_topics",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

@@ -3,14 +3,17 @@
 
 import Foundation
 
-// AppsAppJob domain models
+/// AppsAppJob domain models
 /// - UNSPECIFIED: Default job type, will auto-complete to POST_DEPLOY kind. - PRE_DEPLOY: Indicates a job that
 /// runs before an app deployment. - POST_DEPLOY: Indicates a job that runs after an app deployment. -
 /// FAILED_DEPLOY: Indicates a job that runs after a component fails to deploy.
 public struct AppJobSpecVariant2Kind: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let unspecified = AppJobSpecVariant2Kind(rawValue: "UNSPECIFIED")
     public static let preDeploy = AppJobSpecVariant2Kind(rawValue: "PRE_DEPLOY")
     public static let postDeploy = AppJobSpecVariant2Kind(rawValue: "POST_DEPLOY")
@@ -18,7 +21,7 @@ public struct AppJobSpecVariant2Kind: RawRepresentable, Hashable, Codable, Senda
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -31,7 +34,10 @@ public struct AppJobSpecVariant2Kind: RawRepresentable, Hashable, Codable, Senda
 public struct AppJobInvocationPhase: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let unknown = AppJobInvocationPhase(rawValue: "UNKNOWN")
     public static let pending = AppJobInvocationPhase(rawValue: "PENDING")
     public static let running = AppJobInvocationPhase(rawValue: "RUNNING")
@@ -42,7 +48,7 @@ public struct AppJobInvocationPhase: RawRepresentable, Hashable, Codable, Sendab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

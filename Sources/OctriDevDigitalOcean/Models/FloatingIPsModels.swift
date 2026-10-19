@@ -3,25 +3,33 @@
 
 import Foundation
 
-// FloatingIPs domain models
+/// FloatingIPs domain models
 public indirect enum FloatingIpCreate {
     case floatingIpCreateVariant0(FloatingIpCreateVariant0)
     case floatingIpCreateVariant1(FloatingIpCreateVariant1)
 }
 
 extension FloatingIpCreate: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
+            if let value = Self.decodeLossless1(from: container, raw) {
+                self = value; return
+            }
         }
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for FloatingIpCreate")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for FloatingIpCreate"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
@@ -39,8 +47,12 @@ extension FloatingIpCreate {
 
 extension FloatingIpCreate {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(FloatingIpCreateVariant0.self) { return .floatingIpCreateVariant0(value) }
-        if let value = try? container.decode(FloatingIpCreateVariant1.self) { return .floatingIpCreateVariant1(value) }
+        if let value = try? container.decode(FloatingIpCreateVariant0.self) {
+            return .floatingIpCreateVariant0(value)
+        }
+        if let value = try? container.decode(FloatingIpCreateVariant1.self) {
+            return .floatingIpCreateVariant1(value)
+        }
         return nil
     }
 }
@@ -61,22 +73,32 @@ public indirect enum FloatingIpDroplet {
 }
 
 extension FloatingIpDroplet: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for FloatingIpDroplet")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for FloatingIpDroplet"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension FloatingIpDroplet {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode([String: JSONValue].self) { return .jsonValue(value) }
-        if let value = try? container.decode(Droplet.self) { return .droplet(value) }
+        if let value = try? container.decode([String: JSONValue].self) {
+            return .jsonValue(value)
+        }
+        if let value = try? container.decode(Droplet.self) {
+            return .droplet(value)
+        }
         return nil
     }
 }
@@ -105,23 +127,29 @@ public struct FloatingIpList: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension FloatingIpList {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.floatingIps = try container.sdkDecodeIfPresent(.floatingIps)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension FloatingIpList {
-    public init(meta: MetaMeta, floatingIps: [FloatingIp]? = nil, links: PageLinks? = nil) {
+public extension FloatingIpList {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        floatingIps = try container.sdkDecodeIfPresent(.floatingIps)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension FloatingIpList {
+    init(meta: MetaMeta, floatingIps: [FloatingIp]? = nil, links: PageLinks? = nil) {
         (self.meta, self.floatingIps) = (meta, floatingIps)
         self.links = links
     }
@@ -159,46 +187,68 @@ public struct FloatingIpRegion: Codable {
         case sizes
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension FloatingIpRegion {
-    public init(from decoder: Decoder) throws {
+public extension FloatingIpRegion {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
         }
         guard container.contains(.slug) else {
-            throw SdkValidationError(field: "slug", code: "required", message: "Validation failed for 'slug': value is required")
+            throw SdkValidationError(
+                field: "slug",
+                code: "required",
+                message: "Validation failed for 'slug': value is required"
+            )
         }
         guard container.contains(.features) else {
-            throw SdkValidationError(field: "features", code: "required", message: "Validation failed for 'features': value is required")
+            throw SdkValidationError(
+                field: "features",
+                code: "required",
+                message: "Validation failed for 'features': value is required"
+            )
         }
         guard container.contains(.available) else {
-            throw SdkValidationError(field: "available", code: "required", message: "Validation failed for 'available': value is required")
+            throw SdkValidationError(
+                field: "available",
+                code: "required",
+                message: "Validation failed for 'available': value is required"
+            )
         }
         guard container.contains(.sizes) else {
-            throw SdkValidationError(field: "sizes", code: "required", message: "Validation failed for 'sizes': value is required")
+            throw SdkValidationError(
+                field: "sizes",
+                code: "required",
+                message: "Validation failed for 'sizes': value is required"
+            )
         }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.slug = try container.sdkDecodeRequired(.slug)
-        self.features = try container.sdkDecodeRequired(.features)
-        self.available = try container.sdkDecodeRequired(.available)
-        self.sizes = try container.sdkDecodeRequired(.sizes)
+        name = try container.sdkDecodeRequired(.name)
+        slug = try container.sdkDecodeRequired(.slug)
+        features = try container.sdkDecodeRequired(.features)
+        available = try container.sdkDecodeRequired(.available)
+        sizes = try container.sdkDecodeRequired(.sizes)
         additionalProperties = try decoder.sdkAdditionalProperties(besides: CodingKeys.self)
     }
 }
 
-extension FloatingIpRegion {
-    public init(name: String, slug: String, features: [String], available: Bool, sizes: [String]) {
+public extension FloatingIpRegion {
+    init(name: String, slug: String, features: [String], available: Bool, sizes: [String]) {
         (self.name, self.slug) = (name, slug)
         (self.features, self.available) = (features, available)
         self.sizes = sizes
     }
 }
 
-extension FloatingIpRegion {
-    public func encode(to encoder: Encoder) throws {
+public extension FloatingIpRegion {
+    func encode(to encoder: Encoder) throws {
         try encoder.sdkEncodeAdditionalProperties(additionalProperties)
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(name, forKey: .name)
@@ -217,19 +267,19 @@ public struct FloatingIpListVariant0: Codable {
     }
 
     init() {
-        self.floatingIps = nil
+        floatingIps = nil
     }
 }
 
-extension FloatingIpListVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension FloatingIpListVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.floatingIps = try container.sdkDecodeIfPresent(.floatingIps)
+        floatingIps = try container.sdkDecodeIfPresent(.floatingIps)
     }
 }
 
-extension FloatingIpListVariant0 {
-    public init(floatingIps: [FloatingIp]? = nil) {
+public extension FloatingIpListVariant0 {
+    init(floatingIps: [FloatingIp]? = nil) {
         self.init()
         self.floatingIps = floatingIps
     }
@@ -248,20 +298,20 @@ public struct FloatingIpCreated: Codable {
     }
 
     init() {
-        (self.floatingIp, self.links) = (nil, nil)
+        (floatingIp, links) = (nil, nil)
     }
 }
 
-extension FloatingIpCreated {
-    public init(from decoder: Decoder) throws {
+public extension FloatingIpCreated {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.floatingIp = try container.sdkDecodeIfPresent(.floatingIp)
-        self.links = try container.sdkDecodeIfPresent(.links)
+        floatingIp = try container.sdkDecodeIfPresent(.floatingIp)
+        links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-extension FloatingIpCreated {
-    public init(floatingIp: FloatingIp? = nil, links: FloatingIpCreatedLinks? = nil) {
+public extension FloatingIpCreated {
+    init(floatingIp: FloatingIp? = nil, links: FloatingIpCreatedLinks? = nil) {
         self.init()
         (self.floatingIp, self.links) = (floatingIp, links)
     }
@@ -277,19 +327,19 @@ public struct FloatingIpResponse: Codable {
     }
 
     init() {
-        self.floatingIp = nil
+        floatingIp = nil
     }
 }
 
-extension FloatingIpResponse {
-    public init(from decoder: Decoder) throws {
+public extension FloatingIpResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.floatingIp = try container.sdkDecodeIfPresent(.floatingIp)
+        floatingIp = try container.sdkDecodeIfPresent(.floatingIp)
     }
 }
 
-extension FloatingIpResponse {
-    public init(floatingIp: FloatingIp? = nil) {
+public extension FloatingIpResponse {
+    init(floatingIp: FloatingIp? = nil) {
         self.init()
         self.floatingIp = floatingIp
     }
@@ -308,20 +358,20 @@ public struct FloatingIpCreatedLinks: Codable {
     }
 
     init() {
-        (self.droplets, self.actions) = (nil, nil)
+        (droplets, actions) = (nil, nil)
     }
 }
 
-extension FloatingIpCreatedLinks {
-    public init(from decoder: Decoder) throws {
+public extension FloatingIpCreatedLinks {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.droplets = try container.sdkDecodeIfPresent(.droplets)
-        self.actions = try container.sdkDecodeIfPresent(.actions)
+        droplets = try container.sdkDecodeIfPresent(.droplets)
+        actions = try container.sdkDecodeIfPresent(.actions)
     }
 }
 
-extension FloatingIpCreatedLinks {
-    public init(droplets: [ActionLink]? = nil, actions: [ActionLink]? = nil) {
+public extension FloatingIpCreatedLinks {
+    init(droplets: [ActionLink]? = nil, actions: [ActionLink]? = nil) {
         self.init()
         (self.droplets, self.actions) = (droplets, actions)
     }
@@ -355,26 +405,32 @@ public struct FloatingIp: Codable {
     }
 
     init() {
-        (self.ip, self.region, self.droplet, self.locked, self.projectId) = (nil, nil, nil, nil, nil)
+        (ip, region, droplet, locked, projectId) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension FloatingIp {
-    public init(from decoder: Decoder) throws {
+public extension FloatingIp {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.ip = try container.sdkDecodeIfPresent(.ip)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.droplet = try container.sdkDecodeIfPresent(.droplet)
-        self.locked = try container.sdkDecodeIfPresent(.locked)
-        self.projectId = try container.sdkDecodeIfPresent(.projectId)
-        if let value = self.projectId {
+        ip = try container.sdkDecodeIfPresent(.ip)
+        region = try container.sdkDecodeIfPresent(.region)
+        droplet = try container.sdkDecodeIfPresent(.droplet)
+        locked = try container.sdkDecodeIfPresent(.locked)
+        projectId = try container.sdkDecodeIfPresent(.projectId)
+        if let value = projectId {
             try sdkValidateUuid("project_id", value)
         }
     }
 }
 
-extension FloatingIp {
-    public init(ip: String? = nil, region: FloatingIpRegion? = nil, droplet: FloatingIpDroplet? = nil, locked: Bool? = nil, projectId: String? = nil) throws {
+public extension FloatingIp {
+    init(
+        ip: String? = nil,
+        region: FloatingIpRegion? = nil,
+        droplet: FloatingIpDroplet? = nil,
+        locked: Bool? = nil,
+        projectId: String? = nil
+    ) throws {
         self.init()
         (self.ip, self.region) = (ip, region)
         (self.droplet, self.locked) = (droplet, locked)
@@ -398,25 +454,31 @@ public struct FloatingIpCreateVariant1: Codable {
         case projectId = "project_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension FloatingIpCreateVariant1 {
-    public init(from decoder: Decoder) throws {
+public extension FloatingIpCreateVariant1 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.region) else {
-            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
+            throw SdkValidationError(
+                field: "region",
+                code: "required",
+                message: "Validation failed for 'region': value is required"
+            )
         }
-        self.region = try container.sdkDecodeRequired(.region)
-        self.projectId = try container.sdkDecodeIfPresent(.projectId)
-        if let value = self.projectId {
+        region = try container.sdkDecodeRequired(.region)
+        projectId = try container.sdkDecodeIfPresent(.projectId)
+        if let value = projectId {
             try sdkValidateUuid("project_id", value)
         }
     }
 }
 
-extension FloatingIpCreateVariant1 {
-    public init(region: String, projectId: String? = nil) throws {
+public extension FloatingIpCreateVariant1 {
+    init(region: String, projectId: String? = nil) throws {
         (self.region, self.projectId) = (region, projectId)
         if let value = self.projectId {
             try sdkValidateUuid("project_id", value)
@@ -433,21 +495,27 @@ public struct FloatingIpCreateVariant0: Codable {
         case dropletId = "droplet_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension FloatingIpCreateVariant0 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.dropletId) else {
-            throw SdkValidationError(field: "droplet_id", code: "required", message: "Validation failed for 'droplet_id': value is required")
-        }
-        self.dropletId = try container.sdkDecodeRequired(.dropletId)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension FloatingIpCreateVariant0 {
-    public init(dropletId: Int) {
+public extension FloatingIpCreateVariant0 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.dropletId) else {
+            throw SdkValidationError(
+                field: "droplet_id",
+                code: "required",
+                message: "Validation failed for 'droplet_id': value is required"
+            )
+        }
+        dropletId = try container.sdkDecodeRequired(.dropletId)
+    }
+}
+
+public extension FloatingIpCreateVariant0 {
+    init(dropletId: Int) {
         self.dropletId = dropletId
     }
 }

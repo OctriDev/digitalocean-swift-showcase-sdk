@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiUpdate domain models
+/// AgentPlatformAPIApiUpdate domain models
 /// Typed representation of the `ApiUpdateAgentAPIKeyOutput` API schema.
 public struct ApiUpdateAgentAPIKeyOutput: Codable {
     /// Agent API Key Info
@@ -14,19 +14,19 @@ public struct ApiUpdateAgentAPIKeyOutput: Codable {
     }
 
     init() {
-        self.apiKeyInfo = nil
+        apiKeyInfo = nil
     }
 }
 
-extension ApiUpdateAgentAPIKeyOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateAgentAPIKeyOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-extension ApiUpdateAgentAPIKeyOutput {
-    public init(apiKeyInfo: ApiAgentAPIKeyInfo? = nil) {
+public extension ApiUpdateAgentAPIKeyOutput {
+    init(apiKeyInfo: ApiAgentAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }
@@ -42,19 +42,19 @@ public struct ApiUpdateCustomModelMetadataOutputPublic: Codable {
     }
 
     init() {
-        self.model = nil
+        model = nil
     }
 }
 
-extension ApiUpdateCustomModelMetadataOutputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateCustomModelMetadataOutputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.model = try container.sdkDecodeIfPresent(.model)
+        model = try container.sdkDecodeIfPresent(.model)
     }
 }
 
-extension ApiUpdateCustomModelMetadataOutputPublic {
-    public init(model: ApiCustomModel? = nil) {
+public extension ApiUpdateCustomModelMetadataOutputPublic {
+    init(model: ApiCustomModel? = nil) {
         self.init()
         self.model = model
     }
@@ -70,19 +70,19 @@ public struct ApiUpdateWorkspaceOutput: Codable {
     }
 
     init() {
-        self.workspace = nil
+        workspace = nil
     }
 }
 
-extension ApiUpdateWorkspaceOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateWorkspaceOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.workspace = try container.sdkDecodeIfPresent(.workspace)
+        workspace = try container.sdkDecodeIfPresent(.workspace)
     }
 }
 
-extension ApiUpdateWorkspaceOutput {
-    public init(workspace: ApiWorkspace? = nil) {
+public extension ApiUpdateWorkspaceOutput {
+    init(workspace: ApiWorkspace? = nil) {
         self.init()
         self.workspace = workspace
     }
@@ -117,25 +117,32 @@ public struct ApiUpdateEvaluationTestCaseInputPublic: Codable {
     }
 
     init() {
-        (self.datasetUuid, self.description, self.metrics, self.name, self.starMetric) = (nil, nil, nil, nil, nil)
-        self.testCaseUuid = nil
+        (datasetUuid, description, metrics, name, starMetric) = (nil, nil, nil, nil, nil)
+        testCaseUuid = nil
     }
 }
 
-extension ApiUpdateEvaluationTestCaseInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateEvaluationTestCaseInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.datasetUuid = try container.sdkDecodeIfPresent(.datasetUuid)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.metrics = try container.sdkDecodeIfPresent(.metrics)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.starMetric = try container.sdkDecodeIfPresent(.starMetric)
-        self.testCaseUuid = try container.sdkDecodeIfPresent(.testCaseUuid)
+        datasetUuid = try container.sdkDecodeIfPresent(.datasetUuid)
+        description = try container.sdkDecodeIfPresent(.description)
+        metrics = try container.sdkDecodeIfPresent(.metrics)
+        name = try container.sdkDecodeIfPresent(.name)
+        starMetric = try container.sdkDecodeIfPresent(.starMetric)
+        testCaseUuid = try container.sdkDecodeIfPresent(.testCaseUuid)
     }
 }
 
-extension ApiUpdateEvaluationTestCaseInputPublic {
-    public init(datasetUuid: String? = nil, description: String? = nil, metrics: ApiEvaluationTestCaseMetricList? = nil, name: String? = nil, starMetric: ApiStarMetric? = nil, testCaseUuid: String? = nil) {
+public extension ApiUpdateEvaluationTestCaseInputPublic {
+    init(
+        datasetUuid: String? = nil,
+        description: String? = nil,
+        metrics: ApiEvaluationTestCaseMetricList? = nil,
+        name: String? = nil,
+        starMetric: ApiStarMetric? = nil,
+        testCaseUuid: String? = nil
+    ) {
         self.init()
         (self.datasetUuid, self.description) = (datasetUuid, description)
         (self.metrics, self.name) = (metrics, name)
@@ -153,19 +160,19 @@ public struct ApiUpdateAnthropicAPIKeyOutput: Codable {
     }
 
     init() {
-        self.apiKeyInfo = nil
+        apiKeyInfo = nil
     }
 }
 
-extension ApiUpdateAnthropicAPIKeyOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateAnthropicAPIKeyOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-extension ApiUpdateAnthropicAPIKeyOutput {
-    public init(apiKeyInfo: ApiAnthropicAPIKeyInfo? = nil) {
+public extension ApiUpdateAnthropicAPIKeyOutput {
+    init(apiKeyInfo: ApiAnthropicAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }
@@ -201,25 +208,32 @@ public struct ApiUpdateModelRouterInputPublic: Codable {
     }
 
     init() {
-        (self.description, self.fallbackModels, self.name, self.policies, self.regions) = (nil, nil, nil, nil, nil)
-        self.uuid = nil
+        (description, fallbackModels, name, policies, regions) = (nil, nil, nil, nil, nil)
+        uuid = nil
     }
 }
 
-extension ApiUpdateModelRouterInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateModelRouterInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.fallbackModels = try container.sdkDecodeIfPresent(.fallbackModels)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.policies = try container.sdkDecodeIfPresent(.policies)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        description = try container.sdkDecodeIfPresent(.description)
+        fallbackModels = try container.sdkDecodeIfPresent(.fallbackModels)
+        name = try container.sdkDecodeIfPresent(.name)
+        policies = try container.sdkDecodeIfPresent(.policies)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
     }
 }
 
-extension ApiUpdateModelRouterInputPublic {
-    public init(description: String? = nil, fallbackModels: [[String: JSONValue]]? = nil, name: String? = nil, policies: [ApiModelRouterTaskPolicy]? = nil, regions: [String]? = nil, uuid: String? = nil) {
+public extension ApiUpdateModelRouterInputPublic {
+    init(
+        description: String? = nil,
+        fallbackModels: [[String: JSONValue]]? = nil,
+        name: String? = nil,
+        policies: [ApiModelRouterTaskPolicy]? = nil,
+        regions: [String]? = nil,
+        uuid: String? = nil
+    ) {
         self.init()
         (self.description, self.fallbackModels) = (description, fallbackModels)
         (self.name, self.policies) = (name, policies)
@@ -237,19 +251,19 @@ public struct ApiUpdateKnowledgeBaseOutput: Codable {
     }
 
     init() {
-        self.knowledgeBase = nil
+        knowledgeBase = nil
     }
 }
 
-extension ApiUpdateKnowledgeBaseOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateKnowledgeBaseOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.knowledgeBase = try container.sdkDecodeIfPresent(.knowledgeBase)
+        knowledgeBase = try container.sdkDecodeIfPresent(.knowledgeBase)
     }
 }
 
-extension ApiUpdateKnowledgeBaseOutput {
-    public init(knowledgeBase: ApiKnowledgeBase? = nil) {
+public extension ApiUpdateKnowledgeBaseOutput {
+    init(knowledgeBase: ApiKnowledgeBase? = nil) {
         self.init()
         self.knowledgeBase = knowledgeBase
     }
@@ -278,22 +292,27 @@ public struct ApiUpdateCustomEvaluationMetricInputPublic: Codable {
     }
 
     init() {
-        (self.config, self.description, self.metricName, self.metricUuid) = (nil, nil, nil, nil)
+        (config, description, metricName, metricUuid) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiUpdateCustomEvaluationMetricInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateCustomEvaluationMetricInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.config = try container.sdkDecodeIfPresent(.config)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.metricName = try container.sdkDecodeIfPresent(.metricName)
-        self.metricUuid = try container.sdkDecodeIfPresent(.metricUuid)
+        config = try container.sdkDecodeIfPresent(.config)
+        description = try container.sdkDecodeIfPresent(.description)
+        metricName = try container.sdkDecodeIfPresent(.metricName)
+        metricUuid = try container.sdkDecodeIfPresent(.metricUuid)
     }
 }
 
-extension ApiUpdateCustomEvaluationMetricInputPublic {
-    public init(config: ApiCustomEvaluationMetricConfig? = nil, description: String? = nil, metricName: String? = nil, metricUuid: String? = nil) {
+public extension ApiUpdateCustomEvaluationMetricInputPublic {
+    init(
+        config: ApiCustomEvaluationMetricConfig? = nil,
+        description: String? = nil,
+        metricName: String? = nil,
+        metricUuid: String? = nil
+    ) {
         self.init()
         (self.config, self.description) = (config, description)
         (self.metricName, self.metricUuid) = (metricName, metricUuid)
@@ -319,21 +338,21 @@ public struct ApiUpdateWorkspaceInputPublic: Codable {
     }
 
     init() {
-        (self.description, self.name, self.workspaceUuid) = (nil, nil, nil)
+        (description, name, workspaceUuid) = (nil, nil, nil)
     }
 }
 
-extension ApiUpdateWorkspaceInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateWorkspaceInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.workspaceUuid = try container.sdkDecodeIfPresent(.workspaceUuid)
+        description = try container.sdkDecodeIfPresent(.description)
+        name = try container.sdkDecodeIfPresent(.name)
+        workspaceUuid = try container.sdkDecodeIfPresent(.workspaceUuid)
     }
 }
 
-extension ApiUpdateWorkspaceInputPublic {
-    public init(description: String? = nil, name: String? = nil, workspaceUuid: String? = nil) {
+public extension ApiUpdateWorkspaceInputPublic {
+    init(description: String? = nil, name: String? = nil, workspaceUuid: String? = nil) {
         self.init()
         (self.description, self.name) = (description, name)
         self.workspaceUuid = workspaceUuid
@@ -359,21 +378,21 @@ public struct ApiUpdateAgentAPIKeyInputPublic: Codable {
     }
 
     init() {
-        (self.agentUuid, self.apiKeyUuid, self.name) = (nil, nil, nil)
+        (agentUuid, apiKeyUuid, name) = (nil, nil, nil)
     }
 }
 
-extension ApiUpdateAgentAPIKeyInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateAgentAPIKeyInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
-        self.apiKeyUuid = try container.sdkDecodeIfPresent(.apiKeyUuid)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
+        apiKeyUuid = try container.sdkDecodeIfPresent(.apiKeyUuid)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ApiUpdateAgentAPIKeyInputPublic {
-    public init(agentUuid: String? = nil, apiKeyUuid: String? = nil, name: String? = nil) {
+public extension ApiUpdateAgentAPIKeyInputPublic {
+    init(agentUuid: String? = nil, apiKeyUuid: String? = nil, name: String? = nil) {
         self.init()
         (self.agentUuid, self.apiKeyUuid) = (agentUuid, apiKeyUuid)
         self.name = name
@@ -503,44 +522,50 @@ public struct ApiUpdateAgentInputPublic: Codable {
     }
 
     init() {
-        (self.agentLogInsightsEnabled, self.allowedDomains, self.anthropicKeyUuid, self.clearMcpServers, self.conversationLogsEnabled) = (nil, nil, nil, nil, nil)
-        (self.description, self.instruction, self.k, self.maxTokens, self.mcpServers) = (nil, nil, nil, nil, nil)
-        (self.modelProviderKeyUuid, self.modelRouterUuid, self.modelUuid, self.name, self.openAiKeyUuid) = (nil, nil, nil, nil, nil)
-        (self.projectId, self.provideCitations, self.reasoningEffort, self.retrievalMethod, self.routerPresetSlug) = (nil, nil, nil, nil, nil)
-        (self.tags, self.temperature, self.thinkingTokenBudget, self.topP, self.uuid) = (nil, nil, nil, nil, nil)
-        (self.webFetchEnabled, self.webSearchEnabled) = (nil, nil)
+        (agentLogInsightsEnabled, allowedDomains, anthropicKeyUuid, clearMcpServers, conversationLogsEnabled) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (description, instruction, k, maxTokens, mcpServers) = (nil, nil, nil, nil, nil)
+        (modelProviderKeyUuid, modelRouterUuid, modelUuid, name, openAiKeyUuid) = (nil, nil, nil, nil, nil)
+        (projectId, provideCitations, reasoningEffort, retrievalMethod, routerPresetSlug) = (nil, nil, nil, nil, nil)
+        (tags, temperature, thinkingTokenBudget, topP, uuid) = (nil, nil, nil, nil, nil)
+        (webFetchEnabled, webSearchEnabled) = (nil, nil)
     }
 }
 
-extension ApiUpdateAgentInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateAgentInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agentLogInsightsEnabled = try container.sdkDecodeIfPresent(.agentLogInsightsEnabled)
-        self.allowedDomains = try container.sdkDecodeIfPresent(.allowedDomains)
-        self.anthropicKeyUuid = try container.sdkDecodeIfPresent(.anthropicKeyUuid)
-        self.clearMcpServers = try container.sdkDecodeIfPresent(.clearMcpServers)
-        self.conversationLogsEnabled = try container.sdkDecodeIfPresent(.conversationLogsEnabled)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.instruction = try container.sdkDecodeIfPresent(.instruction)
-        self.k = try container.sdkDecodeIfPresent(.k)
-        self.maxTokens = try container.sdkDecodeIfPresent(.maxTokens)
-        self.mcpServers = try container.sdkDecodeIfPresent(.mcpServers)
-        self.modelProviderKeyUuid = try container.sdkDecodeIfPresent(.modelProviderKeyUuid)
-        self.modelRouterUuid = try container.sdkDecodeIfPresent(.modelRouterUuid)
-        self.modelUuid = try container.sdkDecodeIfPresent(.modelUuid)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.openAiKeyUuid = try container.sdkDecodeIfPresent(.openAiKeyUuid)
-        self.projectId = try container.sdkDecodeIfPresent(.projectId)
-        self.provideCitations = try container.sdkDecodeIfPresent(.provideCitations)
-        self.reasoningEffort = try container.sdkDecodeIfPresent(.reasoningEffort)
-        self.retrievalMethod = try container.sdkDecodeIfPresent(.retrievalMethod)
-        self.routerPresetSlug = try container.sdkDecodeIfPresent(.routerPresetSlug)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.temperature = try container.sdkDecodeIfPresent(.temperature)
-        self.thinkingTokenBudget = try container.sdkDecodeIfPresent(.thinkingTokenBudget)
-        self.topP = try container.sdkDecodeIfPresent(.topP)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
-        self.webFetchEnabled = try container.sdkDecodeIfPresent(.webFetchEnabled)
-        self.webSearchEnabled = try container.sdkDecodeIfPresent(.webSearchEnabled)
+        agentLogInsightsEnabled = try container.sdkDecodeIfPresent(.agentLogInsightsEnabled)
+        allowedDomains = try container.sdkDecodeIfPresent(.allowedDomains)
+        anthropicKeyUuid = try container.sdkDecodeIfPresent(.anthropicKeyUuid)
+        clearMcpServers = try container.sdkDecodeIfPresent(.clearMcpServers)
+        conversationLogsEnabled = try container.sdkDecodeIfPresent(.conversationLogsEnabled)
+        description = try container.sdkDecodeIfPresent(.description)
+        instruction = try container.sdkDecodeIfPresent(.instruction)
+        k = try container.sdkDecodeIfPresent(.k)
+        maxTokens = try container.sdkDecodeIfPresent(.maxTokens)
+        mcpServers = try container.sdkDecodeIfPresent(.mcpServers)
+        modelProviderKeyUuid = try container.sdkDecodeIfPresent(.modelProviderKeyUuid)
+        modelRouterUuid = try container.sdkDecodeIfPresent(.modelRouterUuid)
+        modelUuid = try container.sdkDecodeIfPresent(.modelUuid)
+        name = try container.sdkDecodeIfPresent(.name)
+        openAiKeyUuid = try container.sdkDecodeIfPresent(.openAiKeyUuid)
+        projectId = try container.sdkDecodeIfPresent(.projectId)
+        provideCitations = try container.sdkDecodeIfPresent(.provideCitations)
+        reasoningEffort = try container.sdkDecodeIfPresent(.reasoningEffort)
+        retrievalMethod = try container.sdkDecodeIfPresent(.retrievalMethod)
+        routerPresetSlug = try container.sdkDecodeIfPresent(.routerPresetSlug)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        temperature = try container.sdkDecodeIfPresent(.temperature)
+        thinkingTokenBudget = try container.sdkDecodeIfPresent(.thinkingTokenBudget)
+        topP = try container.sdkDecodeIfPresent(.topP)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
+        webFetchEnabled = try container.sdkDecodeIfPresent(.webFetchEnabled)
+        webSearchEnabled = try container.sdkDecodeIfPresent(.webSearchEnabled)
     }
 }

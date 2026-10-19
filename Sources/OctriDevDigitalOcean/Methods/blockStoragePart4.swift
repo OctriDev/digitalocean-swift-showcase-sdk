@@ -6,47 +6,108 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension BlockStorageMethods {
+public extension BlockStorageMethods {
     /// To show information about a block storage volume, send a GET request to `/v2/volumes/$VOLUME_ID`.
     ///
     /// - Parameters:
     /// - volumeId: The ID of the block storage volume.
-    public static func volumesGet(config: ClientConfig, volumeId: String, requestOptions: RequestOptions? = nil) async throws -> Volume {
+    static func volumesGet(
+        config: ClientConfig,
+        volumeId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Volume {
         try sdkValidateUuid("volume_id", volumeId)
 
-        return try (await sdkRequest("GET", ["/v2/volumes/", sdkEncodePathSegment(sdkWireString(volumeId))].joined(), config: config, decoder: .json, operationId: "volumes_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/volumes/", sdkEncodePathSegment(sdkWireString(volumeId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "volumes_get",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To delete a block storage volume, destroying all data and removing it from your account, send a DELETE request to `/v2/volumes/$VOLUME_ID`. No response body will be sent back, but the response code will indicate success. Specifically, the response code will be a 204, which means that the action was successful with no returned body data.
+    /// To delete a block storage volume, destroying all data and removing it from your account, send a DELETE request
+    /// to `/v2/volumes/$VOLUME_ID`. No response body will be sent back, but the response code will indicate success.
+    /// Specifically, the response code will be a 204, which means that the action was successful with no returned body
+    /// data.
     ///
     /// - Parameters:
     /// - volumeId: The ID of the block storage volume.
-    public static func volumesDelete(config: ClientConfig, volumeId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func volumesDelete(
+        config: ClientConfig,
+        volumeId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("volume_id", volumeId)
 
-        return try (await sdkRequest("DELETE", ["/v2/volumes/", sdkEncodePathSegment(sdkWireString(volumeId))].joined(), config: config, decoder: .empty, operationId: "volumes_delete", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "DELETE",
+            ["/v2/volumes/", sdkEncodePathSegment(sdkWireString(volumeId))].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "volumes_delete",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To retrieve the snapshots that have been created from a volume, send a GET request to `/v2/volumes/$VOLUME_ID/snapshots`.
+    /// To retrieve the snapshots that have been created from a volume, send a GET request to
+    /// `/v2/volumes/$VOLUME_ID/snapshots`.
     ///
     /// - Parameters:
     /// - volumeId: The ID of the block storage volume.
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    public static func volumeSnapshotsList(config: ClientConfig, volumeId: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> VolumeSnapshots {
+    static func volumeSnapshotsList(
+        config: ClientConfig,
+        volumeId: String,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> VolumeSnapshots {
         try sdkValidateUuid("volume_id", volumeId)
 
-        if let perPage = perPage {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page = page {
+        if let page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try (await sdkRequest("GET", ["/v2/volumes/", sdkEncodePathSegment(sdkWireString(volumeId)), "/snapshots"].joined(), config: config, query: [
-            SdkQueryParameter("per_page", value: perPage),
-            SdkQueryParameter("page", value: page),
-        ], decoder: .json, operationId: "volumeSnapshots_list", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/volumes/", sdkEncodePathSegment(sdkWireString(volumeId)), "/snapshots"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("page", value: page),
+            ],
+            decoder: .json,
+            operationId: "volumeSnapshots_list",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

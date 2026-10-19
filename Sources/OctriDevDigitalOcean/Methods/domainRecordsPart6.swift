@@ -6,13 +6,39 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DomainRecordsMethods {
-    /// To delete a record for a domain, send a DELETE request to `/v2/domains/$DOMAIN_NAME/records/$DOMAIN_RECORD_ID`. The record will be deleted and the response status will be a 204. This indicates a successful request with no body returned.
+public extension DomainRecordsMethods {
+    /// To delete a record for a domain, send a DELETE request to `/v2/domains/$DOMAIN_NAME/records/$DOMAIN_RECORD_ID`.
+    /// The record will be deleted and the response status will be a 204. This indicates a successful request with no
+    /// body returned.
     ///
     /// - Parameters:
     /// - domainName: The name of the domain itself.
     /// - domainRecordId: The unique identifier of the domain record.
-    public static func domainsDeleteRecord(config: ClientConfig, domainName: String, domainRecordId: Int, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try (await sdkRequest("DELETE", ["/v2/domains/", sdkEncodePathSegment(sdkWireString(domainName)), "/records/", sdkEncodePathSegment(sdkWireString(domainRecordId))].joined(), config: config, decoder: .empty, operationId: "domains_delete_record", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func domainsDeleteRecord(
+        config: ClientConfig,
+        domainName: String,
+        domainRecordId: Int,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await (sdkRequest(
+            "DELETE",
+            [
+                "/v2/domains/",
+                sdkEncodePathSegment(sdkWireString(domainName)),
+                "/records/",
+                sdkEncodePathSegment(sdkWireString(domainRecordId)),
+            ].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "domains_delete_record",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

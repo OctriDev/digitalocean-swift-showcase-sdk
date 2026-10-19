@@ -3,29 +3,39 @@
 
 import Foundation
 
-// ReservedIPv6 domain models
+/// ReservedIPv6 domain models
 public indirect enum ReservedIpv6Droplet {
     case jsonValue([String: JSONValue])
     case droplet(Droplet)
 }
 
 extension ReservedIpv6Droplet: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ReservedIpv6Droplet")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for ReservedIpv6Droplet"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension ReservedIpv6Droplet {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode([String: JSONValue].self) { return .jsonValue(value) }
-        if let value = try? container.decode(Droplet.self) { return .droplet(value) }
+        if let value = try? container.decode([String: JSONValue].self) {
+            return .jsonValue(value)
+        }
+        if let value = try? container.decode(Droplet.self) {
+            return .droplet(value)
+        }
         return nil
     }
 }
@@ -46,22 +56,32 @@ public indirect enum ReservedIpv6ListReservedIpv6sItemDroplet {
 }
 
 extension ReservedIpv6ListReservedIpv6sItemDroplet: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ReservedIpv6ListReservedIpv6sItemDroplet")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for ReservedIpv6ListReservedIpv6sItemDroplet"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension ReservedIpv6ListReservedIpv6sItemDroplet {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode([String: JSONValue].self) { return .jsonValue(value) }
-        if let value = try? container.decode(Droplet.self) { return .droplet(value) }
+        if let value = try? container.decode([String: JSONValue].self) {
+            return .jsonValue(value)
+        }
+        if let value = try? container.decode(Droplet.self) {
+            return .droplet(value)
+        }
         return nil
     }
 }
@@ -96,24 +116,24 @@ public struct ReservedIpv6CreateResponseReservedIpv6: Codable {
     }
 
     init() {
-        (self.ip, self.regionSlug, self.reservedAt) = (nil, nil, nil)
+        (ip, regionSlug, reservedAt) = (nil, nil, nil)
     }
 }
 
-extension ReservedIpv6CreateResponseReservedIpv6 {
-    public init(from decoder: Decoder) throws {
+public extension ReservedIpv6CreateResponseReservedIpv6 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.ip = try container.sdkDecodeIfPresent(.ip)
-        self.regionSlug = try container.sdkDecodeIfPresent(.regionSlug)
-        self.reservedAt = try container.sdkDecodeIfPresent(.reservedAt)
-        if let value = self.reservedAt {
+        ip = try container.sdkDecodeIfPresent(.ip)
+        regionSlug = try container.sdkDecodeIfPresent(.regionSlug)
+        reservedAt = try container.sdkDecodeIfPresent(.reservedAt)
+        if let value = reservedAt {
             try sdkValidateDateTime("reserved_at", sdkWireString(value))
         }
     }
 }
 
-extension ReservedIpv6CreateResponseReservedIpv6 {
-    public init(ip: String? = nil, regionSlug: String? = nil, reservedAt: Date? = nil) throws {
+public extension ReservedIpv6CreateResponseReservedIpv6 {
+    init(ip: String? = nil, regionSlug: String? = nil, reservedAt: Date? = nil) throws {
         self.init()
         (self.ip, self.regionSlug) = (ip, regionSlug)
         self.reservedAt = reservedAt
@@ -133,19 +153,19 @@ public struct ReservedIpv6Response: Codable {
     }
 
     init() {
-        self.reservedIpv6 = nil
+        reservedIpv6 = nil
     }
 }
 
-extension ReservedIpv6Response {
-    public init(from decoder: Decoder) throws {
+public extension ReservedIpv6Response {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.reservedIpv6 = try container.sdkDecodeIfPresent(.reservedIpv6)
+        reservedIpv6 = try container.sdkDecodeIfPresent(.reservedIpv6)
     }
 }
 
-extension ReservedIpv6Response {
-    public init(reservedIpv6: ReservedIpv6? = nil) {
+public extension ReservedIpv6Response {
+    init(reservedIpv6: ReservedIpv6? = nil) {
         self.init()
         self.reservedIpv6 = reservedIpv6
     }
@@ -161,19 +181,19 @@ public struct ReservedIpv6List: Codable {
     }
 
     init() {
-        self.reservedIpv6s = nil
+        reservedIpv6s = nil
     }
 }
 
-extension ReservedIpv6List {
-    public init(from decoder: Decoder) throws {
+public extension ReservedIpv6List {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.reservedIpv6s = try container.sdkDecodeIfPresent(.reservedIpv6s)
+        reservedIpv6s = try container.sdkDecodeIfPresent(.reservedIpv6s)
     }
 }
 
-extension ReservedIpv6List {
-    public init(reservedIpv6s: [ReservedIpv6ListReservedIpv6sItem]? = nil) {
+public extension ReservedIpv6List {
+    init(reservedIpv6s: [ReservedIpv6ListReservedIpv6sItem]? = nil) {
         self.init()
         self.reservedIpv6s = reservedIpv6s
     }
@@ -189,19 +209,19 @@ public struct ReservedIpv6CreateResponse: Codable {
     }
 
     init() {
-        self.reservedIpv6 = nil
+        reservedIpv6 = nil
     }
 }
 
-extension ReservedIpv6CreateResponse {
-    public init(from decoder: Decoder) throws {
+public extension ReservedIpv6CreateResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.reservedIpv6 = try container.sdkDecodeIfPresent(.reservedIpv6)
+        reservedIpv6 = try container.sdkDecodeIfPresent(.reservedIpv6)
     }
 }
 
-extension ReservedIpv6CreateResponse {
-    public init(reservedIpv6: ReservedIpv6CreateResponseReservedIpv6? = nil) {
+public extension ReservedIpv6CreateResponse {
+    init(reservedIpv6: ReservedIpv6CreateResponseReservedIpv6? = nil) {
         self.init()
         self.reservedIpv6 = reservedIpv6
     }
@@ -230,25 +250,30 @@ public struct ReservedIpv6ListReservedIpv6sItem: Codable {
     }
 
     init() {
-        (self.ip, self.regionSlug, self.reservedAt, self.droplet) = (nil, nil, nil, nil)
+        (ip, regionSlug, reservedAt, droplet) = (nil, nil, nil, nil)
     }
 }
 
-extension ReservedIpv6ListReservedIpv6sItem {
-    public init(from decoder: Decoder) throws {
+public extension ReservedIpv6ListReservedIpv6sItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.ip = try container.sdkDecodeIfPresent(.ip)
-        self.regionSlug = try container.sdkDecodeIfPresent(.regionSlug)
-        self.reservedAt = try container.sdkDecodeIfPresent(.reservedAt)
-        self.droplet = try container.sdkDecodeIfPresent(.droplet)
-        if let value = self.reservedAt {
+        ip = try container.sdkDecodeIfPresent(.ip)
+        regionSlug = try container.sdkDecodeIfPresent(.regionSlug)
+        reservedAt = try container.sdkDecodeIfPresent(.reservedAt)
+        droplet = try container.sdkDecodeIfPresent(.droplet)
+        if let value = reservedAt {
             try sdkValidateDateTime("reserved_at", sdkWireString(value))
         }
     }
 }
 
-extension ReservedIpv6ListReservedIpv6sItem {
-    public init(ip: String? = nil, regionSlug: String? = nil, reservedAt: Date? = nil, droplet: ReservedIpv6ListReservedIpv6sItemDroplet? = nil) throws {
+public extension ReservedIpv6ListReservedIpv6sItem {
+    init(
+        ip: String? = nil,
+        regionSlug: String? = nil,
+        reservedAt: Date? = nil,
+        droplet: ReservedIpv6ListReservedIpv6sItemDroplet? = nil
+    ) throws {
         self.init()
         (self.ip, self.regionSlug) = (ip, regionSlug)
         (self.reservedAt, self.droplet) = (reservedAt, droplet)
@@ -273,23 +298,29 @@ public struct ReservedIPv6ListResponse: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ReservedIPv6ListResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.reservedIpv6s = try container.sdkDecodeIfPresent(.reservedIpv6s)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ReservedIPv6ListResponse {
-    public init(meta: MetaMeta, reservedIpv6s: [ReservedIpv6ListReservedIpv6sItem]? = nil, links: PageLinks? = nil) {
+public extension ReservedIPv6ListResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        reservedIpv6s = try container.sdkDecodeIfPresent(.reservedIpv6s)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension ReservedIPv6ListResponse {
+    init(meta: MetaMeta, reservedIpv6s: [ReservedIpv6ListReservedIpv6sItem]? = nil, links: PageLinks? = nil) {
         (self.meta, self.reservedIpv6s) = (meta, reservedIpv6s)
         self.links = links
     }
@@ -305,21 +336,27 @@ public struct ReservedIpv6Create: Codable {
         case regionSlug = "region_slug"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ReservedIpv6Create {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.regionSlug) else {
-            throw SdkValidationError(field: "region_slug", code: "required", message: "Validation failed for 'region_slug': value is required")
-        }
-        self.regionSlug = try container.sdkDecodeRequired(.regionSlug)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ReservedIpv6Create {
-    public init(regionSlug: String) {
+public extension ReservedIpv6Create {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.regionSlug) else {
+            throw SdkValidationError(
+                field: "region_slug",
+                code: "required",
+                message: "Validation failed for 'region_slug': value is required"
+            )
+        }
+        regionSlug = try container.sdkDecodeRequired(.regionSlug)
+    }
+}
+
+public extension ReservedIpv6Create {
+    init(regionSlug: String) {
         self.regionSlug = regionSlug
     }
 }
@@ -347,25 +384,30 @@ public struct ReservedIpv6: Codable {
     }
 
     init() {
-        (self.ip, self.reservedAt, self.regionSlug, self.droplet) = (nil, nil, nil, nil)
+        (ip, reservedAt, regionSlug, droplet) = (nil, nil, nil, nil)
     }
 }
 
-extension ReservedIpv6 {
-    public init(from decoder: Decoder) throws {
+public extension ReservedIpv6 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.ip = try container.sdkDecodeIfPresent(.ip)
-        self.reservedAt = try container.sdkDecodeIfPresent(.reservedAt)
-        self.regionSlug = try container.sdkDecodeIfPresent(.regionSlug)
-        self.droplet = try container.sdkDecodeIfPresent(.droplet)
-        if let value = self.reservedAt {
+        ip = try container.sdkDecodeIfPresent(.ip)
+        reservedAt = try container.sdkDecodeIfPresent(.reservedAt)
+        regionSlug = try container.sdkDecodeIfPresent(.regionSlug)
+        droplet = try container.sdkDecodeIfPresent(.droplet)
+        if let value = reservedAt {
             try sdkValidateDateTime("reserved_at", sdkWireString(value))
         }
     }
 }
 
-extension ReservedIpv6 {
-    public init(ip: String? = nil, reservedAt: Date? = nil, regionSlug: String? = nil, droplet: ReservedIpv6Droplet? = nil) throws {
+public extension ReservedIpv6 {
+    init(
+        ip: String? = nil,
+        reservedAt: Date? = nil,
+        regionSlug: String? = nil,
+        droplet: ReservedIpv6Droplet? = nil
+    ) throws {
         self.init()
         (self.ip, self.reservedAt) = (ip, reservedAt)
         (self.regionSlug, self.droplet) = (regionSlug, droplet)

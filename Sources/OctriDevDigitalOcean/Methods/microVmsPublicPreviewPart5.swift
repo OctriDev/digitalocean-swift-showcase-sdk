@@ -6,34 +6,94 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension MicroVmsPublicPreviewMethods {
-    /// To delete a checkpoint, send a DELETE request to `/v2/microvms/checkpoints/{checkpoint_id}`. You can no longer create MicroVMs from a deleted checkpoint. The request returns HTTP 400 while the checkpoint is still being captured. A successful request returns a `204 No Content` status code.
+public extension MicroVmsPublicPreviewMethods {
+    /// To delete a checkpoint, send a DELETE request to `/v2/microvms/checkpoints/{checkpoint_id}`. You can no longer
+    /// create MicroVMs from a deleted checkpoint. The request returns HTTP 400 while the checkpoint is still being
+    /// captured. A successful request returns a `204 No Content` status code.
     ///
     /// - Parameters:
     /// - checkpointId: The unique ID of the checkpoint.
-    public static func microvmCheckpointsDelete(config: ClientConfig, checkpointId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func microvmCheckpointsDelete(
+        config: ClientConfig,
+        checkpointId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("checkpoint_id", checkpointId)
 
-        return try (await sdkRequest("DELETE", ["/v2/microvms/checkpoints/", sdkEncodePathSegment(sdkWireString(checkpointId))].joined(), config: config, decoder: .empty, operationId: "microvmCheckpoints_delete", options: requestOptions, errors: ["400": MicrovmError.self, "401": Error2.self, "404": MicrovmError.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "DELETE",
+            ["/v2/microvms/checkpoints/", sdkEncodePathSegment(sdkWireString(checkpointId))].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "microvmCheckpoints_delete",
+            options: requestOptions,
+            errors: [
+                "400": MicrovmError.self,
+                "401": Error2.self,
+                "404": MicrovmError.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To show information about a MicroVM, send a GET request to `/v2/microvms/{microvm_id}`. The endpoint is in the `urls` entry with `default` set to `true`. Its `hostname` is empty and its `status` is `PENDING` until provisioning finishes.
+    /// To show information about a MicroVM, send a GET request to `/v2/microvms/{microvm_id}`. The endpoint is in the
+    /// `urls` entry with `default` set to `true`. Its `hostname` is empty and its `status` is `PENDING` until
+    /// provisioning finishes.
     ///
     /// - Parameters:
     /// - microvmId: The unique ID of the MicroVM.
-    public static func microvmsGet(config: ClientConfig, microvmId: String, requestOptions: RequestOptions? = nil) async throws -> MicrovmResponse {
+    static func microvmsGet(
+        config: ClientConfig,
+        microvmId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> MicrovmResponse {
         try sdkValidateUuid("microvm_id", microvmId)
 
-        return try (await sdkRequest("GET", ["/v2/microvms/", sdkEncodePathSegment(sdkWireString(microvmId))].joined(), config: config, decoder: .json, operationId: "microvms_get", options: requestOptions, errors: ["401": Error2.self, "404": MicrovmError.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/microvms/", sdkEncodePathSegment(sdkWireString(microvmId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "microvms_get",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": MicrovmError.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To delete a MicroVM and the data on its disk, send a DELETE request to `/v2/microvms/{microvm_id}`. The MicroVM's checkpoints are not deleted. A successful request returns a `204 No Content` status code.
+    /// To delete a MicroVM and the data on its disk, send a DELETE request to `/v2/microvms/{microvm_id}`. The
+    /// MicroVM's checkpoints are not deleted. A successful request returns a `204 No Content` status code.
     ///
     /// - Parameters:
     /// - microvmId: The unique ID of the MicroVM.
-    public static func microvmsDelete(config: ClientConfig, microvmId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func microvmsDelete(
+        config: ClientConfig,
+        microvmId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("microvm_id", microvmId)
 
-        return try (await sdkRequest("DELETE", ["/v2/microvms/", sdkEncodePathSegment(sdkWireString(microvmId))].joined(), config: config, decoder: .empty, operationId: "microvms_delete", options: requestOptions, errors: ["401": Error2.self, "404": MicrovmError.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "DELETE",
+            ["/v2/microvms/", sdkEncodePathSegment(sdkWireString(microvmId))].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "microvms_delete",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": MicrovmError.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

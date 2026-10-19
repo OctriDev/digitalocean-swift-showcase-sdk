@@ -6,28 +6,45 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension CdnEndpointsMethods {
+public extension CdnEndpointsMethods {
     /// To list all of the CDN endpoints available on your account, send a GET request to `/v2/cdn/endpoints`.
     ///
     /// - Parameters:
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    public static func cdnListEndpoints(config: ClientConfig, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AllCdnEndpoints {
-        if let perPage = perPage {
+    static func cdnListEndpoints(
+        config: ClientConfig,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AllCdnEndpoints {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page = page {
+        if let page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try (await sdkRequest("GET", "/v2/cdn/endpoints", config: config, query: [
-            SdkQueryParameter("per_page", value: perPage),
-            SdkQueryParameter("page", value: page),
-        ], decoder: .json, operationId: "cdn_list_endpoints", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/v2/cdn/endpoints",
+            config: config,
+            query: [
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("page", value: page),
+            ],
+            decoder: .json,
+            operationId: "cdn_list_endpoints",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 
-    /// To create a new CDN endpoint, send a POST request to `/v2/cdn/endpoints`. The origin attribute must be set to the fully qualified domain name (FQDN) of a DigitalOcean Space. Optionally, the TTL may be configured by setting the `ttl` attribute. A custom subdomain may be configured by specifying the `custom_domain` and `certificate_id` attributes.
+    /// To create a new CDN endpoint, send a POST request to `/v2/cdn/endpoints`. The origin attribute must be set to
+    /// the fully qualified domain name (FQDN) of a DigitalOcean Space. Optionally, the TTL may be configured by setting
+    /// the `ttl` attribute. A custom subdomain may be configured by specifying the `custom_domain` and `certificate_id`
+    /// attributes.
     ///
     /// - Parameters:
     /// - origin: The fully qualified domain name (FQDN) for the origin server which
@@ -39,13 +56,34 @@ extension CdnEndpointsMethods {
     ///   SSL when a custom subdomain is provided.
     /// - customDomain: The fully qualified domain name (FQDN) of the custom
     ///   subdomain used with the CDN endpoint.
-    public static func cdnCreateEndpoint(config: ClientConfig, origin: String, ttl: Int? = nil, certificateId: String? = nil, customDomain: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ExistingEndpoint {
-        if let certificateId = certificateId {
+    static func cdnCreateEndpoint(
+        config: ClientConfig,
+        origin: String,
+        ttl: Int? = nil,
+        certificateId: String? = nil,
+        customDomain: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExistingEndpoint {
+        if let certificateId {
             try sdkValidateUuid("certificate_id", certificateId)
         }
 
-        let requestBody = CdnCreateEndpointRequestBody(origin: origin, ttl: ttl, certificateId: certificateId, customDomain: customDomain)
+        let requestBody = CdnCreateEndpointRequestBody(
+            origin: origin,
+            ttl: ttl,
+            certificateId: certificateId,
+            customDomain: customDomain
+        )
 
-        return try (await sdkRequest("POST", "/v2/cdn/endpoints", config: config, body: requestBody, decoder: .json, operationId: "cdn_create_endpoint", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/cdn/endpoints",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "cdn_create_endpoint",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

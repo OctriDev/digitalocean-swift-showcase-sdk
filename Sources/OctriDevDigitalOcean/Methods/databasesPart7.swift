@@ -6,38 +6,105 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DatabasesMethods {
-    /// To list all of a database cluster's firewall rules (known as "trusted sources" in the control panel), send a GET request to `/v2/databases/$DATABASE_ID/firewall`. The result will be a JSON object with a `rules` key.
+public extension DatabasesMethods {
+    /// To list all of a database cluster's firewall rules (known as "trusted sources" in the control panel), send a GET
+    /// request to `/v2/databases/$DATABASE_ID/firewall`. The result will be a JSON object with a `rules` key.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    public static func databasesListFirewallRules(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> FirewallRulesResponse {
+    static func databasesListFirewallRules(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> FirewallRulesResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/firewall"].joined(), config: config, decoder: .json, operationId: "databases_list_firewall_rules", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/firewall"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "databases_list_firewall_rules",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Replaces the trusted-source firewall rules for a database cluster. Send the `rules` array to specify which Droplets, Kubernetes clusters, IP addresses, tags, or apps can connect. The firewall accepts at most 100 rules and does not support IPv6 addresses; consider using a VPC network to limit database access instead.
+    /// Replaces the trusted-source firewall rules for a database cluster. Send the `rules` array to specify which
+    /// Droplets, Kubernetes clusters, IP addresses, tags, or apps can connect. The firewall accepts at most 100 rules
+    /// and does not support IPv6 addresses; consider using a VPC network to limit database access instead.
     ///
-    /// To update a database cluster's firewall rules (known as "trusted sources" in the control panel), send a PUT request to `/v2/databases/$DATABASE_ID/firewall` specifying which resources should be able to open connections to the database. You may limit connections to specific Droplets, Kubernetes clusters, or IP addresses. When a tag is provided, any Droplet or Kubernetes node with that tag applied to it will have access. The firewall is limited to 100 rules (or trusted sources). You cannot add IPv6 addresses as trusted sources. For additional limits, see your database engine's limits page. When possible, we recommend [placing your databases into a VPC network](https://docs.digitalocean.com/products/networking/vpc/) to limit access to them instead of using a firewall. A successful request returns a 204 status code with no content.
+    /// To update a database cluster's firewall rules (known as "trusted sources" in the control panel), send a PUT
+    /// request to `/v2/databases/$DATABASE_ID/firewall` specifying which resources should be able to open connections
+    /// to the database. You may limit connections to specific Droplets, Kubernetes clusters, or IP addresses. When a
+    /// tag is provided, any Droplet or Kubernetes node with that tag applied to it will have access. The firewall is
+    /// limited to 100 rules (or trusted sources). You cannot add IPv6 addresses as trusted sources. For additional
+    /// limits, see your database engine's limits page. When possible, we recommend [placing your databases into a VPC
+    /// network](https://docs.digitalocean.com/products/networking/vpc/) to limit access to them instead of using a
+    /// firewall. A successful request returns a 204 status code with no content.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    public static func databasesUpdateFirewallRules(config: ClientConfig, databaseClusterUuid: String, rules: [FirewallRuleRequest]? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func databasesUpdateFirewallRules(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        rules: [FirewallRuleRequest]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
         let requestBody = DatabasesUpdateFirewallRulesRequestBody(rules: rules)
 
-        return try (await sdkRequest("PUT", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/firewall"].joined(), config: config, body: requestBody, decoder: .empty, operationId: "databases_update_firewall_rules", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/firewall"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .empty,
+            operationId: "databases_update_firewall_rules",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To retrieve the DigitalOcean-specific settings for a database cluster, send a GET request to `/v2/databases/$DATABASE_ID/do_settings`. The response will include the current `service_cnames` configuration.
+    /// To retrieve the DigitalOcean-specific settings for a database cluster, send a GET request to
+    /// `/v2/databases/$DATABASE_ID/do_settings`. The response will include the current `service_cnames` configuration.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    public static func databasesGetDoSettings(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> DoSettingsResponse {
+    static func databasesGetDoSettings(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DoSettingsResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/do_settings"].joined(), config: config, decoder: .json, operationId: "databases_get_do_settings", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/do_settings"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "databases_get_do_settings",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

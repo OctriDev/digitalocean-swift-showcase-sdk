@@ -6,15 +6,37 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ProjectResourcesMethods {
-    /// To assign resources to your default project, send a POST request to `/v2/projects/default/resources`. You must have both `project:assign_resource` and `<resource>:read` scopes to assign new resources. For example, to assign a Droplet to the default project, include both the `project:assign_resource` and `droplet:read` scopes. The `project:update` scope also grants `project:assign_resource`.
+public extension ProjectResourcesMethods {
+    /// To assign resources to your default project, send a POST request to `/v2/projects/default/resources`. You must
+    /// have both `project:assign_resource` and `<resource>:read` scopes to assign new resources. For example, to assign
+    /// a Droplet to the default project, include both the `project:assign_resource` and `droplet:read` scopes. The
+    /// `project:update` scope also grants `project:assign_resource`.
     ///
     /// - Parameters:
     /// - resources: A list of uniform resource names (URNs) to be added to a
     ///   project. Only resources that you are authorized to see will be returned.
-    public static func projectsAssignResourcesDefault(config: ClientConfig, resources: [Urn]? = nil, requestOptions: RequestOptions? = nil) async throws -> AssignedResourcesList {
+    static func projectsAssignResourcesDefault(
+        config: ClientConfig,
+        resources: [Urn]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AssignedResourcesList {
         let requestBody = ProjectsAssignResourcesDefaultRequestBody(resources: resources)
 
-        return try (await sdkRequest("POST", "/v2/projects/default/resources", config: config, body: requestBody, decoder: .json, operationId: "projects_assign_resources_default", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/projects/default/resources",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "projects_assign_resources_default",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

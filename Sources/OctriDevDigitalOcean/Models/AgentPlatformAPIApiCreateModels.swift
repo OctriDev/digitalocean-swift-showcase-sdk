@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiCreate domain models
+/// AgentPlatformAPIApiCreate domain models
 /// Typed representation of the `ApiCreateEvaluationTestCaseOutput` API schema.
 public struct ApiCreateEvaluationTestCaseOutput: Codable {
     /// Test‑case UUID.
@@ -15,19 +15,19 @@ public struct ApiCreateEvaluationTestCaseOutput: Codable {
     }
 
     init() {
-        self.testCaseUuid = nil
+        testCaseUuid = nil
     }
 }
 
-extension ApiCreateEvaluationTestCaseOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateEvaluationTestCaseOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.testCaseUuid = try container.sdkDecodeIfPresent(.testCaseUuid)
+        testCaseUuid = try container.sdkDecodeIfPresent(.testCaseUuid)
     }
 }
 
-extension ApiCreateEvaluationTestCaseOutput {
-    public init(testCaseUuid: String? = nil) {
+public extension ApiCreateEvaluationTestCaseOutput {
+    init(testCaseUuid: String? = nil) {
         self.init()
         self.testCaseUuid = testCaseUuid
     }
@@ -44,19 +44,19 @@ public struct ApiCreateEvaluationDatasetOutput: Codable {
     }
 
     init() {
-        self.evaluationDatasetUuid = nil
+        evaluationDatasetUuid = nil
     }
 }
 
-extension ApiCreateEvaluationDatasetOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateEvaluationDatasetOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.evaluationDatasetUuid = try container.sdkDecodeIfPresent(.evaluationDatasetUuid)
+        evaluationDatasetUuid = try container.sdkDecodeIfPresent(.evaluationDatasetUuid)
     }
 }
 
-extension ApiCreateEvaluationDatasetOutput {
-    public init(evaluationDatasetUuid: String? = nil) {
+public extension ApiCreateEvaluationDatasetOutput {
+    init(evaluationDatasetUuid: String? = nil) {
         self.init()
         self.evaluationDatasetUuid = evaluationDatasetUuid
     }
@@ -72,19 +72,19 @@ public struct ApiCreateScenarioSetUploadPresignedUrlsInputPublic: Codable {
     }
 
     init() {
-        self.files = nil
+        files = nil
     }
 }
 
-extension ApiCreateScenarioSetUploadPresignedUrlsInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateScenarioSetUploadPresignedUrlsInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.files = try container.sdkDecodeIfPresent(.files)
+        files = try container.sdkDecodeIfPresent(.files)
     }
 }
 
-extension ApiCreateScenarioSetUploadPresignedUrlsInputPublic {
-    public init(files: [ApiPresignedUrlFile]? = nil) {
+public extension ApiCreateScenarioSetUploadPresignedUrlsInputPublic {
+    init(files: [ApiPresignedUrlFile]? = nil) {
         self.init()
         self.files = files
     }
@@ -100,19 +100,19 @@ public struct ApiCreateScenarioSetOutput: Codable {
     }
 
     init() {
-        self.scenarioSet = nil
+        scenarioSet = nil
     }
 }
 
-extension ApiCreateScenarioSetOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateScenarioSetOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.scenarioSet = try container.sdkDecodeIfPresent(.scenarioSet)
+        scenarioSet = try container.sdkDecodeIfPresent(.scenarioSet)
     }
 }
 
-extension ApiCreateScenarioSetOutput {
-    public init(scenarioSet: ApiScenarioSet? = nil) {
+public extension ApiCreateScenarioSetOutput {
+    init(scenarioSet: ApiScenarioSet? = nil) {
         self.init()
         self.scenarioSet = scenarioSet
     }
@@ -128,19 +128,19 @@ public struct ApiCreateModelEvalDatasetUploadPresignedUrlsInputPublic: Codable {
     }
 
     init() {
-        self.files = nil
+        files = nil
     }
 }
 
-extension ApiCreateModelEvalDatasetUploadPresignedUrlsInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateModelEvalDatasetUploadPresignedUrlsInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.files = try container.sdkDecodeIfPresent(.files)
+        files = try container.sdkDecodeIfPresent(.files)
     }
 }
 
-extension ApiCreateModelEvalDatasetUploadPresignedUrlsInputPublic {
-    public init(files: [ApiPresignedUrlFile]? = nil) {
+public extension ApiCreateModelEvalDatasetUploadPresignedUrlsInputPublic {
+    init(files: [ApiPresignedUrlFile]? = nil) {
         self.init()
         self.files = files
     }
@@ -169,22 +169,27 @@ public struct ApiCreateEvaluationDatasetInputPublic: Codable {
     }
 
     init() {
-        (self.datasetParadigm, self.datasetType, self.fileUploadDataset, self.name) = (nil, nil, nil, nil)
+        (datasetParadigm, datasetType, fileUploadDataset, name) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiCreateEvaluationDatasetInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateEvaluationDatasetInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.datasetParadigm = try container.sdkDecodeIfPresent(.datasetParadigm)
-        self.datasetType = try container.sdkDecodeIfPresent(.datasetType)
-        self.fileUploadDataset = try container.sdkDecodeIfPresent(.fileUploadDataset)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        datasetParadigm = try container.sdkDecodeIfPresent(.datasetParadigm)
+        datasetType = try container.sdkDecodeIfPresent(.datasetType)
+        fileUploadDataset = try container.sdkDecodeIfPresent(.fileUploadDataset)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ApiCreateEvaluationDatasetInputPublic {
-    public init(datasetParadigm: ApiEvaluationDatasetParadigm? = nil, datasetType: ApiEvaluationDatasetType? = nil, fileUploadDataset: ApiFileUploadDataSource? = nil, name: String? = nil) {
+public extension ApiCreateEvaluationDatasetInputPublic {
+    init(
+        datasetParadigm: ApiEvaluationDatasetParadigm? = nil,
+        datasetType: ApiEvaluationDatasetType? = nil,
+        fileUploadDataset: ApiFileUploadDataSource? = nil,
+        name: String? = nil
+    ) {
         self.init()
         (self.datasetParadigm, self.datasetType) = (datasetParadigm, datasetType)
         (self.fileUploadDataset, self.name) = (fileUploadDataset, name)
@@ -201,19 +206,19 @@ public struct ApiCreateScheduledIndexingOutput: Codable {
     }
 
     init() {
-        self.indexingInfo = nil
+        indexingInfo = nil
     }
 }
 
-extension ApiCreateScheduledIndexingOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateScheduledIndexingOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.indexingInfo = try container.sdkDecodeIfPresent(.indexingInfo)
+        indexingInfo = try container.sdkDecodeIfPresent(.indexingInfo)
     }
 }
 
-extension ApiCreateScheduledIndexingOutput {
-    public init(indexingInfo: ApiScheduledIndexingInfo? = nil) {
+public extension ApiCreateScheduledIndexingOutput {
+    init(indexingInfo: ApiScheduledIndexingInfo? = nil) {
         self.init()
         self.indexingInfo = indexingInfo
     }
@@ -302,40 +307,60 @@ public struct ApiCreateAgentInputPublic: Codable {
     }
 
     init() {
-        (self.anthropicKeyUuid, self.description, self.instruction, self.knowledgeBaseUuid, self.mcpServers) = (nil, nil, nil, nil, nil)
-        (self.modelProviderKeyUuid, self.modelRouterUuid, self.modelUuid, self.name, self.openAiKeyUuid) = (nil, nil, nil, nil, nil)
-        (self.projectId, self.reasoningEffort, self.region, self.routerPresetSlug, self.tags) = (nil, nil, nil, nil, nil)
-        (self.thinkingTokenBudget, self.webFetchEnabled, self.webSearchEnabled, self.workspaceUuid) = (nil, nil, nil, nil)
+        (anthropicKeyUuid, description, instruction, knowledgeBaseUuid, mcpServers) = (nil, nil, nil, nil, nil)
+        (modelProviderKeyUuid, modelRouterUuid, modelUuid, name, openAiKeyUuid) = (nil, nil, nil, nil, nil)
+        (projectId, reasoningEffort, region, routerPresetSlug, tags) = (nil, nil, nil, nil, nil)
+        (thinkingTokenBudget, webFetchEnabled, webSearchEnabled, workspaceUuid) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiCreateAgentInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateAgentInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.anthropicKeyUuid = try container.sdkDecodeIfPresent(.anthropicKeyUuid)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.instruction = try container.sdkDecodeIfPresent(.instruction)
-        self.knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
-        self.mcpServers = try container.sdkDecodeIfPresent(.mcpServers)
-        self.modelProviderKeyUuid = try container.sdkDecodeIfPresent(.modelProviderKeyUuid)
-        self.modelRouterUuid = try container.sdkDecodeIfPresent(.modelRouterUuid)
-        self.modelUuid = try container.sdkDecodeIfPresent(.modelUuid)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.openAiKeyUuid = try container.sdkDecodeIfPresent(.openAiKeyUuid)
-        self.projectId = try container.sdkDecodeIfPresent(.projectId)
-        self.reasoningEffort = try container.sdkDecodeIfPresent(.reasoningEffort)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.routerPresetSlug = try container.sdkDecodeIfPresent(.routerPresetSlug)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.thinkingTokenBudget = try container.sdkDecodeIfPresent(.thinkingTokenBudget)
-        self.webFetchEnabled = try container.sdkDecodeIfPresent(.webFetchEnabled)
-        self.webSearchEnabled = try container.sdkDecodeIfPresent(.webSearchEnabled)
-        self.workspaceUuid = try container.sdkDecodeIfPresent(.workspaceUuid)
+        anthropicKeyUuid = try container.sdkDecodeIfPresent(.anthropicKeyUuid)
+        description = try container.sdkDecodeIfPresent(.description)
+        instruction = try container.sdkDecodeIfPresent(.instruction)
+        knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
+        mcpServers = try container.sdkDecodeIfPresent(.mcpServers)
+        modelProviderKeyUuid = try container.sdkDecodeIfPresent(.modelProviderKeyUuid)
+        modelRouterUuid = try container.sdkDecodeIfPresent(.modelRouterUuid)
+        modelUuid = try container.sdkDecodeIfPresent(.modelUuid)
+        name = try container.sdkDecodeIfPresent(.name)
+        openAiKeyUuid = try container.sdkDecodeIfPresent(.openAiKeyUuid)
+        projectId = try container.sdkDecodeIfPresent(.projectId)
+        reasoningEffort = try container.sdkDecodeIfPresent(.reasoningEffort)
+        region = try container.sdkDecodeIfPresent(.region)
+        routerPresetSlug = try container.sdkDecodeIfPresent(.routerPresetSlug)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        thinkingTokenBudget = try container.sdkDecodeIfPresent(.thinkingTokenBudget)
+        webFetchEnabled = try container.sdkDecodeIfPresent(.webFetchEnabled)
+        webSearchEnabled = try container.sdkDecodeIfPresent(.webSearchEnabled)
+        workspaceUuid = try container.sdkDecodeIfPresent(.workspaceUuid)
     }
 }
 
-extension ApiCreateAgentInputPublic {
-    public init(anthropicKeyUuid: String? = nil, description: String? = nil, instruction: String? = nil, knowledgeBaseUuid: [String]? = nil, mcpServers: [ApiMcpServer]? = nil, modelProviderKeyUuid: String? = nil, modelRouterUuid: String? = nil, modelUuid: String? = nil, name: String? = nil, openAiKeyUuid: String? = nil, projectId: String? = nil, reasoningEffort: String? = nil, region: String? = nil, routerPresetSlug: String? = nil, tags: [String]? = nil, thinkingTokenBudget: Int? = nil, webFetchEnabled: Bool? = nil, webSearchEnabled: Bool? = nil, workspaceUuid: String? = nil) {
+public extension ApiCreateAgentInputPublic {
+    init(
+        anthropicKeyUuid: String? = nil,
+        description: String? = nil,
+        instruction: String? = nil,
+        knowledgeBaseUuid: [String]? = nil,
+        mcpServers: [ApiMcpServer]? = nil,
+        modelProviderKeyUuid: String? = nil,
+        modelRouterUuid: String? = nil,
+        modelUuid: String? = nil,
+        name: String? = nil,
+        openAiKeyUuid: String? = nil,
+        projectId: String? = nil,
+        reasoningEffort: String? = nil,
+        region: String? = nil,
+        routerPresetSlug: String? = nil,
+        tags: [String]? = nil,
+        thinkingTokenBudget: Int? = nil,
+        webFetchEnabled: Bool? = nil,
+        webSearchEnabled: Bool? = nil,
+        workspaceUuid: String? = nil
+    ) {
         self.init()
         (self.anthropicKeyUuid, self.description) = (anthropicKeyUuid, description)
         (self.instruction, self.knowledgeBaseUuid) = (instruction, knowledgeBaseUuid)
@@ -384,26 +409,34 @@ public struct ApiCreateEvaluationTestCaseInputPublic: Codable {
     }
 
     init() {
-        (self.agentWorkspaceName, self.datasetUuid, self.description, self.metrics, self.name) = (nil, nil, nil, nil, nil)
-        (self.starMetric, self.workspaceUuid) = (nil, nil)
+        (agentWorkspaceName, datasetUuid, description, metrics, name) = (nil, nil, nil, nil, nil)
+        (starMetric, workspaceUuid) = (nil, nil)
     }
 }
 
-extension ApiCreateEvaluationTestCaseInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateEvaluationTestCaseInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agentWorkspaceName = try container.sdkDecodeIfPresent(.agentWorkspaceName)
-        self.datasetUuid = try container.sdkDecodeIfPresent(.datasetUuid)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.metrics = try container.sdkDecodeIfPresent(.metrics)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.starMetric = try container.sdkDecodeIfPresent(.starMetric)
-        self.workspaceUuid = try container.sdkDecodeIfPresent(.workspaceUuid)
+        agentWorkspaceName = try container.sdkDecodeIfPresent(.agentWorkspaceName)
+        datasetUuid = try container.sdkDecodeIfPresent(.datasetUuid)
+        description = try container.sdkDecodeIfPresent(.description)
+        metrics = try container.sdkDecodeIfPresent(.metrics)
+        name = try container.sdkDecodeIfPresent(.name)
+        starMetric = try container.sdkDecodeIfPresent(.starMetric)
+        workspaceUuid = try container.sdkDecodeIfPresent(.workspaceUuid)
     }
 }
 
-extension ApiCreateEvaluationTestCaseInputPublic {
-    public init(agentWorkspaceName: String? = nil, datasetUuid: String? = nil, description: String? = nil, metrics: [String]? = nil, name: String? = nil, starMetric: ApiStarMetric? = nil, workspaceUuid: String? = nil) {
+public extension ApiCreateEvaluationTestCaseInputPublic {
+    init(
+        agentWorkspaceName: String? = nil,
+        datasetUuid: String? = nil,
+        description: String? = nil,
+        metrics: [String]? = nil,
+        name: String? = nil,
+        starMetric: ApiStarMetric? = nil,
+        workspaceUuid: String? = nil
+    ) {
         self.init()
         (self.agentWorkspaceName, self.datasetUuid) = (agentWorkspaceName, datasetUuid)
         (self.description, self.metrics) = (description, metrics)
@@ -455,28 +488,38 @@ public struct ApiCreateSimulationRunInputPublic: Codable {
     }
 
     init() {
-        (self.agentConfig, self.evaluationConfig, self.explorationBudget, self.judgeModelUuid, self.maxTurns) = (nil, nil, nil, nil, nil)
-        (self.name, self.scenarioSetUuid, self.userSimulatorConfig, self.userSimulatorModelUuid) = (nil, nil, nil, nil)
+        (agentConfig, evaluationConfig, explorationBudget, judgeModelUuid, maxTurns) = (nil, nil, nil, nil, nil)
+        (name, scenarioSetUuid, userSimulatorConfig, userSimulatorModelUuid) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiCreateSimulationRunInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateSimulationRunInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agentConfig = try container.sdkDecodeIfPresent(.agentConfig)
-        self.evaluationConfig = try container.sdkDecodeIfPresent(.evaluationConfig)
-        self.explorationBudget = try container.sdkDecodeIfPresent(.explorationBudget)
-        self.judgeModelUuid = try container.sdkDecodeIfPresent(.judgeModelUuid)
-        self.maxTurns = try container.sdkDecodeIfPresent(.maxTurns)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.scenarioSetUuid = try container.sdkDecodeIfPresent(.scenarioSetUuid)
-        self.userSimulatorConfig = try container.sdkDecodeIfPresent(.userSimulatorConfig)
-        self.userSimulatorModelUuid = try container.sdkDecodeIfPresent(.userSimulatorModelUuid)
+        agentConfig = try container.sdkDecodeIfPresent(.agentConfig)
+        evaluationConfig = try container.sdkDecodeIfPresent(.evaluationConfig)
+        explorationBudget = try container.sdkDecodeIfPresent(.explorationBudget)
+        judgeModelUuid = try container.sdkDecodeIfPresent(.judgeModelUuid)
+        maxTurns = try container.sdkDecodeIfPresent(.maxTurns)
+        name = try container.sdkDecodeIfPresent(.name)
+        scenarioSetUuid = try container.sdkDecodeIfPresent(.scenarioSetUuid)
+        userSimulatorConfig = try container.sdkDecodeIfPresent(.userSimulatorConfig)
+        userSimulatorModelUuid = try container.sdkDecodeIfPresent(.userSimulatorModelUuid)
     }
 }
 
-extension ApiCreateSimulationRunInputPublic {
-    public init(agentConfig: ApiCandidateAgentConfig? = nil, evaluationConfig: ApiSimulationEvaluationConfig? = nil, explorationBudget: Int? = nil, judgeModelUuid: String? = nil, maxTurns: Int? = nil, name: String? = nil, scenarioSetUuid: String? = nil, userSimulatorConfig: [String: JSONValue]? = nil, userSimulatorModelUuid: String? = nil) {
+public extension ApiCreateSimulationRunInputPublic {
+    init(
+        agentConfig: ApiCandidateAgentConfig? = nil,
+        evaluationConfig: ApiSimulationEvaluationConfig? = nil,
+        explorationBudget: Int? = nil,
+        judgeModelUuid: String? = nil,
+        maxTurns: Int? = nil,
+        name: String? = nil,
+        scenarioSetUuid: String? = nil,
+        userSimulatorConfig: [String: JSONValue]? = nil,
+        userSimulatorModelUuid: String? = nil
+    ) {
         self.init()
         (self.agentConfig, self.evaluationConfig) = (agentConfig, evaluationConfig)
         (self.explorationBudget, self.judgeModelUuid) = (explorationBudget, judgeModelUuid)

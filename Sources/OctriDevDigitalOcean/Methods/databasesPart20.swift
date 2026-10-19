@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DatabasesMethods {
-    /// To update a connection pool for a PostgreSQL database cluster, send a PUT request to `/v2/databases/$DATABASE_ID/pools/$POOL_NAME`.
+public extension DatabasesMethods {
+    /// To update a connection pool for a PostgreSQL database cluster, send a PUT request to
+    /// `/v2/databases/$DATABASE_ID/pools/$POOL_NAME`.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
@@ -24,11 +25,40 @@ extension DatabasesMethods {
     /// - db: The database for use with the connection pool.
     /// - user: The name of the user for use with the connection pool. When
     ///   excluded, all sessions connect to the database as the inbound user.
-    public static func databasesUpdateConnectionPool(config: ClientConfig, databaseClusterUuid: String, poolName: String, mode: String, size: Int, db: String, user: String? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func databasesUpdateConnectionPool(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        poolName: String,
+        mode: String,
+        size: Int,
+        db: String,
+        user: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
         let requestBody = DatabasesUpdateConnectionPoolRequestBody(mode: mode, size: size, db: db, user: user)
 
-        return try (await sdkRequest("PUT", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/pools/", sdkEncodePathSegment(sdkWireString(poolName))].joined(), config: config, body: requestBody, decoder: .empty, operationId: "databases_update_connectionPool", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            [
+                "/v2/databases/",
+                sdkEncodePathSegment(sdkWireString(databaseClusterUuid)),
+                "/pools/",
+                sdkEncodePathSegment(sdkWireString(poolName)),
+            ].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .empty,
+            operationId: "databases_update_connectionPool",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

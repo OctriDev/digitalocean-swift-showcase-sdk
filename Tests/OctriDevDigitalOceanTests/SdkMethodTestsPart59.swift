@@ -6,7 +6,8 @@ import Foundation
 import XCTest
 
 extension SdkMethodTests {
-    func testPartnerAttachmentsListRemoteRoutesPartnerAttachmentsListRemoteRoutes401ReachesMockAndDecodesResponse() async throws {
+    func testPartnerAttachmentsListRemoteRoutesPartnerAttachmentsListRemoteRoutes401ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -17,10 +18,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.partnerNetworkConnect.partnerAttachmentsListRemoteRoutes(
-            paId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                paId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -66,9 +67,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.partnerNetworkConnect.partnerAttachmentsPatch(
-            paId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            body: decoded("{\"name\":\"env.prod-partner-network-connect\"}")
-        )
+                paId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+                body: decoded("{\"name\":\"env.prod-partner-network-connect\"}")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -198,9 +199,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.projectResources.projectsAssignResources(
-            projectId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            resources: decoded("[\"do:droplet:13457723\",\"do:domain:example.com\"]")
-        )
+                projectId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+                resources: decoded("[\"do:droplet:13457723\",\"do:domain:example.com\"]")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -234,7 +235,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testProjectsAssignResourcesDefaultProjectsAssignResourcesDefault401ReachesMockAndDecodesResponse() async throws {
+    func testProjectsAssignResourcesDefaultProjectsAssignResourcesDefault401ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -245,8 +247,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.projectResources.projectsAssignResourcesDefault(
-            resources: decoded("[\"do:droplet:13457723\",\"do:domain:example.com\"]")
-        )
+                resources: decoded("[\"do:droplet:13457723\",\"do:domain:example.com\"]")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -294,11 +296,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.projects.create(
-            name: decoded("\"my-web-api\""),
-            purpose: decoded("\"Service or API\""),
-            description: decoded("\"My website API\""),
-            environment: decoded("\"Production\"")
-        )
+                name: decoded("\"my-web-api\""),
+                purpose: decoded("\"Service or API\""),
+                description: decoded("\"My website API\""),
+                environment: decoded("\"Production\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -336,8 +338,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.projects.delete(
-            projectId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
-        )
+                projectId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -382,8 +384,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.projects.get(
-            projectId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
-        )
+                projectId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -471,9 +473,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.projects.list(
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -520,10 +522,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.projectResources.projectsListResources(
-            projectId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                projectId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

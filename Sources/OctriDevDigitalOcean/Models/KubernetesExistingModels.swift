@@ -3,7 +3,7 @@
 
 import Foundation
 
-// KubernetesExisting domain models
+/// KubernetesExisting domain models
 /// Typed representation of the `ExistingCluster` API schema.
 public struct ExistingCluster: Codable {
     /// Optional object value serialized in the `kubernetes_cluster` wire field.
@@ -14,19 +14,19 @@ public struct ExistingCluster: Codable {
     }
 
     init() {
-        self.kubernetesCluster = nil
+        kubernetesCluster = nil
     }
 }
 
-extension ExistingCluster {
-    public init(from decoder: Decoder) throws {
+public extension ExistingCluster {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.kubernetesCluster = try container.sdkDecodeIfPresent(.kubernetesCluster)
+        kubernetesCluster = try container.sdkDecodeIfPresent(.kubernetesCluster)
     }
 }
 
-extension ExistingCluster {
-    public init(kubernetesCluster: ClusterRead? = nil) {
+public extension ExistingCluster {
+    init(kubernetesCluster: ClusterRead? = nil) {
         self.init()
         self.kubernetesCluster = kubernetesCluster
     }
@@ -42,19 +42,19 @@ public struct ExistingNodePool: Codable {
     }
 
     init() {
-        self.nodePool = nil
+        nodePool = nil
     }
 }
 
-extension ExistingNodePool {
-    public init(from decoder: Decoder) throws {
+public extension ExistingNodePool {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.nodePool = try container.sdkDecodeIfPresent(.nodePool)
+        nodePool = try container.sdkDecodeIfPresent(.nodePool)
     }
 }
 
-extension ExistingNodePool {
-    public init(nodePool: KubernetesNodePool? = nil) {
+public extension ExistingNodePool {
+    init(nodePool: KubernetesNodePool? = nil) {
         self.init()
         self.nodePool = nodePool
     }

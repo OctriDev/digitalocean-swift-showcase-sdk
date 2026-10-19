@@ -6,23 +6,58 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AddOnsMethods {
+public extension AddOnsMethods {
     /// To fetch details of all available Add-On Applications, send a GET request to `/v2/add-ons/apps`.
-    public static func addonsGetApp(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> AddonsGetApp {
-        return try (await sdkRequest("GET", "/v2/add-ons/apps", config: config, decoder: .json, operationId: "addons_get_app", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func addonsGetApp(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> AddonsGetApp {
+        try await (sdkRequest(
+            "GET",
+            "/v2/add-ons/apps",
+            config: config,
+            decoder: .json,
+            operationId: "addons_get_app",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 
-    /// To find out what metadata is required for a specific add-on, send a GET request to `/v2/add-ons/apps/{app_slug}/metadata`. Metadata varies by application.
+    /// To find out what metadata is required for a specific add-on, send a GET request to
+    /// `/v2/add-ons/apps/{app_slug}/metadata`. Metadata varies by application.
     ///
     /// - Parameters:
     /// - appSlug: The slug identifier for the application whose metadata is being
     ///   requested.
-    public static func addonsGetAppMetadata(config: ClientConfig, appSlug: String, requestOptions: RequestOptions? = nil) async throws -> AddonsGetAppMetadata {
-        return try (await sdkRequest("GET", ["/v2/add-ons/apps/", sdkEncodePathSegment(sdkWireString(appSlug)), "/metadata"].joined(), config: config, decoder: .json, operationId: "addons_get_app_metadata", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func addonsGetAppMetadata(
+        config: ClientConfig,
+        appSlug: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AddonsGetAppMetadata {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/add-ons/apps/", sdkEncodePathSegment(sdkWireString(appSlug)), "/metadata"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "addons_get_app_metadata",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
     /// To fetch all Add-On Resources under your team, send a GET request to `/v2/add-ons/saas`.
-    public static func addonsList(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> AddonsList {
-        return try (await sdkRequest("GET", "/v2/add-ons/saas", config: config, decoder: .json, operationId: "addons_list", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func addonsList(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> AddonsList {
+        try await (sdkRequest(
+            "GET",
+            "/v2/add-ons/saas",
+            config: config,
+            decoder: .json,
+            operationId: "addons_list",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

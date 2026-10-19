@@ -11,7 +11,12 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try AppsMethods.AppsGetJobInvocationLogsOptions(appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""), jobName: decoded("\"component\""), jobInvocationId: decoded("\"123e4567-e89b-12d3-a456-426\""), type: decoded("\"JOB_INVOCATION\""))
+        var options = try AppsMethods.AppsGetJobInvocationLogsOptions(
+            appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
+            jobName: decoded("\"component\""),
+            jobInvocationId: decoded("\"123e4567-e89b-12d3-a456-426\""),
+            type: decoded("\"JOB_INVOCATION\"")
+        )
         options.deploymentId = try decoded("\"3aa4d20e-5527-4c00-b496-601fbd22520a\"")
         options.follow = try decoded("true")
         options.podConnectionTimeout = try decoded("\"3m\"")
@@ -34,7 +39,12 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try AppsMethods.AppsGetJobInvocationLogsOptions(appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""), jobName: decoded("\"component\""), jobInvocationId: decoded("\"123e4567-e89b-12d3-a456-426\""), type: decoded("\"JOB_INVOCATION\""))
+        var options = try AppsMethods.AppsGetJobInvocationLogsOptions(
+            appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
+            jobName: decoded("\"component\""),
+            jobInvocationId: decoded("\"123e4567-e89b-12d3-a456-426\""),
+            type: decoded("\"JOB_INVOCATION\"")
+        )
         options.deploymentId = try decoded("\"3aa4d20e-5527-4c00-b496-601fbd22520a\"")
         options.follow = try decoded("true")
         options.podConnectionTimeout = try decoded("\"3m\"")
@@ -45,8 +55,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.apps.getJobInvocationLogs(
-            options: options
-        )
+                options: options
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -96,13 +106,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.apps.getLogs(
-            appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
-            deploymentId: decoded("\"3aa4d20e-5527-4c00-b496-601fbd22520a\""),
-            componentName: decoded("\"component\""),
-            type: decoded("\"BUILD\""),
-            follow: decoded("true"),
-            podConnectionTimeout: decoded("\"3m\"")
-        )
+                appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
+                deploymentId: decoded("\"3aa4d20e-5527-4c00-b496-601fbd22520a\""),
+                componentName: decoded("\"component\""),
+                type: decoded("\"BUILD\""),
+                follow: decoded("true"),
+                podConnectionTimeout: decoded("\"3m\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -151,12 +161,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.apps.getLogsActiveDeployment(
-            appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
-            componentName: decoded("\"component\""),
-            type: decoded("\"BUILD\""),
-            follow: decoded("true"),
-            podConnectionTimeout: decoded("\"3m\"")
-        )
+                appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
+                componentName: decoded("\"component\""),
+                type: decoded("\"BUILD\""),
+                follow: decoded("true"),
+                podConnectionTimeout: decoded("\"3m\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -172,7 +182,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testAppsGetLogsActiveDeploymentAggregateAppsGetLogsActiveDeploymentAggregateReachesMockAndDecodesResponse() async throws {
+    func testAppsGetLogsActiveDeploymentAggregateAppsGetLogsActiveDeploymentAggregateReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -193,7 +204,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testAppsGetLogsActiveDeploymentAggregateAppsGetLogsActiveDeploymeX266236149dReachesMockAndDecodesResponse() async throws {
+    func testAppsGetLogsActiveDeploymentAggregateAppsGetLogsActiveDeploymeX266236149dReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -204,11 +216,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.apps.getLogsActiveDeploymentAggregate(
-            appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
-            type: decoded("\"BUILD\""),
-            follow: decoded("true"),
-            podConnectionTimeout: decoded("\"3m\"")
-        )
+                appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
+                type: decoded("\"BUILD\""),
+                follow: decoded("true"),
+                podConnectionTimeout: decoded("\"3m\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -257,12 +269,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.apps.getLogsAggregate(
-            appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
-            deploymentId: decoded("\"3aa4d20e-5527-4c00-b496-601fbd22520a\""),
-            type: decoded("\"BUILD\""),
-            follow: decoded("true"),
-            podConnectionTimeout: decoded("\"3m\"")
-        )
+                appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
+                deploymentId: decoded("\"3aa4d20e-5527-4c00-b496-601fbd22520a\""),
+                type: decoded("\"BUILD\""),
+                follow: decoded("true"),
+                podConnectionTimeout: decoded("\"3m\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -308,9 +320,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.apps.getMetricsBandwidthDaily(
-            appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
-            date: decoded("\"2023-01-17T00:00:00Z\"")
-        )
+                appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
+                date: decoded("\"2023-01-17T00:00:00Z\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -357,10 +369,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.apps.list(
-            page: decoded("1"),
-            perPage: decoded("2"),
-            withProjects: decoded("true")
-        )
+                page: decoded("1"),
+                perPage: decoded("2"),
+                withProjects: decoded("true")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -405,8 +417,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.apps.listAlerts(
-            appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\"")
-        )
+                appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -454,11 +466,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.apps.listDeployments(
-            appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
-            page: decoded("1"),
-            perPage: decoded("2"),
-            deploymentTypes: decoded("[\"MANUAL\",\"AUTOSCALED\"]")
-        )
+                appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
+                page: decoded("1"),
+                perPage: decoded("2"),
+                deploymentTypes: decoded("[\"MANUAL\",\"AUTOSCALED\"]")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -506,11 +518,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.apps.listEvents(
-            appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
-            page: decoded("1"),
-            perPage: decoded("2"),
-            eventTypes: decoded("[\"DEPLOYMENT\"]")
-        )
+                appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
+                page: decoded("1"),
+                perPage: decoded("2"),
+                eventTypes: decoded("[\"DEPLOYMENT\"]")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

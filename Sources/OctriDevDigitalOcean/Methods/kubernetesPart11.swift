@@ -6,18 +6,43 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension KubernetesMethods {
-    /// To show information about a specific node pool in a Kubernetes cluster, send a GET request to `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/node_pools/$NODE_POOL_ID`.
+public extension KubernetesMethods {
+    /// To show information about a specific node pool in a Kubernetes cluster, send a GET request to
+    /// `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/node_pools/$NODE_POOL_ID`.
     ///
     /// - Parameters:
     /// - clusterId: A unique ID that can be used to reference a Kubernetes cluster.
     /// - nodePoolId: A unique ID that can be used to reference a Kubernetes node
     ///   pool.
-    public static func kubernetesGetNodePool(config: ClientConfig, clusterId: String, nodePoolId: String, requestOptions: RequestOptions? = nil) async throws -> ExistingNodePool {
+    static func kubernetesGetNodePool(
+        config: ClientConfig,
+        clusterId: String,
+        nodePoolId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExistingNodePool {
         try sdkValidateUuid("cluster_id", clusterId)
 
         try sdkValidateUuid("node_pool_id", nodePoolId)
 
-        return try (await sdkRequest("GET", ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(clusterId)), "/node_pools/", sdkEncodePathSegment(sdkWireString(nodePoolId))].joined(), config: config, decoder: .json, operationId: "kubernetes_get_nodePool", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            [
+                "/v2/kubernetes/clusters/",
+                sdkEncodePathSegment(sdkWireString(clusterId)),
+                "/node_pools/",
+                sdkEncodePathSegment(sdkWireString(nodePoolId)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "kubernetes_get_nodePool",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

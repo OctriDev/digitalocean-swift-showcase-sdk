@@ -6,8 +6,13 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension KubernetesMethods {
-    /// To delete a single node in a pool, send a DELETE request to `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/node_pools/$NODE_POOL_ID/nodes/$NODE_ID`. Appending the `skip_drain=1` query parameter to the request causes node draining to be skipped. Omitting the query parameter or setting its value to `0` carries out draining prior to deletion. Appending the `replace=1` query parameter to the request causes the node to be replaced by a new one after deletion. Omitting the query parameter or setting its value to `0` deletes without replacement.
+public extension KubernetesMethods {
+    /// To delete a single node in a pool, send a DELETE request to
+    /// `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/node_pools/$NODE_POOL_ID/nodes/$NODE_ID`. Appending the `skip_drain=1`
+    /// query parameter to the request causes node draining to be skipped. Omitting the query parameter or setting its
+    /// value to `0` carries out draining prior to deletion. Appending the `replace=1` query parameter to the request
+    /// causes the node to be replaced by a new one after deletion. Omitting the query parameter or setting its value to
+    /// `0` deletes without replacement.
     ///
     /// - Parameters:
     /// - clusterId: A unique ID that can be used to reference a Kubernetes cluster.
@@ -23,24 +28,54 @@ extension KubernetesMethods {
     ///   deleted. Setting it to `1` causes the node to be replaced by a new one after
     ///   deletion. Omitting the query parameter or setting its value to `0` deletes
     ///   without replacement.
-    public static func kubernetesDeleteNode(config: ClientConfig, clusterId: String, nodePoolId: String, nodeId: String, skipDrain: Int? = nil, replace: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func kubernetesDeleteNode(
+        config: ClientConfig,
+        clusterId: String,
+        nodePoolId: String,
+        nodeId: String,
+        skipDrain: Int? = nil,
+        replace: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("cluster_id", clusterId)
 
         try sdkValidateUuid("node_pool_id", nodePoolId)
 
         try sdkValidateUuid("node_id", nodeId)
 
-        if let skipDrain = skipDrain {
+        if let skipDrain {
             try validateRange("skip_drain", Double(skipDrain), min: 0, max: 1)
         }
 
-        if let replace = replace {
+        if let replace {
             try validateRange("replace", Double(replace), min: 0, max: 1)
         }
 
-        return try (await sdkRequest("DELETE", ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(clusterId)), "/node_pools/", sdkEncodePathSegment(sdkWireString(nodePoolId)), "/nodes/", sdkEncodePathSegment(sdkWireString(nodeId))].joined(), config: config, query: [
-            SdkQueryParameter("skip_drain", value: skipDrain),
-            SdkQueryParameter("replace", value: replace),
-        ], decoder: .empty, operationId: "kubernetes_delete_node", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "DELETE",
+            [
+                "/v2/kubernetes/clusters/",
+                sdkEncodePathSegment(sdkWireString(clusterId)),
+                "/node_pools/",
+                sdkEncodePathSegment(sdkWireString(nodePoolId)),
+                "/nodes/",
+                sdkEncodePathSegment(sdkWireString(nodeId)),
+            ].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("skip_drain", value: skipDrain),
+                SdkQueryParameter("replace", value: replace),
+            ],
+            decoder: .empty,
+            operationId: "kubernetes_delete_node",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

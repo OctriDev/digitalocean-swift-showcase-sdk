@@ -3,7 +3,7 @@
 
 import Foundation
 
-// LoadBalancers domain models
+/// LoadBalancers domain models
 /// Optional object value serialized in the `load_balancer` wire field.
 public struct LoadBalancerVariant1: Codable {
     /// An attribute containing the public-facing IP address of the load balancer.
@@ -15,22 +15,22 @@ public struct LoadBalancerVariant1: Codable {
     }
 
     init() {
-        self.ip = nil
+        ip = nil
     }
 }
 
-extension LoadBalancerVariant1 {
-    public init(from decoder: Decoder) throws {
+public extension LoadBalancerVariant1 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.ip = try container.sdkDecodeIfPresent(.ip)
-        if let value = self.ip {
+        ip = try container.sdkDecodeIfPresent(.ip)
+        if let value = ip {
             try sdkValidatePattern("ip", value, sdkPattern456628267985)
         }
     }
 }
 
-extension LoadBalancerVariant1 {
-    public init(ip: String? = nil) throws {
+public extension LoadBalancerVariant1 {
+    init(ip: String? = nil) throws {
         self.init()
         self.ip = ip
         if let value = self.ip {
@@ -74,35 +74,60 @@ public struct ForwardingRule: Codable {
         case tlsPassthrough = "tls_passthrough"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ForwardingRule {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.entryProtocol) else {
-            throw SdkValidationError(field: "entry_protocol", code: "required", message: "Validation failed for 'entry_protocol': value is required")
-        }
-        guard container.contains(.entryPort) else {
-            throw SdkValidationError(field: "entry_port", code: "required", message: "Validation failed for 'entry_port': value is required")
-        }
-        guard container.contains(.targetProtocol) else {
-            throw SdkValidationError(field: "target_protocol", code: "required", message: "Validation failed for 'target_protocol': value is required")
-        }
-        guard container.contains(.targetPort) else {
-            throw SdkValidationError(field: "target_port", code: "required", message: "Validation failed for 'target_port': value is required")
-        }
-        self.entryProtocol = try container.sdkDecodeRequired(.entryProtocol)
-        self.entryPort = try container.sdkDecodeRequired(.entryPort)
-        self.targetProtocol = try container.sdkDecodeRequired(.targetProtocol)
-        self.targetPort = try container.sdkDecodeRequired(.targetPort)
-        self.certificateId = try container.sdkDecodeIfPresent(.certificateId)
-        self.tlsPassthrough = try container.sdkDecodeIfPresent(.tlsPassthrough)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ForwardingRule {
-    public init(entryProtocol: ForwardingRuleEntryProtocol, entryPort: Int, targetProtocol: ForwardingRuleTargetProtocol, targetPort: Int, certificateId: String? = nil, tlsPassthrough: Bool? = nil) {
+public extension ForwardingRule {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.entryProtocol) else {
+            throw SdkValidationError(
+                field: "entry_protocol",
+                code: "required",
+                message: "Validation failed for 'entry_protocol': value is required"
+            )
+        }
+        guard container.contains(.entryPort) else {
+            throw SdkValidationError(
+                field: "entry_port",
+                code: "required",
+                message: "Validation failed for 'entry_port': value is required"
+            )
+        }
+        guard container.contains(.targetProtocol) else {
+            throw SdkValidationError(
+                field: "target_protocol",
+                code: "required",
+                message: "Validation failed for 'target_protocol': value is required"
+            )
+        }
+        guard container.contains(.targetPort) else {
+            throw SdkValidationError(
+                field: "target_port",
+                code: "required",
+                message: "Validation failed for 'target_port': value is required"
+            )
+        }
+        entryProtocol = try container.sdkDecodeRequired(.entryProtocol)
+        entryPort = try container.sdkDecodeRequired(.entryPort)
+        targetProtocol = try container.sdkDecodeRequired(.targetProtocol)
+        targetPort = try container.sdkDecodeRequired(.targetPort)
+        certificateId = try container.sdkDecodeIfPresent(.certificateId)
+        tlsPassthrough = try container.sdkDecodeIfPresent(.tlsPassthrough)
+    }
+}
+
+public extension ForwardingRule {
+    init(
+        entryProtocol: ForwardingRuleEntryProtocol,
+        entryPort: Int,
+        targetProtocol: ForwardingRuleTargetProtocol,
+        targetPort: Int,
+        certificateId: String? = nil,
+        tlsPassthrough: Bool? = nil
+    ) {
         (self.entryProtocol, self.entryPort) = (entryProtocol, entryPort)
         (self.targetProtocol, self.targetPort) = (targetProtocol, targetPort)
         (self.certificateId, self.tlsPassthrough) = (certificateId, tlsPassthrough)
@@ -251,52 +276,90 @@ public struct LoadBalancer: Codable {
         case tag
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension LoadBalancer {
-    public init(from decoder: Decoder) throws {
+public extension LoadBalancer {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.forwardingRules) else {
-            throw SdkValidationError(field: "forwarding_rules", code: "required", message: "Validation failed for 'forwarding_rules': value is required")
+            throw SdkValidationError(
+                field: "forwarding_rules",
+                code: "required",
+                message: "Validation failed for 'forwarding_rules': value is required"
+            )
         }
-        self.forwardingRules = try container.sdkDecodeRequired(.forwardingRules)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.projectId = try container.sdkDecodeIfPresent(.projectId)
-        self.ipv6 = try container.sdkDecodeIfPresent(.ipv6)
-        self.sizeUnit = try container.sdkDecodeIfPresent(.sizeUnit)
-        self.size = try container.sdkDecodeIfPresent(.size)
-        self.algorithm = try container.sdkDecodeIfPresent(.algorithm)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.healthCheck = try container.sdkDecodeIfPresent(.healthCheck)
-        self.stickySessions = try container.sdkDecodeIfPresent(.stickySessions)
-        self.redirectHttpToHttps = try container.sdkDecodeIfPresent(.redirectHttpToHttps)
-        self.enableProxyProtocol = try container.sdkDecodeIfPresent(.enableProxyProtocol)
-        self.enableBackendKeepalive = try container.sdkDecodeIfPresent(.enableBackendKeepalive)
-        self.httpIdleTimeoutSeconds = try container.sdkDecodeIfPresent(.httpIdleTimeoutSeconds)
-        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        self.subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
-        self.disableLetsEncryptDnsRecords = try container.sdkDecodeIfPresent(.disableLetsEncryptDnsRecords)
-        self.firewall = try container.sdkDecodeIfPresent(.firewall)
-        self.network = try container.sdkDecodeIfPresent(.network)
-        self.networkStack = try container.sdkDecodeIfPresent(.networkStack)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.domains = try container.sdkDecodeIfPresent(.domains)
-        self.glbSettings = try container.sdkDecodeIfPresent(.glbSettings)
-        self.targetLoadBalancerIds = try container.sdkDecodeIfPresent(.targetLoadBalancerIds)
-        self.tlsCipherPolicy = try container.sdkDecodeIfPresent(.tlsCipherPolicy)
-        self.ip = try container.sdkDecodeIfPresent(.ip)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
-        self.tag = try container.sdkDecodeIfPresent(.tag)
+        forwardingRules = try container.sdkDecodeRequired(.forwardingRules)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        projectId = try container.sdkDecodeIfPresent(.projectId)
+        ipv6 = try container.sdkDecodeIfPresent(.ipv6)
+        sizeUnit = try container.sdkDecodeIfPresent(.sizeUnit)
+        size = try container.sdkDecodeIfPresent(.size)
+        algorithm = try container.sdkDecodeIfPresent(.algorithm)
+        status = try container.sdkDecodeIfPresent(.status)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        healthCheck = try container.sdkDecodeIfPresent(.healthCheck)
+        stickySessions = try container.sdkDecodeIfPresent(.stickySessions)
+        redirectHttpToHttps = try container.sdkDecodeIfPresent(.redirectHttpToHttps)
+        enableProxyProtocol = try container.sdkDecodeIfPresent(.enableProxyProtocol)
+        enableBackendKeepalive = try container.sdkDecodeIfPresent(.enableBackendKeepalive)
+        httpIdleTimeoutSeconds = try container.sdkDecodeIfPresent(.httpIdleTimeoutSeconds)
+        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
+        disableLetsEncryptDnsRecords = try container.sdkDecodeIfPresent(.disableLetsEncryptDnsRecords)
+        firewall = try container.sdkDecodeIfPresent(.firewall)
+        network = try container.sdkDecodeIfPresent(.network)
+        networkStack = try container.sdkDecodeIfPresent(.networkStack)
+        type = try container.sdkDecodeIfPresent(.type)
+        domains = try container.sdkDecodeIfPresent(.domains)
+        glbSettings = try container.sdkDecodeIfPresent(.glbSettings)
+        targetLoadBalancerIds = try container.sdkDecodeIfPresent(.targetLoadBalancerIds)
+        tlsCipherPolicy = try container.sdkDecodeIfPresent(.tlsCipherPolicy)
+        ip = try container.sdkDecodeIfPresent(.ip)
+        region = try container.sdkDecodeIfPresent(.region)
+        dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
+        tag = try container.sdkDecodeIfPresent(.tag)
         try sdkValidateConstraints()
     }
 }
 
-extension LoadBalancer {
-    public init(forwardingRules: [ForwardingRule], id: String? = nil, name: String? = nil, projectId: String? = nil, ipv6: String? = nil, sizeUnit: Int? = nil, size: LoadBalancerBaseSize? = nil, algorithm: LoadBalancerBaseAlgorithm? = nil, status: LoadBalancerBaseStatus? = nil, createdAt: Date? = nil, healthCheck: HealthCheck? = nil, stickySessions: StickySessions? = nil, redirectHttpToHttps: Bool? = nil, enableProxyProtocol: Bool? = nil, enableBackendKeepalive: Bool? = nil, httpIdleTimeoutSeconds: Int? = nil, vpcUuid: String? = nil, subnetUuid: String? = nil, disableLetsEncryptDnsRecords: Bool? = nil, firewall: LbFirewall? = nil, network: LoadBalancerBaseNetwork? = nil, networkStack: LoadBalancerBaseNetworkStack? = nil, type: LoadBalancerBaseType? = nil, domains: [Domains]? = nil, glbSettings: GlbSettings? = nil, targetLoadBalancerIds: [String]? = nil, tlsCipherPolicy: LoadBalancerBaseTlsCipherPolicy? = nil, ip: String? = nil, region: Region? = nil, dropletIds: [Int]? = nil, tag: String? = nil) throws {
+public extension LoadBalancer {
+    init(
+        forwardingRules: [ForwardingRule],
+        id: String? = nil,
+        name: String? = nil,
+        projectId: String? = nil,
+        ipv6: String? = nil,
+        sizeUnit: Int? = nil,
+        size: LoadBalancerBaseSize? = nil,
+        algorithm: LoadBalancerBaseAlgorithm? = nil,
+        status: LoadBalancerBaseStatus? = nil,
+        createdAt: Date? = nil,
+        healthCheck: HealthCheck? = nil,
+        stickySessions: StickySessions? = nil,
+        redirectHttpToHttps: Bool? = nil,
+        enableProxyProtocol: Bool? = nil,
+        enableBackendKeepalive: Bool? = nil,
+        httpIdleTimeoutSeconds: Int? = nil,
+        vpcUuid: String? = nil,
+        subnetUuid: String? = nil,
+        disableLetsEncryptDnsRecords: Bool? = nil,
+        firewall: LbFirewall? = nil,
+        network: LoadBalancerBaseNetwork? = nil,
+        networkStack: LoadBalancerBaseNetworkStack? = nil,
+        type: LoadBalancerBaseType? = nil,
+        domains: [Domains]? = nil,
+        glbSettings: GlbSettings? = nil,
+        targetLoadBalancerIds: [String]? = nil,
+        tlsCipherPolicy: LoadBalancerBaseTlsCipherPolicy? = nil,
+        ip: String? = nil,
+        region: Region? = nil,
+        dropletIds: [Int]? = nil,
+        tag: String? = nil
+    ) throws {
         (self.forwardingRules, self.id) = (forwardingRules, id)
         (self.name, self.projectId) = (name, projectId)
         (self.ipv6, self.sizeUnit) = (ipv6, sizeUnit)
@@ -319,26 +382,42 @@ extension LoadBalancer {
 
 extension LoadBalancer {
     func sdkValidateConstraints() throws {
-            try validateItems("forwarding_rules", self.forwardingRules, min: 1, max: nil)
-        if let value = self.id {
+        try validateItems("forwarding_rules", forwardingRules, min: 1, max: nil)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
-        if let value = self.sizeUnit {
-            try validateRange("size_unit", Double(value), min: 1, max: 100, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = sizeUnit {
+            try validateRange(
+                "size_unit",
+                Double(value),
+                min: 1,
+                max: 100,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.httpIdleTimeoutSeconds {
-            try validateRange("http_idle_timeout_seconds", Double(value), min: 30, max: 600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = httpIdleTimeoutSeconds {
+            try validateRange(
+                "http_idle_timeout_seconds",
+                Double(value),
+                min: 30,
+                max: 600,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.vpcUuid {
+        if let value = vpcUuid {
             try sdkValidateUuid("vpc_uuid", value)
         }
-        if let value = self.subnetUuid {
+        if let value = subnetUuid {
             try sdkValidateUuid("subnet_uuid", value)
         }
-        if let value = self.ip {
+        if let value = ip {
             try sdkValidatePattern("ip", value, sdkPattern456628267985)
         }
     }
@@ -467,5 +546,7 @@ public struct LoadBalancerCreateRequestVariant0: Codable {
         case tlsCipherPolicy = "tls_cipher_policy"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }

@@ -7,20 +7,64 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum OrganizationsMethods {
-    /// To create a new team within an organization, send a POST request to `/v2/organizations/team`. This endpoint must be called in an organization context. Optionally include `invitations` to invite users to the new team. The `owner` role cannot be assigned via invitation.
+    /// To create a new team within an organization, send a POST request to `/v2/organizations/team`. This endpoint must
+    /// be called in an organization context. Optionally include `invitations` to invite users to the new team. The
+    /// `owner` role cannot be assigned via invitation.
     ///
     /// - Parameters:
     /// - name: The human-readable name for the team to create.
     /// - invitations: Optional invitations to send when creating the team. Each
     ///   invitation includes an email address and a role. The `owner` role cannot be
     ///   assigned via invitation.
-    public static func organizationsCreateTeam(config: ClientConfig, name: String, invitations: [TeamInvitation]? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateTeamResponse {
+    public static func organizationsCreateTeam(
+        config: ClientConfig,
+        name: String,
+        invitations: [TeamInvitation]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateTeamResponse {
         let requestBody = OrganizationsCreateTeamRequestBody(name: name, invitations: invitations)
 
-        return try (await sdkRequest("POST", "/v2/organizations/team", config: config, body: requestBody, decoder: .json, operationId: "organizations_create_team", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "403": Error2.self, "412": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/organizations/team",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "organizations_create_team",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "403": Error2.self,
+                "412": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
-    /// To list all teams in an organization, send a GET request to `/v2/organizations/teams`. This endpoint must be called in an organization context.
-    public static func organizationsListTeams(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> ListTeams {
-        return try (await sdkRequest("GET", "/v2/organizations/teams", config: config, decoder: .json, operationId: "organizations_list_teams", options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "412": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+
+    /// To list all teams in an organization, send a GET request to `/v2/organizations/teams`. This endpoint must be
+    /// called in an organization context.
+    public static func organizationsListTeams(
+        config: ClientConfig,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListTeams {
+        try await (sdkRequest(
+            "GET",
+            "/v2/organizations/teams",
+            config: config,
+            decoder: .json,
+            operationId: "organizations_list_teams",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "403": Error2.self,
+                "412": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

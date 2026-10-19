@@ -17,8 +17,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.deleteAlertRule(
-            id: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"")
-        )
+                id: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -34,7 +34,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testInsightsDeleteNotificationChannelInsightsDeleteNotificationChannelReachesMockAndDecodesResponse() async throws {
+    func testInsightsDeleteNotificationChannelInsightsDeleteNotificationChannelReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -45,7 +46,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testInsightsDeleteNotificationChannelInsightsDeleteNotificationChannel401ReachesMockAndDecodesResponse() async throws {
+    func testInsightsDeleteNotificationChannelInsightsDeleteNotificationChannel401ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -56,8 +58,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.deleteNotificationChannel(
-            id: decoded("\"550e8400-e29b-41d4-a716-446655440000\"")
-        )
+                id: decoded("\"550e8400-e29b-41d4-a716-446655440000\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -102,8 +104,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.getAlertInstance(
-            id: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"")
-        )
+                id: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -148,8 +150,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.getAlertRule(
-            id: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"")
-        )
+                id: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -183,7 +185,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testInsightsGetNotificationChannelInsightsGetNotificationChannel401ReachesMockAndDecodesResponse() async throws {
+    func testInsightsGetNotificationChannelInsightsGetNotificationChannel401ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -194,8 +197,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.getNotificationChannel(
-            id: decoded("\"550e8400-e29b-41d4-a716-446655440000\"")
-        )
+                id: decoded("\"550e8400-e29b-41d4-a716-446655440000\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -243,11 +246,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.getPromLabels(
-            region: decoded("\"nyc3\""),
-            start: decoded("\"1620683817\""),
-            end: decoded("\"1620705417\""),
-            match: decoded("[\"{__name__=~\\\".+\\\"}\"]")
-        )
+                region: decoded("\"nyc3\""),
+                start: decoded("\"1620683817\""),
+                end: decoded("\"1620705417\""),
+                match: decoded("[\"{__name__=~\\\".+\\\"}\"]")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -296,12 +299,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.getPromLabelValues(
-            region: decoded("\"nyc3\""),
-            name: decoded("\"__name__\""),
-            start: decoded("\"1620683817\""),
-            end: decoded("\"1620705417\""),
-            match: decoded("[\"{__name__=~\\\".+\\\"}\"]")
-        )
+                region: decoded("\"nyc3\""),
+                name: decoded("\"__name__\""),
+                start: decoded("\"1620683817\""),
+                end: decoded("\"1620705417\""),
+                match: decoded("[\"{__name__=~\\\".+\\\"}\"]")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -349,11 +352,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.getPromQuery(
-            region: decoded("\"nyc3\""),
-            query: decoded("\"do.droplets.cpu_time\""),
-            time: decoded("\"1620683817\""),
-            timeout: decoded("\"30s\"")
-        )
+                region: decoded("\"nyc3\""),
+                query: decoded("\"do.droplets.cpu_time\""),
+                time: decoded("\"1620683817\""),
+                timeout: decoded("\"30s\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -403,13 +406,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.getPromQueryRange(
-            region: decoded("\"nyc3\""),
-            query: decoded("\"do.droplets.cpu_time\""),
-            start: decoded("\"1620683817\""),
-            end: decoded("\"1620705417\""),
-            step: decoded("\"15s\""),
-            timeout: decoded("\"30s\"")
-        )
+                region: decoded("\"nyc3\""),
+                query: decoded("\"do.droplets.cpu_time\""),
+                start: decoded("\"1620683817\""),
+                end: decoded("\"1620705417\""),
+                step: decoded("\"15s\""),
+                timeout: decoded("\"30s\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -457,11 +460,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.getPromSeries(
-            region: decoded("\"nyc3\""),
-            match: decoded("[\"{__name__=\\\"do.droplets.cpu_time\\\"}\"]"),
-            start: decoded("\"1620683817\""),
-            end: decoded("\"1620705417\"")
-        )
+                region: decoded("\"nyc3\""),
+                match: decoded("[\"{__name__=\\\"do.droplets.cpu_time\\\"}\"]"),
+                start: decoded("\"1620683817\""),
+                end: decoded("\"1620705417\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -509,11 +512,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.getTrace(
-            region: decoded("\"nyc3\""),
-            traceId: decoded("\"7b0b4e56abab38362b24e5498eb9ec64\""),
-            from: decoded("\"24h\""),
-            to: decoded("\"now\"")
-        )
+                region: decoded("\"nyc3\""),
+                traceId: decoded("\"7b0b4e56abab38362b24e5498eb9ec64\""),
+                from: decoded("\"24h\""),
+                to: decoded("\"now\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

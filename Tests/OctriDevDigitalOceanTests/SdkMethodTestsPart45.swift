@@ -17,12 +17,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.deleteNode(
-            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
-            nodePoolId: decoded("\"cdda885e-7663-40c8-bc74-3a036c66545d\""),
-            nodeId: decoded("\"478247f8-b1bb-4f7a-8db9-2a5f8d4b8f8f\""),
-            skipDrain: decoded("1"),
-            replace: decoded("1")
-        )
+                clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
+                nodePoolId: decoded("\"cdda885e-7663-40c8-bc74-3a036c66545d\""),
+                nodeId: decoded("\"478247f8-b1bb-4f7a-8db9-2a5f8d4b8f8f\""),
+                skipDrain: decoded("1"),
+                replace: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -61,9 +61,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.deleteNodePool(
-            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
-            nodePoolId: decoded("\"cdda885e-7663-40c8-bc74-3a036c66545d\"")
-        )
+                clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
+                nodePoolId: decoded("\"cdda885e-7663-40c8-bc74-3a036c66545d\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -79,7 +79,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testKubernetesDestroyAssociatedResourcesDangerousKubernetesDestroXd7b9173000ReachesMockAndDecodesResponse() async throws {
+    func testKubernetesDestroyAssociatedResourcesDangerousKubernetesDestroXd7b9173000ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -90,7 +91,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testKubernetesDestroyAssociatedResourcesDangerousKubernetesDestroX2e80adeb13ReachesMockAndDecodesResponse() async throws {
+    func testKubernetesDestroyAssociatedResourcesDangerousKubernetesDestroX2e80adeb13ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -101,8 +103,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.destroyAssociatedResourcesDangerous(
-            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\"")
-        )
+                clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -118,7 +120,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testKubernetesDestroyAssociatedResourcesSelectiveKubernetesDestroX15050036b9ReachesMockAndDecodesResponse() async throws {
+    func testKubernetesDestroyAssociatedResourcesSelectiveKubernetesDestroX15050036b9ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -132,7 +135,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testKubernetesDestroyAssociatedResourcesSelectiveKubernetesDestroXd6c8443776ReachesMockAndDecodesResponse() async throws {
+    func testKubernetesDestroyAssociatedResourcesSelectiveKubernetesDestroXd6c8443776ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -143,11 +147,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.destroyAssociatedResourcesSelective(
-            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
-            loadBalancers: decoded("[\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"]"),
-            volumes: decoded("[\"ba49449a-7435-11ea-b89e-0a58ac14480f\"]"),
-            volumeSnapshots: decoded("[\"edb0478d-7436-11ea-86e6-0a58ac144b91\"]")
-        )
+                clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
+                loadBalancers: decoded("[\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"]"),
+                volumes: decoded("[\"ba49449a-7435-11ea-b89e-0a58ac14480f\"]"),
+                volumeSnapshots: decoded("[\"edb0478d-7436-11ea-86e6-0a58ac144b91\"]")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -181,7 +185,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testKubernetesGetAvailableUpgradesKubernetesGetAvailableUpgrades401ReachesMockAndDecodesResponse() async throws {
+    func testKubernetesGetAvailableUpgradesKubernetesGetAvailableUpgrades401ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -192,8 +197,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.getAvailableUpgrades(
-            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\"")
-        )
+                clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -238,8 +243,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.getCluster(
-            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\"")
-        )
+                clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -274,7 +279,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testKubernetesGetClusterLintResultsKubernetesGetClusterLintResults401ReachesMockAndDecodesResponse() async throws {
+    func testKubernetesGetClusterLintResultsKubernetesGetClusterLintResults401ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -285,9 +291,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.getClusterLintResults(
-            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
-            runId: decoded("\"50c2f44c-011d-493e-aee5-361a4a0d1844\"")
-        )
+                clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
+                runId: decoded("\"50c2f44c-011d-493e-aee5-361a4a0d1844\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -332,8 +338,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.getClusterUser(
-            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\"")
-        )
+                clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -379,9 +385,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.getCredentials(
-            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
-            expirySeconds: decoded("300")
-        )
+                clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
+                expirySeconds: decoded("300")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -421,10 +427,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.getKubeconfig(
-            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
-            expirySeconds: decoded("300"),
-            type: decoded("\"sso\"")
-        )
+                clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
+                expirySeconds: decoded("300"),
+                type: decoded("\"sso\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -470,9 +476,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.getNodePool(
-            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
-            nodePoolId: decoded("\"cdda885e-7663-40c8-bc74-3a036c66545d\"")
-        )
+                clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
+                nodePoolId: decoded("\"cdda885e-7663-40c8-bc74-3a036c66545d\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -518,9 +524,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.getStatusMessages(
-            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
-            since: decoded("\"2018-11-15T16:00:11Z\"")
-        )
+                clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
+                since: decoded("\"2018-11-15T16:00:11Z\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -536,7 +542,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testKubernetesListAssociatedResourcesKubernetesListAssociatedResourcesReachesMockAndDecodesResponse() async throws {
+    func testKubernetesListAssociatedResourcesKubernetesListAssociatedResourcesReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
