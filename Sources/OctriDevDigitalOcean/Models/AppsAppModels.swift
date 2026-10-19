@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AppsApp domain models
+/// AppsApp domain models
 /// Typed representation of the `AppVariableDefinition` API schema.
 public struct AppVariableDefinition: Codable {
     /// The variable name
@@ -28,28 +28,39 @@ public struct AppVariableDefinition: Codable {
         case value
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AppVariableDefinition {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.key) else {
-            throw SdkValidationError(field: "key", code: "required", message: "Validation failed for 'key': value is required")
-        }
-        self.key = try container.sdkDecodeRequired(.key)
-        self.scope = try container.sdkDecodeIfPresent(.scope)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.value = try container.sdkDecodeIfPresent(.value)
-            try sdkValidatePattern("key", self.key, sdkPatterna5127668bf05)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AppVariableDefinition {
-    public init(key: String, scope: AppVariableDefinitionScope? = nil, type: AppVariableDefinitionType? = nil, value: String? = nil) throws {
+public extension AppVariableDefinition {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.key) else {
+            throw SdkValidationError(
+                field: "key",
+                code: "required",
+                message: "Validation failed for 'key': value is required"
+            )
+        }
+        key = try container.sdkDecodeRequired(.key)
+        scope = try container.sdkDecodeIfPresent(.scope)
+        type = try container.sdkDecodeIfPresent(.type)
+        value = try container.sdkDecodeIfPresent(.value)
+        try sdkValidatePattern("key", key, sdkPatterna5127668bf05)
+    }
+}
+
+public extension AppVariableDefinition {
+    init(
+        key: String,
+        scope: AppVariableDefinitionScope? = nil,
+        type: AppVariableDefinitionType? = nil,
+        value: String? = nil
+    ) throws {
         (self.key, self.scope) = (key, scope)
         (self.type, self.value) = (type, value)
-            try sdkValidatePattern("key", self.key, sdkPatterna5127668bf05)
+        try sdkValidatePattern("key", self.key, sdkPatterna5127668bf05)
     }
 }
 
@@ -63,19 +74,19 @@ public struct AppResponse: Codable {
     }
 
     init() {
-        self.app = nil
+        app = nil
     }
 }
 
-extension AppResponse {
-    public init(from decoder: Decoder) throws {
+public extension AppResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.app = try container.sdkDecodeIfPresent(.app)
+        app = try container.sdkDecodeIfPresent(.app)
     }
 }
 
-extension AppResponse {
-    public init(app: App? = nil) {
+public extension AppResponse {
+    init(app: App? = nil) {
         self.init()
         self.app = app
     }
@@ -104,22 +115,27 @@ public struct AppInstance: Codable {
     }
 
     init() {
-        (self.componentName, self.componentType, self.instanceName, self.instanceAlias) = (nil, nil, nil, nil)
+        (componentName, componentType, instanceName, instanceAlias) = (nil, nil, nil, nil)
     }
 }
 
-extension AppInstance {
-    public init(from decoder: Decoder) throws {
+public extension AppInstance {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.componentName = try container.sdkDecodeIfPresent(.componentName)
-        self.componentType = try container.sdkDecodeIfPresent(.componentType)
-        self.instanceName = try container.sdkDecodeIfPresent(.instanceName)
-        self.instanceAlias = try container.sdkDecodeIfPresent(.instanceAlias)
+        componentName = try container.sdkDecodeIfPresent(.componentName)
+        componentType = try container.sdkDecodeIfPresent(.componentType)
+        instanceName = try container.sdkDecodeIfPresent(.instanceName)
+        instanceAlias = try container.sdkDecodeIfPresent(.instanceAlias)
     }
 }
 
-extension AppInstance {
-    public init(componentName: String? = nil, componentType: AppInstanceComponentType? = nil, instanceName: String? = nil, instanceAlias: String? = nil) {
+public extension AppInstance {
+    init(
+        componentName: String? = nil,
+        componentType: AppInstanceComponentType? = nil,
+        instanceName: String? = nil,
+        instanceAlias: String? = nil
+    ) {
         self.init()
         (self.componentName, self.componentType) = (componentName, componentType)
         (self.instanceName, self.instanceAlias) = (instanceName, instanceAlias)
@@ -205,41 +221,67 @@ public struct AppStaticSiteSpec: Codable {
         case routes
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AppStaticSiteSpec {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.git = try container.sdkDecodeIfPresent(.git)
-        self.github = try container.sdkDecodeIfPresent(.github)
-        self.gitlab = try container.sdkDecodeIfPresent(.gitlab)
-        self.bitbucket = try container.sdkDecodeIfPresent(.bitbucket)
-        self.image = try container.sdkDecodeIfPresent(.image)
-        self.dockerfilePath = try container.sdkDecodeIfPresent(.dockerfilePath)
-        self.buildCommand = try container.sdkDecodeIfPresent(.buildCommand)
-        self.runCommand = try container.sdkDecodeIfPresent(.runCommand)
-        self.sourceDir = try container.sdkDecodeIfPresent(.sourceDir)
-        self.envs = try container.sdkDecodeIfPresent(.envs)
-        self.environmentSlug = try container.sdkDecodeIfPresent(.environmentSlug)
-        self.logDestinations = try container.sdkDecodeIfPresent(.logDestinations)
-        self.indexDocument = try container.sdkDecodeIfPresent(.indexDocument)
-        self.errorDocument = try container.sdkDecodeIfPresent(.errorDocument)
-        self.catchallDocument = try container.sdkDecodeIfPresent(.catchallDocument)
-        self.outputDir = try container.sdkDecodeIfPresent(.outputDir)
-        self.cors = try container.sdkDecodeIfPresent(.cors)
-        self.routes = try container.sdkDecodeIfPresent(.routes)
-            try validateLength("name", self.name, min: 2, max: 32)
-            try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AppStaticSiteSpec {
-    public init(name: String, git: AppsGitSourceSpec? = nil, github: AppsGithubSourceSpec? = nil, gitlab: AppsGitlabSourceSpec? = nil, bitbucket: AppsBitbucketSourceSpec? = nil, image: AppsImageSourceSpec? = nil, dockerfilePath: String? = nil, buildCommand: String? = nil, runCommand: String? = nil, sourceDir: String? = nil, envs: [AppVariableDefinition]? = nil, environmentSlug: String? = nil, logDestinations: [AppLogDestinationDefinition]? = nil, indexDocument: String? = nil, errorDocument: String? = nil, catchallDocument: String? = nil, outputDir: String? = nil, cors: AppStaticSiteSpecVariant1Cors? = nil, routes: [AppRouteSpec]? = nil) throws {
+public extension AppStaticSiteSpec {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        git = try container.sdkDecodeIfPresent(.git)
+        github = try container.sdkDecodeIfPresent(.github)
+        gitlab = try container.sdkDecodeIfPresent(.gitlab)
+        bitbucket = try container.sdkDecodeIfPresent(.bitbucket)
+        image = try container.sdkDecodeIfPresent(.image)
+        dockerfilePath = try container.sdkDecodeIfPresent(.dockerfilePath)
+        buildCommand = try container.sdkDecodeIfPresent(.buildCommand)
+        runCommand = try container.sdkDecodeIfPresent(.runCommand)
+        sourceDir = try container.sdkDecodeIfPresent(.sourceDir)
+        envs = try container.sdkDecodeIfPresent(.envs)
+        environmentSlug = try container.sdkDecodeIfPresent(.environmentSlug)
+        logDestinations = try container.sdkDecodeIfPresent(.logDestinations)
+        indexDocument = try container.sdkDecodeIfPresent(.indexDocument)
+        errorDocument = try container.sdkDecodeIfPresent(.errorDocument)
+        catchallDocument = try container.sdkDecodeIfPresent(.catchallDocument)
+        outputDir = try container.sdkDecodeIfPresent(.outputDir)
+        cors = try container.sdkDecodeIfPresent(.cors)
+        routes = try container.sdkDecodeIfPresent(.routes)
+        try validateLength("name", name, min: 2, max: 32)
+        try sdkValidatePattern("name", name, sdkPattern3c600f7d20be)
+    }
+}
+
+public extension AppStaticSiteSpec {
+    init(
+        name: String,
+        git: AppsGitSourceSpec? = nil,
+        github: AppsGithubSourceSpec? = nil,
+        gitlab: AppsGitlabSourceSpec? = nil,
+        bitbucket: AppsBitbucketSourceSpec? = nil,
+        image: AppsImageSourceSpec? = nil,
+        dockerfilePath: String? = nil,
+        buildCommand: String? = nil,
+        runCommand: String? = nil,
+        sourceDir: String? = nil,
+        envs: [AppVariableDefinition]? = nil,
+        environmentSlug: String? = nil,
+        logDestinations: [AppLogDestinationDefinition]? = nil,
+        indexDocument: String? = nil,
+        errorDocument: String? = nil,
+        catchallDocument: String? = nil,
+        outputDir: String? = nil,
+        cors: AppStaticSiteSpecVariant1Cors? = nil,
+        routes: [AppRouteSpec]? = nil
+    ) throws {
         (self.name, self.git) = (name, git)
         (self.github, self.gitlab) = (github, gitlab)
         (self.bitbucket, self.image) = (bitbucket, image)
@@ -250,8 +292,8 @@ extension AppStaticSiteSpec {
         (self.errorDocument, self.catchallDocument) = (errorDocument, catchallDocument)
         (self.outputDir, self.cors) = (outputDir, cors)
         self.routes = routes
-            try validateLength("name", self.name, min: 2, max: 32)
-            try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
+        try validateLength("name", self.name, min: 2, max: 32)
+        try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
     }
 }
 
@@ -292,35 +334,49 @@ public struct AppDatabaseSpec: Codable {
         case version
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AppDatabaseSpec {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.clusterName = try container.sdkDecodeIfPresent(.clusterName)
-        self.dbName = try container.sdkDecodeIfPresent(.dbName)
-        self.dbUser = try container.sdkDecodeIfPresent(.dbUser)
-        self.engine = try container.sdkDecodeIfPresent(.engine)
-        self.production = try container.sdkDecodeIfPresent(.production)
-        self.version = try container.sdkDecodeIfPresent(.version)
-            try validateLength("name", self.name, min: 2, max: 32)
-            try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AppDatabaseSpec {
-    public init(name: String, clusterName: String? = nil, dbName: String? = nil, dbUser: String? = nil, engine: AppDatabaseSpecEngine? = nil, production: Bool? = nil, version: String? = nil) throws {
+public extension AppDatabaseSpec {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        clusterName = try container.sdkDecodeIfPresent(.clusterName)
+        dbName = try container.sdkDecodeIfPresent(.dbName)
+        dbUser = try container.sdkDecodeIfPresent(.dbUser)
+        engine = try container.sdkDecodeIfPresent(.engine)
+        production = try container.sdkDecodeIfPresent(.production)
+        version = try container.sdkDecodeIfPresent(.version)
+        try validateLength("name", name, min: 2, max: 32)
+        try sdkValidatePattern("name", name, sdkPattern3c600f7d20be)
+    }
+}
+
+public extension AppDatabaseSpec {
+    init(
+        name: String,
+        clusterName: String? = nil,
+        dbName: String? = nil,
+        dbUser: String? = nil,
+        engine: AppDatabaseSpecEngine? = nil,
+        production: Bool? = nil,
+        version: String? = nil
+    ) throws {
         (self.name, self.clusterName) = (name, clusterName)
         (self.dbName, self.dbUser) = (dbName, dbUser)
         (self.engine, self.production) = (engine, production)
         self.version = version
-            try validateLength("name", self.name, min: 2, max: 32)
-            try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
+        try validateLength("name", self.name, min: 2, max: 32)
+        try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
     }
 }
 
@@ -357,25 +413,32 @@ public struct AppStaticSiteSpecVariant1Cors: Codable {
     }
 
     init() {
-        (self.allowOrigins, self.allowMethods, self.allowHeaders, self.exposeHeaders, self.maxAge) = (nil, nil, nil, nil, nil)
-        self.allowCredentials = nil
+        (allowOrigins, allowMethods, allowHeaders, exposeHeaders, maxAge) = (nil, nil, nil, nil, nil)
+        allowCredentials = nil
     }
 }
 
-extension AppStaticSiteSpecVariant1Cors {
-    public init(from decoder: Decoder) throws {
+public extension AppStaticSiteSpecVariant1Cors {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.allowOrigins = try container.sdkDecodeIfPresent(.allowOrigins)
-        self.allowMethods = try container.sdkDecodeIfPresent(.allowMethods)
-        self.allowHeaders = try container.sdkDecodeIfPresent(.allowHeaders)
-        self.exposeHeaders = try container.sdkDecodeIfPresent(.exposeHeaders)
-        self.maxAge = try container.sdkDecodeIfPresent(.maxAge)
-        self.allowCredentials = try container.sdkDecodeIfPresent(.allowCredentials)
+        allowOrigins = try container.sdkDecodeIfPresent(.allowOrigins)
+        allowMethods = try container.sdkDecodeIfPresent(.allowMethods)
+        allowHeaders = try container.sdkDecodeIfPresent(.allowHeaders)
+        exposeHeaders = try container.sdkDecodeIfPresent(.exposeHeaders)
+        maxAge = try container.sdkDecodeIfPresent(.maxAge)
+        allowCredentials = try container.sdkDecodeIfPresent(.allowCredentials)
     }
 }
 
-extension AppStaticSiteSpecVariant1Cors {
-    public init(allowOrigins: [AppsStringMatch]? = nil, allowMethods: [String]? = nil, allowHeaders: [String]? = nil, exposeHeaders: [String]? = nil, maxAge: String? = nil, allowCredentials: Bool? = nil) {
+public extension AppStaticSiteSpecVariant1Cors {
+    init(
+        allowOrigins: [AppsStringMatch]? = nil,
+        allowMethods: [String]? = nil,
+        allowHeaders: [String]? = nil,
+        exposeHeaders: [String]? = nil,
+        maxAge: String? = nil,
+        allowCredentials: Bool? = nil
+    ) {
         self.init()
         (self.allowOrigins, self.allowMethods) = (allowOrigins, allowMethods)
         (self.allowHeaders, self.exposeHeaders) = (allowHeaders, exposeHeaders)
@@ -393,19 +456,19 @@ public struct AppInstances: Codable {
     }
 
     init() {
-        self.instances = nil
+        instances = nil
     }
 }
 
-extension AppInstances {
-    public init(from decoder: Decoder) throws {
+public extension AppInstances {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.instances = try container.sdkDecodeIfPresent(.instances)
+        instances = try container.sdkDecodeIfPresent(.instances)
     }
 }
 
-extension AppInstances {
-    public init(instances: [AppInstance]? = nil) {
+public extension AppInstances {
+    init(instances: [AppInstance]? = nil) {
         self.init()
         self.instances = instances
     }
@@ -441,28 +504,35 @@ public struct AppEvent: Codable {
     }
 
     init() {
-        (self.id, self.type, self.createdAt, self.deploymentId, self.deployment) = (nil, nil, nil, nil, nil)
-        self.autoscaling = nil
+        (id, type, createdAt, deploymentId, deployment) = (nil, nil, nil, nil, nil)
+        autoscaling = nil
     }
 }
 
-extension AppEvent {
-    public init(from decoder: Decoder) throws {
+public extension AppEvent {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.deploymentId = try container.sdkDecodeIfPresent(.deploymentId)
-        self.deployment = try container.sdkDecodeIfPresent(.deployment)
-        self.autoscaling = try container.sdkDecodeIfPresent(.autoscaling)
-        if let value = self.createdAt {
+        id = try container.sdkDecodeIfPresent(.id)
+        type = try container.sdkDecodeIfPresent(.type)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        deploymentId = try container.sdkDecodeIfPresent(.deploymentId)
+        deployment = try container.sdkDecodeIfPresent(.deployment)
+        autoscaling = try container.sdkDecodeIfPresent(.autoscaling)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-extension AppEvent {
-    public init(id: String? = nil, type: AppEventType? = nil, createdAt: Date? = nil, deploymentId: String? = nil, deployment: AppsDeployment? = nil, autoscaling: AppEventAutoscaling? = nil) throws {
+public extension AppEvent {
+    init(
+        id: String? = nil,
+        type: AppEventType? = nil,
+        createdAt: Date? = nil,
+        deploymentId: String? = nil,
+        deployment: AppsDeployment? = nil,
+        autoscaling: AppEventAutoscaling? = nil
+    ) throws {
         self.init()
         (self.id, self.type) = (id, type)
         (self.createdAt, self.deploymentId) = (createdAt, deploymentId)
@@ -505,25 +575,32 @@ public struct AppStaticSiteSpecVariant1: Codable {
     }
 
     init() {
-        (self.indexDocument, self.errorDocument, self.catchallDocument, self.outputDir, self.cors) = (nil, nil, nil, nil, nil)
-        self.routes = nil
+        (indexDocument, errorDocument, catchallDocument, outputDir, cors) = (nil, nil, nil, nil, nil)
+        routes = nil
     }
 }
 
-extension AppStaticSiteSpecVariant1 {
-    public init(from decoder: Decoder) throws {
+public extension AppStaticSiteSpecVariant1 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.indexDocument = try container.sdkDecodeIfPresent(.indexDocument)
-        self.errorDocument = try container.sdkDecodeIfPresent(.errorDocument)
-        self.catchallDocument = try container.sdkDecodeIfPresent(.catchallDocument)
-        self.outputDir = try container.sdkDecodeIfPresent(.outputDir)
-        self.cors = try container.sdkDecodeIfPresent(.cors)
-        self.routes = try container.sdkDecodeIfPresent(.routes)
+        indexDocument = try container.sdkDecodeIfPresent(.indexDocument)
+        errorDocument = try container.sdkDecodeIfPresent(.errorDocument)
+        catchallDocument = try container.sdkDecodeIfPresent(.catchallDocument)
+        outputDir = try container.sdkDecodeIfPresent(.outputDir)
+        cors = try container.sdkDecodeIfPresent(.cors)
+        routes = try container.sdkDecodeIfPresent(.routes)
     }
 }
 
-extension AppStaticSiteSpecVariant1 {
-    public init(indexDocument: String? = nil, errorDocument: String? = nil, catchallDocument: String? = nil, outputDir: String? = nil, cors: AppStaticSiteSpecVariant1Cors? = nil, routes: [AppRouteSpec]? = nil) {
+public extension AppStaticSiteSpecVariant1 {
+    init(
+        indexDocument: String? = nil,
+        errorDocument: String? = nil,
+        catchallDocument: String? = nil,
+        outputDir: String? = nil,
+        cors: AppStaticSiteSpecVariant1Cors? = nil,
+        routes: [AppRouteSpec]? = nil
+    ) {
         self.init()
         (self.indexDocument, self.errorDocument) = (indexDocument, errorDocument)
         (self.catchallDocument, self.outputDir) = (catchallDocument, outputDir)

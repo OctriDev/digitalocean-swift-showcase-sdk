@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension UptimeMethods {
-    public struct UptimeUpdateAlertOptions: Codable {
+public extension UptimeMethods {
+    struct UptimeUpdateAlertOptions: Codable {
         public var checkId: String
         public var alertId: String
         public var name: String
@@ -17,7 +17,14 @@ extension UptimeMethods {
         public var threshold: Int?
         public var comparison: UptimeUpdateAlertRequestBodyComparison?
 
-        public init(checkId: String, alertId: String, name: String, type: UptimeUpdateAlertRequestBodyType, notifications: Notification, period: UptimeUpdateAlertRequestBodyPeriod) {
+        public init(
+            checkId: String,
+            alertId: String,
+            name: String,
+            type: UptimeUpdateAlertRequestBodyType,
+            notifications: Notification,
+            period: UptimeUpdateAlertRequestBodyPeriod
+        ) {
             self.checkId = checkId
             self.alertId = alertId
             self.name = name
@@ -40,13 +47,37 @@ extension UptimeMethods {
     /// - threshold: The threshold at which the alert will enter a trigger state.
     ///   The specific threshold is dependent on the alert type.
     /// - comparison: The comparison operator used against the alert's threshold.
-    public static func uptimeUpdateAlert(config: ClientConfig, options: UptimeUpdateAlertOptions, requestOptions: RequestOptions? = nil) async throws -> ExistingAlert {
+    static func uptimeUpdateAlert(
+        config: ClientConfig,
+        options: UptimeUpdateAlertOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExistingAlert {
         try sdkValidateUuid("check_id", options.checkId)
 
         try sdkValidateUuid("alert_id", options.alertId)
 
         let requestBody = UptimeUpdateAlertRequestBody(options: options)
 
-        return try (await sdkRequest("PUT", ["/v2/uptime/checks/", sdkEncodePathSegment(sdkWireString(options.checkId)), "/alerts/", sdkEncodePathSegment(sdkWireString(options.alertId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "uptime_update_alert", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            [
+                "/v2/uptime/checks/",
+                sdkEncodePathSegment(sdkWireString(options.checkId)),
+                "/alerts/",
+                sdkEncodePathSegment(sdkWireString(options.alertId)),
+            ].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "uptime_update_alert",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

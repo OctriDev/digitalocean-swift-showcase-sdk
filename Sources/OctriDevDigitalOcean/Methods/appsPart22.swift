@@ -6,8 +6,11 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AppsMethods {
-    /// Check whether an app can be rolled back to a specific deployment. This endpoint can also be used to check if there are any warnings or validation conditions that will cause the rollback to proceed under unideal circumstances. For example, if a component must be rebuilt as part of the rollback causing it to take longer than usual.
+public extension AppsMethods {
+    /// Check whether an app can be rolled back to a specific deployment. This endpoint can also be used to check if
+    /// there are any warnings or validation conditions that will cause the rollback to proceed under unideal
+    /// circumstances. For example, if a component must be rebuilt as part of the rollback causing it to take longer
+    /// than usual.
     ///
     /// - Parameters:
     /// - appId: The app ID
@@ -18,17 +21,57 @@ extension AppsMethods {
     ///   committed or reverted via the CommitAppRollback or RevertAppRollback
     ///   endpoints respectively. If true, the rollback will be immediately committed
     ///   and the app will remain unpinned.
-    public static func appsValidateRollback(config: ClientConfig, appId: String, deploymentId: String? = nil, skipPin: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsValidateRollback {
+    static func appsValidateRollback(
+        config: ClientConfig,
+        appId: String,
+        deploymentId: String? = nil,
+        skipPin: Bool? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppsValidateRollback {
         let requestBody = AppsValidateRollbackRequestBody(deploymentId: deploymentId, skipPin: skipPin)
 
-        return try (await sdkRequest("POST", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/rollback/validate"].joined(), config: config, body: requestBody, decoder: .json, operationId: "apps_validate_rollback", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/rollback/validate"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "apps_validate_rollback",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Commit an app rollback. This action permanently applies the rollback and unpins the app to resume new deployments.
+    /// Commit an app rollback. This action permanently applies the rollback and unpins the app to resume new
+    /// deployments.
     ///
     /// - Parameters:
     /// - appId: The app ID
-    public static func appsCommitRollback(config: ClientConfig, appId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try (await sdkRequest("POST", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/rollback/commit"].joined(), config: config, decoder: .empty, operationId: "apps_commit_rollback", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func appsCommitRollback(
+        config: ClientConfig,
+        appId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await (sdkRequest(
+            "POST",
+            ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/rollback/commit"].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "apps_commit_rollback",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

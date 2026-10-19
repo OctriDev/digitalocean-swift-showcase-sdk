@@ -3,27 +3,35 @@
 
 import Foundation
 
-// Signals domain models
-extension CreateDeletionRequest {
-    public init(from decoder: Decoder) throws {
+/// Signals domain models
+public extension CreateDeletionRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
         }
         guard container.contains(.teamId) else {
-            throw SdkValidationError(field: "team_id", code: "required", message: "Validation failed for 'team_id': value is required")
+            throw SdkValidationError(
+                field: "team_id",
+                code: "required",
+                message: "Validation failed for 'team_id': value is required"
+            )
         }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.teamId = try container.sdkDecodeRequired(.teamId)
-        self.agentId = try container.sdkDecodeIfPresent(.agentId)
-        if let value = self.agentId {
+        type = try container.sdkDecodeRequired(.type)
+        teamId = try container.sdkDecodeRequired(.teamId)
+        agentId = try container.sdkDecodeIfPresent(.agentId)
+        if let value = agentId {
             try sdkValidateUuid("agent_id", value)
         }
     }
 }
 
-extension CreateDeletionRequest {
-    public init(type: CreateDeletionRequestType, teamId: Int, agentId: String? = nil) throws {
+public extension CreateDeletionRequest {
+    init(type: CreateDeletionRequestType, teamId: Int, agentId: String? = nil) throws {
         (self.type, self.teamId) = (type, teamId)
         self.agentId = agentId
         if let value = self.agentId {
@@ -46,20 +54,20 @@ public struct ListDialoguesResponseEdgesItem: Codable {
     }
 
     init() {
-        (self.cursor, self.node) = (nil, nil)
+        (cursor, node) = (nil, nil)
     }
 }
 
-extension ListDialoguesResponseEdgesItem {
-    public init(from decoder: Decoder) throws {
+public extension ListDialoguesResponseEdgesItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.cursor = try container.sdkDecodeIfPresent(.cursor)
-        self.node = try container.sdkDecodeIfPresent(.node)
+        cursor = try container.sdkDecodeIfPresent(.cursor)
+        node = try container.sdkDecodeIfPresent(.node)
     }
 }
 
-extension ListDialoguesResponseEdgesItem {
-    public init(cursor: String? = nil, node: SessionDialogue? = nil) {
+public extension ListDialoguesResponseEdgesItem {
+    init(cursor: String? = nil, node: SessionDialogue? = nil) {
         self.init()
         (self.cursor, self.node) = (cursor, node)
     }
@@ -78,20 +86,20 @@ public struct ListDialoguesResponse: Codable {
     }
 
     init() {
-        (self.edges, self.pageInfo) = (nil, nil)
+        (edges, pageInfo) = (nil, nil)
     }
 }
 
-extension ListDialoguesResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListDialoguesResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.edges = try container.sdkDecodeIfPresent(.edges)
-        self.pageInfo = try container.sdkDecodeIfPresent(.pageInfo)
+        edges = try container.sdkDecodeIfPresent(.edges)
+        pageInfo = try container.sdkDecodeIfPresent(.pageInfo)
     }
 }
 
-extension ListDialoguesResponse {
-    public init(edges: [ListDialoguesResponseEdgesItem]? = nil, pageInfo: ListDialoguesResponsePageInfo? = nil) {
+public extension ListDialoguesResponse {
+    init(edges: [ListDialoguesResponseEdgesItem]? = nil, pageInfo: ListDialoguesResponsePageInfo? = nil) {
         self.init()
         (self.edges, self.pageInfo) = (edges, pageInfo)
     }
@@ -110,21 +118,27 @@ public struct ExportOptionsFilters: Codable {
         case signalType = "signal_type"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ExportOptionsFilters {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.signalType) else {
-            throw SdkValidationError(field: "signal_type", code: "required", message: "Validation failed for 'signal_type': value is required")
-        }
-        self.signalType = try container.sdkDecodeRequired(.signalType)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ExportOptionsFilters {
-    public init(signalType: [String]) {
+public extension ExportOptionsFilters {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.signalType) else {
+            throw SdkValidationError(
+                field: "signal_type",
+                code: "required",
+                message: "Validation failed for 'signal_type': value is required"
+            )
+        }
+        signalType = try container.sdkDecodeRequired(.signalType)
+    }
+}
+
+public extension ExportOptionsFilters {
+    init(signalType: [String]) {
         self.signalType = signalType
     }
 }
@@ -145,20 +159,20 @@ public struct ListDeletionsResponseEdgesItem: Codable {
     }
 
     init() {
-        (self.cursor, self.node) = (nil, nil)
+        (cursor, node) = (nil, nil)
     }
 }
 
-extension ListDeletionsResponseEdgesItem {
-    public init(from decoder: Decoder) throws {
+public extension ListDeletionsResponseEdgesItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.cursor = try container.sdkDecodeIfPresent(.cursor)
-        self.node = try container.sdkDecodeIfPresent(.node)
+        cursor = try container.sdkDecodeIfPresent(.cursor)
+        node = try container.sdkDecodeIfPresent(.node)
     }
 }
 
-extension ListDeletionsResponseEdgesItem {
-    public init(cursor: String? = nil, node: DeletionJob? = nil) {
+public extension ListDeletionsResponseEdgesItem {
+    init(cursor: String? = nil, node: DeletionJob? = nil) {
         self.init()
         (self.cursor, self.node) = (cursor, node)
     }
@@ -178,22 +192,28 @@ public struct ListConsents: Codable {
         case source
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ListConsents {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.consents) else {
-            throw SdkValidationError(field: "consents", code: "required", message: "Validation failed for 'consents': value is required")
-        }
-        self.consents = try container.sdkDecodeRequired(.consents)
-        self.source = try container.sdkDecodeIfPresent(.source)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ListConsents {
-    public init(consents: [ConsentRecord], source: ListConsentsSource? = nil) {
+public extension ListConsents {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.consents) else {
+            throw SdkValidationError(
+                field: "consents",
+                code: "required",
+                message: "Validation failed for 'consents': value is required"
+            )
+        }
+        consents = try container.sdkDecodeRequired(.consents)
+        source = try container.sdkDecodeIfPresent(.source)
+    }
+}
+
+public extension ListConsents {
+    init(consents: [ConsentRecord], source: ListConsentsSource? = nil) {
         (self.consents, self.source) = (consents, source)
     }
 }
@@ -213,20 +233,20 @@ public struct ListSessionsResponseResponseEdgesItem: Codable {
     }
 
     init() {
-        (self.cursor, self.node) = (nil, nil)
+        (cursor, node) = (nil, nil)
     }
 }
 
-extension ListSessionsResponseResponseEdgesItem {
-    public init(from decoder: Decoder) throws {
+public extension ListSessionsResponseResponseEdgesItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.cursor = try container.sdkDecodeIfPresent(.cursor)
-        self.node = try container.sdkDecodeIfPresent(.node)
+        cursor = try container.sdkDecodeIfPresent(.cursor)
+        node = try container.sdkDecodeIfPresent(.node)
     }
 }
 
-extension ListSessionsResponseResponseEdgesItem {
-    public init(cursor: String? = nil, node: Session2? = nil) {
+public extension ListSessionsResponseResponseEdgesItem {
+    init(cursor: String? = nil, node: Session2? = nil) {
         self.init()
         (self.cursor, self.node) = (cursor, node)
     }
@@ -248,28 +268,38 @@ public struct ExportDownload: Codable {
         case expiresAt = "expires_at"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ExportDownload {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.downloadUrl) else {
-            throw SdkValidationError(field: "download_url", code: "required", message: "Validation failed for 'download_url': value is required")
-        }
-        guard container.contains(.expiresAt) else {
-            throw SdkValidationError(field: "expires_at", code: "required", message: "Validation failed for 'expires_at': value is required")
-        }
-        self.downloadUrl = try container.sdkDecodeRequired(.downloadUrl)
-        self.expiresAt = try container.sdkDecodeRequired(.expiresAt)
-            try sdkValidateUri("download_url", self.downloadUrl)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ExportDownload {
-    public init(downloadUrl: String, expiresAt: Int) throws {
+public extension ExportDownload {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.downloadUrl) else {
+            throw SdkValidationError(
+                field: "download_url",
+                code: "required",
+                message: "Validation failed for 'download_url': value is required"
+            )
+        }
+        guard container.contains(.expiresAt) else {
+            throw SdkValidationError(
+                field: "expires_at",
+                code: "required",
+                message: "Validation failed for 'expires_at': value is required"
+            )
+        }
+        downloadUrl = try container.sdkDecodeRequired(.downloadUrl)
+        expiresAt = try container.sdkDecodeRequired(.expiresAt)
+        try sdkValidateUri("download_url", downloadUrl)
+    }
+}
+
+public extension ExportDownload {
+    init(downloadUrl: String, expiresAt: Int) throws {
         (self.downloadUrl, self.expiresAt) = (downloadUrl, expiresAt)
-            try sdkValidateUri("download_url", self.downloadUrl)
+        try sdkValidateUri("download_url", self.downloadUrl)
     }
 }
 
@@ -303,43 +333,68 @@ public struct AgentConsent: Codable {
         case updatedAt = "updated_at"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension AgentConsent {
-    public init(from decoder: Decoder) throws {
+public extension AgentConsent {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.teamId) else {
-            throw SdkValidationError(field: "team_id", code: "required", message: "Validation failed for 'team_id': value is required")
+            throw SdkValidationError(
+                field: "team_id",
+                code: "required",
+                message: "Validation failed for 'team_id': value is required"
+            )
         }
         guard container.contains(.source) else {
-            throw SdkValidationError(field: "source", code: "required", message: "Validation failed for 'source': value is required")
+            throw SdkValidationError(
+                field: "source",
+                code: "required",
+                message: "Validation failed for 'source': value is required"
+            )
         }
         guard container.contains(.agentId) else {
-            throw SdkValidationError(field: "agent_id", code: "required", message: "Validation failed for 'agent_id': value is required")
+            throw SdkValidationError(
+                field: "agent_id",
+                code: "required",
+                message: "Validation failed for 'agent_id': value is required"
+            )
         }
         guard container.contains(.enabled) else {
-            throw SdkValidationError(field: "enabled", code: "required", message: "Validation failed for 'enabled': value is required")
+            throw SdkValidationError(
+                field: "enabled",
+                code: "required",
+                message: "Validation failed for 'enabled': value is required"
+            )
         }
-        self.teamId = try container.sdkDecodeRequired(.teamId)
-        self.source = try container.sdkDecodeRequired(.source)
-        self.agentId = try container.sdkDecodeRequired(.agentId)
-        self.enabled = try container.sdkDecodeRequired(.enabled)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-            try sdkValidateUuid("agent_id", self.agentId)
-        if let value = self.updatedAt {
+        teamId = try container.sdkDecodeRequired(.teamId)
+        source = try container.sdkDecodeRequired(.source)
+        agentId = try container.sdkDecodeRequired(.agentId)
+        enabled = try container.sdkDecodeRequired(.enabled)
+        id = try container.sdkDecodeIfPresent(.id)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        try sdkValidateUuid("agent_id", agentId)
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension AgentConsent {
-    public init(teamId: Int, source: AgentConsentSource, agentId: String, enabled: Bool, id: Int? = nil, updatedAt: Date? = nil) throws {
+public extension AgentConsent {
+    init(
+        teamId: Int,
+        source: AgentConsentSource,
+        agentId: String,
+        enabled: Bool,
+        id: Int? = nil,
+        updatedAt: Date? = nil
+    ) throws {
         (self.teamId, self.source) = (teamId, source)
         (self.agentId, self.enabled) = (agentId, enabled)
         (self.id, self.updatedAt) = (id, updatedAt)
-            try sdkValidateUuid("agent_id", self.agentId)
+        try sdkValidateUuid("agent_id", self.agentId)
         if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
@@ -359,20 +414,20 @@ public struct ListExportsResponse: Codable {
     }
 
     init() {
-        (self.edges, self.pageInfo) = (nil, nil)
+        (edges, pageInfo) = (nil, nil)
     }
 }
 
-extension ListExportsResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListExportsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.edges = try container.sdkDecodeIfPresent(.edges)
-        self.pageInfo = try container.sdkDecodeIfPresent(.pageInfo)
+        edges = try container.sdkDecodeIfPresent(.edges)
+        pageInfo = try container.sdkDecodeIfPresent(.pageInfo)
     }
 }
 
-extension ListExportsResponse {
-    public init(edges: [ListExportsResponseEdgesItem]? = nil, pageInfo: ListExportsResponsePageInfo? = nil) {
+public extension ListExportsResponse {
+    init(edges: [ListExportsResponseEdgesItem]? = nil, pageInfo: ListExportsResponsePageInfo? = nil) {
         self.init()
         (self.edges, self.pageInfo) = (edges, pageInfo)
     }
@@ -391,20 +446,20 @@ public struct ListSessionsResponseResponse: Codable {
     }
 
     init() {
-        (self.edges, self.pageInfo) = (nil, nil)
+        (edges, pageInfo) = (nil, nil)
     }
 }
 
-extension ListSessionsResponseResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListSessionsResponseResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.edges = try container.sdkDecodeIfPresent(.edges)
-        self.pageInfo = try container.sdkDecodeIfPresent(.pageInfo)
+        edges = try container.sdkDecodeIfPresent(.edges)
+        pageInfo = try container.sdkDecodeIfPresent(.pageInfo)
     }
 }
 
-extension ListSessionsResponseResponse {
-    public init(edges: [ListSessionsResponseResponseEdgesItem]? = nil, pageInfo: ListSessionsResponseResponsePageInfo? = nil) {
+public extension ListSessionsResponseResponse {
+    init(edges: [ListSessionsResponseResponseEdgesItem]? = nil, pageInfo: ListSessionsResponseResponsePageInfo? = nil) {
         self.init()
         (self.edges, self.pageInfo) = (edges, pageInfo)
     }
@@ -453,44 +508,76 @@ public struct DeletionJob: Codable {
         case completedAt = "completed_at"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension DeletionJob {
-    public init(from decoder: Decoder) throws {
+public extension DeletionJob {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.teamId) else {
-            throw SdkValidationError(field: "team_id", code: "required", message: "Validation failed for 'team_id': value is required")
+            throw SdkValidationError(
+                field: "team_id",
+                code: "required",
+                message: "Validation failed for 'team_id': value is required"
+            )
         }
         guard container.contains(.deletionId) else {
-            throw SdkValidationError(field: "deletion_id", code: "required", message: "Validation failed for 'deletion_id': value is required")
+            throw SdkValidationError(
+                field: "deletion_id",
+                code: "required",
+                message: "Validation failed for 'deletion_id': value is required"
+            )
         }
         guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
         }
         guard container.contains(.status) else {
-            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
+            throw SdkValidationError(
+                field: "status",
+                code: "required",
+                message: "Validation failed for 'status': value is required"
+            )
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
+            throw SdkValidationError(
+                field: "created_at",
+                code: "required",
+                message: "Validation failed for 'created_at': value is required"
+            )
         }
-        self.teamId = try container.sdkDecodeRequired(.teamId)
-        self.deletionId = try container.sdkDecodeRequired(.deletionId)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.status = try container.sdkDecodeRequired(.status)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.agentId = try container.sdkDecodeIfPresent(.agentId)
-        self.errorMessage = try container.sdkDecodeIfPresent(.errorMessage)
-        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        if let value = self.agentId {
+        teamId = try container.sdkDecodeRequired(.teamId)
+        deletionId = try container.sdkDecodeRequired(.deletionId)
+        type = try container.sdkDecodeRequired(.type)
+        status = try container.sdkDecodeRequired(.status)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        agentId = try container.sdkDecodeIfPresent(.agentId)
+        errorMessage = try container.sdkDecodeIfPresent(.errorMessage)
+        startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        if let value = agentId {
             try sdkValidateUuid("agent_id", value)
         }
     }
 }
 
-extension DeletionJob {
-    public init(teamId: Int, deletionId: String, type: DeletionJobType, status: DeletionJobStatus, createdAt: Int, agentId: String? = nil, errorMessage: String? = nil, startedAt: Int? = nil, completedAt: Int? = nil) throws {
+public extension DeletionJob {
+    init(
+        teamId: Int,
+        deletionId: String,
+        type: DeletionJobType,
+        status: DeletionJobStatus,
+        createdAt: Int,
+        agentId: String? = nil,
+        errorMessage: String? = nil,
+        startedAt: Int? = nil,
+        completedAt: Int? = nil
+    ) throws {
         (self.teamId, self.deletionId) = (teamId, deletionId)
         (self.type, self.status) = (type, status)
         (self.createdAt, self.agentId) = (createdAt, agentId)
@@ -517,20 +604,20 @@ public struct ExportJobFilters: Codable {
     }
 
     init() {
-        (self.signalType, self.sessionIds) = (nil, nil)
+        (signalType, sessionIds) = (nil, nil)
     }
 }
 
-extension ExportJobFilters {
-    public init(from decoder: Decoder) throws {
+public extension ExportJobFilters {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.signalType = try container.sdkDecodeIfPresent(.signalType)
-        self.sessionIds = try container.sdkDecodeIfPresent(.sessionIds)
+        signalType = try container.sdkDecodeIfPresent(.signalType)
+        sessionIds = try container.sdkDecodeIfPresent(.sessionIds)
     }
 }
 
-extension ExportJobFilters {
-    public init(signalType: [String]? = nil, sessionIds: [String]? = nil) {
+public extension ExportJobFilters {
+    init(signalType: [String]? = nil, sessionIds: [String]? = nil) {
         self.init()
         (self.signalType, self.sessionIds) = (signalType, sessionIds)
     }

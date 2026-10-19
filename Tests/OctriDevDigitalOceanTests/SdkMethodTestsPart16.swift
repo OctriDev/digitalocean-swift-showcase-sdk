@@ -11,7 +11,11 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try DomainRecordsMethods.DomainsPatchRecordOptions(domainName: decoded("\"example.com\""), domainRecordId: decoded("3352896"), type: decoded("\"A\""))
+        var options = try DomainRecordsMethods.DomainsPatchRecordOptions(
+            domainName: decoded("\"example.com\""),
+            domainRecordId: decoded("3352896"),
+            type: decoded("\"A\"")
+        )
         options.name = try decoded("\"blog\"")
         options.data = try decoded("null")
         options.priority = try decoded("null")
@@ -26,8 +30,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.domainRecords.domainsPatchRecord(
-            options: options
-        )
+                options: options
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -48,7 +52,11 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try DomainRecordsMethods.DomainsUpdateRecordOptions(domainName: decoded("\"example.com\""), domainRecordId: decoded("3352896"), type: decoded("\"CNAME\""))
+        var options = try DomainRecordsMethods.DomainsUpdateRecordOptions(
+            domainName: decoded("\"example.com\""),
+            domainRecordId: decoded("3352896"),
+            type: decoded("\"CNAME\"")
+        )
         options.name = try decoded("\"blog\"")
         options.data = try decoded("null")
         options.priority = try decoded("null")
@@ -75,7 +83,11 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try DomainRecordsMethods.DomainsUpdateRecordOptions(domainName: decoded("\"example.com\""), domainRecordId: decoded("3352896"), type: decoded("\"CNAME\""))
+        var options = try DomainRecordsMethods.DomainsUpdateRecordOptions(
+            domainName: decoded("\"example.com\""),
+            domainRecordId: decoded("3352896"),
+            type: decoded("\"CNAME\"")
+        )
         options.name = try decoded("\"blog\"")
         options.data = try decoded("null")
         options.priority = try decoded("null")
@@ -90,8 +102,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.domainRecords.domainsUpdateRecord(
-            options: options
-        )
+                options: options
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -137,9 +149,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dropletActions.get(
-            dropletId: decoded("3164444"),
-            actionId: decoded("36804636")
-        )
+                dropletId: decoded("3164444"),
+                actionId: decoded("36804636")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -186,10 +198,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dropletActions.list(
-            dropletId: decoded("3164444"),
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                dropletId: decoded("3164444"),
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -235,9 +247,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dropletActions.post(
-            dropletId: decoded("3164444"),
-            body: decoded(sdkMethodFixture363Value1)
-        )
+                dropletId: decoded("3164444"),
+                body: decoded(sdkMethodFixture363Value1)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -283,9 +295,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dropletActions.postByTag(
-            tagName: decoded("\"env:prod\""),
-            body: decoded("{\"type\":\"enable_backups\"}")
-        )
+                tagName: decoded("\"env:prod\""),
+                body: decoded("{\"type\":\"enable_backups\"}")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -330,8 +342,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.droplets.create(
-            body: decoded(sdkMethodFixture367Value1)
-        )
+                body: decoded(sdkMethodFixture367Value1)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -369,8 +381,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.droplets.destroy(
-            dropletId: decoded("3164444")
-        )
+                dropletId: decoded("3164444")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -408,8 +420,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.droplets.destroyByTag(
-            tagName: decoded("\"env:test\"")
-        )
+                tagName: decoded("\"env:test\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -425,7 +437,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testDropletsDestroyRetryWithAssociatedResourcesDropletsDestroyRetX9183eef9b8ReachesMockAndDecodesResponse() async throws {
+    func testDropletsDestroyRetryWithAssociatedResourcesDropletsDestroyRetX9183eef9b8ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -436,7 +449,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testDropletsDestroyRetryWithAssociatedResourcesDropletsDestroyRetXfbd6413461ReachesMockAndDecodesResponse() async throws {
+    func testDropletsDestroyRetryWithAssociatedResourcesDropletsDestroyRetXfbd6413461ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -447,8 +461,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.droplets.destroyRetryWithAssociatedResources(
-            dropletId: decoded("3164444")
-        )
+                dropletId: decoded("3164444")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -464,7 +478,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testDropletsDestroyWithAssociatedResourcesDangerousDropletsDestroX4d14da76e3ReachesMockAndDecodesResponse() async throws {
+    func testDropletsDestroyWithAssociatedResourcesDangerousDropletsDestroX4d14da76e3ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -476,7 +491,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testDropletsDestroyWithAssociatedResourcesDangerousDropletsDestroX15683b774aReachesMockAndDecodesResponse() async throws {
+    func testDropletsDestroyWithAssociatedResourcesDangerousDropletsDestroX15683b774aReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -487,9 +503,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.droplets.destroyWithAssociatedResourcesDangerous(
-            dropletId: decoded("3164444"),
-            xDangerous: decoded("true")
-        )
+                dropletId: decoded("3164444"),
+                xDangerous: decoded("true")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -505,7 +521,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testDropletsDestroyWithAssociatedResourcesSelectiveDropletsDestroX30c04de3d0ReachesMockAndDecodesResponse() async throws {
+    func testDropletsDestroyWithAssociatedResourcesSelectiveDropletsDestroX30c04de3d0ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -521,7 +538,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testDropletsDestroyWithAssociatedResourcesSelectiveDropletsDestroX10c5218852ReachesMockAndDecodesResponse() async throws {
+    func testDropletsDestroyWithAssociatedResourcesSelectiveDropletsDestroX10c5218852ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -532,13 +550,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.droplets.destroyWithAssociatedResourcesSelective(
-            dropletId: decoded("3164444"),
-            floatingIps: decoded("[\"6186916\"]"),
-            reservedIps: decoded("[\"6186916\"]"),
-            snapshots: decoded("[\"61486916\"]"),
-            volumes: decoded("[\"ba49449a-7435-11ea-b89e-0a58ac14480f\"]"),
-            volumeSnapshots: decoded("[\"edb0478d-7436-11ea-86e6-0a58ac144b91\"]")
-        )
+                dropletId: decoded("3164444"),
+                floatingIps: decoded("[\"6186916\"]"),
+                reservedIps: decoded("[\"6186916\"]"),
+                snapshots: decoded("[\"61486916\"]"),
+                volumes: decoded("[\"ba49449a-7435-11ea-b89e-0a58ac14480f\"]"),
+                volumeSnapshots: decoded("[\"edb0478d-7436-11ea-86e6-0a58ac144b91\"]")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

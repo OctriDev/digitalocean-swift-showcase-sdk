@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiList domain models
+/// AgentPlatformAPIApiList domain models
 /// Response containing a list of custom models (public)
 public struct ApiListCustomModelsOutputPublic: Codable {
     /// Links to other pages
@@ -24,22 +24,22 @@ public struct ApiListCustomModelsOutputPublic: Codable {
     }
 
     init() {
-        (self.links, self.maxThreshold, self.meta, self.models) = (nil, nil, nil, nil)
+        (links, maxThreshold, meta, models) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiListCustomModelsOutputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiListCustomModelsOutputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.links = try container.sdkDecodeIfPresent(.links)
-        self.maxThreshold = try container.sdkDecodeIfPresent(.maxThreshold)
-        self.meta = try container.sdkDecodeIfPresent(.meta)
-        self.models = try container.sdkDecodeIfPresent(.models)
+        links = try container.sdkDecodeIfPresent(.links)
+        maxThreshold = try container.sdkDecodeIfPresent(.maxThreshold)
+        meta = try container.sdkDecodeIfPresent(.meta)
+        models = try container.sdkDecodeIfPresent(.models)
     }
 }
 
-extension ApiListCustomModelsOutputPublic {
-    public init(links: ApiLinks? = nil, maxThreshold: Int? = nil, meta: ApiMeta? = nil, models: [ApiCustomModel]? = nil) {
+public extension ApiListCustomModelsOutputPublic {
+    init(links: ApiLinks? = nil, maxThreshold: Int? = nil, meta: ApiMeta? = nil, models: [ApiCustomModel]? = nil) {
         self.init()
         (self.links, self.maxThreshold) = (links, maxThreshold)
         (self.meta, self.models) = (meta, models)
@@ -81,27 +81,42 @@ public struct ApiListModelCatalogOutput: Codable {
     }
 
     init() {
-        (self.availableAvailability, self.availableBadges, self.availableModelTypes, self.availableProviders, self.availableSortBy) = (nil, nil, nil, nil, nil)
-        (self.availableSortDirections, self.data, self.meta) = (nil, nil, nil)
+        (availableAvailability, availableBadges, availableModelTypes, availableProviders, availableSortBy) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (availableSortDirections, data, meta) = (nil, nil, nil)
     }
 }
 
-extension ApiListModelCatalogOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiListModelCatalogOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.availableAvailability = try container.sdkDecodeIfPresent(.availableAvailability)
-        self.availableBadges = try container.sdkDecodeIfPresent(.availableBadges)
-        self.availableModelTypes = try container.sdkDecodeIfPresent(.availableModelTypes)
-        self.availableProviders = try container.sdkDecodeIfPresent(.availableProviders)
-        self.availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
-        self.availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.meta = try container.sdkDecodeIfPresent(.meta)
+        availableAvailability = try container.sdkDecodeIfPresent(.availableAvailability)
+        availableBadges = try container.sdkDecodeIfPresent(.availableBadges)
+        availableModelTypes = try container.sdkDecodeIfPresent(.availableModelTypes)
+        availableProviders = try container.sdkDecodeIfPresent(.availableProviders)
+        availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
+        availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
+        data = try container.sdkDecodeIfPresent(.data)
+        meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-extension ApiListModelCatalogOutput {
-    public init(availableAvailability: [String]? = nil, availableBadges: [String]? = nil, availableModelTypes: [String]? = nil, availableProviders: [String]? = nil, availableSortBy: [ApiModelCatalogSortBy]? = nil, availableSortDirections: [ApiSortDirection]? = nil, data: [ApiModelCatalogEntry]? = nil, meta: ApiMeta? = nil) {
+public extension ApiListModelCatalogOutput {
+    init(
+        availableAvailability: [String]? = nil,
+        availableBadges: [String]? = nil,
+        availableModelTypes: [String]? = nil,
+        availableProviders: [String]? = nil,
+        availableSortBy: [ApiModelCatalogSortBy]? = nil,
+        availableSortDirections: [ApiSortDirection]? = nil,
+        data: [ApiModelCatalogEntry]? = nil,
+        meta: ApiMeta? = nil
+    ) {
         self.init()
         (self.availableAvailability, self.availableBadges) = (availableAvailability, availableBadges)
         (self.availableModelTypes, self.availableProviders) = (availableModelTypes, availableProviders)
@@ -126,21 +141,21 @@ public struct ApiListModelRouterPresetsOutput: Codable {
     }
 
     init() {
-        (self.links, self.meta, self.presets) = (nil, nil, nil)
+        (links, meta, presets) = (nil, nil, nil)
     }
 }
 
-extension ApiListModelRouterPresetsOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiListModelRouterPresetsOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.links = try container.sdkDecodeIfPresent(.links)
-        self.meta = try container.sdkDecodeIfPresent(.meta)
-        self.presets = try container.sdkDecodeIfPresent(.presets)
+        links = try container.sdkDecodeIfPresent(.links)
+        meta = try container.sdkDecodeIfPresent(.meta)
+        presets = try container.sdkDecodeIfPresent(.presets)
     }
 }
 
-extension ApiListModelRouterPresetsOutput {
-    public init(links: ApiLinks? = nil, meta: ApiMeta? = nil, presets: [ApiModelRouterPreset]? = nil) {
+public extension ApiListModelRouterPresetsOutput {
+    init(links: ApiLinks? = nil, meta: ApiMeta? = nil, presets: [ApiModelRouterPreset]? = nil) {
         self.init()
         (self.links, self.meta) = (links, meta)
         self.presets = presets
@@ -157,19 +172,19 @@ public struct ApiListEvaluationTestCasesByWorkspaceOutput: Codable {
     }
 
     init() {
-        self.evaluationTestCases = nil
+        evaluationTestCases = nil
     }
 }
 
-extension ApiListEvaluationTestCasesByWorkspaceOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiListEvaluationTestCasesByWorkspaceOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.evaluationTestCases = try container.sdkDecodeIfPresent(.evaluationTestCases)
+        evaluationTestCases = try container.sdkDecodeIfPresent(.evaluationTestCases)
     }
 }
 
-extension ApiListEvaluationTestCasesByWorkspaceOutput {
-    public init(evaluationTestCases: [ApiEvaluationTestCase]? = nil) {
+public extension ApiListEvaluationTestCasesByWorkspaceOutput {
+    init(evaluationTestCases: [ApiEvaluationTestCase]? = nil) {
         self.init()
         self.evaluationTestCases = evaluationTestCases
     }

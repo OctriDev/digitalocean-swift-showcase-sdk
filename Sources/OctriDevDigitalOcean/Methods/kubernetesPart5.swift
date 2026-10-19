@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension KubernetesMethods {
-    public struct KubernetesUpdateClusterOptions: Codable {
+public extension KubernetesMethods {
+    struct KubernetesUpdateClusterOptions: Codable {
         public var clusterId: String
         public var name: String
         public var tags: [String]?
@@ -36,7 +36,8 @@ extension KubernetesMethods {
         }
     }
 
-    /// To update a Kubernetes cluster, send a PUT request to `/v2/kubernetes/clusters/$K8S_CLUSTER_ID` and specify one or more of the attributes below.
+    /// To update a Kubernetes cluster, send a PUT request to `/v2/kubernetes/clusters/$K8S_CLUSTER_ID` and specify one
+    /// or more of the attributes below.
     ///
     /// - Parameters:
     /// - clusterId: A unique ID that can be used to reference a Kubernetes cluster.
@@ -93,11 +94,30 @@ extension KubernetesMethods {
     /// - corednsAutoscaler: An object specifying whether the Cluster Proportional
     ///   Autoscaler (CPA) add-on for CoreDNS should be enabled for the Kubernetes
     ///   cluster.
-    public static func kubernetesUpdateCluster(config: ClientConfig, options: KubernetesUpdateClusterOptions, requestOptions: RequestOptions? = nil) async throws -> UpdatedCluster {
+    static func kubernetesUpdateCluster(
+        config: ClientConfig,
+        options: KubernetesUpdateClusterOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UpdatedCluster {
         try sdkValidateUuid("cluster_id", options.clusterId)
 
         let requestBody = KubernetesUpdateClusterRequestBody(options: options)
 
-        return try (await sdkRequest("PUT", ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(options.clusterId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "kubernetes_update_cluster", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(options.clusterId))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "kubernetes_update_cluster",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

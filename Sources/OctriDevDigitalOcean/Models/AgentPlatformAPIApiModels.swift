@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApi domain models
+/// AgentPlatformAPIApi domain models
 /// An Agent
 public struct ApiAgent: Codable {
     /// Anthropic API Key Info
@@ -195,8 +195,8 @@ extension ApiAgent {
     }
 }
 
-extension ApiAgent {
-    public init(from decoder: Decoder) throws {
+public extension ApiAgent {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init(sdkDefaults: ())
         try sdkDecodeFieldsPart1(container)
@@ -204,20 +204,70 @@ extension ApiAgent {
         try sdkDecodeFieldsPart3(container)
         try sdkDecodeFieldsPart4(container)
         try sdkDecodeFieldsPart5(container)
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.routeCreatedAt {
+        if let value = routeCreatedAt {
             try sdkValidateDateTime("route_created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiAgent {
-    public init(anthropicApiKey: ApiAnthropicAPIKeyInfo? = nil, apiKeyInfos: [ApiAgentAPIKeyInfo]? = nil, apiKeys: [ApiAgentAPIKey]? = nil, chatbot: ApiChatbot? = nil, chatbotIdentifiers: [ApiAgentChatbotIdentifier]? = nil, childAgents: [ApiAgent]? = nil, conversationLogsEnabled: Bool? = nil, createdAt: Date? = nil, deployment: ApiDeployment? = nil, description: String? = nil, functions: [ApiAgentFunction]? = nil, guardrails: [ApiAgentGuardrail]? = nil, ifCase: String? = nil, instruction: String? = nil, k: Int? = nil, knowledgeBases: [ApiKnowledgeBase]? = nil, loggingConfig: ApiAgentLoggingConfig? = nil, maxTokens: Int? = nil, mcpServers: [ApiMcpServer]? = nil, model: ApiModel? = nil, modelProviderKey: ApiModelProviderKeyInfo? = nil, modelRouter: ApiModelRouter? = nil, name: String? = nil, openaiApiKey: ApiOpenAIAPIKeyInfo? = nil, parentAgents: [ApiAgent]? = nil, projectId: String? = nil, provideCitations: Bool? = nil, reasoningEffort: String? = nil, region: String? = nil, retrievalMethod: ApiRetrievalMethod? = nil, routeCreatedAt: Date? = nil, routeCreatedBy: String? = nil, routeName: String? = nil, routeUuid: String? = nil, tags: [String]? = nil, temperature: Double? = nil, template: ApiAgentTemplate? = nil, thinkingTokenBudget: Int? = nil, topP: Double? = nil, updatedAt: Date? = nil, url: String? = nil, userId: String? = nil, uuid: String? = nil, versionHash: String? = nil, vpcEgressIps: [String]? = nil, vpcUuid: String? = nil, webFetchEnabled: Bool? = nil, webSearchEnabled: Bool? = nil, workspace: ApiWorkspace? = nil) throws {
+public extension ApiAgent {
+    init(
+        anthropicApiKey: ApiAnthropicAPIKeyInfo? = nil,
+        apiKeyInfos: [ApiAgentAPIKeyInfo]? = nil,
+        apiKeys: [ApiAgentAPIKey]? = nil,
+        chatbot: ApiChatbot? = nil,
+        chatbotIdentifiers: [ApiAgentChatbotIdentifier]? = nil,
+        childAgents: [ApiAgent]? = nil,
+        conversationLogsEnabled: Bool? = nil,
+        createdAt: Date? = nil,
+        deployment: ApiDeployment? = nil,
+        description: String? = nil,
+        functions: [ApiAgentFunction]? = nil,
+        guardrails: [ApiAgentGuardrail]? = nil,
+        ifCase: String? = nil,
+        instruction: String? = nil,
+        k: Int? = nil,
+        knowledgeBases: [ApiKnowledgeBase]? = nil,
+        loggingConfig: ApiAgentLoggingConfig? = nil,
+        maxTokens: Int? = nil,
+        mcpServers: [ApiMcpServer]? = nil,
+        model: ApiModel? = nil,
+        modelProviderKey: ApiModelProviderKeyInfo? = nil,
+        modelRouter: ApiModelRouter? = nil,
+        name: String? = nil,
+        openaiApiKey: ApiOpenAIAPIKeyInfo? = nil,
+        parentAgents: [ApiAgent]? = nil,
+        projectId: String? = nil,
+        provideCitations: Bool? = nil,
+        reasoningEffort: String? = nil,
+        region: String? = nil,
+        retrievalMethod: ApiRetrievalMethod? = nil,
+        routeCreatedAt: Date? = nil,
+        routeCreatedBy: String? = nil,
+        routeName: String? = nil,
+        routeUuid: String? = nil,
+        tags: [String]? = nil,
+        temperature: Double? = nil,
+        template: ApiAgentTemplate? = nil,
+        thinkingTokenBudget: Int? = nil,
+        topP: Double? = nil,
+        updatedAt: Date? = nil,
+        url: String? = nil,
+        userId: String? = nil,
+        uuid: String? = nil,
+        versionHash: String? = nil,
+        vpcEgressIps: [String]? = nil,
+        vpcUuid: String? = nil,
+        webFetchEnabled: Bool? = nil,
+        webSearchEnabled: Bool? = nil,
+        workspace: ApiWorkspace? = nil
+    ) throws {
         self.init(sdkDefaults: ())
         sdkSet1(anthropicApiKey, apiKeyInfos, apiKeys, chatbot, chatbotIdentifiers)
         sdkSet2(childAgents, conversationLogsEnabled, createdAt, deployment, description)
@@ -242,7 +292,13 @@ extension ApiAgent {
 }
 
 extension ApiAgent {
-    mutating func sdkSet1(_ anthropicApiKey: ApiAnthropicAPIKeyInfo?, _ apiKeyInfos: [ApiAgentAPIKeyInfo]?, _ apiKeys: [ApiAgentAPIKey]?, _ chatbot: ApiChatbot?, _ chatbotIdentifiers: [ApiAgentChatbotIdentifier]?) {
+    mutating func sdkSet1(
+        _ anthropicApiKey: ApiAnthropicAPIKeyInfo?,
+        _ apiKeyInfos: [ApiAgentAPIKeyInfo]?,
+        _ apiKeys: [ApiAgentAPIKey]?,
+        _ chatbot: ApiChatbot?,
+        _ chatbotIdentifiers: [ApiAgentChatbotIdentifier]?
+    ) {
         self.anthropicApiKey = anthropicApiKey
         self.apiKeyInfos = apiKeyInfos
         self.apiKeys = apiKeys
@@ -252,7 +308,13 @@ extension ApiAgent {
 }
 
 extension ApiAgent {
-    mutating func sdkSet2(_ childAgents: [ApiAgent]?, _ conversationLogsEnabled: Bool?, _ createdAt: Date?, _ deployment: ApiDeployment?, _ description: String?) {
+    mutating func sdkSet2(
+        _ childAgents: [ApiAgent]?,
+        _ conversationLogsEnabled: Bool?,
+        _ createdAt: Date?,
+        _ deployment: ApiDeployment?,
+        _ description: String?
+    ) {
         self.childAgents = childAgents
         self.conversationLogsEnabled = conversationLogsEnabled
         self.createdAt = createdAt
@@ -262,7 +324,13 @@ extension ApiAgent {
 }
 
 extension ApiAgent {
-    mutating func sdkSet3(_ functions: [ApiAgentFunction]?, _ guardrails: [ApiAgentGuardrail]?, _ ifCase: String?, _ instruction: String?, _ k: Int?) {
+    mutating func sdkSet3(
+        _ functions: [ApiAgentFunction]?,
+        _ guardrails: [ApiAgentGuardrail]?,
+        _ ifCase: String?,
+        _ instruction: String?,
+        _ k: Int?
+    ) {
         self.functions = functions
         self.guardrails = guardrails
         self.ifCase = ifCase
@@ -272,7 +340,13 @@ extension ApiAgent {
 }
 
 extension ApiAgent {
-    mutating func sdkSet4(_ knowledgeBases: [ApiKnowledgeBase]?, _ loggingConfig: ApiAgentLoggingConfig?, _ maxTokens: Int?, _ mcpServers: [ApiMcpServer]?, _ model: ApiModel?) {
+    mutating func sdkSet4(
+        _ knowledgeBases: [ApiKnowledgeBase]?,
+        _ loggingConfig: ApiAgentLoggingConfig?,
+        _ maxTokens: Int?,
+        _ mcpServers: [ApiMcpServer]?,
+        _ model: ApiModel?
+    ) {
         self.knowledgeBases = knowledgeBases
         self.loggingConfig = loggingConfig
         self.maxTokens = maxTokens
@@ -282,7 +356,13 @@ extension ApiAgent {
 }
 
 extension ApiAgent {
-    mutating func sdkSet5(_ modelProviderKey: ApiModelProviderKeyInfo?, _ modelRouter: ApiModelRouter?, _ name: String?, _ openaiApiKey: ApiOpenAIAPIKeyInfo?, _ parentAgents: [ApiAgent]?) {
+    mutating func sdkSet5(
+        _ modelProviderKey: ApiModelProviderKeyInfo?,
+        _ modelRouter: ApiModelRouter?,
+        _ name: String?,
+        _ openaiApiKey: ApiOpenAIAPIKeyInfo?,
+        _ parentAgents: [ApiAgent]?
+    ) {
         self.modelProviderKey = modelProviderKey
         self.modelRouter = modelRouter
         self.name = name
@@ -292,7 +372,13 @@ extension ApiAgent {
 }
 
 extension ApiAgent {
-    mutating func sdkSet6(_ projectId: String?, _ provideCitations: Bool?, _ reasoningEffort: String?, _ region: String?, _ retrievalMethod: ApiRetrievalMethod?) {
+    mutating func sdkSet6(
+        _ projectId: String?,
+        _ provideCitations: Bool?,
+        _ reasoningEffort: String?,
+        _ region: String?,
+        _ retrievalMethod: ApiRetrievalMethod?
+    ) {
         self.projectId = projectId
         self.provideCitations = provideCitations
         self.reasoningEffort = reasoningEffort
@@ -302,7 +388,13 @@ extension ApiAgent {
 }
 
 extension ApiAgent {
-    mutating func sdkSet7(_ routeCreatedAt: Date?, _ routeCreatedBy: String?, _ routeName: String?, _ routeUuid: String?, _ tags: [String]?) {
+    mutating func sdkSet7(
+        _ routeCreatedAt: Date?,
+        _ routeCreatedBy: String?,
+        _ routeName: String?,
+        _ routeUuid: String?,
+        _ tags: [String]?
+    ) {
         self.routeCreatedAt = routeCreatedAt
         self.routeCreatedBy = routeCreatedBy
         self.routeName = routeName
@@ -312,7 +404,13 @@ extension ApiAgent {
 }
 
 extension ApiAgent {
-    mutating func sdkSet8(_ temperature: Double?, _ template: ApiAgentTemplate?, _ thinkingTokenBudget: Int?, _ topP: Double?, _ updatedAt: Date?) {
+    mutating func sdkSet8(
+        _ temperature: Double?,
+        _ template: ApiAgentTemplate?,
+        _ thinkingTokenBudget: Int?,
+        _ topP: Double?,
+        _ updatedAt: Date?
+    ) {
         self.temperature = temperature
         self.template = template
         self.thinkingTokenBudget = thinkingTokenBudget
@@ -322,7 +420,13 @@ extension ApiAgent {
 }
 
 extension ApiAgent {
-    mutating func sdkSet9(_ url: String?, _ userId: String?, _ uuid: String?, _ versionHash: String?, _ vpcEgressIps: [String]?) {
+    mutating func sdkSet9(
+        _ url: String?,
+        _ userId: String?,
+        _ uuid: String?,
+        _ versionHash: String?,
+        _ vpcEgressIps: [String]?
+    ) {
         self.url = url
         self.userId = userId
         self.uuid = uuid
@@ -332,7 +436,12 @@ extension ApiAgent {
 }
 
 extension ApiAgent {
-    mutating func sdkSet10(_ vpcUuid: String?, _ webFetchEnabled: Bool?, _ webSearchEnabled: Bool?, _ workspace: ApiWorkspace?) {
+    mutating func sdkSet10(
+        _ vpcUuid: String?,
+        _ webFetchEnabled: Bool?,
+        _ webSearchEnabled: Bool?,
+        _ workspace: ApiWorkspace?
+    ) {
         self.vpcUuid = vpcUuid
         self.webFetchEnabled = webFetchEnabled
         self.webSearchEnabled = webSearchEnabled
@@ -342,75 +451,75 @@ extension ApiAgent {
 
 extension ApiAgent {
     mutating func sdkDecodeFieldsPart1(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        self.anthropicApiKey = try container.sdkDecodeIfPresent(.anthropicApiKey)
-        self.apiKeyInfos = try container.sdkDecodeIfPresent(.apiKeyInfos)
-        self.apiKeys = try container.sdkDecodeIfPresent(.apiKeys)
-        self.chatbot = try container.sdkDecodeIfPresent(.chatbot)
-        self.chatbotIdentifiers = try container.sdkDecodeIfPresent(.chatbotIdentifiers)
-        self.childAgents = try container.sdkDecodeIfPresent(.childAgents)
-        self.conversationLogsEnabled = try container.sdkDecodeIfPresent(.conversationLogsEnabled)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.deployment = try container.sdkDecodeIfPresent(.deployment)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.functions = try container.sdkDecodeIfPresent(.functions)
-        self.guardrails = try container.sdkDecodeIfPresent(.guardrails)
+        anthropicApiKey = try container.sdkDecodeIfPresent(.anthropicApiKey)
+        apiKeyInfos = try container.sdkDecodeIfPresent(.apiKeyInfos)
+        apiKeys = try container.sdkDecodeIfPresent(.apiKeys)
+        chatbot = try container.sdkDecodeIfPresent(.chatbot)
+        chatbotIdentifiers = try container.sdkDecodeIfPresent(.chatbotIdentifiers)
+        childAgents = try container.sdkDecodeIfPresent(.childAgents)
+        conversationLogsEnabled = try container.sdkDecodeIfPresent(.conversationLogsEnabled)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        deployment = try container.sdkDecodeIfPresent(.deployment)
+        description = try container.sdkDecodeIfPresent(.description)
+        functions = try container.sdkDecodeIfPresent(.functions)
+        guardrails = try container.sdkDecodeIfPresent(.guardrails)
     }
 }
 
 extension ApiAgent {
     mutating func sdkDecodeFieldsPart2(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        self.ifCase = try container.sdkDecodeIfPresent(.ifCase)
-        self.instruction = try container.sdkDecodeIfPresent(.instruction)
-        self.k = try container.sdkDecodeIfPresent(.k)
-        self.knowledgeBases = try container.sdkDecodeIfPresent(.knowledgeBases)
-        self.loggingConfig = try container.sdkDecodeIfPresent(.loggingConfig)
-        self.maxTokens = try container.sdkDecodeIfPresent(.maxTokens)
-        self.mcpServers = try container.sdkDecodeIfPresent(.mcpServers)
-        self.model = try container.sdkDecodeIfPresent(.model)
-        self.modelProviderKey = try container.sdkDecodeIfPresent(.modelProviderKey)
-        self.modelRouter = try container.sdkDecodeIfPresent(.modelRouter)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.openaiApiKey = try container.sdkDecodeIfPresent(.openaiApiKey)
+        ifCase = try container.sdkDecodeIfPresent(.ifCase)
+        instruction = try container.sdkDecodeIfPresent(.instruction)
+        k = try container.sdkDecodeIfPresent(.k)
+        knowledgeBases = try container.sdkDecodeIfPresent(.knowledgeBases)
+        loggingConfig = try container.sdkDecodeIfPresent(.loggingConfig)
+        maxTokens = try container.sdkDecodeIfPresent(.maxTokens)
+        mcpServers = try container.sdkDecodeIfPresent(.mcpServers)
+        model = try container.sdkDecodeIfPresent(.model)
+        modelProviderKey = try container.sdkDecodeIfPresent(.modelProviderKey)
+        modelRouter = try container.sdkDecodeIfPresent(.modelRouter)
+        name = try container.sdkDecodeIfPresent(.name)
+        openaiApiKey = try container.sdkDecodeIfPresent(.openaiApiKey)
     }
 }
 
 extension ApiAgent {
     mutating func sdkDecodeFieldsPart3(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        self.parentAgents = try container.sdkDecodeIfPresent(.parentAgents)
-        self.projectId = try container.sdkDecodeIfPresent(.projectId)
-        self.provideCitations = try container.sdkDecodeIfPresent(.provideCitations)
-        self.reasoningEffort = try container.sdkDecodeIfPresent(.reasoningEffort)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.retrievalMethod = try container.sdkDecodeIfPresent(.retrievalMethod)
-        self.routeCreatedAt = try container.sdkDecodeIfPresent(.routeCreatedAt)
-        self.routeCreatedBy = try container.sdkDecodeIfPresent(.routeCreatedBy)
-        self.routeName = try container.sdkDecodeIfPresent(.routeName)
-        self.routeUuid = try container.sdkDecodeIfPresent(.routeUuid)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.temperature = try container.sdkDecodeIfPresent(.temperature)
+        parentAgents = try container.sdkDecodeIfPresent(.parentAgents)
+        projectId = try container.sdkDecodeIfPresent(.projectId)
+        provideCitations = try container.sdkDecodeIfPresent(.provideCitations)
+        reasoningEffort = try container.sdkDecodeIfPresent(.reasoningEffort)
+        region = try container.sdkDecodeIfPresent(.region)
+        retrievalMethod = try container.sdkDecodeIfPresent(.retrievalMethod)
+        routeCreatedAt = try container.sdkDecodeIfPresent(.routeCreatedAt)
+        routeCreatedBy = try container.sdkDecodeIfPresent(.routeCreatedBy)
+        routeName = try container.sdkDecodeIfPresent(.routeName)
+        routeUuid = try container.sdkDecodeIfPresent(.routeUuid)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        temperature = try container.sdkDecodeIfPresent(.temperature)
     }
 }
 
 extension ApiAgent {
     mutating func sdkDecodeFieldsPart4(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        self.template = try container.sdkDecodeIfPresent(.template)
-        self.thinkingTokenBudget = try container.sdkDecodeIfPresent(.thinkingTokenBudget)
-        self.topP = try container.sdkDecodeIfPresent(.topP)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.url = try container.sdkDecodeIfPresent(.url)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
-        self.versionHash = try container.sdkDecodeIfPresent(.versionHash)
-        self.vpcEgressIps = try container.sdkDecodeIfPresent(.vpcEgressIps)
-        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        self.webFetchEnabled = try container.sdkDecodeIfPresent(.webFetchEnabled)
-        self.webSearchEnabled = try container.sdkDecodeIfPresent(.webSearchEnabled)
+        template = try container.sdkDecodeIfPresent(.template)
+        thinkingTokenBudget = try container.sdkDecodeIfPresent(.thinkingTokenBudget)
+        topP = try container.sdkDecodeIfPresent(.topP)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        url = try container.sdkDecodeIfPresent(.url)
+        userId = try container.sdkDecodeIfPresent(.userId)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
+        versionHash = try container.sdkDecodeIfPresent(.versionHash)
+        vpcEgressIps = try container.sdkDecodeIfPresent(.vpcEgressIps)
+        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        webFetchEnabled = try container.sdkDecodeIfPresent(.webFetchEnabled)
+        webSearchEnabled = try container.sdkDecodeIfPresent(.webSearchEnabled)
     }
 }
 
 extension ApiAgent {
     mutating func sdkDecodeFieldsPart5(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        self.workspace = try container.sdkDecodeIfPresent(.workspace)
+        workspace = try container.sdkDecodeIfPresent(.workspace)
     }
 }
 
@@ -451,27 +560,36 @@ public struct ApiLLMSpan: Codable {
     }
 
     init() {
-        (self.common, self.model, self.numInputTokens, self.numOutputTokens, self.temperature) = (nil, nil, nil, nil, nil)
-        (self.timeToFirstTokenNs, self.tools, self.totalTokens) = (nil, nil, nil)
+        (common, model, numInputTokens, numOutputTokens, temperature) = (nil, nil, nil, nil, nil)
+        (timeToFirstTokenNs, tools, totalTokens) = (nil, nil, nil)
     }
 }
 
-extension ApiLLMSpan {
-    public init(from decoder: Decoder) throws {
+public extension ApiLLMSpan {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.common = try container.sdkDecodeIfPresent(.common)
-        self.model = try container.sdkDecodeIfPresent(.model)
-        self.numInputTokens = try container.sdkDecodeIfPresent(.numInputTokens)
-        self.numOutputTokens = try container.sdkDecodeIfPresent(.numOutputTokens)
-        self.temperature = try container.sdkDecodeIfPresent(.temperature)
-        self.timeToFirstTokenNs = try container.sdkDecodeIfPresent(.timeToFirstTokenNs)
-        self.tools = try container.sdkDecodeIfPresent(.tools)
-        self.totalTokens = try container.sdkDecodeIfPresent(.totalTokens)
+        common = try container.sdkDecodeIfPresent(.common)
+        model = try container.sdkDecodeIfPresent(.model)
+        numInputTokens = try container.sdkDecodeIfPresent(.numInputTokens)
+        numOutputTokens = try container.sdkDecodeIfPresent(.numOutputTokens)
+        temperature = try container.sdkDecodeIfPresent(.temperature)
+        timeToFirstTokenNs = try container.sdkDecodeIfPresent(.timeToFirstTokenNs)
+        tools = try container.sdkDecodeIfPresent(.tools)
+        totalTokens = try container.sdkDecodeIfPresent(.totalTokens)
     }
 }
 
-extension ApiLLMSpan {
-    public init(common: ApiSpanCommon? = nil, model: String? = nil, numInputTokens: Int? = nil, numOutputTokens: Int? = nil, temperature: Double? = nil, timeToFirstTokenNs: String? = nil, tools: [[String: JSONValue]]? = nil, totalTokens: Int? = nil) {
+public extension ApiLLMSpan {
+    init(
+        common: ApiSpanCommon? = nil,
+        model: String? = nil,
+        numInputTokens: Int? = nil,
+        numOutputTokens: Int? = nil,
+        temperature: Double? = nil,
+        timeToFirstTokenNs: String? = nil,
+        tools: [[String: JSONValue]]? = nil,
+        totalTokens: Int? = nil
+    ) {
         self.init()
         (self.common, self.model) = (common, model)
         (self.numInputTokens, self.numOutputTokens) = (numInputTokens, numOutputTokens)

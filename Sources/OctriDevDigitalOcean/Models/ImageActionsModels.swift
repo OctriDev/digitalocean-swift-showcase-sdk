@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ImageActions domain models
+/// ImageActions domain models
 /// Typed representation of the `ImageActionTransfer` API schema.
 public struct ImageActionTransfer: Codable {
     /// The action to be taken on the image. Can be either `convert` or `transfer`.
@@ -18,28 +18,38 @@ public struct ImageActionTransfer: Codable {
         case region
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ImageActionTransfer {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.region) else {
-            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.region = try container.sdkDecodeRequired(.region)
-            try sdkValidateRawEnum("type", self.type, ImageActionBaseType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ImageActionTransfer {
-    public init(type: ImageActionBaseType, region: RegionSlug) throws {
+public extension ImageActionTransfer {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.region) else {
+            throw SdkValidationError(
+                field: "region",
+                code: "required",
+                message: "Validation failed for 'region': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        region = try container.sdkDecodeRequired(.region)
+        try sdkValidateRawEnum("type", type, ImageActionBaseType.allCases.map(\.rawValue))
+    }
+}
+
+public extension ImageActionTransfer {
+    init(type: ImageActionBaseType, region: RegionSlug) throws {
         (self.type, self.region) = (type, region)
-            try sdkValidateRawEnum("type", self.type, ImageActionBaseType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, ImageActionBaseType.allCases.map(\.rawValue))
     }
 }
 
@@ -52,21 +62,27 @@ public struct ImageActionTransferVariant1: Codable {
         case region
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ImageActionTransferVariant1 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.region) else {
-            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
-        }
-        self.region = try container.sdkDecodeRequired(.region)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ImageActionTransferVariant1 {
-    public init(region: RegionSlug) {
+public extension ImageActionTransferVariant1 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.region) else {
+            throw SdkValidationError(
+                field: "region",
+                code: "required",
+                message: "Validation failed for 'region': value is required"
+            )
+        }
+        region = try container.sdkDecodeRequired(.region)
+    }
+}
+
+public extension ImageActionTransferVariant1 {
+    init(region: RegionSlug) {
         self.region = region
     }
 }
@@ -85,23 +101,29 @@ public struct GetImageActionsResponse: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension GetImageActionsResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.actions = try container.sdkDecodeIfPresent(.actions)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension GetImageActionsResponse {
-    public init(meta: MetaMeta, actions: [Action]? = nil, links: PageLinks? = nil) {
+public extension GetImageActionsResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        actions = try container.sdkDecodeIfPresent(.actions)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension GetImageActionsResponse {
+    init(meta: MetaMeta, actions: [Action]? = nil, links: PageLinks? = nil) {
         (self.meta, self.actions) = (meta, actions)
         self.links = links
     }
@@ -117,24 +139,30 @@ public struct ImageActionBase: Codable {
         case type
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ImageActionBase {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-            try sdkValidateRawEnum("type", self.type, ImageActionBaseType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ImageActionBase {
-    public init(type: ImageActionBaseType) throws {
+public extension ImageActionBase {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        try sdkValidateRawEnum("type", type, ImageActionBaseType.allCases.map(\.rawValue))
+    }
+}
+
+public extension ImageActionBase {
+    init(type: ImageActionBaseType) throws {
         self.type = type
-            try sdkValidateRawEnum("type", self.type, ImageActionBaseType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, ImageActionBaseType.allCases.map(\.rawValue))
     }
 }
 
@@ -146,19 +174,19 @@ public struct GetImageActionsResponseVariant0: Codable {
     }
 
     init() {
-        self.actions = nil
+        actions = nil
     }
 }
 
-extension GetImageActionsResponseVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension GetImageActionsResponseVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.actions = try container.sdkDecodeIfPresent(.actions)
+        actions = try container.sdkDecodeIfPresent(.actions)
     }
 }
 
-extension GetImageActionsResponseVariant0 {
-    public init(actions: [Action]? = nil) {
+public extension GetImageActionsResponseVariant0 {
+    init(actions: [Action]? = nil) {
         self.init()
         self.actions = actions
     }

@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ServerlessInferenceMethods {
-    public struct InferenceCreateChatCompletionOptions: Codable {
+public extension ServerlessInferenceMethods {
+    struct InferenceCreateChatCompletionOptions: Codable {
         public var messages: [ChatMessage]
         public var model: String
         public var maxTokens: SdkOptional<Int>?
@@ -105,7 +105,11 @@ extension ServerlessInferenceMethods {
     ///   temperature but not both.
     /// - user: A unique identifier representing your end-user, which can help
     ///   DigitalOcean to monitor and detect abuse.
-    public static func inferenceCreateChatCompletion(config: ClientConfig, options: InferenceCreateChatCompletionOptions, requestOptions: RequestOptions? = nil) async throws -> ChatCompletionResponse {
+    static func inferenceCreateChatCompletion(
+        config: ClientConfig,
+        options: InferenceCreateChatCompletionOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ChatCompletionResponse {
         try validateItems("messages", options.messages, min: 1)
 
         if let maxTokens = options.maxTokens?.valueOrNil {
@@ -142,6 +146,15 @@ extension ServerlessInferenceMethods {
 
         let requestBody = InferenceCreateChatCompletionRequestBody(options: options)
 
-        return try (await sdkRequest("POST", "/v1/chat/completions", config: config, body: requestBody, decoder: .json, operationId: "inference_create_chat_completion", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v1/chat/completions",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "inference_create_chat_completion",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

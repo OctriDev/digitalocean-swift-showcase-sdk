@@ -3,42 +3,130 @@
 
 import Foundation
 
-extension HarnessRuntimeNamespace {
-/// Keyset-paginated. The large `payload` field is omitted from list items; fetch a single execution to read it.
-    public func harnessListTriggerExecutions(triggerId: String, pageSize: Int? = nil, pageToken: String? = nil, status: TriggerExecutionStatus? = nil, requestOptions: RequestOptions? = nil) async throws -> ListTriggerExecutionsResponse {
-        return try await HarnessRuntimeMethods.harnessListTriggerExecutions(config: config, triggerId: triggerId, pageSize: pageSize, pageToken: pageToken, status: status, requestOptions: requestOptions)
+public extension HarnessRuntimeNamespace {
+    /// Keyset-paginated. The large `payload` field is omitted from list items; fetch a single execution to read it.
+    func harnessListTriggerExecutions(
+        triggerId: String,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        status: TriggerExecutionStatus? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListTriggerExecutionsResponse {
+        try await HarnessRuntimeMethods.harnessListTriggerExecutions(
+            config: config,
+            triggerId: triggerId,
+            pageSize: pageSize,
+            pageToken: pageToken,
+            status: status,
+            requestOptions: requestOptions
+        )
     }
 
-/// Keyset-paginated. The large `payload` field is omitted from list items; fetch a single execution to read it.
-    public func harnessListTriggerExecutionsPaginated(triggerId: String, pageSize: Int? = nil, pageToken: String? = nil, status: TriggerExecutionStatus? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<TriggerExecution, Swift.Error> {
-        return HarnessRuntimeMethods.harnessListTriggerExecutionsPaginated(config: config, triggerId: triggerId, pageSize: pageSize, pageToken: pageToken, status: status, requestOptions: requestOptions)
+    /// Keyset-paginated. The large `payload` field is omitted from list items; fetch a single execution to read it.
+    func harnessListTriggerExecutionsPaginated(
+        triggerId: String,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        status: TriggerExecutionStatus? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<TriggerExecution, Swift.Error> {
+        HarnessRuntimeMethods.harnessListTriggerExecutionsPaginated(
+            config: config,
+            triggerId: triggerId,
+            pageSize: pageSize,
+            pageToken: pageToken,
+            status: status,
+            requestOptions: requestOptions
+        )
     }
 
-/// Returns the full execution row, including the `payload`, `output_text`, and `output_truncated` fields omitted from list items.
-    public func harnessGetTriggerExecution(triggerId: String, executionId: String, requestOptions: RequestOptions? = nil) async throws -> GetTriggerExecutionResponse {
-        return try await HarnessRuntimeMethods.harnessGetTriggerExecution(config: config, triggerId: triggerId, executionId: executionId, requestOptions: requestOptions)
+    /// Returns the full execution row, including the `payload`, `output_text`, and `output_truncated` fields omitted
+    /// from list items.
+    func harnessGetTriggerExecution(
+        triggerId: String,
+        executionId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetTriggerExecutionResponse {
+        try await HarnessRuntimeMethods.harnessGetTriggerExecution(
+            config: config,
+            triggerId: triggerId,
+            executionId: executionId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Fails the execution and frees the trigger's in-flight slot. A fresh-mode session is destroyed outright. A reuse-mode session is only paused, not stopped - harness has no run-interrupt call, so the agent's turn may still be in flight server-side; this frees the queue, not necessarily the agent's work. A non-running execution is a no-op that still returns 200.
-    public func harnessCancelTriggerExecution(triggerId: String, executionId: String, force: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> GetTriggerExecutionResponse {
-        return try await HarnessRuntimeMethods.harnessCancelTriggerExecution(config: config, triggerId: triggerId, executionId: executionId, force: force, requestOptions: requestOptions)
+    /// Fails the execution and frees the trigger's in-flight slot. A fresh-mode session is destroyed outright. A
+    /// reuse-mode session is only paused, not stopped - harness has no run-interrupt call, so the agent's turn may
+    /// still be in flight server-side; this frees the queue, not necessarily the agent's work. A non-running execution
+    /// is a no-op that still returns 200.
+    func harnessCancelTriggerExecution(
+        triggerId: String,
+        executionId: String,
+        force: Bool? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetTriggerExecutionResponse {
+        try await HarnessRuntimeMethods.harnessCancelTriggerExecution(
+            config: config,
+            triggerId: triggerId,
+            executionId: executionId,
+            force: force,
+            requestOptions: requestOptions
+        )
     }
 
-/// Webhook triggers only (409 for cron). Issues a new secret (shown once) and moves the old value to the previous slot, where it keeps verifying deliveries until previous_secret_expires_at. Default grace is 5 minutes when grace_period_seconds is omitted, so deliveries already in flight (signed with the old value) still succeed while the customer updates their external system. After that instant the old value is refused with 401. Pass grace_period_seconds=0 to retire the old secret on this call (breach response), or a positive value (up to the server max, default 1 hour) for a custom window; above the max is 400.
-    public func harnessPostTriggerRotateSecret(triggerId: String, gracePeriodSeconds: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> RotateSecretResponse {
-        return try await HarnessRuntimeMethods.harnessPostTriggerRotateSecret(config: config, triggerId: triggerId, gracePeriodSeconds: gracePeriodSeconds, requestOptions: requestOptions)
+    /// Webhook triggers only (409 for cron). Issues a new secret (shown once) and moves the old value to the previous
+    /// slot, where it keeps verifying deliveries until previous_secret_expires_at. Default grace is 5 minutes when
+    /// grace_period_seconds is omitted, so deliveries already in flight (signed with the old value) still succeed while
+    /// the customer updates their external system. After that instant the old value is refused with 401. Pass
+    /// grace_period_seconds=0 to retire the old secret on this call (breach response), or a positive value (up to the
+    /// server max, default 1 hour) for a custom window; above the max is 400.
+    func harnessPostTriggerRotateSecret(
+        triggerId: String,
+        gracePeriodSeconds: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RotateSecretResponse {
+        try await HarnessRuntimeMethods.harnessPostTriggerRotateSecret(
+            config: config,
+            triggerId: triggerId,
+            gracePeriodSeconds: gracePeriodSeconds,
+            requestOptions: requestOptions
+        )
     }
 
-/// Receives a signed webhook delivery from an external system for a trigger. The caller is the external system, and each delivery is authenticated with the trigger's provider-specific signature or token. Successful deliveries are accepted for asynchronous processing; paused triggers and deduplicated retries also receive an accepted response.
+    /// Receives a signed webhook delivery from an external system for a trigger. The caller is the external system, and
+    /// each delivery is authenticated with the trigger's provider-specific signature or token. Successful deliveries
+    /// are accepted for asynchronous processing; paused triggers and deduplicated retries also receive an accepted
+    /// response.
     ///
-    /// The one public, un-team-authenticated endpoint. There is NO DO bearer token: the caller is the customer's external system. Authentication is the per-trigger HMAC secret, verified on every delivery; edge rate-limiting is mandatory. The request body is the provider's RAW body, forwarded verbatim (the HMAC is computed over the exact bytes received); Content-Type is provider-defined and passed through. The signature header depends on the trigger's provider: - github: `X-Hub-Signature-256: sha256=<hex>` (HMAC-SHA256 of the raw body) - gitlab: `X-Gitlab-Token: <token>` (plaintext token equality; GitLab does not sign) - custom: `X-DigitalOcean-Signature: t=<unix>,v1=<hex>` (HMAC-SHA256 of `{unix}.{raw body}`; `do-signature` is also accepted as a transitional alias) On success (including a provider retry that dedupes to an existing firing) it returns 202 with the execution_id. A delivery to a paused trigger returns 202 with no body and queues nothing (deliberately not 409, so providers do not auto-disable the webhook after repeated non-2xx).
-    public func harnessPostTriggerWebhook(triggerId: String, body: Data, requestOptions: RequestOptions? = nil) async throws -> WebhookAcceptedResponse {
-        return try await HarnessRuntimeMethods.harnessPostTriggerWebhook(config: config, triggerId: triggerId, body: body, requestOptions: requestOptions)
+    /// The one public, un-team-authenticated endpoint. There is NO DO bearer token: the caller is the customer's
+    /// external system. Authentication is the per-trigger HMAC secret, verified on every delivery; edge rate-limiting
+    /// is mandatory. The request body is the provider's RAW body, forwarded verbatim (the HMAC is computed over the
+    /// exact bytes received); Content-Type is provider-defined and passed through. The signature header depends on the
+    /// trigger's provider: - github: `X-Hub-Signature-256: sha256=<hex>` (HMAC-SHA256 of the raw body) - gitlab:
+    /// `X-Gitlab-Token: <token>` (plaintext token equality; GitLab does not sign) - custom: `X-DigitalOcean-Signature:
+    /// t=<unix>,v1=<hex>` (HMAC-SHA256 of `{unix}.{raw body}`; `do-signature` is also accepted as a transitional alias)
+    /// On success (including a provider retry that dedupes to an existing firing) it returns 202 with the execution_id.
+    /// A delivery to a paused trigger returns 202 with no body and queues nothing (deliberately not 409, so providers
+    /// do not auto-disable the webhook after repeated non-2xx).
+    func harnessPostTriggerWebhook(
+        triggerId: String,
+        body: Data,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> WebhookAcceptedResponse {
+        try await HarnessRuntimeMethods.harnessPostTriggerWebhook(
+            config: config,
+            triggerId: triggerId,
+            body: body,
+            requestOptions: requestOptions
+        )
     }
 
-/// A static, code-defined registry (not a database table), webhook-only. Cron triggers have no provider and never call this. Used to populate the provider dropdown with display name, docs link, paste hint, and the signature scheme.
-    public func harnessListWebhookProviders(requestOptions: RequestOptions? = nil) async throws -> ListWebhookProvidersResponse {
-        return try await HarnessRuntimeMethods.harnessListWebhookProviders(config: config, requestOptions: requestOptions)
+    /// A static, code-defined registry (not a database table), webhook-only. Cron triggers have no provider and never
+    /// call this. Used to populate the provider dropdown with display name, docs link, paste hint, and the signature
+    /// scheme.
+    func harnessListWebhookProviders(requestOptions: RequestOptions? = nil) async throws
+        -> ListWebhookProvidersResponse {
+        try await HarnessRuntimeMethods.harnessListWebhookProviders(config: config, requestOptions: requestOptions)
     }
 }
 
@@ -48,147 +136,424 @@ public class AppsNamespace {
         self.config = config
     }
 
-/// List all apps on your account. Information about the current active deployment as well as any in progress ones will also be included for each app.
-    public func list(page: Int? = nil, perPage: Int? = nil, withProjects: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsResponse {
-        return try await AppsMethods.appsList(config: config, page: page, perPage: perPage, withProjects: withProjects, requestOptions: requestOptions)
+    /// List all apps on your account. Information about the current active deployment as well as any in progress ones
+    /// will also be included for each app.
+    public func list(
+        page: Int? = nil,
+        perPage: Int? = nil,
+        withProjects: Bool? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppsResponse {
+        try await AppsMethods.appsList(
+            config: config,
+            page: page,
+            perPage: perPage,
+            withProjects: withProjects,
+            requestOptions: requestOptions
+        )
     }
 
-/// Create a new app by submitting an app specification. For documentation on app specifications (`AppSpec` objects), please refer to [the product documentation](https://docs.digitalocean.com/products/app-platform/reference/app-spec/).
-    public func create(spec: AppSpecRequest, accept: AppsCreateParameter? = nil, projectId: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AppResponse {
-        return try await AppsMethods.appsCreate(config: config, spec: spec, accept: accept, projectId: projectId, requestOptions: requestOptions)
+    /// Create a new app by submitting an app specification. For documentation on app specifications (`AppSpec`
+    /// objects), please refer to [the product
+    /// documentation](https://docs.digitalocean.com/products/app-platform/reference/app-spec/).
+    public func create(
+        spec: AppSpecRequest,
+        accept: AppsCreateParameter? = nil,
+        projectId: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppResponse {
+        try await AppsMethods.appsCreate(
+            config: config,
+            spec: spec,
+            accept: accept,
+            projectId: projectId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Delete an existing app. Once deleted, all active deployments will be permanently shut down and the app deleted. If needed, be sure to back up your app specification so that you may re-create it at a later time.
+    /// Delete an existing app. Once deleted, all active deployments will be permanently shut down and the app deleted.
+    /// If needed, be sure to back up your app specification so that you may re-create it at a later time.
     public func delete(id: String, requestOptions: RequestOptions? = nil) async throws -> AppsDeleteAppResponse {
-        return try await AppsMethods.appsDelete(config: config, id: id, requestOptions: requestOptions)
+        try await AppsMethods.appsDelete(config: config, id: id, requestOptions: requestOptions)
     }
 
-/// Retrieve details about an existing app by either its ID or name. To retrieve an app by its name, do not include an ID in the request path. Information about the current active deployment as well as any in progress ones will also be included in the response.
-    public func get(id: String, name: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AppResponse {
-        return try await AppsMethods.appsGet(config: config, id: id, name: name, requestOptions: requestOptions)
+    /// Retrieve details about an existing app by either its ID or name. To retrieve an app by its name, do not include
+    /// an ID in the request path. Information about the current active deployment as well as any in progress ones will
+    /// also be included in the response.
+    public func get(
+        id: String,
+        name: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppResponse {
+        try await AppsMethods.appsGet(config: config, id: id, name: name, requestOptions: requestOptions)
     }
 
-/// Update an existing app by submitting a new app specification. For documentation on app specifications (`AppSpec` objects), please refer to [the product documentation](https://docs.digitalocean.com/products/app-platform/reference/app-spec/).
-    public func update(id: String, spec: AppSpecRequest, updateAllSourceVersions: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> AppResponse {
-        return try await AppsMethods.appsUpdate(config: config, id: id, spec: spec, updateAllSourceVersions: updateAllSourceVersions, requestOptions: requestOptions)
+    /// Update an existing app by submitting a new app specification. For documentation on app specifications (`AppSpec`
+    /// objects), please refer to [the product
+    /// documentation](https://docs.digitalocean.com/products/app-platform/reference/app-spec/).
+    public func update(
+        id: String,
+        spec: AppSpecRequest,
+        updateAllSourceVersions: Bool? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppResponse {
+        try await AppsMethods.appsUpdate(
+            config: config,
+            id: id,
+            spec: spec,
+            updateAllSourceVersions: updateAllSourceVersions,
+            requestOptions: requestOptions
+        )
     }
 
-/// Triggers a rolling restart of an app, either across all components or only the components you specify. Pass `components` to limit the restart; omit it to restart all components. A successful response includes the resulting deployment object.
+    /// Triggers a rolling restart of an app, either across all components or only the components you specify. Pass
+    /// `components` to limit the restart; omit it to restart all components. A successful response includes the
+    /// resulting deployment object.
     ///
     /// Perform a rolling restart of all or specific components in an app.
-    public func restart(appId: String, components: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsDeploymentResponse {
-        return try await AppsMethods.appsRestart(config: config, appId: appId, components: components, requestOptions: requestOptions)
+    public func restart(
+        appId: String,
+        components: [String]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppsDeploymentResponse {
+        try await AppsMethods.appsRestart(
+            config: config,
+            appId: appId,
+            components: components,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieve the logs of the active deployment if one exists. The response will include links to either real-time logs of an in-progress or active deployment or archived logs of a past deployment. Note log_type=BUILD logs will return logs associated with the current active deployment (being served). To view build logs associated with in-progress build, the query must explicitly reference the deployment id.
-    public func getLogsActiveDeployment(appId: String, componentName: String, type: AppsGetLogsActiveDeploymentParameter, follow: Bool? = nil, podConnectionTimeout: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsGetLogsResponse {
-        return try await AppsMethods.appsGetLogsActiveDeployment(config: config, appId: appId, componentName: componentName, type: type, follow: follow, podConnectionTimeout: podConnectionTimeout, requestOptions: requestOptions)
+    /// Retrieve the logs of the active deployment if one exists. The response will include links to either real-time
+    /// logs of an in-progress or active deployment or archived logs of a past deployment. Note log_type=BUILD logs will
+    /// return logs associated with the current active deployment (being served). To view build logs associated with
+    /// in-progress build, the query must explicitly reference the deployment id.
+    public func getLogsActiveDeployment(
+        appId: String,
+        componentName: String,
+        type: AppsGetLogsActiveDeploymentParameter,
+        follow: Bool? = nil,
+        podConnectionTimeout: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppsGetLogsResponse {
+        try await AppsMethods.appsGetLogsActiveDeployment(
+            config: config,
+            appId: appId,
+            componentName: componentName,
+            type: type,
+            follow: follow,
+            podConnectionTimeout: podConnectionTimeout,
+            requestOptions: requestOptions
+        )
     }
 
-/// Returns a websocket URL that allows sending/receiving console input and output to a component of the active deployment if one exists.
-    public func getExecActiveDeployment(appId: String, componentName: String, instanceName: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsGetExecResponse {
-        return try await AppsMethods.appsGetExecActiveDeployment(config: config, appId: appId, componentName: componentName, instanceName: instanceName, requestOptions: requestOptions)
+    /// Returns a websocket URL that allows sending/receiving console input and output to a component of the active
+    /// deployment if one exists.
+    public func getExecActiveDeployment(
+        appId: String,
+        componentName: String,
+        instanceName: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppsGetExecResponse {
+        try await AppsMethods.appsGetExecActiveDeployment(
+            config: config,
+            appId: appId,
+            componentName: componentName,
+            instanceName: instanceName,
+            requestOptions: requestOptions
+        )
     }
 }
 
-extension AppsNamespace {
-/// Retrieve the list of running instances for a given application, including instance names and component types. Please note that these instances are ephemeral and may change over time. It is recommended not to make persistent changes or develop scripts that rely on their persistence.
-    public func getInstances(appId: String, requestOptions: RequestOptions? = nil) async throws -> AppInstances {
-        return try await AppsMethods.appsGetInstances(config: config, appId: appId, requestOptions: requestOptions)
+public extension AppsNamespace {
+    /// Retrieve the list of running instances for a given application, including instance names and component types.
+    /// Please note that these instances are ephemeral and may change over time. It is recommended not to make
+    /// persistent changes or develop scripts that rely on their persistence.
+    func getInstances(appId: String, requestOptions: RequestOptions? = nil) async throws -> AppInstances {
+        try await AppsMethods.appsGetInstances(config: config, appId: appId, requestOptions: requestOptions)
     }
 
-/// Lists deployments for a specific app. Filter by deployment type and use `page` and `per_page` to paginate the results.
+    /// Lists deployments for a specific app. Filter by deployment type and use `page` and `per_page` to paginate the
+    /// results.
     ///
     /// List all deployments of an app.
-    public func listDeployments(appId: String, page: Int? = nil, perPage: Int? = nil, deploymentTypes: [AppsListDeploymentsParameterItem]? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsDeploymentsResponse {
-        return try await AppsMethods.appsListDeployments(config: config, appId: appId, page: page, perPage: perPage, deploymentTypes: deploymentTypes, requestOptions: requestOptions)
+    func listDeployments(
+        appId: String,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        deploymentTypes: [AppsListDeploymentsParameterItem]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppsDeploymentsResponse {
+        try await AppsMethods.appsListDeployments(
+            config: config,
+            appId: appId,
+            page: page,
+            perPage: perPage,
+            deploymentTypes: deploymentTypes,
+            requestOptions: requestOptions
+        )
     }
 
-/// Creates a deployment for a specific app by pulling the latest changes from its repository and scheduling a new deployment. Set `force_build` to build the app from source even when an existing cached build can be reused. The response includes the deployment record and its current phase.
+    /// Creates a deployment for a specific app by pulling the latest changes from its repository and scheduling a new
+    /// deployment. Set `force_build` to build the app from source even when an existing cached build can be reused. The
+    /// response includes the deployment record and its current phase.
     ///
-    /// Creating an app deployment will pull the latest changes from your repository and schedule a new deployment for your app.
-    public func createDeployment(appId: String, forceBuild: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsDeploymentResponse {
-        return try await AppsMethods.appsCreateDeployment(config: config, appId: appId, forceBuild: forceBuild, requestOptions: requestOptions)
+    /// Creating an app deployment will pull the latest changes from your repository and schedule a new deployment for
+    /// your app.
+    func createDeployment(
+        appId: String,
+        forceBuild: Bool? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppsDeploymentResponse {
+        try await AppsMethods.appsCreateDeployment(
+            config: config,
+            appId: appId,
+            forceBuild: forceBuild,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves details for a specific deployment of an app. Use both identifiers to select the deployment, and inspect its phase and progress to check its current state.
+    /// Retrieves details for a specific deployment of an app. Use both identifiers to select the deployment, and
+    /// inspect its phase and progress to check its current state.
     ///
     /// Retrieve information about an app deployment.
-    public func getDeployment(appId: String, deploymentId: String, requestOptions: RequestOptions? = nil) async throws -> AppsDeploymentResponse {
-        return try await AppsMethods.appsGetDeployment(config: config, appId: appId, deploymentId: deploymentId, requestOptions: requestOptions)
+    func getDeployment(
+        appId: String,
+        deploymentId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppsDeploymentResponse {
+        try await AppsMethods.appsGetDeployment(
+            config: config,
+            appId: appId,
+            deploymentId: deploymentId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Cancels an in-progress deployment for a specific app. Use the app and deployment identifiers to select the deployment to stop. The response contains the deployment after it has been cancelled.
+    /// Cancels an in-progress deployment for a specific app. Use the app and deployment identifiers to select the
+    /// deployment to stop. The response contains the deployment after it has been cancelled.
     ///
     /// Immediately cancel an in-progress deployment.
-    public func cancelDeployment(appId: String, deploymentId: String, requestOptions: RequestOptions? = nil) async throws -> AppsDeploymentResponse {
-        return try await AppsMethods.appsCancelDeployment(config: config, appId: appId, deploymentId: deploymentId, requestOptions: requestOptions)
+    func cancelDeployment(
+        appId: String,
+        deploymentId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppsDeploymentResponse {
+        try await AppsMethods.appsCancelDeployment(
+            config: config,
+            appId: appId,
+            deploymentId: deploymentId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieve the logs of a past, in-progress, or active deployment. The response will include links to either real-time logs of an in-progress or active deployment or archived logs of a past deployment.
-    public func getLogs(appId: String, deploymentId: String, componentName: String, type: AppsGetLogsActiveDeploymentParameter, follow: Bool? = nil, podConnectionTimeout: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsGetLogsResponse {
-        return try await AppsMethods.appsGetLogs(config: config, appId: appId, deploymentId: deploymentId, componentName: componentName, type: type, follow: follow, podConnectionTimeout: podConnectionTimeout, requestOptions: requestOptions)
+    /// Retrieve the logs of a past, in-progress, or active deployment. The response will include links to either
+    /// real-time logs of an in-progress or active deployment or archived logs of a past deployment.
+    func getLogs(
+        appId: String,
+        deploymentId: String,
+        componentName: String,
+        type: AppsGetLogsActiveDeploymentParameter,
+        follow: Bool? = nil,
+        podConnectionTimeout: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppsGetLogsResponse {
+        try await AppsMethods.appsGetLogs(
+            config: config,
+            appId: appId,
+            deploymentId: deploymentId,
+            componentName: componentName,
+            type: type,
+            follow: follow,
+            podConnectionTimeout: podConnectionTimeout,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieve the logs of a past, in-progress, or active deployment. If a component name is specified, the logs will be limited to only that component. The response will include links to either real-time logs of an in-progress or active deployment or archived logs of a past deployment.
-    public func getLogsAggregate(appId: String, deploymentId: String, type: AppsGetLogsActiveDeploymentParameter, follow: Bool? = nil, podConnectionTimeout: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsGetLogsResponse {
-        return try await AppsMethods.appsGetLogsAggregate(config: config, appId: appId, deploymentId: deploymentId, type: type, follow: follow, podConnectionTimeout: podConnectionTimeout, requestOptions: requestOptions)
+    /// Retrieve the logs of a past, in-progress, or active deployment. If a component name is specified, the logs will
+    /// be limited to only that component. The response will include links to either real-time logs of an in-progress or
+    /// active deployment or archived logs of a past deployment.
+    func getLogsAggregate(
+        appId: String,
+        deploymentId: String,
+        type: AppsGetLogsActiveDeploymentParameter,
+        follow: Bool? = nil,
+        podConnectionTimeout: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppsGetLogsResponse {
+        try await AppsMethods.appsGetLogsAggregate(
+            config: config,
+            appId: appId,
+            deploymentId: deploymentId,
+            type: type,
+            follow: follow,
+            podConnectionTimeout: podConnectionTimeout,
+            requestOptions: requestOptions
+        )
     }
 
-/// Returns a websocket URL that allows sending/receiving console input and output to a component of the specified deployment if one exists. Optionally, the instance_name parameter can be provided to retrieve the exec URL for a specific instance. Note that instances are ephemeral; therefore, we recommended to avoid making persistent changes or such scripting around them.
-    public func getExec(appId: String, deploymentId: String, componentName: String, instanceName: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsGetExecResponse {
-        return try await AppsMethods.appsGetExec(config: config, appId: appId, deploymentId: deploymentId, componentName: componentName, instanceName: instanceName, requestOptions: requestOptions)
+    /// Returns a websocket URL that allows sending/receiving console input and output to a component of the specified
+    /// deployment if one exists. Optionally, the instance_name parameter can be provided to retrieve the exec URL for a
+    /// specific instance. Note that instances are ephemeral; therefore, we recommended to avoid making persistent
+    /// changes or such scripting around them.
+    func getExec(
+        appId: String,
+        deploymentId: String,
+        componentName: String,
+        instanceName: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppsGetExecResponse {
+        try await AppsMethods.appsGetExec(
+            config: config,
+            appId: appId,
+            deploymentId: deploymentId,
+            componentName: componentName,
+            instanceName: instanceName,
+            requestOptions: requestOptions
+        )
     }
 }
 
-extension AppsNamespace {
-/// Retrieve the logs of the active deployment if one exists. The response will include links to either real-time logs of an in-progress or active deployment or archived logs of a past deployment. Note log_type=BUILD logs will return logs associated with the current active deployment (being served). To view build logs associated with in-progress build, the query must explicitly reference the deployment id.
-    public func getLogsActiveDeploymentAggregate(appId: String, type: AppsGetLogsActiveDeploymentParameter, follow: Bool? = nil, podConnectionTimeout: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsGetLogsResponse {
-        return try await AppsMethods.appsGetLogsActiveDeploymentAggregate(config: config, appId: appId, type: type, follow: follow, podConnectionTimeout: podConnectionTimeout, requestOptions: requestOptions)
+public extension AppsNamespace {
+    /// Retrieve the logs of the active deployment if one exists. The response will include links to either real-time
+    /// logs of an in-progress or active deployment or archived logs of a past deployment. Note log_type=BUILD logs will
+    /// return logs associated with the current active deployment (being served). To view build logs associated with
+    /// in-progress build, the query must explicitly reference the deployment id.
+    func getLogsActiveDeploymentAggregate(
+        appId: String,
+        type: AppsGetLogsActiveDeploymentParameter,
+        follow: Bool? = nil,
+        podConnectionTimeout: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppsGetLogsResponse {
+        try await AppsMethods.appsGetLogsActiveDeploymentAggregate(
+            config: config,
+            appId: appId,
+            type: type,
+            follow: follow,
+            podConnectionTimeout: podConnectionTimeout,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists job invocations for a specific app. Filter the results by job names or deployment, and use `page` and `per_page` to paginate the results.
+    /// Lists job invocations for a specific app. Filter the results by job names or deployment, and use `page` and
+    /// `per_page` to paginate the results.
     ///
     /// List all job invocations for an app.
-    public func listJobInvocations(appId: String, jobNames: [Schema]? = nil, deploymentId: String? = nil, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AppJobInvocations {
-        return try await AppsMethods.appsListJobInvocations(config: config, appId: appId, jobNames: jobNames, deploymentId: deploymentId, page: page, perPage: perPage, requestOptions: requestOptions)
+    func listJobInvocations(
+        appId: String,
+        jobNames: [Schema]? = nil,
+        deploymentId: String? = nil,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppJobInvocations {
+        try await AppsMethods.appsListJobInvocations(
+            config: config,
+            appId: appId,
+            jobNames: jobNames,
+            deploymentId: deploymentId,
+            page: page,
+            perPage: perPage,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves a specific job invocation for an app. Use `job_invocation_id` to select the invocation and optionally provide `job_name` to specify the job associated with it.
+    /// Retrieves a specific job invocation for an app. Use `job_invocation_id` to select the invocation and optionally
+    /// provide `job_name` to specify the job associated with it.
     ///
     /// Get a specific job invocation for an app.
-    public func getJobInvocation(appId: String, jobInvocationId: String, jobName: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AppJobInvocation {
-        return try await AppsMethods.appsGetJobInvocation(config: config, appId: appId, jobInvocationId: jobInvocationId, jobName: jobName, requestOptions: requestOptions)
+    func getJobInvocation(
+        appId: String,
+        jobInvocationId: String,
+        jobName: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppJobInvocation {
+        try await AppsMethods.appsGetJobInvocation(
+            config: config,
+            appId: appId,
+            jobInvocationId: jobInvocationId,
+            jobName: jobName,
+            requestOptions: requestOptions
+        )
     }
 
-/// Cancels a job invocation for a specified app. Use `app_id` and `job_invocation_id` to identify the invocation, and provide `job_name` to identify the associated job when needed. The response includes the invocation's phase and lifecycle timestamps.
+    /// Cancels a job invocation for a specified app. Use `app_id` and `job_invocation_id` to identify the invocation,
+    /// and provide `job_name` to identify the associated job when needed. The response includes the invocation's phase
+    /// and lifecycle timestamps.
     ///
     /// Cancel a specific job invocation for an app.
-    public func cancelJobInvocation(appId: String, jobInvocationId: String, jobName: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AppJobInvocation {
-        return try await AppsMethods.appsCancelJobInvocation(config: config, appId: appId, jobInvocationId: jobInvocationId, jobName: jobName, requestOptions: requestOptions)
+    func cancelJobInvocation(
+        appId: String,
+        jobInvocationId: String,
+        jobName: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppJobInvocation {
+        try await AppsMethods.appsCancelJobInvocation(
+            config: config,
+            appId: appId,
+            jobInvocationId: jobInvocationId,
+            jobName: jobName,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieve the logs of a past, in-progress, or active deployment. If a component name is specified, the logs will be limited to only that component. If deployment is omitted the active deployment will be selected (if available). The response will include links to either real-time logs of an in-progress or active deployment or archived logs of a past deployment.
-    public func getJobInvocationLogs(options: AppsMethods.AppsGetJobInvocationLogsOptions, requestOptions: RequestOptions? = nil) async throws -> AppsGetLogsResponse {
-        return try await AppsMethods.appsGetJobInvocationLogs(config: config, options: options, requestOptions: requestOptions)
+    /// Retrieve the logs of a past, in-progress, or active deployment. If a component name is specified, the logs will
+    /// be limited to only that component. If deployment is omitted the active deployment will be selected (if
+    /// available). The response will include links to either real-time logs of an in-progress or active deployment or
+    /// archived logs of a past deployment.
+    func getJobInvocationLogs(
+        options: AppsMethods.AppsGetJobInvocationLogsOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppsGetLogsResponse {
+        try await AppsMethods.appsGetJobInvocationLogs(config: config, options: options, requestOptions: requestOptions)
     }
 
-/// List all events for an app, including deployments and autoscaling events.
-    public func listEvents(appId: String, page: Int? = nil, perPage: Int? = nil, eventTypes: [AppsListEventsParameterItem]? = nil, requestOptions: RequestOptions? = nil) async throws -> AppEvents {
-        return try await AppsMethods.appsListEvents(config: config, appId: appId, page: page, perPage: perPage, eventTypes: eventTypes, requestOptions: requestOptions)
+    /// List all events for an app, including deployments and autoscaling events.
+    func listEvents(
+        appId: String,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        eventTypes: [AppsListEventsParameterItem]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppEvents {
+        try await AppsMethods.appsListEvents(
+            config: config,
+            appId: appId,
+            page: page,
+            perPage: perPage,
+            eventTypes: eventTypes,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves a single event for a specified app. Use `app_id` and `event_id` to identify the event whose details you need.
+    /// Retrieves a single event for a specified app. Use `app_id` and `event_id` to identify the event whose details
+    /// you need.
     ///
     /// Get a single event for an app.
-    public func getEvent(appId: String, eventId: String, requestOptions: RequestOptions? = nil) async throws -> GetEvent {
-        return try await AppsMethods.appsGetEvent(config: config, appId: appId, eventId: eventId, requestOptions: requestOptions)
+    func getEvent(appId: String, eventId: String, requestOptions: RequestOptions? = nil) async throws -> GetEvent {
+        try await AppsMethods.appsGetEvent(
+            config: config,
+            appId: appId,
+            eventId: eventId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Cancels an in-progress autoscaling event for a specified app. Use `app_id` and `event_id` to identify the event to cancel. The response includes the event details after the cancellation request.
+    /// Cancels an in-progress autoscaling event for a specified app. Use `app_id` and `event_id` to identify the event
+    /// to cancel. The response includes the event details after the cancellation request.
     ///
     /// Cancel an in-progress autoscaling event.
-    public func cancelEvent(appId: String, eventId: String, requestOptions: RequestOptions? = nil) async throws -> CancelEvent {
-        return try await AppsMethods.appsCancelEvent(config: config, appId: appId, eventId: eventId, requestOptions: requestOptions)
+    func cancelEvent(
+        appId: String,
+        eventId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CancelEvent {
+        try await AppsMethods.appsCancelEvent(
+            config: config,
+            appId: appId,
+            eventId: eventId,
+            requestOptions: requestOptions
+        )
     }
 }

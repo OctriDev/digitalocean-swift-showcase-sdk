@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ContainerRegistry domain models
+/// ContainerRegistry domain models
 /// Typed representation of the `AllRepositories` API schema.
 public struct AllRepositories: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,23 +18,29 @@ public struct AllRepositories: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllRepositories {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.repositories = try container.sdkDecodeIfPresent(.repositories)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllRepositories {
-    public init(meta: MetaMeta, repositories: [Repository]? = nil, links: PageLinks? = nil) {
+public extension AllRepositories {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        repositories = try container.sdkDecodeIfPresent(.repositories)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllRepositories {
+    init(meta: MetaMeta, repositories: [Repository]? = nil, links: PageLinks? = nil) {
         (self.meta, self.repositories) = (meta, repositories)
         self.links = links
     }
@@ -62,22 +68,22 @@ public struct Repository: Codable {
     }
 
     init() {
-        (self.registryName, self.name, self.latestTag, self.tagCount) = (nil, nil, nil, nil)
+        (registryName, name, latestTag, tagCount) = (nil, nil, nil, nil)
     }
 }
 
-extension Repository {
-    public init(from decoder: Decoder) throws {
+public extension Repository {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.registryName = try container.sdkDecodeIfPresent(.registryName)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.latestTag = try container.sdkDecodeIfPresent(.latestTag)
-        self.tagCount = try container.sdkDecodeIfPresent(.tagCount)
+        registryName = try container.sdkDecodeIfPresent(.registryName)
+        name = try container.sdkDecodeIfPresent(.name)
+        latestTag = try container.sdkDecodeIfPresent(.latestTag)
+        tagCount = try container.sdkDecodeIfPresent(.tagCount)
     }
 }
 
-extension Repository {
-    public init(registryName: String? = nil, name: String? = nil, latestTag: RepositoryTag? = nil, tagCount: Int? = nil) {
+public extension Repository {
+    init(registryName: String? = nil, name: String? = nil, latestTag: RepositoryTag? = nil, tagCount: Int? = nil) {
         self.init()
         (self.registryName, self.name) = (registryName, name)
         (self.latestTag, self.tagCount) = (latestTag, tagCount)
@@ -95,19 +101,19 @@ public struct RegistryRunGc: Codable {
     }
 
     init() {
-        self.type = nil
+        type = nil
     }
 }
 
-extension RegistryRunGc {
-    public init(from decoder: Decoder) throws {
+public extension RegistryRunGc {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
+        type = try container.sdkDecodeIfPresent(.type)
     }
 }
 
-extension RegistryRunGc {
-    public init(type: RegistryRunGcType? = nil) {
+public extension RegistryRunGc {
+    init(type: RegistryRunGcType? = nil) {
         self.init()
         self.type = type
     }
@@ -123,19 +129,19 @@ public struct RegistryInfo: Codable {
     }
 
     init() {
-        self.registry = nil
+        registry = nil
     }
 }
 
-extension RegistryInfo {
-    public init(from decoder: Decoder) throws {
+public extension RegistryInfo {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.registry = try container.sdkDecodeIfPresent(.registry)
+        registry = try container.sdkDecodeIfPresent(.registry)
     }
 }
 
-extension RegistryInfo {
-    public init(registry: Registry? = nil) {
+public extension RegistryInfo {
+    init(registry: Registry? = nil) {
         self.init()
         self.registry = registry
     }
@@ -149,27 +155,23 @@ public struct AllRepositoriesVariant0: Codable {
     }
 
     init() {
-        self.repositories = nil
+        repositories = nil
     }
 }
 
-extension AllRepositoriesVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AllRepositoriesVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.repositories = try container.sdkDecodeIfPresent(.repositories)
+        repositories = try container.sdkDecodeIfPresent(.repositories)
     }
 }
 
-extension AllRepositoriesVariant0 {
-    public init(repositories: [Repository]? = nil) {
+public extension AllRepositoriesVariant0 {
+    init(repositories: [Repository]? = nil) {
         self.init()
         self.repositories = repositories
     }
 }
-
-
-
-
 
 /// Typed representation of the `RegistryCreate` API schema.
 public struct RegistryCreate: Codable {
@@ -190,32 +192,46 @@ public struct RegistryCreate: Codable {
         case region
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension RegistryCreate {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.subscriptionTierSlug) else {
-            throw SdkValidationError(field: "subscription_tier_slug", code: "required", message: "Validation failed for 'subscription_tier_slug': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.subscriptionTierSlug = try container.sdkDecodeRequired(.subscriptionTierSlug)
-        self.region = try container.sdkDecodeIfPresent(.region)
-            try validateLength("name", self.name, min: nil, max: 63)
-            try sdkValidatePattern("name", self.name, sdkPattern41dd286f4dc3)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension RegistryCreate {
-    public init(name: String, subscriptionTierSlug: RegistryCreateSubscriptionTierSlug, region: RegistryCreateRegion? = nil) throws {
+public extension RegistryCreate {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.subscriptionTierSlug) else {
+            throw SdkValidationError(
+                field: "subscription_tier_slug",
+                code: "required",
+                message: "Validation failed for 'subscription_tier_slug': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        subscriptionTierSlug = try container.sdkDecodeRequired(.subscriptionTierSlug)
+        region = try container.sdkDecodeIfPresent(.region)
+        try validateLength("name", name, min: nil, max: 63)
+        try sdkValidatePattern("name", name, sdkPattern41dd286f4dc3)
+    }
+}
+
+public extension RegistryCreate {
+    init(
+        name: String,
+        subscriptionTierSlug: RegistryCreateSubscriptionTierSlug,
+        region: RegistryCreateRegion? = nil
+    ) throws {
         (self.name, self.subscriptionTierSlug) = (name, subscriptionTierSlug)
         self.region = region
-            try validateLength("name", self.name, min: nil, max: 63)
-            try sdkValidatePattern("name", self.name, sdkPattern41dd286f4dc3)
+        try validateLength("name", self.name, min: nil, max: 63)
+        try sdkValidatePattern("name", self.name, sdkPattern41dd286f4dc3)
     }
 }
 
@@ -223,14 +239,17 @@ extension RegistryCreate {
 public struct RegistryCreateSubscriptionTierSlug: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let starter = RegistryCreateSubscriptionTierSlug(rawValue: "starter")
     public static let basic = RegistryCreateSubscriptionTierSlug(rawValue: "basic")
     public static let professional = RegistryCreateSubscriptionTierSlug(rawValue: "professional")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -243,14 +262,18 @@ public struct RegistryCreateSubscriptionTierSlug: RawRepresentable, Hashable, Co
 public struct RegistryRunGcType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let untaggedManifestsOnly = RegistryRunGcType(rawValue: "untagged manifests only")
     public static let unreferencedBlobsOnly = RegistryRunGcType(rawValue: "unreferenced blobs only")
-    public static let untaggedManifestsAndUnreferencedBlobs = RegistryRunGcType(rawValue: "untagged manifests and unreferenced blobs")
+    public static let untaggedManifestsAndUnreferencedBlobs =
+        RegistryRunGcType(rawValue: "untagged manifests and unreferenced blobs")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -263,7 +286,10 @@ public struct RegistryRunGcType: RawRepresentable, Hashable, Codable, Sendable, 
 public struct RegistryCreateRegion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let nyc3 = RegistryCreateRegion(rawValue: "nyc3")
     public static let sfo3 = RegistryCreateRegion(rawValue: "sfo3")
     public static let ams3 = RegistryCreateRegion(rawValue: "ams3")
@@ -272,7 +298,7 @@ public struct RegistryCreateRegion: RawRepresentable, Hashable, Codable, Sendabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -6,13 +6,32 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AppsMethods {
-    /// Revert an app rollback. This action reverts the active rollback by creating a new deployment from the latest app spec prior to the rollback and unpins the app to resume new deployments.
+public extension AppsMethods {
+    /// Revert an app rollback. This action reverts the active rollback by creating a new deployment from the latest app
+    /// spec prior to the rollback and unpins the app to resume new deployments.
     ///
     /// - Parameters:
     /// - appId: The app ID
-    public static func appsRevertRollback(config: ClientConfig, appId: String, requestOptions: RequestOptions? = nil) async throws -> AppsDeploymentResponse {
-        return try (await sdkRequest("POST", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/rollback/revert"].joined(), config: config, decoder: .json, operationId: "apps_revert_rollback", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func appsRevertRollback(
+        config: ClientConfig,
+        appId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppsDeploymentResponse {
+        try await (sdkRequest(
+            "POST",
+            ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/rollback/revert"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "apps_revert_rollback",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
     /// Retrieve daily bandwidth usage metrics for a single app.
@@ -21,14 +40,34 @@ extension AppsMethods {
     /// - appId: The app ID
     /// - date: Optional day to query. Only the date component of the timestamp will
     ///   be considered. Default: yesterday.
-    public static func appsGetMetricsBandwidthDaily(config: ClientConfig, appId: String, date: Date? = nil, requestOptions: RequestOptions? = nil) async throws -> AppMetricsBandwidthUsage {
-        if let date = date {
+    static func appsGetMetricsBandwidthDaily(
+        config: ClientConfig,
+        appId: String,
+        date: Date? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppMetricsBandwidthUsage {
+        if let date {
             try sdkValidateDateTime("date", date)
         }
 
-        return try (await sdkRequest("GET", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/metrics/bandwidth_daily"].joined(), config: config, query: [
-            SdkQueryParameter("date", value: date),
-        ], decoder: .json, operationId: "apps_get_metrics_bandwidth_daily", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/metrics/bandwidth_daily"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("date", value: date),
+            ],
+            decoder: .json,
+            operationId: "apps_get_metrics_bandwidth_daily",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
     /// Retrieve daily bandwidth usage metrics for multiple apps.
@@ -37,15 +76,35 @@ extension AppsMethods {
     /// - appIds: A list of app IDs to query bandwidth metrics for.
     /// - date: Optional day to query. Only the date component of the timestamp will
     ///   be considered. Default: yesterday.
-    public static func appsListMetricsBandwidthDaily(config: ClientConfig, appIds: [String], date: Date? = nil, requestOptions: RequestOptions? = nil) async throws -> AppMetricsBandwidthUsage {
+    static func appsListMetricsBandwidthDaily(
+        config: ClientConfig,
+        appIds: [String],
+        date: Date? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppMetricsBandwidthUsage {
         try validateItems("app_ids", appIds, max: 100)
 
-        if let date = date {
+        if let date {
             try sdkValidateDateTime("date", date)
         }
 
         let requestBody = AppsListMetricsBandwidthDailyRequestBody(appIds: appIds, date: date)
 
-        return try (await sdkRequest("POST", "/v2/apps/metrics/bandwidth_daily", config: config, body: requestBody, decoder: .json, operationId: "apps_list_metrics_bandwidth_daily", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/apps/metrics/bandwidth_daily",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "apps_list_metrics_bandwidth_daily",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

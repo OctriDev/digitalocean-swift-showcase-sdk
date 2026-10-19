@@ -3,7 +3,7 @@
 
 import Foundation
 
-// HarnessRuntimeSandbox domain models
+/// HarnessRuntimeSandbox domain models
 /// Typed representation of the `SandboxTemplateImageSource` API schema.
 public struct SandboxTemplateImageSource: Codable {
     /// Optional `string` value serialized in the `registry` wire field.
@@ -27,22 +27,22 @@ public struct SandboxTemplateImageSource: Codable {
     }
 
     init() {
-        (self.registry, self.repository, self.tag, self.digest) = (nil, nil, nil, nil)
+        (registry, repository, tag, digest) = (nil, nil, nil, nil)
     }
 }
 
-extension SandboxTemplateImageSource {
-    public init(from decoder: Decoder) throws {
+public extension SandboxTemplateImageSource {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.registry = try container.sdkDecodeIfPresent(.registry)
-        self.repository = try container.sdkDecodeIfPresent(.repository)
-        self.tag = try container.sdkDecodeIfPresent(.tag)
-        self.digest = try container.sdkDecodeIfPresent(.digest)
+        registry = try container.sdkDecodeIfPresent(.registry)
+        repository = try container.sdkDecodeIfPresent(.repository)
+        tag = try container.sdkDecodeIfPresent(.tag)
+        digest = try container.sdkDecodeIfPresent(.digest)
     }
 }
 
-extension SandboxTemplateImageSource {
-    public init(registry: String? = nil, repository: String? = nil, tag: String? = nil, digest: String? = nil) {
+public extension SandboxTemplateImageSource {
+    init(registry: String? = nil, repository: String? = nil, tag: String? = nil, digest: String? = nil) {
         self.init()
         (self.registry, self.repository) = (registry, repository)
         (self.tag, self.digest) = (tag, digest)
@@ -78,47 +78,76 @@ public struct SandboxTemplate: Codable {
         case spec
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SandboxTemplate {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.templateId) else {
-            throw SdkValidationError(field: "template_id", code: "required", message: "Validation failed for 'template_id': value is required")
-        }
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.status) else {
-            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
-        }
-        guard container.contains(.createdAt) else {
-            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
-        }
-        guard container.contains(.updatedAt) else {
-            throw SdkValidationError(field: "updated_at", code: "required", message: "Validation failed for 'updated_at': value is required")
-        }
-        self.templateId = try container.sdkDecodeRequired(.templateId)
-        self.name = try container.sdkDecodeRequired(.name)
-        self.status = try container.sdkDecodeRequired(.status)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        self.spec = try container.sdkDecodeIfPresent(.spec)
-            try sdkValidateUuid("template_id", self.templateId)
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SandboxTemplate {
-    public init(templateId: String, name: String, status: SandboxTemplateStatus, createdAt: Date, updatedAt: Date, spec: SandboxTemplateSpec? = nil) throws {
+public extension SandboxTemplate {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.templateId) else {
+            throw SdkValidationError(
+                field: "template_id",
+                code: "required",
+                message: "Validation failed for 'template_id': value is required"
+            )
+        }
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.status) else {
+            throw SdkValidationError(
+                field: "status",
+                code: "required",
+                message: "Validation failed for 'status': value is required"
+            )
+        }
+        guard container.contains(.createdAt) else {
+            throw SdkValidationError(
+                field: "created_at",
+                code: "required",
+                message: "Validation failed for 'created_at': value is required"
+            )
+        }
+        guard container.contains(.updatedAt) else {
+            throw SdkValidationError(
+                field: "updated_at",
+                code: "required",
+                message: "Validation failed for 'updated_at': value is required"
+            )
+        }
+        templateId = try container.sdkDecodeRequired(.templateId)
+        name = try container.sdkDecodeRequired(.name)
+        status = try container.sdkDecodeRequired(.status)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        updatedAt = try container.sdkDecodeRequired(.updatedAt)
+        spec = try container.sdkDecodeIfPresent(.spec)
+        try sdkValidateUuid("template_id", templateId)
+        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        try sdkValidateDateTime("updated_at", sdkWireString(updatedAt))
+    }
+}
+
+public extension SandboxTemplate {
+    init(
+        templateId: String,
+        name: String,
+        status: SandboxTemplateStatus,
+        createdAt: Date,
+        updatedAt: Date,
+        spec: SandboxTemplateSpec? = nil
+    ) throws {
         (self.templateId, self.name) = (templateId, name)
         (self.status, self.createdAt) = (status, createdAt)
         (self.updatedAt, self.spec) = (updatedAt, spec)
-            try sdkValidateUuid("template_id", self.templateId)
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+        try sdkValidateUuid("template_id", self.templateId)
+        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+        try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
@@ -132,19 +161,19 @@ public struct SandboxSizesResponse: Codable {
     }
 
     init() {
-        self.sizes = nil
+        sizes = nil
     }
 }
 
-extension SandboxSizesResponse {
-    public init(from decoder: Decoder) throws {
+public extension SandboxSizesResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.sizes = try container.sdkDecodeIfPresent(.sizes)
+        sizes = try container.sdkDecodeIfPresent(.sizes)
     }
 }
 
-extension SandboxSizesResponse {
-    public init(sizes: [SandboxSize]? = nil) {
+public extension SandboxSizesResponse {
+    init(sizes: [SandboxSize]? = nil) {
         self.init()
         self.sizes = sizes
     }
@@ -177,23 +206,29 @@ public struct SandboxSize: Codable {
     }
 
     init() {
-        (self.slug, self.vcpus, self.memoryMb, self.pricePerHourUsd, self.pricePerMonthUsd) = (nil, nil, nil, nil, nil)
+        (slug, vcpus, memoryMb, pricePerHourUsd, pricePerMonthUsd) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension SandboxSize {
-    public init(from decoder: Decoder) throws {
+public extension SandboxSize {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.slug = try container.sdkDecodeIfPresent(.slug)
-        self.vcpus = try container.sdkDecodeIfPresent(.vcpus)
-        self.memoryMb = try container.sdkDecodeIfPresent(.memoryMb)
-        self.pricePerHourUsd = try container.sdkDecodeIfPresent(.pricePerHourUsd)
-        self.pricePerMonthUsd = try container.sdkDecodeIfPresent(.pricePerMonthUsd)
+        slug = try container.sdkDecodeIfPresent(.slug)
+        vcpus = try container.sdkDecodeIfPresent(.vcpus)
+        memoryMb = try container.sdkDecodeIfPresent(.memoryMb)
+        pricePerHourUsd = try container.sdkDecodeIfPresent(.pricePerHourUsd)
+        pricePerMonthUsd = try container.sdkDecodeIfPresent(.pricePerMonthUsd)
     }
 }
 
-extension SandboxSize {
-    public init(slug: String? = nil, vcpus: Int? = nil, memoryMb: Int? = nil, pricePerHourUsd: Double? = nil, pricePerMonthUsd: Double? = nil) {
+public extension SandboxSize {
+    init(
+        slug: String? = nil,
+        vcpus: Int? = nil,
+        memoryMb: Int? = nil,
+        pricePerHourUsd: Double? = nil,
+        pricePerMonthUsd: Double? = nil
+    ) {
         self.init()
         (self.slug, self.vcpus) = (slug, vcpus)
         (self.memoryMb, self.pricePerHourUsd) = (memoryMb, pricePerHourUsd)
@@ -237,50 +272,77 @@ public struct SandboxTemplateBuild: Codable {
         case error
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension SandboxTemplateBuild {
-    public init(from decoder: Decoder) throws {
+public extension SandboxTemplateBuild {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.buildId) else {
-            throw SdkValidationError(field: "build_id", code: "required", message: "Validation failed for 'build_id': value is required")
+            throw SdkValidationError(
+                field: "build_id",
+                code: "required",
+                message: "Validation failed for 'build_id': value is required"
+            )
         }
         guard container.contains(.status) else {
-            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
+            throw SdkValidationError(
+                field: "status",
+                code: "required",
+                message: "Validation failed for 'status': value is required"
+            )
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
+            throw SdkValidationError(
+                field: "created_at",
+                code: "required",
+                message: "Validation failed for 'created_at': value is required"
+            )
         }
         guard container.contains(.updatedAt) else {
-            throw SdkValidationError(field: "updated_at", code: "required", message: "Validation failed for 'updated_at': value is required")
+            throw SdkValidationError(
+                field: "updated_at",
+                code: "required",
+                message: "Validation failed for 'updated_at': value is required"
+            )
         }
-        self.buildId = try container.sdkDecodeRequired(.buildId)
-        self.status = try container.sdkDecodeRequired(.status)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        self.templateId = try container.sdkDecodeIfPresent(.templateId)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.spec = try container.sdkDecodeIfPresent(.spec)
-        self.error = try container.sdkDecodeIfPresent(.error)
-            try sdkValidateUuid("build_id", self.buildId)
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
-        if let value = self.templateId {
+        buildId = try container.sdkDecodeRequired(.buildId)
+        status = try container.sdkDecodeRequired(.status)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        updatedAt = try container.sdkDecodeRequired(.updatedAt)
+        templateId = try container.sdkDecodeIfPresent(.templateId)
+        name = try container.sdkDecodeIfPresent(.name)
+        spec = try container.sdkDecodeIfPresent(.spec)
+        error = try container.sdkDecodeIfPresent(.error)
+        try sdkValidateUuid("build_id", buildId)
+        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        try sdkValidateDateTime("updated_at", sdkWireString(updatedAt))
+        if let value = templateId {
             try sdkValidateUuid("template_id", value)
         }
     }
 }
 
-extension SandboxTemplateBuild {
-    public init(buildId: String, status: SandboxTemplateBuildStatus, createdAt: Date, updatedAt: Date, templateId: String? = nil, name: String? = nil, spec: SandboxTemplateSpec? = nil, error: String? = nil) throws {
+public extension SandboxTemplateBuild {
+    init(
+        buildId: String,
+        status: SandboxTemplateBuildStatus,
+        createdAt: Date,
+        updatedAt: Date,
+        templateId: String? = nil,
+        name: String? = nil,
+        spec: SandboxTemplateSpec? = nil,
+        error: String? = nil
+    ) throws {
         (self.buildId, self.status) = (buildId, status)
         (self.createdAt, self.updatedAt) = (createdAt, updatedAt)
         (self.templateId, self.name) = (templateId, name)
         (self.spec, self.error) = (spec, error)
-            try sdkValidateUuid("build_id", self.buildId)
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+        try sdkValidateUuid("build_id", self.buildId)
+        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+        try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
         if let value = self.templateId {
             try sdkValidateUuid("template_id", value)
         }
@@ -302,20 +364,20 @@ public struct SandboxTemplateSpec: Codable {
     }
 
     init() {
-        (self.baseTemplate, self.image) = (nil, nil)
+        (baseTemplate, image) = (nil, nil)
     }
 }
 
-extension SandboxTemplateSpec {
-    public init(from decoder: Decoder) throws {
+public extension SandboxTemplateSpec {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.baseTemplate = try container.sdkDecodeIfPresent(.baseTemplate)
-        self.image = try container.sdkDecodeIfPresent(.image)
+        baseTemplate = try container.sdkDecodeIfPresent(.baseTemplate)
+        image = try container.sdkDecodeIfPresent(.image)
     }
 }
 
-extension SandboxTemplateSpec {
-    public init(baseTemplate: String? = nil, image: SandboxTemplateImageSource? = nil) {
+public extension SandboxTemplateSpec {
+    init(baseTemplate: String? = nil, image: SandboxTemplateImageSource? = nil) {
         self.init()
         (self.baseTemplate, self.image) = (baseTemplate, image)
     }
@@ -325,7 +387,10 @@ extension SandboxTemplateSpec {
 public struct SandboxTemplateStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let templateStatusUnspecified = SandboxTemplateStatus(rawValue: "TEMPLATE_STATUS_UNSPECIFIED")
     public static let templateStatusPending = SandboxTemplateStatus(rawValue: "TEMPLATE_STATUS_PENDING")
     public static let templateStatusBuilding = SandboxTemplateStatus(rawValue: "TEMPLATE_STATUS_BUILDING")
@@ -334,7 +399,7 @@ public struct SandboxTemplateStatus: RawRepresentable, Hashable, Codable, Sendab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -347,7 +412,10 @@ public struct SandboxTemplateStatus: RawRepresentable, Hashable, Codable, Sendab
 public struct SandboxTemplateBuildStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let statusUnspecified = SandboxTemplateBuildStatus(rawValue: "STATUS_UNSPECIFIED")
     public static let pending = SandboxTemplateBuildStatus(rawValue: "PENDING")
     public static let building = SandboxTemplateBuildStatus(rawValue: "BUILDING")
@@ -356,7 +424,7 @@ public struct SandboxTemplateBuildStatus: RawRepresentable, Hashable, Codable, S
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

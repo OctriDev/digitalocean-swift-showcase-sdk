@@ -6,30 +6,69 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension VpcPeeringsMethods {
-    /// To update the name of a VPC peering, send a PATCH request to `/v2/vpc_peerings/$VPC_PEERING_ID` with the new `name` in the request body.
+public extension VpcPeeringsMethods {
+    /// To update the name of a VPC peering, send a PATCH request to `/v2/vpc_peerings/$VPC_PEERING_ID` with the new
+    /// `name` in the request body.
     ///
     /// - Parameters:
     /// - vpcPeeringId: A unique identifier for a VPC peering.
     /// - name: The name of the VPC peering. Must be unique within the team and may
     ///   only contain alphanumeric characters and dashes.
-    public static func vpcPeeringsPatch(config: ClientConfig, vpcPeeringId: String, name: String, requestOptions: RequestOptions? = nil) async throws -> ActiveVpcPeering {
+    static func vpcPeeringsPatch(
+        config: ClientConfig,
+        vpcPeeringId: String,
+        name: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ActiveVpcPeering {
         try sdkValidateUuid("vpc_peering_id", vpcPeeringId)
 
         try sdkValidatePattern("name", name, sdkPattern651e90d87583)
 
         let requestBody = VpcPeeringsPatchRequestBody(name: name)
 
-        return try (await sdkRequest("PATCH", ["/v2/vpc_peerings/", sdkEncodePathSegment(sdkWireString(vpcPeeringId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "vpcPeerings_patch", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PATCH",
+            ["/v2/vpc_peerings/", sdkEncodePathSegment(sdkWireString(vpcPeeringId))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "vpcPeerings_patch",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
     /// To delete a VPC peering, send a DELETE request to `/v2/vpc_peerings/$VPC_PEERING_ID`.
     ///
     /// - Parameters:
     /// - vpcPeeringId: A unique identifier for a VPC peering.
-    public static func vpcPeeringsDelete(config: ClientConfig, vpcPeeringId: String, requestOptions: RequestOptions? = nil) async throws -> DeletingVpcPeering {
+    static func vpcPeeringsDelete(
+        config: ClientConfig,
+        vpcPeeringId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DeletingVpcPeering {
         try sdkValidateUuid("vpc_peering_id", vpcPeeringId)
 
-        return try (await sdkRequest("DELETE", ["/v2/vpc_peerings/", sdkEncodePathSegment(sdkWireString(vpcPeeringId))].joined(), config: config, decoder: .json, operationId: "vpcPeerings_delete", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "DELETE",
+            ["/v2/vpc_peerings/", sdkEncodePathSegment(sdkWireString(vpcPeeringId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "vpcPeerings_delete",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

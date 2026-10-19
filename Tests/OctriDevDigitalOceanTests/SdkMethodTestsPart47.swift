@@ -17,9 +17,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.loadBalancers.addDroplets(
-            lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            body: decoded("{\"droplet_ids\":[3164444,3164445]}")
-        )
+                lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+                body: decoded("{\"droplet_ids\":[3164444,3164445]}")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -47,7 +47,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testLoadBalancersAddForwardingRulesLoadBalancersAddForwardingRules401ReachesMockAndDecodesResponse() async throws {
+    func testLoadBalancersAddForwardingRulesLoadBalancersAddForwardingRules401ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -58,9 +59,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.loadBalancers.addForwardingRules(
-            lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            forwardingRules: decoded(sdkMethodFixture1054Value1)
-        )
+                lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+                forwardingRules: decoded(sdkMethodFixture1054Value1)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -105,8 +106,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.loadBalancers.create(
-            body: decoded(sdkMethodFixture1056Value1)
-        )
+                body: decoded(sdkMethodFixture1056Value1)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -144,8 +145,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.loadBalancers.delete(
-            lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
-        )
+                lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -183,8 +184,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.loadBalancers.deleteCache(
-            lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
-        )
+                lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -229,8 +230,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.loadBalancers.get(
-            lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
-        )
+                lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -276,9 +277,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.loadBalancers.list(
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -317,9 +318,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.loadBalancers.removeDroplets(
-            lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            body: decoded("{\"droplet_ids\":[3164444,3164445]}")
-        )
+                lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+                body: decoded("{\"droplet_ids\":[3164444,3164445]}")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -335,7 +336,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testLoadBalancersRemoveForwardingRulesLoadBalancersRemoveForwardingRulesReachesMockAndDecodesResponse() async throws {
+    func testLoadBalancersRemoveForwardingRulesLoadBalancersRemoveForwardingRulesReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -347,7 +349,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testLoadBalancersRemoveForwardingRulesLoadBalancersRemoveForwardingRules401ReachesMockAndDecodesResponse() async throws {
+    func testLoadBalancersRemoveForwardingRulesLoadBalancersRemoveForwardingRules401ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -358,9 +361,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.loadBalancers.removeForwardingRules(
-            lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            forwardingRules: decoded(sdkMethodFixture1068Value1)
-        )
+                lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+                forwardingRules: decoded(sdkMethodFixture1068Value1)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -406,9 +409,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.loadBalancers.update(
-            lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            body: decoded(sdkMethodFixture1070Value1)
-        )
+                lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+                body: decoded(sdkMethodFixture1070Value1)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -429,7 +432,10 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try ActionGatewayMethods.McpServersCreateOptions(serverRef: decoded("\"docs\""), endpoint: decoded("\"https://mcp.example.com/mcp\""))
+        var options = try ActionGatewayMethods.McpServersCreateOptions(
+            serverRef: decoded("\"docs\""),
+            endpoint: decoded("\"https://mcp.example.com/mcp\"")
+        )
         options.transport = try decoded("null")
         options.credentialRefSource = try decoded("\"secret\"")
         options.description = try decoded("\"Internal documentation search.\"")
@@ -459,7 +465,10 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try ActionGatewayMethods.McpServersCreateOptions(serverRef: decoded("\"docs\""), endpoint: decoded("\"https://mcp.example.com/mcp\""))
+        var options = try ActionGatewayMethods.McpServersCreateOptions(
+            serverRef: decoded("\"docs\""),
+            endpoint: decoded("\"https://mcp.example.com/mcp\"")
+        )
         options.transport = try decoded("null")
         options.credentialRefSource = try decoded("\"secret\"")
         options.description = try decoded("\"Internal documentation search.\"")
@@ -477,8 +486,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.mcpServersCreate(
-            options: options
-        )
+                options: options
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -523,8 +532,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.mcpServersDelete(
-            serverRef: decoded("\"docs\"")
-        )
+                serverRef: decoded("\"docs\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

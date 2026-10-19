@@ -3,7 +3,7 @@
 
 import Foundation
 
-// SpacesKeys domain models
+/// SpacesKeys domain models
 /// Typed representation of the `KeyUpdate` API schema.
 public struct KeyUpdate: Codable {
     /// Optional object value serialized in the `key` wire field.
@@ -14,19 +14,19 @@ public struct KeyUpdate: Codable {
     }
 
     init() {
-        self.key = nil
+        key = nil
     }
 }
 
-extension KeyUpdate {
-    public init(from decoder: Decoder) throws {
+public extension KeyUpdate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.key = try container.sdkDecodeIfPresent(.key)
+        key = try container.sdkDecodeIfPresent(.key)
     }
 }
 
-extension KeyUpdate {
-    public init(key: Key? = nil) {
+public extension KeyUpdate {
+    init(key: Key? = nil) {
         self.init()
         self.key = key
     }
@@ -59,26 +59,32 @@ public struct KeyCreateResponse: Codable {
     }
 
     init() {
-        (self.secretKey, self.name, self.grants, self.accessKey, self.createdAt) = (nil, nil, nil, nil, nil)
+        (secretKey, name, grants, accessKey, createdAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension KeyCreateResponse {
-    public init(from decoder: Decoder) throws {
+public extension KeyCreateResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.secretKey = try container.sdkDecodeIfPresent(.secretKey)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.grants = try container.sdkDecodeIfPresent(.grants)
-        self.accessKey = try container.sdkDecodeIfPresent(.accessKey)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        if let value = self.createdAt {
+        secretKey = try container.sdkDecodeIfPresent(.secretKey)
+        name = try container.sdkDecodeIfPresent(.name)
+        grants = try container.sdkDecodeIfPresent(.grants)
+        accessKey = try container.sdkDecodeIfPresent(.accessKey)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-extension KeyCreateResponse {
-    public init(secretKey: String? = nil, name: String? = nil, grants: [Grant]? = nil, accessKey: String? = nil, createdAt: Date? = nil) throws {
+public extension KeyCreateResponse {
+    init(
+        secretKey: String? = nil,
+        name: String? = nil,
+        grants: [Grant]? = nil,
+        accessKey: String? = nil,
+        createdAt: Date? = nil
+    ) throws {
         self.init()
         (self.secretKey, self.name) = (secretKey, name)
         (self.grants, self.accessKey) = (grants, accessKey)
@@ -111,25 +117,25 @@ public struct Key: Codable {
     }
 
     init() {
-        (self.name, self.grants, self.accessKey, self.createdAt) = (nil, nil, nil, nil)
+        (name, grants, accessKey, createdAt) = (nil, nil, nil, nil)
     }
 }
 
-extension Key {
-    public init(from decoder: Decoder) throws {
+public extension Key {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.grants = try container.sdkDecodeIfPresent(.grants)
-        self.accessKey = try container.sdkDecodeIfPresent(.accessKey)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        if let value = self.createdAt {
+        name = try container.sdkDecodeIfPresent(.name)
+        grants = try container.sdkDecodeIfPresent(.grants)
+        accessKey = try container.sdkDecodeIfPresent(.accessKey)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-extension Key {
-    public init(name: String? = nil, grants: [Grant]? = nil, accessKey: String? = nil, createdAt: Date? = nil) throws {
+public extension Key {
+    init(name: String? = nil, grants: [Grant]? = nil, accessKey: String? = nil, createdAt: Date? = nil) throws {
         self.init()
         (self.name, self.grants) = (name, grants)
         (self.accessKey, self.createdAt) = (accessKey, createdAt)
@@ -153,20 +159,20 @@ public struct KeyRequest: Codable {
     }
 
     init() {
-        (self.name, self.grants) = (nil, nil)
+        (name, grants) = (nil, nil)
     }
 }
 
-extension KeyRequest {
-    public init(from decoder: Decoder) throws {
+public extension KeyRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.grants = try container.sdkDecodeIfPresent(.grants)
+        name = try container.sdkDecodeIfPresent(.name)
+        grants = try container.sdkDecodeIfPresent(.grants)
     }
 }
 
-extension KeyRequest {
-    public init(name: String? = nil, grants: [Grant]? = nil) {
+public extension KeyRequest {
+    init(name: String? = nil, grants: [Grant]? = nil) {
         self.init()
         (self.name, self.grants) = (name, grants)
     }
@@ -187,25 +193,35 @@ public struct Grant: Codable {
         case permission
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension Grant {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.bucket) else {
-            throw SdkValidationError(field: "bucket", code: "required", message: "Validation failed for 'bucket': value is required")
-        }
-        guard container.contains(.permission) else {
-            throw SdkValidationError(field: "permission", code: "required", message: "Validation failed for 'permission': value is required")
-        }
-        self.bucket = try container.sdkDecodeRequired(.bucket)
-        self.permission = try container.sdkDecodeRequired(.permission)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension Grant {
-    public init(bucket: String, permission: String) {
+public extension Grant {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.bucket) else {
+            throw SdkValidationError(
+                field: "bucket",
+                code: "required",
+                message: "Validation failed for 'bucket': value is required"
+            )
+        }
+        guard container.contains(.permission) else {
+            throw SdkValidationError(
+                field: "permission",
+                code: "required",
+                message: "Validation failed for 'permission': value is required"
+            )
+        }
+        bucket = try container.sdkDecodeRequired(.bucket)
+        permission = try container.sdkDecodeRequired(.permission)
+    }
+}
+
+public extension Grant {
+    init(bucket: String, permission: String) {
         (self.bucket, self.permission) = (bucket, permission)
     }
 }
@@ -222,19 +238,19 @@ public struct KeyCreateResponseVariant0: Codable {
     }
 
     init() {
-        self.secretKey = nil
+        secretKey = nil
     }
 }
 
-extension KeyCreateResponseVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension KeyCreateResponseVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.secretKey = try container.sdkDecodeIfPresent(.secretKey)
+        secretKey = try container.sdkDecodeIfPresent(.secretKey)
     }
 }
 
-extension KeyCreateResponseVariant0 {
-    public init(secretKey: String? = nil) {
+public extension KeyCreateResponseVariant0 {
+    init(secretKey: String? = nil) {
         self.init()
         self.secretKey = secretKey
     }
@@ -250,19 +266,19 @@ public struct KeyCreate: Codable {
     }
 
     init() {
-        self.key = nil
+        key = nil
     }
 }
 
-extension KeyCreate {
-    public init(from decoder: Decoder) throws {
+public extension KeyCreate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.key = try container.sdkDecodeIfPresent(.key)
+        key = try container.sdkDecodeIfPresent(.key)
     }
 }
 
-extension KeyCreate {
-    public init(key: KeyCreateResponse? = nil) {
+public extension KeyCreate {
+    init(key: KeyCreateResponse? = nil) {
         self.init()
         self.key = key
     }
@@ -276,19 +292,19 @@ public struct KeyGetVariant0: Codable {
     }
 
     init() {
-        self.keys = nil
+        keys = nil
     }
 }
 
-extension KeyGetVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension KeyGetVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.keys = try container.sdkDecodeIfPresent(.keys)
+        keys = try container.sdkDecodeIfPresent(.keys)
     }
 }
 
-extension KeyGetVariant0 {
-    public init(keys: [Key]? = nil) {
+public extension KeyGetVariant0 {
+    init(keys: [Key]? = nil) {
         self.init()
         self.keys = keys
     }
@@ -302,19 +318,19 @@ public struct KeyListVariant0: Codable {
     }
 
     init() {
-        self.keys = nil
+        keys = nil
     }
 }
 
-extension KeyListVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension KeyListVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.keys = try container.sdkDecodeIfPresent(.keys)
+        keys = try container.sdkDecodeIfPresent(.keys)
     }
 }
 
-extension KeyListVariant0 {
-    public init(keys: [Key]? = nil) {
+public extension KeyListVariant0 {
+    init(keys: [Key]? = nil) {
         self.init()
         self.keys = keys
     }
@@ -334,23 +350,29 @@ public struct KeyList: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension KeyList {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.keys = try container.sdkDecodeIfPresent(.keys)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension KeyList {
-    public init(meta: MetaMeta, keys: [Key]? = nil, links: PageLinks? = nil) {
+public extension KeyList {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        keys = try container.sdkDecodeIfPresent(.keys)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension KeyList {
+    init(meta: MetaMeta, keys: [Key]? = nil, links: PageLinks? = nil) {
         (self.meta, self.keys) = (meta, keys)
         self.links = links
     }
@@ -365,19 +387,19 @@ public struct KeyGet: Codable {
     }
 
     init() {
-        self.keys = nil
+        keys = nil
     }
 }
 
-extension KeyGet {
-    public init(from decoder: Decoder) throws {
+public extension KeyGet {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.keys = try container.sdkDecodeIfPresent(.keys)
+        keys = try container.sdkDecodeIfPresent(.keys)
     }
 }
 
-extension KeyGet {
-    public init(keys: [Key]? = nil) {
+public extension KeyGet {
+    init(keys: [Key]? = nil) {
         self.init()
         self.keys = keys
     }

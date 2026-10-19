@@ -3,7 +3,7 @@
 
 import Foundation
 
-// KubernetesAssociated domain models
+/// KubernetesAssociated domain models
 /// Typed representation of the `AssociatedKubernetesResource` API schema.
 public struct AssociatedKubernetesResource: Codable {
     /// The ID of a resource associated with a Kubernetes cluster.
@@ -19,20 +19,20 @@ public struct AssociatedKubernetesResource: Codable {
     }
 
     init() {
-        (self.id, self.name) = (nil, nil)
+        (id, name) = (nil, nil)
     }
 }
 
-extension AssociatedKubernetesResource {
-    public init(from decoder: Decoder) throws {
+public extension AssociatedKubernetesResource {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension AssociatedKubernetesResource {
-    public init(id: String? = nil, name: String? = nil) {
+public extension AssociatedKubernetesResource {
+    init(id: String? = nil, name: String? = nil) {
         self.init()
         (self.id, self.name) = (id, name)
     }
@@ -57,21 +57,25 @@ public struct AssociatedKubernetesResources: Codable {
     }
 
     init() {
-        (self.loadBalancers, self.volumes, self.volumeSnapshots) = (nil, nil, nil)
+        (loadBalancers, volumes, volumeSnapshots) = (nil, nil, nil)
     }
 }
 
-extension AssociatedKubernetesResources {
-    public init(from decoder: Decoder) throws {
+public extension AssociatedKubernetesResources {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.loadBalancers = try container.sdkDecodeIfPresent(.loadBalancers)
-        self.volumes = try container.sdkDecodeIfPresent(.volumes)
-        self.volumeSnapshots = try container.sdkDecodeIfPresent(.volumeSnapshots)
+        loadBalancers = try container.sdkDecodeIfPresent(.loadBalancers)
+        volumes = try container.sdkDecodeIfPresent(.volumes)
+        volumeSnapshots = try container.sdkDecodeIfPresent(.volumeSnapshots)
     }
 }
 
-extension AssociatedKubernetesResources {
-    public init(loadBalancers: [AssociatedKubernetesResource]? = nil, volumes: [AssociatedKubernetesResource]? = nil, volumeSnapshots: [AssociatedKubernetesResource]? = nil) {
+public extension AssociatedKubernetesResources {
+    init(
+        loadBalancers: [AssociatedKubernetesResource]? = nil,
+        volumes: [AssociatedKubernetesResource]? = nil,
+        volumeSnapshots: [AssociatedKubernetesResource]? = nil
+    ) {
         self.init()
         (self.loadBalancers, self.volumes) = (loadBalancers, volumes)
         self.volumeSnapshots = volumeSnapshots

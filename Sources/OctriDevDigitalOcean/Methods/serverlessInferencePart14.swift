@@ -6,20 +6,57 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ServerlessInferenceMethods {
-    /// Returns the current state of a video generation job. Poll until `status` reaches a terminal value such as `completed` or `failed`.
+public extension ServerlessInferenceMethods {
+    /// Returns the current state of a video generation job. Poll until `status` reaches a terminal value such as
+    /// `completed` or `failed`.
     ///
     /// - Parameters:
     /// - videoId: The video generation job identifier.
-    public static func inferenceGetVideo(config: ClientConfig, videoId: String, requestOptions: RequestOptions? = nil) async throws -> VideoGeneration {
-        return try (await sdkRequest("GET", ["/v1/videos/", sdkEncodePathSegment(sdkWireString(videoId))].joined(), config: config, decoder: .json, operationId: "inference_get_video", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func inferenceGetVideo(
+        config: ClientConfig,
+        videoId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> VideoGeneration {
+        try await (sdkRequest(
+            "GET",
+            ["/v1/videos/", sdkEncodePathSegment(sdkWireString(videoId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "inference_get_video",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
     /// Downloads the generated MP4 for a completed video generation job.
     ///
     /// - Parameters:
     /// - videoId: The video generation job identifier.
-    public static func inferenceGetVideoContent(config: ClientConfig, videoId: String, requestOptions: RequestOptions? = nil) async throws -> Data {
-        return try (await sdkRequest("GET", ["/v1/videos/", sdkEncodePathSegment(sdkWireString(videoId)), "/content"].joined(), config: config, decoder: .bytes, operationId: "inference_get_video_content", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func inferenceGetVideoContent(
+        config: ClientConfig,
+        videoId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Data {
+        try await (sdkRequest(
+            "GET",
+            ["/v1/videos/", sdkEncodePathSegment(sdkWireString(videoId)), "/content"].joined(),
+            config: config,
+            decoder: .bytes,
+            operationId: "inference_get_video_content",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

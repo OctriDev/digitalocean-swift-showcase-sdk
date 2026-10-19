@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AppsAppFunctions domain models
+/// AppsAppFunctions domain models
 /// Typed representation of the `AppFunctionsSpec` API schema.
 public struct AppFunctionsSpec: Codable {
     /// The name. Must be unique across all components within the same app.
@@ -46,41 +46,59 @@ public struct AppFunctionsSpec: Codable {
         case logDestinations = "log_destinations"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AppFunctionsSpec {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.cors = try container.sdkDecodeIfPresent(.cors)
-        self.routes = try container.sdkDecodeIfPresent(.routes)
-        self.sourceDir = try container.sdkDecodeIfPresent(.sourceDir)
-        self.alerts = try container.sdkDecodeIfPresent(.alerts)
-        self.envs = try container.sdkDecodeIfPresent(.envs)
-        self.git = try container.sdkDecodeIfPresent(.git)
-        self.github = try container.sdkDecodeIfPresent(.github)
-        self.gitlab = try container.sdkDecodeIfPresent(.gitlab)
-        self.bitbucket = try container.sdkDecodeIfPresent(.bitbucket)
-        self.logDestinations = try container.sdkDecodeIfPresent(.logDestinations)
-            try validateLength("name", self.name, min: 2, max: 32)
-            try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AppFunctionsSpec {
-    public init(name: String, cors: AppFunctionsSpecCors? = nil, routes: [AppRouteSpec]? = nil, sourceDir: String? = nil, alerts: [AppAlertSpec]? = nil, envs: [AppVariableDefinition]? = nil, git: AppsGitSourceSpec? = nil, github: AppsGithubSourceSpec? = nil, gitlab: AppsGitlabSourceSpec? = nil, bitbucket: AppsBitbucketSourceSpec? = nil, logDestinations: [AppLogDestinationDefinition]? = nil) throws {
+public extension AppFunctionsSpec {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        cors = try container.sdkDecodeIfPresent(.cors)
+        routes = try container.sdkDecodeIfPresent(.routes)
+        sourceDir = try container.sdkDecodeIfPresent(.sourceDir)
+        alerts = try container.sdkDecodeIfPresent(.alerts)
+        envs = try container.sdkDecodeIfPresent(.envs)
+        git = try container.sdkDecodeIfPresent(.git)
+        github = try container.sdkDecodeIfPresent(.github)
+        gitlab = try container.sdkDecodeIfPresent(.gitlab)
+        bitbucket = try container.sdkDecodeIfPresent(.bitbucket)
+        logDestinations = try container.sdkDecodeIfPresent(.logDestinations)
+        try validateLength("name", name, min: 2, max: 32)
+        try sdkValidatePattern("name", name, sdkPattern3c600f7d20be)
+    }
+}
+
+public extension AppFunctionsSpec {
+    init(
+        name: String,
+        cors: AppFunctionsSpecCors? = nil,
+        routes: [AppRouteSpec]? = nil,
+        sourceDir: String? = nil,
+        alerts: [AppAlertSpec]? = nil,
+        envs: [AppVariableDefinition]? = nil,
+        git: AppsGitSourceSpec? = nil,
+        github: AppsGithubSourceSpec? = nil,
+        gitlab: AppsGitlabSourceSpec? = nil,
+        bitbucket: AppsBitbucketSourceSpec? = nil,
+        logDestinations: [AppLogDestinationDefinition]? = nil
+    ) throws {
         (self.name, self.cors) = (name, cors)
         (self.routes, self.sourceDir) = (routes, sourceDir)
         (self.alerts, self.envs) = (alerts, envs)
         (self.git, self.github) = (git, github)
         (self.gitlab, self.bitbucket) = (gitlab, bitbucket)
         self.logDestinations = logDestinations
-            try validateLength("name", self.name, min: 2, max: 32)
-            try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
+        try validateLength("name", self.name, min: 2, max: 32)
+        try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
     }
 }
 
@@ -117,25 +135,32 @@ public struct AppFunctionsSpecCors: Codable {
     }
 
     init() {
-        (self.allowOrigins, self.allowMethods, self.allowHeaders, self.exposeHeaders, self.maxAge) = (nil, nil, nil, nil, nil)
-        self.allowCredentials = nil
+        (allowOrigins, allowMethods, allowHeaders, exposeHeaders, maxAge) = (nil, nil, nil, nil, nil)
+        allowCredentials = nil
     }
 }
 
-extension AppFunctionsSpecCors {
-    public init(from decoder: Decoder) throws {
+public extension AppFunctionsSpecCors {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.allowOrigins = try container.sdkDecodeIfPresent(.allowOrigins)
-        self.allowMethods = try container.sdkDecodeIfPresent(.allowMethods)
-        self.allowHeaders = try container.sdkDecodeIfPresent(.allowHeaders)
-        self.exposeHeaders = try container.sdkDecodeIfPresent(.exposeHeaders)
-        self.maxAge = try container.sdkDecodeIfPresent(.maxAge)
-        self.allowCredentials = try container.sdkDecodeIfPresent(.allowCredentials)
+        allowOrigins = try container.sdkDecodeIfPresent(.allowOrigins)
+        allowMethods = try container.sdkDecodeIfPresent(.allowMethods)
+        allowHeaders = try container.sdkDecodeIfPresent(.allowHeaders)
+        exposeHeaders = try container.sdkDecodeIfPresent(.exposeHeaders)
+        maxAge = try container.sdkDecodeIfPresent(.maxAge)
+        allowCredentials = try container.sdkDecodeIfPresent(.allowCredentials)
     }
 }
 
-extension AppFunctionsSpecCors {
-    public init(allowOrigins: [AppsStringMatch]? = nil, allowMethods: [String]? = nil, allowHeaders: [String]? = nil, exposeHeaders: [String]? = nil, maxAge: String? = nil, allowCredentials: Bool? = nil) {
+public extension AppFunctionsSpecCors {
+    init(
+        allowOrigins: [AppsStringMatch]? = nil,
+        allowMethods: [String]? = nil,
+        allowHeaders: [String]? = nil,
+        exposeHeaders: [String]? = nil,
+        maxAge: String? = nil,
+        allowCredentials: Bool? = nil
+    ) {
         self.init()
         (self.allowOrigins, self.allowMethods) = (allowOrigins, allowMethods)
         (self.allowHeaders, self.exposeHeaders) = (allowHeaders, exposeHeaders)
@@ -162,28 +187,29 @@ public struct AppFunctionsComponentHealthFunctionsComponentHealthMetricsItem: Co
     }
 
     init() {
-        (self.metricLabel, self.metricValue, self.timeWindow) = (nil, nil, nil)
+        (metricLabel, metricValue, timeWindow) = (nil, nil, nil)
     }
 }
 
-extension AppFunctionsComponentHealthFunctionsComponentHealthMetricsItem {
-    public init(from decoder: Decoder) throws {
+public extension AppFunctionsComponentHealthFunctionsComponentHealthMetricsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.metricLabel = try container.sdkDecodeIfPresent(.metricLabel)
-        self.metricValue = try container.sdkDecodeIfPresent(.metricValue)
-        self.timeWindow = try container.sdkDecodeIfPresent(.timeWindow)
+        metricLabel = try container.sdkDecodeIfPresent(.metricLabel)
+        metricValue = try container.sdkDecodeIfPresent(.metricValue)
+        timeWindow = try container.sdkDecodeIfPresent(.timeWindow)
     }
 }
 
-extension AppFunctionsComponentHealthFunctionsComponentHealthMetricsItem {
-    public init(metricLabel: String? = nil, metricValue: Double? = nil, timeWindow: String? = nil) {
+public extension AppFunctionsComponentHealthFunctionsComponentHealthMetricsItem {
+    init(metricLabel: String? = nil, metricValue: Double? = nil, timeWindow: String? = nil) {
         self.init()
         (self.metricLabel, self.metricValue) = (metricLabel, metricValue)
         self.timeWindow = timeWindow
     }
 }
 
-public typealias AppFunctionsComponentHealthFunctionsComponentHealthMetricsList = [AppFunctionsComponentHealthFunctionsComponentHealthMetricsItem]
+public typealias AppFunctionsComponentHealthFunctionsComponentHealthMetricsList =
+    [AppFunctionsComponentHealthFunctionsComponentHealthMetricsItem]
 
 /// Typed representation of the `AppFunctionsComponentHealth` API schema.
 public struct AppFunctionsComponentHealth: Codable {
@@ -199,20 +225,23 @@ public struct AppFunctionsComponentHealth: Codable {
     }
 
     init() {
-        (self.name, self.functionsComponentHealthMetrics) = (nil, nil)
+        (name, functionsComponentHealthMetrics) = (nil, nil)
     }
 }
 
-extension AppFunctionsComponentHealth {
-    public init(from decoder: Decoder) throws {
+public extension AppFunctionsComponentHealth {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.functionsComponentHealthMetrics = try container.sdkDecodeIfPresent(.functionsComponentHealthMetrics)
+        name = try container.sdkDecodeIfPresent(.name)
+        functionsComponentHealthMetrics = try container.sdkDecodeIfPresent(.functionsComponentHealthMetrics)
     }
 }
 
-extension AppFunctionsComponentHealth {
-    public init(name: String? = nil, functionsComponentHealthMetrics: AppFunctionsComponentHealthFunctionsComponentHealthMetricsList? = nil) {
+public extension AppFunctionsComponentHealth {
+    init(
+        name: String? = nil,
+        functionsComponentHealthMetrics: AppFunctionsComponentHealthFunctionsComponentHealthMetricsList? = nil
+    ) {
         self.init()
         (self.name, self.functionsComponentHealthMetrics) = (name, functionsComponentHealthMetrics)
     }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DatabasesSchema domain models
+/// DatabasesSchema domain models
 /// Typed representation of the `SchemaRegistryConnection` API schema.
 public struct SchemaRegistryConnection: Codable {
     /// This is provided as a convenience and should be able to be constructed by the other attributes.
@@ -35,25 +35,32 @@ public struct SchemaRegistryConnection: Codable {
     }
 
     init() {
-        (self.uri, self.host, self.port, self.user, self.password) = (nil, nil, nil, nil, nil)
-        self.ssl = nil
+        (uri, host, port, user, password) = (nil, nil, nil, nil, nil)
+        ssl = nil
     }
 }
 
-extension SchemaRegistryConnection {
-    public init(from decoder: Decoder) throws {
+public extension SchemaRegistryConnection {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.uri = try container.sdkDecodeIfPresent(.uri)
-        self.host = try container.sdkDecodeIfPresent(.host)
-        self.port = try container.sdkDecodeIfPresent(.port)
-        self.user = try container.sdkDecodeIfPresent(.user)
-        self.password = try container.sdkDecodeIfPresent(.password)
-        self.ssl = try container.sdkDecodeIfPresent(.ssl)
+        uri = try container.sdkDecodeIfPresent(.uri)
+        host = try container.sdkDecodeIfPresent(.host)
+        port = try container.sdkDecodeIfPresent(.port)
+        user = try container.sdkDecodeIfPresent(.user)
+        password = try container.sdkDecodeIfPresent(.password)
+        ssl = try container.sdkDecodeIfPresent(.ssl)
     }
 }
 
-extension SchemaRegistryConnection {
-    public init(uri: String? = nil, host: String? = nil, port: Int? = nil, user: String? = nil, password: String? = nil, ssl: Bool? = nil) {
+public extension SchemaRegistryConnection {
+    init(
+        uri: String? = nil,
+        host: String? = nil,
+        port: Int? = nil,
+        user: String? = nil,
+        password: String? = nil,
+        ssl: Bool? = nil
+    ) {
         self.init()
         (self.uri, self.host) = (uri, host)
         (self.port, self.user) = (port, user)
@@ -63,11 +70,11 @@ extension SchemaRegistryConnection {
 
 /// Typed representation of the `SchemaRegistryConnectionRequest` API schema.
 public struct SchemaRegistryConnectionRequest: Codable {
-
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension SchemaRegistryConnectionRequest {
-    public init() {
-    }
+public extension SchemaRegistryConnectionRequest {
+    init() {}
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AppsAppsVpc domain models
+/// AppsAppsVpc domain models
 /// Typed representation of the `AppsVpcEgressIp` API schema.
 public struct AppsVpcEgressIp: Codable {
     /// Optional `string` value serialized in the `ip` wire field.
@@ -15,19 +15,19 @@ public struct AppsVpcEgressIp: Codable {
     }
 
     init() {
-        self.ip = nil
+        ip = nil
     }
 }
 
-extension AppsVpcEgressIp {
-    public init(from decoder: Decoder) throws {
+public extension AppsVpcEgressIp {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.ip = try container.sdkDecodeIfPresent(.ip)
+        ip = try container.sdkDecodeIfPresent(.ip)
     }
 }
 
-extension AppsVpcEgressIp {
-    public init(ip: String? = nil) {
+public extension AppsVpcEgressIp {
+    init(ip: String? = nil) {
         self.init()
         self.ip = ip
     }
@@ -47,20 +47,20 @@ public struct AppsVpc: Codable {
     }
 
     init() {
-        (self.id, self.egressIps) = (nil, nil)
+        (id, egressIps) = (nil, nil)
     }
 }
 
-extension AppsVpc {
-    public init(from decoder: Decoder) throws {
+public extension AppsVpc {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.egressIps = try container.sdkDecodeIfPresent(.egressIps)
+        id = try container.sdkDecodeIfPresent(.id)
+        egressIps = try container.sdkDecodeIfPresent(.egressIps)
     }
 }
 
-extension AppsVpc {
-    public init(id: String? = nil, egressIps: [AppsVpcEgressIp]? = nil) {
+public extension AppsVpc {
+    init(id: String? = nil, egressIps: [AppsVpcEgressIp]? = nil) {
         self.init()
         (self.id, self.egressIps) = (id, egressIps)
     }

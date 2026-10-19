@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Kubernetes domain models
+/// Kubernetes domain models
 /// An object specifying whether the Peer-to-peer OCI registry component should be enabled for the Kubernetes
 /// cluster.
 public struct P2pOciRegistryPlugin: Codable {
@@ -16,19 +16,19 @@ public struct P2pOciRegistryPlugin: Codable {
     }
 
     init() {
-        self.enabled = nil
+        enabled = nil
     }
 }
 
-extension P2pOciRegistryPlugin {
-    public init(from decoder: Decoder) throws {
+public extension P2pOciRegistryPlugin {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
     }
 }
 
-extension P2pOciRegistryPlugin {
-    public init(enabled: Bool? = nil) {
+public extension P2pOciRegistryPlugin {
+    init(enabled: Bool? = nil) {
         self.init()
         self.enabled = enabled
     }
@@ -45,19 +45,19 @@ public struct RdmaSharedDevPlugin: Codable {
     }
 
     init() {
-        self.enabled = nil
+        enabled = nil
     }
 }
 
-extension RdmaSharedDevPlugin {
-    public init(from decoder: Decoder) throws {
+public extension RdmaSharedDevPlugin {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
     }
 }
 
-extension RdmaSharedDevPlugin {
-    public init(enabled: Bool? = nil) {
+public extension RdmaSharedDevPlugin {
+    init(enabled: Bool? = nil) {
         self.init()
         self.enabled = enabled
     }
@@ -82,21 +82,21 @@ public struct DestroyAssociatedKubernetesResources: Codable {
     }
 
     init() {
-        (self.loadBalancers, self.volumes, self.volumeSnapshots) = (nil, nil, nil)
+        (loadBalancers, volumes, volumeSnapshots) = (nil, nil, nil)
     }
 }
 
-extension DestroyAssociatedKubernetesResources {
-    public init(from decoder: Decoder) throws {
+public extension DestroyAssociatedKubernetesResources {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.loadBalancers = try container.sdkDecodeIfPresent(.loadBalancers)
-        self.volumes = try container.sdkDecodeIfPresent(.volumes)
-        self.volumeSnapshots = try container.sdkDecodeIfPresent(.volumeSnapshots)
+        loadBalancers = try container.sdkDecodeIfPresent(.loadBalancers)
+        volumes = try container.sdkDecodeIfPresent(.volumes)
+        volumeSnapshots = try container.sdkDecodeIfPresent(.volumeSnapshots)
     }
 }
 
-extension DestroyAssociatedKubernetesResources {
-    public init(loadBalancers: [String]? = nil, volumes: [String]? = nil, volumeSnapshots: [String]? = nil) {
+public extension DestroyAssociatedKubernetesResources {
+    init(loadBalancers: [String]? = nil, volumes: [String]? = nil, volumeSnapshots: [String]? = nil) {
         self.init()
         (self.loadBalancers, self.volumes) = (loadBalancers, volumes)
         self.volumeSnapshots = volumeSnapshots
@@ -115,19 +115,19 @@ public struct CorednsAutoscaler: Codable {
     }
 
     init() {
-        self.enabled = nil
+        enabled = nil
     }
 }
 
-extension CorednsAutoscaler {
-    public init(from decoder: Decoder) throws {
+public extension CorednsAutoscaler {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
     }
 }
 
-extension CorednsAutoscaler {
-    public init(enabled: Bool? = nil) {
+public extension CorednsAutoscaler {
+    init(enabled: Bool? = nil) {
         self.init()
         self.enabled = enabled
     }
@@ -143,19 +143,19 @@ public struct UpdatedCluster: Codable {
     }
 
     init() {
-        self.kubernetesCluster = nil
+        kubernetesCluster = nil
     }
 }
 
-extension UpdatedCluster {
-    public init(from decoder: Decoder) throws {
+public extension UpdatedCluster {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.kubernetesCluster = try container.sdkDecodeIfPresent(.kubernetesCluster)
+        kubernetesCluster = try container.sdkDecodeIfPresent(.kubernetesCluster)
     }
 }
 
-extension UpdatedCluster {
-    public init(kubernetesCluster: Cluster? = nil) {
+public extension UpdatedCluster {
+    init(kubernetesCluster: Cluster? = nil) {
         self.init()
         self.kubernetesCluster = kubernetesCluster
     }
@@ -176,23 +176,23 @@ public struct User2KubernetesClusterUser: Codable {
     }
 
     init() {
-        (self.username, self.groups) = (nil, nil)
+        (username, groups) = (nil, nil)
     }
 }
 
-extension User2KubernetesClusterUser {
-    public init(from decoder: Decoder) throws {
+public extension User2KubernetesClusterUser {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.username = try container.sdkDecodeIfPresent(.username)
-        self.groups = try container.sdkDecodeIfPresent(.groups)
-        if let value = self.username {
+        username = try container.sdkDecodeIfPresent(.username)
+        groups = try container.sdkDecodeIfPresent(.groups)
+        if let value = username {
             try sdkValidateEmail("username", value)
         }
     }
 }
 
-extension User2KubernetesClusterUser {
-    public init(username: String? = nil, groups: [String]? = nil) throws {
+public extension User2KubernetesClusterUser {
+    init(username: String? = nil, groups: [String]? = nil) throws {
         self.init()
         (self.username, self.groups) = (username, groups)
         if let value = self.username {
@@ -211,19 +211,19 @@ public struct User2: Codable {
     }
 
     init() {
-        self.kubernetesClusterUser = nil
+        kubernetesClusterUser = nil
     }
 }
 
-extension User2 {
-    public init(from decoder: Decoder) throws {
+public extension User2 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.kubernetesClusterUser = try container.sdkDecodeIfPresent(.kubernetesClusterUser)
+        kubernetesClusterUser = try container.sdkDecodeIfPresent(.kubernetesClusterUser)
     }
 }
 
-extension User2 {
-    public init(kubernetesClusterUser: User2KubernetesClusterUser? = nil) {
+public extension User2 {
+    init(kubernetesClusterUser: User2KubernetesClusterUser? = nil) {
         self.init()
         self.kubernetesClusterUser = kubernetesClusterUser
     }
@@ -239,19 +239,19 @@ public struct AvailableUpgrades: Codable {
     }
 
     init() {
-        self.availableUpgradeVersions = nil
+        availableUpgradeVersions = nil
     }
 }
 
-extension AvailableUpgrades {
-    public init(from decoder: Decoder) throws {
+public extension AvailableUpgrades {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.availableUpgradeVersions = try container.sdkDecodeIfPresent(.availableUpgradeVersions)
+        availableUpgradeVersions = try container.sdkDecodeIfPresent(.availableUpgradeVersions)
     }
 }
 
-extension AvailableUpgrades {
-    public init(availableUpgradeVersions: [KubernetesVersion]? = nil) {
+public extension AvailableUpgrades {
+    init(availableUpgradeVersions: [KubernetesVersion]? = nil) {
         self.init()
         self.availableUpgradeVersions = availableUpgradeVersions
     }
@@ -268,19 +268,19 @@ public struct RoutingAgent: Codable {
     }
 
     init() {
-        self.enabled = nil
+        enabled = nil
     }
 }
 
-extension RoutingAgent {
-    public init(from decoder: Decoder) throws {
+public extension RoutingAgent {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
     }
 }
 
-extension RoutingAgent {
-    public init(enabled: Bool? = nil) {
+public extension RoutingAgent {
+    init(enabled: Bool? = nil) {
         self.init()
         self.enabled = enabled
     }
@@ -302,20 +302,20 @@ public struct ControlPlaneFirewall: Codable {
     }
 
     init() {
-        (self.enabled, self.allowedAddresses) = (nil, nil)
+        (enabled, allowedAddresses) = (nil, nil)
     }
 }
 
-extension ControlPlaneFirewall {
-    public init(from decoder: Decoder) throws {
+public extension ControlPlaneFirewall {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
-        self.allowedAddresses = try container.sdkDecodeIfPresent(.allowedAddresses)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
+        allowedAddresses = try container.sdkDecodeIfPresent(.allowedAddresses)
     }
 }
 
-extension ControlPlaneFirewall {
-    public init(enabled: Bool? = nil, allowedAddresses: [String]? = nil) {
+public extension ControlPlaneFirewall {
+    init(enabled: Bool? = nil, allowedAddresses: [String]? = nil) {
         self.init()
         (self.enabled, self.allowedAddresses) = (enabled, allowedAddresses)
     }
@@ -332,19 +332,19 @@ public struct NfsCsiPlugin: Codable {
     }
 
     init() {
-        self.enabled = nil
+        enabled = nil
     }
 }
 
-extension NfsCsiPlugin {
-    public init(from decoder: Decoder) throws {
+public extension NfsCsiPlugin {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
     }
 }
 
-extension NfsCsiPlugin {
-    public init(enabled: Bool? = nil) {
+public extension NfsCsiPlugin {
+    init(enabled: Bool? = nil) {
         self.init()
         self.enabled = enabled
     }
@@ -373,25 +373,25 @@ public struct Sso: Codable {
     }
 
     init() {
-        (self.enabled, self.required, self.issuerUrl, self.clientId) = (nil, nil, nil, nil)
+        (enabled, required, issuerUrl, clientId) = (nil, nil, nil, nil)
     }
 }
 
-extension Sso {
-    public init(from decoder: Decoder) throws {
+public extension Sso {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
-        self.required = try container.sdkDecodeIfPresent(.required)
-        self.issuerUrl = try container.sdkDecodeIfPresent(.issuerUrl)
-        self.clientId = try container.sdkDecodeIfPresent(.clientId)
-        if let value = self.issuerUrl {
+        enabled = try container.sdkDecodeIfPresent(.enabled)
+        required = try container.sdkDecodeIfPresent(.required)
+        issuerUrl = try container.sdkDecodeIfPresent(.issuerUrl)
+        clientId = try container.sdkDecodeIfPresent(.clientId)
+        if let value = issuerUrl {
             try sdkValidateUri("issuer_url", value)
         }
     }
 }
 
-extension Sso {
-    public init(enabled: Bool? = nil, required: Bool? = nil, issuerUrl: String? = nil, clientId: String? = nil) throws {
+public extension Sso {
+    init(enabled: Bool? = nil, required: Bool? = nil, issuerUrl: String? = nil, clientId: String? = nil) throws {
         self.init()
         (self.enabled, self.required) = (enabled, required)
         (self.issuerUrl, self.clientId) = (issuerUrl, clientId)
@@ -446,31 +446,38 @@ public struct Credentials: Codable {
     }
 
     init() {
-        (self.server, self.certificateAuthorityData, self.clientCertificateData, self.clientKeyData, self.token) = (nil, nil, nil, nil, nil)
-        self.expiresAt = nil
+        (server, certificateAuthorityData, clientCertificateData, clientKeyData, token) = (nil, nil, nil, nil, nil)
+        expiresAt = nil
     }
 }
 
-extension Credentials {
-    public init(from decoder: Decoder) throws {
+public extension Credentials {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.server = try container.sdkDecodeIfPresent(.server)
-        self.certificateAuthorityData = try container.sdkDecodeIfPresent(.certificateAuthorityData)
-        self.clientCertificateData = try container.sdkDecodeIfPresent(.clientCertificateData)
-        self.clientKeyData = try container.sdkDecodeIfPresent(.clientKeyData)
-        self.token = try container.sdkDecodeIfPresent(.token)
-        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
-        if let value = self.server {
+        server = try container.sdkDecodeIfPresent(.server)
+        certificateAuthorityData = try container.sdkDecodeIfPresent(.certificateAuthorityData)
+        clientCertificateData = try container.sdkDecodeIfPresent(.clientCertificateData)
+        clientKeyData = try container.sdkDecodeIfPresent(.clientKeyData)
+        token = try container.sdkDecodeIfPresent(.token)
+        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+        if let value = server {
             try sdkValidateUri("server", value)
         }
-        if let value = self.expiresAt {
+        if let value = expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
     }
 }
 
-extension Credentials {
-    public init(server: String? = nil, certificateAuthorityData: Data? = nil, clientCertificateData: Data? = nil, clientKeyData: Data? = nil, token: String? = nil, expiresAt: Date? = nil) throws {
+public extension Credentials {
+    init(
+        server: String? = nil,
+        certificateAuthorityData: Data? = nil,
+        clientCertificateData: Data? = nil,
+        clientKeyData: Data? = nil,
+        token: String? = nil,
+        expiresAt: Date? = nil
+    ) throws {
         self.init()
         (self.server, self.certificateAuthorityData) = (server, certificateAuthorityData)
         (self.clientCertificateData, self.clientKeyData) = (clientCertificateData, clientKeyData)

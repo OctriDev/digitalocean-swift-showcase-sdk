@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension HarnessRuntimeMethods {
-    /// Replaces the source configuration of a team template and kicks off a new build. Supply `source_oci_ref`, `base_template`, or both to update the template; the body fields are optional.
+public extension HarnessRuntimeMethods {
+    /// Replaces the source configuration of a team template and kicks off a new build. Supply `source_oci_ref`,
+    /// `base_template`, or both to update the template; the body fields are optional.
     ///
     /// UpdateTemplate updates a team template's source and kicks a new build.
     ///
@@ -17,23 +18,64 @@ extension HarnessRuntimeMethods {
     ///   wire field.
     /// - baseTemplate: Optional `string` value serialized in the `base_template`
     ///   wire field.
-    public static func harnessUpdateTemplate(config: ClientConfig, templateId: String, sourceOciRef: String? = nil, baseTemplate: String? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateTemplateResponse {
+    static func harnessUpdateTemplate(
+        config: ClientConfig,
+        templateId: String,
+        sourceOciRef: String? = nil,
+        baseTemplate: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateTemplateResponse {
         try sdkValidateUuid("template_id", templateId)
 
         let requestBody = HarnessUpdateTemplateRequestBody(sourceOciRef: sourceOciRef, baseTemplate: baseTemplate)
 
-        return try (await sdkRequest("PUT", ["/v2/agents/templates/", sdkEncodePathSegment(sdkWireString(templateId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "harness_update_template", options: requestOptions, errors: ["401": Error2.self, "402": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/v2/agents/templates/", sdkEncodePathSegment(sdkWireString(templateId))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "harness_update_template",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "402": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Deletes a team-owned custom template. Use the template ID to identify the template to remove; global templates cannot be deleted through this operation.
+    /// Deletes a team-owned custom template. Use the template ID to identify the template to remove; global templates
+    /// cannot be deleted through this operation.
     ///
     /// Global templates cannot be deleted via this API.
     ///
     /// - Parameters:
     /// - templateId: The template UUID.
-    public static func harnessDeleteTemplate(config: ClientConfig, templateId: String, requestOptions: RequestOptions? = nil) async throws -> DeleteTemplateResponse {
+    static func harnessDeleteTemplate(
+        config: ClientConfig,
+        templateId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DeleteTemplateResponse {
         try sdkValidateUuid("template_id", templateId)
 
-        return try (await sdkRequest("DELETE", ["/v2/agents/templates/", sdkEncodePathSegment(sdkWireString(templateId))].joined(), config: config, decoder: .json, operationId: "harness_delete_template", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "DELETE",
+            ["/v2/agents/templates/", sdkEncodePathSegment(sdkWireString(templateId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "harness_delete_template",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

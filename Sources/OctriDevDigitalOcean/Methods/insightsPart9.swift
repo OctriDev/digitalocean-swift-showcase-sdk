@@ -6,18 +6,39 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InsightsMethods {
-    /// To delete a notification channel, send a DELETE request to `/v2/insights/notification-channels/{id}`. Deleting a channel that is still referenced by one or more alert rules returns `409 Conflict`.
+public extension InsightsMethods {
+    /// To delete a notification channel, send a DELETE request to `/v2/insights/notification-channels/{id}`. Deleting a
+    /// channel that is still referenced by one or more alert rules returns `409 Conflict`.
     ///
     /// - Parameters:
     /// - id: A unique identifier for a notification channel.
-    public static func insightsDeleteNotificationChannel(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func insightsDeleteNotificationChannel(
+        config: ClientConfig,
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("id", id)
 
-        return try (await sdkRequest("DELETE", ["/v2/insights/notification-channels/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .empty, operationId: "insights_delete_notificationChannel", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "409": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "DELETE",
+            ["/v2/insights/notification-channels/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "insights_delete_notificationChannel",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "409": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To evaluate a PromQL expression at a single point in time, send a GET request to `/v2/insights/query/{region}/prom/api/v1/query`.
+    /// To evaluate a PromQL expression at a single point in time, send a GET request to
+    /// `/v2/insights/query/{region}/prom/api/v1/query`.
     ///
     /// - Parameters:
     /// - region: The datacenter region slug for the query.
@@ -27,11 +48,37 @@ extension InsightsMethods {
     /// - time: Evaluation timestamp for an instant query. Accepts a RFC3339 string
     ///   or a UNIX timestamp. Defaults to now when omitted.
     /// - timeout: Optional evaluation timeout as a Prometheus duration string.
-    public static func insightsGetPromQuery(config: ClientConfig, region: String, query: String, time: String? = nil, timeout: String? = nil, requestOptions: RequestOptions? = nil) async throws -> PromQueryResponse {
-        return try (await sdkRequest("GET", ["/v2/insights/query/", sdkEncodePathSegment(sdkWireString(region)), "/prom/api/v1/query"].joined(), config: config, query: [
-            SdkQueryParameter("query", value: query),
-            SdkQueryParameter("time", value: time),
-            SdkQueryParameter("timeout", value: timeout),
-        ], decoder: .json, operationId: "insights_get_promQuery", options: requestOptions, errors: ["400": PromError.self, "401": Error2.self, "403": Error2.self, "404": Error2.self, "422": PromError.self, "429": Error2.self, "500": PromError.self, "503": PromError.self, "default": Error2.self])).data
+    static func insightsGetPromQuery(
+        config: ClientConfig,
+        region: String,
+        query: String,
+        time: String? = nil,
+        timeout: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> PromQueryResponse {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/insights/query/", sdkEncodePathSegment(sdkWireString(region)), "/prom/api/v1/query"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("query", value: query),
+                SdkQueryParameter("time", value: time),
+                SdkQueryParameter("timeout", value: timeout),
+            ],
+            decoder: .json,
+            operationId: "insights_get_promQuery",
+            options: requestOptions,
+            errors: [
+                "400": PromError.self,
+                "401": Error2.self,
+                "403": Error2.self,
+                "404": Error2.self,
+                "422": PromError.self,
+                "429": Error2.self,
+                "500": PromError.self,
+                "503": PromError.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

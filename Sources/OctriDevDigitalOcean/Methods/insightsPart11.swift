@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InsightsMethods {
-    /// To evaluate a PromQL expression over a time range, send a GET request to `/v2/insights/query/{region}/prom/api/v1/query_range`.
+public extension InsightsMethods {
+    /// To evaluate a PromQL expression over a time range, send a GET request to
+    /// `/v2/insights/query/{region}/prom/api/v1/query_range`.
     ///
     /// - Parameters:
     /// - region: The datacenter region slug for the query.
@@ -21,13 +22,41 @@ extension InsightsMethods {
     /// - step: Query resolution step width as a Prometheus duration string (for
     ///   example `15s`, `1m`, `1h`).
     /// - timeout: Optional evaluation timeout as a Prometheus duration string.
-    public static func insightsGetPromQueryRange(config: ClientConfig, region: String, query: String, start: String, end: String, step: String, timeout: String? = nil, requestOptions: RequestOptions? = nil) async throws -> PromQueryRangeResponse {
-        return try (await sdkRequest("GET", ["/v2/insights/query/", sdkEncodePathSegment(sdkWireString(region)), "/prom/api/v1/query_range"].joined(), config: config, query: [
-            SdkQueryParameter("query", value: query),
-            SdkQueryParameter("start", value: start),
-            SdkQueryParameter("end", value: end),
-            SdkQueryParameter("step", value: step),
-            SdkQueryParameter("timeout", value: timeout),
-        ], decoder: .json, operationId: "insights_get_promQueryRange", options: requestOptions, errors: ["400": PromError.self, "401": Error2.self, "403": Error2.self, "404": Error2.self, "422": PromError.self, "429": Error2.self, "500": PromError.self, "503": PromError.self, "default": Error2.self])).data
+    static func insightsGetPromQueryRange(
+        config: ClientConfig,
+        region: String,
+        query: String,
+        start: String,
+        end: String,
+        step: String,
+        timeout: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> PromQueryRangeResponse {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/insights/query/", sdkEncodePathSegment(sdkWireString(region)), "/prom/api/v1/query_range"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("query", value: query),
+                SdkQueryParameter("start", value: start),
+                SdkQueryParameter("end", value: end),
+                SdkQueryParameter("step", value: step),
+                SdkQueryParameter("timeout", value: timeout),
+            ],
+            decoder: .json,
+            operationId: "insights_get_promQueryRange",
+            options: requestOptions,
+            errors: [
+                "400": PromError.self,
+                "401": Error2.self,
+                "403": Error2.self,
+                "404": Error2.self,
+                "422": PromError.self,
+                "429": Error2.self,
+                "500": PromError.self,
+                "503": PromError.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

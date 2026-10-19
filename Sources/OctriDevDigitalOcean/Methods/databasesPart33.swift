@@ -6,30 +6,93 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DatabasesMethods {
-    /// To update the Schema Registry configuration for a Subject of a Kafka cluster, send a PUT request to `/v2/databases/$DATABASE_ID/schema-registry/config/$SUBJECT_NAME`. The response is a JSON object with a `compatibility_level` key, which is set to an object containing any database configuration parameters.
+public extension DatabasesMethods {
+    /// To update the Schema Registry configuration for a Subject of a Kafka cluster, send a PUT request to
+    /// `/v2/databases/$DATABASE_ID/schema-registry/config/$SUBJECT_NAME`. The response is a JSON object with a
+    /// `compatibility_level` key, which is set to an object containing any database configuration parameters.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - subjectName: The name of the Kafka schema subject.
     /// - compatibilityLevel: The compatibility level of the schema registry.
-    public static func databasesUpdateKafkaSchemaSubjectConfig(config: ClientConfig, databaseClusterUuid: String, subjectName: String, compatibilityLevel: DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLevel, requestOptions: RequestOptions? = nil) async throws -> DatabaseSchemaRegistrySubjectConfig {
+    static func databasesUpdateKafkaSchemaSubjectConfig(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        subjectName: String,
+        compatibilityLevel: DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLevel,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DatabaseSchemaRegistrySubjectConfig {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
         let requestBody = DatabasesUpdateKafkaSchemaSubjectConfigRequestBody(compatibilityLevel: compatibilityLevel)
 
-        return try (await sdkRequest("PUT", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/schema-registry/config/", sdkEncodePathSegment(sdkWireString(subjectName))].joined(), config: config, body: requestBody, decoder: .json, operationId: "databases_update_kafka_schema_subject_config", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            [
+                "/v2/databases/",
+                sdkEncodePathSegment(sdkWireString(databaseClusterUuid)),
+                "/schema-registry/config/",
+                sdkEncodePathSegment(sdkWireString(subjectName)),
+            ].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "databases_update_kafka_schema_subject_config",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To show the credentials for all database clusters' metrics endpoints, send a GET request to `/v2/databases/metrics/credentials`. The result will be a JSON object with a `credentials` key.
-    public static func databasesGetClusterMetricsCredentials(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> DatabaseMetricsAuth {
-        return try (await sdkRequest("GET", "/v2/databases/metrics/credentials", config: config, decoder: .json, operationId: "databases_get_cluster_metrics_credentials", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    /// To show the credentials for all database clusters' metrics endpoints, send a GET request to
+    /// `/v2/databases/metrics/credentials`. The result will be a JSON object with a `credentials` key.
+    static func databasesGetClusterMetricsCredentials(
+        config: ClientConfig,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DatabaseMetricsAuth {
+        try await (sdkRequest(
+            "GET",
+            "/v2/databases/metrics/credentials",
+            config: config,
+            decoder: .json,
+            operationId: "databases_get_cluster_metrics_credentials",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Replaces the metrics endpoint credentials for all database clusters. Include `credentials` to set the basic-auth username and password using `basic_auth_username` and `basic_auth_password`; the request body is optional. A successful request returns 204 with no response body.
+    /// Replaces the metrics endpoint credentials for all database clusters. Include `credentials` to set the basic-auth
+    /// username and password using `basic_auth_username` and `basic_auth_password`; the request body is optional. A
+    /// successful request returns 204 with no response body.
     ///
-    /// To update the credentials for all database clusters' metrics endpoints, send a PUT request to `/v2/databases/metrics/credentials`. A successful request will receive a 204 No Content status code with no body in response.
-    public static func databasesUpdateClusterMetricsCredentials(config: ClientConfig, body: DatabasesUpdateClusterMetricsCredentialsRequestBody? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try (await sdkRequest("PUT", "/v2/databases/metrics/credentials", config: config, rawBody: (try body.map { try sdkEncodeBody($0, contentType: "application/json") }), decoder: .empty, operationId: "databases_update_cluster_metrics_credentials", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    /// To update the credentials for all database clusters' metrics endpoints, send a PUT request to
+    /// `/v2/databases/metrics/credentials`. A successful request will receive a 204 No Content status code with no body
+    /// in response.
+    static func databasesUpdateClusterMetricsCredentials(
+        config: ClientConfig,
+        body: DatabasesUpdateClusterMetricsCredentialsRequestBody? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await (sdkRequest(
+            "PUT",
+            "/v2/databases/metrics/credentials",
+            config: config,
+            rawBody: (body.map { try sdkEncodeBody($0, contentType: "application/json") }),
+            decoder: .empty,
+            operationId: "databases_update_cluster_metrics_credentials",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

@@ -3,238 +3,574 @@
 
 import Foundation
 
-// Databases domain models
+/// Databases domain models
 extension PostgresAdvancedConfig {
     mutating func sdkDecodeFieldsPart1(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        self.autovacuumFreezeMaxAge = try container.sdkDecodeIfPresent(.autovacuumFreezeMaxAge)
-        self.autovacuumMaxWorkers = try container.sdkDecodeIfPresent(.autovacuumMaxWorkers)
-        self.autovacuumNaptime = try container.sdkDecodeIfPresent(.autovacuumNaptime)
-        self.autovacuumVacuumThreshold = try container.sdkDecodeIfPresent(.autovacuumVacuumThreshold)
-        self.autovacuumAnalyzeThreshold = try container.sdkDecodeIfPresent(.autovacuumAnalyzeThreshold)
-        self.autovacuumVacuumScaleFactor = try container.sdkDecodeIfPresent(.autovacuumVacuumScaleFactor)
-        self.autovacuumAnalyzeScaleFactor = try container.sdkDecodeIfPresent(.autovacuumAnalyzeScaleFactor)
-        self.autovacuumVacuumCostDelay = try container.sdkDecodeIfPresent(.autovacuumVacuumCostDelay)
-        self.autovacuumVacuumCostLimit = try container.sdkDecodeIfPresent(.autovacuumVacuumCostLimit)
-        self.backupHour = try container.sdkDecodeIfPresent(.backupHour)
-        self.backupMinute = try container.sdkDecodeIfPresent(.backupMinute)
-        self.bgwriterDelay = try container.sdkDecodeIfPresent(.bgwriterDelay)
+        autovacuumFreezeMaxAge = try container.sdkDecodeIfPresent(.autovacuumFreezeMaxAge)
+        autovacuumMaxWorkers = try container.sdkDecodeIfPresent(.autovacuumMaxWorkers)
+        autovacuumNaptime = try container.sdkDecodeIfPresent(.autovacuumNaptime)
+        autovacuumVacuumThreshold = try container.sdkDecodeIfPresent(.autovacuumVacuumThreshold)
+        autovacuumAnalyzeThreshold = try container.sdkDecodeIfPresent(.autovacuumAnalyzeThreshold)
+        autovacuumVacuumScaleFactor = try container.sdkDecodeIfPresent(.autovacuumVacuumScaleFactor)
+        autovacuumAnalyzeScaleFactor = try container.sdkDecodeIfPresent(.autovacuumAnalyzeScaleFactor)
+        autovacuumVacuumCostDelay = try container.sdkDecodeIfPresent(.autovacuumVacuumCostDelay)
+        autovacuumVacuumCostLimit = try container.sdkDecodeIfPresent(.autovacuumVacuumCostLimit)
+        backupHour = try container.sdkDecodeIfPresent(.backupHour)
+        backupMinute = try container.sdkDecodeIfPresent(.backupMinute)
+        bgwriterDelay = try container.sdkDecodeIfPresent(.bgwriterDelay)
     }
 }
 
 extension PostgresAdvancedConfig {
     mutating func sdkDecodeFieldsPart2(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        self.bgwriterFlushAfter = try container.sdkDecodeIfPresent(.bgwriterFlushAfter)
-        self.bgwriterLruMaxpages = try container.sdkDecodeIfPresent(.bgwriterLruMaxpages)
-        self.bgwriterLruMultiplier = try container.sdkDecodeIfPresent(.bgwriterLruMultiplier)
-        self.deadlockTimeout = try container.sdkDecodeIfPresent(.deadlockTimeout)
-        self.defaultToastCompression = try container.sdkDecodeIfPresent(.defaultToastCompression)
-        self.idleInTransactionSessionTimeout = try container.sdkDecodeIfPresent(.idleInTransactionSessionTimeout)
-        self.jit = try container.sdkDecodeIfPresent(.jit)
-        self.logAutovacuumMinDuration = try container.sdkDecodeIfPresent(.logAutovacuumMinDuration)
-        self.logErrorVerbosity = try container.sdkDecodeIfPresent(.logErrorVerbosity)
-        self.logLinePrefix = try container.sdkDecodeIfPresent(.logLinePrefix)
-        self.logMinDurationStatement = try container.sdkDecodeIfPresent(.logMinDurationStatement)
-        self.maxFilesPerProcess = try container.sdkDecodeIfPresent(.maxFilesPerProcess)
+        bgwriterFlushAfter = try container.sdkDecodeIfPresent(.bgwriterFlushAfter)
+        bgwriterLruMaxpages = try container.sdkDecodeIfPresent(.bgwriterLruMaxpages)
+        bgwriterLruMultiplier = try container.sdkDecodeIfPresent(.bgwriterLruMultiplier)
+        deadlockTimeout = try container.sdkDecodeIfPresent(.deadlockTimeout)
+        defaultToastCompression = try container.sdkDecodeIfPresent(.defaultToastCompression)
+        idleInTransactionSessionTimeout = try container.sdkDecodeIfPresent(.idleInTransactionSessionTimeout)
+        jit = try container.sdkDecodeIfPresent(.jit)
+        logAutovacuumMinDuration = try container.sdkDecodeIfPresent(.logAutovacuumMinDuration)
+        logErrorVerbosity = try container.sdkDecodeIfPresent(.logErrorVerbosity)
+        logLinePrefix = try container.sdkDecodeIfPresent(.logLinePrefix)
+        logMinDurationStatement = try container.sdkDecodeIfPresent(.logMinDurationStatement)
+        maxFilesPerProcess = try container.sdkDecodeIfPresent(.maxFilesPerProcess)
     }
 }
 
 extension PostgresAdvancedConfig {
     mutating func sdkDecodeFieldsPart3(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        self.maxPreparedTransactions = try container.sdkDecodeIfPresent(.maxPreparedTransactions)
-        self.maxPredLocksPerTransaction = try container.sdkDecodeIfPresent(.maxPredLocksPerTransaction)
-        self.maxLocksPerTransaction = try container.sdkDecodeIfPresent(.maxLocksPerTransaction)
-        self.maxStackDepth = try container.sdkDecodeIfPresent(.maxStackDepth)
-        self.maxStandbyArchiveDelay = try container.sdkDecodeIfPresent(.maxStandbyArchiveDelay)
-        self.maxStandbyStreamingDelay = try container.sdkDecodeIfPresent(.maxStandbyStreamingDelay)
-        self.maxReplicationSlots = try container.sdkDecodeIfPresent(.maxReplicationSlots)
-        self.maxLogicalReplicationWorkers = try container.sdkDecodeIfPresent(.maxLogicalReplicationWorkers)
-        self.maxParallelWorkers = try container.sdkDecodeIfPresent(.maxParallelWorkers)
-        self.maxParallelWorkersPerGather = try container.sdkDecodeIfPresent(.maxParallelWorkersPerGather)
-        self.maxWorkerProcesses = try container.sdkDecodeIfPresent(.maxWorkerProcesses)
-        self.pgPartmanBgwRole = try container.sdkDecodeIfPresent(.pgPartmanBgwRole)
+        maxPreparedTransactions = try container.sdkDecodeIfPresent(.maxPreparedTransactions)
+        maxPredLocksPerTransaction = try container.sdkDecodeIfPresent(.maxPredLocksPerTransaction)
+        maxLocksPerTransaction = try container.sdkDecodeIfPresent(.maxLocksPerTransaction)
+        maxStackDepth = try container.sdkDecodeIfPresent(.maxStackDepth)
+        maxStandbyArchiveDelay = try container.sdkDecodeIfPresent(.maxStandbyArchiveDelay)
+        maxStandbyStreamingDelay = try container.sdkDecodeIfPresent(.maxStandbyStreamingDelay)
+        maxReplicationSlots = try container.sdkDecodeIfPresent(.maxReplicationSlots)
+        maxLogicalReplicationWorkers = try container.sdkDecodeIfPresent(.maxLogicalReplicationWorkers)
+        maxParallelWorkers = try container.sdkDecodeIfPresent(.maxParallelWorkers)
+        maxParallelWorkersPerGather = try container.sdkDecodeIfPresent(.maxParallelWorkersPerGather)
+        maxWorkerProcesses = try container.sdkDecodeIfPresent(.maxWorkerProcesses)
+        pgPartmanBgwRole = try container.sdkDecodeIfPresent(.pgPartmanBgwRole)
     }
 }
 
 extension PostgresAdvancedConfig {
     mutating func sdkDecodeFieldsPart4(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        self.pgPartmanBgwInterval = try container.sdkDecodeIfPresent(.pgPartmanBgwInterval)
-        self.pgStatStatementsTrack = try container.sdkDecodeIfPresent(.pgStatStatementsTrack)
-        self.tempFileLimit = try container.sdkDecodeIfPresent(.tempFileLimit)
-        self.timezone = try container.sdkDecodeIfPresent(.timezone)
-        self.trackActivityQuerySize = try container.sdkDecodeIfPresent(.trackActivityQuerySize)
-        self.trackCommitTimestamp = try container.sdkDecodeIfPresent(.trackCommitTimestamp)
-        self.trackFunctions = try container.sdkDecodeIfPresent(.trackFunctions)
-        self.trackIoTiming = try container.sdkDecodeIfPresent(.trackIoTiming)
-        self.maxWalSenders = try container.sdkDecodeIfPresent(.maxWalSenders)
-        self.walSenderTimeout = try container.sdkDecodeIfPresent(.walSenderTimeout)
-        self.walWriterDelay = try container.sdkDecodeIfPresent(.walWriterDelay)
-        self.sharedBuffersPercentage = try container.sdkDecodeIfPresent(.sharedBuffersPercentage)
+        pgPartmanBgwInterval = try container.sdkDecodeIfPresent(.pgPartmanBgwInterval)
+        pgStatStatementsTrack = try container.sdkDecodeIfPresent(.pgStatStatementsTrack)
+        tempFileLimit = try container.sdkDecodeIfPresent(.tempFileLimit)
+        timezone = try container.sdkDecodeIfPresent(.timezone)
+        trackActivityQuerySize = try container.sdkDecodeIfPresent(.trackActivityQuerySize)
+        trackCommitTimestamp = try container.sdkDecodeIfPresent(.trackCommitTimestamp)
+        trackFunctions = try container.sdkDecodeIfPresent(.trackFunctions)
+        trackIoTiming = try container.sdkDecodeIfPresent(.trackIoTiming)
+        maxWalSenders = try container.sdkDecodeIfPresent(.maxWalSenders)
+        walSenderTimeout = try container.sdkDecodeIfPresent(.walSenderTimeout)
+        walWriterDelay = try container.sdkDecodeIfPresent(.walWriterDelay)
+        sharedBuffersPercentage = try container.sdkDecodeIfPresent(.sharedBuffersPercentage)
     }
 }
 
 extension PostgresAdvancedConfig {
     mutating func sdkDecodeFieldsPart5(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        self.pgbouncer = try container.sdkDecodeIfPresent(.pgbouncer)
-        self.workMem = try container.sdkDecodeIfPresent(.workMem)
-        self.timescaledb = try container.sdkDecodeIfPresent(.timescaledb)
-        self.synchronousReplication = try container.sdkDecodeIfPresent(.synchronousReplication)
-        self.statMonitorEnable = try container.sdkDecodeIfPresent(.statMonitorEnable)
-        self.maxFailoverReplicationTimeLag = try container.sdkDecodeIfPresent(.maxFailoverReplicationTimeLag)
-        self.maxConnections = try container.sdkDecodeIfPresent(.maxConnections)
-        self.maxSlotWalKeepSize = try container.sdkDecodeIfPresent(.maxSlotWalKeepSize)
-        self.pgaudit = try container.sdkDecodeIfPresent(.pgaudit)
+        pgbouncer = try container.sdkDecodeIfPresent(.pgbouncer)
+        workMem = try container.sdkDecodeIfPresent(.workMem)
+        timescaledb = try container.sdkDecodeIfPresent(.timescaledb)
+        synchronousReplication = try container.sdkDecodeIfPresent(.synchronousReplication)
+        statMonitorEnable = try container.sdkDecodeIfPresent(.statMonitorEnable)
+        maxFailoverReplicationTimeLag = try container.sdkDecodeIfPresent(.maxFailoverReplicationTimeLag)
+        maxConnections = try container.sdkDecodeIfPresent(.maxConnections)
+        maxSlotWalKeepSize = try container.sdkDecodeIfPresent(.maxSlotWalKeepSize)
+        pgaudit = try container.sdkDecodeIfPresent(.pgaudit)
     }
 }
 
 extension PostgresAdvancedConfig {
     func sdkValidateConstraintsPart1() throws {
-        if let value = self.autovacuumFreezeMaxAge {
-            try validateRange("autovacuum_freeze_max_age", Double(value), min: 200000000, max: 1500000000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = autovacuumFreezeMaxAge {
+            try validateRange(
+                "autovacuum_freeze_max_age",
+                Double(value),
+                min: 200_000_000,
+                max: 1_500_000_000,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.autovacuumMaxWorkers {
-            try validateRange("autovacuum_max_workers", Double(value), min: 1, max: 20, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = autovacuumMaxWorkers {
+            try validateRange(
+                "autovacuum_max_workers",
+                Double(value),
+                min: 1,
+                max: 20,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.autovacuumNaptime {
-            try validateRange("autovacuum_naptime", Double(value), min: 0, max: 86400, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = autovacuumNaptime {
+            try validateRange(
+                "autovacuum_naptime",
+                Double(value),
+                min: 0,
+                max: 86400,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.autovacuumVacuumThreshold {
-            try validateRange("autovacuum_vacuum_threshold", Double(value), min: 0, max: 2147483647, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = autovacuumVacuumThreshold {
+            try validateRange(
+                "autovacuum_vacuum_threshold",
+                Double(value),
+                min: 0,
+                max: 2_147_483_647,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.autovacuumAnalyzeThreshold {
-            try validateRange("autovacuum_analyze_threshold", Double(value), min: 0, max: 2147483647, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = autovacuumAnalyzeThreshold {
+            try validateRange(
+                "autovacuum_analyze_threshold",
+                Double(value),
+                min: 0,
+                max: 2_147_483_647,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.autovacuumVacuumScaleFactor {
-            try validateRange("autovacuum_vacuum_scale_factor", Double(value), min: 0, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = autovacuumVacuumScaleFactor {
+            try validateRange(
+                "autovacuum_vacuum_scale_factor",
+                Double(value),
+                min: 0,
+                max: 1,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.autovacuumAnalyzeScaleFactor {
-            try validateRange("autovacuum_analyze_scale_factor", Double(value), min: 0, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = autovacuumAnalyzeScaleFactor {
+            try validateRange(
+                "autovacuum_analyze_scale_factor",
+                Double(value),
+                min: 0,
+                max: 1,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.autovacuumVacuumCostDelay {
-            try validateRange("autovacuum_vacuum_cost_delay", Double(value), min: -1, max: 100, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = autovacuumVacuumCostDelay {
+            try validateRange(
+                "autovacuum_vacuum_cost_delay",
+                Double(value),
+                min: -1,
+                max: 100,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.autovacuumVacuumCostLimit {
-            try validateRange("autovacuum_vacuum_cost_limit", Double(value), min: -1, max: 10000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = autovacuumVacuumCostLimit {
+            try validateRange(
+                "autovacuum_vacuum_cost_limit",
+                Double(value),
+                min: -1,
+                max: 10000,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.backupHour {
-            try validateRange("backup_hour", Double(value), min: 0, max: 23, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = backupHour {
+            try validateRange(
+                "backup_hour",
+                Double(value),
+                min: 0,
+                max: 23,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.backupMinute {
-            try validateRange("backup_minute", Double(value), min: 0, max: 59, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = backupMinute {
+            try validateRange(
+                "backup_minute",
+                Double(value),
+                min: 0,
+                max: 59,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.bgwriterDelay {
-            try validateRange("bgwriter_delay", Double(value), min: 10, max: 10000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = bgwriterDelay {
+            try validateRange(
+                "bgwriter_delay",
+                Double(value),
+                min: 10,
+                max: 10000,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
 extension PostgresAdvancedConfig {
     func sdkValidateConstraintsPart2() throws {
-        if let value = self.bgwriterFlushAfter {
-            try validateRange("bgwriter_flush_after", Double(value), min: 0, max: 2048, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = bgwriterFlushAfter {
+            try validateRange(
+                "bgwriter_flush_after",
+                Double(value),
+                min: 0,
+                max: 2048,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.bgwriterLruMaxpages {
-            try validateRange("bgwriter_lru_maxpages", Double(value), min: 0, max: 1073741823, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = bgwriterLruMaxpages {
+            try validateRange(
+                "bgwriter_lru_maxpages",
+                Double(value),
+                min: 0,
+                max: 1_073_741_823,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.bgwriterLruMultiplier {
-            try validateRange("bgwriter_lru_multiplier", Double(value), min: 0, max: 10, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = bgwriterLruMultiplier {
+            try validateRange(
+                "bgwriter_lru_multiplier",
+                Double(value),
+                min: 0,
+                max: 10,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.deadlockTimeout {
-            try validateRange("deadlock_timeout", Double(value), min: 500, max: 1800000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = deadlockTimeout {
+            try validateRange(
+                "deadlock_timeout",
+                Double(value),
+                min: 500,
+                max: 1_800_000,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.idleInTransactionSessionTimeout {
-            try validateRange("idle_in_transaction_session_timeout", Double(value), min: 0, max: 604800000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = idleInTransactionSessionTimeout {
+            try validateRange(
+                "idle_in_transaction_session_timeout",
+                Double(value),
+                min: 0,
+                max: 604_800_000,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.logAutovacuumMinDuration {
-            try validateRange("log_autovacuum_min_duration", Double(value), min: -1, max: 2147483647, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = logAutovacuumMinDuration {
+            try validateRange(
+                "log_autovacuum_min_duration",
+                Double(value),
+                min: -1,
+                max: 2_147_483_647,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.logMinDurationStatement {
-            try validateRange("log_min_duration_statement", Double(value), min: -1, max: 86400000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = logMinDurationStatement {
+            try validateRange(
+                "log_min_duration_statement",
+                Double(value),
+                min: -1,
+                max: 86_400_000,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.maxFilesPerProcess {
-            try validateRange("max_files_per_process", Double(value), min: 1000, max: 4096, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = maxFilesPerProcess {
+            try validateRange(
+                "max_files_per_process",
+                Double(value),
+                min: 1000,
+                max: 4096,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.maxPreparedTransactions {
-            try validateRange("max_prepared_transactions", Double(value), min: 0, max: 10000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = maxPreparedTransactions {
+            try validateRange(
+                "max_prepared_transactions",
+                Double(value),
+                min: 0,
+                max: 10000,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.maxPredLocksPerTransaction {
-            try validateRange("max_pred_locks_per_transaction", Double(value), min: 64, max: 640, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = maxPredLocksPerTransaction {
+            try validateRange(
+                "max_pred_locks_per_transaction",
+                Double(value),
+                min: 64,
+                max: 640,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.maxLocksPerTransaction {
-            try validateRange("max_locks_per_transaction", Double(value), min: 64, max: 6400, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = maxLocksPerTransaction {
+            try validateRange(
+                "max_locks_per_transaction",
+                Double(value),
+                min: 64,
+                max: 6400,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.maxStackDepth {
-            try validateRange("max_stack_depth", Double(value), min: 2097152, max: 6291456, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = maxStackDepth {
+            try validateRange(
+                "max_stack_depth",
+                Double(value),
+                min: 2_097_152,
+                max: 6_291_456,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
 extension PostgresAdvancedConfig {
     func sdkValidateConstraintsPart3() throws {
-        if let value = self.maxStandbyArchiveDelay {
-            try validateRange("max_standby_archive_delay", Double(value), min: 1, max: 43200000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = maxStandbyArchiveDelay {
+            try validateRange(
+                "max_standby_archive_delay",
+                Double(value),
+                min: 1,
+                max: 43_200_000,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.maxStandbyStreamingDelay {
-            try validateRange("max_standby_streaming_delay", Double(value), min: 1, max: 43200000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = maxStandbyStreamingDelay {
+            try validateRange(
+                "max_standby_streaming_delay",
+                Double(value),
+                min: 1,
+                max: 43_200_000,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.maxReplicationSlots {
-            try validateRange("max_replication_slots", Double(value), min: 8, max: 64, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = maxReplicationSlots {
+            try validateRange(
+                "max_replication_slots",
+                Double(value),
+                min: 8,
+                max: 64,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.maxLogicalReplicationWorkers {
-            try validateRange("max_logical_replication_workers", Double(value), min: 4, max: 64, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = maxLogicalReplicationWorkers {
+            try validateRange(
+                "max_logical_replication_workers",
+                Double(value),
+                min: 4,
+                max: 64,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.maxParallelWorkers {
-            try validateRange("max_parallel_workers", Double(value), min: 0, max: 96, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = maxParallelWorkers {
+            try validateRange(
+                "max_parallel_workers",
+                Double(value),
+                min: 0,
+                max: 96,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.maxParallelWorkersPerGather {
-            try validateRange("max_parallel_workers_per_gather", Double(value), min: 0, max: 96, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = maxParallelWorkersPerGather {
+            try validateRange(
+                "max_parallel_workers_per_gather",
+                Double(value),
+                min: 0,
+                max: 96,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.maxWorkerProcesses {
-            try validateRange("max_worker_processes", Double(value), min: 8, max: 96, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = maxWorkerProcesses {
+            try validateRange(
+                "max_worker_processes",
+                Double(value),
+                min: 8,
+                max: 96,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.pgPartmanBgwRole {
+        if let value = pgPartmanBgwRole {
             try validateLength("pg_partman_bgw.role", value, min: nil, max: 64)
             try sdkValidatePattern("pg_partman_bgw.role", value, sdkPatterne56e4969d6cd)
         }
-        if let value = self.pgPartmanBgwInterval {
-            try validateRange("pg_partman_bgw.interval", Double(value), min: 3600, max: 604800, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = pgPartmanBgwInterval {
+            try validateRange(
+                "pg_partman_bgw.interval",
+                Double(value),
+                min: 3600,
+                max: 604_800,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.tempFileLimit {
-            try validateRange("temp_file_limit", Double(value), min: -1, max: 2147483647, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = tempFileLimit {
+            try validateRange(
+                "temp_file_limit",
+                Double(value),
+                min: -1,
+                max: 2_147_483_647,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.timezone {
+        if let value = timezone {
             try validateLength("timezone", value, min: nil, max: 64)
         }
-        if let value = self.trackActivityQuerySize {
-            try validateRange("track_activity_query_size", Double(value), min: 1024, max: 10240, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = trackActivityQuerySize {
+            try validateRange(
+                "track_activity_query_size",
+                Double(value),
+                min: 1024,
+                max: 10240,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
 extension PostgresAdvancedConfig {
     func sdkValidateConstraintsPart4() throws {
-        if let value = self.maxWalSenders {
-            try validateRange("max_wal_senders", Double(value), min: 20, max: 64, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = maxWalSenders {
+            try validateRange(
+                "max_wal_senders",
+                Double(value),
+                min: 20,
+                max: 64,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.walSenderTimeout {
-            try validateRange("wal_sender_timeout", Double(value), min: 0, max: 10800000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = walSenderTimeout {
+            try validateRange(
+                "wal_sender_timeout",
+                Double(value),
+                min: 0,
+                max: 10_800_000,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.walWriterDelay {
-            try validateRange("wal_writer_delay", Double(value), min: 10, max: 200, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = walWriterDelay {
+            try validateRange(
+                "wal_writer_delay",
+                Double(value),
+                min: 10,
+                max: 200,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.sharedBuffersPercentage {
-            try validateRange("shared_buffers_percentage", Double(value), min: 20, max: 60, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = sharedBuffersPercentage {
+            try validateRange(
+                "shared_buffers_percentage",
+                Double(value),
+                min: 20,
+                max: 60,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.workMem {
-            try validateRange("work_mem", Double(value), min: 1, max: 1024, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = workMem {
+            try validateRange(
+                "work_mem",
+                Double(value),
+                min: 1,
+                max: 1024,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.maxFailoverReplicationTimeLag {
-            try validateRange("max_failover_replication_time_lag", Double(value), min: 10, max: 9223372036854775808, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = maxFailoverReplicationTimeLag {
+            try validateRange(
+                "max_failover_replication_time_lag",
+                Double(value),
+                min: 10,
+                max: 9_223_372_036_854_775_808,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.maxConnections {
-            try validateRange("max_connections", Double(value), min: 25, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = maxConnections {
+            try validateRange(
+                "max_connections",
+                Double(value),
+                min: 25,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.maxSlotWalKeepSize {
-            try validateRange("max_slot_wal_keep_size", Double(value), min: -1, max: 2147483647, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = maxSlotWalKeepSize {
+            try validateRange(
+                "max_slot_wal_keep_size",
+                Double(value),
+                min: -1,
+                max: 2_147_483_647,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
@@ -259,21 +595,21 @@ public struct OptionsOptionsMongodb: Codable {
     }
 
     init() {
-        (self.regions, self.versions, self.layouts) = (nil, nil, nil)
+        (regions, versions, layouts) = (nil, nil, nil)
     }
 }
 
-extension OptionsOptionsMongodb {
-    public init(from decoder: Decoder) throws {
+public extension OptionsOptionsMongodb {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.versions = try container.sdkDecodeIfPresent(.versions)
-        self.layouts = try container.sdkDecodeIfPresent(.layouts)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        versions = try container.sdkDecodeIfPresent(.versions)
+        layouts = try container.sdkDecodeIfPresent(.layouts)
     }
 }
 
-extension OptionsOptionsMongodb {
-    public init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
+public extension OptionsOptionsMongodb {
+    init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
         self.init()
         (self.regions, self.versions) = (regions, versions)
         self.layouts = layouts

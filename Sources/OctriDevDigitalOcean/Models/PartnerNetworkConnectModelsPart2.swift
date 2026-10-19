@@ -3,46 +3,75 @@
 
 import Foundation
 
-// PartnerNetworkConnect domain models
-extension PartnerAttachmentWritable {
-    public init(from decoder: Decoder) throws {
+/// PartnerNetworkConnect domain models
+public extension PartnerAttachmentWritable {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
         }
         guard container.contains(.connectionBandwidthInMbps) else {
-            throw SdkValidationError(field: "connection_bandwidth_in_mbps", code: "required", message: "Validation failed for 'connection_bandwidth_in_mbps': value is required")
+            throw SdkValidationError(
+                field: "connection_bandwidth_in_mbps",
+                code: "required",
+                message: "Validation failed for 'connection_bandwidth_in_mbps': value is required"
+            )
         }
         guard container.contains(.region) else {
-            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
+            throw SdkValidationError(
+                field: "region",
+                code: "required",
+                message: "Validation failed for 'region': value is required"
+            )
         }
         guard container.contains(.naasProvider) else {
-            throw SdkValidationError(field: "naas_provider", code: "required", message: "Validation failed for 'naas_provider': value is required")
+            throw SdkValidationError(
+                field: "naas_provider",
+                code: "required",
+                message: "Validation failed for 'naas_provider': value is required"
+            )
         }
         guard container.contains(.vpcIds) else {
-            throw SdkValidationError(field: "vpc_ids", code: "required", message: "Validation failed for 'vpc_ids': value is required")
+            throw SdkValidationError(
+                field: "vpc_ids",
+                code: "required",
+                message: "Validation failed for 'vpc_ids': value is required"
+            )
         }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.connectionBandwidthInMbps = try container.sdkDecodeRequired(.connectionBandwidthInMbps)
-        self.region = try container.sdkDecodeRequired(.region)
-        self.naasProvider = try container.sdkDecodeRequired(.naasProvider)
-        self.vpcIds = try container.sdkDecodeRequired(.vpcIds)
-        self.parentUuid = try container.sdkDecodeIfPresent(.parentUuid)
-        self.bgp = try container.sdkDecodeIfPresent(.bgp)
-        self.redundancyZone = try container.sdkDecodeIfPresent(.redundancyZone)
-            try sdkValidatePattern("name", self.name, sdkPatternef0a913b6e4d)
-            try validateItems("vpc_ids", self.vpcIds, min: 1, max: nil)
+        name = try container.sdkDecodeRequired(.name)
+        connectionBandwidthInMbps = try container.sdkDecodeRequired(.connectionBandwidthInMbps)
+        region = try container.sdkDecodeRequired(.region)
+        naasProvider = try container.sdkDecodeRequired(.naasProvider)
+        vpcIds = try container.sdkDecodeRequired(.vpcIds)
+        parentUuid = try container.sdkDecodeIfPresent(.parentUuid)
+        bgp = try container.sdkDecodeIfPresent(.bgp)
+        redundancyZone = try container.sdkDecodeIfPresent(.redundancyZone)
+        try sdkValidatePattern("name", name, sdkPatternef0a913b6e4d)
+        try validateItems("vpc_ids", vpcIds, min: 1, max: nil)
     }
 }
 
-extension PartnerAttachmentWritable {
-    public init(name: String, connectionBandwidthInMbps: Int, region: PartnerAttachmentWritableRegion, naasProvider: String, vpcIds: [String], parentUuid: String? = nil, bgp: PartnerAttachmentWritableBgp? = nil, redundancyZone: PartnerAttachmentWritableRedundancyZone? = nil) throws {
+public extension PartnerAttachmentWritable {
+    init(
+        name: String,
+        connectionBandwidthInMbps: Int,
+        region: PartnerAttachmentWritableRegion,
+        naasProvider: String,
+        vpcIds: [String],
+        parentUuid: String? = nil,
+        bgp: PartnerAttachmentWritableBgp? = nil,
+        redundancyZone: PartnerAttachmentWritableRedundancyZone? = nil
+    ) throws {
         (self.name, self.connectionBandwidthInMbps) = (name, connectionBandwidthInMbps)
         (self.region, self.naasProvider) = (region, naasProvider)
         (self.vpcIds, self.parentUuid) = (vpcIds, parentUuid)
         (self.bgp, self.redundancyZone) = (bgp, redundancyZone)
-            try sdkValidatePattern("name", self.name, sdkPatternef0a913b6e4d)
-            try validateItems("vpc_ids", self.vpcIds, min: 1, max: nil)
+        try sdkValidatePattern("name", self.name, sdkPatternef0a913b6e4d)
+        try validateItems("vpc_ids", self.vpcIds, min: 1, max: nil)
     }
 }
 
@@ -55,19 +84,19 @@ public struct SinglePartnerAttachmentBgpAuthKey: Codable {
     }
 
     init() {
-        self.bgpAuthKey = nil
+        bgpAuthKey = nil
     }
 }
 
-extension SinglePartnerAttachmentBgpAuthKey {
-    public init(from decoder: Decoder) throws {
+public extension SinglePartnerAttachmentBgpAuthKey {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.bgpAuthKey = try container.sdkDecodeIfPresent(.bgpAuthKey)
+        bgpAuthKey = try container.sdkDecodeIfPresent(.bgpAuthKey)
     }
 }
 
-extension SinglePartnerAttachmentBgpAuthKey {
-    public init(bgpAuthKey: [String: JSONValue]? = nil) {
+public extension SinglePartnerAttachmentBgpAuthKey {
+    init(bgpAuthKey: [String: JSONValue]? = nil) {
         self.init()
         self.bgpAuthKey = bgpAuthKey
     }
@@ -95,33 +124,51 @@ public struct PartnerAttachmentWritableBgp: Codable {
         case authKey = "auth_key"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension PartnerAttachmentWritableBgp {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.localRouterIp) else {
-            throw SdkValidationError(field: "local_router_ip", code: "required", message: "Validation failed for 'local_router_ip': value is required")
-        }
-        guard container.contains(.peerRouterIp) else {
-            throw SdkValidationError(field: "peer_router_ip", code: "required", message: "Validation failed for 'peer_router_ip': value is required")
-        }
-        guard container.contains(.peerRouterAsn) else {
-            throw SdkValidationError(field: "peer_router_asn", code: "required", message: "Validation failed for 'peer_router_asn': value is required")
-        }
-        guard container.contains(.authKey) else {
-            throw SdkValidationError(field: "auth_key", code: "required", message: "Validation failed for 'auth_key': value is required")
-        }
-        self.localRouterIp = try container.sdkDecodeRequired(.localRouterIp)
-        self.peerRouterIp = try container.sdkDecodeRequired(.peerRouterIp)
-        self.peerRouterAsn = try container.sdkDecodeRequired(.peerRouterAsn)
-        self.authKey = try container.sdkDecodeRequired(.authKey)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension PartnerAttachmentWritableBgp {
-    public init(localRouterIp: String, peerRouterIp: String, peerRouterAsn: Int, authKey: String) {
+public extension PartnerAttachmentWritableBgp {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.localRouterIp) else {
+            throw SdkValidationError(
+                field: "local_router_ip",
+                code: "required",
+                message: "Validation failed for 'local_router_ip': value is required"
+            )
+        }
+        guard container.contains(.peerRouterIp) else {
+            throw SdkValidationError(
+                field: "peer_router_ip",
+                code: "required",
+                message: "Validation failed for 'peer_router_ip': value is required"
+            )
+        }
+        guard container.contains(.peerRouterAsn) else {
+            throw SdkValidationError(
+                field: "peer_router_asn",
+                code: "required",
+                message: "Validation failed for 'peer_router_asn': value is required"
+            )
+        }
+        guard container.contains(.authKey) else {
+            throw SdkValidationError(
+                field: "auth_key",
+                code: "required",
+                message: "Validation failed for 'auth_key': value is required"
+            )
+        }
+        localRouterIp = try container.sdkDecodeRequired(.localRouterIp)
+        peerRouterIp = try container.sdkDecodeRequired(.peerRouterIp)
+        peerRouterAsn = try container.sdkDecodeRequired(.peerRouterAsn)
+        authKey = try container.sdkDecodeRequired(.authKey)
+    }
+}
+
+public extension PartnerAttachmentWritableBgp {
+    init(localRouterIp: String, peerRouterIp: String, peerRouterAsn: Int, authKey: String) {
         (self.localRouterIp, self.peerRouterIp) = (localRouterIp, peerRouterIp)
         (self.peerRouterAsn, self.authKey) = (peerRouterAsn, authKey)
     }
@@ -136,19 +183,19 @@ public struct PartnerAttachmentUpdatableVariant2: Codable {
     }
 
     init() {
-        self.bgp = nil
+        bgp = nil
     }
 }
 
-extension PartnerAttachmentUpdatableVariant2 {
-    public init(from decoder: Decoder) throws {
+public extension PartnerAttachmentUpdatableVariant2 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.bgp = try container.sdkDecodeIfPresent(.bgp)
+        bgp = try container.sdkDecodeIfPresent(.bgp)
     }
 }
 
-extension PartnerAttachmentUpdatableVariant2 {
-    public init(bgp: PartnerAttachmentUpdatableVariant2Bgp? = nil) {
+public extension PartnerAttachmentUpdatableVariant2 {
+    init(bgp: PartnerAttachmentUpdatableVariant2Bgp? = nil) {
         self.init()
         self.bgp = bgp
     }
@@ -163,19 +210,19 @@ public struct SinglePartnerAttachment: Codable {
     }
 
     init() {
-        self.partnerAttachment = nil
+        partnerAttachment = nil
     }
 }
 
-extension SinglePartnerAttachment {
-    public init(from decoder: Decoder) throws {
+public extension SinglePartnerAttachment {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.partnerAttachment = try container.sdkDecodeIfPresent(.partnerAttachment)
+        partnerAttachment = try container.sdkDecodeIfPresent(.partnerAttachment)
     }
 }
 
-extension SinglePartnerAttachment {
-    public init(partnerAttachment: PartnerAttachment? = nil) {
+public extension SinglePartnerAttachment {
+    init(partnerAttachment: PartnerAttachment? = nil) {
         self.init()
         self.partnerAttachment = partnerAttachment
     }
@@ -189,19 +236,19 @@ public struct SinglePartnerAttachmentServiceKeyVariant0: Codable {
     }
 
     init() {
-        self.serviceKey = nil
+        serviceKey = nil
     }
 }
 
-extension SinglePartnerAttachmentServiceKeyVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension SinglePartnerAttachmentServiceKeyVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.serviceKey = try container.sdkDecodeIfPresent(.serviceKey)
+        serviceKey = try container.sdkDecodeIfPresent(.serviceKey)
     }
 }
 
-extension SinglePartnerAttachmentServiceKeyVariant0 {
-    public init(serviceKey: [String: JSONValue]? = nil) {
+public extension SinglePartnerAttachmentServiceKeyVariant0 {
+    init(serviceKey: [String: JSONValue]? = nil) {
         self.init()
         self.serviceKey = serviceKey
     }
@@ -215,19 +262,19 @@ public struct SinglePartnerAttachmentVariant0: Codable {
     }
 
     init() {
-        self.partnerAttachment = nil
+        partnerAttachment = nil
     }
 }
 
-extension SinglePartnerAttachmentVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension SinglePartnerAttachmentVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.partnerAttachment = try container.sdkDecodeIfPresent(.partnerAttachment)
+        partnerAttachment = try container.sdkDecodeIfPresent(.partnerAttachment)
     }
 }
 
-extension SinglePartnerAttachmentVariant0 {
-    public init(partnerAttachment: PartnerAttachment? = nil) {
+public extension SinglePartnerAttachmentVariant0 {
+    init(partnerAttachment: PartnerAttachment? = nil) {
         self.init()
         self.partnerAttachment = partnerAttachment
     }
@@ -242,19 +289,19 @@ public struct SinglePartnerAttachmentServiceKey: Codable {
     }
 
     init() {
-        self.serviceKey = nil
+        serviceKey = nil
     }
 }
 
-extension SinglePartnerAttachmentServiceKey {
-    public init(from decoder: Decoder) throws {
+public extension SinglePartnerAttachmentServiceKey {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.serviceKey = try container.sdkDecodeIfPresent(.serviceKey)
+        serviceKey = try container.sdkDecodeIfPresent(.serviceKey)
     }
 }
 
-extension SinglePartnerAttachmentServiceKey {
-    public init(serviceKey: [String: JSONValue]? = nil) {
+public extension SinglePartnerAttachmentServiceKey {
+    init(serviceKey: [String: JSONValue]? = nil) {
         self.init()
         self.serviceKey = serviceKey
     }
@@ -283,22 +330,22 @@ public struct PartnerAttachmentBgp: Codable {
     }
 
     init() {
-        (self.localAsn, self.peerAsn, self.localRouterIp, self.peerRouterIp) = (nil, nil, nil, nil)
+        (localAsn, peerAsn, localRouterIp, peerRouterIp) = (nil, nil, nil, nil)
     }
 }
 
-extension PartnerAttachmentBgp {
-    public init(from decoder: Decoder) throws {
+public extension PartnerAttachmentBgp {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.localAsn = try container.sdkDecodeIfPresent(.localAsn)
-        self.peerAsn = try container.sdkDecodeIfPresent(.peerAsn)
-        self.localRouterIp = try container.sdkDecodeIfPresent(.localRouterIp)
-        self.peerRouterIp = try container.sdkDecodeIfPresent(.peerRouterIp)
+        localAsn = try container.sdkDecodeIfPresent(.localAsn)
+        peerAsn = try container.sdkDecodeIfPresent(.peerAsn)
+        localRouterIp = try container.sdkDecodeIfPresent(.localRouterIp)
+        peerRouterIp = try container.sdkDecodeIfPresent(.peerRouterIp)
     }
 }
 
-extension PartnerAttachmentBgp {
-    public init(localAsn: Int? = nil, peerAsn: Int? = nil, localRouterIp: String? = nil, peerRouterIp: String? = nil) {
+public extension PartnerAttachmentBgp {
+    init(localAsn: Int? = nil, peerAsn: Int? = nil, localRouterIp: String? = nil, peerRouterIp: String? = nil) {
         self.init()
         (self.localAsn, self.peerAsn) = (localAsn, peerAsn)
         (self.localRouterIp, self.peerRouterIp) = (localRouterIp, peerRouterIp)
@@ -314,35 +361,39 @@ public struct SinglePartnerAttachmentDeleting: Codable {
     }
 
     init() {
-        self.partnerAttachment = nil
+        partnerAttachment = nil
     }
 }
 
-extension SinglePartnerAttachmentDeleting {
-    public init(from decoder: Decoder) throws {
+public extension SinglePartnerAttachmentDeleting {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.partnerAttachment = try container.sdkDecodeIfPresent(.partnerAttachment)
+        partnerAttachment = try container.sdkDecodeIfPresent(.partnerAttachment)
     }
 }
 
-extension SinglePartnerAttachmentDeleting {
-    public init(partnerAttachment: PartnerAttachment? = nil) {
+public extension SinglePartnerAttachmentDeleting {
+    init(partnerAttachment: PartnerAttachment? = nil) {
         self.init()
         self.partnerAttachment = partnerAttachment
     }
 }
 
 /// Optional redundancy zone for the partner attachment.
-public struct PartnerAttachmentWritableRedundancyZone: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct PartnerAttachmentWritableRedundancyZone: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let megaportBlue = PartnerAttachmentWritableRedundancyZone(rawValue: "MEGAPORT_BLUE")
     public static let megaportRed = PartnerAttachmentWritableRedundancyZone(rawValue: "MEGAPORT_RED")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -355,7 +406,10 @@ public struct PartnerAttachmentWritableRedundancyZone: RawRepresentable, Hashabl
 public struct PartnerAttachmentWritableRegion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let nyc = PartnerAttachmentWritableRegion(rawValue: "nyc")
     public static let sfo = PartnerAttachmentWritableRegion(rawValue: "sfo")
     public static let fra = PartnerAttachmentWritableRegion(rawValue: "fra")
@@ -364,7 +418,7 @@ public struct PartnerAttachmentWritableRegion: RawRepresentable, Hashable, Codab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -6,12 +6,32 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension HarnessRuntimeMethods {
-    /// Marks the trigger deleted, fails any pending executions, and purges the webhook secret / cron schedule. A fresh trigger owns no session; a reuse trigger only UNBINDS - it never destroys the customer's session. Execution history and by-session lookups continue to resolve to the deleted row. Returns 204 No Content on success.
+public extension HarnessRuntimeMethods {
+    /// Marks the trigger deleted, fails any pending executions, and purges the webhook secret / cron schedule. A fresh
+    /// trigger owns no session; a reuse trigger only UNBINDS - it never destroys the customer's session. Execution
+    /// history and by-session lookups continue to resolve to the deleted row. Returns 204 No Content on success.
     ///
     /// - Parameters:
     /// - triggerId: The trigger UUID.
-    public static func harnessDeleteTrigger(config: ClientConfig, triggerId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try (await sdkRequest("DELETE", ["/v2/agents/triggers/", sdkEncodePathSegment(sdkWireString(triggerId))].joined(), config: config, decoder: .empty, operationId: "harness_delete_trigger", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func harnessDeleteTrigger(
+        config: ClientConfig,
+        triggerId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await (sdkRequest(
+            "DELETE",
+            ["/v2/agents/triggers/", sdkEncodePathSegment(sdkWireString(triggerId))].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "harness_delete_trigger",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

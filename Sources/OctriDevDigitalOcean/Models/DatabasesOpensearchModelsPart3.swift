@@ -3,9 +3,17 @@
 
 import Foundation
 
-// DatabasesOpensearch domain models
-extension OpensearchIndex {
-    public init(indexName: String? = nil, numberOfShards: Int? = nil, numberOfReplicas: Int? = nil, size: Int? = nil, createdTime: Date? = nil, status: OpensearchIndexVariant1Status? = nil, health: OpensearchIndexVariant1Health? = nil) throws {
+/// DatabasesOpensearch domain models
+public extension OpensearchIndex {
+    init(
+        indexName: String? = nil,
+        numberOfShards: Int? = nil,
+        numberOfReplicas: Int? = nil,
+        size: Int? = nil,
+        createdTime: Date? = nil,
+        status: OpensearchIndexVariant1Status? = nil,
+        health: OpensearchIndexVariant1Health? = nil
+    ) throws {
         self.init()
         (self.indexName, self.numberOfShards) = (indexName, numberOfShards)
         (self.numberOfReplicas, self.size) = (numberOfReplicas, size)
@@ -27,19 +35,19 @@ public struct OpensearchIndexes: Codable {
     }
 
     init() {
-        self.indexes = nil
+        indexes = nil
     }
 }
 
-extension OpensearchIndexes {
-    public init(from decoder: Decoder) throws {
+public extension OpensearchIndexes {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.indexes = try container.sdkDecodeIfPresent(.indexes)
+        indexes = try container.sdkDecodeIfPresent(.indexes)
     }
 }
 
-extension OpensearchIndexes {
-    public init(indexes: [OpensearchIndex]? = nil) {
+public extension OpensearchIndexes {
+    init(indexes: [OpensearchIndex]? = nil) {
         self.init()
         self.indexes = indexes
     }
@@ -49,7 +57,10 @@ extension OpensearchIndexes {
 public struct OpensearchIndexVariant1Health: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let unknown = OpensearchIndexVariant1Health(rawValue: "unknown")
     public static let green = OpensearchIndexVariant1Health(rawValue: "green")
     public static let yellow = OpensearchIndexVariant1Health(rawValue: "yellow")
@@ -58,7 +69,7 @@ public struct OpensearchIndexVariant1Health: RawRepresentable, Hashable, Codable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -71,7 +82,10 @@ public struct OpensearchIndexVariant1Health: RawRepresentable, Hashable, Codable
 public struct OpensearchIndexVariant1Status: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let unknown = OpensearchIndexVariant1Status(rawValue: "unknown")
     public static let open = OpensearchIndexVariant1Status(rawValue: "open")
     public static let close = OpensearchIndexVariant1Status(rawValue: "close")
@@ -79,7 +93,7 @@ public struct OpensearchIndexVariant1Status: RawRepresentable, Hashable, Codable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

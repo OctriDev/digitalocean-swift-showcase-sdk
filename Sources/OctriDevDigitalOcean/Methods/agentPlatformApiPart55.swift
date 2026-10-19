@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
-    /// Lists agents linked to a specific OpenAI key. Use `page` and `per_page` to paginate the results. The response includes pagination metadata and links to other pages.
+public extension AgentPlatformApiMethods {
+    /// Lists agents linked to a specific OpenAI key. Use `page` and `per_page` to paginate the results. The response
+    /// includes pagination metadata and links to other pages.
     ///
     /// List Agents by OpenAI Key.
     ///
@@ -15,11 +16,32 @@ extension AgentPlatformApiMethods {
     /// - uuid: Unique ID of OpenAI key
     /// - page: Page number.
     /// - perPage: Items per page.
-    public static func genaiListAgentsByOpenaiKey(config: ClientConfig, uuid: String, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListAgentsByOpenAIKeyOutput {
-        return try (await sdkRequest("GET", ["/v2/gen-ai/openai/keys/", sdkEncodePathSegment(sdkWireString(uuid)), "/agents"].joined(), config: config, query: [
-            SdkQueryParameter("page", value: page),
-            SdkQueryParameter("per_page", value: perPage),
-        ], decoder: .json, operationId: "genai_list_agents_by_openai_key", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiListAgentsByOpenaiKey(
+        config: ClientConfig,
+        uuid: String,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiListAgentsByOpenAIKeyOutput {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/gen-ai/openai/keys/", sdkEncodePathSegment(sdkWireString(uuid)), "/agents"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("page", value: page),
+                SdkQueryParameter("per_page", value: perPage),
+            ],
+            decoder: .json,
+            operationId: "genai_list_agents_by_openai_key",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
     /// To list all datacenter regions, send a GET request to `/v2/gen-ai/regions`.
@@ -27,10 +49,30 @@ extension AgentPlatformApiMethods {
     /// - Parameters:
     /// - servesInference: Include datacenters that serve inference.
     /// - servesBatch: Include datacenters that are capable of running batch jobs.
-    public static func genaiListDatacenterRegions(config: ClientConfig, servesInference: Bool? = nil, servesBatch: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListRegionsOutput {
-        return try (await sdkRequest("GET", "/v2/gen-ai/regions", config: config, query: [
-            SdkQueryParameter("serves_inference", value: servesInference),
-            SdkQueryParameter("serves_batch", value: servesBatch),
-        ], decoder: .json, operationId: "genai_list_datacenter_regions", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiListDatacenterRegions(
+        config: ClientConfig,
+        servesInference: Bool? = nil,
+        servesBatch: Bool? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiListRegionsOutput {
+        try await (sdkRequest(
+            "GET",
+            "/v2/gen-ai/regions",
+            config: config,
+            query: [
+                SdkQueryParameter("serves_inference", value: servesInference),
+                SdkQueryParameter("serves_batch", value: servesBatch),
+            ],
+            decoder: .json,
+            operationId: "genai_list_datacenter_regions",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

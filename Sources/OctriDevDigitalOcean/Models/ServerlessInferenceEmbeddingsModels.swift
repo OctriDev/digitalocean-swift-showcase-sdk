@@ -3,29 +3,39 @@
 
 import Foundation
 
-// ServerlessInferenceEmbeddings domain models
+/// ServerlessInferenceEmbeddings domain models
 public indirect enum EmbeddingsRequestInput {
     case stringValue(String)
     case stringList([String])
 }
 
 extension EmbeddingsRequestInput: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for EmbeddingsRequestInput")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for EmbeddingsRequestInput"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension EmbeddingsRequestInput {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode([String].self) { return .stringList(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode([String].self) {
+            return .stringList(value)
+        }
         return nil
     }
 }
@@ -62,27 +72,42 @@ public struct EmbeddingsRequest: Codable {
         case encodingFormat = "encoding_format"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension EmbeddingsRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.model) else {
-            throw SdkValidationError(field: "model", code: "required", message: "Validation failed for 'model': value is required")
-        }
-        guard container.contains(.input) else {
-            throw SdkValidationError(field: "input", code: "required", message: "Validation failed for 'input': value is required")
-        }
-        self.model = try container.sdkDecodeRequired(.model)
-        self.input = try container.sdkDecodeRequired(.input)
-        self.user = try container.sdkDecodeIfPresent(.user)
-        self.encodingFormat = try container.sdkDecodeIfPresent(.encodingFormat)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension EmbeddingsRequest {
-    public init(model: String, input: EmbeddingsRequestInput, user: String? = nil, encodingFormat: EmbeddingsRequestEncodingFormat? = nil) {
+public extension EmbeddingsRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.model) else {
+            throw SdkValidationError(
+                field: "model",
+                code: "required",
+                message: "Validation failed for 'model': value is required"
+            )
+        }
+        guard container.contains(.input) else {
+            throw SdkValidationError(
+                field: "input",
+                code: "required",
+                message: "Validation failed for 'input': value is required"
+            )
+        }
+        model = try container.sdkDecodeRequired(.model)
+        input = try container.sdkDecodeRequired(.input)
+        user = try container.sdkDecodeIfPresent(.user)
+        encodingFormat = try container.sdkDecodeIfPresent(.encodingFormat)
+    }
+}
+
+public extension EmbeddingsRequest {
+    init(
+        model: String,
+        input: EmbeddingsRequestInput,
+        user: String? = nil,
+        encodingFormat: EmbeddingsRequestEncodingFormat? = nil
+    ) {
         (self.model, self.input) = (model, input)
         (self.user, self.encodingFormat) = (user, encodingFormat)
     }
@@ -108,33 +133,51 @@ public struct EmbeddingsResponse: Codable {
         case usage
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension EmbeddingsResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.object) else {
-            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
-        }
-        guard container.contains(.model) else {
-            throw SdkValidationError(field: "model", code: "required", message: "Validation failed for 'model': value is required")
-        }
-        guard container.contains(.data) else {
-            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
-        }
-        guard container.contains(.usage) else {
-            throw SdkValidationError(field: "usage", code: "required", message: "Validation failed for 'usage': value is required")
-        }
-        self.object = try container.sdkDecodeRequired(.object)
-        self.model = try container.sdkDecodeRequired(.model)
-        self.data = try container.sdkDecodeRequired(.data)
-        self.usage = try container.sdkDecodeRequired(.usage)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension EmbeddingsResponse {
-    public init(object: EmbeddingsResponseObject, model: String, data: [EmbeddingDataItem], usage: EmbeddingsUsage) {
+public extension EmbeddingsResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.object) else {
+            throw SdkValidationError(
+                field: "object",
+                code: "required",
+                message: "Validation failed for 'object': value is required"
+            )
+        }
+        guard container.contains(.model) else {
+            throw SdkValidationError(
+                field: "model",
+                code: "required",
+                message: "Validation failed for 'model': value is required"
+            )
+        }
+        guard container.contains(.data) else {
+            throw SdkValidationError(
+                field: "data",
+                code: "required",
+                message: "Validation failed for 'data': value is required"
+            )
+        }
+        guard container.contains(.usage) else {
+            throw SdkValidationError(
+                field: "usage",
+                code: "required",
+                message: "Validation failed for 'usage': value is required"
+            )
+        }
+        object = try container.sdkDecodeRequired(.object)
+        model = try container.sdkDecodeRequired(.model)
+        data = try container.sdkDecodeRequired(.data)
+        usage = try container.sdkDecodeRequired(.usage)
+    }
+}
+
+public extension EmbeddingsResponse {
+    init(object: EmbeddingsResponseObject, model: String, data: [EmbeddingDataItem], usage: EmbeddingsUsage) {
         (self.object, self.model) = (object, model)
         (self.data, self.usage) = (data, usage)
     }
@@ -154,25 +197,35 @@ public struct EmbeddingsUsage: Codable {
         case totalTokens = "total_tokens"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension EmbeddingsUsage {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.promptTokens) else {
-            throw SdkValidationError(field: "prompt_tokens", code: "required", message: "Validation failed for 'prompt_tokens': value is required")
-        }
-        guard container.contains(.totalTokens) else {
-            throw SdkValidationError(field: "total_tokens", code: "required", message: "Validation failed for 'total_tokens': value is required")
-        }
-        self.promptTokens = try container.sdkDecodeRequired(.promptTokens)
-        self.totalTokens = try container.sdkDecodeRequired(.totalTokens)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension EmbeddingsUsage {
-    public init(promptTokens: Int, totalTokens: Int) {
+public extension EmbeddingsUsage {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.promptTokens) else {
+            throw SdkValidationError(
+                field: "prompt_tokens",
+                code: "required",
+                message: "Validation failed for 'prompt_tokens': value is required"
+            )
+        }
+        guard container.contains(.totalTokens) else {
+            throw SdkValidationError(
+                field: "total_tokens",
+                code: "required",
+                message: "Validation failed for 'total_tokens': value is required"
+            )
+        }
+        promptTokens = try container.sdkDecodeRequired(.promptTokens)
+        totalTokens = try container.sdkDecodeRequired(.totalTokens)
+    }
+}
+
+public extension EmbeddingsUsage {
+    init(promptTokens: Int, totalTokens: Int) {
         (self.promptTokens, self.totalTokens) = (promptTokens, totalTokens)
     }
 }
@@ -181,12 +234,15 @@ extension EmbeddingsUsage {
 public struct EmbeddingsResponseObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = EmbeddingsResponseObject(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -199,13 +255,16 @@ public struct EmbeddingsResponseObject: RawRepresentable, Hashable, Codable, Sen
 public struct EmbeddingsRequestEncodingFormat: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let float = EmbeddingsRequestEncodingFormat(rawValue: "float")
     public static let base64 = EmbeddingsRequestEncodingFormat(rawValue: "base64")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

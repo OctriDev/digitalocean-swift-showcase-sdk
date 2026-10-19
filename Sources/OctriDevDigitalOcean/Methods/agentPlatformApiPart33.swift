@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
-    public struct GenaiCreateKnowledgeBaseOptions: Codable {
+public extension AgentPlatformApiMethods {
+    struct GenaiCreateKnowledgeBaseOptions: Codable {
         public var databaseId: String?
         public var datasources: [ApiKBDataSource]?
         public var embeddingModelUuid: String?
@@ -22,7 +22,9 @@ extension AgentPlatformApiMethods {
         public init() {}
     }
 
-    /// Creates a knowledge base in a specified region and project, optionally using an existing database. Configure its name, embedding model, size, tags, VPC, and retrieval reranking with the corresponding fields. You can attach data sources during creation or add them later.
+    /// Creates a knowledge base in a specified region and project, optionally using an existing database. Configure its
+    /// name, embedding model, size, tags, VPC, and retrieval reranking with the corresponding fields. You can attach
+    /// data sources during creation or add them later.
     ///
     /// To create a knowledge base, send a POST request to `/v2/gen-ai/knowledge_bases`.
     ///
@@ -48,9 +50,28 @@ extension AgentPlatformApiMethods {
     /// - size: Optional enumerated value serialized in the `size` wire field.
     /// - tags: Tags to organize your knowledge base.
     /// - vpcUuid: The VPC to deploy the knowledge base database in
-    public static func genaiCreateKnowledgeBase(config: ClientConfig, options: GenaiCreateKnowledgeBaseOptions, requestOptions: RequestOptions? = nil) async throws -> ApiCreateKnowledgeBaseOutput {
+    static func genaiCreateKnowledgeBase(
+        config: ClientConfig,
+        options: GenaiCreateKnowledgeBaseOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiCreateKnowledgeBaseOutput {
         let requestBody = GenaiCreateKnowledgeBaseRequestBody(options: options)
 
-        return try (await sdkRequest("POST", "/v2/gen-ai/knowledge_bases", config: config, body: requestBody, decoder: .json, operationId: "genai_create_knowledge_base", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/gen-ai/knowledge_bases",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "genai_create_knowledge_base",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

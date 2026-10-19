@@ -7,23 +7,39 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum SizesMethods {
-    /// To list all of available Droplet sizes, send a GET request to `/v2/sizes`. The response will be a JSON object with a key called `sizes`. The value of this will be an array of `size` objects each of which contain the standard size attributes.
+    /// To list all of available Droplet sizes, send a GET request to `/v2/sizes`. The response will be a JSON object
+    /// with a key called `sizes`. The value of this will be an array of `size` objects each of which contain the
+    /// standard size attributes.
     ///
     /// - Parameters:
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    public static func sizesList(config: ClientConfig, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AllSizes {
-        if let perPage = perPage {
+    public static func sizesList(
+        config: ClientConfig,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AllSizes {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page = page {
+        if let page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try (await sdkRequest("GET", "/v2/sizes", config: config, query: [
-            SdkQueryParameter("per_page", value: perPage),
-            SdkQueryParameter("page", value: page),
-        ], decoder: .json, operationId: "sizes_list", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/v2/sizes",
+            config: config,
+            query: [
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("page", value: page),
+            ],
+            decoder: .json,
+            operationId: "sizes_list",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-// Canonical dropletActions operation model declarations
+/// Canonical dropletActions operation model declarations
 public indirect enum DropletActionsPostRequestBody {
     case dropletAction(DropletAction)
     case dropletActionEnableBackupsRequest(DropletActionEnableBackupsRequest)
@@ -23,7 +23,6 @@ public indirect enum DropletActionsPostRequestBody {
 }
 
 extension DropletActionsPostRequestBody: Codable {
-
     private enum CodingKeys: String, CodingKey {
         case discriminator = "type"
     }
@@ -31,20 +30,29 @@ extension DropletActionsPostRequestBody: Codable {
     public init(from decoder: Decoder) throws {
         if let tagged = try? decoder.container(keyedBy: CodingKeys.self),
            let discriminator = try? tagged.decode(String.self, forKey: .discriminator) {
-            if let value = try Self.decodeGroup1(discriminator, from: decoder) { self = value; return }
+            if let value = try Self.decodeGroup1(discriminator, from: decoder) {
+                self = value; return
+            }
         }
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeUntaggedGroup1(from: container) { self = value; return }
+        if let value = Self.decodeUntaggedGroup1(from: container) {
+            self = value; return
+        }
         if let tagged = try? decoder.container(keyedBy: CodingKeys.self),
            let discriminator = try? tagged.decode(String.self, forKey: .discriminator) {
             self = try .unknown(tag: discriminator, raw: JSONValue(from: decoder))
             return
         }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for DropletActionsPostRequestBody")
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for DropletActionsPostRequestBody"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
         if case let .unknown(_, raw) = self {
             var container = encoder.singleValueContainer()
             try container.encode(raw)
@@ -56,36 +64,41 @@ extension DropletActionsPostRequestBody {
     static func decodeGroup1(_ discriminator: String, from decoder: Decoder) throws -> Self? {
         switch discriminator {
         case "disable_backups":
-        return .dropletAction(try DropletAction(from: decoder))
+            try .dropletAction(DropletAction(from: decoder))
         case "reboot":
-        return .dropletAction(try DropletAction(from: decoder))
+            try .dropletAction(DropletAction(from: decoder))
         case "power_cycle":
-        return .dropletAction(try DropletAction(from: decoder))
+            try .dropletAction(DropletAction(from: decoder))
         case "shutdown":
-        return .dropletAction(try DropletAction(from: decoder))
+            try .dropletAction(DropletAction(from: decoder))
         case "power_off":
-        return .dropletAction(try DropletAction(from: decoder))
+            try .dropletAction(DropletAction(from: decoder))
         case "power_on":
-        return .dropletAction(try DropletAction(from: decoder))
+            try .dropletAction(DropletAction(from: decoder))
         case "password_reset":
-        return .dropletAction(try DropletAction(from: decoder))
+            try .dropletAction(DropletAction(from: decoder))
         case "enable_ipv6":
-        return .dropletAction(try DropletAction(from: decoder))
-        case "change_backup_policy": return .dropletActionChangeBackupPolicy(try DropletActionChangeBackupPolicy(from: decoder))
-        case "restore": return .dropletActionRestore(try DropletActionRestore(from: decoder))
-        case "resize": return .dropletActionResize(try DropletActionResize(from: decoder))
-        case "rebuild": return .dropletActionRebuild(try DropletActionRebuild(from: decoder))
-        case "rename": return .dropletActionRename(try DropletActionRename(from: decoder))
-        case "change_kernel": return .dropletActionChangeKernel(try DropletActionChangeKernel(from: decoder))
-        case "snapshot": return .dropletActionSnapshot(try DropletActionSnapshot(from: decoder))
-        default: return nil
+            try .dropletAction(DropletAction(from: decoder))
+        case "change_backup_policy": try .dropletActionChangeBackupPolicy(
+                DropletActionChangeBackupPolicy(from: decoder)
+            )
+        case "restore": try .dropletActionRestore(DropletActionRestore(from: decoder))
+        case "resize": try .dropletActionResize(DropletActionResize(from: decoder))
+        case "rebuild": try .dropletActionRebuild(DropletActionRebuild(from: decoder))
+        case "rename": try .dropletActionRename(DropletActionRename(from: decoder))
+        case "change_kernel": try .dropletActionChangeKernel(DropletActionChangeKernel(from: decoder))
+        case "snapshot": try .dropletActionSnapshot(DropletActionSnapshot(from: decoder))
+        default: nil
         }
     }
 }
 
 extension DropletActionsPostRequestBody {
     static func decodeUntaggedGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(DropletActionEnableBackupsRequest.self) { return .dropletActionEnableBackupsRequest(value) }
+        if let value = try? container
+            .decode(DropletActionEnableBackupsRequest.self) {
+            return .dropletActionEnableBackupsRequest(value)
+        }
         return nil
     }
 }
@@ -116,7 +129,6 @@ public indirect enum DropletActionsPostByTagRequestBody {
 }
 
 extension DropletActionsPostByTagRequestBody: Codable {
-
     private enum CodingKeys: String, CodingKey {
         case discriminator = "type"
     }
@@ -124,12 +136,16 @@ extension DropletActionsPostByTagRequestBody: Codable {
     public init(from decoder: Decoder) throws {
         let tagged = try decoder.container(keyedBy: CodingKeys.self)
         let discriminator = try tagged.decode(String.self, forKey: .discriminator)
-        if let value = try Self.decodeGroup1(discriminator, from: decoder) { self = value; return }
+        if let value = try Self.decodeGroup1(discriminator, from: decoder) {
+            self = value; return
+        }
         self = try .unknown(tag: discriminator, raw: JSONValue(from: decoder))
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
         if case let .unknown(_, raw) = self {
             var container = encoder.singleValueContainer()
             try container.encode(raw)
@@ -141,21 +157,21 @@ extension DropletActionsPostByTagRequestBody {
     static func decodeGroup1(_ discriminator: String, from decoder: Decoder) throws -> Self? {
         switch discriminator {
         case "enable_backups":
-        return .dropletAction(try DropletAction(from: decoder))
+            try .dropletAction(DropletAction(from: decoder))
         case "disable_backups":
-        return .dropletAction(try DropletAction(from: decoder))
+            try .dropletAction(DropletAction(from: decoder))
         case "power_cycle":
-        return .dropletAction(try DropletAction(from: decoder))
+            try .dropletAction(DropletAction(from: decoder))
         case "shutdown":
-        return .dropletAction(try DropletAction(from: decoder))
+            try .dropletAction(DropletAction(from: decoder))
         case "power_off":
-        return .dropletAction(try DropletAction(from: decoder))
+            try .dropletAction(DropletAction(from: decoder))
         case "power_on":
-        return .dropletAction(try DropletAction(from: decoder))
+            try .dropletAction(DropletAction(from: decoder))
         case "enable_ipv6":
-        return .dropletAction(try DropletAction(from: decoder))
-        case "snapshot": return .dropletActionSnapshot(try DropletActionSnapshot(from: decoder))
-        default: return nil
+            try .dropletAction(DropletAction(from: decoder))
+        case "snapshot": try .dropletActionSnapshot(DropletActionSnapshot(from: decoder))
+        default: nil
         }
     }
 }

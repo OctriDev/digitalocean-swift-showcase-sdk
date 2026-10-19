@@ -7,8 +7,8 @@ import XCTest
 
 let sdkMethodFixture1714Expected = String(
     data: Data(base64Encoded: [
-    "eyJpZCI6InVuYXV0aG9yaXplZCIsIm1lc3NhZ2UiOiJVbmFibGUgdG8gYXV0aGVudGljYXRlIHlvdS4i",
-    "fQ==",
+        "eyJpZCI6InVuYXV0aG9yaXplZCIsIm1lc3NhZ2UiOiJVbmFibGUgdG8gYXV0aGVudGljYXRlIHlvdS4i",
+        "fQ==",
     ].joined())!,
     encoding: .utf8
 )!

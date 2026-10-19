@@ -3,7 +3,7 @@
 
 import Foundation
 
-// SharedLink domain models
+/// SharedLink domain models
 /// Typed representation of the `LinkToLastPage` API schema.
 public struct LinkToLastPage: Codable {
     /// URI of the last page of the results.
@@ -15,19 +15,19 @@ public struct LinkToLastPage: Codable {
     }
 
     init() {
-        self.last = nil
+        last = nil
     }
 }
 
-extension LinkToLastPage {
-    public init(from decoder: Decoder) throws {
+public extension LinkToLastPage {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.last = try container.sdkDecodeIfPresent(.last)
+        last = try container.sdkDecodeIfPresent(.last)
     }
 }
 
-extension LinkToLastPage {
-    public init(last: String? = nil) {
+public extension LinkToLastPage {
+    init(last: String? = nil) {
         self.init()
         self.last = last
     }
@@ -44,19 +44,19 @@ public struct LinkToNextPage: Codable {
     }
 
     init() {
-        self.next = nil
+        next = nil
     }
 }
 
-extension LinkToNextPage {
-    public init(from decoder: Decoder) throws {
+public extension LinkToNextPage {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.next = try container.sdkDecodeIfPresent(.next)
+        next = try container.sdkDecodeIfPresent(.next)
     }
 }
 
-extension LinkToNextPage {
-    public init(next: String? = nil) {
+public extension LinkToNextPage {
+    init(next: String? = nil) {
         self.init()
         self.next = next
     }
@@ -73,19 +73,19 @@ public struct LinkToFirstPage: Codable {
     }
 
     init() {
-        self.first = nil
+        first = nil
     }
 }
 
-extension LinkToFirstPage {
-    public init(from decoder: Decoder) throws {
+public extension LinkToFirstPage {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.first = try container.sdkDecodeIfPresent(.first)
+        first = try container.sdkDecodeIfPresent(.first)
     }
 }
 
-extension LinkToFirstPage {
-    public init(first: String? = nil) {
+public extension LinkToFirstPage {
+    init(first: String? = nil) {
         self.init()
         self.first = first
     }
@@ -102,19 +102,19 @@ public struct LinkToPrevPage: Codable {
     }
 
     init() {
-        self.prev = nil
+        prev = nil
     }
 }
 
-extension LinkToPrevPage {
-    public init(from decoder: Decoder) throws {
+public extension LinkToPrevPage {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.prev = try container.sdkDecodeIfPresent(.prev)
+        prev = try container.sdkDecodeIfPresent(.prev)
     }
 }
 
-extension LinkToPrevPage {
-    public init(prev: String? = nil) {
+public extension LinkToPrevPage {
+    init(prev: String? = nil) {
         self.init()
         self.prev = prev
     }

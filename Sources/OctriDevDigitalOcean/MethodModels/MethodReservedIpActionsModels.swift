@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-// Canonical reservedIpActions operation model declarations
+/// Canonical reservedIpActions operation model declarations
 public indirect enum ReservedIPsActionsPostRequestBody {
     case reservedIpActionUnassign(ReservedIpActionUnassign)
     case reservedIpActionAssign(ReservedIpActionAssign)
@@ -16,7 +16,6 @@ public indirect enum ReservedIPsActionsPostRequestBody {
 }
 
 extension ReservedIPsActionsPostRequestBody: Codable {
-
     private enum CodingKeys: String, CodingKey {
         case discriminator = "type"
     }
@@ -24,12 +23,16 @@ extension ReservedIPsActionsPostRequestBody: Codable {
     public init(from decoder: Decoder) throws {
         let tagged = try decoder.container(keyedBy: CodingKeys.self)
         let discriminator = try tagged.decode(String.self, forKey: .discriminator)
-        if let value = try Self.decodeGroup1(discriminator, from: decoder) { self = value; return }
+        if let value = try Self.decodeGroup1(discriminator, from: decoder) {
+            self = value; return
+        }
         self = try .unknown(tag: discriminator, raw: JSONValue(from: decoder))
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
         if case let .unknown(_, raw) = self {
             var container = encoder.singleValueContainer()
             try container.encode(raw)
@@ -40,9 +43,9 @@ extension ReservedIPsActionsPostRequestBody: Codable {
 extension ReservedIPsActionsPostRequestBody {
     static func decodeGroup1(_ discriminator: String, from decoder: Decoder) throws -> Self? {
         switch discriminator {
-        case "unassign": return .reservedIpActionUnassign(try ReservedIpActionUnassign(from: decoder))
-        case "assign": return .reservedIpActionAssign(try ReservedIpActionAssign(from: decoder))
-        default: return nil
+        case "unassign": try .reservedIpActionUnassign(ReservedIpActionUnassign(from: decoder))
+        case "assign": try .reservedIpActionAssign(ReservedIpActionAssign(from: decoder))
+        default: nil
         }
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Functions domain models
+/// Functions domain models
 public struct ListTriggersVariant0: Codable {
     public var triggers: [TriggerInfo]?
 
@@ -12,19 +12,19 @@ public struct ListTriggersVariant0: Codable {
     }
 
     init() {
-        self.triggers = nil
+        triggers = nil
     }
 }
 
-extension ListTriggersVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension ListTriggersVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.triggers = try container.sdkDecodeIfPresent(.triggers)
+        triggers = try container.sdkDecodeIfPresent(.triggers)
     }
 }
 
-extension ListTriggersVariant0 {
-    public init(triggers: [TriggerInfo]? = nil) {
+public extension ListTriggersVariant0 {
+    init(triggers: [TriggerInfo]? = nil) {
         self.init()
         self.triggers = triggers
     }
@@ -40,19 +40,19 @@ public struct AccessKeyUpdate: Codable {
     }
 
     init() {
-        self.accessKey = nil
+        accessKey = nil
     }
 }
 
-extension AccessKeyUpdate {
-    public init(from decoder: Decoder) throws {
+public extension AccessKeyUpdate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.accessKey = try container.sdkDecodeIfPresent(.accessKey)
+        accessKey = try container.sdkDecodeIfPresent(.accessKey)
     }
 }
 
-extension AccessKeyUpdate {
-    public init(accessKey: AccessKey? = nil) {
+public extension AccessKeyUpdate {
+    init(accessKey: AccessKey? = nil) {
         self.init()
         self.accessKey = accessKey
     }
@@ -71,20 +71,20 @@ public struct AccessKeyList: Codable {
     }
 
     init() {
-        (self.accessKeys, self.count) = (nil, nil)
+        (accessKeys, count) = (nil, nil)
     }
 }
 
-extension AccessKeyList {
-    public init(from decoder: Decoder) throws {
+public extension AccessKeyList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.accessKeys = try container.sdkDecodeIfPresent(.accessKeys)
-        self.count = try container.sdkDecodeIfPresent(.count)
+        accessKeys = try container.sdkDecodeIfPresent(.accessKeys)
+        count = try container.sdkDecodeIfPresent(.count)
     }
 }
 
-extension AccessKeyList {
-    public init(accessKeys: [AccessKey]? = nil, count: Int? = nil) {
+public extension AccessKeyList {
+    init(accessKeys: [AccessKey]? = nil, count: Int? = nil) {
         self.init()
         (self.accessKeys, self.count) = (accessKeys, count)
     }
@@ -115,37 +115,59 @@ public struct CreateTrigger: Codable {
         case scheduledDetails = "scheduled_details"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateTrigger {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.function) else {
-            throw SdkValidationError(field: "function", code: "required", message: "Validation failed for 'function': value is required")
-        }
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.isEnabled) else {
-            throw SdkValidationError(field: "is_enabled", code: "required", message: "Validation failed for 'is_enabled': value is required")
-        }
-        guard container.contains(.scheduledDetails) else {
-            throw SdkValidationError(field: "scheduled_details", code: "required", message: "Validation failed for 'scheduled_details': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.function = try container.sdkDecodeRequired(.function)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.isEnabled = try container.sdkDecodeRequired(.isEnabled)
-        self.scheduledDetails = try container.sdkDecodeRequired(.scheduledDetails)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateTrigger {
-    public init(name: String, function: String, type: String, isEnabled: Bool, scheduledDetails: ScheduledDetails) {
+public extension CreateTrigger {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.function) else {
+            throw SdkValidationError(
+                field: "function",
+                code: "required",
+                message: "Validation failed for 'function': value is required"
+            )
+        }
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.isEnabled) else {
+            throw SdkValidationError(
+                field: "is_enabled",
+                code: "required",
+                message: "Validation failed for 'is_enabled': value is required"
+            )
+        }
+        guard container.contains(.scheduledDetails) else {
+            throw SdkValidationError(
+                field: "scheduled_details",
+                code: "required",
+                message: "Validation failed for 'scheduled_details': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        function = try container.sdkDecodeRequired(.function)
+        type = try container.sdkDecodeRequired(.type)
+        isEnabled = try container.sdkDecodeRequired(.isEnabled)
+        scheduledDetails = try container.sdkDecodeRequired(.scheduledDetails)
+    }
+}
+
+public extension CreateTrigger {
+    init(name: String, function: String, type: String, isEnabled: Bool, scheduledDetails: ScheduledDetails) {
         (self.name, self.function) = (name, function)
         (self.type, self.isEnabled) = (type, isEnabled)
         self.scheduledDetails = scheduledDetails
@@ -162,19 +184,19 @@ public struct AccessKeyCreate: Codable {
     }
 
     init() {
-        self.accessKey = nil
+        accessKey = nil
     }
 }
 
-extension AccessKeyCreate {
-    public init(from decoder: Decoder) throws {
+public extension AccessKeyCreate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.accessKey = try container.sdkDecodeIfPresent(.accessKey)
+        accessKey = try container.sdkDecodeIfPresent(.accessKey)
     }
 }
 
-extension AccessKeyCreate {
-    public init(accessKey: AccessKeyCreateResponse? = nil) {
+public extension AccessKeyCreate {
+    init(accessKey: AccessKeyCreateResponse? = nil) {
         self.init()
         self.accessKey = accessKey
     }
@@ -188,19 +210,19 @@ public struct ListNamespacesVariant0: Codable {
     }
 
     init() {
-        self.namespaces = nil
+        namespaces = nil
     }
 }
 
-extension ListNamespacesVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension ListNamespacesVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.namespaces = try container.sdkDecodeIfPresent(.namespaces)
+        namespaces = try container.sdkDecodeIfPresent(.namespaces)
     }
 }
 
-extension ListNamespacesVariant0 {
-    public init(namespaces: [NamespaceInfo]? = nil) {
+public extension ListNamespacesVariant0 {
+    init(namespaces: [NamespaceInfo]? = nil) {
         self.init()
         self.namespaces = namespaces
     }
@@ -216,19 +238,19 @@ public struct TriggerResponse: Codable {
     }
 
     init() {
-        self.trigger = nil
+        trigger = nil
     }
 }
 
-extension TriggerResponse {
-    public init(from decoder: Decoder) throws {
+public extension TriggerResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.trigger = try container.sdkDecodeIfPresent(.trigger)
+        trigger = try container.sdkDecodeIfPresent(.trigger)
     }
 }
 
-extension TriggerResponse {
-    public init(trigger: TriggerInfo? = nil) {
+public extension TriggerResponse {
+    init(trigger: TriggerInfo? = nil) {
         self.init()
         self.trigger = trigger
     }
@@ -249,22 +271,28 @@ public struct AccessKeyCreateRequest: Codable {
         case expiresIn = "expires_in"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AccessKeyCreateRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.expiresIn = try container.sdkDecodeIfPresent(.expiresIn)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AccessKeyCreateRequest {
-    public init(name: String, expiresIn: String? = nil) {
+public extension AccessKeyCreateRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        expiresIn = try container.sdkDecodeIfPresent(.expiresIn)
+    }
+}
+
+public extension AccessKeyCreateRequest {
+    init(name: String, expiresIn: String? = nil) {
         (self.name, self.expiresIn) = (name, expiresIn)
     }
 }
@@ -279,19 +307,19 @@ public struct NamespaceCreated: Codable {
     }
 
     init() {
-        self.namespace = nil
+        namespace = nil
     }
 }
 
-extension NamespaceCreated {
-    public init(from decoder: Decoder) throws {
+public extension NamespaceCreated {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.namespace = try container.sdkDecodeIfPresent(.namespace)
+        namespace = try container.sdkDecodeIfPresent(.namespace)
     }
 }
 
-extension NamespaceCreated {
-    public init(namespace: NamespaceInfo? = nil) {
+public extension NamespaceCreated {
+    init(namespace: NamespaceInfo? = nil) {
         self.init()
         self.namespace = namespace
     }
@@ -324,32 +352,38 @@ public struct AccessKey: Codable {
     }
 
     init() {
-        (self.id, self.name, self.expiresAt, self.createdAt, self.updatedAt) = (nil, nil, nil, nil, nil)
+        (id, name, expiresAt, createdAt, updatedAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension AccessKey {
-    public init(from decoder: Decoder) throws {
+public extension AccessKey {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = self.expiresAt {
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension AccessKey {
-    public init(id: String? = nil, name: String? = nil, expiresAt: Date? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) throws {
+public extension AccessKey {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        expiresAt: Date? = nil,
+        createdAt: Date? = nil,
+        updatedAt: Date? = nil
+    ) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.expiresAt, self.createdAt) = (expiresAt, createdAt)
@@ -407,27 +441,36 @@ public struct NamespaceInfo: Codable {
     }
 
     init() {
-        (self.apiHost, self.namespace, self.createdAt, self.updatedAt, self.label) = (nil, nil, nil, nil, nil)
-        (self.region, self.uuid, self.key) = (nil, nil, nil)
+        (apiHost, namespace, createdAt, updatedAt, label) = (nil, nil, nil, nil, nil)
+        (region, uuid, key) = (nil, nil, nil)
     }
 }
 
-extension NamespaceInfo {
-    public init(from decoder: Decoder) throws {
+public extension NamespaceInfo {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiHost = try container.sdkDecodeIfPresent(.apiHost)
-        self.namespace = try container.sdkDecodeIfPresent(.namespace)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.label = try container.sdkDecodeIfPresent(.label)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
-        self.key = try container.sdkDecodeIfPresent(.key)
+        apiHost = try container.sdkDecodeIfPresent(.apiHost)
+        namespace = try container.sdkDecodeIfPresent(.namespace)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        label = try container.sdkDecodeIfPresent(.label)
+        region = try container.sdkDecodeIfPresent(.region)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
+        key = try container.sdkDecodeIfPresent(.key)
     }
 }
 
-extension NamespaceInfo {
-    public init(apiHost: String? = nil, namespace: String? = nil, createdAt: String? = nil, updatedAt: String? = nil, label: String? = nil, region: String? = nil, uuid: String? = nil, key: String? = nil) {
+public extension NamespaceInfo {
+    init(
+        apiHost: String? = nil,
+        namespace: String? = nil,
+        createdAt: String? = nil,
+        updatedAt: String? = nil,
+        label: String? = nil,
+        region: String? = nil,
+        uuid: String? = nil,
+        key: String? = nil
+    ) {
         self.init()
         (self.apiHost, self.namespace) = (apiHost, namespace)
         (self.createdAt, self.updatedAt) = (createdAt, updatedAt)
@@ -445,19 +488,19 @@ public struct ListNamespaces: Codable {
     }
 
     init() {
-        self.namespaces = nil
+        namespaces = nil
     }
 }
 
-extension ListNamespaces {
-    public init(from decoder: Decoder) throws {
+public extension ListNamespaces {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.namespaces = try container.sdkDecodeIfPresent(.namespaces)
+        namespaces = try container.sdkDecodeIfPresent(.namespaces)
     }
 }
 
-extension ListNamespaces {
-    public init(namespaces: [NamespaceInfo]? = nil) {
+public extension ListNamespaces {
+    init(namespaces: [NamespaceInfo]? = nil) {
         self.init()
         self.namespaces = namespaces
     }
@@ -474,19 +517,19 @@ public struct ScheduledDetailsBody: Codable {
     }
 
     init() {
-        self.name = nil
+        name = nil
     }
 }
 
-extension ScheduledDetailsBody {
-    public init(from decoder: Decoder) throws {
+public extension ScheduledDetailsBody {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ScheduledDetailsBody {
-    public init(name: String? = nil) {
+public extension ScheduledDetailsBody {
+    init(name: String? = nil) {
         self.init()
         self.name = name
     }
@@ -506,20 +549,20 @@ public struct UpdateTrigger: Codable {
     }
 
     init() {
-        (self.isEnabled, self.scheduledDetails) = (nil, nil)
+        (isEnabled, scheduledDetails) = (nil, nil)
     }
 }
 
-extension UpdateTrigger {
-    public init(from decoder: Decoder) throws {
+public extension UpdateTrigger {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.isEnabled = try container.sdkDecodeIfPresent(.isEnabled)
-        self.scheduledDetails = try container.sdkDecodeIfPresent(.scheduledDetails)
+        isEnabled = try container.sdkDecodeIfPresent(.isEnabled)
+        scheduledDetails = try container.sdkDecodeIfPresent(.scheduledDetails)
     }
 }
 
-extension UpdateTrigger {
-    public init(isEnabled: Bool? = nil, scheduledDetails: ScheduledDetails? = nil) {
+public extension UpdateTrigger {
+    init(isEnabled: Bool? = nil, scheduledDetails: ScheduledDetails? = nil) {
         self.init()
         (self.isEnabled, self.scheduledDetails) = (isEnabled, scheduledDetails)
     }
@@ -539,25 +582,35 @@ public struct CreateNamespace: Codable {
         case label
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateNamespace {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.region) else {
-            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
-        }
-        guard container.contains(.label) else {
-            throw SdkValidationError(field: "label", code: "required", message: "Validation failed for 'label': value is required")
-        }
-        self.region = try container.sdkDecodeRequired(.region)
-        self.label = try container.sdkDecodeRequired(.label)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateNamespace {
-    public init(region: String, label: String) {
+public extension CreateNamespace {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.region) else {
+            throw SdkValidationError(
+                field: "region",
+                code: "required",
+                message: "Validation failed for 'region': value is required"
+            )
+        }
+        guard container.contains(.label) else {
+            throw SdkValidationError(
+                field: "label",
+                code: "required",
+                message: "Validation failed for 'label': value is required"
+            )
+        }
+        region = try container.sdkDecodeRequired(.region)
+        label = try container.sdkDecodeRequired(.label)
+    }
+}
+
+public extension CreateNamespace {
+    init(region: String, label: String) {
         (self.region, self.label) = (region, label)
     }
 }

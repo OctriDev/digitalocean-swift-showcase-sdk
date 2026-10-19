@@ -6,7 +6,7 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension SecurityMethods {
+public extension SecurityMethods {
     /// To get the latest CSPM scan, send a GET request to `/v2/security/scans/latest`.
     ///
     /// - Parameters:
@@ -14,30 +14,73 @@ extension SecurityMethods {
     /// - page: Which 'page' of paginated results to return.
     /// - severity: The finding severity level to include.
     /// - type: The finding type to include.
-    public static func securityGetLatestScan(config: ClientConfig, perPage: Int? = nil, page: Int? = nil, severity: SecurityGetLatestScanParameter? = nil, type: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ScanResponse {
-        if let perPage = perPage {
+    static func securityGetLatestScan(
+        config: ClientConfig,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        severity: SecurityGetLatestScanParameter? = nil,
+        type: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ScanResponse {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page = page {
+        if let page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try (await sdkRequest("GET", "/v2/security/scans/latest", config: config, query: [
-            SdkQueryParameter("per_page", value: perPage),
-            SdkQueryParameter("page", value: page),
-            SdkQueryParameter("severity", value: severity),
-            SdkQueryParameter("type", value: type),
-        ], decoder: .json, operationId: "security_get_latest_scan", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/v2/security/scans/latest",
+            config: config,
+            query: [
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("page", value: page),
+                SdkQueryParameter("severity", value: severity),
+                SdkQueryParameter("type", value: type),
+            ],
+            decoder: .json,
+            operationId: "security_get_latest_scan",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To mark a scan finding as a false positive, send a POST request to `/v2/security/scans/rules` to create a new scan rule.
+    /// To mark a scan finding as a false positive, send a POST request to `/v2/security/scans/rules` to create a new
+    /// scan rule.
     ///
     /// - Parameters:
     /// - resource: The URN of a resource to exclude from future scans.
-    public static func securityCreateScanRule(config: ClientConfig, resource: String? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func securityCreateScanRule(
+        config: ClientConfig,
+        resource: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         let requestBody = SecurityCreateScanRuleRequestBody(resource: resource)
 
-        return try (await sdkRequest("POST", "/v2/security/scans/rules", config: config, body: requestBody, decoder: .empty, operationId: "security_create_scan_rule", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/security/scans/rules",
+            config: config,
+            body: requestBody,
+            decoder: .empty,
+            operationId: "security_create_scan_rule",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

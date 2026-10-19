@@ -6,14 +6,33 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension KubernetesMethods {
-    /// To show information about an existing Kubernetes cluster, send a GET request to `/v2/kubernetes/clusters/$K8S_CLUSTER_ID`.
+public extension KubernetesMethods {
+    /// To show information about an existing Kubernetes cluster, send a GET request to
+    /// `/v2/kubernetes/clusters/$K8S_CLUSTER_ID`.
     ///
     /// - Parameters:
     /// - clusterId: A unique ID that can be used to reference a Kubernetes cluster.
-    public static func kubernetesGetCluster(config: ClientConfig, clusterId: String, requestOptions: RequestOptions? = nil) async throws -> ExistingCluster {
+    static func kubernetesGetCluster(
+        config: ClientConfig,
+        clusterId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExistingCluster {
         try sdkValidateUuid("cluster_id", clusterId)
 
-        return try (await sdkRequest("GET", ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(clusterId))].joined(), config: config, decoder: .json, operationId: "kubernetes_get_cluster", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(clusterId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "kubernetes_get_cluster",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

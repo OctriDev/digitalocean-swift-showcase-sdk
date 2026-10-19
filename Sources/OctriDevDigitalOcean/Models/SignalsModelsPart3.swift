@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Signals domain models
+/// Signals domain models
 /// Optional object value serialized in the `page_info` wire field.
 public struct ListExportsResponsePageInfo: Codable {
     /// Whether there are more results after this page.
@@ -14,19 +14,19 @@ public struct ListExportsResponsePageInfo: Codable {
     }
 
     init() {
-        self.hasNextPage = nil
+        hasNextPage = nil
     }
 }
 
-extension ListExportsResponsePageInfo {
-    public init(from decoder: Decoder) throws {
+public extension ListExportsResponsePageInfo {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.hasNextPage = try container.sdkDecodeIfPresent(.hasNextPage)
+        hasNextPage = try container.sdkDecodeIfPresent(.hasNextPage)
     }
 }
 
-extension ListExportsResponsePageInfo {
-    public init(hasNextPage: Bool? = nil) {
+public extension ListExportsResponsePageInfo {
+    init(hasNextPage: Bool? = nil) {
         self.init()
         self.hasNextPage = hasNextPage
     }
@@ -42,19 +42,19 @@ public struct ListSessionsResponseResponsePageInfo: Codable {
     }
 
     init() {
-        self.hasNextPage = nil
+        hasNextPage = nil
     }
 }
 
-extension ListSessionsResponseResponsePageInfo {
-    public init(from decoder: Decoder) throws {
+public extension ListSessionsResponseResponsePageInfo {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.hasNextPage = try container.sdkDecodeIfPresent(.hasNextPage)
+        hasNextPage = try container.sdkDecodeIfPresent(.hasNextPage)
     }
 }
 
-extension ListSessionsResponseResponsePageInfo {
-    public init(hasNextPage: Bool? = nil) {
+public extension ListSessionsResponseResponsePageInfo {
+    init(hasNextPage: Bool? = nil) {
         self.init()
         self.hasNextPage = hasNextPage
     }
@@ -69,21 +69,27 @@ public struct ExportOptions: Codable {
         case filters
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ExportOptions {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.filters) else {
-            throw SdkValidationError(field: "filters", code: "required", message: "Validation failed for 'filters': value is required")
-        }
-        self.filters = try container.sdkDecodeRequired(.filters)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ExportOptions {
-    public init(filters: ExportOptionsFilters) {
+public extension ExportOptions {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.filters) else {
+            throw SdkValidationError(
+                field: "filters",
+                code: "required",
+                message: "Validation failed for 'filters': value is required"
+            )
+        }
+        filters = try container.sdkDecodeRequired(.filters)
+    }
+}
+
+public extension ExportOptions {
+    init(filters: ExportOptionsFilters) {
         self.filters = filters
     }
 }
@@ -98,21 +104,27 @@ public struct UpdateTeamConsentResponse: Codable {
         case consent
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension UpdateTeamConsentResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.consent) else {
-            throw SdkValidationError(field: "consent", code: "required", message: "Validation failed for 'consent': value is required")
-        }
-        self.consent = try container.sdkDecodeRequired(.consent)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension UpdateTeamConsentResponse {
-    public init(consent: ConsentRecord) {
+public extension UpdateTeamConsentResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.consent) else {
+            throw SdkValidationError(
+                field: "consent",
+                code: "required",
+                message: "Validation failed for 'consent': value is required"
+            )
+        }
+        consent = try container.sdkDecodeRequired(.consent)
+    }
+}
+
+public extension UpdateTeamConsentResponse {
+    init(consent: ConsentRecord) {
         self.consent = consent
     }
 }
@@ -123,13 +135,16 @@ extension UpdateTeamConsentResponse {
 public struct CreateDeletionRequestType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let agent = CreateDeletionRequestType(rawValue: "agent")
     public static let inference = CreateDeletionRequestType(rawValue: "inference")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -145,13 +160,16 @@ public struct CreateDeletionRequestType: RawRepresentable, Hashable, Codable, Se
 public struct CreateExportRequestType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let agent = CreateExportRequestType(rawValue: "agent")
     public static let inference = CreateExportRequestType(rawValue: "inference")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -165,13 +183,16 @@ public struct CreateExportRequestType: RawRepresentable, Hashable, Codable, Send
 public struct ExportJobType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let agent = ExportJobType(rawValue: "agent")
     public static let inference = ExportJobType(rawValue: "inference")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -184,12 +205,15 @@ public struct ExportJobType: RawRepresentable, Hashable, Codable, Sendable, SdkW
 public struct AgentConsentSource: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let agent = AgentConsentSource(rawValue: "agent")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -202,7 +226,10 @@ public struct AgentConsentSource: RawRepresentable, Hashable, Codable, Sendable,
 public struct DeletionJobStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let queued = DeletionJobStatus(rawValue: "queued")
     public static let running = DeletionJobStatus(rawValue: "running")
     public static let complete = DeletionJobStatus(rawValue: "complete")
@@ -210,7 +237,7 @@ public struct DeletionJobStatus: RawRepresentable, Hashable, Codable, Sendable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -224,13 +251,16 @@ public struct DeletionJobStatus: RawRepresentable, Hashable, Codable, Sendable, 
 public struct DeletionJobType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let agent = DeletionJobType(rawValue: "agent")
     public static let inference = DeletionJobType(rawValue: "inference")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -243,13 +273,16 @@ public struct DeletionJobType: RawRepresentable, Hashable, Codable, Sendable, Sd
 public struct ListConsentsSource: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let agent = ListConsentsSource(rawValue: "agent")
     public static let inference = ListConsentsSource(rawValue: "inference")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -262,7 +295,10 @@ public struct ListConsentsSource: RawRepresentable, Hashable, Codable, Sendable,
 public struct ExportJobStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pending = ExportJobStatus(rawValue: "pending")
     public static let processing = ExportJobStatus(rawValue: "processing")
     public static let complete = ExportJobStatus(rawValue: "complete")
@@ -270,7 +306,7 @@ public struct ExportJobStatus: RawRepresentable, Hashable, Codable, Sendable, Sd
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -284,13 +320,16 @@ public struct ExportJobStatus: RawRepresentable, Hashable, Codable, Sendable, Sd
 public struct ConsentRecordSource: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let agent = ConsentRecordSource(rawValue: "agent")
     public static let inference = ConsentRecordSource(rawValue: "inference")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

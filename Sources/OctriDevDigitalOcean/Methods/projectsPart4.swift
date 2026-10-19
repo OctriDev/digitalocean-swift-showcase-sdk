@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ProjectsMethods {
-    /// To update you default project, send a PUT request to `/v2/projects/default`. All of the following attributes must be sent.
+public extension ProjectsMethods {
+    /// To update you default project, send a PUT request to `/v2/projects/default`. All of the following attributes
+    /// must be sent.
     ///
     /// - Parameters:
     /// - name: The human-readable name for the project. The maximum length is 175
@@ -24,20 +25,69 @@ extension ProjectsMethods {
     /// - environment: The environment of the project's resources.
     /// - isDefault: If true, all resources will be added to this project if no
     ///   project is specified.
-    public static func projectsUpdateDefault(config: ClientConfig, name: String, description: String, purpose: String, environment: ProjectsUpdateDefaultRequestBodyEnvironment, isDefault: Bool, requestOptions: RequestOptions? = nil) async throws -> ExistingProject {
+    static func projectsUpdateDefault(
+        config: ClientConfig,
+        name: String,
+        description: String,
+        purpose: String,
+        environment: ProjectsUpdateDefaultRequestBodyEnvironment,
+        isDefault: Bool,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExistingProject {
         try validateLength("name", name, max: 175)
 
         try validateLength("description", description, max: 255)
 
         try validateLength("purpose", purpose, max: 255)
 
-        let requestBody = ProjectsUpdateDefaultRequestBody(name: name, description: description, purpose: purpose, environment: environment, isDefault: isDefault)
+        let requestBody = ProjectsUpdateDefaultRequestBody(
+            name: name,
+            description: description,
+            purpose: purpose,
+            environment: environment,
+            isDefault: isDefault
+        )
 
-        return try (await sdkRequest("PUT", "/v2/projects/default", config: config, body: requestBody, decoder: .json, operationId: "projects_update_default", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            "/v2/projects/default",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "projects_update_default",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To update only specific attributes of your default project, send a PATCH request to `/v2/projects/default`. At least one of the following attributes needs to be sent.
-    public static func projectsPatchDefault(config: ClientConfig, body: ProjectRequest, requestOptions: RequestOptions? = nil) async throws -> ExistingProject {
-        return try (await sdkRequest("PATCH", "/v2/projects/default", config: config, rawBody: (try sdkEncodeBody(body, contentType: "application/json")), decoder: .json, operationId: "projects_patch_default", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    /// To update only specific attributes of your default project, send a PATCH request to `/v2/projects/default`. At
+    /// least one of the following attributes needs to be sent.
+    static func projectsPatchDefault(
+        config: ClientConfig,
+        body: ProjectRequest,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExistingProject {
+        try await (sdkRequest(
+            "PATCH",
+            "/v2/projects/default",
+            config: config,
+            rawBody: sdkEncodeBody(body, contentType: "application/json"),
+            decoder: .json,
+            operationId: "projects_patch_default",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

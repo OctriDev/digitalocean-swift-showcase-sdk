@@ -6,33 +6,81 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension KubernetesMethods {
-    /// This endpoint returns a JSON object . It can be used to programmatically construct Kubernetes clients which cannot parse kubeconfig files. The resulting JSON object contains token-based authentication for clusters supporting it, and certificate-based authentication otherwise. For a list of supported versions and more information, see "[How to Connect to a DigitalOcean Kubernetes Cluster](https://docs.digitalocean.com/products/kubernetes/how-to/connect-to-cluster/)". To retrieve credentials for accessing a Kubernetes cluster, send a GET request to `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/credentials`. Clusters supporting token-based authentication may define an expiration by passing a duration in seconds as a query parameter to `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/credentials?expiry_seconds=$DURATION_IN_SECONDS`. If not set or 0, then the token will have a 7 day expiry. The query parameter has no impact in certificate-based authentication.
+public extension KubernetesMethods {
+    /// This endpoint returns a JSON object . It can be used to programmatically construct Kubernetes clients which
+    /// cannot parse kubeconfig files. The resulting JSON object contains token-based authentication for clusters
+    /// supporting it, and certificate-based authentication otherwise. For a list of supported versions and more
+    /// information, see "[How to Connect to a DigitalOcean Kubernetes
+    /// Cluster](https://docs.digitalocean.com/products/kubernetes/how-to/connect-to-cluster/)". To retrieve credentials
+    /// for accessing a Kubernetes cluster, send a GET request to `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/credentials`.
+    /// Clusters supporting token-based authentication may define an expiration by passing a duration in seconds as a
+    /// query parameter to `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/credentials?expiry_seconds=$DURATION_IN_SECONDS`. If
+    /// not set or 0, then the token will have a 7 day expiry. The query parameter has no impact in certificate-based
+    /// authentication.
     ///
     /// - Parameters:
     /// - clusterId: A unique ID that can be used to reference a Kubernetes cluster.
     /// - expirySeconds: The duration in seconds that the returned Kubernetes
     ///   credentials will be valid. If not set or 0, the credentials will have a 7
     ///   day expiry.
-    public static func kubernetesGetCredentials(config: ClientConfig, clusterId: String, expirySeconds: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> Credentials {
+    static func kubernetesGetCredentials(
+        config: ClientConfig,
+        clusterId: String,
+        expirySeconds: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Credentials {
         try sdkValidateUuid("cluster_id", clusterId)
 
-        if let expirySeconds = expirySeconds {
+        if let expirySeconds {
             try validateRange("expiry_seconds", Double(expirySeconds), min: 0)
         }
 
-        return try (await sdkRequest("GET", ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(clusterId)), "/credentials"].joined(), config: config, query: [
-            SdkQueryParameter("expiry_seconds", value: expirySeconds),
-        ], decoder: .json, operationId: "kubernetes_get_credentials", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(clusterId)), "/credentials"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("expiry_seconds", value: expirySeconds),
+            ],
+            decoder: .json,
+            operationId: "kubernetes_get_credentials",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To determine whether a cluster can be upgraded, and the versions to which it can be upgraded, send a GET request to `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/upgrades`.
+    /// To determine whether a cluster can be upgraded, and the versions to which it can be upgraded, send a GET request
+    /// to `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/upgrades`.
     ///
     /// - Parameters:
     /// - clusterId: A unique ID that can be used to reference a Kubernetes cluster.
-    public static func kubernetesGetAvailableUpgrades(config: ClientConfig, clusterId: String, requestOptions: RequestOptions? = nil) async throws -> AvailableUpgrades {
+    static func kubernetesGetAvailableUpgrades(
+        config: ClientConfig,
+        clusterId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AvailableUpgrades {
         try sdkValidateUuid("cluster_id", clusterId)
 
-        return try (await sdkRequest("GET", ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(clusterId)), "/upgrades"].joined(), config: config, decoder: .json, operationId: "kubernetes_get_availableUpgrades", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(clusterId)), "/upgrades"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "kubernetes_get_availableUpgrades",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

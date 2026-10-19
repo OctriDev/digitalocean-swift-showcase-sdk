@@ -6,8 +6,10 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ActionGatewayMethods {
-    /// Creates a session owned by your team, with a new session URN, and returns the MCP URL an agent connects to. tools selects the tools and toolbelts the session exposes, and policy decides which calls run, need approval, or are refused.
+public extension ActionGatewayMethods {
+    /// Creates a session owned by your team, with a new session URN, and returns the MCP URL an agent connects to.
+    /// tools selects the tools and toolbelts the session exposes, and policy decides which calls run, need approval, or
+    /// are refused.
     ///
     /// - Parameters:
     /// - name: Required human-readable session name.
@@ -30,13 +32,46 @@ extension ActionGatewayMethods {
     ///   identify a VPC owned by the session's team.
     /// - insights: Omitted when the request omitted insights or explicitly sent
     ///   null.
-    public static func sessionsCreate(config: ClientConfig, name: String, actorId: String? = nil, policy: SdkOptional<SessionPolicy>? = nil, tools: [String]? = nil, config2: [String: JSONValue]? = nil, network: SessionNetwork? = nil, insights: SessionInsights? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateSessionResponse {
-        if let actorId = actorId {
+    static func sessionsCreate(
+        config: ClientConfig,
+        name: String,
+        actorId: String? = nil,
+        policy: SdkOptional<SessionPolicy>? = nil,
+        tools: [String]? = nil,
+        config2: [String: JSONValue]? = nil,
+        network: SessionNetwork? = nil,
+        insights: SessionInsights? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateSessionResponse {
+        if let actorId {
             try sdkValidatePattern("actorId", actorId, sdkPatternd665a9126795)
         }
 
-        let requestBody = SessionsCreateRequestBody(name: name, actorId: actorId, policy: policy, tools: tools, config2: config2, network: network, insights: insights)
+        let requestBody = SessionsCreateRequestBody(
+            name: name,
+            actorId: actorId,
+            policy: policy,
+            tools: tools,
+            config2: config2,
+            network: network,
+            insights: insights
+        )
 
-        return try (await sdkRequest("POST", "/v2/action-gateway/sessions", config: config, body: requestBody, decoder: .json, operationId: "sessions_create", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/action-gateway/sessions",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "sessions_create",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

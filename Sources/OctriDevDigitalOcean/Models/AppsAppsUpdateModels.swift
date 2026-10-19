@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AppsAppsUpdate domain models
+/// AppsAppsUpdate domain models
 /// Typed representation of the `AppsUpdateAppRequest` API schema.
 public struct AppsUpdateAppRequest: Codable {
     /// The desired configuration of an application.
@@ -19,22 +19,28 @@ public struct AppsUpdateAppRequest: Codable {
         case updateAllSourceVersions = "update_all_source_versions"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AppsUpdateAppRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.spec) else {
-            throw SdkValidationError(field: "spec", code: "required", message: "Validation failed for 'spec': value is required")
-        }
-        self.spec = try container.sdkDecodeRequired(.spec)
-        self.updateAllSourceVersions = try container.sdkDecodeIfPresent(.updateAllSourceVersions)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AppsUpdateAppRequest {
-    public init(spec: AppSpec, updateAllSourceVersions: Bool? = nil) {
+public extension AppsUpdateAppRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.spec) else {
+            throw SdkValidationError(
+                field: "spec",
+                code: "required",
+                message: "Validation failed for 'spec': value is required"
+            )
+        }
+        spec = try container.sdkDecodeRequired(.spec)
+        updateAllSourceVersions = try container.sdkDecodeIfPresent(.updateAllSourceVersions)
+    }
+}
+
+public extension AppsUpdateAppRequest {
+    init(spec: AppSpec, updateAllSourceVersions: Bool? = nil) {
         (self.spec, self.updateAllSourceVersions) = (spec, updateAllSourceVersions)
     }
 }
@@ -54,22 +60,28 @@ public struct AppsUpdateAppRequestRequest: Codable {
         case updateAllSourceVersions = "update_all_source_versions"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AppsUpdateAppRequestRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.spec) else {
-            throw SdkValidationError(field: "spec", code: "required", message: "Validation failed for 'spec': value is required")
-        }
-        self.spec = try container.sdkDecodeRequired(.spec)
-        self.updateAllSourceVersions = try container.sdkDecodeIfPresent(.updateAllSourceVersions)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AppsUpdateAppRequestRequest {
-    public init(spec: AppSpecRequest, updateAllSourceVersions: Bool? = nil) {
+public extension AppsUpdateAppRequestRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.spec) else {
+            throw SdkValidationError(
+                field: "spec",
+                code: "required",
+                message: "Validation failed for 'spec': value is required"
+            )
+        }
+        spec = try container.sdkDecodeRequired(.spec)
+        updateAllSourceVersions = try container.sdkDecodeIfPresent(.updateAllSourceVersions)
+    }
+}
+
+public extension AppsUpdateAppRequestRequest {
+    init(spec: AppSpecRequest, updateAllSourceVersions: Bool? = nil) {
         (self.spec, self.updateAllSourceVersions) = (spec, updateAllSourceVersions)
     }
 }

@@ -6,44 +6,105 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InsightsMethods {
-    /// To list alert rules for your account, send a GET request to `/v2/insights/alert-rules`. Results are paginated with `page` and `per_page` (default `20`, maximum `200`). Optionally filter by `resource_urn`.
+public extension InsightsMethods {
+    /// To list alert rules for your account, send a GET request to `/v2/insights/alert-rules`. Results are paginated
+    /// with `page` and `per_page` (default `20`, maximum `200`). Optionally filter by `resource_urn`.
     ///
     /// - Parameters:
     /// - page: Which 'page' of paginated results to return.
     /// - perPage: Number of items returned per page
     /// - resourceUrn: Optional filter. When set, only resources associated with
     ///   this resource URN are returned.
-    public static func insightsListAlertRules(config: ClientConfig, page: Int? = nil, perPage: Int? = nil, resourceUrn: String? = nil, requestOptions: RequestOptions? = nil) async throws -> InsightsListAlertRulesResponse {
-        if let page = page {
+    static func insightsListAlertRules(
+        config: ClientConfig,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        resourceUrn: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> InsightsListAlertRulesResponse {
+        if let page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        if let perPage = perPage {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        return try (await sdkRequest("GET", "/v2/insights/alert-rules", config: config, query: [
-            SdkQueryParameter("page", value: page),
-            SdkQueryParameter("per_page", value: perPage),
-            SdkQueryParameter("resource_urn", value: resourceUrn),
-        ], decoder: .json, operationId: "insights_list_alertRules", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/v2/insights/alert-rules",
+            config: config,
+            query: [
+                SdkQueryParameter("page", value: page),
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("resource_urn", value: resourceUrn),
+            ],
+            decoder: .json,
+            operationId: "insights_list_alertRules",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 
-    /// Creates an alert rule for a metric query and its configured thresholds. Provide a `spec` with `name`, `query`, `thresholds`, and at least one `notification_channels` binding; `status` defaults to `ALERT_RULE_STATUS_ACTIVE` and `re_alert_duration` defaults to `RE_ALERT_DURATION_4H` when omitted. Use a dotted OpenTelemetry metric name for `query.metric`, such as `do.droplets.cpu_utilization`.
+    /// Creates an alert rule for a metric query and its configured thresholds. Provide a `spec` with `name`, `query`,
+    /// `thresholds`, and at least one `notification_channels` binding; `status` defaults to `ALERT_RULE_STATUS_ACTIVE`
+    /// and `re_alert_duration` defaults to `RE_ALERT_DURATION_4H` when omitted. Use a dotted OpenTelemetry metric name
+    /// for `query.metric`, such as `do.droplets.cpu_utilization`.
     ///
-    /// To create an alert rule, send a POST request to `/v2/insights/alert-rules` with a `spec` containing `name`, `query`, `thresholds`, and at least one `notification_channels` binding. `status` defaults to `ALERT_RULE_STATUS_ACTIVE` when omitted. `re_alert_duration` defaults to `RE_ALERT_DURATION_4H` when omitted. `query.metric` must be a dotted OpenTelemetry name such as `do.droplets.cpu_utilization`. Underscored Prometheus-style names are rejected with `422 Unprocessable Entity`.
-    public static func insightsCreateAlertRule(config: ClientConfig, body: AlertRuleCreateRequest, requestOptions: RequestOptions? = nil) async throws -> AlertRuleResponse {
-        return try (await sdkRequest("POST", "/v2/insights/alert-rules", config: config, rawBody: (try sdkEncodeBody(body, contentType: "application/json")), decoder: .json, operationId: "insights_create_alertRule", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "422": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    /// To create an alert rule, send a POST request to `/v2/insights/alert-rules` with a `spec` containing `name`,
+    /// `query`, `thresholds`, and at least one `notification_channels` binding. `status` defaults to
+    /// `ALERT_RULE_STATUS_ACTIVE` when omitted. `re_alert_duration` defaults to `RE_ALERT_DURATION_4H` when omitted.
+    /// `query.metric` must be a dotted OpenTelemetry name such as `do.droplets.cpu_utilization`. Underscored
+    /// Prometheus-style names are rejected with `422 Unprocessable Entity`.
+    static func insightsCreateAlertRule(
+        config: ClientConfig,
+        body: AlertRuleCreateRequest,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AlertRuleResponse {
+        try await (sdkRequest(
+            "POST",
+            "/v2/insights/alert-rules",
+            config: config,
+            rawBody: sdkEncodeBody(body, contentType: "application/json"),
+            decoder: .json,
+            operationId: "insights_create_alertRule",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "422": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
     /// To retrieve an alert rule, send a GET request to `/v2/insights/alert-rules/{id}`.
     ///
     /// - Parameters:
     /// - id: A unique identifier for an alert rule.
-    public static func insightsGetAlertRule(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> AlertRuleResponse {
+    static func insightsGetAlertRule(
+        config: ClientConfig,
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AlertRuleResponse {
         try sdkValidateUuid("id", id)
 
-        return try (await sdkRequest("GET", ["/v2/insights/alert-rules/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "insights_get_alertRule", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/insights/alert-rules/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "insights_get_alertRule",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

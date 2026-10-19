@@ -3,12 +3,15 @@
 
 import Foundation
 
-// ActionGateway domain models
+/// ActionGateway domain models
 /// pending, active, revoked, or expired.
 public struct UserConnectionsItemStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pending = UserConnectionsItemStatus(rawValue: "pending")
     public static let active = UserConnectionsItemStatus(rawValue: "active")
     public static let revoked = UserConnectionsItemStatus(rawValue: "revoked")
@@ -16,7 +19,7 @@ public struct UserConnectionsItemStatus: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

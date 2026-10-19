@@ -3,52 +3,82 @@
 
 import Foundation
 
-// Monitoring domain models
+/// Monitoring domain models
 /// Required enumerated value serialized in the `type` wire field.
 public struct AlertPolicyType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let v1InsightsDropletLoad1 = AlertPolicyType(rawValue: "v1/insights/droplet/load_1")
     public static let v1InsightsDropletLoad5 = AlertPolicyType(rawValue: "v1/insights/droplet/load_5")
     public static let v1InsightsDropletLoad15 = AlertPolicyType(rawValue: "v1/insights/droplet/load_15")
-    public static let v1InsightsDropletMemoryUtilizationPercent = AlertPolicyType(rawValue: "v1/insights/droplet/memory_utilization_percent")
-    public static let v1InsightsDropletDiskUtilizationPercent = AlertPolicyType(rawValue: "v1/insights/droplet/disk_utilization_percent")
+    public static let v1InsightsDropletMemoryUtilizationPercent =
+        AlertPolicyType(rawValue: "v1/insights/droplet/memory_utilization_percent")
+    public static let v1InsightsDropletDiskUtilizationPercent =
+        AlertPolicyType(rawValue: "v1/insights/droplet/disk_utilization_percent")
     public static let v1InsightsDropletCpu = AlertPolicyType(rawValue: "v1/insights/droplet/cpu")
     public static let v1InsightsDropletDiskRead = AlertPolicyType(rawValue: "v1/insights/droplet/disk_read")
     public static let v1InsightsDropletDiskWrite = AlertPolicyType(rawValue: "v1/insights/droplet/disk_write")
-    public static let v1InsightsDropletPublicOutboundBandwidth = AlertPolicyType(rawValue: "v1/insights/droplet/public_outbound_bandwidth")
-    public static let v1InsightsDropletPublicInboundBandwidth = AlertPolicyType(rawValue: "v1/insights/droplet/public_inbound_bandwidth")
-    public static let v1InsightsDropletPrivateOutboundBandwidth = AlertPolicyType(rawValue: "v1/insights/droplet/private_outbound_bandwidth")
-    public static let v1InsightsDropletPrivateInboundBandwidth = AlertPolicyType(rawValue: "v1/insights/droplet/private_inbound_bandwidth")
-    public static let v1InsightsLbaasAvgCpuUtilizationPercent = AlertPolicyType(rawValue: "v1/insights/lbaas/avg_cpu_utilization_percent")
-    public static let v1InsightsLbaasConnectionUtilizationPercent = AlertPolicyType(rawValue: "v1/insights/lbaas/connection_utilization_percent")
+    public static let v1InsightsDropletPublicOutboundBandwidth =
+        AlertPolicyType(rawValue: "v1/insights/droplet/public_outbound_bandwidth")
+    public static let v1InsightsDropletPublicInboundBandwidth =
+        AlertPolicyType(rawValue: "v1/insights/droplet/public_inbound_bandwidth")
+    public static let v1InsightsDropletPrivateOutboundBandwidth =
+        AlertPolicyType(rawValue: "v1/insights/droplet/private_outbound_bandwidth")
+    public static let v1InsightsDropletPrivateInboundBandwidth =
+        AlertPolicyType(rawValue: "v1/insights/droplet/private_inbound_bandwidth")
+    public static let v1InsightsLbaasAvgCpuUtilizationPercent =
+        AlertPolicyType(rawValue: "v1/insights/lbaas/avg_cpu_utilization_percent")
+    public static let v1InsightsLbaasConnectionUtilizationPercent =
+        AlertPolicyType(rawValue: "v1/insights/lbaas/connection_utilization_percent")
     public static let v1InsightsLbaasDropletHealth = AlertPolicyType(rawValue: "v1/insights/lbaas/droplet_health")
-    public static let v1InsightsLbaasTlsConnectionsPerSecondUtilizationPercent = AlertPolicyType(rawValue: "v1/insights/lbaas/tls_connections_per_second_utilization_percent")
-    public static let v1InsightsLbaasIncreaseInHttpErrorRatePercentage5xx = AlertPolicyType(rawValue: "v1/insights/lbaas/increase_in_http_error_rate_percentage_5xx")
-    public static let v1InsightsLbaasIncreaseInHttpErrorRatePercentage4xx = AlertPolicyType(rawValue: "v1/insights/lbaas/increase_in_http_error_rate_percentage_4xx")
-    public static let v1InsightsLbaasIncreaseInHttpErrorRateCount5xx = AlertPolicyType(rawValue: "v1/insights/lbaas/increase_in_http_error_rate_count_5xx")
-    public static let v1InsightsLbaasIncreaseInHttpErrorRateCount4xx = AlertPolicyType(rawValue: "v1/insights/lbaas/increase_in_http_error_rate_count_4xx")
-    public static let v1InsightsLbaasHighHttpRequestResponseTime = AlertPolicyType(rawValue: "v1/insights/lbaas/high_http_request_response_time")
-    public static let v1InsightsLbaasHighHttpRequestResponseTime50p = AlertPolicyType(rawValue: "v1/insights/lbaas/high_http_request_response_time_50p")
-    public static let v1InsightsLbaasHighHttpRequestResponseTime95p = AlertPolicyType(rawValue: "v1/insights/lbaas/high_http_request_response_time_95p")
-    public static let v1InsightsLbaasHighHttpRequestResponseTime99p = AlertPolicyType(rawValue: "v1/insights/lbaas/high_http_request_response_time_99p")
+    public static let v1InsightsLbaasTlsConnectionsPerSecondUtilizationPercent =
+        AlertPolicyType(rawValue: "v1/insights/lbaas/tls_connections_per_second_utilization_percent")
+    public static let v1InsightsLbaasIncreaseInHttpErrorRatePercentage5xx =
+        AlertPolicyType(rawValue: "v1/insights/lbaas/increase_in_http_error_rate_percentage_5xx")
+    public static let v1InsightsLbaasIncreaseInHttpErrorRatePercentage4xx =
+        AlertPolicyType(rawValue: "v1/insights/lbaas/increase_in_http_error_rate_percentage_4xx")
+    public static let v1InsightsLbaasIncreaseInHttpErrorRateCount5xx =
+        AlertPolicyType(rawValue: "v1/insights/lbaas/increase_in_http_error_rate_count_5xx")
+    public static let v1InsightsLbaasIncreaseInHttpErrorRateCount4xx =
+        AlertPolicyType(rawValue: "v1/insights/lbaas/increase_in_http_error_rate_count_4xx")
+    public static let v1InsightsLbaasHighHttpRequestResponseTime =
+        AlertPolicyType(rawValue: "v1/insights/lbaas/high_http_request_response_time")
+    public static let v1InsightsLbaasHighHttpRequestResponseTime50p =
+        AlertPolicyType(rawValue: "v1/insights/lbaas/high_http_request_response_time_50p")
+    public static let v1InsightsLbaasHighHttpRequestResponseTime95p =
+        AlertPolicyType(rawValue: "v1/insights/lbaas/high_http_request_response_time_95p")
+    public static let v1InsightsLbaasHighHttpRequestResponseTime99p =
+        AlertPolicyType(rawValue: "v1/insights/lbaas/high_http_request_response_time_99p")
     public static let v1DbaasAlertsLoad15Alerts = AlertPolicyType(rawValue: "v1/dbaas/alerts/load_15_alerts")
-    public static let v1DbaasAlertsMemoryUtilizationAlerts = AlertPolicyType(rawValue: "v1/dbaas/alerts/memory_utilization_alerts")
-    public static let v1DbaasAlertsDiskUtilizationAlerts = AlertPolicyType(rawValue: "v1/dbaas/alerts/disk_utilization_alerts")
+    public static let v1DbaasAlertsMemoryUtilizationAlerts =
+        AlertPolicyType(rawValue: "v1/dbaas/alerts/memory_utilization_alerts")
+    public static let v1DbaasAlertsDiskUtilizationAlerts =
+        AlertPolicyType(rawValue: "v1/dbaas/alerts/disk_utilization_alerts")
     public static let v1DbaasAlertsCpuAlerts = AlertPolicyType(rawValue: "v1/dbaas/alerts/cpu_alerts")
-    public static let v1DropletAutoscaleAlertsCurrentInstances = AlertPolicyType(rawValue: "v1/droplet/autoscale_alerts/current_instances")
-    public static let v1DropletAutoscaleAlertsTargetInstances = AlertPolicyType(rawValue: "v1/droplet/autoscale_alerts/target_instances")
-    public static let v1DropletAutoscaleAlertsCurrentCpuUtilization = AlertPolicyType(rawValue: "v1/droplet/autoscale_alerts/current_cpu_utilization")
-    public static let v1DropletAutoscaleAlertsTargetCpuUtilization = AlertPolicyType(rawValue: "v1/droplet/autoscale_alerts/target_cpu_utilization")
-    public static let v1DropletAutoscaleAlertsCurrentMemoryUtilization = AlertPolicyType(rawValue: "v1/droplet/autoscale_alerts/current_memory_utilization")
-    public static let v1DropletAutoscaleAlertsTargetMemoryUtilization = AlertPolicyType(rawValue: "v1/droplet/autoscale_alerts/target_memory_utilization")
-    public static let v1DropletAutoscaleAlertsScaleUp = AlertPolicyType(rawValue: "v1/droplet/autoscale_alerts/scale_up")
-    public static let v1DropletAutoscaleAlertsScaleDown = AlertPolicyType(rawValue: "v1/droplet/autoscale_alerts/scale_down")
+    public static let v1DropletAutoscaleAlertsCurrentInstances =
+        AlertPolicyType(rawValue: "v1/droplet/autoscale_alerts/current_instances")
+    public static let v1DropletAutoscaleAlertsTargetInstances =
+        AlertPolicyType(rawValue: "v1/droplet/autoscale_alerts/target_instances")
+    public static let v1DropletAutoscaleAlertsCurrentCpuUtilization =
+        AlertPolicyType(rawValue: "v1/droplet/autoscale_alerts/current_cpu_utilization")
+    public static let v1DropletAutoscaleAlertsTargetCpuUtilization =
+        AlertPolicyType(rawValue: "v1/droplet/autoscale_alerts/target_cpu_utilization")
+    public static let v1DropletAutoscaleAlertsCurrentMemoryUtilization =
+        AlertPolicyType(rawValue: "v1/droplet/autoscale_alerts/current_memory_utilization")
+    public static let v1DropletAutoscaleAlertsTargetMemoryUtilization =
+        AlertPolicyType(rawValue: "v1/droplet/autoscale_alerts/target_memory_utilization")
+    public static let v1DropletAutoscaleAlertsScaleUp =
+        AlertPolicyType(rawValue: "v1/droplet/autoscale_alerts/scale_up")
+    public static let v1DropletAutoscaleAlertsScaleDown =
+        AlertPolicyType(rawValue: "v1/droplet/autoscale_alerts/scale_down")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -61,12 +91,15 @@ public struct AlertPolicyType: RawRepresentable, Hashable, Codable, Sendable, Sd
 public struct MetricsDataResultType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let matrix = MetricsDataResultType(rawValue: "matrix")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -80,13 +113,16 @@ public struct MetricsDataResultType: RawRepresentable, Hashable, Codable, Sendab
 public struct DestinationRequestType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let opensearchDbaas = DestinationRequestType(rawValue: "opensearch_dbaas")
     public static let opensearchExt = DestinationRequestType(rawValue: "opensearch_ext")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -99,13 +135,16 @@ public struct DestinationRequestType: RawRepresentable, Hashable, Codable, Senda
 public struct AlertPolicyCompare: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let greaterThan = AlertPolicyCompare(rawValue: "GreaterThan")
     public static let lessThan = AlertPolicyCompare(rawValue: "LessThan")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -118,13 +157,16 @@ public struct AlertPolicyCompare: RawRepresentable, Hashable, Codable, Sendable,
 public struct MetricsStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let success = MetricsStatus(rawValue: "success")
     public static let error = MetricsStatus(rawValue: "error")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -137,7 +179,10 @@ public struct MetricsStatus: RawRepresentable, Hashable, Codable, Sendable, SdkW
 public struct AlertPolicyRequestWindow: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let value5m = AlertPolicyRequestWindow(rawValue: "5m")
     public static let value10m = AlertPolicyRequestWindow(rawValue: "10m")
     public static let value30m = AlertPolicyRequestWindow(rawValue: "30m")
@@ -145,7 +190,7 @@ public struct AlertPolicyRequestWindow: RawRepresentable, Hashable, Codable, Sen
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -158,47 +203,78 @@ public struct AlertPolicyRequestWindow: RawRepresentable, Hashable, Codable, Sen
 public struct AlertPolicyRequestType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let v1InsightsDropletLoad1 = AlertPolicyRequestType(rawValue: "v1/insights/droplet/load_1")
     public static let v1InsightsDropletLoad5 = AlertPolicyRequestType(rawValue: "v1/insights/droplet/load_5")
     public static let v1InsightsDropletLoad15 = AlertPolicyRequestType(rawValue: "v1/insights/droplet/load_15")
-    public static let v1InsightsDropletMemoryUtilizationPercent = AlertPolicyRequestType(rawValue: "v1/insights/droplet/memory_utilization_percent")
-    public static let v1InsightsDropletDiskUtilizationPercent = AlertPolicyRequestType(rawValue: "v1/insights/droplet/disk_utilization_percent")
+    public static let v1InsightsDropletMemoryUtilizationPercent =
+        AlertPolicyRequestType(rawValue: "v1/insights/droplet/memory_utilization_percent")
+    public static let v1InsightsDropletDiskUtilizationPercent =
+        AlertPolicyRequestType(rawValue: "v1/insights/droplet/disk_utilization_percent")
     public static let v1InsightsDropletCpu = AlertPolicyRequestType(rawValue: "v1/insights/droplet/cpu")
     public static let v1InsightsDropletDiskRead = AlertPolicyRequestType(rawValue: "v1/insights/droplet/disk_read")
     public static let v1InsightsDropletDiskWrite = AlertPolicyRequestType(rawValue: "v1/insights/droplet/disk_write")
-    public static let v1InsightsDropletPublicOutboundBandwidth = AlertPolicyRequestType(rawValue: "v1/insights/droplet/public_outbound_bandwidth")
-    public static let v1InsightsDropletPublicInboundBandwidth = AlertPolicyRequestType(rawValue: "v1/insights/droplet/public_inbound_bandwidth")
-    public static let v1InsightsDropletPrivateOutboundBandwidth = AlertPolicyRequestType(rawValue: "v1/insights/droplet/private_outbound_bandwidth")
-    public static let v1InsightsDropletPrivateInboundBandwidth = AlertPolicyRequestType(rawValue: "v1/insights/droplet/private_inbound_bandwidth")
-    public static let v1InsightsLbaasAvgCpuUtilizationPercent = AlertPolicyRequestType(rawValue: "v1/insights/lbaas/avg_cpu_utilization_percent")
-    public static let v1InsightsLbaasConnectionUtilizationPercent = AlertPolicyRequestType(rawValue: "v1/insights/lbaas/connection_utilization_percent")
-    public static let v1InsightsLbaasDropletHealth = AlertPolicyRequestType(rawValue: "v1/insights/lbaas/droplet_health")
-    public static let v1InsightsLbaasTlsConnectionsPerSecondUtilizationPercent = AlertPolicyRequestType(rawValue: "v1/insights/lbaas/tls_connections_per_second_utilization_percent")
-    public static let v1InsightsLbaasIncreaseInHttpErrorRatePercentage5xx = AlertPolicyRequestType(rawValue: "v1/insights/lbaas/increase_in_http_error_rate_percentage_5xx")
-    public static let v1InsightsLbaasIncreaseInHttpErrorRatePercentage4xx = AlertPolicyRequestType(rawValue: "v1/insights/lbaas/increase_in_http_error_rate_percentage_4xx")
-    public static let v1InsightsLbaasIncreaseInHttpErrorRateCount5xx = AlertPolicyRequestType(rawValue: "v1/insights/lbaas/increase_in_http_error_rate_count_5xx")
-    public static let v1InsightsLbaasIncreaseInHttpErrorRateCount4xx = AlertPolicyRequestType(rawValue: "v1/insights/lbaas/increase_in_http_error_rate_count_4xx")
-    public static let v1InsightsLbaasHighHttpRequestResponseTime = AlertPolicyRequestType(rawValue: "v1/insights/lbaas/high_http_request_response_time")
-    public static let v1InsightsLbaasHighHttpRequestResponseTime50p = AlertPolicyRequestType(rawValue: "v1/insights/lbaas/high_http_request_response_time_50p")
-    public static let v1InsightsLbaasHighHttpRequestResponseTime95p = AlertPolicyRequestType(rawValue: "v1/insights/lbaas/high_http_request_response_time_95p")
-    public static let v1InsightsLbaasHighHttpRequestResponseTime99p = AlertPolicyRequestType(rawValue: "v1/insights/lbaas/high_http_request_response_time_99p")
+    public static let v1InsightsDropletPublicOutboundBandwidth =
+        AlertPolicyRequestType(rawValue: "v1/insights/droplet/public_outbound_bandwidth")
+    public static let v1InsightsDropletPublicInboundBandwidth =
+        AlertPolicyRequestType(rawValue: "v1/insights/droplet/public_inbound_bandwidth")
+    public static let v1InsightsDropletPrivateOutboundBandwidth =
+        AlertPolicyRequestType(rawValue: "v1/insights/droplet/private_outbound_bandwidth")
+    public static let v1InsightsDropletPrivateInboundBandwidth =
+        AlertPolicyRequestType(rawValue: "v1/insights/droplet/private_inbound_bandwidth")
+    public static let v1InsightsLbaasAvgCpuUtilizationPercent =
+        AlertPolicyRequestType(rawValue: "v1/insights/lbaas/avg_cpu_utilization_percent")
+    public static let v1InsightsLbaasConnectionUtilizationPercent =
+        AlertPolicyRequestType(rawValue: "v1/insights/lbaas/connection_utilization_percent")
+    public static let v1InsightsLbaasDropletHealth =
+        AlertPolicyRequestType(rawValue: "v1/insights/lbaas/droplet_health")
+    public static let v1InsightsLbaasTlsConnectionsPerSecondUtilizationPercent =
+        AlertPolicyRequestType(rawValue: "v1/insights/lbaas/tls_connections_per_second_utilization_percent")
+    public static let v1InsightsLbaasIncreaseInHttpErrorRatePercentage5xx =
+        AlertPolicyRequestType(rawValue: "v1/insights/lbaas/increase_in_http_error_rate_percentage_5xx")
+    public static let v1InsightsLbaasIncreaseInHttpErrorRatePercentage4xx =
+        AlertPolicyRequestType(rawValue: "v1/insights/lbaas/increase_in_http_error_rate_percentage_4xx")
+    public static let v1InsightsLbaasIncreaseInHttpErrorRateCount5xx =
+        AlertPolicyRequestType(rawValue: "v1/insights/lbaas/increase_in_http_error_rate_count_5xx")
+    public static let v1InsightsLbaasIncreaseInHttpErrorRateCount4xx =
+        AlertPolicyRequestType(rawValue: "v1/insights/lbaas/increase_in_http_error_rate_count_4xx")
+    public static let v1InsightsLbaasHighHttpRequestResponseTime =
+        AlertPolicyRequestType(rawValue: "v1/insights/lbaas/high_http_request_response_time")
+    public static let v1InsightsLbaasHighHttpRequestResponseTime50p =
+        AlertPolicyRequestType(rawValue: "v1/insights/lbaas/high_http_request_response_time_50p")
+    public static let v1InsightsLbaasHighHttpRequestResponseTime95p =
+        AlertPolicyRequestType(rawValue: "v1/insights/lbaas/high_http_request_response_time_95p")
+    public static let v1InsightsLbaasHighHttpRequestResponseTime99p =
+        AlertPolicyRequestType(rawValue: "v1/insights/lbaas/high_http_request_response_time_99p")
     public static let v1DbaasAlertsLoad15Alerts = AlertPolicyRequestType(rawValue: "v1/dbaas/alerts/load_15_alerts")
-    public static let v1DbaasAlertsMemoryUtilizationAlerts = AlertPolicyRequestType(rawValue: "v1/dbaas/alerts/memory_utilization_alerts")
-    public static let v1DbaasAlertsDiskUtilizationAlerts = AlertPolicyRequestType(rawValue: "v1/dbaas/alerts/disk_utilization_alerts")
+    public static let v1DbaasAlertsMemoryUtilizationAlerts =
+        AlertPolicyRequestType(rawValue: "v1/dbaas/alerts/memory_utilization_alerts")
+    public static let v1DbaasAlertsDiskUtilizationAlerts =
+        AlertPolicyRequestType(rawValue: "v1/dbaas/alerts/disk_utilization_alerts")
     public static let v1DbaasAlertsCpuAlerts = AlertPolicyRequestType(rawValue: "v1/dbaas/alerts/cpu_alerts")
-    public static let v1DropletAutoscaleAlertsCurrentInstances = AlertPolicyRequestType(rawValue: "v1/droplet/autoscale_alerts/current_instances")
-    public static let v1DropletAutoscaleAlertsTargetInstances = AlertPolicyRequestType(rawValue: "v1/droplet/autoscale_alerts/target_instances")
-    public static let v1DropletAutoscaleAlertsCurrentCpuUtilization = AlertPolicyRequestType(rawValue: "v1/droplet/autoscale_alerts/current_cpu_utilization")
-    public static let v1DropletAutoscaleAlertsTargetCpuUtilization = AlertPolicyRequestType(rawValue: "v1/droplet/autoscale_alerts/target_cpu_utilization")
-    public static let v1DropletAutoscaleAlertsCurrentMemoryUtilization = AlertPolicyRequestType(rawValue: "v1/droplet/autoscale_alerts/current_memory_utilization")
-    public static let v1DropletAutoscaleAlertsTargetMemoryUtilization = AlertPolicyRequestType(rawValue: "v1/droplet/autoscale_alerts/target_memory_utilization")
-    public static let v1DropletAutoscaleAlertsScaleUp = AlertPolicyRequestType(rawValue: "v1/droplet/autoscale_alerts/scale_up")
-    public static let v1DropletAutoscaleAlertsScaleDown = AlertPolicyRequestType(rawValue: "v1/droplet/autoscale_alerts/scale_down")
+    public static let v1DropletAutoscaleAlertsCurrentInstances =
+        AlertPolicyRequestType(rawValue: "v1/droplet/autoscale_alerts/current_instances")
+    public static let v1DropletAutoscaleAlertsTargetInstances =
+        AlertPolicyRequestType(rawValue: "v1/droplet/autoscale_alerts/target_instances")
+    public static let v1DropletAutoscaleAlertsCurrentCpuUtilization =
+        AlertPolicyRequestType(rawValue: "v1/droplet/autoscale_alerts/current_cpu_utilization")
+    public static let v1DropletAutoscaleAlertsTargetCpuUtilization =
+        AlertPolicyRequestType(rawValue: "v1/droplet/autoscale_alerts/target_cpu_utilization")
+    public static let v1DropletAutoscaleAlertsCurrentMemoryUtilization =
+        AlertPolicyRequestType(rawValue: "v1/droplet/autoscale_alerts/current_memory_utilization")
+    public static let v1DropletAutoscaleAlertsTargetMemoryUtilization =
+        AlertPolicyRequestType(rawValue: "v1/droplet/autoscale_alerts/target_memory_utilization")
+    public static let v1DropletAutoscaleAlertsScaleUp =
+        AlertPolicyRequestType(rawValue: "v1/droplet/autoscale_alerts/scale_up")
+    public static let v1DropletAutoscaleAlertsScaleDown =
+        AlertPolicyRequestType(rawValue: "v1/droplet/autoscale_alerts/scale_down")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

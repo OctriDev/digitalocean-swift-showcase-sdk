@@ -6,26 +6,72 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension BatchInferenceMethods {
-    /// Creates a file record and returns a `file_id` plus a short-lived presigned `PUT` URL (typically valid for ~15 minutes). Upload the raw JSONL bytes to `upload_url` (see `PUT /{upload_path}`) before calling `POST /v1/batches`.
+public extension BatchInferenceMethods {
+    /// Creates a file record and returns a `file_id` plus a short-lived presigned `PUT` URL (typically valid for ~15
+    /// minutes). Upload the raw JSONL bytes to `upload_url` (see `PUT /{upload_path}`) before calling `POST
+    /// /v1/batches`.
     ///
     /// - Parameters:
     /// - fileName: The file you plan to upload. Must end with `.jsonl`
     ///   (case-insensitive) and contain one request per line in the schema expected
     ///   by the target `provider`.
-    public static func inferenceCreateBatchFile(config: ClientConfig, fileName: String, requestOptions: RequestOptions? = nil) async throws -> BatchFileCreateResponse {
+    static func inferenceCreateBatchFile(
+        config: ClientConfig,
+        fileName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> BatchFileCreateResponse {
         try validateLength("file_name", fileName, min: 7)
         try sdkValidatePattern("file_name", fileName, sdkPatterna3234e480eb3)
 
         let requestBody = InferenceCreateBatchFileRequestBody(fileName: fileName)
 
-        return try (await sdkRequest("POST", "/v1/batches/files", config: config, body: requestBody, decoder: .json, operationId: "inference_create_batch_file", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "403": Error2.self, "422": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v1/batches/files",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "inference_create_batch_file",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "403": Error2.self,
+                "422": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Uploads raw JSONL bytes to the presigned URL returned by `POST /v1/batches/files`. Use the returned `upload_url` verbatim and send the bytes as `application/octet-stream` or omit `Content-Type` to avoid signature mismatches. The upload must complete before `POST /v1/batches` checks the object with a `HEAD` request.
+    /// Uploads raw JSONL bytes to the presigned URL returned by `POST /v1/batches/files`. Use the returned `upload_url`
+    /// verbatim and send the bytes as `application/octet-stream` or omit `Content-Type` to avoid signature mismatches.
+    /// The upload must complete before `POST /v1/batches` checks the object with a `HEAD` request.
     ///
-    /// Uploads the raw JSONL bytes to the presigned `upload_url` returned by `POST /v1/batches/files`. **The URL is dynamic — do not construct it.** Use the `upload_url` value from the previous step verbatim. Its host, path, and query parameters are part of the short-lived (~15 minute) signature and change per request; the server and path shown here are illustrative. If the URL expires before the upload completes, create a new file intent and retry. `POST /v1/batches` performs a `HEAD` check on the uploaded object and will reject the batch if this upload has not completed. Send the raw JSONL bytes verbatim. Presigned PUT URLs are signature-sensitive to request headers — prefer `application/octet-stream` or omit `Content-Type` entirely. A custom value (for example `application/jsonl`) can cause signature mismatches unless the URL was signed for that exact header.
-    public static func inferenceUploadBatchFile(config: ClientConfig, body: Data, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try (await sdkRequest("PUT", "/<upload_url>", config: config, rawBody: body, contentType: "application/octet-stream", decoder: .empty, operationId: "inference_upload_batch_file", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    /// Uploads the raw JSONL bytes to the presigned `upload_url` returned by `POST /v1/batches/files`. **The URL is
+    /// dynamic — do not construct it.** Use the `upload_url` value from the previous step verbatim. Its host, path, and
+    /// query parameters are part of the short-lived (~15 minute) signature and change per request; the server and path
+    /// shown here are illustrative. If the URL expires before the upload completes, create a new file intent and retry.
+    /// `POST /v1/batches` performs a `HEAD` check on the uploaded object and will reject the batch if this upload has
+    /// not completed. Send the raw JSONL bytes verbatim. Presigned PUT URLs are signature-sensitive to request headers
+    /// — prefer `application/octet-stream` or omit `Content-Type` entirely. A custom value (for example
+    /// `application/jsonl`) can cause signature mismatches unless the URL was signed for that exact header.
+    static func inferenceUploadBatchFile(
+        config: ClientConfig,
+        body: Data,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await (sdkRequest(
+            "PUT",
+            "/<upload_url>",
+            config: config,
+            rawBody: body,
+            contentType: "application/octet-stream",
+            decoder: .empty,
+            operationId: "inference_upload_batch_file",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

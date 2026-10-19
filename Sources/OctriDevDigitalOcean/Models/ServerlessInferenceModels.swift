@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ServerlessInference domain models
+/// ServerlessInference domain models
 /// Describes a model offering that can be used with the API.
 public struct Model: Codable {
     /// The model identifier, which can be referenced in the API endpoints.
@@ -26,33 +26,51 @@ public struct Model: Codable {
         case ownedBy = "owned_by"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension Model {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        guard container.contains(.created) else {
-            throw SdkValidationError(field: "created", code: "required", message: "Validation failed for 'created': value is required")
-        }
-        guard container.contains(.object) else {
-            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
-        }
-        guard container.contains(.ownedBy) else {
-            throw SdkValidationError(field: "owned_by", code: "required", message: "Validation failed for 'owned_by': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
-        self.created = try container.sdkDecodeRequired(.created)
-        self.object = try container.sdkDecodeRequired(.object)
-        self.ownedBy = try container.sdkDecodeRequired(.ownedBy)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension Model {
-    public init(id: String, created: Int, object: ModelObject, ownedBy: String) {
+public extension Model {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        guard container.contains(.created) else {
+            throw SdkValidationError(
+                field: "created",
+                code: "required",
+                message: "Validation failed for 'created': value is required"
+            )
+        }
+        guard container.contains(.object) else {
+            throw SdkValidationError(
+                field: "object",
+                code: "required",
+                message: "Validation failed for 'object': value is required"
+            )
+        }
+        guard container.contains(.ownedBy) else {
+            throw SdkValidationError(
+                field: "owned_by",
+                code: "required",
+                message: "Validation failed for 'owned_by': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+        created = try container.sdkDecodeRequired(.created)
+        object = try container.sdkDecodeRequired(.object)
+        ownedBy = try container.sdkDecodeRequired(.ownedBy)
+    }
+}
+
+public extension Model {
+    init(id: String, created: Int, object: ModelObject, ownedBy: String) {
         (self.id, self.created) = (id, created)
         (self.object, self.ownedBy) = (object, ownedBy)
     }
@@ -73,22 +91,28 @@ public struct GeneratedImage: Codable {
         case revisedPrompt = "revised_prompt"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension GeneratedImage {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.b64Json) else {
-            throw SdkValidationError(field: "b64_json", code: "required", message: "Validation failed for 'b64_json': value is required")
-        }
-        self.b64Json = try container.sdkDecodeRequired(.b64Json)
-        self.revisedPrompt = try container.sdkDecodeIfPresent(.revisedPrompt)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension GeneratedImage {
-    public init(b64Json: String, revisedPrompt: String? = nil) {
+public extension GeneratedImage {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.b64Json) else {
+            throw SdkValidationError(
+                field: "b64_json",
+                code: "required",
+                message: "Validation failed for 'b64_json': value is required"
+            )
+        }
+        b64Json = try container.sdkDecodeRequired(.b64Json)
+        revisedPrompt = try container.sdkDecodeIfPresent(.revisedPrompt)
+    }
+}
+
+public extension GeneratedImage {
+    init(b64Json: String, revisedPrompt: String? = nil) {
         (self.b64Json, self.revisedPrompt) = (b64Json, revisedPrompt)
     }
 }
@@ -130,25 +154,36 @@ public struct ImageGenPartialImageEvent: Codable {
         case partialImageIndex = "partial_image_index"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ImageGenPartialImageEvent {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.b64Json = try container.sdkDecodeRequired(.b64Json)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.size = try container.sdkDecodeRequired(.size)
-        self.quality = try container.sdkDecodeRequired(.quality)
-        self.background = try container.sdkDecodeRequired(.background)
-        self.outputFormat = try container.sdkDecodeRequired(.outputFormat)
-        self.partialImageIndex = try container.sdkDecodeRequired(.partialImageIndex)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ImageGenPartialImageEvent {
-    public init(type: ImageGenPartialImageEventType, b64Json: String, createdAt: Int, size: ImageGenPartialImageEventSize, quality: ImageGenPartialImageEventQuality, background: ImageGenPartialImageEventBackground, outputFormat: ImageGenPartialImageEventOutputFormat, partialImageIndex: Int) {
+public extension ImageGenPartialImageEvent {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        type = try container.sdkDecodeRequired(.type)
+        b64Json = try container.sdkDecodeRequired(.b64Json)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        size = try container.sdkDecodeRequired(.size)
+        quality = try container.sdkDecodeRequired(.quality)
+        background = try container.sdkDecodeRequired(.background)
+        outputFormat = try container.sdkDecodeRequired(.outputFormat)
+        partialImageIndex = try container.sdkDecodeRequired(.partialImageIndex)
+    }
+}
+
+public extension ImageGenPartialImageEvent {
+    init(
+        type: ImageGenPartialImageEventType,
+        b64Json: String,
+        createdAt: Int,
+        size: ImageGenPartialImageEventSize,
+        quality: ImageGenPartialImageEventQuality,
+        background: ImageGenPartialImageEventBackground,
+        outputFormat: ImageGenPartialImageEventOutputFormat,
+        partialImageIndex: Int
+    ) {
         (self.type, self.b64Json) = (type, b64Json)
         (self.createdAt, self.size) = (createdAt, size)
         (self.quality, self.background) = (quality, background)
@@ -181,37 +216,65 @@ public struct ResponseUsage: Codable {
         case totalTokens = "total_tokens"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ResponseUsage {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.inputTokens) else {
-            throw SdkValidationError(field: "input_tokens", code: "required", message: "Validation failed for 'input_tokens': value is required")
-        }
-        guard container.contains(.inputTokensDetails) else {
-            throw SdkValidationError(field: "input_tokens_details", code: "required", message: "Validation failed for 'input_tokens_details': value is required")
-        }
-        guard container.contains(.outputTokens) else {
-            throw SdkValidationError(field: "output_tokens", code: "required", message: "Validation failed for 'output_tokens': value is required")
-        }
-        guard container.contains(.outputTokensDetails) else {
-            throw SdkValidationError(field: "output_tokens_details", code: "required", message: "Validation failed for 'output_tokens_details': value is required")
-        }
-        guard container.contains(.totalTokens) else {
-            throw SdkValidationError(field: "total_tokens", code: "required", message: "Validation failed for 'total_tokens': value is required")
-        }
-        self.inputTokens = try container.sdkDecodeRequired(.inputTokens)
-        self.inputTokensDetails = try container.sdkDecodeRequired(.inputTokensDetails)
-        self.outputTokens = try container.sdkDecodeRequired(.outputTokens)
-        self.outputTokensDetails = try container.sdkDecodeRequired(.outputTokensDetails)
-        self.totalTokens = try container.sdkDecodeRequired(.totalTokens)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ResponseUsage {
-    public init(inputTokens: Int, inputTokensDetails: ResponseUsageInputTokensDetails, outputTokens: Int, outputTokensDetails: ResponseUsageOutputTokensDetails, totalTokens: Int) {
+public extension ResponseUsage {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.inputTokens) else {
+            throw SdkValidationError(
+                field: "input_tokens",
+                code: "required",
+                message: "Validation failed for 'input_tokens': value is required"
+            )
+        }
+        guard container.contains(.inputTokensDetails) else {
+            throw SdkValidationError(
+                field: "input_tokens_details",
+                code: "required",
+                message: "Validation failed for 'input_tokens_details': value is required"
+            )
+        }
+        guard container.contains(.outputTokens) else {
+            throw SdkValidationError(
+                field: "output_tokens",
+                code: "required",
+                message: "Validation failed for 'output_tokens': value is required"
+            )
+        }
+        guard container.contains(.outputTokensDetails) else {
+            throw SdkValidationError(
+                field: "output_tokens_details",
+                code: "required",
+                message: "Validation failed for 'output_tokens_details': value is required"
+            )
+        }
+        guard container.contains(.totalTokens) else {
+            throw SdkValidationError(
+                field: "total_tokens",
+                code: "required",
+                message: "Validation failed for 'total_tokens': value is required"
+            )
+        }
+        inputTokens = try container.sdkDecodeRequired(.inputTokens)
+        inputTokensDetails = try container.sdkDecodeRequired(.inputTokensDetails)
+        outputTokens = try container.sdkDecodeRequired(.outputTokens)
+        outputTokensDetails = try container.sdkDecodeRequired(.outputTokensDetails)
+        totalTokens = try container.sdkDecodeRequired(.totalTokens)
+    }
+}
+
+public extension ResponseUsage {
+    init(
+        inputTokens: Int,
+        inputTokensDetails: ResponseUsageInputTokensDetails,
+        outputTokens: Int,
+        outputTokensDetails: ResponseUsageOutputTokensDetails,
+        totalTokens: Int
+    ) {
         (self.inputTokens, self.inputTokensDetails) = (inputTokens, inputTokensDetails)
         (self.outputTokens, self.outputTokensDetails) = (outputTokens, outputTokensDetails)
         self.totalTokens = totalTokens
@@ -235,29 +298,43 @@ public struct EmbeddingDataItem: Codable {
         case embedding
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension EmbeddingDataItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.index) else {
-            throw SdkValidationError(field: "index", code: "required", message: "Validation failed for 'index': value is required")
-        }
-        guard container.contains(.object) else {
-            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
-        }
-        guard container.contains(.embedding) else {
-            throw SdkValidationError(field: "embedding", code: "required", message: "Validation failed for 'embedding': value is required")
-        }
-        self.index = try container.sdkDecodeRequired(.index)
-        self.object = try container.sdkDecodeRequired(.object)
-        self.embedding = try container.sdkDecodeRequired(.embedding)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension EmbeddingDataItem {
-    public init(index: Int, object: EmbeddingDataItemObject, embedding: EmbeddingDataItemEmbedding) {
+public extension EmbeddingDataItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.index) else {
+            throw SdkValidationError(
+                field: "index",
+                code: "required",
+                message: "Validation failed for 'index': value is required"
+            )
+        }
+        guard container.contains(.object) else {
+            throw SdkValidationError(
+                field: "object",
+                code: "required",
+                message: "Validation failed for 'object': value is required"
+            )
+        }
+        guard container.contains(.embedding) else {
+            throw SdkValidationError(
+                field: "embedding",
+                code: "required",
+                message: "Validation failed for 'embedding': value is required"
+            )
+        }
+        index = try container.sdkDecodeRequired(.index)
+        object = try container.sdkDecodeRequired(.object)
+        embedding = try container.sdkDecodeRequired(.embedding)
+    }
+}
+
+public extension EmbeddingDataItem {
+    init(index: Int, object: EmbeddingDataItemObject, embedding: EmbeddingDataItemEmbedding) {
         (self.index, self.object) = (index, object)
         self.embedding = embedding
     }
@@ -269,22 +346,32 @@ public indirect enum EmbeddingDataItemEmbedding {
 }
 
 extension EmbeddingDataItemEmbedding: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for EmbeddingDataItemEmbedding")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for EmbeddingDataItemEmbedding"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension EmbeddingDataItemEmbedding {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode([Double].self) { return .doubleList(value) }
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
+        if let value = try? container.decode([Double].self) {
+            return .doubleList(value)
+        }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
         return nil
     }
 }
@@ -309,21 +396,27 @@ public struct ResponseUsageInputTokensDetails: Codable {
         case cachedTokens = "cached_tokens"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ResponseUsageInputTokensDetails {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.cachedTokens) else {
-            throw SdkValidationError(field: "cached_tokens", code: "required", message: "Validation failed for 'cached_tokens': value is required")
-        }
-        self.cachedTokens = try container.sdkDecodeRequired(.cachedTokens)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ResponseUsageInputTokensDetails {
-    public init(cachedTokens: Int) {
+public extension ResponseUsageInputTokensDetails {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.cachedTokens) else {
+            throw SdkValidationError(
+                field: "cached_tokens",
+                code: "required",
+                message: "Validation failed for 'cached_tokens': value is required"
+            )
+        }
+        cachedTokens = try container.sdkDecodeRequired(.cachedTokens)
+    }
+}
+
+public extension ResponseUsageInputTokensDetails {
+    init(cachedTokens: Int) {
         self.cachedTokens = cachedTokens
     }
 }
@@ -341,25 +434,35 @@ public struct ResponseUsageOutputTokensDetails: Codable {
         case toolOutputTokens = "tool_output_tokens"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ResponseUsageOutputTokensDetails {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.reasoningTokens) else {
-            throw SdkValidationError(field: "reasoning_tokens", code: "required", message: "Validation failed for 'reasoning_tokens': value is required")
-        }
-        guard container.contains(.toolOutputTokens) else {
-            throw SdkValidationError(field: "tool_output_tokens", code: "required", message: "Validation failed for 'tool_output_tokens': value is required")
-        }
-        self.reasoningTokens = try container.sdkDecodeRequired(.reasoningTokens)
-        self.toolOutputTokens = try container.sdkDecodeRequired(.toolOutputTokens)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ResponseUsageOutputTokensDetails {
-    public init(reasoningTokens: Int, toolOutputTokens: Int) {
+public extension ResponseUsageOutputTokensDetails {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.reasoningTokens) else {
+            throw SdkValidationError(
+                field: "reasoning_tokens",
+                code: "required",
+                message: "Validation failed for 'reasoning_tokens': value is required"
+            )
+        }
+        guard container.contains(.toolOutputTokens) else {
+            throw SdkValidationError(
+                field: "tool_output_tokens",
+                code: "required",
+                message: "Validation failed for 'tool_output_tokens': value is required"
+            )
+        }
+        reasoningTokens = try container.sdkDecodeRequired(.reasoningTokens)
+        toolOutputTokens = try container.sdkDecodeRequired(.toolOutputTokens)
+    }
+}
+
+public extension ResponseUsageOutputTokensDetails {
+    init(reasoningTokens: Int, toolOutputTokens: Int) {
         (self.reasoningTokens, self.toolOutputTokens) = (reasoningTokens, toolOutputTokens)
     }
 }
@@ -377,25 +480,35 @@ public struct ListModelsResponse: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ListModelsResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.object) else {
-            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
-        }
-        guard container.contains(.data) else {
-            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
-        }
-        self.object = try container.sdkDecodeRequired(.object)
-        self.data = try container.sdkDecodeRequired(.data)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ListModelsResponse {
-    public init(object: ListModelsResponseObject, data: [Model]) {
+public extension ListModelsResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.object) else {
+            throw SdkValidationError(
+                field: "object",
+                code: "required",
+                message: "Validation failed for 'object': value is required"
+            )
+        }
+        guard container.contains(.data) else {
+            throw SdkValidationError(
+                field: "data",
+                code: "required",
+                message: "Validation failed for 'data': value is required"
+            )
+        }
+        object = try container.sdkDecodeRequired(.object)
+        data = try container.sdkDecodeRequired(.data)
+    }
+}
+
+public extension ListModelsResponse {
+    init(object: ListModelsResponseObject, data: [Model]) {
         (self.object, self.data) = (object, data)
     }
 }
@@ -404,12 +517,15 @@ extension ListModelsResponse {
 public struct EmbeddingDataItemObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let embedding = EmbeddingDataItemObject(rawValue: "embedding")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -422,12 +538,16 @@ public struct EmbeddingDataItemObject: RawRepresentable, Hashable, Codable, Send
 public struct ImageGenPartialImageEventType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
-    public static let imageGenerationPartialImage = ImageGenPartialImageEventType(rawValue: "image_generation.partial_image")
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let imageGenerationPartialImage =
+        ImageGenPartialImageEventType(rawValue: "image_generation.partial_image")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -440,12 +560,15 @@ public struct ImageGenPartialImageEventType: RawRepresentable, Hashable, Codable
 public struct ListModelsResponseObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = ListModelsResponseObject(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -458,12 +581,15 @@ public struct ListModelsResponseObject: RawRepresentable, Hashable, Codable, Sen
 public struct ModelObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let model = ModelObject(rawValue: "model")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -476,14 +602,17 @@ public struct ModelObject: RawRepresentable, Hashable, Codable, Sendable, SdkWir
 public struct ImageGenPartialImageEventOutputFormat: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let png = ImageGenPartialImageEventOutputFormat(rawValue: "png")
     public static let webp = ImageGenPartialImageEventOutputFormat(rawValue: "webp")
     public static let jpeg = ImageGenPartialImageEventOutputFormat(rawValue: "jpeg")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -496,7 +625,10 @@ public struct ImageGenPartialImageEventOutputFormat: RawRepresentable, Hashable,
 public struct ImageGenPartialImageEventQuality: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let low = ImageGenPartialImageEventQuality(rawValue: "low")
     public static let medium = ImageGenPartialImageEventQuality(rawValue: "medium")
     public static let high = ImageGenPartialImageEventQuality(rawValue: "high")
@@ -504,7 +636,7 @@ public struct ImageGenPartialImageEventQuality: RawRepresentable, Hashable, Coda
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

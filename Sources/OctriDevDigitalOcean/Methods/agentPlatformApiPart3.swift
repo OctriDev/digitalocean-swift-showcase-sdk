@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
-    public struct GenaiCreateAgentOptions: Codable {
+public extension AgentPlatformApiMethods {
+    struct GenaiCreateAgentOptions: Codable {
         public var anthropicKeyUuid: String?
         public var description: String?
         public var instruction: String?
@@ -31,9 +31,12 @@ extension AgentPlatformApiMethods {
         public init() {}
     }
 
-    /// Creates a new agent in the specified project and region. Configure the agent with fields such as `name`, `instruction`, and `model_uuid`, and optionally attach knowledge bases or MCP servers. A 200 response returns the newly created agent object.
+    /// Creates a new agent in the specified project and region. Configure the agent with fields such as `name`,
+    /// `instruction`, and `model_uuid`, and optionally attach knowledge bases or MCP servers. A 200 response returns
+    /// the newly created agent object.
     ///
-    /// To create a new agent, send a POST request to `/v2/gen-ai/agents`. The response body contains a JSON object with the newly created agent object.
+    /// To create a new agent, send a POST request to `/v2/gen-ai/agents`. The response body contains a JSON object with
+    /// the newly created agent object.
     ///
     /// - Parameters:
     /// - anthropicKeyUuid: Optional Anthropic API key ID to use with Anthropic
@@ -66,9 +69,28 @@ extension AgentPlatformApiMethods {
     /// - webSearchEnabled: Whether the agent can use the built-in web_search tool
     ///   to search the public web for current information.
     /// - workspaceUuid: Identifier for the workspace
-    public static func genaiCreateAgent(config: ClientConfig, options: GenaiCreateAgentOptions, requestOptions: RequestOptions? = nil) async throws -> ApiCreateAgentOutput {
+    static func genaiCreateAgent(
+        config: ClientConfig,
+        options: GenaiCreateAgentOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiCreateAgentOutput {
         let requestBody = GenaiCreateAgentRequestBody(options: options)
 
-        return try (await sdkRequest("POST", "/v2/gen-ai/agents", config: config, body: requestBody, decoder: .json, operationId: "genai_create_agent", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/gen-ai/agents",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "genai_create_agent",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }
