@@ -17,10 +17,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vpcs.patchPeerings(
-                vpcId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-                vpcPeeringId: decoded("\"5a4981aa-9653-4bd1-bef5-d6bff52042e4\""),
-                name: decoded("\"nyc1-blr1-peering\"")
-            )
+            vpcId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+            vpcPeeringId: decoded("\"5a4981aa-9653-4bd1-bef5-d6bff52042e4\""),
+            name: decoded("\"nyc1-blr1-peering\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -68,11 +68,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vpcRoutesPublicPreview.vpcSubnetRoutesCreate(
-                vpcUuid: decoded("\"997615ce-132d-4bae-9270-9ee21b395e5d\""),
-                subnetUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-                destinationCidr: decoded("\"0.0.0.0/0\""),
-                targetUrns: decoded("[\"do:droplet:4126873\"]")
-            )
+            vpcUuid: decoded("\"997615ce-132d-4bae-9270-9ee21b395e5d\""),
+            subnetUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+            destinationCidr: decoded("\"0.0.0.0/0\""),
+            targetUrns: decoded("[\"do:droplet:4126873\"]")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -112,10 +112,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vpcRoutesPublicPreview.vpcSubnetRoutesDelete(
-                vpcUuid: decoded("\"997615ce-132d-4bae-9270-9ee21b395e5d\""),
-                subnetUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-                routeUuid: decoded("\"f0e1d2c3-b4a5-6789-0fed-cba987654321\"")
-            )
+            vpcUuid: decoded("\"997615ce-132d-4bae-9270-9ee21b395e5d\""),
+            subnetUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+            routeUuid: decoded("\"f0e1d2c3-b4a5-6789-0fed-cba987654321\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -163,11 +163,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vpcRoutesPublicPreview.vpcSubnetRoutesList(
-                vpcUuid: decoded("\"997615ce-132d-4bae-9270-9ee21b395e5d\""),
-                subnetUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            vpcUuid: decoded("\"997615ce-132d-4bae-9270-9ee21b395e5d\""),
+            subnetUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -215,11 +215,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vpcRoutesPublicPreview.vpcSubnetRoutesUpdate(
-                vpcUuid: decoded("\"997615ce-132d-4bae-9270-9ee21b395e5d\""),
-                subnetUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-                routeUuid: decoded("\"f0e1d2c3-b4a5-6789-0fed-cba987654321\""),
-                targetUrns: decoded("[\"do:droplet:4126873\"]")
-            )
+            vpcUuid: decoded("\"997615ce-132d-4bae-9270-9ee21b395e5d\""),
+            subnetUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+            routeUuid: decoded("\"f0e1d2c3-b4a5-6789-0fed-cba987654321\""),
+            targetUrns: decoded("[\"do:droplet:4126873\"]")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -266,10 +266,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vpcSubnetsPublicPreview.vpcSubnetsCreate(
-                vpcUuid: decoded("\"997615ce-132d-4bae-9270-9ee21b395e5d\""),
-                name: decoded("\"new-subnet\""),
-                ipRange: decoded("\"10.20.0.0/16\"")
-            )
+            vpcUuid: decoded("\"997615ce-132d-4bae-9270-9ee21b395e5d\""),
+            name: decoded("\"new-subnet\""),
+            ipRange: decoded("\"10.20.0.0/16\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -308,9 +308,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vpcSubnetsPublicPreview.vpcSubnetsDelete(
-                vpcUuid: decoded("\"997615ce-132d-4bae-9270-9ee21b395e5d\""),
-                subnetUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
-            )
+            vpcUuid: decoded("\"997615ce-132d-4bae-9270-9ee21b395e5d\""),
+            subnetUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -356,9 +356,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vpcSubnetsPublicPreview.vpcSubnetsGet(
-                vpcUuid: decoded("\"997615ce-132d-4bae-9270-9ee21b395e5d\""),
-                subnetUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
-            )
+            vpcUuid: decoded("\"997615ce-132d-4bae-9270-9ee21b395e5d\""),
+            subnetUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -405,10 +405,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vpcSubnetsPublicPreview.vpcSubnetsList(
-                vpcUuid: decoded("\"997615ce-132d-4bae-9270-9ee21b395e5d\""),
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            vpcUuid: decoded("\"997615ce-132d-4bae-9270-9ee21b395e5d\""),
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -457,12 +457,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vpcSubnetsPublicPreview.vpcSubnetsListMembers(
-                vpcUuid: decoded("\"997615ce-132d-4bae-9270-9ee21b395e5d\""),
-                subnetUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-                resourceType: decoded("\"droplet\""),
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            vpcUuid: decoded("\"997615ce-132d-4bae-9270-9ee21b395e5d\""),
+            subnetUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+            resourceType: decoded("\"droplet\""),
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -509,10 +509,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vpcSubnetsPublicPreview.vpcSubnetsUpdate(
-                vpcUuid: decoded("\"997615ce-132d-4bae-9270-9ee21b395e5d\""),
-                subnetUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-                name: decoded("\"renamed-subnet\"")
-            )
+            vpcUuid: decoded("\"997615ce-132d-4bae-9270-9ee21b395e5d\""),
+            subnetUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+            name: decoded("\"renamed-subnet\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -558,9 +558,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vpcs.update(
-                vpcId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-                body: decoded(sdkMethodFixture1714Value1)
-            )
+            vpcId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+            body: decoded(sdkMethodFixture1714Value1)
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

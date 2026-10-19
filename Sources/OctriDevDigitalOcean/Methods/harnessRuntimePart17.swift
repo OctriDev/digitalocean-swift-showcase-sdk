@@ -6,9 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension HarnessRuntimeMethods {
-    /// Runs `argv` directly in the guest (no shell). Stdout/stderr are buffered and capped at 1 MiB each; truncation is
-    /// indicated via response headers when present. A non-zero exit code is still HTTP 200.
+extension HarnessRuntimeMethods {
+    /// Runs `argv` directly in the guest (no shell). Stdout/stderr are buffered and capped at 1 MiB each; truncation is indicated via response headers when present. A non-zero exit code is still HTTP 200.
     ///
     /// - Parameters:
     /// - sessionId: The session UUID.
@@ -21,42 +20,9 @@ public extension HarnessRuntimeMethods {
     ///   endpoint.
     /// - timeoutSeconds: Optional timeout. Clamped server-side (default 60, maximum
     ///   240) regardless of the value sent.
-    static func harnessPostSessionSandboxExec(
-        config: ClientConfig,
-        sessionId: String,
-        argv: [String],
-        workdir: String? = nil,
-        stdin: Data? = nil,
-        timeoutSeconds: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExecInSandboxResponse {
-        let requestBody = HarnessPostSessionSandboxExecRequestBody(
-            argv: argv,
-            workdir: workdir,
-            stdin: stdin,
-            timeoutSeconds: timeoutSeconds
-        )
+    public static func harnessPostSessionSandboxExec(config: ClientConfig, sessionId: String, argv: [String], workdir: String? = nil, stdin: Data? = nil, timeoutSeconds: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ExecInSandboxResponse {
+        let requestBody = HarnessPostSessionSandboxExecRequestBody(argv: argv, workdir: workdir, stdin: stdin, timeoutSeconds: timeoutSeconds)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/agents/sessions/", sdkEncodePathSegment(sdkWireString(sessionId)), "/sandbox/exec"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "harness_post_session_sandbox_exec",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "402": Error2.self,
-                "403": Error2.self,
-                "404": Error2.self,
-                "409": Error2.self,
-                "423": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/agents/sessions/", sdkEncodePathSegment(sdkWireString(sessionId)), "/sandbox/exec"].joined(), config: config, body: requestBody, decoder: .json, operationId: "harness_post_session_sandbox_exec", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "402": Error2.self, "403": Error2.self, "404": Error2.self, "409": Error2.self, "423": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

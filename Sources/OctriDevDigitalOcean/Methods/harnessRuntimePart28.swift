@@ -6,7 +6,7 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension HarnessRuntimeMethods {
+extension HarnessRuntimeMethods {
     /// ListTemplateBuilds returns build history for a template.
     ///
     /// - Parameters:
@@ -14,34 +14,13 @@ public extension HarnessRuntimeMethods {
     /// - pageSize: Page size. Defaults to 50 when omitted or non-positive.
     /// - pageToken: Optional pagination cursor (opaque). Empty starts from the
     ///   beginning.
-    static func harnessListTemplateBuilds(
-        config: ClientConfig,
-        templateId: String,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ListTemplateBuildsResponse {
+    public static func harnessListTemplateBuilds(config: ClientConfig, templateId: String, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListTemplateBuildsResponse {
         try sdkValidateUuid("template_id", templateId)
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/agents/templates/", sdkEncodePathSegment(sdkWireString(templateId)), "/builds"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("page_size", value: pageSize),
-                SdkQueryParameter("page_token", value: pageToken),
-            ],
-            decoder: .json,
-            operationId: "harness_list_template_builds",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/agents/templates/", sdkEncodePathSegment(sdkWireString(templateId)), "/builds"].joined(), config: config, query: [
+            SdkQueryParameter("page_size", value: pageSize),
+            SdkQueryParameter("page_token", value: pageToken),
+        ], decoder: .json, operationId: "harness_list_template_builds", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// ListTemplateBuilds returns build history for a template.
@@ -51,38 +30,17 @@ public extension HarnessRuntimeMethods {
     /// - pageSize: Page size. Defaults to 50 when omitted or non-positive.
     /// - pageToken: Optional pagination cursor (opaque). Empty starts from the
     ///   beginning.
-    static func harnessListTemplateBuildsPaginated(
-        config: ClientConfig,
-        templateId: String,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<SandboxTemplateBuild, Swift.Error> {
-        AsyncThrowingStream<SandboxTemplateBuild, Swift.Error> { (continuation: AsyncThrowingStream<
-            SandboxTemplateBuild,
-            Swift.Error
-        >.Continuation) in
+    public static func harnessListTemplateBuildsPaginated(config: ClientConfig, templateId: String, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<SandboxTemplateBuild, Swift.Error> {
+        return AsyncThrowingStream<SandboxTemplateBuild, Swift.Error> { (continuation: AsyncThrowingStream<SandboxTemplateBuild, Swift.Error>.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await harnessListTemplateBuilds(
-                            config: config,
-                            templateId: templateId,
-                            pageSize: pageSize,
-                            pageToken: pageCursor,
-                            requestOptions: requestOptions
-                        )
+                        let pageResponse = try await harnessListTemplateBuilds(config: config, templateId: templateId, pageSize: pageSize, pageToken: pageCursor, requestOptions: requestOptions)
                         let pageItems = (pageResponse.builds ?? [])
-                        if pageItems.isEmpty {
-                            break
-                        }
-                        for item in pageItems {
-                            continuation.yield(item)
-                        }
-                        guard let nextCursor = pageResponse.nextPageToken else {
-                            break
-                        }
+                        if pageItems.isEmpty { break }
+                        for item in pageItems { continuation.yield(item) }
+                        guard let nextCursor = pageResponse.nextPageToken else { break }
                         pageCursor = nextCursor
                     }
                 } catch {
@@ -95,50 +53,25 @@ public extension HarnessRuntimeMethods {
         }
     }
 
-    struct HarnessListTemplateBuildsPage {
+    public struct HarnessListTemplateBuildsPage {
         public let data: ListTemplateBuildsResponse
         public let items: [SandboxTemplateBuild]
         public let hasMore: Bool
     }
 
-    static func harnessListTemplateBuildsPages(
-        config: ClientConfig,
-        templateId: String,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<HarnessListTemplateBuildsPage, Swift.Error> {
-        AsyncThrowingStream<HarnessListTemplateBuildsPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<
-            HarnessListTemplateBuildsPage,
-            Swift.Error
-        >.Continuation) in
+    public static func harnessListTemplateBuildsPages(config: ClientConfig, templateId: String, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<HarnessListTemplateBuildsPage, Swift.Error> {
+        return AsyncThrowingStream<HarnessListTemplateBuildsPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<HarnessListTemplateBuildsPage, Swift.Error>.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await harnessListTemplateBuilds(
-                            config: config,
-                            templateId: templateId,
-                            pageSize: pageSize,
-                            pageToken: pageCursor,
-                            requestOptions: requestOptions
-                        )
+                        let pageResponse = try await harnessListTemplateBuilds(config: config, templateId: templateId, pageSize: pageSize, pageToken: pageCursor, requestOptions: requestOptions)
                         let pageItems = (pageResponse.builds ?? [])
-                        if pageItems.isEmpty {
-                            break
-                        }
+                        if pageItems.isEmpty { break }
                         let hasMore = pageResponse.nextPageToken != nil
-                        pageContinuation.yield(HarnessListTemplateBuildsPage(
-                            data: pageResponse,
-                            items: pageItems,
-                            hasMore: hasMore
-                        ))
-                        if !hasMore {
-                            break
-                        }
-                        guard let nextCursor = pageResponse.nextPageToken else {
-                            break
-                        }
+                        pageContinuation.yield(HarnessListTemplateBuildsPage(data: pageResponse, items: pageItems, hasMore: hasMore))
+                        if !hasMore { break }
+                        guard let nextCursor = pageResponse.nextPageToken else { break }
                         pageCursor = nextCursor
                     }
                 } catch {

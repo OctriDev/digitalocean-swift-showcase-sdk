@@ -6,7 +6,7 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension BlockStorageActionsMethods {
+extension BlockStorageActionsMethods {
     /// To retrieve the status of a volume action, send a GET request to `/v2/volumes/$VOLUME_ID/actions/$ACTION_ID`.
     ///
     /// - Parameters:
@@ -15,49 +15,22 @@ public extension BlockStorageActionsMethods {
     ///   an action.
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func volumeActionsGet(
-        config: ClientConfig,
-        volumeId: String,
-        actionId: Int,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VolumeActionResponse {
+    public static func volumeActionsGet(config: ClientConfig, volumeId: String, actionId: Int, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> VolumeActionResponse {
         try sdkValidateUuid("volume_id", volumeId)
 
         try validateRange("action_id", Double(actionId), min: 1)
 
-        if let perPage {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            [
-                "/v2/volumes/",
-                sdkEncodePathSegment(sdkWireString(volumeId)),
-                "/actions/",
-                sdkEncodePathSegment(sdkWireString(actionId)),
-            ].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "volumeActions_get",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/volumes/", sdkEncodePathSegment(sdkWireString(volumeId)), "/actions/", sdkEncodePathSegment(sdkWireString(actionId))].joined(), config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "volumeActions_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

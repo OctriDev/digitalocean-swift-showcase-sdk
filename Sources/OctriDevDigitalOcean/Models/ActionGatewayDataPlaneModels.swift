@@ -3,30 +3,25 @@
 
 import Foundation
 
-/// ActionGatewayDataPlane domain models
+// ActionGatewayDataPlane domain models
 public indirect enum Forbidden {
     case toolResultError(ToolResultError)
     case error2(Error2)
 }
 
 extension Forbidden: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for Forbidden")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -44,12 +39,8 @@ extension Forbidden {
 
 extension Forbidden {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(ToolResultError.self) {
-            return .toolResultError(value)
-        }
-        if let value = try? container.decode(Error2.self) {
-            return .error2(value)
-        }
+        if let value = try? container.decode(ToolResultError.self) { return .toolResultError(value) }
+        if let value = try? container.decode(Error2.self) { return .error2(value) }
         return nil
     }
 }
@@ -81,28 +72,22 @@ public struct SearchQuery: Codable {
         case knownFields = "known_fields"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SearchQuery {
-    init(from decoder: Decoder) throws {
+extension SearchQuery {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.useCase) else {
-            throw SdkValidationError(
-                field: "use_case",
-                code: "required",
-                message: "Validation failed for 'use_case': value is required"
-            )
+            throw SdkValidationError(field: "use_case", code: "required", message: "Validation failed for 'use_case': value is required")
         }
-        useCase = try container.sdkDecodeRequired(.useCase)
-        knownFields = try container.sdkDecodeIfPresent(.knownFields)
+        self.useCase = try container.sdkDecodeRequired(.useCase)
+        self.knownFields = try container.sdkDecodeIfPresent(.knownFields)
     }
 }
 
-public extension SearchQuery {
-    init(useCase: String, knownFields: String? = nil) {
+extension SearchQuery {
+    public init(useCase: String, knownFields: String? = nil) {
         (self.useCase, self.knownFields) = (useCase, knownFields)
     }
 }
@@ -129,55 +114,33 @@ public struct SearchToolsRequest: Codable {
         case limit
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SearchToolsRequest {
-    init(from decoder: Decoder) throws {
+extension SearchToolsRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.queries) else {
-            throw SdkValidationError(
-                field: "queries",
-                code: "required",
-                message: "Validation failed for 'queries': value is required"
-            )
+            throw SdkValidationError(field: "queries", code: "required", message: "Validation failed for 'queries': value is required")
         }
-        queries = try container.sdkDecodeRequired(.queries)
-        providers = try container.sdkDecodeIfPresent(.providers)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        limit = try container.sdkDecodeIfPresent(.limit)
-        try validateItems("queries", queries, min: 1, max: 5)
-        if let value = limit {
-            try validateRange(
-                "limit",
-                Double(value),
-                min: 1,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.queries = try container.sdkDecodeRequired(.queries)
+        self.providers = try container.sdkDecodeIfPresent(.providers)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.limit = try container.sdkDecodeIfPresent(.limit)
+            try validateItems("queries", self.queries, min: 1, max: 5)
+        if let value = self.limit {
+            try validateRange("limit", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
-public extension SearchToolsRequest {
-    init(queries: [SearchQuery], providers: [String]? = nil, tags: [String]? = nil, limit: Int? = nil) throws {
+extension SearchToolsRequest {
+    public init(queries: [SearchQuery], providers: [String]? = nil, tags: [String]? = nil, limit: Int? = nil) throws {
         (self.queries, self.providers) = (queries, providers)
         (self.tags, self.limit) = (tags, limit)
-        try validateItems("queries", self.queries, min: 1, max: 5)
+            try validateItems("queries", self.queries, min: 1, max: 5)
         if let value = self.limit {
-            try validateRange(
-                "limit",
-                Double(value),
-                min: 1,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("limit", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -190,19 +153,19 @@ public struct ExecuteCodeResponseVariant1: Codable {
     }
 
     init() {
-        output = nil
+        self.output = nil
     }
 }
 
-public extension ExecuteCodeResponseVariant1 {
-    init(from decoder: Decoder) throws {
+extension ExecuteCodeResponseVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        output = try container.sdkDecodeIfPresent(.output)
+        self.output = try container.sdkDecodeIfPresent(.output)
     }
 }
 
-public extension ExecuteCodeResponseVariant1 {
-    init(output: ExecuteCodeResponseVariant1Output? = nil) {
+extension ExecuteCodeResponseVariant1 {
+    public init(output: ExecuteCodeResponseVariant1Output? = nil) {
         self.init()
         self.output = output
     }
@@ -223,21 +186,21 @@ public struct ExecuteCodeResponseVariant1Output: Codable {
     }
 
     init() {
-        (stdout, stderr, exitCode) = (nil, nil, nil)
+        (self.stdout, self.stderr, self.exitCode) = (nil, nil, nil)
     }
 }
 
-public extension ExecuteCodeResponseVariant1Output {
-    init(from decoder: Decoder) throws {
+extension ExecuteCodeResponseVariant1Output {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        stdout = try container.sdkDecodeIfPresent(.stdout)
-        stderr = try container.sdkDecodeIfPresent(.stderr)
-        exitCode = try container.sdkDecodeIfPresent(.exitCode)
+        self.stdout = try container.sdkDecodeIfPresent(.stdout)
+        self.stderr = try container.sdkDecodeIfPresent(.stderr)
+        self.exitCode = try container.sdkDecodeIfPresent(.exitCode)
     }
 }
 
-public extension ExecuteCodeResponseVariant1Output {
-    init(stdout: String? = nil, stderr: String? = nil, exitCode: Int? = nil) {
+extension ExecuteCodeResponseVariant1Output {
+    public init(stdout: String? = nil, stderr: String? = nil, exitCode: Int? = nil) {
         self.init()
         (self.stdout, self.stderr) = (stdout, stderr)
         self.exitCode = exitCode
@@ -257,31 +220,25 @@ public struct InvokeToolsRequest: Codable {
         case rationale
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InvokeToolsRequest {
-    init(from decoder: Decoder) throws {
+extension InvokeToolsRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.tools) else {
-            throw SdkValidationError(
-                field: "tools",
-                code: "required",
-                message: "Validation failed for 'tools': value is required"
-            )
+            throw SdkValidationError(field: "tools", code: "required", message: "Validation failed for 'tools': value is required")
         }
-        tools = try container.sdkDecodeRequired(.tools)
-        rationale = try container.sdkDecodeIfPresent(.rationale)
-        try validateItems("tools", tools, min: 1, max: 10)
+        self.tools = try container.sdkDecodeRequired(.tools)
+        self.rationale = try container.sdkDecodeIfPresent(.rationale)
+            try validateItems("tools", self.tools, min: 1, max: 10)
     }
 }
 
-public extension InvokeToolsRequest {
-    init(tools: [ToolCall], rationale: String? = nil) throws {
+extension InvokeToolsRequest {
+    public init(tools: [ToolCall], rationale: String? = nil) throws {
         (self.tools, self.rationale) = (tools, rationale)
-        try validateItems("tools", self.tools, min: 1, max: 10)
+            try validateItems("tools", self.tools, min: 1, max: 10)
     }
 }
 
@@ -304,21 +261,21 @@ public struct ListSessionToolsResponse: Codable {
     }
 
     init() {
-        (version, tools, nextPageToken) = (nil, nil, nil)
+        (self.version, self.tools, self.nextPageToken) = (nil, nil, nil)
     }
 }
 
-public extension ListSessionToolsResponse {
-    init(from decoder: Decoder) throws {
+extension ListSessionToolsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        version = try container.sdkDecodeIfPresent(.version)
-        tools = try container.sdkDecodeIfPresent(.tools)
-        nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
+        self.version = try container.sdkDecodeIfPresent(.version)
+        self.tools = try container.sdkDecodeIfPresent(.tools)
+        self.nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
     }
 }
 
-public extension ListSessionToolsResponse {
-    init(version: String? = nil, tools: [SessionTool]? = nil, nextPageToken: NextPageToken? = nil) {
+extension ListSessionToolsResponse {
+    public init(version: String? = nil, tools: [SessionTool]? = nil, nextPageToken: NextPageToken? = nil) {
         self.init()
         (self.version, self.tools) = (version, tools)
         self.nextPageToken = nextPageToken
@@ -355,44 +312,28 @@ public struct DataPlaneSearchToolsResponse: Codable {
         case meta = "_meta"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DataPlaneSearchToolsResponse {
-    init(from decoder: Decoder) throws {
+extension DataPlaneSearchToolsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.callId) else {
-            throw SdkValidationError(
-                field: "call_id",
-                code: "required",
-                message: "Validation failed for 'call_id': value is required"
-            )
+            throw SdkValidationError(field: "call_id", code: "required", message: "Validation failed for 'call_id': value is required")
         }
-        status = try container.sdkDecodeRequired(.status)
-        callId = try container.sdkDecodeRequired(.callId)
-        output = try container.sdkDecodeIfPresent(.output)
-        error = try container.sdkDecodeIfPresent(.error)
-        meta = try container.sdkDecodeIfPresent(.meta)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.callId = try container.sdkDecodeRequired(.callId)
+        self.output = try container.sdkDecodeIfPresent(.output)
+        self.error = try container.sdkDecodeIfPresent(.error)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-public extension DataPlaneSearchToolsResponse {
-    init(
-        status: ToolResultStatus,
-        callId: String,
-        output: DataPlaneSearchToolsResponseVariant1Output? = nil,
-        error: ErrorEnvelope? = nil,
-        meta: [String: JSONValue]? = nil
-    ) {
+extension DataPlaneSearchToolsResponse {
+    public init(status: ToolResultStatus, callId: String, output: DataPlaneSearchToolsResponseVariant1Output? = nil, error: ErrorEnvelope? = nil, meta: [String: JSONValue]? = nil) {
         (self.status, self.callId) = (status, callId)
         (self.output, self.error) = (output, error)
         self.meta = meta
@@ -416,43 +357,29 @@ public struct ToolResultError: Codable {
         case callId = "call_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ToolResultError {
-    init(from decoder: Decoder) throws {
+extension ToolResultError {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.error) else {
-            throw SdkValidationError(
-                field: "error",
-                code: "required",
-                message: "Validation failed for 'error': value is required"
-            )
+            throw SdkValidationError(field: "error", code: "required", message: "Validation failed for 'error': value is required")
         }
         guard container.contains(.callId) else {
-            throw SdkValidationError(
-                field: "call_id",
-                code: "required",
-                message: "Validation failed for 'call_id': value is required"
-            )
+            throw SdkValidationError(field: "call_id", code: "required", message: "Validation failed for 'call_id': value is required")
         }
-        status = try container.sdkDecodeRequired(.status)
-        error = try container.sdkDecodeRequired(.error)
-        callId = try container.sdkDecodeRequired(.callId)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.error = try container.sdkDecodeRequired(.error)
+        self.callId = try container.sdkDecodeRequired(.callId)
     }
 }
 
-public extension ToolResultError {
-    init(status: ToolResultErrorStatus, error: ErrorEnvelope, callId: String) {
+extension ToolResultError {
+    public init(status: ToolResultErrorStatus, error: ErrorEnvelope, callId: String) {
         (self.status, self.error) = (status, error)
         self.callId = callId
     }
@@ -476,29 +403,23 @@ public struct ToolCall: Codable {
         case arguments
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ToolCall {
-    init(from decoder: Decoder) throws {
+extension ToolCall {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.tool) else {
-            throw SdkValidationError(
-                field: "tool",
-                code: "required",
-                message: "Validation failed for 'tool': value is required"
-            )
+            throw SdkValidationError(field: "tool", code: "required", message: "Validation failed for 'tool': value is required")
         }
-        tool = try container.sdkDecodeRequired(.tool)
-        version = try container.sdkDecodeIfPresent(.version)
-        arguments = try container.sdkDecodeIfPresent(.arguments)
+        self.tool = try container.sdkDecodeRequired(.tool)
+        self.version = try container.sdkDecodeIfPresent(.version)
+        self.arguments = try container.sdkDecodeIfPresent(.arguments)
     }
 }
 
-public extension ToolCall {
-    init(tool: String, version: String? = nil, arguments: [String: JSONValue]? = nil) {
+extension ToolCall {
+    public init(tool: String, version: String? = nil, arguments: [String: JSONValue]? = nil) {
         (self.tool, self.version) = (tool, version)
         self.arguments = arguments
     }
@@ -535,32 +456,25 @@ public struct SearchToolsResult: Codable {
     }
 
     init() {
-        (name, version, title, description, inputSchema) = (nil, nil, nil, nil, nil)
-        score = nil
+        (self.name, self.version, self.title, self.description, self.inputSchema) = (nil, nil, nil, nil, nil)
+        self.score = nil
     }
 }
 
-public extension SearchToolsResult {
-    init(from decoder: Decoder) throws {
+extension SearchToolsResult {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        version = try container.sdkDecodeIfPresent(.version)
-        title = try container.sdkDecodeIfPresent(.title)
-        description = try container.sdkDecodeIfPresent(.description)
-        inputSchema = try container.sdkDecodeIfPresent(.inputSchema)
-        score = try container.sdkDecodeIfPresent(.score)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.version = try container.sdkDecodeIfPresent(.version)
+        self.title = try container.sdkDecodeIfPresent(.title)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.inputSchema = try container.sdkDecodeIfPresent(.inputSchema)
+        self.score = try container.sdkDecodeIfPresent(.score)
     }
 }
 
-public extension SearchToolsResult {
-    init(
-        name: String? = nil,
-        version: String? = nil,
-        title: String? = nil,
-        description: String? = nil,
-        inputSchema: [String: JSONValue]? = nil,
-        score: Double? = nil
-    ) {
+extension SearchToolsResult {
+    public init(name: String? = nil, version: String? = nil, title: String? = nil, description: String? = nil, inputSchema: [String: JSONValue]? = nil, score: Double? = nil) {
         self.init()
         (self.name, self.version) = (name, version)
         (self.title, self.description) = (title, description)
@@ -590,22 +504,22 @@ public struct InvokeToolsItem: Codable {
     }
 
     init() {
-        (index, tool, version, result) = (nil, nil, nil, nil)
+        (self.index, self.tool, self.version, self.result) = (nil, nil, nil, nil)
     }
 }
 
-public extension InvokeToolsItem {
-    init(from decoder: Decoder) throws {
+extension InvokeToolsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        index = try container.sdkDecodeIfPresent(.index)
-        tool = try container.sdkDecodeIfPresent(.tool)
-        version = try container.sdkDecodeIfPresent(.version)
-        result = try container.sdkDecodeIfPresent(.result)
+        self.index = try container.sdkDecodeIfPresent(.index)
+        self.tool = try container.sdkDecodeIfPresent(.tool)
+        self.version = try container.sdkDecodeIfPresent(.version)
+        self.result = try container.sdkDecodeIfPresent(.result)
     }
 }
 
-public extension InvokeToolsItem {
-    init(index: Int? = nil, tool: String? = nil, version: String? = nil, result: ToolResult? = nil) {
+extension InvokeToolsItem {
+    public init(index: Int? = nil, tool: String? = nil, version: String? = nil, result: ToolResult? = nil) {
         self.init()
         (self.index, self.tool) = (index, tool)
         (self.version, self.result) = (version, result)
@@ -622,7 +536,5 @@ public struct ApprovalDecision: Codable {
         case decision
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }

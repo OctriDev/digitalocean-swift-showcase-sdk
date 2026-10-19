@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Billing domain models
+// Billing domain models
 /// Typed representation of the `PrepaymentConfig` API schema.
 public struct PrepaymentConfig: Codable {
     /// Maximum spend allowed before the prepayment gate blocks usage. Decimal dollars, e.g. `"100.00"`.
@@ -35,38 +35,31 @@ public struct PrepaymentConfig: Codable {
     }
 
     init() {
-        (spendLimit, isAutoPrepayEnabled, prepayAmount, prepayThreshold, createdAt) = (nil, nil, nil, nil, nil)
-        updatedAt = nil
+        (self.spendLimit, self.isAutoPrepayEnabled, self.prepayAmount, self.prepayThreshold, self.createdAt) = (nil, nil, nil, nil, nil)
+        self.updatedAt = nil
     }
 }
 
-public extension PrepaymentConfig {
-    init(from decoder: Decoder) throws {
+extension PrepaymentConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        spendLimit = try container.sdkDecodeIfPresent(.spendLimit)
-        isAutoPrepayEnabled = try container.sdkDecodeIfPresent(.isAutoPrepayEnabled)
-        prepayAmount = try container.sdkDecodeIfPresent(.prepayAmount)
-        prepayThreshold = try container.sdkDecodeIfPresent(.prepayThreshold)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = createdAt {
+        self.spendLimit = try container.sdkDecodeIfPresent(.spendLimit)
+        self.isAutoPrepayEnabled = try container.sdkDecodeIfPresent(.isAutoPrepayEnabled)
+        self.prepayAmount = try container.sdkDecodeIfPresent(.prepayAmount)
+        self.prepayThreshold = try container.sdkDecodeIfPresent(.prepayThreshold)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension PrepaymentConfig {
-    init(
-        spendLimit: String? = nil,
-        isAutoPrepayEnabled: Bool? = nil,
-        prepayAmount: String? = nil,
-        prepayThreshold: String? = nil,
-        createdAt: Date? = nil,
-        updatedAt: Date? = nil
-    ) throws {
+extension PrepaymentConfig {
+    public init(spendLimit: String? = nil, isAutoPrepayEnabled: Bool? = nil, prepayAmount: String? = nil, prepayThreshold: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) throws {
         self.init()
         (self.spendLimit, self.isAutoPrepayEnabled) = (spendLimit, isAutoPrepayEnabled)
         (self.prepayAmount, self.prepayThreshold) = (prepayAmount, prepayThreshold)
@@ -95,20 +88,20 @@ public struct SimpleCharge: Codable {
     }
 
     init() {
-        (name, amount) = (nil, nil)
+        (self.name, self.amount) = (nil, nil)
     }
 }
 
-public extension SimpleCharge {
-    init(from decoder: Decoder) throws {
+extension SimpleCharge {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        amount = try container.sdkDecodeIfPresent(.amount)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.amount = try container.sdkDecodeIfPresent(.amount)
     }
 }
 
-public extension SimpleCharge {
-    init(name: String? = nil, amount: String? = nil) {
+extension SimpleCharge {
+    public init(name: String? = nil, amount: String? = nil) {
         self.init()
         (self.name, self.amount) = (name, amount)
     }
@@ -127,20 +120,20 @@ public struct PrepaymentConfigResponse: Codable {
     }
 
     init() {
-        (config, status) = (nil, nil)
+        (self.config, self.status) = (nil, nil)
     }
 }
 
-public extension PrepaymentConfigResponse {
-    init(from decoder: Decoder) throws {
+extension PrepaymentConfigResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        config = try container.sdkDecodeIfPresent(.config)
-        status = try container.sdkDecodeIfPresent(.status)
+        self.config = try container.sdkDecodeIfPresent(.config)
+        self.status = try container.sdkDecodeIfPresent(.status)
     }
 }
 
-public extension PrepaymentConfigResponse {
-    init(config: PrepaymentConfig? = nil, status: PrepaymentStatus? = nil) {
+extension PrepaymentConfigResponse {
+    public init(config: PrepaymentConfig? = nil, status: PrepaymentStatus? = nil) {
         self.init()
         (self.config, self.status) = (config, status)
     }
@@ -165,21 +158,21 @@ public struct ProductChargeItem: Codable {
     }
 
     init() {
-        (amount, name, count) = (nil, nil, nil)
+        (self.amount, self.name, self.count) = (nil, nil, nil)
     }
 }
 
-public extension ProductChargeItem {
-    init(from decoder: Decoder) throws {
+extension ProductChargeItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        amount = try container.sdkDecodeIfPresent(.amount)
-        name = try container.sdkDecodeIfPresent(.name)
-        count = try container.sdkDecodeIfPresent(.count)
+        self.amount = try container.sdkDecodeIfPresent(.amount)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.count = try container.sdkDecodeIfPresent(.count)
     }
 }
 
-public extension ProductChargeItem {
-    init(amount: String? = nil, name: String? = nil, count: String? = nil) {
+extension ProductChargeItem {
+    public init(amount: String? = nil, name: String? = nil, count: String? = nil) {
         self.init()
         (self.amount, self.name) = (amount, name)
         self.count = count
@@ -237,43 +230,31 @@ public struct InvoiceItem: Codable {
     }
 
     init() {
-        (product, resourceUuid, resourceId, groupDescription, description) = (nil, nil, nil, nil, nil)
-        (amount, duration, durationUnit, startTime, endTime) = (nil, nil, nil, nil, nil)
-        projectName = nil
+        (self.product, self.resourceUuid, self.resourceId, self.groupDescription, self.description) = (nil, nil, nil, nil, nil)
+        (self.amount, self.duration, self.durationUnit, self.startTime, self.endTime) = (nil, nil, nil, nil, nil)
+        self.projectName = nil
     }
 }
 
-public extension InvoiceItem {
-    init(from decoder: Decoder) throws {
+extension InvoiceItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        product = try container.sdkDecodeIfPresent(.product)
-        resourceUuid = try container.sdkDecodeIfPresent(.resourceUuid)
-        resourceId = try container.sdkDecodeIfPresent(.resourceId)
-        groupDescription = try container.sdkDecodeIfPresent(.groupDescription)
-        description = try container.sdkDecodeIfPresent(.description)
-        amount = try container.sdkDecodeIfPresent(.amount)
-        duration = try container.sdkDecodeIfPresent(.duration)
-        durationUnit = try container.sdkDecodeIfPresent(.durationUnit)
-        startTime = try container.sdkDecodeIfPresent(.startTime)
-        endTime = try container.sdkDecodeIfPresent(.endTime)
-        projectName = try container.sdkDecodeIfPresent(.projectName)
+        self.product = try container.sdkDecodeIfPresent(.product)
+        self.resourceUuid = try container.sdkDecodeIfPresent(.resourceUuid)
+        self.resourceId = try container.sdkDecodeIfPresent(.resourceId)
+        self.groupDescription = try container.sdkDecodeIfPresent(.groupDescription)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.amount = try container.sdkDecodeIfPresent(.amount)
+        self.duration = try container.sdkDecodeIfPresent(.duration)
+        self.durationUnit = try container.sdkDecodeIfPresent(.durationUnit)
+        self.startTime = try container.sdkDecodeIfPresent(.startTime)
+        self.endTime = try container.sdkDecodeIfPresent(.endTime)
+        self.projectName = try container.sdkDecodeIfPresent(.projectName)
     }
 }
 
-public extension InvoiceItem {
-    init(
-        product: String? = nil,
-        resourceUuid: String? = nil,
-        resourceId: String? = nil,
-        groupDescription: String? = nil,
-        description: String? = nil,
-        amount: String? = nil,
-        duration: String? = nil,
-        durationUnit: String? = nil,
-        startTime: String? = nil,
-        endTime: String? = nil,
-        projectName: String? = nil
-    ) {
+extension InvoiceItem {
+    public init(product: String? = nil, resourceUuid: String? = nil, resourceId: String? = nil, groupDescription: String? = nil, description: String? = nil, amount: String? = nil, duration: String? = nil, durationUnit: String? = nil, startTime: String? = nil, endTime: String? = nil, projectName: String? = nil) {
         self.init()
         (self.product, self.resourceUuid) = (product, resourceUuid)
         (self.resourceId, self.groupDescription) = (resourceId, groupDescription)
@@ -292,19 +273,19 @@ public struct BillingHistoryResponseVariant0: Codable {
     }
 
     init() {
-        billingHistory = nil
+        self.billingHistory = nil
     }
 }
 
-public extension BillingHistoryResponseVariant0 {
-    init(from decoder: Decoder) throws {
+extension BillingHistoryResponseVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        billingHistory = try container.sdkDecodeIfPresent(.billingHistory)
+        self.billingHistory = try container.sdkDecodeIfPresent(.billingHistory)
     }
 }
 
-public extension BillingHistoryResponseVariant0 {
-    init(billingHistory: [BillingHistory]? = nil) {
+extension BillingHistoryResponseVariant0 {
+    public init(billingHistory: [BillingHistory]? = nil) {
         self.init()
         self.billingHistory = billingHistory
     }
@@ -332,51 +313,33 @@ public struct BillingInsights: Codable {
         case currentPage = "current_page"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension BillingInsights {
-    init(from decoder: Decoder) throws {
+extension BillingInsights {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.dataPoints) else {
-            throw SdkValidationError(
-                field: "data_points",
-                code: "required",
-                message: "Validation failed for 'data_points': value is required"
-            )
+            throw SdkValidationError(field: "data_points", code: "required", message: "Validation failed for 'data_points': value is required")
         }
         guard container.contains(.totalItems) else {
-            throw SdkValidationError(
-                field: "total_items",
-                code: "required",
-                message: "Validation failed for 'total_items': value is required"
-            )
+            throw SdkValidationError(field: "total_items", code: "required", message: "Validation failed for 'total_items': value is required")
         }
         guard container.contains(.totalPages) else {
-            throw SdkValidationError(
-                field: "total_pages",
-                code: "required",
-                message: "Validation failed for 'total_pages': value is required"
-            )
+            throw SdkValidationError(field: "total_pages", code: "required", message: "Validation failed for 'total_pages': value is required")
         }
         guard container.contains(.currentPage) else {
-            throw SdkValidationError(
-                field: "current_page",
-                code: "required",
-                message: "Validation failed for 'current_page': value is required"
-            )
+            throw SdkValidationError(field: "current_page", code: "required", message: "Validation failed for 'current_page': value is required")
         }
-        dataPoints = try container.sdkDecodeRequired(.dataPoints)
-        totalItems = try container.sdkDecodeRequired(.totalItems)
-        totalPages = try container.sdkDecodeRequired(.totalPages)
-        currentPage = try container.sdkDecodeRequired(.currentPage)
+        self.dataPoints = try container.sdkDecodeRequired(.dataPoints)
+        self.totalItems = try container.sdkDecodeRequired(.totalItems)
+        self.totalPages = try container.sdkDecodeRequired(.totalPages)
+        self.currentPage = try container.sdkDecodeRequired(.currentPage)
     }
 }
 
-public extension BillingInsights {
-    init(dataPoints: [BillingDataPoint], totalItems: Int, totalPages: Int, currentPage: Int) {
+extension BillingInsights {
+    public init(dataPoints: [BillingDataPoint], totalItems: Int, totalPages: Int, currentPage: Int) {
         (self.dataPoints, self.totalItems) = (dataPoints, totalItems)
         (self.totalPages, self.currentPage) = (totalPages, currentPage)
     }
@@ -421,36 +384,27 @@ public struct BillingAddress: Codable {
     }
 
     init() {
-        (addressLine1, addressLine2, city, region, postalCode) = (nil, nil, nil, nil, nil)
-        (countryIso2Code, createdAt, updatedAt) = (nil, nil, nil)
+        (self.addressLine1, self.addressLine2, self.city, self.region, self.postalCode) = (nil, nil, nil, nil, nil)
+        (self.countryIso2Code, self.createdAt, self.updatedAt) = (nil, nil, nil)
     }
 }
 
-public extension BillingAddress {
-    init(from decoder: Decoder) throws {
+extension BillingAddress {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        addressLine1 = try container.sdkDecodeIfPresent(.addressLine1)
-        addressLine2 = try container.sdkDecodeIfPresent(.addressLine2)
-        city = try container.sdkDecodeIfPresent(.city)
-        region = try container.sdkDecodeIfPresent(.region)
-        postalCode = try container.sdkDecodeIfPresent(.postalCode)
-        countryIso2Code = try container.sdkDecodeIfPresent(.countryIso2Code)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.addressLine1 = try container.sdkDecodeIfPresent(.addressLine1)
+        self.addressLine2 = try container.sdkDecodeIfPresent(.addressLine2)
+        self.city = try container.sdkDecodeIfPresent(.city)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.postalCode = try container.sdkDecodeIfPresent(.postalCode)
+        self.countryIso2Code = try container.sdkDecodeIfPresent(.countryIso2Code)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
     }
 }
 
-public extension BillingAddress {
-    init(
-        addressLine1: String? = nil,
-        addressLine2: String? = nil,
-        city: String? = nil,
-        region: String? = nil,
-        postalCode: String? = nil,
-        countryIso2Code: String? = nil,
-        createdAt: String? = nil,
-        updatedAt: String? = nil
-    ) {
+extension BillingAddress {
+    public init(addressLine1: String? = nil, addressLine2: String? = nil, city: String? = nil, region: String? = nil, postalCode: String? = nil, countryIso2Code: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
         self.init()
         (self.addressLine1, self.addressLine2) = (addressLine1, addressLine2)
         (self.city, self.region) = (city, region)
@@ -482,30 +436,25 @@ public struct Balance: Codable {
     }
 
     init() {
-        (monthToDateBalance, accountBalance, monthToDateUsage, generatedAt) = (nil, nil, nil, nil)
+        (self.monthToDateBalance, self.accountBalance, self.monthToDateUsage, self.generatedAt) = (nil, nil, nil, nil)
     }
 }
 
-public extension Balance {
-    init(from decoder: Decoder) throws {
+extension Balance {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        monthToDateBalance = try container.sdkDecodeIfPresent(.monthToDateBalance)
-        accountBalance = try container.sdkDecodeIfPresent(.accountBalance)
-        monthToDateUsage = try container.sdkDecodeIfPresent(.monthToDateUsage)
-        generatedAt = try container.sdkDecodeIfPresent(.generatedAt)
-        if let value = generatedAt {
+        self.monthToDateBalance = try container.sdkDecodeIfPresent(.monthToDateBalance)
+        self.accountBalance = try container.sdkDecodeIfPresent(.accountBalance)
+        self.monthToDateUsage = try container.sdkDecodeIfPresent(.monthToDateUsage)
+        self.generatedAt = try container.sdkDecodeIfPresent(.generatedAt)
+        if let value = self.generatedAt {
             try sdkValidateDateTime("generated_at", sdkWireString(value))
         }
     }
 }
 
-public extension Balance {
-    init(
-        monthToDateBalance: String? = nil,
-        accountBalance: String? = nil,
-        monthToDateUsage: String? = nil,
-        generatedAt: Date? = nil
-    ) throws {
+extension Balance {
+    public init(monthToDateBalance: String? = nil, accountBalance: String? = nil, monthToDateUsage: String? = nil, generatedAt: Date? = nil) throws {
         self.init()
         (self.monthToDateBalance, self.accountBalance) = (monthToDateBalance, accountBalance)
         (self.monthToDateUsage, self.generatedAt) = (monthToDateUsage, generatedAt)
@@ -532,35 +481,24 @@ public struct Invoices: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Invoices {
-    init(from decoder: Decoder) throws {
+extension Invoices {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        invoices = try container.sdkDecodeIfPresent(.invoices)
-        invoicePreview = try container.sdkDecodeIfPresent(.invoicePreview)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.invoices = try container.sdkDecodeIfPresent(.invoices)
+        self.invoicePreview = try container.sdkDecodeIfPresent(.invoicePreview)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension Invoices {
-    init(
-        meta: MetaMeta,
-        invoices: [InvoicePreview]? = nil,
-        invoicePreview: InvoicePreview? = nil,
-        links: PageLinks? = nil
-    ) {
+extension Invoices {
+    public init(meta: MetaMeta, invoices: [InvoicePreview]? = nil, invoicePreview: InvoicePreview? = nil, links: PageLinks? = nil) {
         (self.meta, self.invoices) = (meta, invoices)
         (self.invoicePreview, self.links) = (invoicePreview, links)
     }
@@ -570,10 +508,7 @@ public extension Invoices {
 public struct BillingHistoryType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let achFailure = BillingHistoryType(rawValue: "ACHFailure")
     public static let adjustment = BillingHistoryType(rawValue: "Adjustment")
     public static let attemptFailed = BillingHistoryType(rawValue: "AttemptFailed")
@@ -587,7 +522,7 @@ public struct BillingHistoryType: RawRepresentable, Hashable, Codable, Sendable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

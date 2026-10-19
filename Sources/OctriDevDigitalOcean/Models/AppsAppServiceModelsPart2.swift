@@ -3,23 +3,20 @@
 
 import Foundation
 
-/// AppsAppService domain models
+// AppsAppService domain models
 /// The protocol which the service uses to serve traffic on the http_port. - `HTTP`: The app is serving the HTTP
 /// protocol. Default. - `HTTP2`: The app is serving the HTTP/2 protocol. Currently, this needs to be
 /// implemented in the service by serving HTTP/2 cleartext (h2c).
 public struct AppServiceSpecVariant2Protocol: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let http = AppServiceSpecVariant2Protocol(rawValue: "HTTP")
     public static let http2 = AppServiceSpecVariant2Protocol(rawValue: "HTTP2")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

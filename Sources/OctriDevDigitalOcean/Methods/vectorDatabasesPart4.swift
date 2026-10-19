@@ -6,111 +6,34 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension VectorDatabasesMethods {
-    /// To check the status of a restore operation, send a GET request to
-    /// `/v2/vector-databases/{id}/backups/{backup_id}/restore`. The response body contains the current status of the
-    /// restore.
+extension VectorDatabasesMethods {
+    /// To check the status of a restore operation, send a GET request to `/v2/vector-databases/{id}/backups/{backup_id}/restore`. The response body contains the current status of the restore.
     ///
     /// - Parameters:
     /// - id: Required. ID of the vector database.
     /// - backupId: Required. ID of the backup being restored.
-    static func vectorDatabasesGetRestoreStatus(
-        config: ClientConfig,
-        id: String,
-        backupId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VectordbGetRestoreStatusResponse {
-        try await (sdkRequest(
-            "GET",
-            [
-                "/v2/vector-databases/",
-                sdkEncodePathSegment(sdkWireString(id)),
-                "/backups/",
-                sdkEncodePathSegment(sdkWireString(backupId)),
-                "/restore",
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "vectorDatabases_get_restore_status",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func vectorDatabasesGetRestoreStatus(config: ClientConfig, id: String, backupId: String, requestOptions: RequestOptions? = nil) async throws -> VectordbGetRestoreStatusResponse {
+        return try (await sdkRequest("GET", ["/v2/vector-databases/", sdkEncodePathSegment(sdkWireString(id)), "/backups/", sdkEncodePathSegment(sdkWireString(backupId)), "/restore"].joined(), config: config, decoder: .json, operationId: "vectorDatabases_get_restore_status", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To restore a vector database from a backup, send a POST request to
-    /// `/v2/vector-databases/{id}/backups/{backup_id}/restore`. The restore runs asynchronously; use the restore-status
-    /// endpoint to monitor its progress.
+    /// To restore a vector database from a backup, send a POST request to `/v2/vector-databases/{id}/backups/{backup_id}/restore`. The restore runs asynchronously; use the restore-status endpoint to monitor its progress.
     ///
     /// - Parameters:
     /// - id: Required. ID of the vector database.
     /// - backupId: Required. ID of the backup to restore from.
     /// - backupId2: Required. ID of the backup to restore from.
     /// - id2: Required. ID of the vector database.
-    static func vectorDatabasesPostRestoreBackup(
-        config: ClientConfig,
-        id: String,
-        backupId: String,
-        backupId2: String? = nil,
-        id2: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VectordbRestoreBackupResponse {
+    public static func vectorDatabasesPostRestoreBackup(config: ClientConfig, id: String, backupId: String, backupId2: String? = nil, id2: String? = nil, requestOptions: RequestOptions? = nil) async throws -> VectordbRestoreBackupResponse {
         let requestBody = VectorDatabasesPostRestoreBackupRequestBody(backupId2: backupId2, id2: id2)
 
-        return try await (sdkRequest(
-            "POST",
-            [
-                "/v2/vector-databases/",
-                sdkEncodePathSegment(sdkWireString(id)),
-                "/backups/",
-                sdkEncodePathSegment(sdkWireString(backupId)),
-                "/restore",
-            ].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "vectorDatabases_post_restore_backup",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/vector-databases/", sdkEncodePathSegment(sdkWireString(id)), "/backups/", sdkEncodePathSegment(sdkWireString(backupId)), "/restore"].joined(), config: config, body: requestBody, decoder: .json, operationId: "vectorDatabases_post_restore_backup", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To retrieve the admin credentials for a vector database, send a GET request to
-    /// `/v2/vector-databases/{id}/credentials`. The response body contains the `user_id` and `api_token` for the admin
-    /// user provisioned on the cluster.
+    /// To retrieve the admin credentials for a vector database, send a GET request to `/v2/vector-databases/{id}/credentials`. The response body contains the `user_id` and `api_token` for the admin user provisioned on the cluster.
     ///
     /// - Parameters:
     /// - id: ID of the vector database.
-    static func vectorDatabasesGetCredentials(
-        config: ClientConfig,
-        id: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VectordbGetVectorDBAdminCredentialsResponse {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/vector-databases/", sdkEncodePathSegment(sdkWireString(id)), "/credentials"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "vectorDatabases_get_credentials",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func vectorDatabasesGetCredentials(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> VectordbGetVectorDBAdminCredentialsResponse {
+        return try (await sdkRequest("GET", ["/v2/vector-databases/", sdkEncodePathSegment(sdkWireString(id)), "/credentials"].joined(), config: config, decoder: .json, operationId: "vectorDatabases_get_credentials", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

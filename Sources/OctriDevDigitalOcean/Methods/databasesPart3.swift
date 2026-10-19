@@ -6,97 +6,34 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DatabasesMethods {
-    /// To show information about an existing database cluster, send a GET request to `/v2/databases/$DATABASE_ID`. The
-    /// response will be a JSON object with a database key. This will be set to an object containing the standard
-    /// database cluster attributes. The embedded `connection` and `private_connection` objects will contain the
-    /// information needed to access the database cluster. For multi-node clusters, the `standby_connection` and
-    /// `standby_private_connection` objects contain the information needed to connect to the cluster's standby node(s).
-    /// The embedded maintenance_window object will contain information about any scheduled maintenance for the database
-    /// cluster.
+extension DatabasesMethods {
+    /// To show information about an existing database cluster, send a GET request to `/v2/databases/$DATABASE_ID`. The response will be a JSON object with a database key. This will be set to an object containing the standard database cluster attributes. The embedded `connection` and `private_connection` objects will contain the information needed to access the database cluster. For multi-node clusters, the `standby_connection` and `standby_private_connection` objects contain the information needed to connect to the cluster's standby node(s). The embedded maintenance_window object will contain information about any scheduled maintenance for the database cluster.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    static func databasesGetCluster(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DatabaseClusterResponse {
+    public static func databasesGetCluster(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> DatabaseClusterResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "databases_get_cluster",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid))].joined(), config: config, decoder: .json, operationId: "databases_get_cluster", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To destroy a specific database, send a DELETE request to `/v2/databases/$DATABASE_ID`. A status of 204 will be
-    /// given. This indicates that the request was processed successfully, but that no response body is needed.
+    /// To destroy a specific database, send a DELETE request to `/v2/databases/$DATABASE_ID`. A status of 204 will be given. This indicates that the request was processed successfully, but that no response body is needed.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    static func databasesDestroyCluster(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
+    public static func databasesDestroyCluster(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try await (sdkRequest(
-            "DELETE",
-            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid))].joined(),
-            config: config,
-            decoder: .empty,
-            operationId: "databases_destroy_cluster",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("DELETE", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid))].joined(), config: config, decoder: .empty, operationId: "databases_destroy_cluster", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Shows configuration parameters for an existing database cluster by sending a GET request to
-    /// `/v2/databases/$DATABASE_ID/config`. The response is a JSON object with a `config` key, which is set to an
-    /// object containing any database configuration parameters.
+    /// Shows configuration parameters for an existing database cluster by sending a GET request to `/v2/databases/$DATABASE_ID/config`. The response is a JSON object with a `config` key, which is set to an object containing any database configuration parameters.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    static func databasesGetConfig(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DatabaseConfigResponse {
+    public static func databasesGetConfig(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> DatabaseConfigResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/config"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "databases_get_config",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/config"].joined(), config: config, decoder: .json, operationId: "databases_get_config", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

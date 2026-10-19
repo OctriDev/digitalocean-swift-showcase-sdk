@@ -6,9 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ProjectsMethods {
-    /// To update a project, send a PUT request to `/v2/projects/$PROJECT_ID`. All of the following attributes must be
-    /// sent.
+extension ProjectsMethods {
+    /// To update a project, send a PUT request to `/v2/projects/$PROJECT_ID`. All of the following attributes must be sent.
     ///
     /// - Parameters:
     /// - projectId: A unique identifier for a project.
@@ -26,16 +25,7 @@ public extension ProjectsMethods {
     /// - environment: The environment of the project's resources.
     /// - isDefault: If true, all resources will be added to this project if no
     ///   project is specified.
-    static func projectsUpdate(
-        config: ClientConfig,
-        projectId: String,
-        name: String,
-        description: String,
-        purpose: String,
-        environment: ProjectsUpdateRequestBodyEnvironment,
-        isDefault: Bool,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExistingProject {
+    public static func projectsUpdate(config: ClientConfig, projectId: String, name: String, description: String, purpose: String, environment: ProjectsUpdateRequestBodyEnvironment, isDefault: Bool, requestOptions: RequestOptions? = nil) async throws -> ExistingProject {
         try sdkValidateUuid("project_id", projectId)
 
         try validateLength("name", name, max: 175)
@@ -44,29 +34,8 @@ public extension ProjectsMethods {
 
         try validateLength("purpose", purpose, max: 255)
 
-        let requestBody = ProjectsUpdateRequestBody(
-            name: name,
-            description: description,
-            purpose: purpose,
-            environment: environment,
-            isDefault: isDefault
-        )
+        let requestBody = ProjectsUpdateRequestBody(name: name, description: description, purpose: purpose, environment: environment, isDefault: isDefault)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/projects/", sdkEncodePathSegment(sdkWireString(projectId))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "projects_update",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/projects/", sdkEncodePathSegment(sdkWireString(projectId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "projects_update", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

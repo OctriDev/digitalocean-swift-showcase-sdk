@@ -3,24 +3,24 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiModel domain models
-public extension ApiModelPricingInterval {
-    init(from decoder: Decoder) throws {
+// AgentPlatformAPIApiModel domain models
+extension ApiModelPricingInterval {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        endTime = try container.sdkDecodeIfPresent(.endTime)
-        prices = try container.sdkDecodeIfPresent(.prices)
-        startTime = try container.sdkDecodeIfPresent(.startTime)
-        if let value = endTime {
+        self.endTime = try container.sdkDecodeIfPresent(.endTime)
+        self.prices = try container.sdkDecodeIfPresent(.prices)
+        self.startTime = try container.sdkDecodeIfPresent(.startTime)
+        if let value = self.endTime {
             try sdkValidateDateTime("end_time", sdkWireString(value))
         }
-        if let value = startTime {
+        if let value = self.startTime {
             try sdkValidateDateTime("start_time", sdkWireString(value))
         }
     }
 }
 
-public extension ApiModelPricingInterval {
-    init(endTime: Date? = nil, prices: ApiModelPricing? = nil, startTime: Date? = nil) throws {
+extension ApiModelPricingInterval {
+    public init(endTime: Date? = nil, prices: ApiModelPricing? = nil, startTime: Date? = nil) throws {
         self.init()
         (self.endTime, self.prices) = (endTime, prices)
         self.startTime = startTime
@@ -68,32 +68,25 @@ public struct ApiModelPricingVariant: Codable {
     }
 
     init() {
-        (currency, label, mode, prices, scaledPricing) = (nil, nil, nil, nil, nil)
-        tier = nil
+        (self.currency, self.label, self.mode, self.prices, self.scaledPricing) = (nil, nil, nil, nil, nil)
+        self.tier = nil
     }
 }
 
-public extension ApiModelPricingVariant {
-    init(from decoder: Decoder) throws {
+extension ApiModelPricingVariant {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        currency = try container.sdkDecodeIfPresent(.currency)
-        label = try container.sdkDecodeIfPresent(.label)
-        mode = try container.sdkDecodeIfPresent(.mode)
-        prices = try container.sdkDecodeIfPresent(.prices)
-        scaledPricing = try container.sdkDecodeIfPresent(.scaledPricing)
-        tier = try container.sdkDecodeIfPresent(.tier)
+        self.currency = try container.sdkDecodeIfPresent(.currency)
+        self.label = try container.sdkDecodeIfPresent(.label)
+        self.mode = try container.sdkDecodeIfPresent(.mode)
+        self.prices = try container.sdkDecodeIfPresent(.prices)
+        self.scaledPricing = try container.sdkDecodeIfPresent(.scaledPricing)
+        self.tier = try container.sdkDecodeIfPresent(.tier)
     }
 }
 
-public extension ApiModelPricingVariant {
-    init(
-        currency: String? = nil,
-        label: String? = nil,
-        mode: ApiModelBillingMode? = nil,
-        prices: ApiModelPricing? = nil,
-        scaledPricing: ApiModelScaledPricing? = nil,
-        tier: ApiModelPricingTier? = nil
-    ) {
+extension ApiModelPricingVariant {
+    public init(currency: String? = nil, label: String? = nil, mode: ApiModelBillingMode? = nil, prices: ApiModelPricing? = nil, scaledPricing: ApiModelScaledPricing? = nil, tier: ApiModelPricingTier? = nil) {
         self.init()
         (self.currency, self.label) = (currency, label)
         (self.mode, self.prices) = (mode, prices)
@@ -111,19 +104,19 @@ public struct ApiModelPricingDetail: Codable {
     }
 
     init() {
-        variants = nil
+        self.variants = nil
     }
 }
 
-public extension ApiModelPricingDetail {
-    init(from decoder: Decoder) throws {
+extension ApiModelPricingDetail {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        variants = try container.sdkDecodeIfPresent(.variants)
+        self.variants = try container.sdkDecodeIfPresent(.variants)
     }
 }
 
-public extension ApiModelPricingDetail {
-    init(variants: [ApiModelPricingVariant]? = nil) {
+extension ApiModelPricingDetail {
+    public init(variants: [ApiModelPricingVariant]? = nil) {
         self.init()
         self.variants = variants
     }
@@ -144,20 +137,20 @@ public struct ApiModelModalities: Codable {
     }
 
     init() {
-        (input, output) = (nil, nil)
+        (self.input, self.output) = (nil, nil)
     }
 }
 
-public extension ApiModelModalities {
-    init(from decoder: Decoder) throws {
+extension ApiModelModalities {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        input = try container.sdkDecodeIfPresent(.input)
-        output = try container.sdkDecodeIfPresent(.output)
+        self.input = try container.sdkDecodeIfPresent(.input)
+        self.output = try container.sdkDecodeIfPresent(.output)
     }
 }
 
-public extension ApiModelModalities {
-    init(input: [String]? = nil, output: [String]? = nil) {
+extension ApiModelModalities {
+    public init(input: [String]? = nil, output: [String]? = nil) {
         self.init()
         (self.input, self.output) = (input, output)
     }
@@ -184,21 +177,21 @@ public struct ApiModelEvaluationEpochAttempt: Codable {
     }
 
     init() {
-        (candidateRoutedTask, metricResults, output) = (nil, nil, nil)
+        (self.candidateRoutedTask, self.metricResults, self.output) = (nil, nil, nil)
     }
 }
 
-public extension ApiModelEvaluationEpochAttempt {
-    init(from decoder: Decoder) throws {
+extension ApiModelEvaluationEpochAttempt {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        candidateRoutedTask = try container.sdkDecodeIfPresent(.candidateRoutedTask)
-        metricResults = try container.sdkDecodeIfPresent(.metricResults)
-        output = try container.sdkDecodeIfPresent(.output)
+        self.candidateRoutedTask = try container.sdkDecodeIfPresent(.candidateRoutedTask)
+        self.metricResults = try container.sdkDecodeIfPresent(.metricResults)
+        self.output = try container.sdkDecodeIfPresent(.output)
     }
 }
 
-public extension ApiModelEvaluationEpochAttempt {
-    init(candidateRoutedTask: String? = nil, metricResults: [ApiEvaluationMetricResult]? = nil, output: String? = nil) {
+extension ApiModelEvaluationEpochAttempt {
+    public init(candidateRoutedTask: String? = nil, metricResults: [ApiEvaluationMetricResult]? = nil, output: String? = nil) {
         self.init()
         (self.candidateRoutedTask, self.metricResults) = (candidateRoutedTask, metricResults)
         self.output = output
@@ -321,88 +314,58 @@ public struct ApiModelPublic: Codable {
     }
 
     init() {
-        (agreement, benchmarkScore, capabilities, contextWindow, createdAt) = (nil, nil, nil, nil, nil)
-        (description, endpoints, id, isFoundational, kbDefaultChunkSize) = (nil, nil, nil, nil, nil)
-        (kbMaxChunkSize, kbMinChunkSize, lifecycleStatus, modalities, modelAvailability) = (nil, nil, nil, nil, nil)
-        (name, parameterCount, parentUuid, pricing, provider) = (nil, nil, nil, nil, nil)
-        (reasoningEfforts, settings, thinking, type, updatedAt) = (nil, nil, nil, nil, nil)
-        (uploadComplete, url, uuid, version) = (nil, nil, nil, nil)
+        (self.agreement, self.benchmarkScore, self.capabilities, self.contextWindow, self.createdAt) = (nil, nil, nil, nil, nil)
+        (self.description, self.endpoints, self.id, self.isFoundational, self.kbDefaultChunkSize) = (nil, nil, nil, nil, nil)
+        (self.kbMaxChunkSize, self.kbMinChunkSize, self.lifecycleStatus, self.modalities, self.modelAvailability) = (nil, nil, nil, nil, nil)
+        (self.name, self.parameterCount, self.parentUuid, self.pricing, self.provider) = (nil, nil, nil, nil, nil)
+        (self.reasoningEfforts, self.settings, self.thinking, self.type, self.updatedAt) = (nil, nil, nil, nil, nil)
+        (self.uploadComplete, self.url, self.uuid, self.version) = (nil, nil, nil, nil)
     }
 }
 
-public extension ApiModelPublic {
-    init(from decoder: Decoder) throws {
+extension ApiModelPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agreement = try container.sdkDecodeIfPresent(.agreement)
-        benchmarkScore = try container.sdkDecodeIfPresent(.benchmarkScore)
-        capabilities = try container.sdkDecodeIfPresent(.capabilities)
-        contextWindow = try container.sdkDecodeIfPresent(.contextWindow)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        description = try container.sdkDecodeIfPresent(.description)
-        endpoints = try container.sdkDecodeIfPresent(.endpoints)
-        id = try container.sdkDecodeIfPresent(.id)
-        isFoundational = try container.sdkDecodeIfPresent(.isFoundational)
-        kbDefaultChunkSize = try container.sdkDecodeIfPresent(.kbDefaultChunkSize)
-        kbMaxChunkSize = try container.sdkDecodeIfPresent(.kbMaxChunkSize)
-        kbMinChunkSize = try container.sdkDecodeIfPresent(.kbMinChunkSize)
-        lifecycleStatus = try container.sdkDecodeIfPresent(.lifecycleStatus)
-        modalities = try container.sdkDecodeIfPresent(.modalities)
-        modelAvailability = try container.sdkDecodeIfPresent(.modelAvailability)
-        name = try container.sdkDecodeIfPresent(.name)
-        parameterCount = try container.sdkDecodeIfPresent(.parameterCount)
-        parentUuid = try container.sdkDecodeIfPresent(.parentUuid)
-        pricing = try container.sdkDecodeIfPresent(.pricing)
-        provider = try container.sdkDecodeIfPresent(.provider)
-        reasoningEfforts = try container.sdkDecodeIfPresent(.reasoningEfforts)
-        settings = try container.sdkDecodeIfPresent(.settings)
-        thinking = try container.sdkDecodeIfPresent(.thinking)
-        type = try container.sdkDecodeIfPresent(.type)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        uploadComplete = try container.sdkDecodeIfPresent(.uploadComplete)
-        url = try container.sdkDecodeIfPresent(.url)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
-        version = try container.sdkDecodeIfPresent(.version)
-        if let value = createdAt {
+        self.agreement = try container.sdkDecodeIfPresent(.agreement)
+        self.benchmarkScore = try container.sdkDecodeIfPresent(.benchmarkScore)
+        self.capabilities = try container.sdkDecodeIfPresent(.capabilities)
+        self.contextWindow = try container.sdkDecodeIfPresent(.contextWindow)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.endpoints = try container.sdkDecodeIfPresent(.endpoints)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.isFoundational = try container.sdkDecodeIfPresent(.isFoundational)
+        self.kbDefaultChunkSize = try container.sdkDecodeIfPresent(.kbDefaultChunkSize)
+        self.kbMaxChunkSize = try container.sdkDecodeIfPresent(.kbMaxChunkSize)
+        self.kbMinChunkSize = try container.sdkDecodeIfPresent(.kbMinChunkSize)
+        self.lifecycleStatus = try container.sdkDecodeIfPresent(.lifecycleStatus)
+        self.modalities = try container.sdkDecodeIfPresent(.modalities)
+        self.modelAvailability = try container.sdkDecodeIfPresent(.modelAvailability)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.parameterCount = try container.sdkDecodeIfPresent(.parameterCount)
+        self.parentUuid = try container.sdkDecodeIfPresent(.parentUuid)
+        self.pricing = try container.sdkDecodeIfPresent(.pricing)
+        self.provider = try container.sdkDecodeIfPresent(.provider)
+        self.reasoningEfforts = try container.sdkDecodeIfPresent(.reasoningEfforts)
+        self.settings = try container.sdkDecodeIfPresent(.settings)
+        self.thinking = try container.sdkDecodeIfPresent(.thinking)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.uploadComplete = try container.sdkDecodeIfPresent(.uploadComplete)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        self.version = try container.sdkDecodeIfPresent(.version)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApiModelPublic {
-    init(
-        agreement: ApiAgreement? = nil,
-        benchmarkScore: [String: JSONValue]? = nil,
-        capabilities: [String]? = nil,
-        contextWindow: String? = nil,
-        createdAt: Date? = nil,
-        description: String? = nil,
-        endpoints: [ApiModelEndpoint]? = nil,
-        id: String? = nil,
-        isFoundational: Bool? = nil,
-        kbDefaultChunkSize: Int? = nil,
-        kbMaxChunkSize: Int? = nil,
-        kbMinChunkSize: Int? = nil,
-        lifecycleStatus: String? = nil,
-        modalities: ApiModelModalities? = nil,
-        modelAvailability: String? = nil,
-        name: String? = nil,
-        parameterCount: Double? = nil,
-        parentUuid: String? = nil,
-        pricing: ApiModelPricing? = nil,
-        provider: ApiModelProvider? = nil,
-        reasoningEfforts: [String]? = nil,
-        settings: [ApiModelSetting]? = nil,
-        thinking: Bool? = nil,
-        type: String? = nil,
-        updatedAt: Date? = nil,
-        uploadComplete: Bool? = nil,
-        url: String? = nil,
-        uuid: String? = nil,
-        version: ApiModelVersion? = nil
-    ) throws {
+extension ApiModelPublic {
+    public init(agreement: ApiAgreement? = nil, benchmarkScore: [String: JSONValue]? = nil, capabilities: [String]? = nil, contextWindow: String? = nil, createdAt: Date? = nil, description: String? = nil, endpoints: [ApiModelEndpoint]? = nil, id: String? = nil, isFoundational: Bool? = nil, kbDefaultChunkSize: Int? = nil, kbMaxChunkSize: Int? = nil, kbMinChunkSize: Int? = nil, lifecycleStatus: String? = nil, modalities: ApiModelModalities? = nil, modelAvailability: String? = nil, name: String? = nil, parameterCount: Double? = nil, parentUuid: String? = nil, pricing: ApiModelPricing? = nil, provider: ApiModelProvider? = nil, reasoningEfforts: [String]? = nil, settings: [ApiModelSetting]? = nil, thinking: Bool? = nil, type: String? = nil, updatedAt: Date? = nil, uploadComplete: Bool? = nil, url: String? = nil, uuid: String? = nil, version: ApiModelVersion? = nil) throws {
         self.init()
         (self.agreement, self.benchmarkScore) = (agreement, benchmarkScore)
         (self.capabilities, self.contextWindow) = (capabilities, contextWindow)
@@ -459,38 +422,31 @@ public struct ApiModelAPIKeyInfo: Codable {
     }
 
     init() {
-        (createdAt, createdBy, deletedAt, name, secretKey) = (nil, nil, nil, nil, nil)
-        uuid = nil
+        (self.createdAt, self.createdBy, self.deletedAt, self.name, self.secretKey) = (nil, nil, nil, nil, nil)
+        self.uuid = nil
     }
 }
 
-public extension ApiModelAPIKeyInfo {
-    init(from decoder: Decoder) throws {
+extension ApiModelAPIKeyInfo {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        createdBy = try container.sdkDecodeIfPresent(.createdBy)
-        deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
-        name = try container.sdkDecodeIfPresent(.name)
-        secretKey = try container.sdkDecodeIfPresent(.secretKey)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
-        if let value = createdAt {
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.createdBy = try container.sdkDecodeIfPresent(.createdBy)
+        self.deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.secretKey = try container.sdkDecodeIfPresent(.secretKey)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = deletedAt {
+        if let value = self.deletedAt {
             try sdkValidateDateTime("deleted_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApiModelAPIKeyInfo {
-    init(
-        createdAt: Date? = nil,
-        createdBy: String? = nil,
-        deletedAt: Date? = nil,
-        name: String? = nil,
-        secretKey: String? = nil,
-        uuid: String? = nil
-    ) throws {
+extension ApiModelAPIKeyInfo {
+    public init(createdAt: Date? = nil, createdBy: String? = nil, deletedAt: Date? = nil, name: String? = nil, secretKey: String? = nil, uuid: String? = nil) throws {
         self.init()
         (self.createdAt, self.createdBy) = (createdAt, createdBy)
         (self.deletedAt, self.name) = (deletedAt, name)

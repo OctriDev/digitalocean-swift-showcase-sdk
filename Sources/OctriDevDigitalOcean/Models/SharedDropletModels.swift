@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// SharedDroplet domain models
+// SharedDroplet domain models
 /// Typed representation of the `Droplet` API schema.
 public struct Droplet: Codable {
     /// A unique identifier for each Droplet instance. This is automatically generated upon Droplet creation.
@@ -106,78 +106,43 @@ public struct Droplet: Codable {
         case gpuInfo = "gpu_info"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Droplet {
-    init(from decoder: Decoder) throws {
+extension Droplet {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeRequired(.id)
-        name = try container.sdkDecodeRequired(.name)
-        memory = try container.sdkDecodeRequired(.memory)
-        vcpus = try container.sdkDecodeRequired(.vcpus)
-        disk = try container.sdkDecodeRequired(.disk)
-        locked = try container.sdkDecodeRequired(.locked)
-        status = try container.sdkDecodeRequired(.status)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        features = try container.sdkDecodeRequired(.features)
-        backupIds = try container.sdkDecodeRequired(.backupIds)
-        nextBackupWindow = try container.sdkDecodeNullable(.nextBackupWindow)
-        snapshotIds = try container.sdkDecodeRequired(.snapshotIds)
-        image = try container.sdkDecodeRequired(.image)
-        volumeIds = try container.sdkDecodeRequired(.volumeIds)
-        size = try container.sdkDecodeRequired(.size)
-        sizeSlug = try container.sdkDecodeRequired(.sizeSlug)
-        networks = try container.sdkDecodeRequired(.networks)
-        region = try container.sdkDecodeRequired(.region)
-        tags = try container.sdkDecodeRequired(.tags)
-        diskInfo = try container.sdkDecodeIfPresent(.diskInfo)
-        kernel = try container.sdkDecodeIfPresent(.kernel)
-        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
-        gpuInfo = try container.sdkDecodeIfPresent(.gpuInfo)
-        try validateRange(
-            "memory",
-            Double(memory),
-            min: nil,
-            max: nil,
-            exclusiveMin: nil,
-            exclusiveMax: nil,
-            multipleOf: 8
-        )
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.id = try container.sdkDecodeRequired(.id)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.memory = try container.sdkDecodeRequired(.memory)
+        self.vcpus = try container.sdkDecodeRequired(.vcpus)
+        self.disk = try container.sdkDecodeRequired(.disk)
+        self.locked = try container.sdkDecodeRequired(.locked)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.features = try container.sdkDecodeRequired(.features)
+        self.backupIds = try container.sdkDecodeRequired(.backupIds)
+        self.nextBackupWindow = try container.sdkDecodeNullable(.nextBackupWindow)
+        self.snapshotIds = try container.sdkDecodeRequired(.snapshotIds)
+        self.image = try container.sdkDecodeRequired(.image)
+        self.volumeIds = try container.sdkDecodeRequired(.volumeIds)
+        self.size = try container.sdkDecodeRequired(.size)
+        self.sizeSlug = try container.sdkDecodeRequired(.sizeSlug)
+        self.networks = try container.sdkDecodeRequired(.networks)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.tags = try container.sdkDecodeRequired(.tags)
+        self.diskInfo = try container.sdkDecodeIfPresent(.diskInfo)
+        self.kernel = try container.sdkDecodeIfPresent(.kernel)
+        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        self.subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
+        self.gpuInfo = try container.sdkDecodeIfPresent(.gpuInfo)
+            try validateRange("memory", Double(self.memory), min: nil, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: 8)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension Droplet {
-    init(
-        id: Int,
-        name: String,
-        memory: Int,
-        vcpus: Int,
-        disk: Int,
-        locked: Bool,
-        status: DropletStatus,
-        createdAt: Date,
-        features: [String],
-        backupIds: [Int],
-        nextBackupWindow: DropletNextBackupWindow?,
-        snapshotIds: [Int],
-        image: Image,
-        volumeIds: [String],
-        size: Size,
-        sizeSlug: String,
-        networks: DropletNetworks,
-        region: Region,
-        tags: [String],
-        diskInfo: [DiskInfo]? = nil,
-        kernel: Kernel? = nil,
-        vpcUuid: String? = nil,
-        subnetUuid: String? = nil,
-        gpuInfo: GpuInfo? = nil
-    ) throws {
+extension Droplet {
+    public init(id: Int, name: String, memory: Int, vcpus: Int, disk: Int, locked: Bool, status: DropletStatus, createdAt: Date, features: [String], backupIds: [Int], nextBackupWindow: DropletNextBackupWindow?, snapshotIds: [Int], image: Image, volumeIds: [String], size: Size, sizeSlug: String, networks: DropletNetworks, region: Region, tags: [String], diskInfo: [DiskInfo]? = nil, kernel: Kernel? = nil, vpcUuid: String? = nil, subnetUuid: String? = nil, gpuInfo: GpuInfo? = nil) throws {
         (self.id, self.name) = (id, name)
         (self.memory, self.vcpus) = (memory, vcpus)
         (self.disk, self.locked) = (disk, locked)
@@ -190,18 +155,14 @@ public extension Droplet {
         (self.tags, self.diskInfo) = (tags, diskInfo)
         (self.kernel, self.vpcUuid) = (kernel, vpcUuid)
         (self.subnetUuid, self.gpuInfo) = (subnetUuid, gpuInfo)
-        try validateRange(
-            "memory",
-            Double(self.memory),
-            min: nil,
-            max: nil,
-            exclusiveMin: nil,
-            exclusiveMax: nil,
-            multipleOf: 8
-        )
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try validateRange("memory", Double(self.memory), min: nil, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: 8)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
+
+
+
+
 
 /// Typed representation of the `DropletBackupPolicy` API schema.
 public struct DropletBackupPolicy: Codable {
@@ -229,35 +190,33 @@ public struct DropletBackupPolicy: Codable {
     }
 
     init() {
-        (plan, weekday, hour, windowLengthHours, retentionPeriodDays) = (nil, nil, nil, nil, nil)
+        (self.plan, self.weekday, self.hour, self.windowLengthHours, self.retentionPeriodDays) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension DropletBackupPolicy {
-    init(from decoder: Decoder) throws {
+extension DropletBackupPolicy {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        plan = try container.sdkDecodeIfPresent(.plan)
-        weekday = try container.sdkDecodeIfPresent(.weekday)
-        hour = try container.sdkDecodeIfPresent(.hour)
-        windowLengthHours = try container.sdkDecodeIfPresent(.windowLengthHours)
-        retentionPeriodDays = try container.sdkDecodeIfPresent(.retentionPeriodDays)
+        self.plan = try container.sdkDecodeIfPresent(.plan)
+        self.weekday = try container.sdkDecodeIfPresent(.weekday)
+        self.hour = try container.sdkDecodeIfPresent(.hour)
+        self.windowLengthHours = try container.sdkDecodeIfPresent(.windowLengthHours)
+        self.retentionPeriodDays = try container.sdkDecodeIfPresent(.retentionPeriodDays)
     }
 }
 
-public extension DropletBackupPolicy {
-    init(
-        plan: DropletBackupPolicyPlan? = nil,
-        weekday: DropletBackupPolicyWeekday? = nil,
-        hour: Int? = nil,
-        windowLengthHours: Int? = nil,
-        retentionPeriodDays: Int? = nil
-    ) {
+extension DropletBackupPolicy {
+    public init(plan: DropletBackupPolicyPlan? = nil, weekday: DropletBackupPolicyWeekday? = nil, hour: Int? = nil, windowLengthHours: Int? = nil, retentionPeriodDays: Int? = nil) {
         self.init()
         (self.plan, self.weekday) = (plan, weekday)
         (self.hour, self.windowLengthHours) = (hour, windowLengthHours)
         self.retentionPeriodDays = retentionPeriodDays
     }
 }
+
+
+
+
 
 /// An object specifying the backup policy for the Droplet. If omitted and `backups` is `true`, the backup plan will
 /// default to daily.
@@ -278,25 +237,21 @@ public struct DropletBackupPolicyRequest: Codable {
     }
 
     init() {
-        (plan, weekday, hour) = (nil, nil, nil)
+        (self.plan, self.weekday, self.hour) = (nil, nil, nil)
     }
 }
 
-public extension DropletBackupPolicyRequest {
-    init(from decoder: Decoder) throws {
+extension DropletBackupPolicyRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        plan = try container.sdkDecodeIfPresent(.plan)
-        weekday = try container.sdkDecodeIfPresent(.weekday)
-        hour = try container.sdkDecodeIfPresent(.hour)
+        self.plan = try container.sdkDecodeIfPresent(.plan)
+        self.weekday = try container.sdkDecodeIfPresent(.weekday)
+        self.hour = try container.sdkDecodeIfPresent(.hour)
     }
 }
 
-public extension DropletBackupPolicyRequest {
-    init(
-        plan: DropletBackupPolicyRequestPlan? = nil,
-        weekday: DropletBackupPolicyRequestWeekday? = nil,
-        hour: Int? = nil
-    ) {
+extension DropletBackupPolicyRequest {
+    public init(plan: DropletBackupPolicyRequestPlan? = nil, weekday: DropletBackupPolicyRequestWeekday? = nil, hour: Int? = nil) {
         self.init()
         (self.plan, self.weekday) = (plan, weekday)
         self.hour = hour
@@ -320,26 +275,26 @@ public struct DropletNextBackupWindow: Codable {
     }
 
     init() {
-        (start, end) = (nil, nil)
+        (self.start, self.end) = (nil, nil)
     }
 }
 
-public extension DropletNextBackupWindow {
-    init(from decoder: Decoder) throws {
+extension DropletNextBackupWindow {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        start = try container.sdkDecodeIfPresent(.start)
-        end = try container.sdkDecodeIfPresent(.end)
-        if let value = start {
+        self.start = try container.sdkDecodeIfPresent(.start)
+        self.end = try container.sdkDecodeIfPresent(.end)
+        if let value = self.start {
             try sdkValidateDateTime("start", sdkWireString(value))
         }
-        if let value = end {
+        if let value = self.end {
             try sdkValidateDateTime("end", sdkWireString(value))
         }
     }
 }
 
-public extension DropletNextBackupWindow {
-    init(start: Date? = nil, end: Date? = nil) throws {
+extension DropletNextBackupWindow {
+    public init(start: Date? = nil, end: Date? = nil) throws {
         self.init()
         (self.start, self.end) = (start, end)
         if let value = self.start {
@@ -367,20 +322,20 @@ public struct DropletNetworks: Codable {
     }
 
     init() {
-        (v4, v6) = (nil, nil)
+        (self.v4, self.v6) = (nil, nil)
     }
 }
 
-public extension DropletNetworks {
-    init(from decoder: Decoder) throws {
+extension DropletNetworks {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        v4 = try container.sdkDecodeIfPresent(.v4)
-        v6 = try container.sdkDecodeIfPresent(.v6)
+        self.v4 = try container.sdkDecodeIfPresent(.v4)
+        self.v6 = try container.sdkDecodeIfPresent(.v6)
     }
 }
 
-public extension DropletNetworks {
-    init(v4: [NetworkV4]? = nil, v6: [NetworkV6]? = nil) {
+extension DropletNetworks {
+    public init(v4: [NetworkV4]? = nil, v6: [NetworkV6]? = nil) {
         self.init()
         (self.v4, self.v6) = (v4, v6)
     }
@@ -390,10 +345,7 @@ public extension DropletNetworks {
 public struct DropletBackupPolicyWeekday: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let sun = DropletBackupPolicyWeekday(rawValue: "SUN")
     public static let mon = DropletBackupPolicyWeekday(rawValue: "MON")
     public static let tue = DropletBackupPolicyWeekday(rawValue: "TUE")
@@ -404,7 +356,7 @@ public struct DropletBackupPolicyWeekday: RawRepresentable, Hashable, Codable, S
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -417,16 +369,13 @@ public struct DropletBackupPolicyWeekday: RawRepresentable, Hashable, Codable, S
 public struct DropletBackupPolicyPlan: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let daily = DropletBackupPolicyPlan(rawValue: "daily")
     public static let weekly = DropletBackupPolicyPlan(rawValue: "weekly")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -439,16 +388,13 @@ public struct DropletBackupPolicyPlan: RawRepresentable, Hashable, Codable, Send
 public struct DropletBackupPolicyRequestPlan: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let daily = DropletBackupPolicyRequestPlan(rawValue: "daily")
     public static let weekly = DropletBackupPolicyRequestPlan(rawValue: "weekly")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -462,10 +408,7 @@ public struct DropletBackupPolicyRequestPlan: RawRepresentable, Hashable, Codabl
 public struct DropletStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let new = DropletStatus(rawValue: "new")
     public static let active = DropletStatus(rawValue: "active")
     public static let off = DropletStatus(rawValue: "off")
@@ -473,7 +416,7 @@ public struct DropletStatus: RawRepresentable, Hashable, Codable, Sendable, SdkW
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -486,10 +429,7 @@ public struct DropletStatus: RawRepresentable, Hashable, Codable, Sendable, SdkW
 public struct DropletBackupPolicyRequestWeekday: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let sun = DropletBackupPolicyRequestWeekday(rawValue: "SUN")
     public static let mon = DropletBackupPolicyRequestWeekday(rawValue: "MON")
     public static let tue = DropletBackupPolicyRequestWeekday(rawValue: "TUE")
@@ -500,7 +440,7 @@ public struct DropletBackupPolicyRequestWeekday: RawRepresentable, Hashable, Cod
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

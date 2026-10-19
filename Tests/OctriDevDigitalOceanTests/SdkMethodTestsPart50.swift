@@ -17,8 +17,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.deleteSink(
-                sinkUuid: decoded("\"78b172b6-52c3-4a4b-96d5-78d3f1a0b18c\"")
-            )
+            sinkUuid: decoded("\"78b172b6-52c3-4a4b-96d5-78d3f1a0b18c\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -63,8 +63,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getAlertPolicy(
-                alertUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
-            )
+            alertUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -80,8 +80,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetAppCpuPercentageMetricsMonitoringGetAppCpuPercentageMetricsReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetAppCpuPercentageMetricsMonitoringGetAppCpuPercentageMetricsReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -102,8 +101,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetAppCpuPercentageMetricsMonitoringGetAppCpuPercenX7c5d526dfbReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetAppCpuPercentageMetricsMonitoringGetAppCpuPercenX7c5d526dfbReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -114,11 +112,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getAppCpuPercentageMetrics(
-                appId: decoded("\"2db3c021-15ad-4088-bfe8-99dc972b9cf6\""),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\""),
-                appComponent: decoded("\"sample-application\"")
-            )
+            appId: decoded("\"2db3c021-15ad-4088-bfe8-99dc972b9cf6\""),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\""),
+            appComponent: decoded("\"sample-application\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -134,8 +132,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetAppMemoryPercentageMetricsMonitoringGetAppMemoryX8c752ac5a3ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetAppMemoryPercentageMetricsMonitoringGetAppMemoryX8c752ac5a3ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -156,8 +153,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetAppMemoryPercentageMetricsMonitoringGetAppMemoryX8d00aa23e3ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetAppMemoryPercentageMetricsMonitoringGetAppMemoryX8d00aa23e3ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -168,11 +164,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getAppMemoryPercentageMetrics(
-                appId: decoded("\"2db3c021-15ad-4088-bfe8-99dc972b9cf6\""),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\""),
-                appComponent: decoded("\"sample-application\"")
-            )
+            appId: decoded("\"2db3c021-15ad-4088-bfe8-99dc972b9cf6\""),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\""),
+            appComponent: decoded("\"sample-application\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -188,8 +184,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetAppRestartCountMetricsYmlMonitoringGetAppRestartX7735ae75f2ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetAppRestartCountMetricsYmlMonitoringGetAppRestartX7735ae75f2ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -210,8 +205,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetAppRestartCountMetricsYmlMonitoringGetAppRestartX718bf02570ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetAppRestartCountMetricsYmlMonitoringGetAppRestartX718bf02570ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -222,11 +216,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getAppRestartCountMetricsYml(
-                appId: decoded("\"2db3c021-15ad-4088-bfe8-99dc972b9cf6\""),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\""),
-                appComponent: decoded("\"sample-application\"")
-            )
+            appId: decoded("\"2db3c021-15ad-4088-bfe8-99dc972b9cf6\""),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\""),
+            appComponent: decoded("\"sample-application\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -242,8 +236,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetDatabaseMysqlCpuUsageMonitoringGetDatabaseMysqlCpuUsageReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlCpuUsageMonitoringGetDatabaseMysqlCpuUsageReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -264,8 +257,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetDatabaseMysqlCpuUsageMonitoringGetDatabaseMysqlCpuUsage401ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlCpuUsageMonitoringGetDatabaseMysqlCpuUsage401ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -276,11 +268,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getDatabaseMysqlCpuUsage(
-                dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                aggregate: decoded("\"avg\""),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\"")
-            )
+            dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            aggregate: decoded("\"avg\""),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -296,8 +288,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetDatabaseMysqlDiskUsageMonitoringGetDatabaseMysqlDiskUsageReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlDiskUsageMonitoringGetDatabaseMysqlDiskUsageReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -318,8 +309,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetDatabaseMysqlDiskUsageMonitoringGetDatabaseMysqlXa4dafa86c7ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlDiskUsageMonitoringGetDatabaseMysqlXa4dafa86c7ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -330,11 +320,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getDatabaseMysqlDiskUsage(
-                dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                aggregate: decoded("\"avg\""),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\"")
-            )
+            dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            aggregate: decoded("\"avg\""),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -350,8 +340,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetDatabaseMysqlIndexVsSequentialReadsMonitoringGetX5862a715a6ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlIndexVsSequentialReadsMonitoringGetX5862a715a6ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -371,8 +360,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetDatabaseMysqlIndexVsSequentialReadsMonitoringGetXe6a249b3f8ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlIndexVsSequentialReadsMonitoringGetXe6a249b3f8ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -383,10 +371,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getDatabaseMysqlIndexVsSequentialReads(
-                dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\"")
-            )
+            dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -424,8 +412,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetDatabaseMysqlLoadMonitoringGetDatabaseMysqlLoad401ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlLoadMonitoringGetDatabaseMysqlLoad401ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -436,12 +423,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getDatabaseMysqlLoad(
-                dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                metric: decoded("\"load1\""),
-                aggregate: decoded("\"avg\""),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\"")
-            )
+            dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            metric: decoded("\"load1\""),
+            aggregate: decoded("\"avg\""),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -457,8 +444,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetDatabaseMysqlMemoryUsageMonitoringGetDatabaseMysX0da089ebbeReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlMemoryUsageMonitoringGetDatabaseMysX0da089ebbeReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -479,8 +465,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetDatabaseMysqlMemoryUsageMonitoringGetDatabaseMysX57c5ef39b5ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlMemoryUsageMonitoringGetDatabaseMysX57c5ef39b5ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -491,11 +476,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getDatabaseMysqlMemoryUsage(
-                dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                aggregate: decoded("\"avg\""),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\"")
-            )
+            dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            aggregate: decoded("\"avg\""),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -511,8 +496,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetDatabaseMysqlOpRatesMonitoringGetDatabaseMysqlOpRatesReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlOpRatesMonitoringGetDatabaseMysqlOpRatesReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DatabasesKafka domain models
+// DatabasesKafka domain models
 /// Typed representation of the `KafkaTopicBase` API schema.
 public struct KafkaTopicBase: Codable {
     /// The name of the Kafka topic.
@@ -23,21 +23,21 @@ public struct KafkaTopicBase: Codable {
     }
 
     init() {
-        (name, replicationFactor, partitionCount) = (nil, nil, nil)
+        (self.name, self.replicationFactor, self.partitionCount) = (nil, nil, nil)
     }
 }
 
-public extension KafkaTopicBase {
-    init(from decoder: Decoder) throws {
+extension KafkaTopicBase {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        replicationFactor = try container.sdkDecodeIfPresent(.replicationFactor)
-        partitionCount = try container.sdkDecodeIfPresent(.partitionCount)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.replicationFactor = try container.sdkDecodeIfPresent(.replicationFactor)
+        self.partitionCount = try container.sdkDecodeIfPresent(.partitionCount)
     }
 }
 
-public extension KafkaTopicBase {
-    init(name: String? = nil, replicationFactor: Int? = nil, partitionCount: Int? = nil) {
+extension KafkaTopicBase {
+    public init(name: String? = nil, replicationFactor: Int? = nil, partitionCount: Int? = nil) {
         self.init()
         (self.name, self.replicationFactor) = (name, replicationFactor)
         self.partitionCount = partitionCount
@@ -69,29 +69,23 @@ public struct KafkaTopicPartition: Codable {
     }
 
     init() {
-        (size, id, inSyncReplicas, earliestOffset, consumerGroups) = (nil, nil, nil, nil, nil)
+        (self.size, self.id, self.inSyncReplicas, self.earliestOffset, self.consumerGroups) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension KafkaTopicPartition {
-    init(from decoder: Decoder) throws {
+extension KafkaTopicPartition {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        size = try container.sdkDecodeIfPresent(.size)
-        id = try container.sdkDecodeIfPresent(.id)
-        inSyncReplicas = try container.sdkDecodeIfPresent(.inSyncReplicas)
-        earliestOffset = try container.sdkDecodeIfPresent(.earliestOffset)
-        consumerGroups = try container.sdkDecodeIfPresent(.consumerGroups)
+        self.size = try container.sdkDecodeIfPresent(.size)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.inSyncReplicas = try container.sdkDecodeIfPresent(.inSyncReplicas)
+        self.earliestOffset = try container.sdkDecodeIfPresent(.earliestOffset)
+        self.consumerGroups = try container.sdkDecodeIfPresent(.consumerGroups)
     }
 }
 
-public extension KafkaTopicPartition {
-    init(
-        size: Int? = nil,
-        id: Int? = nil,
-        inSyncReplicas: Int? = nil,
-        earliestOffset: Int? = nil,
-        consumerGroups: [KafkaTopicPartitionConsumerGroupsItem]? = nil
-    ) {
+extension KafkaTopicPartition {
+    public init(size: Int? = nil, id: Int? = nil, inSyncReplicas: Int? = nil, earliestOffset: Int? = nil, consumerGroups: [KafkaTopicPartitionConsumerGroupsItem]? = nil) {
         self.init()
         (self.size, self.id) = (size, id)
         (self.inSyncReplicas, self.earliestOffset) = (inSyncReplicas, earliestOffset)
@@ -109,19 +103,19 @@ public struct KafkaTopics: Codable {
     }
 
     init() {
-        topics = nil
+        self.topics = nil
     }
 }
 
-public extension KafkaTopics {
-    init(from decoder: Decoder) throws {
+extension KafkaTopics {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        topics = try container.sdkDecodeIfPresent(.topics)
+        self.topics = try container.sdkDecodeIfPresent(.topics)
     }
 }
 
-public extension KafkaTopics {
-    init(topics: [KafkaTopic]? = nil) {
+extension KafkaTopics {
+    public init(topics: [KafkaTopic]? = nil) {
         self.init()
         self.topics = topics
     }
@@ -137,19 +131,19 @@ public struct KafkaSchemas: Codable {
     }
 
     init() {
-        subjects = nil
+        self.subjects = nil
     }
 }
 
-public extension KafkaSchemas {
-    init(from decoder: Decoder) throws {
+extension KafkaSchemas {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        subjects = try container.sdkDecodeIfPresent(.subjects)
+        self.subjects = try container.sdkDecodeIfPresent(.subjects)
     }
 }
 
-public extension KafkaSchemas {
-    init(subjects: [KafkaSchemaVerbose]? = nil) {
+extension KafkaSchemas {
+    public init(subjects: [KafkaSchemaVerbose]? = nil) {
         self.init()
         self.subjects = subjects
     }
@@ -173,21 +167,21 @@ public struct KafkaTopicUpdate: Codable {
     }
 
     init() {
-        (replicationFactor, partitionCount, config) = (nil, nil, nil)
+        (self.replicationFactor, self.partitionCount, self.config) = (nil, nil, nil)
     }
 }
 
-public extension KafkaTopicUpdate {
-    init(from decoder: Decoder) throws {
+extension KafkaTopicUpdate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        replicationFactor = try container.sdkDecodeIfPresent(.replicationFactor)
-        partitionCount = try container.sdkDecodeIfPresent(.partitionCount)
-        config = try container.sdkDecodeIfPresent(.config)
+        self.replicationFactor = try container.sdkDecodeIfPresent(.replicationFactor)
+        self.partitionCount = try container.sdkDecodeIfPresent(.partitionCount)
+        self.config = try container.sdkDecodeIfPresent(.config)
     }
 }
 
-public extension KafkaTopicUpdate {
-    init(replicationFactor: Int? = nil, partitionCount: Int? = nil, config: KafkaTopicConfig? = nil) {
+extension KafkaTopicUpdate {
+    public init(replicationFactor: Int? = nil, partitionCount: Int? = nil, config: KafkaTopicConfig? = nil) {
         self.init()
         (self.replicationFactor, self.partitionCount) = (replicationFactor, partitionCount)
         self.config = config
@@ -302,127 +296,55 @@ public struct KafkaTopicConfig: Codable {
     }
 
     init() {
-        (cleanupPolicy, compressionType, deleteRetentionMs, fileDeleteDelayMs, flushMessages) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        (flushMs, indexIntervalBytes, maxCompactionLagMs, maxMessageBytes, messageDownConversionEnable) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        (messageFormatVersion, messageTimestampType, minCleanableDirtyRatio, minCompactionLagMs, minInsyncReplicas) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        (preallocate, retentionBytes, retentionMs, segmentBytes, segmentJitterMs) = (nil, nil, nil, nil, nil)
-        segmentMs = nil
+        (self.cleanupPolicy, self.compressionType, self.deleteRetentionMs, self.fileDeleteDelayMs, self.flushMessages) = (nil, nil, nil, nil, nil)
+        (self.flushMs, self.indexIntervalBytes, self.maxCompactionLagMs, self.maxMessageBytes, self.messageDownConversionEnable) = (nil, nil, nil, nil, nil)
+        (self.messageFormatVersion, self.messageTimestampType, self.minCleanableDirtyRatio, self.minCompactionLagMs, self.minInsyncReplicas) = (nil, nil, nil, nil, nil)
+        (self.preallocate, self.retentionBytes, self.retentionMs, self.segmentBytes, self.segmentJitterMs) = (nil, nil, nil, nil, nil)
+        self.segmentMs = nil
     }
 }
 
-public extension KafkaTopicConfig {
-    init(from decoder: Decoder) throws {
+extension KafkaTopicConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        cleanupPolicy = try container.sdkDecodeIfPresent(.cleanupPolicy)
-        compressionType = try container.sdkDecodeIfPresent(.compressionType)
-        deleteRetentionMs = try container.sdkDecodeIfPresent(.deleteRetentionMs)
-        fileDeleteDelayMs = try container.sdkDecodeIfPresent(.fileDeleteDelayMs)
-        flushMessages = try container.sdkDecodeIfPresent(.flushMessages)
-        flushMs = try container.sdkDecodeIfPresent(.flushMs)
-        indexIntervalBytes = try container.sdkDecodeIfPresent(.indexIntervalBytes)
-        maxCompactionLagMs = try container.sdkDecodeIfPresent(.maxCompactionLagMs)
-        maxMessageBytes = try container.sdkDecodeIfPresent(.maxMessageBytes)
-        messageDownConversionEnable = try container.sdkDecodeIfPresent(.messageDownConversionEnable)
-        messageFormatVersion = try container.sdkDecodeIfPresent(.messageFormatVersion)
-        messageTimestampType = try container.sdkDecodeIfPresent(.messageTimestampType)
-        minCleanableDirtyRatio = try container.sdkDecodeIfPresent(.minCleanableDirtyRatio)
-        minCompactionLagMs = try container.sdkDecodeIfPresent(.minCompactionLagMs)
-        minInsyncReplicas = try container.sdkDecodeIfPresent(.minInsyncReplicas)
-        preallocate = try container.sdkDecodeIfPresent(.preallocate)
-        retentionBytes = try container.sdkDecodeIfPresent(.retentionBytes)
-        retentionMs = try container.sdkDecodeIfPresent(.retentionMs)
-        segmentBytes = try container.sdkDecodeIfPresent(.segmentBytes)
-        segmentJitterMs = try container.sdkDecodeIfPresent(.segmentJitterMs)
-        segmentMs = try container.sdkDecodeIfPresent(.segmentMs)
-        if let value = minCleanableDirtyRatio {
-            try validateRange(
-                "min_cleanable_dirty_ratio",
-                Double(value),
-                min: 0,
-                max: 1,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.cleanupPolicy = try container.sdkDecodeIfPresent(.cleanupPolicy)
+        self.compressionType = try container.sdkDecodeIfPresent(.compressionType)
+        self.deleteRetentionMs = try container.sdkDecodeIfPresent(.deleteRetentionMs)
+        self.fileDeleteDelayMs = try container.sdkDecodeIfPresent(.fileDeleteDelayMs)
+        self.flushMessages = try container.sdkDecodeIfPresent(.flushMessages)
+        self.flushMs = try container.sdkDecodeIfPresent(.flushMs)
+        self.indexIntervalBytes = try container.sdkDecodeIfPresent(.indexIntervalBytes)
+        self.maxCompactionLagMs = try container.sdkDecodeIfPresent(.maxCompactionLagMs)
+        self.maxMessageBytes = try container.sdkDecodeIfPresent(.maxMessageBytes)
+        self.messageDownConversionEnable = try container.sdkDecodeIfPresent(.messageDownConversionEnable)
+        self.messageFormatVersion = try container.sdkDecodeIfPresent(.messageFormatVersion)
+        self.messageTimestampType = try container.sdkDecodeIfPresent(.messageTimestampType)
+        self.minCleanableDirtyRatio = try container.sdkDecodeIfPresent(.minCleanableDirtyRatio)
+        self.minCompactionLagMs = try container.sdkDecodeIfPresent(.minCompactionLagMs)
+        self.minInsyncReplicas = try container.sdkDecodeIfPresent(.minInsyncReplicas)
+        self.preallocate = try container.sdkDecodeIfPresent(.preallocate)
+        self.retentionBytes = try container.sdkDecodeIfPresent(.retentionBytes)
+        self.retentionMs = try container.sdkDecodeIfPresent(.retentionMs)
+        self.segmentBytes = try container.sdkDecodeIfPresent(.segmentBytes)
+        self.segmentJitterMs = try container.sdkDecodeIfPresent(.segmentJitterMs)
+        self.segmentMs = try container.sdkDecodeIfPresent(.segmentMs)
+        if let value = self.minCleanableDirtyRatio {
+            try validateRange("min_cleanable_dirty_ratio", Double(value), min: 0, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = minInsyncReplicas {
-            try validateRange(
-                "min_insync_replicas",
-                Double(value),
-                min: 1,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.minInsyncReplicas {
+            try validateRange("min_insync_replicas", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = segmentBytes {
-            try validateRange(
-                "segment_bytes",
-                Double(value),
-                min: 14,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.segmentBytes {
+            try validateRange("segment_bytes", Double(value), min: 14, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = segmentMs {
-            try validateRange(
-                "segment_ms",
-                Double(value),
-                min: 1,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.segmentMs {
+            try validateRange("segment_ms", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
-public extension KafkaTopicConfig {
-    init(
-        cleanupPolicy: KafkaTopicConfigCleanupPolicy? = nil,
-        compressionType: KafkaTopicConfigCompressionType? = nil,
-        deleteRetentionMs: Int? = nil,
-        fileDeleteDelayMs: Int? = nil,
-        flushMessages: Int? = nil,
-        flushMs: Int? = nil,
-        indexIntervalBytes: Int? = nil,
-        maxCompactionLagMs: Int? = nil,
-        maxMessageBytes: Int? = nil,
-        messageDownConversionEnable: Bool? = nil,
-        messageFormatVersion: KafkaTopicConfigMessageFormatVersion? = nil,
-        messageTimestampType: KafkaTopicConfigMessageTimestampType? = nil,
-        minCleanableDirtyRatio: Double? = nil,
-        minCompactionLagMs: Int? = nil,
-        minInsyncReplicas: Int? = nil,
-        preallocate: Bool? = nil,
-        retentionBytes: Int? = nil,
-        retentionMs: Int? = nil,
-        segmentBytes: Int? = nil,
-        segmentJitterMs: Int? = nil,
-        segmentMs: Int? = nil
-    ) throws {
+extension KafkaTopicConfig {
+    public init(cleanupPolicy: KafkaTopicConfigCleanupPolicy? = nil, compressionType: KafkaTopicConfigCompressionType? = nil, deleteRetentionMs: Int? = nil, fileDeleteDelayMs: Int? = nil, flushMessages: Int? = nil, flushMs: Int? = nil, indexIntervalBytes: Int? = nil, maxCompactionLagMs: Int? = nil, maxMessageBytes: Int? = nil, messageDownConversionEnable: Bool? = nil, messageFormatVersion: KafkaTopicConfigMessageFormatVersion? = nil, messageTimestampType: KafkaTopicConfigMessageTimestampType? = nil, minCleanableDirtyRatio: Double? = nil, minCompactionLagMs: Int? = nil, minInsyncReplicas: Int? = nil, preallocate: Bool? = nil, retentionBytes: Int? = nil, retentionMs: Int? = nil, segmentBytes: Int? = nil, segmentJitterMs: Int? = nil, segmentMs: Int? = nil) throws {
         self.init()
         (self.cleanupPolicy, self.compressionType) = (cleanupPolicy, compressionType)
         (self.deleteRetentionMs, self.fileDeleteDelayMs) = (deleteRetentionMs, fileDeleteDelayMs)
@@ -438,48 +360,16 @@ public extension KafkaTopicConfig {
         (self.retentionMs, self.segmentBytes) = (retentionMs, segmentBytes)
         (self.segmentJitterMs, self.segmentMs) = (segmentJitterMs, segmentMs)
         if let value = self.minCleanableDirtyRatio {
-            try validateRange(
-                "min_cleanable_dirty_ratio",
-                Double(value),
-                min: 0,
-                max: 1,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("min_cleanable_dirty_ratio", Double(value), min: 0, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.minInsyncReplicas {
-            try validateRange(
-                "min_insync_replicas",
-                Double(value),
-                min: 1,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("min_insync_replicas", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.segmentBytes {
-            try validateRange(
-                "segment_bytes",
-                Double(value),
-                min: 14,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("segment_bytes", Double(value), min: 14, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.segmentMs {
-            try validateRange(
-                "segment_ms",
-                Double(value),
-                min: 1,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("segment_ms", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -509,29 +399,23 @@ public struct KafkaTopicVerbose: Codable {
     }
 
     init() {
-        (name, state, replicationFactor, partitions, config) = (nil, nil, nil, nil, nil)
+        (self.name, self.state, self.replicationFactor, self.partitions, self.config) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension KafkaTopicVerbose {
-    init(from decoder: Decoder) throws {
+extension KafkaTopicVerbose {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        state = try container.sdkDecodeIfPresent(.state)
-        replicationFactor = try container.sdkDecodeIfPresent(.replicationFactor)
-        partitions = try container.sdkDecodeIfPresent(.partitions)
-        config = try container.sdkDecodeIfPresent(.config)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.state = try container.sdkDecodeIfPresent(.state)
+        self.replicationFactor = try container.sdkDecodeIfPresent(.replicationFactor)
+        self.partitions = try container.sdkDecodeIfPresent(.partitions)
+        self.config = try container.sdkDecodeIfPresent(.config)
     }
 }
 
-public extension KafkaTopicVerbose {
-    init(
-        name: String? = nil,
-        state: KafkaTopicVerboseState? = nil,
-        replicationFactor: Int? = nil,
-        partitions: [KafkaTopicPartition]? = nil,
-        config: KafkaTopicConfig? = nil
-    ) {
+extension KafkaTopicVerbose {
+    public init(name: String? = nil, state: KafkaTopicVerboseState? = nil, replicationFactor: Int? = nil, partitions: [KafkaTopicPartition]? = nil, config: KafkaTopicConfig? = nil) {
         self.init()
         (self.name, self.state) = (name, state)
         (self.replicationFactor, self.partitions) = (replicationFactor, partitions)
@@ -546,10 +430,7 @@ public extension KafkaTopicVerbose {
 public struct KafkaTopicConfigMessageFormatVersion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let value080 = KafkaTopicConfigMessageFormatVersion(rawValue: "0.8.0")
     public static let value081 = KafkaTopicConfigMessageFormatVersion(rawValue: "0.8.1")
     public static let value082 = KafkaTopicConfigMessageFormatVersion(rawValue: "0.8.2")
@@ -594,7 +475,7 @@ public struct KafkaTopicConfigMessageFormatVersion: RawRepresentable, Hashable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

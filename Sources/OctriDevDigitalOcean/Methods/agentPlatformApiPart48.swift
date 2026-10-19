@@ -6,41 +6,18 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
-    /// Retrieves detailed information about a specific model in the catalog, including its capabilities, pricing, and
-    /// code examples. Use the `id` path parameter to look up a catalog entry, or use `model_id` to look it up by the
-    /// identifier used for API calls.
+extension AgentPlatformApiMethods {
+    /// Retrieves detailed information about a specific model in the catalog, including its capabilities, pricing, and code examples. Use the `id` path parameter to look up a catalog entry, or use `model_id` to look it up by the identifier used for API calls.
     ///
-    /// Returns detailed information for a specific model in the catalog including capabilities, pricing, and code
-    /// examples.
+    /// Returns detailed information for a specific model in the catalog including capabilities, pricing, and code examples.
     ///
     /// - Parameters:
     /// - modelId: Model identifier used for API calls (e.g.,
     ///   "llama3.1-70b-instruct"). Alternative to UUID lookup.
-    static func genaiGetModelCatalogCard(
-        config: ClientConfig,
-        id: String,
-        modelId: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiGetModelCatalogCardOutput {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/gen-ai/models/catalog/", sdkEncodePathSegment(sdkWireString(id))].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("model_id", value: modelId),
-            ],
-            decoder: .json,
-            operationId: "genai_get_model_catalog_card",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func genaiGetModelCatalogCard(config: ClientConfig, id: String, modelId: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiGetModelCatalogCardOutput {
+        return try (await sdkRequest("GET", ["/v2/gen-ai/models/catalog/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, query: [
+            SdkQueryParameter("model_id", value: modelId),
+        ], decoder: .json, operationId: "genai_get_model_catalog_card", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To list model routers, send a GET request to `/v2/gen-ai/models/routers`.
@@ -48,30 +25,10 @@ public extension AgentPlatformApiMethods {
     /// - Parameters:
     /// - page: Page number.
     /// - perPage: Items per page.
-    static func genaiListModelRouters(
-        config: ClientConfig,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiListModelRoutersOutput {
-        try await (sdkRequest(
-            "GET",
-            "/v2/gen-ai/models/routers",
-            config: config,
-            query: [
-                SdkQueryParameter("page", value: page),
-                SdkQueryParameter("per_page", value: perPage),
-            ],
-            decoder: .json,
-            operationId: "genai_list_model_routers",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func genaiListModelRouters(config: ClientConfig, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListModelRoutersOutput {
+        return try (await sdkRequest("GET", "/v2/gen-ai/models/routers", config: config, query: [
+            SdkQueryParameter("page", value: page),
+            SdkQueryParameter("per_page", value: perPage),
+        ], decoder: .json, operationId: "genai_list_model_routers", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

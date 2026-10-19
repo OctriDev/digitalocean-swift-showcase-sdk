@@ -6,95 +6,30 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension LoadBalancersMethods {
-    /// Replaces the settings for a load balancer. Send a full representation, including existing attributes you want to
-    /// retain; any omitted attribute is reset to its default value. Choose either `droplet_ids` or `tag` to assign
-    /// Droplets, and include `region` and `forwarding_rules`.
+extension LoadBalancersMethods {
+    /// Replaces the settings for a load balancer. Send a full representation, including existing attributes you want to retain; any omitted attribute is reset to its default value. Choose either `droplet_ids` or `tag` to assign Droplets, and include `region` and `forwarding_rules`.
     ///
-    /// To update a load balancer's settings, send a PUT request to `/v2/load_balancers/$LOAD_BALANCER_ID`. The request
-    /// should contain a full representation of the load balancer including existing attributes. It may contain _one of_
-    /// the `droplets_ids` or `tag` attributes as they are mutually exclusive. **Note that any attribute that is not
-    /// provided will be reset to its default value.**
+    /// To update a load balancer's settings, send a PUT request to `/v2/load_balancers/$LOAD_BALANCER_ID`. The request should contain a full representation of the load balancer including existing attributes. It may contain _one of_ the `droplets_ids` or `tag` attributes as they are mutually exclusive. **Note that any attribute that is not provided will be reset to its default value.**
     ///
     /// - Parameters:
     /// - lbId: A unique identifier for a load balancer.
-    static func loadBalancersUpdate(
-        config: ClientConfig,
-        lbId: String,
-        body: LoadBalancerUpdateRequest,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> UpdatedLoadBalancer {
-        try await (sdkRequest(
-            "PUT",
-            ["/v2/load_balancers/", sdkEncodePathSegment(sdkWireString(lbId))].joined(),
-            config: config,
-            rawBody: sdkEncodeBody(body, contentType: "application/json"),
-            decoder: .json,
-            operationId: "loadBalancers_update",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func loadBalancersUpdate(config: ClientConfig, lbId: String, body: LoadBalancerUpdateRequest, requestOptions: RequestOptions? = nil) async throws -> UpdatedLoadBalancer {
+        return try (await sdkRequest("PUT", ["/v2/load_balancers/", sdkEncodePathSegment(sdkWireString(lbId))].joined(), config: config, rawBody: (try sdkEncodeBody(body, contentType: "application/json")), decoder: .json, operationId: "loadBalancers_update", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To delete a load balancer instance, disassociating any Droplets assigned to it and removing it from your
-    /// account, send a DELETE request to `/v2/load_balancers/$LOAD_BALANCER_ID`. A successful request will receive a
-    /// 204 status code with no body in response. This indicates that the request was processed successfully.
+    /// To delete a load balancer instance, disassociating any Droplets assigned to it and removing it from your account, send a DELETE request to `/v2/load_balancers/$LOAD_BALANCER_ID`. A successful request will receive a 204 status code with no body in response. This indicates that the request was processed successfully.
     ///
     /// - Parameters:
     /// - lbId: A unique identifier for a load balancer.
-    static func loadBalancersDelete(
-        config: ClientConfig,
-        lbId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await (sdkRequest(
-            "DELETE",
-            ["/v2/load_balancers/", sdkEncodePathSegment(sdkWireString(lbId))].joined(),
-            config: config,
-            decoder: .empty,
-            operationId: "loadBalancers_delete",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func loadBalancersDelete(config: ClientConfig, lbId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try (await sdkRequest("DELETE", ["/v2/load_balancers/", sdkEncodePathSegment(sdkWireString(lbId))].joined(), config: config, decoder: .empty, operationId: "loadBalancers_delete", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To delete a Global load balancer CDN cache, send a DELETE request to
-    /// `/v2/load_balancers/$LOAD_BALANCER_ID/cache`. A successful request will receive a 204 status code with no body
-    /// in response. This indicates that the request was processed successfully.
+    /// To delete a Global load balancer CDN cache, send a DELETE request to `/v2/load_balancers/$LOAD_BALANCER_ID/cache`. A successful request will receive a 204 status code with no body in response. This indicates that the request was processed successfully.
     ///
     /// - Parameters:
     /// - lbId: A unique identifier for a load balancer.
-    static func loadBalancersDeleteCache(
-        config: ClientConfig,
-        lbId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await (sdkRequest(
-            "DELETE",
-            ["/v2/load_balancers/", sdkEncodePathSegment(sdkWireString(lbId)), "/cache"].joined(),
-            config: config,
-            decoder: .empty,
-            operationId: "loadBalancers_delete_cache",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func loadBalancersDeleteCache(config: ClientConfig, lbId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try (await sdkRequest("DELETE", ["/v2/load_balancers/", sdkEncodePathSegment(sdkWireString(lbId)), "/cache"].joined(), config: config, decoder: .empty, operationId: "loadBalancers_delete_cache", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

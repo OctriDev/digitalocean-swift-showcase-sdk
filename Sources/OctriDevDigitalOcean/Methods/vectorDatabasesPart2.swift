@@ -6,43 +6,18 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension VectorDatabasesMethods {
-    /// Lists vector databases provisioned on your account. Use `page` and `per_page` to paginate the results. The
-    /// response includes the `vector_dbs` array and the overall count in `total`.
+extension VectorDatabasesMethods {
+    /// Lists vector databases provisioned on your account. Use `page` and `per_page` to paginate the results. The response includes the `vector_dbs` array and the overall count in `total`.
     ///
-    /// To list all of the vector databases on your account, send a GET request to `/v2/vector-databases`. Use the
-    /// `page` and `per_page` query parameters to paginate the results. The response body contains a `vector_dbs` array
-    /// of vector database objects and a `total` field with the overall count.
-    static func vectorDatabasesList(
-        config: ClientConfig,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VectordbListVectorDBsResponse {
-        try await (sdkRequest(
-            "GET",
-            "/v2/vector-databases",
-            config: config,
-            query: [
-                SdkQueryParameter("page", value: page),
-                SdkQueryParameter("per_page", value: perPage),
-            ],
-            decoder: .json,
-            operationId: "vectorDatabases_list",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    /// To list all of the vector databases on your account, send a GET request to `/v2/vector-databases`. Use the `page` and `per_page` query parameters to paginate the results. The response body contains a `vector_dbs` array of vector database objects and a `total` field with the overall count.
+    public static func vectorDatabasesList(config: ClientConfig, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> VectordbListVectorDBsResponse {
+        return try (await sdkRequest("GET", "/v2/vector-databases", config: config, query: [
+            SdkQueryParameter("page", value: page),
+            SdkQueryParameter("per_page", value: perPage),
+        ], decoder: .json, operationId: "vectorDatabases_list", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To create a vector database, send a POST request to `/v2/vector-databases`. The response body contains a JSON
-    /// object with a `vector_db` key holding the newly created database. Its initial `status` is `creating` and changes
-    /// to `active` once the database is ready to receive traffic.
+    /// To create a vector database, send a POST request to `/v2/vector-databases`. The response body contains a JSON object with a `vector_db` key holding the newly created database. Its initial `status` is `creating` and changes to `active` once the database is ready to receive traffic.
     ///
     /// - Parameters:
     /// - name: Required. Human-readable name for the database.
@@ -50,66 +25,17 @@ public extension VectorDatabasesMethods {
     /// - region: Required. Region slug where the database will be provisioned.
     /// - size: Required. Resource tier: small, medium, or large.
     /// - tags: A set of arbitrary tags to organize your vector database
-    static func vectorDatabasesCreate(
-        config: ClientConfig,
-        name: String? = nil,
-        projectId: String? = nil,
-        region: String? = nil,
-        size: String? = nil,
-        tags: [String]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VectordbCreateVectorDBResponse {
-        let requestBody = VectorDatabasesCreateRequestBody(
-            name: name,
-            projectId: projectId,
-            region: region,
-            size: size,
-            tags: tags
-        )
+    public static func vectorDatabasesCreate(config: ClientConfig, name: String? = nil, projectId: String? = nil, region: String? = nil, size: String? = nil, tags: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> VectordbCreateVectorDBResponse {
+        let requestBody = VectorDatabasesCreateRequestBody(name: name, projectId: projectId, region: region, size: size, tags: tags)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/vector-databases",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "vectorDatabases_create",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v2/vector-databases", config: config, body: requestBody, decoder: .json, operationId: "vectorDatabases_create", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To show information about an existing vector database, send a GET request to `/v2/vector-databases/{id}`. The
-    /// response body contains a JSON object with a `vector_db` key holding the standard vector database attributes,
-    /// including an embedded `endpoints` object with the connection information needed to access the database.
+    /// To show information about an existing vector database, send a GET request to `/v2/vector-databases/{id}`. The response body contains a JSON object with a `vector_db` key holding the standard vector database attributes, including an embedded `endpoints` object with the connection information needed to access the database.
     ///
     /// - Parameters:
     /// - id: ID of the vector database.
-    static func vectorDatabasesGet(
-        config: ClientConfig,
-        id: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VectordbGetVectorDBResponse {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/vector-databases/", sdkEncodePathSegment(sdkWireString(id))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "vectorDatabases_get",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func vectorDatabasesGet(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> VectordbGetVectorDBResponse {
+        return try (await sdkRequest("GET", ["/v2/vector-databases/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "vectorDatabases_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

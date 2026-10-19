@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Signals domain models
+// Signals domain models
 /// A session represents a conversation monitored by Signals, such as a Harness Runtime environment session or a
 /// Serverless Inference chat completion.
 public struct Session2: Codable {
@@ -31,45 +31,33 @@ public struct Session2: Codable {
         case signalCount = "signal_count"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Session2 {
-    init(from decoder: Decoder) throws {
+extension Session2 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.sessionId) else {
-            throw SdkValidationError(
-                field: "session_id",
-                code: "required",
-                message: "Validation failed for 'session_id': value is required"
-            )
+            throw SdkValidationError(field: "session_id", code: "required", message: "Validation failed for 'session_id': value is required")
         }
-        sessionId = try container.sdkDecodeRequired(.sessionId)
-        totalTurns = try container.sdkDecodeIfPresent(.totalTurns)
-        startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        durationSeconds = try container.sdkDecodeIfPresent(.durationSeconds)
-        signalCount = try container.sdkDecodeIfPresent(.signalCount)
-        try sdkValidateUuid("session_id", sessionId)
-        if let value = startedAt {
+        self.sessionId = try container.sdkDecodeRequired(.sessionId)
+        self.totalTurns = try container.sdkDecodeIfPresent(.totalTurns)
+        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        self.durationSeconds = try container.sdkDecodeIfPresent(.durationSeconds)
+        self.signalCount = try container.sdkDecodeIfPresent(.signalCount)
+            try sdkValidateUuid("session_id", self.sessionId)
+        if let value = self.startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
     }
 }
 
-public extension Session2 {
-    init(
-        sessionId: String,
-        totalTurns: Int? = nil,
-        startedAt: Date? = nil,
-        durationSeconds: Double? = nil,
-        signalCount: Int? = nil
-    ) throws {
+extension Session2 {
+    public init(sessionId: String, totalTurns: Int? = nil, startedAt: Date? = nil, durationSeconds: Double? = nil, signalCount: Int? = nil) throws {
         (self.sessionId, self.totalTurns) = (sessionId, totalTurns)
         (self.startedAt, self.durationSeconds) = (startedAt, durationSeconds)
         self.signalCount = signalCount
-        try sdkValidateUuid("session_id", self.sessionId)
+            try sdkValidateUuid("session_id", self.sessionId)
         if let value = self.startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
@@ -90,20 +78,20 @@ public struct ListExportsResponseEdgesItem: Codable {
     }
 
     init() {
-        (cursor, node) = (nil, nil)
+        (self.cursor, self.node) = (nil, nil)
     }
 }
 
-public extension ListExportsResponseEdgesItem {
-    init(from decoder: Decoder) throws {
+extension ListExportsResponseEdgesItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        cursor = try container.sdkDecodeIfPresent(.cursor)
-        node = try container.sdkDecodeIfPresent(.node)
+        self.cursor = try container.sdkDecodeIfPresent(.cursor)
+        self.node = try container.sdkDecodeIfPresent(.node)
     }
 }
 
-public extension ListExportsResponseEdgesItem {
-    init(cursor: String? = nil, node: ExportJob? = nil) {
+extension ListExportsResponseEdgesItem {
+    public init(cursor: String? = nil, node: ExportJob? = nil) {
         self.init()
         (self.cursor, self.node) = (cursor, node)
     }
@@ -119,19 +107,19 @@ public struct ListDialoguesResponsePageInfo: Codable {
     }
 
     init() {
-        hasNextPage = nil
+        self.hasNextPage = nil
     }
 }
 
-public extension ListDialoguesResponsePageInfo {
-    init(from decoder: Decoder) throws {
+extension ListDialoguesResponsePageInfo {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        hasNextPage = try container.sdkDecodeIfPresent(.hasNextPage)
+        self.hasNextPage = try container.sdkDecodeIfPresent(.hasNextPage)
     }
 }
 
-public extension ListDialoguesResponsePageInfo {
-    init(hasNextPage: Bool? = nil) {
+extension ListDialoguesResponsePageInfo {
+    public init(hasNextPage: Bool? = nil) {
         self.init()
         self.hasNextPage = hasNextPage
     }
@@ -147,27 +135,21 @@ public struct UpdateConsentResponse: Codable {
         case consent
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension UpdateConsentResponse {
-    init(from decoder: Decoder) throws {
+extension UpdateConsentResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.consent) else {
-            throw SdkValidationError(
-                field: "consent",
-                code: "required",
-                message: "Validation failed for 'consent': value is required"
-            )
+            throw SdkValidationError(field: "consent", code: "required", message: "Validation failed for 'consent': value is required")
         }
-        consent = try container.sdkDecodeRequired(.consent)
+        self.consent = try container.sdkDecodeRequired(.consent)
     }
 }
 
-public extension UpdateConsentResponse {
-    init(consent: ConsentRecord) {
+extension UpdateConsentResponse {
+    public init(consent: ConsentRecord) {
         self.consent = consent
     }
 }
@@ -185,20 +167,20 @@ public struct ListDeletionsResponse: Codable {
     }
 
     init() {
-        (edges, pageInfo) = (nil, nil)
+        (self.edges, self.pageInfo) = (nil, nil)
     }
 }
 
-public extension ListDeletionsResponse {
-    init(from decoder: Decoder) throws {
+extension ListDeletionsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        edges = try container.sdkDecodeIfPresent(.edges)
-        pageInfo = try container.sdkDecodeIfPresent(.pageInfo)
+        self.edges = try container.sdkDecodeIfPresent(.edges)
+        self.pageInfo = try container.sdkDecodeIfPresent(.pageInfo)
     }
 }
 
-public extension ListDeletionsResponse {
-    init(edges: [ListDeletionsResponseEdgesItem]? = nil, pageInfo: ListDeletionsResponsePageInfo? = nil) {
+extension ListDeletionsResponse {
+    public init(edges: [ListDeletionsResponseEdgesItem]? = nil, pageInfo: ListDeletionsResponsePageInfo? = nil) {
         self.init()
         (self.edges, self.pageInfo) = (edges, pageInfo)
     }
@@ -237,72 +219,46 @@ public struct ConsentRecord: Codable {
         case updatedAt = "updated_at"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ConsentRecord {
-    init(from decoder: Decoder) throws {
+extension ConsentRecord {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.teamId) else {
-            throw SdkValidationError(
-                field: "team_id",
-                code: "required",
-                message: "Validation failed for 'team_id': value is required"
-            )
+            throw SdkValidationError(field: "team_id", code: "required", message: "Validation failed for 'team_id': value is required")
         }
         guard container.contains(.source) else {
-            throw SdkValidationError(
-                field: "source",
-                code: "required",
-                message: "Validation failed for 'source': value is required"
-            )
+            throw SdkValidationError(field: "source", code: "required", message: "Validation failed for 'source': value is required")
         }
         guard container.contains(.agentId) else {
-            throw SdkValidationError(
-                field: "agent_id",
-                code: "required",
-                message: "Validation failed for 'agent_id': value is required"
-            )
+            throw SdkValidationError(field: "agent_id", code: "required", message: "Validation failed for 'agent_id': value is required")
         }
         guard container.contains(.enabled) else {
-            throw SdkValidationError(
-                field: "enabled",
-                code: "required",
-                message: "Validation failed for 'enabled': value is required"
-            )
+            throw SdkValidationError(field: "enabled", code: "required", message: "Validation failed for 'enabled': value is required")
         }
         guard container.contains(.updatedAt) else {
-            throw SdkValidationError(
-                field: "updated_at",
-                code: "required",
-                message: "Validation failed for 'updated_at': value is required"
-            )
+            throw SdkValidationError(field: "updated_at", code: "required", message: "Validation failed for 'updated_at': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        teamId = try container.sdkDecodeRequired(.teamId)
-        source = try container.sdkDecodeRequired(.source)
-        agentId = try container.sdkDecodeRequired(.agentId)
-        enabled = try container.sdkDecodeRequired(.enabled)
-        updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        try sdkValidateDateTime("updated_at", sdkWireString(updatedAt))
+        self.id = try container.sdkDecodeRequired(.id)
+        self.teamId = try container.sdkDecodeRequired(.teamId)
+        self.source = try container.sdkDecodeRequired(.source)
+        self.agentId = try container.sdkDecodeRequired(.agentId)
+        self.enabled = try container.sdkDecodeRequired(.enabled)
+        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
+            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
-public extension ConsentRecord {
-    init(id: Int, teamId: Int, source: ConsentRecordSource, agentId: String, enabled: Bool, updatedAt: Date) throws {
+extension ConsentRecord {
+    public init(id: Int, teamId: Int, source: ConsentRecordSource, agentId: String, enabled: Bool, updatedAt: Date) throws {
         (self.id, self.teamId) = (id, teamId)
         (self.source, self.agentId) = (source, agentId)
         (self.enabled, self.updatedAt) = (enabled, updatedAt)
-        try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
@@ -320,20 +276,20 @@ public struct ListDeletionsResponsePageInfo: Codable {
     }
 
     init() {
-        (hasNextPage, endCursor) = (nil, nil)
+        (self.hasNextPage, self.endCursor) = (nil, nil)
     }
 }
 
-public extension ListDeletionsResponsePageInfo {
-    init(from decoder: Decoder) throws {
+extension ListDeletionsResponsePageInfo {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        hasNextPage = try container.sdkDecodeIfPresent(.hasNextPage)
-        endCursor = try container.sdkDecodeIfPresent(.endCursor)
+        self.hasNextPage = try container.sdkDecodeIfPresent(.hasNextPage)
+        self.endCursor = try container.sdkDecodeIfPresent(.endCursor)
     }
 }
 
-public extension ListDeletionsResponsePageInfo {
-    init(hasNextPage: Bool? = nil, endCursor: String? = nil) {
+extension ListDeletionsResponsePageInfo {
+    public init(hasNextPage: Bool? = nil, endCursor: String? = nil) {
         self.init()
         (self.hasNextPage, self.endCursor) = (hasNextPage, endCursor)
     }
@@ -381,75 +337,47 @@ public struct ExportJob: Codable {
         case errorMessage = "error_message"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ExportJob {
-    init(from decoder: Decoder) throws {
+extension ExportJob {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.exportId) else {
-            throw SdkValidationError(
-                field: "export_id",
-                code: "required",
-                message: "Validation failed for 'export_id': value is required"
-            )
+            throw SdkValidationError(field: "export_id", code: "required", message: "Validation failed for 'export_id': value is required")
         }
         guard container.contains(.agentId) else {
-            throw SdkValidationError(
-                field: "agent_id",
-                code: "required",
-                message: "Validation failed for 'agent_id': value is required"
-            )
+            throw SdkValidationError(field: "agent_id", code: "required", message: "Validation failed for 'agent_id': value is required")
         }
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
-        exportId = try container.sdkDecodeRequired(.exportId)
-        agentId = try container.sdkDecodeRequired(.agentId)
-        status = try container.sdkDecodeRequired(.status)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        type = try container.sdkDecodeIfPresent(.type)
-        filters = try container.sdkDecodeIfPresent(.filters)
-        completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
-        errorMessage = try container.sdkDecodeIfPresent(.errorMessage)
-        try sdkValidateUuid("export_id", exportId)
-        try sdkValidateUuid("agent_id", agentId)
+        self.exportId = try container.sdkDecodeRequired(.exportId)
+        self.agentId = try container.sdkDecodeRequired(.agentId)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.filters = try container.sdkDecodeIfPresent(.filters)
+        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+        self.errorMessage = try container.sdkDecodeIfPresent(.errorMessage)
+            try sdkValidateUuid("export_id", self.exportId)
+            try sdkValidateUuid("agent_id", self.agentId)
     }
 }
 
-public extension ExportJob {
-    init(
-        exportId: String,
-        agentId: String,
-        status: ExportJobStatus,
-        createdAt: Int,
-        type: ExportJobType? = nil,
-        filters: ExportJobFilters? = nil,
-        completedAt: Int? = nil,
-        expiresAt: Int? = nil,
-        errorMessage: String? = nil
-    ) throws {
+extension ExportJob {
+    public init(exportId: String, agentId: String, status: ExportJobStatus, createdAt: Int, type: ExportJobType? = nil, filters: ExportJobFilters? = nil, completedAt: Int? = nil, expiresAt: Int? = nil, errorMessage: String? = nil) throws {
         (self.exportId, self.agentId) = (exportId, agentId)
         (self.status, self.createdAt) = (status, createdAt)
         (self.type, self.filters) = (type, filters)
         (self.completedAt, self.expiresAt) = (completedAt, expiresAt)
         self.errorMessage = errorMessage
-        try sdkValidateUuid("export_id", self.exportId)
-        try sdkValidateUuid("agent_id", self.agentId)
+            try sdkValidateUuid("export_id", self.exportId)
+            try sdkValidateUuid("agent_id", self.agentId)
     }
 }
 
@@ -489,41 +417,34 @@ public struct CreateExportRequest: Codable {
     }
 
     init() {
-        (type, agentId, signalType, sessionIds, startTime) = (nil, nil, nil, nil, nil)
-        endTime = nil
+        (self.type, self.agentId, self.signalType, self.sessionIds, self.startTime) = (nil, nil, nil, nil, nil)
+        self.endTime = nil
     }
 }
 
-public extension CreateExportRequest {
-    init(from decoder: Decoder) throws {
+extension CreateExportRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        agentId = try container.sdkDecodeIfPresent(.agentId)
-        signalType = try container.sdkDecodeIfPresent(.signalType)
-        sessionIds = try container.sdkDecodeIfPresent(.sessionIds)
-        startTime = try container.sdkDecodeIfPresent(.startTime)
-        endTime = try container.sdkDecodeIfPresent(.endTime)
-        if let value = agentId {
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.agentId = try container.sdkDecodeIfPresent(.agentId)
+        self.signalType = try container.sdkDecodeIfPresent(.signalType)
+        self.sessionIds = try container.sdkDecodeIfPresent(.sessionIds)
+        self.startTime = try container.sdkDecodeIfPresent(.startTime)
+        self.endTime = try container.sdkDecodeIfPresent(.endTime)
+        if let value = self.agentId {
             try sdkValidateUuid("agent_id", value)
         }
-        if let value = startTime {
+        if let value = self.startTime {
             try sdkValidateDateTime("start_time", sdkWireString(value))
         }
-        if let value = endTime {
+        if let value = self.endTime {
             try sdkValidateDateTime("end_time", sdkWireString(value))
         }
     }
 }
 
-public extension CreateExportRequest {
-    init(
-        type: CreateExportRequestType? = nil,
-        agentId: String? = nil,
-        signalType: [String]? = nil,
-        sessionIds: [String]? = nil,
-        startTime: Date? = nil,
-        endTime: Date? = nil
-    ) throws {
+extension CreateExportRequest {
+    public init(type: CreateExportRequestType? = nil, agentId: String? = nil, signalType: [String]? = nil, sessionIds: [String]? = nil, startTime: Date? = nil, endTime: Date? = nil) throws {
         self.init()
         (self.type, self.agentId) = (type, agentId)
         (self.signalType, self.sessionIds) = (signalType, sessionIds)
@@ -566,37 +487,25 @@ public struct SessionDialogue: Codable {
         case signals
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SessionDialogue {
-    init(from decoder: Decoder) throws {
+extension SessionDialogue {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        sequence = try container.sdkDecodeIfPresent(.sequence)
-        runStatus = try container.sdkDecodeIfPresent(.runStatus)
-        userMessage = try container.sdkDecodeIfPresent(.userMessage)
-        signals = try container.sdkDecodeIfPresent(.signals)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.sequence = try container.sdkDecodeIfPresent(.sequence)
+        self.runStatus = try container.sdkDecodeIfPresent(.runStatus)
+        self.userMessage = try container.sdkDecodeIfPresent(.userMessage)
+        self.signals = try container.sdkDecodeIfPresent(.signals)
     }
 }
 
-public extension SessionDialogue {
-    init(
-        id: String,
-        sequence: Int? = nil,
-        runStatus: String? = nil,
-        userMessage: String? = nil,
-        signals: [String]? = nil
-    ) {
+extension SessionDialogue {
+    public init(id: String, sequence: Int? = nil, runStatus: String? = nil, userMessage: String? = nil, signals: [String]? = nil) {
         (self.id, self.sequence) = (id, sequence)
         (self.runStatus, self.userMessage) = (runStatus, userMessage)
         self.signals = signals
@@ -624,7 +533,5 @@ public struct CreateDeletionRequest: Codable {
         case agentId = "agent_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }

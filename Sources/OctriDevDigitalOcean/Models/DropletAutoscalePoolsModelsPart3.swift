@@ -3,15 +3,12 @@
 
 import Foundation
 
-/// DropletAutoscalePools domain models
+// DropletAutoscalePools domain models
 /// The datacenter in which all of the Droplets will be created.
 public struct AutoscalePoolDropletTemplateRegion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let nyc1 = AutoscalePoolDropletTemplateRegion(rawValue: "nyc1")
     public static let nyc2 = AutoscalePoolDropletTemplateRegion(rawValue: "nyc2")
     public static let nyc3 = AutoscalePoolDropletTemplateRegion(rawValue: "nyc3")
@@ -29,7 +26,7 @@ public struct AutoscalePoolDropletTemplateRegion: RawRepresentable, Hashable, Co
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -42,10 +39,7 @@ public struct AutoscalePoolDropletTemplateRegion: RawRepresentable, Hashable, Co
 public struct MemberStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let provisioning = MemberStatus(rawValue: "provisioning")
     public static let active = MemberStatus(rawValue: "active")
     public static let deleting = MemberStatus(rawValue: "deleting")
@@ -53,7 +47,7 @@ public struct MemberStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWi
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -66,17 +60,14 @@ public struct MemberStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWi
 public struct AutoscalePoolStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let active = AutoscalePoolStatus(rawValue: "active")
     public static let deleting = AutoscalePoolStatus(rawValue: "deleting")
     public static let error = AutoscalePoolStatus(rawValue: "error")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -89,16 +80,13 @@ public struct AutoscalePoolStatus: RawRepresentable, Hashable, Codable, Sendable
 public struct MemberHealthStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let healthy = MemberHealthStatus(rawValue: "healthy")
     public static let unhealthy = MemberHealthStatus(rawValue: "unhealthy")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -111,17 +99,14 @@ public struct MemberHealthStatus: RawRepresentable, Hashable, Codable, Sendable,
 public struct HistoryReason: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let configurationChange = HistoryReason(rawValue: "CONFIGURATION_CHANGE")
     public static let scaleUp = HistoryReason(rawValue: "SCALE_UP")
     public static let scaleDown = HistoryReason(rawValue: "SCALE_DOWN")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -134,17 +119,14 @@ public struct HistoryReason: RawRepresentable, Hashable, Codable, Sendable, SdkW
 public struct HistoryStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let inProgress = HistoryStatus(rawValue: "in_progress")
     public static let success = HistoryStatus(rawValue: "success")
     public static let error = HistoryStatus(rawValue: "error")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

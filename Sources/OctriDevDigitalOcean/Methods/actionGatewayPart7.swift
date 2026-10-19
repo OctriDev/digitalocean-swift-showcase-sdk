@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ActionGatewayMethods {
-    struct McpServersCreateOptions: Codable {
+extension ActionGatewayMethods {
+    public struct McpServersCreateOptions: Codable {
         public var serverRef: String
         public var endpoint: String
         public var transport: McpServerCreateRequestTransport?
@@ -28,11 +28,7 @@ public extension ActionGatewayMethods {
         }
     }
 
-    /// Registers a remote MCP server for your team, using the streamable HTTP transport. The server starts with
-    /// `syncStatus` pending and no tools: discover its tools with `POST .../mcp-servers/{server_ref}/resync`, then
-    /// choose which to enable with `PUT .../mcp-servers/{server_ref}/tools`. The endpoint must be HTTPS and resolve
-    /// only to public IP addresses. The number of servers per team is limited (10 by default); registering beyond it
-    /// returns 429. Returns 409 when `serverRef` is already in use.
+    /// Registers a remote MCP server for your team, using the streamable HTTP transport. The server starts with `syncStatus` pending and no tools: discover its tools with `POST .../mcp-servers/{server_ref}/resync`, then choose which to enable with `PUT .../mcp-servers/{server_ref}/tools`. The endpoint must be HTTPS and resolve only to public IP addresses. The number of servers per team is limited (10 by default); registering beyond it returns 429. Returns 409 when `serverRef` is already in use.
     ///
     /// - Parameters:
     /// - serverRef: Identifier for the server, unique within your team. Must match
@@ -73,11 +69,7 @@ public extension ActionGatewayMethods {
     ///   sent back through consent. Set it no longer than the provider's own token
     ///   lifetime, so the prompt arrives before a tool call fails against an expired
     ///   token.
-    static func mcpServersCreate(
-        config: ClientConfig,
-        options: McpServersCreateOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> McpServerResponse {
+    public static func mcpServersCreate(config: ClientConfig, options: McpServersCreateOptions, requestOptions: RequestOptions? = nil) async throws -> McpServerResponse {
         try sdkValidatePattern("serverRef", options.serverRef, sdkPatternc47f13327b4b)
 
         if let description = options.description {
@@ -86,22 +78,6 @@ public extension ActionGatewayMethods {
 
         let requestBody = McpServersCreateRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/action-gateway/mcp-servers",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "mcpServers_create",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "409": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v2/action-gateway/mcp-servers", config: config, body: requestBody, decoder: .json, operationId: "mcpServers_create", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "409": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

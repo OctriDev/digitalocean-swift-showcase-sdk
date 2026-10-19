@@ -6,23 +6,10 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension HarnessRuntimeMethods {
-    /// Creates a Harness Runtime session from a JSON configuration reference or an environment spec supplied as YAML.
-    /// For JSON, provide `name` and `config_id`; for YAML, send the environment spec with a supported YAML
-    /// `Content-Type`. Sandbox boot continues asynchronously after the session row is allocated.
+extension HarnessRuntimeMethods {
+    /// Creates a Harness Runtime session from a JSON configuration reference or an environment spec supplied as YAML. For JSON, provide `name` and `config_id`; for YAML, send the environment spec with a supported YAML `Content-Type`. Sandbox boot continues asynchronously after the session row is allocated.
     ///
-    /// Returns once the session row is allocated. Sandbox boot completes asynchronously. Two mutually exclusive request
-    /// forms are selected by Content-Type (same contract as harness-api `harness.swagger.json`): - YAML
-    /// (`application/x-yaml`, `application/yaml`, `text/yaml`, `text/x-yaml`): the environment spec. Two
-    /// environment-spec formats are accepted during the dual-format transition: the flat format (primary) and the
-    /// legacy `agents.digitalocean.com/v1alpha1` envelope (deprecated). A top-level `apiVersion` key selects the legacy
-    /// parser; its absence selects flat. Internally persists a durable Environment Config, then creates the session. -
-    /// JSON (`application/json`): `{name, config_id}` loads the config, resolves its credentials from Secrets Manager
-    /// at the version pinned when the config was created, and creates the session. The OpenAPI `requestBody` schemas
-    /// the JSON form for client generation (Autorest cannot emit a multi–content-type body). The live API still accepts
-    /// the YAML forms listed above. Successful responses may include `config_id` on the session. `X-Device-UUID` (if
-    /// present) is persisted on the session row. Query parameters `openai_session_id` and `resume_on_topoff` apply to
-    /// both forms; when both the JSON body field and `?resume_on_topoff=` are present, the query parameter wins.
+    /// Returns once the session row is allocated. Sandbox boot completes asynchronously. Two mutually exclusive request forms are selected by Content-Type (same contract as harness-api `harness.swagger.json`): - YAML (`application/x-yaml`, `application/yaml`, `text/yaml`, `text/x-yaml`): the environment spec. Two environment-spec formats are accepted during the dual-format transition: the flat format (primary) and the legacy `agents.digitalocean.com/v1alpha1` envelope (deprecated). A top-level `apiVersion` key selects the legacy parser; its absence selects flat. Internally persists a durable Environment Config, then creates the session. - JSON (`application/json`): `{name, config_id}` loads the config, resolves its credentials from Secrets Manager at the version pinned when the config was created, and creates the session. The OpenAPI `requestBody` schemas the JSON form for client generation (Autorest cannot emit a multi–content-type body). The live API still accepts the YAML forms listed above. Successful responses may include `config_id` on the session. `X-Device-UUID` (if present) is persisted on the session row. Query parameters `openai_session_id` and `resume_on_topoff` apply to both forms; when both the JSON body field and `?resume_on_topoff=` are present, the query parameter wins.
     ///
     /// - Parameters:
     /// - name: Session name, independent of the config name. Must satisfy the
@@ -47,56 +34,18 @@ public extension HarnessRuntimeMethods {
     ///   not config-scoped: the referenced config never confers this, so one shared
     ///   config cannot enrol every session created from it. Omit to leave the default
     ///   (or to let the ?resume_on_topoff= query parameter supply it).
-    static func harnessCreateSession(
-        config: ClientConfig,
-        name: String,
-        configId: String,
-        openaiSessionId: String? = nil,
-        resumeOnTopoff: Bool? = nil,
-        xDeviceUuid: String? = nil,
-        resumeOnTopoff2: Bool? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DefinitionsCreateSessionResponse {
+    public static func harnessCreateSession(config: ClientConfig, name: String, configId: String, openaiSessionId: String? = nil, resumeOnTopoff: Bool? = nil, xDeviceUuid: String? = nil, resumeOnTopoff2: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> DefinitionsCreateSessionResponse {
         try validateLength("name", name, min: 1, max: 64)
 
         try sdkValidateUuid("config_id", configId)
 
-        let requestBody = HarnessCreateSessionRequestBody(
-            name: name,
-            configId: configId,
-            resumeOnTopoff2: resumeOnTopoff2
-        )
+        let requestBody = HarnessCreateSessionRequestBody(name: name, configId: configId, resumeOnTopoff2: resumeOnTopoff2)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/agents/sessions",
-            config: config,
-            query: [
-                SdkQueryParameter("openai_session_id", value: openaiSessionId),
-                SdkQueryParameter("resume_on_topoff", value: resumeOnTopoff),
-            ],
-            body: requestBody,
-            decoder: .json,
-            operationId: "harness_create_session",
-            extraHeaders: sdkHeaders([
-                ("X-Device-UUID", sdkHeaderValue(xDeviceUuid)),
-            ]),
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "402": Error2.self,
-                "403": Error2.self,
-                "404": Error2.self,
-                "409": Error2.self,
-                "413": Error2.self,
-                "415": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "501": Error2.self,
-                "503": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v2/agents/sessions", config: config, query: [
+            SdkQueryParameter("openai_session_id", value: openaiSessionId),
+            SdkQueryParameter("resume_on_topoff", value: resumeOnTopoff),
+        ], body: requestBody, decoder: .json, operationId: "harness_create_session", extraHeaders: sdkHeaders([
+            ("X-Device-UUID", sdkHeaderValue(xDeviceUuid)),
+        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "402": Error2.self, "403": Error2.self, "404": Error2.self, "409": Error2.self, "413": Error2.self, "415": Error2.self, "429": Error2.self, "500": Error2.self, "501": Error2.self, "503": Error2.self, "default": Error2.self])).data
     }
 }

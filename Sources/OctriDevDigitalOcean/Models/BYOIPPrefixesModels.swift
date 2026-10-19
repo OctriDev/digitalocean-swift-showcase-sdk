@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// BYOIPPrefixes domain models
+// BYOIPPrefixes domain models
 /// Typed representation of the `ByoipPrefixList` API schema.
 public struct ByoipPrefixList: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,29 +18,23 @@ public struct ByoipPrefixList: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ByoipPrefixList {
-    init(from decoder: Decoder) throws {
+extension ByoipPrefixList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        byoipPrefixes = try container.sdkDecodeIfPresent(.byoipPrefixes)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.byoipPrefixes = try container.sdkDecodeIfPresent(.byoipPrefixes)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension ByoipPrefixList {
-    init(meta: MetaMeta, byoipPrefixes: [ByoipPrefix]? = nil, links: PageLinks? = nil) {
+extension ByoipPrefixList {
+    public init(meta: MetaMeta, byoipPrefixes: [ByoipPrefix]? = nil, links: PageLinks? = nil) {
         (self.meta, self.byoipPrefixes) = (meta, byoipPrefixes)
         self.links = links
     }
@@ -54,19 +48,19 @@ public struct ByoipPrefixListVariant0: Codable {
     }
 
     init() {
-        byoipPrefixes = nil
+        self.byoipPrefixes = nil
     }
 }
 
-public extension ByoipPrefixListVariant0 {
-    init(from decoder: Decoder) throws {
+extension ByoipPrefixListVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        byoipPrefixes = try container.sdkDecodeIfPresent(.byoipPrefixes)
+        self.byoipPrefixes = try container.sdkDecodeIfPresent(.byoipPrefixes)
     }
 }
 
-public extension ByoipPrefixListVariant0 {
-    init(byoipPrefixes: [ByoipPrefix]? = nil) {
+extension ByoipPrefixListVariant0 {
+    public init(byoipPrefixes: [ByoipPrefix]? = nil) {
         self.init()
         self.byoipPrefixes = byoipPrefixes
     }
@@ -115,40 +109,29 @@ public struct ByoipPrefix: Codable {
     }
 
     init() {
-        (uuid, name, prefix, status, region) = (nil, nil, nil, nil, nil)
-        (validations, failureReason, locked, advertised, projectId) = (nil, nil, nil, nil, nil)
+        (self.uuid, self.name, self.prefix, self.status, self.region) = (nil, nil, nil, nil, nil)
+        (self.validations, self.failureReason, self.locked, self.advertised, self.projectId) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ByoipPrefix {
-    init(from decoder: Decoder) throws {
+extension ByoipPrefix {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
-        name = try container.sdkDecodeIfPresent(.name)
-        prefix = try container.sdkDecodeIfPresent(.prefix)
-        status = try container.sdkDecodeIfPresent(.status)
-        region = try container.sdkDecodeIfPresent(.region)
-        validations = try container.sdkDecodeIfPresent(.validations)
-        failureReason = try container.sdkDecodeIfPresent(.failureReason)
-        locked = try container.sdkDecodeIfPresent(.locked)
-        advertised = try container.sdkDecodeIfPresent(.advertised)
-        projectId = try container.sdkDecodeIfPresent(.projectId)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.prefix = try container.sdkDecodeIfPresent(.prefix)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.validations = try container.sdkDecodeIfPresent(.validations)
+        self.failureReason = try container.sdkDecodeIfPresent(.failureReason)
+        self.locked = try container.sdkDecodeIfPresent(.locked)
+        self.advertised = try container.sdkDecodeIfPresent(.advertised)
+        self.projectId = try container.sdkDecodeIfPresent(.projectId)
     }
 }
 
-public extension ByoipPrefix {
-    init(
-        uuid: String? = nil,
-        name: String? = nil,
-        prefix: String? = nil,
-        status: String? = nil,
-        region: String? = nil,
-        validations: [ByoipPrefixValidationsItem]? = nil,
-        failureReason: String? = nil,
-        locked: Bool? = nil,
-        advertised: Bool? = nil,
-        projectId: String? = nil
-    ) {
+extension ByoipPrefix {
+    public init(uuid: String? = nil, name: String? = nil, prefix: String? = nil, status: String? = nil, region: String? = nil, validations: [ByoipPrefixValidationsItem]? = nil, failureReason: String? = nil, locked: Bool? = nil, advertised: Bool? = nil, projectId: String? = nil) {
         self.init()
         (self.uuid, self.name) = (uuid, name)
         (self.prefix, self.status) = (prefix, status)
@@ -176,21 +159,21 @@ public struct ByoipPrefixValidationsItem: Codable {
     }
 
     init() {
-        (name, status, note) = (nil, nil, nil)
+        (self.name, self.status, self.note) = (nil, nil, nil)
     }
 }
 
-public extension ByoipPrefixValidationsItem {
-    init(from decoder: Decoder) throws {
+extension ByoipPrefixValidationsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        status = try container.sdkDecodeIfPresent(.status)
-        note = try container.sdkDecodeIfPresent(.note)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.note = try container.sdkDecodeIfPresent(.note)
     }
 }
 
-public extension ByoipPrefixValidationsItem {
-    init(name: String? = nil, status: String? = nil, note: String? = nil) {
+extension ByoipPrefixValidationsItem {
+    public init(name: String? = nil, status: String? = nil, note: String? = nil) {
         self.init()
         (self.name, self.status) = (name, status)
         self.note = note
@@ -215,43 +198,29 @@ public struct ByoipPrefixCreate: Codable {
         case signature
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ByoipPrefixCreate {
-    init(from decoder: Decoder) throws {
+extension ByoipPrefixCreate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.prefix) else {
-            throw SdkValidationError(
-                field: "prefix",
-                code: "required",
-                message: "Validation failed for 'prefix': value is required"
-            )
+            throw SdkValidationError(field: "prefix", code: "required", message: "Validation failed for 'prefix': value is required")
         }
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
         guard container.contains(.signature) else {
-            throw SdkValidationError(
-                field: "signature",
-                code: "required",
-                message: "Validation failed for 'signature': value is required"
-            )
+            throw SdkValidationError(field: "signature", code: "required", message: "Validation failed for 'signature': value is required")
         }
-        prefix = try container.sdkDecodeRequired(.prefix)
-        region = try container.sdkDecodeRequired(.region)
-        signature = try container.sdkDecodeRequired(.signature)
+        self.prefix = try container.sdkDecodeRequired(.prefix)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.signature = try container.sdkDecodeRequired(.signature)
     }
 }
 
-public extension ByoipPrefixCreate {
-    init(prefix: String, region: String, signature: String) {
+extension ByoipPrefixCreate {
+    public init(prefix: String, region: String, signature: String) {
         (self.prefix, self.region) = (prefix, region)
         self.signature = signature
     }
@@ -284,32 +253,26 @@ public struct ByoipPrefixResource: Codable {
     }
 
     init() {
-        (id, byoip, region, resource, assignedAt) = (nil, nil, nil, nil, nil)
+        (self.id, self.byoip, self.region, self.resource, self.assignedAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ByoipPrefixResource {
-    init(from decoder: Decoder) throws {
+extension ByoipPrefixResource {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        byoip = try container.sdkDecodeIfPresent(.byoip)
-        region = try container.sdkDecodeIfPresent(.region)
-        resource = try container.sdkDecodeIfPresent(.resource)
-        assignedAt = try container.sdkDecodeIfPresent(.assignedAt)
-        if let value = assignedAt {
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.byoip = try container.sdkDecodeIfPresent(.byoip)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.resource = try container.sdkDecodeIfPresent(.resource)
+        self.assignedAt = try container.sdkDecodeIfPresent(.assignedAt)
+        if let value = self.assignedAt {
             try sdkValidateDateTime("assigned_at", sdkWireString(value))
         }
     }
 }
 
-public extension ByoipPrefixResource {
-    init(
-        id: Int? = nil,
-        byoip: String? = nil,
-        region: String? = nil,
-        resource: String? = nil,
-        assignedAt: Date? = nil
-    ) throws {
+extension ByoipPrefixResource {
+    public init(id: Int? = nil, byoip: String? = nil, region: String? = nil, resource: String? = nil, assignedAt: Date? = nil) throws {
         self.init()
         (self.id, self.byoip) = (id, byoip)
         (self.region, self.resource) = (region, resource)
@@ -328,19 +291,19 @@ public struct ByoipPrefixListResourcesVariant0: Codable {
     }
 
     init() {
-        ips = nil
+        self.ips = nil
     }
 }
 
-public extension ByoipPrefixListResourcesVariant0 {
-    init(from decoder: Decoder) throws {
+extension ByoipPrefixListResourcesVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        ips = try container.sdkDecodeIfPresent(.ips)
+        self.ips = try container.sdkDecodeIfPresent(.ips)
     }
 }
 
-public extension ByoipPrefixListResourcesVariant0 {
-    init(ips: [ByoipPrefixResource]? = nil) {
+extension ByoipPrefixListResourcesVariant0 {
+    public init(ips: [ByoipPrefixResource]? = nil) {
         self.init()
         self.ips = ips
     }
@@ -360,29 +323,23 @@ public struct ByoipPrefixListResources: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ByoipPrefixListResources {
-    init(from decoder: Decoder) throws {
+extension ByoipPrefixListResources {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        ips = try container.sdkDecodeIfPresent(.ips)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.ips = try container.sdkDecodeIfPresent(.ips)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension ByoipPrefixListResources {
-    init(meta: MetaMeta, ips: [ByoipPrefixResource]? = nil, links: PageLinks? = nil) {
+extension ByoipPrefixListResources {
+    public init(meta: MetaMeta, ips: [ByoipPrefixResource]? = nil, links: PageLinks? = nil) {
         (self.meta, self.ips) = (meta, ips)
         self.links = links
     }
@@ -398,19 +355,19 @@ public struct ByoipPrefixGet: Codable {
     }
 
     init() {
-        byoipPrefix = nil
+        self.byoipPrefix = nil
     }
 }
 
-public extension ByoipPrefixGet {
-    init(from decoder: Decoder) throws {
+extension ByoipPrefixGet {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        byoipPrefix = try container.sdkDecodeIfPresent(.byoipPrefix)
+        self.byoipPrefix = try container.sdkDecodeIfPresent(.byoipPrefix)
     }
 }
 
-public extension ByoipPrefixGet {
-    init(byoipPrefix: ByoipPrefix? = nil) {
+extension ByoipPrefixGet {
+    public init(byoipPrefix: ByoipPrefix? = nil) {
         self.init()
         self.byoipPrefix = byoipPrefix
     }
@@ -435,21 +392,21 @@ public struct ByoipPrefixCreateResponse: Codable {
     }
 
     init() {
-        (uuid, region, status) = (nil, nil, nil)
+        (self.uuid, self.region, self.status) = (nil, nil, nil)
     }
 }
 
-public extension ByoipPrefixCreateResponse {
-    init(from decoder: Decoder) throws {
+extension ByoipPrefixCreateResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
-        region = try container.sdkDecodeIfPresent(.region)
-        status = try container.sdkDecodeIfPresent(.status)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.status = try container.sdkDecodeIfPresent(.status)
     }
 }
 
-public extension ByoipPrefixCreateResponse {
-    init(uuid: String? = nil, region: String? = nil, status: String? = nil) {
+extension ByoipPrefixCreateResponse {
+    public init(uuid: String? = nil, region: String? = nil, status: String? = nil) {
         self.init()
         (self.uuid, self.region) = (uuid, region)
         self.status = status
@@ -467,19 +424,19 @@ public struct ByoipPrefixUpdate: Codable {
     }
 
     init() {
-        advertise = nil
+        self.advertise = nil
     }
 }
 
-public extension ByoipPrefixUpdate {
-    init(from decoder: Decoder) throws {
+extension ByoipPrefixUpdate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        advertise = try container.sdkDecodeIfPresent(.advertise)
+        self.advertise = try container.sdkDecodeIfPresent(.advertise)
     }
 }
 
-public extension ByoipPrefixUpdate {
-    init(advertise: Bool? = nil) {
+extension ByoipPrefixUpdate {
+    public init(advertise: Bool? = nil) {
         self.init()
         self.advertise = advertise
     }
@@ -495,19 +452,19 @@ public struct ByoipPrefixUpdateResponse: Codable {
     }
 
     init() {
-        byoipPrefix = nil
+        self.byoipPrefix = nil
     }
 }
 
-public extension ByoipPrefixUpdateResponse {
-    init(from decoder: Decoder) throws {
+extension ByoipPrefixUpdateResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        byoipPrefix = try container.sdkDecodeIfPresent(.byoipPrefix)
+        self.byoipPrefix = try container.sdkDecodeIfPresent(.byoipPrefix)
     }
 }
 
-public extension ByoipPrefixUpdateResponse {
-    init(byoipPrefix: ByoipPrefix? = nil) {
+extension ByoipPrefixUpdateResponse {
+    public init(byoipPrefix: ByoipPrefix? = nil) {
         self.init()
         self.byoipPrefix = byoipPrefix
     }

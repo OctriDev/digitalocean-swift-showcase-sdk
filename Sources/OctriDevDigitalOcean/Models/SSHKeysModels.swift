@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// SSHKeys domain models
+// SSHKeys domain models
 public typealias SshKeyFingerprint = String
 
 public typealias SshKeyId = Int
@@ -18,19 +18,19 @@ public struct SshKeysAllVariant0: Codable {
     }
 
     init() {
-        sshKeys = nil
+        self.sshKeys = nil
     }
 }
 
-public extension SshKeysAllVariant0 {
-    init(from decoder: Decoder) throws {
+extension SshKeysAllVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        sshKeys = try container.sdkDecodeIfPresent(.sshKeys)
+        self.sshKeys = try container.sdkDecodeIfPresent(.sshKeys)
     }
 }
 
-public extension SshKeysAllVariant0 {
-    init(sshKeys: [SshKeys]? = nil) {
+extension SshKeysAllVariant0 {
+    public init(sshKeys: [SshKeys]? = nil) {
         self.init()
         self.sshKeys = sshKeys
     }
@@ -46,19 +46,19 @@ public struct SshKeysExisting: Codable {
     }
 
     init() {
-        sshKey = nil
+        self.sshKey = nil
     }
 }
 
-public extension SshKeysExisting {
-    init(from decoder: Decoder) throws {
+extension SshKeysExisting {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        sshKey = try container.sdkDecodeIfPresent(.sshKey)
+        self.sshKey = try container.sdkDecodeIfPresent(.sshKey)
     }
 }
 
-public extension SshKeysExisting {
-    init(sshKey: SshKeys? = nil) {
+extension SshKeysExisting {
+    public init(sshKey: SshKeys? = nil) {
         self.init()
         self.sshKey = sshKey
     }
@@ -81,35 +81,25 @@ public struct SshKeysRequest: Codable {
         case name
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SshKeysRequest {
-    init(from decoder: Decoder) throws {
+extension SshKeysRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.publicKey) else {
-            throw SdkValidationError(
-                field: "public_key",
-                code: "required",
-                message: "Validation failed for 'public_key': value is required"
-            )
+            throw SdkValidationError(field: "public_key", code: "required", message: "Validation failed for 'public_key': value is required")
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        publicKey = try container.sdkDecodeRequired(.publicKey)
-        name = try container.sdkDecodeRequired(.name)
+        self.publicKey = try container.sdkDecodeRequired(.publicKey)
+        self.name = try container.sdkDecodeRequired(.name)
     }
 }
 
-public extension SshKeysRequest {
-    init(publicKey: String, name: SshKeyName) {
+extension SshKeysRequest {
+    public init(publicKey: String, name: SshKeyName) {
         (self.publicKey, self.name) = (publicKey, name)
     }
 }
@@ -128,29 +118,23 @@ public struct SshKeysAll: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SshKeysAll {
-    init(from decoder: Decoder) throws {
+extension SshKeysAll {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        sshKeys = try container.sdkDecodeIfPresent(.sshKeys)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.sshKeys = try container.sdkDecodeIfPresent(.sshKeys)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension SshKeysAll {
-    init(meta: MetaMeta, sshKeys: [SshKeys]? = nil, links: PageLinks? = nil) {
+extension SshKeysAll {
+    public init(meta: MetaMeta, sshKeys: [SshKeys]? = nil, links: PageLinks? = nil) {
         (self.meta, self.sshKeys) = (meta, sshKeys)
         self.links = links
     }
@@ -166,19 +150,19 @@ public struct SshKeysNew: Codable {
     }
 
     init() {
-        sshKey = nil
+        self.sshKey = nil
     }
 }
 
-public extension SshKeysNew {
-    init(from decoder: Decoder) throws {
+extension SshKeysNew {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        sshKey = try container.sdkDecodeIfPresent(.sshKey)
+        self.sshKey = try container.sdkDecodeIfPresent(.sshKey)
     }
 }
 
-public extension SshKeysNew {
-    init(sshKey: SshKeys? = nil) {
+extension SshKeysNew {
+    public init(sshKey: SshKeys? = nil) {
         self.init()
         self.sshKey = sshKey
     }
@@ -210,37 +194,27 @@ public struct SshKeys: Codable {
         case fingerprint
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SshKeys {
-    init(from decoder: Decoder) throws {
+extension SshKeys {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.publicKey) else {
-            throw SdkValidationError(
-                field: "public_key",
-                code: "required",
-                message: "Validation failed for 'public_key': value is required"
-            )
+            throw SdkValidationError(field: "public_key", code: "required", message: "Validation failed for 'public_key': value is required")
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        publicKey = try container.sdkDecodeRequired(.publicKey)
-        name = try container.sdkDecodeRequired(.name)
-        id = try container.sdkDecodeIfPresent(.id)
-        fingerprint = try container.sdkDecodeIfPresent(.fingerprint)
+        self.publicKey = try container.sdkDecodeRequired(.publicKey)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.fingerprint = try container.sdkDecodeIfPresent(.fingerprint)
     }
 }
 
-public extension SshKeys {
-    init(publicKey: String, name: SshKeyName, id: SshKeyId? = nil, fingerprint: SshKeyFingerprint? = nil) {
+extension SshKeys {
+    public init(publicKey: String, name: SshKeyName, id: SshKeyId? = nil, fingerprint: SshKeyFingerprint? = nil) {
         (self.publicKey, self.name) = (publicKey, name)
         (self.id, self.fingerprint) = (id, fingerprint)
     }

@@ -6,41 +6,18 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DropletAutoscalePoolsMethods {
-    /// To show information about an individual autoscale pool, send a GET request to
-    /// `/v2/droplets/autoscale/$AUTOSCALE_POOL_ID`.
+extension DropletAutoscalePoolsMethods {
+    /// To show information about an individual autoscale pool, send a GET request to `/v2/droplets/autoscale/$AUTOSCALE_POOL_ID`.
     ///
     /// - Parameters:
     /// - autoscalePoolId: A unique identifier for an autoscale pool.
-    static func autoscalepoolsGet(
-        config: ClientConfig,
-        autoscalePoolId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExistingAutoscalePool {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/droplets/autoscale/", sdkEncodePathSegment(sdkWireString(autoscalePoolId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "autoscalepools_get",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func autoscalepoolsGet(config: ClientConfig, autoscalePoolId: String, requestOptions: RequestOptions? = nil) async throws -> ExistingAutoscalePool {
+        return try (await sdkRequest("GET", ["/v2/droplets/autoscale/", sdkEncodePathSegment(sdkWireString(autoscalePoolId))].joined(), config: config, decoder: .json, operationId: "autoscalepools_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Replaces the configuration of an existing autoscale pool with the full representation supplied in the request.
-    /// Include `name`, `config`, and `droplet_template`, and provide the required region, image, size, and SSH keys in
-    /// the Droplet template. A 200 response returns the updated pool details.
+    /// Replaces the configuration of an existing autoscale pool with the full representation supplied in the request. Include `name`, `config`, and `droplet_template`, and provide the required region, image, size, and SSH keys in the Droplet template. A 200 response returns the updated pool details.
     ///
-    /// To update the configuration of an existing autoscale pool, send a PUT request to
-    /// `/v2/droplets/autoscale/$AUTOSCALE_POOL_ID`. The request must contain a full representation of the autoscale
-    /// pool including existing attributes.
+    /// To update the configuration of an existing autoscale pool, send a PUT request to `/v2/droplets/autoscale/$AUTOSCALE_POOL_ID`. The request must contain a full representation of the autoscale pool including existing attributes.
     ///
     /// - Parameters:
     /// - autoscalePoolId: A unique identifier for an autoscale pool.
@@ -51,35 +28,9 @@ public extension DropletAutoscalePoolsMethods {
     ///   configuration).
     /// - dropletTemplate: Required object value serialized in the
     ///   `droplet_template` wire field.
-    static func autoscalepoolsUpdate(
-        config: ClientConfig,
-        autoscalePoolId: String,
-        name: String,
-        config2: AutoscalePoolCreateConfig,
-        dropletTemplate: AutoscalePoolDropletTemplate,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AutoscalePoolCreateResponse {
-        let requestBody = AutoscalepoolsUpdateRequestBody(
-            name: name,
-            config2: config2,
-            dropletTemplate: dropletTemplate
-        )
+    public static func autoscalepoolsUpdate(config: ClientConfig, autoscalePoolId: String, name: String, config2: AutoscalePoolCreateConfig, dropletTemplate: AutoscalePoolDropletTemplate, requestOptions: RequestOptions? = nil) async throws -> AutoscalePoolCreateResponse {
+        let requestBody = AutoscalepoolsUpdateRequestBody(name: name, config2: config2, dropletTemplate: dropletTemplate)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/droplets/autoscale/", sdkEncodePathSegment(sdkWireString(autoscalePoolId))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "autoscalepools_update",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/droplets/autoscale/", sdkEncodePathSegment(sdkWireString(autoscalePoolId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "autoscalepools_update", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

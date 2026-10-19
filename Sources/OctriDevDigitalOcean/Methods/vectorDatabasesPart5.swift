@@ -6,72 +6,28 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension VectorDatabasesMethods {
-    /// To resize a vector database, send a POST request to `/v2/vector-databases/{id}/resize`. This changes the
-    /// database's resource tier. The response body contains a JSON object with the updated vector database.
+extension VectorDatabasesMethods {
+    /// To resize a vector database, send a POST request to `/v2/vector-databases/{id}/resize`. This changes the database's resource tier. The response body contains a JSON object with the updated vector database.
     ///
     /// - Parameters:
     /// - id: Required. ID of the vector database to resize.
     /// - id2: Required. ID of the vector database to resize.
     /// - size: Required. Target resource tier: small, medium, or large.
-    static func vectorDatabasesPostResize(
-        config: ClientConfig,
-        id: String,
-        id2: String? = nil,
-        size: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VectordbResizeVectorDBResponse {
+    public static func vectorDatabasesPostResize(config: ClientConfig, id: String, id2: String? = nil, size: String? = nil, requestOptions: RequestOptions? = nil) async throws -> VectordbResizeVectorDBResponse {
         let requestBody = VectorDatabasesPostResizeRequestBody(id2: id2, size: size)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/vector-databases/", sdkEncodePathSegment(sdkWireString(id)), "/resize"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "vectorDatabases_post_resize",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/vector-databases/", sdkEncodePathSegment(sdkWireString(id)), "/resize"].joined(), config: config, body: requestBody, decoder: .json, operationId: "vectorDatabases_post_resize", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To update the tags on a vector database, send a PUT request to `/v2/vector-databases/{id}/tags`. The supplied
-    /// set of tags replaces the database's existing tags.
+    /// To update the tags on a vector database, send a PUT request to `/v2/vector-databases/{id}/tags`. The supplied set of tags replaces the database's existing tags.
     ///
     /// - Parameters:
     /// - id: Required. ID of the vector database to update tags for.
     /// - id2: Required. ID of the vector database to update tags for.
     /// - tags: Tags to set on the vector database. Replaces all existing tags.
-    static func vectorDatabasesUpdateTags(
-        config: ClientConfig,
-        id: String,
-        id2: String? = nil,
-        tags: [String]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VectordbUpdateVectorDBTagsResponse {
+    public static func vectorDatabasesUpdateTags(config: ClientConfig, id: String, id2: String? = nil, tags: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> VectordbUpdateVectorDBTagsResponse {
         let requestBody = VectorDatabasesUpdateTagsRequestBody(id2: id2, tags: tags)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/vector-databases/", sdkEncodePathSegment(sdkWireString(id)), "/tags"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "vectorDatabases_update_tags",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/vector-databases/", sdkEncodePathSegment(sdkWireString(id)), "/tags"].joined(), config: config, body: requestBody, decoder: .json, operationId: "vectorDatabases_update_tags", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

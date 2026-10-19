@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// ProjectResources domain models
+// ProjectResources domain models
 /// Typed representation of the `ProjectAssignment` API schema.
 public struct ProjectAssignment: Codable {
     /// A list of uniform resource names (URNs) to be added to a project. Only resources that you are authorized to
@@ -16,19 +16,19 @@ public struct ProjectAssignment: Codable {
     }
 
     init() {
-        resources = nil
+        self.resources = nil
     }
 }
 
-public extension ProjectAssignment {
-    init(from decoder: Decoder) throws {
+extension ProjectAssignment {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        resources = try container.sdkDecodeIfPresent(.resources)
+        self.resources = try container.sdkDecodeIfPresent(.resources)
     }
 }
 
-public extension ProjectAssignment {
-    init(resources: [Urn]? = nil) {
+extension ProjectAssignment {
+    public init(resources: [Urn]? = nil) {
         self.init()
         self.resources = resources
     }
@@ -49,8 +49,8 @@ public struct ResourceLinks: Codable {
     }
 }
 
-public extension ResourceLinks {
-    init(from decoder: Decoder) throws {
+extension ResourceLinks {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.`self` = try container.sdkDecodeIfPresent(.`self`)
         if let value = self.`self` {
@@ -59,8 +59,8 @@ public extension ResourceLinks {
     }
 }
 
-public extension ResourceLinks {
-    init(self selfValue: String? = nil) throws {
+extension ResourceLinks {
+    public init(`self` selfValue: String? = nil) throws {
         self.init()
         self.`self` = selfValue
         if let value = self.`self` {
@@ -79,19 +79,19 @@ public struct ResourcesListVariant0: Codable {
     }
 
     init() {
-        resources = nil
+        self.resources = nil
     }
 }
 
-public extension ResourcesListVariant0 {
-    init(from decoder: Decoder) throws {
+extension ResourcesListVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        resources = try container.sdkDecodeIfPresent(.resources)
+        self.resources = try container.sdkDecodeIfPresent(.resources)
     }
 }
 
-public extension ResourcesListVariant0 {
-    init(resources: [Resource]? = nil) {
+extension ResourcesListVariant0 {
+    public init(resources: [Resource]? = nil) {
         self.init()
         self.resources = resources
     }
@@ -119,28 +119,28 @@ public struct Resource: Codable {
     }
 
     init() {
-        (urn, assignedAt, links, status) = (nil, nil, nil, nil)
+        (self.urn, self.assignedAt, self.links, self.status) = (nil, nil, nil, nil)
     }
 }
 
-public extension Resource {
-    init(from decoder: Decoder) throws {
+extension Resource {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        urn = try container.sdkDecodeIfPresent(.urn)
-        assignedAt = try container.sdkDecodeIfPresent(.assignedAt)
-        links = try container.sdkDecodeIfPresent(.links)
-        status = try container.sdkDecodeIfPresent(.status)
-        if let value = urn {
+        self.urn = try container.sdkDecodeIfPresent(.urn)
+        self.assignedAt = try container.sdkDecodeIfPresent(.assignedAt)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        if let value = self.urn {
             try sdkValidatePattern("urn", sdkWireString(value), sdkPattern9296ac5c6d12)
         }
-        if let value = assignedAt {
+        if let value = self.assignedAt {
             try sdkValidateDateTime("assigned_at", sdkWireString(value))
         }
     }
 }
 
-public extension Resource {
-    init(urn: Urn? = nil, assignedAt: Date? = nil, links: ResourceLinks? = nil, status: ResourceStatus? = nil) throws {
+extension Resource {
+    public init(urn: Urn? = nil, assignedAt: Date? = nil, links: ResourceLinks? = nil, status: ResourceStatus? = nil) throws {
         self.init()
         (self.urn, self.assignedAt) = (urn, assignedAt)
         (self.links, self.status) = (links, status)
@@ -169,29 +169,23 @@ public struct ResourcesList: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ResourcesList {
-    init(from decoder: Decoder) throws {
+extension ResourcesList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        resources = try container.sdkDecodeIfPresent(.resources)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.resources = try container.sdkDecodeIfPresent(.resources)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension ResourcesList {
-    init(meta: MetaMeta, resources: [Resource]? = nil, links: PageLinks? = nil) {
+extension ResourcesList {
+    public init(meta: MetaMeta, resources: [Resource]? = nil, links: PageLinks? = nil) {
         (self.meta, self.resources) = (meta, resources)
         self.links = links
     }
@@ -208,19 +202,19 @@ public struct AssignedResourcesList: Codable {
     }
 
     init() {
-        resources = nil
+        self.resources = nil
     }
 }
 
-public extension AssignedResourcesList {
-    init(from decoder: Decoder) throws {
+extension AssignedResourcesList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        resources = try container.sdkDecodeIfPresent(.resources)
+        self.resources = try container.sdkDecodeIfPresent(.resources)
     }
 }
 
-public extension AssignedResourcesList {
-    init(resources: [Resource]? = nil) {
+extension AssignedResourcesList {
+    public init(resources: [Resource]? = nil) {
         self.init()
         self.resources = resources
     }
@@ -230,10 +224,7 @@ public extension AssignedResourcesList {
 public struct ResourceStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let ok = ResourceStatus(rawValue: "ok")
     public static let notFound = ResourceStatus(rawValue: "not_found")
     public static let assigned = ResourceStatus(rawValue: "assigned")
@@ -242,7 +233,7 @@ public struct ResourceStatus: RawRepresentable, Hashable, Codable, Sendable, Sdk
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

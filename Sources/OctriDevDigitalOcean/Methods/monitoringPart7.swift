@@ -6,93 +6,46 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension MonitoringMethods {
+extension MonitoringMethods {
     /// To retrieve CPU metrics for a given droplet, send a GET request to `/v2/monitoring/metrics/droplet/cpu`.
     ///
     /// - Parameters:
     /// - hostId: The droplet ID.
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    static func monitoringGetDropletCpuMetrics(
-        config: ClientConfig,
-        hostId: String,
-        start: String,
-        end: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Metrics {
-        try await (sdkRequest(
-            "GET",
-            "/v2/monitoring/metrics/droplet/cpu",
-            config: config,
-            query: [
-                SdkQueryParameter("host_id", value: hostId),
-                SdkQueryParameter("start", value: start),
-                SdkQueryParameter("end", value: end),
-            ],
-            decoder: .json,
-            operationId: "monitoring_get_DropletCpuMetrics",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    public static func monitoringGetDropletCpuMetrics(config: ClientConfig, hostId: String, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
+        return try (await sdkRequest("GET", "/v2/monitoring/metrics/droplet/cpu", config: config, query: [
+            SdkQueryParameter("host_id", value: hostId),
+            SdkQueryParameter("start", value: start),
+            SdkQueryParameter("end", value: end),
+        ], decoder: .json, operationId: "monitoring_get_DropletCpuMetrics", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To retrieve filesystem free metrics for a given droplet, send a GET request to
-    /// `/v2/monitoring/metrics/droplet/filesystem_free`.
+    /// To retrieve filesystem free metrics for a given droplet, send a GET request to `/v2/monitoring/metrics/droplet/filesystem_free`.
     ///
     /// - Parameters:
     /// - hostId: The droplet ID.
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    static func monitoringGetDropletFilesystemFreeMetrics(
-        config: ClientConfig,
-        hostId: String,
-        start: String,
-        end: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Metrics {
-        try await (sdkRequest(
-            "GET",
-            "/v2/monitoring/metrics/droplet/filesystem_free",
-            config: config,
-            query: [
-                SdkQueryParameter("host_id", value: hostId),
-                SdkQueryParameter("start", value: start),
-                SdkQueryParameter("end", value: end),
-            ],
-            decoder: .json,
-            operationId: "monitoring_get_dropletFilesystemFreeMetrics",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    public static func monitoringGetDropletFilesystemFreeMetrics(config: ClientConfig, hostId: String, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
+        return try (await sdkRequest("GET", "/v2/monitoring/metrics/droplet/filesystem_free", config: config, query: [
+            SdkQueryParameter("host_id", value: hostId),
+            SdkQueryParameter("start", value: start),
+            SdkQueryParameter("end", value: end),
+        ], decoder: .json, operationId: "monitoring_get_dropletFilesystemFreeMetrics", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To retrieve filesystem size metrics for a given droplet, send a GET request to
-    /// `/v2/monitoring/metrics/droplet/filesystem_size`.
+    /// To retrieve filesystem size metrics for a given droplet, send a GET request to `/v2/monitoring/metrics/droplet/filesystem_size`.
     ///
     /// - Parameters:
     /// - hostId: The droplet ID.
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    static func monitoringGetDropletFilesystemSizeMetrics(
-        config: ClientConfig,
-        hostId: String,
-        start: String,
-        end: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Metrics {
-        try await (sdkRequest(
-            "GET",
-            "/v2/monitoring/metrics/droplet/filesystem_size",
-            config: config,
-            query: [
-                SdkQueryParameter("host_id", value: hostId),
-                SdkQueryParameter("start", value: start),
-                SdkQueryParameter("end", value: end),
-            ],
-            decoder: .json,
-            operationId: "monitoring_get_dropletFilesystemSizeMetrics",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    public static func monitoringGetDropletFilesystemSizeMetrics(config: ClientConfig, hostId: String, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
+        return try (await sdkRequest("GET", "/v2/monitoring/metrics/droplet/filesystem_size", config: config, query: [
+            SdkQueryParameter("host_id", value: hostId),
+            SdkQueryParameter("start", value: start),
+            SdkQueryParameter("end", value: end),
+        ], decoder: .json, operationId: "monitoring_get_dropletFilesystemSizeMetrics", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

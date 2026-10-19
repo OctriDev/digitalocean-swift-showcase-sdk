@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ServerlessInferenceMethods {
-    struct InferenceCreateImageOptions: Codable {
+extension ServerlessInferenceMethods {
+    public struct InferenceCreateImageOptions: Codable {
         public var prompt: String
         public var model: String
         public var n: Int
@@ -28,8 +28,7 @@ public extension ServerlessInferenceMethods {
         }
     }
 
-    /// Creates a high-quality image from a text prompt using GPT-IMAGE-1, the latest image generation model with
-    /// automatic prompt optimization and enhanced visual capabilities.
+    /// Creates a high-quality image from a text prompt using GPT-IMAGE-1, the latest image generation model with automatic prompt optimization and enhanced visual capabilities.
     ///
     /// - Parameters:
     /// - prompt: A text description of the desired image(s). Supports up to 32,000
@@ -58,11 +57,7 @@ public extension ServerlessInferenceMethods {
     ///   than 0 to receive progressive updates of the image as it is being generated.
     /// - user: A unique identifier representing your end-user, which can help
     ///   DigitalOcean to monitor and detect abuse.
-    static func inferenceCreateImage(
-        config: ClientConfig,
-        options: InferenceCreateImageOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ImagesResponse {
+    public static func inferenceCreateImage(config: ClientConfig, options: InferenceCreateImageOptions, requestOptions: RequestOptions? = nil) async throws -> ImagesResponse {
         try validateLength("prompt", options.prompt, min: 1)
 
         try validateRange("n", Double(options.n), min: 1, max: 10)
@@ -81,15 +76,6 @@ public extension ServerlessInferenceMethods {
 
         let requestBody = InferenceCreateImageRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v1/images/generations",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "inference_create_image",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+        return try (await sdkRequest("POST", "/v1/images/generations", config: config, body: requestBody, decoder: .json, operationId: "inference_create_image", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

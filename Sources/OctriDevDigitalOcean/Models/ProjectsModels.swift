@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Projects domain models
+// Projects domain models
 /// Typed representation of the `Project` API schema.
 public struct Project: Codable {
     /// The unique universal identifier of this project.
@@ -54,58 +54,47 @@ public struct Project: Codable {
     }
 
     init() {
-        (id, ownerUuid, ownerId, name, description) = (nil, nil, nil, nil, nil)
-        (purpose, environment, createdAt, updatedAt, isDefault) = (nil, nil, nil, nil, nil)
+        (self.id, self.ownerUuid, self.ownerId, self.name, self.description) = (nil, nil, nil, nil, nil)
+        (self.purpose, self.environment, self.createdAt, self.updatedAt, self.isDefault) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension Project {
-    init(from decoder: Decoder) throws {
+extension Project {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        ownerUuid = try container.sdkDecodeIfPresent(.ownerUuid)
-        ownerId = try container.sdkDecodeIfPresent(.ownerId)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        purpose = try container.sdkDecodeIfPresent(.purpose)
-        environment = try container.sdkDecodeIfPresent(.environment)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        isDefault = try container.sdkDecodeIfPresent(.isDefault)
-        if let value = id {
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.ownerUuid = try container.sdkDecodeIfPresent(.ownerUuid)
+        self.ownerId = try container.sdkDecodeIfPresent(.ownerId)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.purpose = try container.sdkDecodeIfPresent(.purpose)
+        self.environment = try container.sdkDecodeIfPresent(.environment)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.isDefault = try container.sdkDecodeIfPresent(.isDefault)
+        if let value = self.id {
             try sdkValidateUuid("id", value)
         }
-        if let value = name {
+        if let value = self.name {
             try validateLength("name", value, min: nil, max: 175)
         }
-        if let value = description {
+        if let value = self.description {
             try validateLength("description", value, min: nil, max: 255)
         }
-        if let value = purpose {
+        if let value = self.purpose {
             try validateLength("purpose", value, min: nil, max: 255)
         }
-        if let value = createdAt {
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension Project {
-    init(
-        id: String? = nil,
-        ownerUuid: String? = nil,
-        ownerId: Int? = nil,
-        name: String? = nil,
-        description: String? = nil,
-        purpose: String? = nil,
-        environment: ProjectBaseEnvironment? = nil,
-        createdAt: Date? = nil,
-        updatedAt: Date? = nil,
-        isDefault: Bool? = nil
-    ) throws {
+extension Project {
+    public init(id: String? = nil, ownerUuid: String? = nil, ownerId: Int? = nil, name: String? = nil, description: String? = nil, purpose: String? = nil, environment: ProjectBaseEnvironment? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, isDefault: Bool? = nil) throws {
         self.init()
         (self.id, self.ownerUuid) = (id, ownerUuid)
         (self.ownerId, self.name) = (ownerId, name)
@@ -142,19 +131,19 @@ public struct ProjectRequestVariant1: Codable {
     }
 
     init() {
-        isDefault = nil
+        self.isDefault = nil
     }
 }
 
-public extension ProjectRequestVariant1 {
-    init(from decoder: Decoder) throws {
+extension ProjectRequestVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        isDefault = try container.sdkDecodeIfPresent(.isDefault)
+        self.isDefault = try container.sdkDecodeIfPresent(.isDefault)
     }
 }
 
-public extension ProjectRequestVariant1 {
-    init(isDefault: Bool? = nil) {
+extension ProjectRequestVariant1 {
+    public init(isDefault: Bool? = nil) {
         self.init()
         self.isDefault = isDefault
     }
@@ -170,19 +159,19 @@ public struct DefaultProject: Codable {
     }
 
     init() {
-        project = nil
+        self.project = nil
     }
 }
 
-public extension DefaultProject {
-    init(from decoder: Decoder) throws {
+extension DefaultProject {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        project = try container.sdkDecodeIfPresent(.project)
+        self.project = try container.sdkDecodeIfPresent(.project)
     }
 }
 
-public extension DefaultProject {
-    init(project: Project? = nil) {
+extension DefaultProject {
+    public init(project: Project? = nil) {
         self.init()
         self.project = project
     }
@@ -215,36 +204,31 @@ public struct ProjectBaseRequest: Codable {
     }
 
     init() {
-        (name, description, purpose, environment) = (nil, nil, nil, nil)
+        (self.name, self.description, self.purpose, self.environment) = (nil, nil, nil, nil)
     }
 }
 
-public extension ProjectBaseRequest {
-    init(from decoder: Decoder) throws {
+extension ProjectBaseRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        purpose = try container.sdkDecodeIfPresent(.purpose)
-        environment = try container.sdkDecodeIfPresent(.environment)
-        if let value = name {
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.purpose = try container.sdkDecodeIfPresent(.purpose)
+        self.environment = try container.sdkDecodeIfPresent(.environment)
+        if let value = self.name {
             try validateLength("name", value, min: nil, max: 175)
         }
-        if let value = description {
+        if let value = self.description {
             try validateLength("description", value, min: nil, max: 255)
         }
-        if let value = purpose {
+        if let value = self.purpose {
             try validateLength("purpose", value, min: nil, max: 255)
         }
     }
 }
 
-public extension ProjectBaseRequest {
-    init(
-        name: String? = nil,
-        description: String? = nil,
-        purpose: String? = nil,
-        environment: ProjectBaseRequestEnvironment? = nil
-    ) throws {
+extension ProjectBaseRequest {
+    public init(name: String? = nil, description: String? = nil, purpose: String? = nil, environment: ProjectBaseRequestEnvironment? = nil) throws {
         self.init()
         (self.name, self.description) = (name, description)
         (self.purpose, self.environment) = (purpose, environment)
@@ -307,56 +291,46 @@ public struct ProjectBase: Codable {
     }
 
     init() {
-        (id, ownerUuid, ownerId, name, description) = (nil, nil, nil, nil, nil)
-        (purpose, environment, createdAt, updatedAt) = (nil, nil, nil, nil)
+        (self.id, self.ownerUuid, self.ownerId, self.name, self.description) = (nil, nil, nil, nil, nil)
+        (self.purpose, self.environment, self.createdAt, self.updatedAt) = (nil, nil, nil, nil)
     }
 }
 
-public extension ProjectBase {
-    init(from decoder: Decoder) throws {
+extension ProjectBase {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        ownerUuid = try container.sdkDecodeIfPresent(.ownerUuid)
-        ownerId = try container.sdkDecodeIfPresent(.ownerId)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        purpose = try container.sdkDecodeIfPresent(.purpose)
-        environment = try container.sdkDecodeIfPresent(.environment)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = id {
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.ownerUuid = try container.sdkDecodeIfPresent(.ownerUuid)
+        self.ownerId = try container.sdkDecodeIfPresent(.ownerId)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.purpose = try container.sdkDecodeIfPresent(.purpose)
+        self.environment = try container.sdkDecodeIfPresent(.environment)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = self.id {
             try sdkValidateUuid("id", value)
         }
-        if let value = name {
+        if let value = self.name {
             try validateLength("name", value, min: nil, max: 175)
         }
-        if let value = description {
+        if let value = self.description {
             try validateLength("description", value, min: nil, max: 255)
         }
-        if let value = purpose {
+        if let value = self.purpose {
             try validateLength("purpose", value, min: nil, max: 255)
         }
-        if let value = createdAt {
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension ProjectBase {
-    init(
-        id: String? = nil,
-        ownerUuid: String? = nil,
-        ownerId: Int? = nil,
-        name: String? = nil,
-        description: String? = nil,
-        purpose: String? = nil,
-        environment: ProjectBaseEnvironment? = nil,
-        createdAt: Date? = nil,
-        updatedAt: Date? = nil
-    ) throws {
+extension ProjectBase {
+    public init(id: String? = nil, ownerUuid: String? = nil, ownerId: Int? = nil, name: String? = nil, description: String? = nil, purpose: String? = nil, environment: ProjectBaseEnvironment? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) throws {
         self.init()
         (self.id, self.ownerUuid) = (id, ownerUuid)
         (self.ownerId, self.name) = (ownerId, name)
@@ -392,19 +366,19 @@ public struct ProjectsListVariant0: Codable {
     }
 
     init() {
-        projects = nil
+        self.projects = nil
     }
 }
 
-public extension ProjectsListVariant0 {
-    init(from decoder: Decoder) throws {
+extension ProjectsListVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        projects = try container.sdkDecodeIfPresent(.projects)
+        self.projects = try container.sdkDecodeIfPresent(.projects)
     }
 }
 
-public extension ProjectsListVariant0 {
-    init(projects: [Project]? = nil) {
+extension ProjectsListVariant0 {
+    public init(projects: [Project]? = nil) {
         self.init()
         self.projects = projects
     }
@@ -420,19 +394,19 @@ public struct ProjectVariant1: Codable {
     }
 
     init() {
-        isDefault = nil
+        self.isDefault = nil
     }
 }
 
-public extension ProjectVariant1 {
-    init(from decoder: Decoder) throws {
+extension ProjectVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        isDefault = try container.sdkDecodeIfPresent(.isDefault)
+        self.isDefault = try container.sdkDecodeIfPresent(.isDefault)
     }
 }
 
-public extension ProjectVariant1 {
-    init(isDefault: Bool? = nil) {
+extension ProjectVariant1 {
+    public init(isDefault: Bool? = nil) {
         self.init()
         self.isDefault = isDefault
     }
@@ -448,19 +422,19 @@ public struct ExistingProject: Codable {
     }
 
     init() {
-        project = nil
+        self.project = nil
     }
 }
 
-public extension ExistingProject {
-    init(from decoder: Decoder) throws {
+extension ExistingProject {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        project = try container.sdkDecodeIfPresent(.project)
+        self.project = try container.sdkDecodeIfPresent(.project)
     }
 }
 
-public extension ExistingProject {
-    init(project: Project? = nil) {
+extension ExistingProject {
+    public init(project: Project? = nil) {
         self.init()
         self.project = project
     }
@@ -480,29 +454,23 @@ public struct ProjectsList: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ProjectsList {
-    init(from decoder: Decoder) throws {
+extension ProjectsList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        projects = try container.sdkDecodeIfPresent(.projects)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.projects = try container.sdkDecodeIfPresent(.projects)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension ProjectsList {
-    init(meta: MetaMeta, projects: [Project]? = nil, links: PageLinks? = nil) {
+extension ProjectsList {
+    public init(meta: MetaMeta, projects: [Project]? = nil, links: PageLinks? = nil) {
         (self.meta, self.projects) = (meta, projects)
         self.links = links
     }
@@ -538,38 +506,32 @@ public struct ProjectRequest: Codable {
     }
 
     init() {
-        (name, description, purpose, environment, isDefault) = (nil, nil, nil, nil, nil)
+        (self.name, self.description, self.purpose, self.environment, self.isDefault) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ProjectRequest {
-    init(from decoder: Decoder) throws {
+extension ProjectRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        purpose = try container.sdkDecodeIfPresent(.purpose)
-        environment = try container.sdkDecodeIfPresent(.environment)
-        isDefault = try container.sdkDecodeIfPresent(.isDefault)
-        if let value = name {
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.purpose = try container.sdkDecodeIfPresent(.purpose)
+        self.environment = try container.sdkDecodeIfPresent(.environment)
+        self.isDefault = try container.sdkDecodeIfPresent(.isDefault)
+        if let value = self.name {
             try validateLength("name", value, min: nil, max: 175)
         }
-        if let value = description {
+        if let value = self.description {
             try validateLength("description", value, min: nil, max: 255)
         }
-        if let value = purpose {
+        if let value = self.purpose {
             try validateLength("purpose", value, min: nil, max: 255)
         }
     }
 }
 
-public extension ProjectRequest {
-    init(
-        name: String? = nil,
-        description: String? = nil,
-        purpose: String? = nil,
-        environment: ProjectBaseRequestEnvironment? = nil,
-        isDefault: Bool? = nil
-    ) throws {
+extension ProjectRequest {
+    public init(name: String? = nil, description: String? = nil, purpose: String? = nil, environment: ProjectBaseRequestEnvironment? = nil, isDefault: Bool? = nil) throws {
         self.init()
         (self.name, self.description) = (name, description)
         (self.purpose, self.environment) = (purpose, environment)
@@ -590,17 +552,14 @@ public extension ProjectRequest {
 public struct ProjectBaseEnvironment: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let development = ProjectBaseEnvironment(rawValue: "Development")
     public static let staging = ProjectBaseEnvironment(rawValue: "Staging")
     public static let production = ProjectBaseEnvironment(rawValue: "Production")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -613,17 +572,14 @@ public struct ProjectBaseEnvironment: RawRepresentable, Hashable, Codable, Senda
 public struct ProjectBaseRequestEnvironment: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let development = ProjectBaseRequestEnvironment(rawValue: "Development")
     public static let staging = ProjectBaseRequestEnvironment(rawValue: "Staging")
     public static let production = ProjectBaseRequestEnvironment(rawValue: "Production")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

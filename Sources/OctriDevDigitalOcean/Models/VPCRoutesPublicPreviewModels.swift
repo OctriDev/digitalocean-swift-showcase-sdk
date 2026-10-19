@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// VPCRoutesPublicPreview domain models
+// VPCRoutesPublicPreview domain models
 /// Typed representation of the `RouteUpdate` API schema.
 public struct RouteUpdate: Codable {
     /// The URNs of supported next-hop resources. Droplet targets must use a numeric ID in the format
@@ -15,27 +15,21 @@ public struct RouteUpdate: Codable {
         case targetUrns = "target_urns"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension RouteUpdate {
-    init(from decoder: Decoder) throws {
+extension RouteUpdate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.targetUrns) else {
-            throw SdkValidationError(
-                field: "target_urns",
-                code: "required",
-                message: "Validation failed for 'target_urns': value is required"
-            )
+            throw SdkValidationError(field: "target_urns", code: "required", message: "Validation failed for 'target_urns': value is required")
         }
-        targetUrns = try container.sdkDecodeRequired(.targetUrns)
+        self.targetUrns = try container.sdkDecodeRequired(.targetUrns)
     }
 }
 
-public extension RouteUpdate {
-    init(targetUrns: [String]) {
+extension RouteUpdate {
+    public init(targetUrns: [String]) {
         self.targetUrns = targetUrns
     }
 }
@@ -54,29 +48,23 @@ public struct AllVpcSubnetRoutes: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllVpcSubnetRoutes {
-    init(from decoder: Decoder) throws {
+extension AllVpcSubnetRoutes {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        routes = try container.sdkDecodeIfPresent(.routes)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.routes = try container.sdkDecodeIfPresent(.routes)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllVpcSubnetRoutes {
-    init(meta: MetaMeta, routes: [Route]? = nil, links: PageLinks? = nil) {
+extension AllVpcSubnetRoutes {
+    public init(meta: MetaMeta, routes: [Route]? = nil, links: PageLinks? = nil) {
         (self.meta, self.routes) = (meta, routes)
         self.links = links
     }
@@ -114,68 +102,43 @@ public struct Route: Codable {
         case createdAt = "created_at"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Route {
-    init(from decoder: Decoder) throws {
+extension Route {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.destinationCidr) else {
-            throw SdkValidationError(
-                field: "destination_cidr",
-                code: "required",
-                message: "Validation failed for 'destination_cidr': value is required"
-            )
+            throw SdkValidationError(field: "destination_cidr", code: "required", message: "Validation failed for 'destination_cidr': value is required")
         }
         guard container.contains(.targetUrns) else {
-            throw SdkValidationError(
-                field: "target_urns",
-                code: "required",
-                message: "Validation failed for 'target_urns': value is required"
-            )
+            throw SdkValidationError(field: "target_urns", code: "required", message: "Validation failed for 'target_urns': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        type = try container.sdkDecodeRequired(.type)
-        destinationCidr = try container.sdkDecodeRequired(.destinationCidr)
-        targetUrns = try container.sdkDecodeRequired(.targetUrns)
-        modifiable = try container.sdkDecodeIfPresent(.modifiable)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        try sdkValidateUuid("id", id)
-        if let value = createdAt {
+        self.id = try container.sdkDecodeRequired(.id)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.destinationCidr = try container.sdkDecodeRequired(.destinationCidr)
+        self.targetUrns = try container.sdkDecodeRequired(.targetUrns)
+        self.modifiable = try container.sdkDecodeIfPresent(.modifiable)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+            try sdkValidateUuid("id", self.id)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-public extension Route {
-    init(
-        id: String,
-        type: RouteType,
-        destinationCidr: String,
-        targetUrns: [String],
-        modifiable: Bool? = nil,
-        createdAt: Date? = nil
-    ) throws {
+extension Route {
+    public init(id: String, type: RouteType, destinationCidr: String, targetUrns: [String], modifiable: Bool? = nil, createdAt: Date? = nil) throws {
         (self.id, self.type) = (id, type)
         (self.destinationCidr, self.targetUrns) = (destinationCidr, targetUrns)
         (self.modifiable, self.createdAt) = (modifiable, createdAt)
-        try sdkValidateUuid("id", self.id)
+            try sdkValidateUuid("id", self.id)
         if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
@@ -190,19 +153,19 @@ public struct AllVpcRoutesVariant0: Codable {
     }
 
     init() {
-        routes = nil
+        self.routes = nil
     }
 }
 
-public extension AllVpcRoutesVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllVpcRoutesVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        routes = try container.sdkDecodeIfPresent(.routes)
+        self.routes = try container.sdkDecodeIfPresent(.routes)
     }
 }
 
-public extension AllVpcRoutesVariant0 {
-    init(routes: [Route]? = nil) {
+extension AllVpcRoutesVariant0 {
+    public init(routes: [Route]? = nil) {
         self.init()
         self.routes = routes
     }
@@ -222,29 +185,23 @@ public struct AllVpcRoutes: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllVpcRoutes {
-    init(from decoder: Decoder) throws {
+extension AllVpcRoutes {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        routes = try container.sdkDecodeIfPresent(.routes)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.routes = try container.sdkDecodeIfPresent(.routes)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllVpcRoutes {
-    init(meta: MetaMeta, routes: [Route]? = nil, links: PageLinks? = nil) {
+extension AllVpcRoutes {
+    public init(meta: MetaMeta, routes: [Route]? = nil, links: PageLinks? = nil) {
         (self.meta, self.routes) = (meta, routes)
         self.links = links
     }
@@ -260,19 +217,19 @@ public struct SingleRoute: Codable {
     }
 
     init() {
-        route = nil
+        self.route = nil
     }
 }
 
-public extension SingleRoute {
-    init(from decoder: Decoder) throws {
+extension SingleRoute {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        route = try container.sdkDecodeIfPresent(.route)
+        self.route = try container.sdkDecodeIfPresent(.route)
     }
 }
 
-public extension SingleRoute {
-    init(route: Route? = nil) {
+extension SingleRoute {
+    public init(route: Route? = nil) {
         self.init()
         self.route = route
     }
@@ -286,19 +243,19 @@ public struct AllVpcSubnetRoutesVariant0: Codable {
     }
 
     init() {
-        routes = nil
+        self.routes = nil
     }
 }
 
-public extension AllVpcSubnetRoutesVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllVpcSubnetRoutesVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        routes = try container.sdkDecodeIfPresent(.routes)
+        self.routes = try container.sdkDecodeIfPresent(.routes)
     }
 }
 
-public extension AllVpcSubnetRoutesVariant0 {
-    init(routes: [Route]? = nil) {
+extension AllVpcSubnetRoutesVariant0 {
+    public init(routes: [Route]? = nil) {
         self.init()
         self.routes = routes
     }
@@ -319,35 +276,25 @@ public struct RouteCreate: Codable {
         case targetUrns = "target_urns"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension RouteCreate {
-    init(from decoder: Decoder) throws {
+extension RouteCreate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.destinationCidr) else {
-            throw SdkValidationError(
-                field: "destination_cidr",
-                code: "required",
-                message: "Validation failed for 'destination_cidr': value is required"
-            )
+            throw SdkValidationError(field: "destination_cidr", code: "required", message: "Validation failed for 'destination_cidr': value is required")
         }
         guard container.contains(.targetUrns) else {
-            throw SdkValidationError(
-                field: "target_urns",
-                code: "required",
-                message: "Validation failed for 'target_urns': value is required"
-            )
+            throw SdkValidationError(field: "target_urns", code: "required", message: "Validation failed for 'target_urns': value is required")
         }
-        destinationCidr = try container.sdkDecodeRequired(.destinationCidr)
-        targetUrns = try container.sdkDecodeRequired(.targetUrns)
+        self.destinationCidr = try container.sdkDecodeRequired(.destinationCidr)
+        self.targetUrns = try container.sdkDecodeRequired(.targetUrns)
     }
 }
 
-public extension RouteCreate {
-    init(destinationCidr: String, targetUrns: [String]) {
+extension RouteCreate {
+    public init(destinationCidr: String, targetUrns: [String]) {
         (self.destinationCidr, self.targetUrns) = (destinationCidr, targetUrns)
     }
 }
@@ -356,16 +303,13 @@ public extension RouteCreate {
 public struct RouteType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let `static` = RouteType(rawValue: "STATIC")
     public static let dynamic = RouteType(rawValue: "DYNAMIC")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

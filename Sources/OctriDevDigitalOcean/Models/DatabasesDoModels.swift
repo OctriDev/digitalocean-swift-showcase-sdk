@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DatabasesDo domain models
+// DatabasesDo domain models
 /// DigitalOcean-specific settings for the database cluster.
 public struct DoSettings: Codable {
     /// An array of custom CNAMEs for the database cluster. Each CNAME must be a valid RFC 1123 hostname (e.g.,
@@ -16,22 +16,22 @@ public struct DoSettings: Codable {
     }
 
     init() {
-        serviceCnames = nil
+        self.serviceCnames = nil
     }
 }
 
-public extension DoSettings {
-    init(from decoder: Decoder) throws {
+extension DoSettings {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        serviceCnames = try container.sdkDecodeIfPresent(.serviceCnames)
-        if let value = serviceCnames {
+        self.serviceCnames = try container.sdkDecodeIfPresent(.serviceCnames)
+        if let value = self.serviceCnames {
             try validateItems("service_cnames", value, min: nil, max: 16)
         }
     }
 }
 
-public extension DoSettings {
-    init(serviceCnames: [String]? = nil) throws {
+extension DoSettings {
+    public init(serviceCnames: [String]? = nil) throws {
         self.init()
         self.serviceCnames = serviceCnames
         if let value = self.serviceCnames {
@@ -49,27 +49,21 @@ public struct DoSettingsResponse: Codable {
         case doSettings = "do_settings"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DoSettingsResponse {
-    init(from decoder: Decoder) throws {
+extension DoSettingsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.doSettings) else {
-            throw SdkValidationError(
-                field: "do_settings",
-                code: "required",
-                message: "Validation failed for 'do_settings': value is required"
-            )
+            throw SdkValidationError(field: "do_settings", code: "required", message: "Validation failed for 'do_settings': value is required")
         }
-        doSettings = try container.sdkDecodeRequired(.doSettings)
+        self.doSettings = try container.sdkDecodeRequired(.doSettings)
     }
 }
 
-public extension DoSettingsResponse {
-    init(doSettings: DoSettings) {
+extension DoSettingsResponse {
+    public init(doSettings: DoSettings) {
         self.doSettings = doSettings
     }
 }

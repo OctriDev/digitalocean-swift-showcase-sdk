@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// InsightsNotification domain models
+// InsightsNotification domain models
 /// Create or update body for a notification channel. Provide a `name` and exactly one of `email`, `slack`, or
 /// `webhook`. Secret fields are write-only: send the full value to set or rotate; omit the field on update to keep
 /// the existing secret.
@@ -30,35 +30,24 @@ public struct NotificationChannelRequestRequest: Codable {
         case webhook
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NotificationChannelRequestRequest {
-    init(from decoder: Decoder) throws {
+extension NotificationChannelRequestRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        email = try container.sdkDecodeIfPresent(.email)
-        slack = try container.sdkDecodeIfPresent(.slack)
-        webhook = try container.sdkDecodeIfPresent(.webhook)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.email = try container.sdkDecodeIfPresent(.email)
+        self.slack = try container.sdkDecodeIfPresent(.slack)
+        self.webhook = try container.sdkDecodeIfPresent(.webhook)
     }
 }
 
-public extension NotificationChannelRequestRequest {
-    init(
-        name: String,
-        email: EmailNotificationConfig? = nil,
-        slack: SlackNotificationConfigRequest? = nil,
-        webhook: WebhookNotificationConfigRequest? = nil
-    ) {
+extension NotificationChannelRequestRequest {
+    public init(name: String, email: EmailNotificationConfig? = nil, slack: SlackNotificationConfigRequest? = nil, webhook: WebhookNotificationConfigRequest? = nil) {
         (self.name, self.email) = (name, email)
         (self.slack, self.webhook) = (slack, webhook)
     }
@@ -75,19 +64,19 @@ public struct NotificationChannelUsage: Codable {
     }
 
     init() {
-        ruleCount = nil
+        self.ruleCount = nil
     }
 }
 
-public extension NotificationChannelUsage {
-    init(from decoder: Decoder) throws {
+extension NotificationChannelUsage {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        ruleCount = try container.sdkDecodeIfPresent(.ruleCount)
+        self.ruleCount = try container.sdkDecodeIfPresent(.ruleCount)
     }
 }
 
-public extension NotificationChannelUsage {
-    init(ruleCount: Int? = nil) {
+extension NotificationChannelUsage {
+    public init(ruleCount: Int? = nil) {
         self.init()
         self.ruleCount = ruleCount
     }
@@ -109,31 +98,25 @@ public struct NotificationChannelBinding: Codable {
         case notifyOn = "notify_on"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NotificationChannelBinding {
-    init(from decoder: Decoder) throws {
+extension NotificationChannelBinding {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.notificationChannelId) else {
-            throw SdkValidationError(
-                field: "notification_channel_id",
-                code: "required",
-                message: "Validation failed for 'notification_channel_id': value is required"
-            )
+            throw SdkValidationError(field: "notification_channel_id", code: "required", message: "Validation failed for 'notification_channel_id': value is required")
         }
-        notificationChannelId = try container.sdkDecodeRequired(.notificationChannelId)
-        notifyOn = try container.sdkDecodeIfPresent(.notifyOn)
-        try sdkValidateUuid("notification_channel_id", notificationChannelId)
+        self.notificationChannelId = try container.sdkDecodeRequired(.notificationChannelId)
+        self.notifyOn = try container.sdkDecodeIfPresent(.notifyOn)
+            try sdkValidateUuid("notification_channel_id", self.notificationChannelId)
     }
 }
 
-public extension NotificationChannelBinding {
-    init(notificationChannelId: String, notifyOn: [NotificationChannelBindingNotifyOnItem]? = nil) throws {
+extension NotificationChannelBinding {
+    public init(notificationChannelId: String, notifyOn: [NotificationChannelBindingNotifyOnItem]? = nil) throws {
         (self.notificationChannelId, self.notifyOn) = (notificationChannelId, notifyOn)
-        try sdkValidateUuid("notification_channel_id", self.notificationChannelId)
+            try sdkValidateUuid("notification_channel_id", self.notificationChannelId)
     }
 }
 
@@ -146,27 +129,21 @@ public struct NotificationChannelResponse: Codable {
         case notificationChannel = "notification_channel"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NotificationChannelResponse {
-    init(from decoder: Decoder) throws {
+extension NotificationChannelResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.notificationChannel) else {
-            throw SdkValidationError(
-                field: "notification_channel",
-                code: "required",
-                message: "Validation failed for 'notification_channel': value is required"
-            )
+            throw SdkValidationError(field: "notification_channel", code: "required", message: "Validation failed for 'notification_channel': value is required")
         }
-        notificationChannel = try container.sdkDecodeRequired(.notificationChannel)
+        self.notificationChannel = try container.sdkDecodeRequired(.notificationChannel)
     }
 }
 
-public extension NotificationChannelResponse {
-    init(notificationChannel: NotificationChannel) {
+extension NotificationChannelResponse {
+    public init(notificationChannel: NotificationChannel) {
         self.notificationChannel = notificationChannel
     }
 }
@@ -213,102 +190,66 @@ public struct NotificationChannel: Codable {
         case usage
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NotificationChannel {
-    init(from decoder: Decoder) throws {
+extension NotificationChannel {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.channelType) else {
-            throw SdkValidationError(
-                field: "channel_type",
-                code: "required",
-                message: "Validation failed for 'channel_type': value is required"
-            )
+            throw SdkValidationError(field: "channel_type", code: "required", message: "Validation failed for 'channel_type': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.updatedAt) else {
-            throw SdkValidationError(
-                field: "updated_at",
-                code: "required",
-                message: "Validation failed for 'updated_at': value is required"
-            )
+            throw SdkValidationError(field: "updated_at", code: "required", message: "Validation failed for 'updated_at': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        name = try container.sdkDecodeRequired(.name)
-        channelType = try container.sdkDecodeRequired(.channelType)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        email = try container.sdkDecodeIfPresent(.email)
-        slack = try container.sdkDecodeIfPresent(.slack)
-        webhook = try container.sdkDecodeIfPresent(.webhook)
-        usage = try container.sdkDecodeIfPresent(.usage)
-        try sdkValidateUuid("id", id)
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
-        try sdkValidateDateTime("updated_at", sdkWireString(updatedAt))
+        self.id = try container.sdkDecodeRequired(.id)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.channelType = try container.sdkDecodeRequired(.channelType)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
+        self.email = try container.sdkDecodeIfPresent(.email)
+        self.slack = try container.sdkDecodeIfPresent(.slack)
+        self.webhook = try container.sdkDecodeIfPresent(.webhook)
+        self.usage = try container.sdkDecodeIfPresent(.usage)
+            try sdkValidateUuid("id", self.id)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
-public extension NotificationChannel {
-    init(
-        id: String,
-        name: String,
-        channelType: NotificationChannelChannelType,
-        createdAt: Date,
-        updatedAt: Date,
-        email: EmailNotificationConfig? = nil,
-        slack: SlackNotificationConfigResponse? = nil,
-        webhook: WebhookNotificationConfigResponse? = nil,
-        usage: NotificationChannelUsage? = nil
-    ) throws {
+extension NotificationChannel {
+    public init(id: String, name: String, channelType: NotificationChannelChannelType, createdAt: Date, updatedAt: Date, email: EmailNotificationConfig? = nil, slack: SlackNotificationConfigResponse? = nil, webhook: WebhookNotificationConfigResponse? = nil, usage: NotificationChannelUsage? = nil) throws {
         (self.id, self.name) = (id, name)
         (self.channelType, self.createdAt) = (channelType, createdAt)
         (self.updatedAt, self.email) = (updatedAt, email)
         (self.slack, self.webhook) = (slack, webhook)
         self.usage = usage
-        try sdkValidateUuid("id", self.id)
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-        try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+            try sdkValidateUuid("id", self.id)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
 /// Required enumerated value serialized in the `notify_on[]` wire field.
-public struct NotificationChannelBindingNotifyOnItem: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct NotificationChannelBindingNotifyOnItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let severityWarning = NotificationChannelBindingNotifyOnItem(rawValue: "SEVERITY_WARNING")
     public static let severityCritical = NotificationChannelBindingNotifyOnItem(rawValue: "SEVERITY_CRITICAL")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -322,17 +263,14 @@ public struct NotificationChannelBindingNotifyOnItem: RawRepresentable, Hashable
 public struct NotificationChannelChannelType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let channelTypeEmail = NotificationChannelChannelType(rawValue: "CHANNEL_TYPE_EMAIL")
     public static let channelTypeSlack = NotificationChannelChannelType(rawValue: "CHANNEL_TYPE_SLACK")
     public static let channelTypeWebhook = NotificationChannelChannelType(rawValue: "CHANNEL_TYPE_WEBHOOK")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AppsAppPropose domain models
+// AppsAppPropose domain models
 /// Typed representation of the `AppProposeRequest` API schema.
 public struct AppProposeRequest: Codable {
     /// The desired configuration of an application.
@@ -18,28 +18,22 @@ public struct AppProposeRequest: Codable {
         case appId = "app_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AppProposeRequest {
-    init(from decoder: Decoder) throws {
+extension AppProposeRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.spec) else {
-            throw SdkValidationError(
-                field: "spec",
-                code: "required",
-                message: "Validation failed for 'spec': value is required"
-            )
+            throw SdkValidationError(field: "spec", code: "required", message: "Validation failed for 'spec': value is required")
         }
-        spec = try container.sdkDecodeRequired(.spec)
-        appId = try container.sdkDecodeIfPresent(.appId)
+        self.spec = try container.sdkDecodeRequired(.spec)
+        self.appId = try container.sdkDecodeIfPresent(.appId)
     }
 }
 
-public extension AppProposeRequest {
-    init(spec: AppSpecRequest, appId: String? = nil) {
+extension AppProposeRequest {
+    public init(spec: AppSpecRequest, appId: String? = nil) {
         (self.spec, self.appId) = (spec, appId)
     }
 }
@@ -82,34 +76,26 @@ public struct AppProposeResponse: Codable {
     }
 
     init() {
-        (appIsStatic, appNameAvailable, appNameSuggestion, existingStaticApps, spec) = (nil, nil, nil, nil, nil)
-        (appCost, appTierDowngradeCost) = (nil, nil)
+        (self.appIsStatic, self.appNameAvailable, self.appNameSuggestion, self.existingStaticApps, self.spec) = (nil, nil, nil, nil, nil)
+        (self.appCost, self.appTierDowngradeCost) = (nil, nil)
     }
 }
 
-public extension AppProposeResponse {
-    init(from decoder: Decoder) throws {
+extension AppProposeResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        appIsStatic = try container.sdkDecodeIfPresent(.appIsStatic)
-        appNameAvailable = try container.sdkDecodeIfPresent(.appNameAvailable)
-        appNameSuggestion = try container.sdkDecodeIfPresent(.appNameSuggestion)
-        existingStaticApps = try container.sdkDecodeIfPresent(.existingStaticApps)
-        spec = try container.sdkDecodeIfPresent(.spec)
-        appCost = try container.sdkDecodeIfPresent(.appCost)
-        appTierDowngradeCost = try container.sdkDecodeIfPresent(.appTierDowngradeCost)
+        self.appIsStatic = try container.sdkDecodeIfPresent(.appIsStatic)
+        self.appNameAvailable = try container.sdkDecodeIfPresent(.appNameAvailable)
+        self.appNameSuggestion = try container.sdkDecodeIfPresent(.appNameSuggestion)
+        self.existingStaticApps = try container.sdkDecodeIfPresent(.existingStaticApps)
+        self.spec = try container.sdkDecodeIfPresent(.spec)
+        self.appCost = try container.sdkDecodeIfPresent(.appCost)
+        self.appTierDowngradeCost = try container.sdkDecodeIfPresent(.appTierDowngradeCost)
     }
 }
 
-public extension AppProposeResponse {
-    init(
-        appIsStatic: Bool? = nil,
-        appNameAvailable: Bool? = nil,
-        appNameSuggestion: String? = nil,
-        existingStaticApps: String? = nil,
-        spec: AppSpec? = nil,
-        appCost: Int? = nil,
-        appTierDowngradeCost: Int? = nil
-    ) {
+extension AppProposeResponse {
+    public init(appIsStatic: Bool? = nil, appNameAvailable: Bool? = nil, appNameSuggestion: String? = nil, existingStaticApps: String? = nil, spec: AppSpec? = nil, appCost: Int? = nil, appTierDowngradeCost: Int? = nil) {
         self.init()
         (self.appIsStatic, self.appNameAvailable) = (appIsStatic, appNameAvailable)
         (self.appNameSuggestion, self.existingStaticApps) = (appNameSuggestion, existingStaticApps)

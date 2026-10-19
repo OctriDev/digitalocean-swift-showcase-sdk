@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Monitoring domain models
+// Monitoring domain models
 /// Typed representation of the `ListSinks` API schema.
 public struct ListSinks: Codable {
     /// List of sinks identified by their URNs.
@@ -14,19 +14,19 @@ public struct ListSinks: Codable {
     }
 
     init() {
-        sinks = nil
+        self.sinks = nil
     }
 }
 
-public extension ListSinks {
-    init(from decoder: Decoder) throws {
+extension ListSinks {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        sinks = try container.sdkDecodeIfPresent(.sinks)
+        self.sinks = try container.sdkDecodeIfPresent(.sinks)
     }
 }
 
-public extension ListSinks {
-    init(sinks: [SinksResponse]? = nil) {
+extension ListSinks {
+    public init(sinks: [SinksResponse]? = nil) {
         self.init()
         self.sinks = sinks
     }
@@ -38,32 +38,22 @@ public indirect enum MetricsResultValuesItemItem {
 }
 
 extension MetricsResultValuesItemItem: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for MetricsResultValuesItemItem"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for MetricsResultValuesItemItem")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension MetricsResultValuesItemItem {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(Int.self) {
-            return .intValue(value)
-        }
-        if let value = try? container.decode(String.self) {
-            return .stringValue(value)
-        }
+        if let value = try? container.decode(Int.self) { return .intValue(value) }
+        if let value = try? container.decode(String.self) { return .stringValue(value) }
         return nil
     }
 }
@@ -118,32 +108,25 @@ public struct OpensearchConfigOmitCredentials: Codable {
     }
 
     init() {
-        (id, endpoint, clusterUuid, clusterName, indexName) = (nil, nil, nil, nil, nil)
-        retentionDays = nil
+        (self.id, self.endpoint, self.clusterUuid, self.clusterName, self.indexName) = (nil, nil, nil, nil, nil)
+        self.retentionDays = nil
     }
 }
 
-public extension OpensearchConfigOmitCredentials {
-    init(from decoder: Decoder) throws {
+extension OpensearchConfigOmitCredentials {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        endpoint = try container.sdkDecodeIfPresent(.endpoint)
-        clusterUuid = try container.sdkDecodeIfPresent(.clusterUuid)
-        clusterName = try container.sdkDecodeIfPresent(.clusterName)
-        indexName = try container.sdkDecodeIfPresent(.indexName)
-        retentionDays = try container.sdkDecodeIfPresent(.retentionDays)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.endpoint = try container.sdkDecodeIfPresent(.endpoint)
+        self.clusterUuid = try container.sdkDecodeIfPresent(.clusterUuid)
+        self.clusterName = try container.sdkDecodeIfPresent(.clusterName)
+        self.indexName = try container.sdkDecodeIfPresent(.indexName)
+        self.retentionDays = try container.sdkDecodeIfPresent(.retentionDays)
     }
 }
 
-public extension OpensearchConfigOmitCredentials {
-    init(
-        id: String? = nil,
-        endpoint: String? = nil,
-        clusterUuid: String? = nil,
-        clusterName: String? = nil,
-        indexName: String? = nil,
-        retentionDays: Int? = nil
-    ) {
+extension OpensearchConfigOmitCredentials {
+    public init(id: String? = nil, endpoint: String? = nil, clusterUuid: String? = nil, clusterName: String? = nil, indexName: String? = nil, retentionDays: Int? = nil) {
         self.init()
         (self.id, self.endpoint) = (id, endpoint)
         (self.clusterUuid, self.clusterName) = (clusterUuid, clusterName)
@@ -160,27 +143,21 @@ public struct ListAlertPolicy: Codable {
         case policies
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ListAlertPolicy {
-    init(from decoder: Decoder) throws {
+extension ListAlertPolicy {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.policies) else {
-            throw SdkValidationError(
-                field: "policies",
-                code: "required",
-                message: "Validation failed for 'policies': value is required"
-            )
+            throw SdkValidationError(field: "policies", code: "required", message: "Validation failed for 'policies': value is required")
         }
-        policies = try container.sdkDecodeRequired(.policies)
+        self.policies = try container.sdkDecodeRequired(.policies)
     }
 }
 
-public extension ListAlertPolicy {
-    init(policies: [AlertPolicy]) {
+extension ListAlertPolicy {
+    public init(policies: [AlertPolicy]) {
         self.policies = policies
     }
 }
@@ -199,35 +176,25 @@ public struct SlackDetails: Codable {
         case url
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SlackDetails {
-    init(from decoder: Decoder) throws {
+extension SlackDetails {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.channel) else {
-            throw SdkValidationError(
-                field: "channel",
-                code: "required",
-                message: "Validation failed for 'channel': value is required"
-            )
+            throw SdkValidationError(field: "channel", code: "required", message: "Validation failed for 'channel': value is required")
         }
         guard container.contains(.url) else {
-            throw SdkValidationError(
-                field: "url",
-                code: "required",
-                message: "Validation failed for 'url': value is required"
-            )
+            throw SdkValidationError(field: "url", code: "required", message: "Validation failed for 'url': value is required")
         }
-        channel = try container.sdkDecodeRequired(.channel)
-        url = try container.sdkDecodeRequired(.url)
+        self.channel = try container.sdkDecodeRequired(.channel)
+        self.url = try container.sdkDecodeRequired(.url)
     }
 }
 
-public extension SlackDetails {
-    init(channel: String, url: String) {
+extension SlackDetails {
+    public init(channel: String, url: String) {
         (self.channel, self.url) = (channel, url)
     }
 }
@@ -261,39 +228,26 @@ public struct OpensearchConfigRequest: Codable {
         case retentionDays = "retention_days"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension OpensearchConfigRequest {
-    init(from decoder: Decoder) throws {
+extension OpensearchConfigRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.endpoint) else {
-            throw SdkValidationError(
-                field: "endpoint",
-                code: "required",
-                message: "Validation failed for 'endpoint': value is required"
-            )
+            throw SdkValidationError(field: "endpoint", code: "required", message: "Validation failed for 'endpoint': value is required")
         }
-        endpoint = try container.sdkDecodeRequired(.endpoint)
-        credentials = try container.sdkDecodeIfPresent(.credentials)
-        clusterUuid = try container.sdkDecodeIfPresent(.clusterUuid)
-        clusterName = try container.sdkDecodeIfPresent(.clusterName)
-        indexName = try container.sdkDecodeIfPresent(.indexName)
-        retentionDays = try container.sdkDecodeIfPresent(.retentionDays)
+        self.endpoint = try container.sdkDecodeRequired(.endpoint)
+        self.credentials = try container.sdkDecodeIfPresent(.credentials)
+        self.clusterUuid = try container.sdkDecodeIfPresent(.clusterUuid)
+        self.clusterName = try container.sdkDecodeIfPresent(.clusterName)
+        self.indexName = try container.sdkDecodeIfPresent(.indexName)
+        self.retentionDays = try container.sdkDecodeIfPresent(.retentionDays)
     }
 }
 
-public extension OpensearchConfigRequest {
-    init(
-        endpoint: String,
-        credentials: OpensearchConfigRequestCredentials? = nil,
-        clusterUuid: String? = nil,
-        clusterName: String? = nil,
-        indexName: String? = nil,
-        retentionDays: Int? = nil
-    ) {
+extension OpensearchConfigRequest {
+    public init(endpoint: String, credentials: OpensearchConfigRequestCredentials? = nil, clusterUuid: String? = nil, clusterName: String? = nil, indexName: String? = nil, retentionDays: Int? = nil) {
         (self.endpoint, self.credentials) = (endpoint, credentials)
         (self.clusterUuid, self.clusterName) = (clusterUuid, clusterName)
         (self.indexName, self.retentionDays) = (indexName, retentionDays)
@@ -313,35 +267,25 @@ public struct Alerts: Codable {
         case slack
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Alerts {
-    init(from decoder: Decoder) throws {
+extension Alerts {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.email) else {
-            throw SdkValidationError(
-                field: "email",
-                code: "required",
-                message: "Validation failed for 'email': value is required"
-            )
+            throw SdkValidationError(field: "email", code: "required", message: "Validation failed for 'email': value is required")
         }
         guard container.contains(.slack) else {
-            throw SdkValidationError(
-                field: "slack",
-                code: "required",
-                message: "Validation failed for 'slack': value is required"
-            )
+            throw SdkValidationError(field: "slack", code: "required", message: "Validation failed for 'slack': value is required")
         }
-        email = try container.sdkDecodeRequired(.email)
-        slack = try container.sdkDecodeRequired(.slack)
+        self.email = try container.sdkDecodeRequired(.email)
+        self.slack = try container.sdkDecodeRequired(.slack)
     }
 }
 
-public extension Alerts {
-    init(email: [String], slack: [SlackDetails]) {
+extension Alerts {
+    public init(email: [String], slack: [SlackDetails]) {
         (self.email, self.slack) = (email, slack)
     }
 }
@@ -360,31 +304,25 @@ public struct SinkResource: Codable {
         case name
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SinkResource {
-    init(from decoder: Decoder) throws {
+extension SinkResource {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.urn) else {
-            throw SdkValidationError(
-                field: "urn",
-                code: "required",
-                message: "Validation failed for 'urn': value is required"
-            )
+            throw SdkValidationError(field: "urn", code: "required", message: "Validation failed for 'urn': value is required")
         }
-        urn = try container.sdkDecodeRequired(.urn)
-        name = try container.sdkDecodeIfPresent(.name)
-        try sdkValidatePattern("urn", urn, sdkPatternb7c2fa1db2ef)
+        self.urn = try container.sdkDecodeRequired(.urn)
+        self.name = try container.sdkDecodeIfPresent(.name)
+            try sdkValidatePattern("urn", self.urn, sdkPatternb7c2fa1db2ef)
     }
 }
 
-public extension SinkResource {
-    init(urn: String, name: String? = nil) throws {
+extension SinkResource {
+    public init(urn: String, name: String? = nil) throws {
         (self.urn, self.name) = (urn, name)
-        try sdkValidatePattern("urn", self.urn, sdkPatternb7c2fa1db2ef)
+            try sdkValidatePattern("urn", self.urn, sdkPatternb7c2fa1db2ef)
     }
 }
 
@@ -411,27 +349,22 @@ public struct DestinationOmitCredentials: Codable {
     }
 
     init() {
-        (id, name, type, config) = (nil, nil, nil, nil)
+        (self.id, self.name, self.type, self.config) = (nil, nil, nil, nil)
     }
 }
 
-public extension DestinationOmitCredentials {
-    init(from decoder: Decoder) throws {
+extension DestinationOmitCredentials {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        type = try container.sdkDecodeIfPresent(.type)
-        config = try container.sdkDecodeIfPresent(.config)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.config = try container.sdkDecodeIfPresent(.config)
     }
 }
 
-public extension DestinationOmitCredentials {
-    init(
-        id: String? = nil,
-        name: String? = nil,
-        type: DestinationOmitCredentialsType? = nil,
-        config: OpensearchConfigOmitCredentials? = nil
-    ) {
+extension DestinationOmitCredentials {
+    public init(id: String? = nil, name: String? = nil, type: DestinationOmitCredentialsType? = nil, config: OpensearchConfigOmitCredentials? = nil) {
         self.init()
         (self.id, self.name) = (id, name)
         (self.type, self.config) = (type, config)
@@ -451,20 +384,20 @@ public struct SinksResponse: Codable {
     }
 
     init() {
-        (destination, resources) = (nil, nil)
+        (self.destination, self.resources) = (nil, nil)
     }
 }
 
-public extension SinksResponse {
-    init(from decoder: Decoder) throws {
+extension SinksResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        destination = try container.sdkDecodeIfPresent(.destination)
-        resources = try container.sdkDecodeIfPresent(.resources)
+        self.destination = try container.sdkDecodeIfPresent(.destination)
+        self.resources = try container.sdkDecodeIfPresent(.resources)
     }
 }
 
-public extension SinksResponse {
-    init(destination: Destination? = nil, resources: [SinkResource]? = nil) {
+extension SinksResponse {
+    public init(destination: Destination? = nil, resources: [SinkResource]? = nil) {
         self.init()
         (self.destination, self.resources) = (destination, resources)
     }
@@ -485,20 +418,20 @@ public struct OpensearchConfigCredentials: Codable {
     }
 
     init() {
-        (username, password) = (nil, nil)
+        (self.username, self.password) = (nil, nil)
     }
 }
 
-public extension OpensearchConfigCredentials {
-    init(from decoder: Decoder) throws {
+extension OpensearchConfigCredentials {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        username = try container.sdkDecodeIfPresent(.username)
-        password = try container.sdkDecodeIfPresent(.password)
+        self.username = try container.sdkDecodeIfPresent(.username)
+        self.password = try container.sdkDecodeIfPresent(.password)
     }
 }
 
-public extension OpensearchConfigCredentials {
-    init(username: String? = nil, password: String? = nil) {
+extension OpensearchConfigCredentials {
+    public init(username: String? = nil, password: String? = nil) {
         self.init()
         (self.username, self.password) = (username, password)
     }
@@ -517,35 +450,25 @@ public struct MetricsData: Codable {
         case resultType
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension MetricsData {
-    init(from decoder: Decoder) throws {
+extension MetricsData {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.result) else {
-            throw SdkValidationError(
-                field: "result",
-                code: "required",
-                message: "Validation failed for 'result': value is required"
-            )
+            throw SdkValidationError(field: "result", code: "required", message: "Validation failed for 'result': value is required")
         }
         guard container.contains(.resultType) else {
-            throw SdkValidationError(
-                field: "resultType",
-                code: "required",
-                message: "Validation failed for 'resultType': value is required"
-            )
+            throw SdkValidationError(field: "resultType", code: "required", message: "Validation failed for 'resultType': value is required")
         }
-        result = try container.sdkDecodeRequired(.result)
-        resultType = try container.sdkDecodeRequired(.resultType)
+        self.result = try container.sdkDecodeRequired(.result)
+        self.resultType = try container.sdkDecodeRequired(.resultType)
     }
 }
 
-public extension MetricsData {
-    init(result: [MetricsResult], resultType: MetricsDataResultType) {
+extension MetricsData {
+    public init(result: [MetricsResult], resultType: MetricsDataResultType) {
         (self.result, self.resultType) = (result, resultType)
     }
 }
@@ -555,16 +478,13 @@ public extension MetricsData {
 public struct DestinationOmitCredentialsType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let opensearchDbaas = DestinationOmitCredentialsType(rawValue: "opensearch_dbaas")
     public static let opensearchExt = DestinationOmitCredentialsType(rawValue: "opensearch_ext")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -577,10 +497,7 @@ public struct DestinationOmitCredentialsType: RawRepresentable, Hashable, Codabl
 public struct AlertPolicyWindow: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let value5m = AlertPolicyWindow(rawValue: "5m")
     public static let value10m = AlertPolicyWindow(rawValue: "10m")
     public static let value30m = AlertPolicyWindow(rawValue: "30m")
@@ -588,7 +505,7 @@ public struct AlertPolicyWindow: RawRepresentable, Hashable, Codable, Sendable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -602,16 +519,13 @@ public struct AlertPolicyWindow: RawRepresentable, Hashable, Codable, Sendable, 
 public struct DestinationType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let opensearchDbaas = DestinationType(rawValue: "opensearch_dbaas")
     public static let opensearchExt = DestinationType(rawValue: "opensearch_ext")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -624,16 +538,13 @@ public struct DestinationType: RawRepresentable, Hashable, Codable, Sendable, Sd
 public struct AlertPolicyRequestCompare: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let greaterThan = AlertPolicyRequestCompare(rawValue: "GreaterThan")
     public static let lessThan = AlertPolicyRequestCompare(rawValue: "LessThan")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

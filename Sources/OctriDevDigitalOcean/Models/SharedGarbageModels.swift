@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// SharedGarbage domain models
+// SharedGarbage domain models
 /// Typed representation of the `GarbageCollection` API schema.
 public struct GarbageCollection: Codable {
     /// A string specifying the UUID of the garbage collection.
@@ -39,40 +39,32 @@ public struct GarbageCollection: Codable {
     }
 
     init() {
-        (uuid, registryName, status, createdAt, updatedAt) = (nil, nil, nil, nil, nil)
-        (blobsDeleted, freedBytes) = (nil, nil)
+        (self.uuid, self.registryName, self.status, self.createdAt, self.updatedAt) = (nil, nil, nil, nil, nil)
+        (self.blobsDeleted, self.freedBytes) = (nil, nil)
     }
 }
 
-public extension GarbageCollection {
-    init(from decoder: Decoder) throws {
+extension GarbageCollection {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
-        registryName = try container.sdkDecodeIfPresent(.registryName)
-        status = try container.sdkDecodeIfPresent(.status)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        blobsDeleted = try container.sdkDecodeIfPresent(.blobsDeleted)
-        freedBytes = try container.sdkDecodeIfPresent(.freedBytes)
-        if let value = createdAt {
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        self.registryName = try container.sdkDecodeIfPresent(.registryName)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.blobsDeleted = try container.sdkDecodeIfPresent(.blobsDeleted)
+        self.freedBytes = try container.sdkDecodeIfPresent(.freedBytes)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension GarbageCollection {
-    init(
-        uuid: String? = nil,
-        registryName: String? = nil,
-        status: GarbageCollectionStatus? = nil,
-        createdAt: Date? = nil,
-        updatedAt: Date? = nil,
-        blobsDeleted: Int? = nil,
-        freedBytes: Int? = nil
-    ) throws {
+extension GarbageCollection {
+    public init(uuid: String? = nil, registryName: String? = nil, status: GarbageCollectionStatus? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, blobsDeleted: Int? = nil, freedBytes: Int? = nil) throws {
         self.init()
         (self.uuid, self.registryName) = (uuid, registryName)
         (self.status, self.createdAt) = (status, createdAt)
@@ -97,19 +89,19 @@ public struct GarbageCollections: Codable {
     }
 
     init() {
-        garbageCollections = nil
+        self.garbageCollections = nil
     }
 }
 
-public extension GarbageCollections {
-    init(from decoder: Decoder) throws {
+extension GarbageCollections {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        garbageCollections = try container.sdkDecodeIfPresent(.garbageCollections)
+        self.garbageCollections = try container.sdkDecodeIfPresent(.garbageCollections)
     }
 }
 
-public extension GarbageCollections {
-    init(garbageCollections: [GarbageCollection]? = nil) {
+extension GarbageCollections {
+    public init(garbageCollections: [GarbageCollection]? = nil) {
         self.init()
         self.garbageCollections = garbageCollections
     }
@@ -125,19 +117,19 @@ public struct GarbageCollectionResponse: Codable {
     }
 
     init() {
-        garbageCollection = nil
+        self.garbageCollection = nil
     }
 }
 
-public extension GarbageCollectionResponse {
-    init(from decoder: Decoder) throws {
+extension GarbageCollectionResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        garbageCollection = try container.sdkDecodeIfPresent(.garbageCollection)
+        self.garbageCollection = try container.sdkDecodeIfPresent(.garbageCollection)
     }
 }
 
-public extension GarbageCollectionResponse {
-    init(garbageCollection: GarbageCollection? = nil) {
+extension GarbageCollectionResponse {
+    public init(garbageCollection: GarbageCollection? = nil) {
         self.init()
         self.garbageCollection = garbageCollection
     }
@@ -147,13 +139,9 @@ public extension GarbageCollectionResponse {
 public struct GarbageCollectionStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let requested = GarbageCollectionStatus(rawValue: "requested")
-    public static let waitingForWriteJwtsToExpire =
-        GarbageCollectionStatus(rawValue: "waiting for write JWTs to expire")
+    public static let waitingForWriteJwtsToExpire = GarbageCollectionStatus(rawValue: "waiting for write JWTs to expire")
     public static let scanningManifests = GarbageCollectionStatus(rawValue: "scanning manifests")
     public static let deletingUnreferencedBlobs = GarbageCollectionStatus(rawValue: "deleting unreferenced blobs")
     public static let cancelling = GarbageCollectionStatus(rawValue: "cancelling")
@@ -163,7 +151,7 @@ public struct GarbageCollectionStatus: RawRepresentable, Hashable, Codable, Send
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// NFS domain models
+// NFS domain models
 /// Typed representation of the `NfsSnapshotListResponse` API schema.
 public struct NfsSnapshotListResponse: Codable {
     /// Optional array value serialized in the `snapshots` wire field.
@@ -14,19 +14,19 @@ public struct NfsSnapshotListResponse: Codable {
     }
 
     init() {
-        snapshots = nil
+        self.snapshots = nil
     }
 }
 
-public extension NfsSnapshotListResponse {
-    init(from decoder: Decoder) throws {
+extension NfsSnapshotListResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        snapshots = try container.sdkDecodeIfPresent(.snapshots)
+        self.snapshots = try container.sdkDecodeIfPresent(.snapshots)
     }
 }
 
-public extension NfsSnapshotListResponse {
-    init(snapshots: [NfsSnapshotResponse]? = nil) {
+extension NfsSnapshotListResponse {
+    public init(snapshots: [NfsSnapshotResponse]? = nil) {
         self.init()
         self.snapshots = snapshots
     }
@@ -41,27 +41,21 @@ public struct AccessPointGetResponse: Codable {
         case accessPoint = "access_point"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AccessPointGetResponse {
-    init(from decoder: Decoder) throws {
+extension AccessPointGetResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.accessPoint) else {
-            throw SdkValidationError(
-                field: "access_point",
-                code: "required",
-                message: "Validation failed for 'access_point': value is required"
-            )
+            throw SdkValidationError(field: "access_point", code: "required", message: "Validation failed for 'access_point': value is required")
         }
-        accessPoint = try container.sdkDecodeRequired(.accessPoint)
+        self.accessPoint = try container.sdkDecodeRequired(.accessPoint)
     }
 }
 
-public extension AccessPointGetResponse {
-    init(accessPoint: AccessPointResponse) {
+extension AccessPointGetResponse {
+    public init(accessPoint: AccessPointResponse) {
         self.accessPoint = accessPoint
     }
 }
@@ -92,52 +86,34 @@ public struct NfsRequest: Codable {
         case performanceTier = "performance_tier"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NfsRequest {
-    init(from decoder: Decoder) throws {
+extension NfsRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.sizeGib) else {
-            throw SdkValidationError(
-                field: "size_gib",
-                code: "required",
-                message: "Validation failed for 'size_gib': value is required"
-            )
+            throw SdkValidationError(field: "size_gib", code: "required", message: "Validation failed for 'size_gib': value is required")
         }
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
         guard container.contains(.vpcIds) else {
-            throw SdkValidationError(
-                field: "vpc_ids",
-                code: "required",
-                message: "Validation failed for 'vpc_ids': value is required"
-            )
+            throw SdkValidationError(field: "vpc_ids", code: "required", message: "Validation failed for 'vpc_ids': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        sizeGib = try container.sdkDecodeRequired(.sizeGib)
-        region = try container.sdkDecodeRequired(.region)
-        vpcIds = try container.sdkDecodeRequired(.vpcIds)
-        performanceTier = try container.sdkDecodeIfPresent(.performanceTier)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.sizeGib = try container.sdkDecodeRequired(.sizeGib)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.vpcIds = try container.sdkDecodeRequired(.vpcIds)
+        self.performanceTier = try container.sdkDecodeIfPresent(.performanceTier)
     }
 }
 
-public extension NfsRequest {
-    init(name: String, sizeGib: Int, region: String, vpcIds: [String], performanceTier: String? = nil) {
+extension NfsRequest {
+    public init(name: String, sizeGib: Int, region: String, vpcIds: [String], performanceTier: String? = nil) {
         (self.name, self.sizeGib) = (name, sizeGib)
         (self.region, self.vpcIds) = (region, vpcIds)
         self.performanceTier = performanceTier
@@ -193,51 +169,38 @@ public struct AccessPointResponse: Codable {
         case vpcId = "vpc_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AccessPointResponse {
-    init(from decoder: Decoder) throws {
+extension AccessPointResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeRequired(.id)
-        name = try container.sdkDecodeRequired(.name)
-        shareId = try container.sdkDecodeRequired(.shareId)
-        path = try container.sdkDecodeRequired(.path)
-        status = try container.sdkDecodeRequired(.status)
-        accessPolicy = try container.sdkDecodeRequired(.accessPolicy)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        isDefault = try container.sdkDecodeRequired(.isDefault)
-        vpcId = try container.sdkDecodeIfPresent(.vpcId)
-        try sdkValidateUuid("id", id)
-        try sdkValidateUuid("share_id", shareId)
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.id = try container.sdkDecodeRequired(.id)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.shareId = try container.sdkDecodeRequired(.shareId)
+        self.path = try container.sdkDecodeRequired(.path)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.accessPolicy = try container.sdkDecodeRequired(.accessPolicy)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
+        self.isDefault = try container.sdkDecodeRequired(.isDefault)
+        self.vpcId = try container.sdkDecodeIfPresent(.vpcId)
+            try sdkValidateUuid("id", self.id)
+            try sdkValidateUuid("share_id", self.shareId)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension AccessPointResponse {
-    init(
-        id: String,
-        name: String,
-        shareId: String,
-        path: String,
-        status: AccessPointResponseStatus,
-        accessPolicy: AccessPolicy,
-        createdAt: Date,
-        updatedAt: String,
-        isDefault: Bool,
-        vpcId: String? = nil
-    ) throws {
+extension AccessPointResponse {
+    public init(id: String, name: String, shareId: String, path: String, status: AccessPointResponseStatus, accessPolicy: AccessPolicy, createdAt: Date, updatedAt: String, isDefault: Bool, vpcId: String? = nil) throws {
         (self.id, self.name) = (id, name)
         (self.shareId, self.path) = (shareId, path)
         (self.status, self.accessPolicy) = (status, accessPolicy)
         (self.createdAt, self.updatedAt) = (createdAt, updatedAt)
         (self.isDefault, self.vpcId) = (isDefault, vpcId)
-        try sdkValidateUuid("id", self.id)
-        try sdkValidateUuid("share_id", self.shareId)
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateUuid("id", self.id)
+            try sdkValidateUuid("share_id", self.shareId)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -251,19 +214,19 @@ public struct NfsSnapshotGetResponse: Codable {
     }
 
     init() {
-        snapshot = nil
+        self.snapshot = nil
     }
 }
 
-public extension NfsSnapshotGetResponse {
-    init(from decoder: Decoder) throws {
+extension NfsSnapshotGetResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        snapshot = try container.sdkDecodeIfPresent(.snapshot)
+        self.snapshot = try container.sdkDecodeIfPresent(.snapshot)
     }
 }
 
-public extension NfsSnapshotGetResponse {
-    init(snapshot: NfsSnapshotResponse? = nil) {
+extension NfsSnapshotGetResponse {
+    public init(snapshot: NfsSnapshotResponse? = nil) {
         self.init()
         self.snapshot = snapshot
     }
@@ -283,35 +246,25 @@ public struct NfsApiError: Codable {
         case message
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NfsApiError {
-    init(from decoder: Decoder) throws {
+extension NfsApiError {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.code) else {
-            throw SdkValidationError(
-                field: "code",
-                code: "required",
-                message: "Validation failed for 'code': value is required"
-            )
+            throw SdkValidationError(field: "code", code: "required", message: "Validation failed for 'code': value is required")
         }
         guard container.contains(.message) else {
-            throw SdkValidationError(
-                field: "message",
-                code: "required",
-                message: "Validation failed for 'message': value is required"
-            )
+            throw SdkValidationError(field: "message", code: "required", message: "Validation failed for 'message': value is required")
         }
-        code = try container.sdkDecodeRequired(.code)
-        message = try container.sdkDecodeRequired(.message)
+        self.code = try container.sdkDecodeRequired(.code)
+        self.message = try container.sdkDecodeRequired(.message)
     }
 }
 
-public extension NfsApiError {
-    init(code: String, message: String) {
+extension NfsApiError {
+    public init(code: String, message: String) {
         (self.code, self.message) = (code, message)
     }
 }
@@ -344,51 +297,33 @@ public struct AccessPointRequest: Codable {
         case vpcId = "vpc_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AccessPointRequest {
-    init(from decoder: Decoder) throws {
+extension AccessPointRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.path) else {
-            throw SdkValidationError(
-                field: "path",
-                code: "required",
-                message: "Validation failed for 'path': value is required"
-            )
+            throw SdkValidationError(field: "path", code: "required", message: "Validation failed for 'path': value is required")
         }
         guard container.contains(.accessPolicy) else {
-            throw SdkValidationError(
-                field: "access_policy",
-                code: "required",
-                message: "Validation failed for 'access_policy': value is required"
-            )
+            throw SdkValidationError(field: "access_policy", code: "required", message: "Validation failed for 'access_policy': value is required")
         }
         guard container.contains(.vpcId) else {
-            throw SdkValidationError(
-                field: "vpc_id",
-                code: "required",
-                message: "Validation failed for 'vpc_id': value is required"
-            )
+            throw SdkValidationError(field: "vpc_id", code: "required", message: "Validation failed for 'vpc_id': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        path = try container.sdkDecodeRequired(.path)
-        accessPolicy = try container.sdkDecodeRequired(.accessPolicy)
-        vpcId = try container.sdkDecodeRequired(.vpcId)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.path = try container.sdkDecodeRequired(.path)
+        self.accessPolicy = try container.sdkDecodeRequired(.accessPolicy)
+        self.vpcId = try container.sdkDecodeRequired(.vpcId)
     }
 }
 
-public extension AccessPointRequest {
-    init(name: String, path: String, accessPolicy: AccessPolicy, vpcId: String) {
+extension AccessPointRequest {
+    public init(name: String, path: String, accessPolicy: AccessPolicy, vpcId: String) {
         (self.name, self.path) = (name, path)
         (self.accessPolicy, self.vpcId) = (accessPolicy, vpcId)
     }
@@ -404,19 +339,19 @@ public struct NfsListResponse: Codable {
     }
 
     init() {
-        shares = nil
+        self.shares = nil
     }
 }
 
-public extension NfsListResponse {
-    init(from decoder: Decoder) throws {
+extension NfsListResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        shares = try container.sdkDecodeIfPresent(.shares)
+        self.shares = try container.sdkDecodeIfPresent(.shares)
     }
 }
 
-public extension NfsListResponse {
-    init(shares: [NfsResponse]? = nil) {
+extension NfsListResponse {
+    public init(shares: [NfsResponse]? = nil) {
         self.init()
         self.shares = shares
     }
@@ -432,19 +367,19 @@ public struct NfsGetResponse: Codable {
     }
 
     init() {
-        share = nil
+        self.share = nil
     }
 }
 
-public extension NfsGetResponse {
-    init(from decoder: Decoder) throws {
+extension NfsGetResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        share = try container.sdkDecodeIfPresent(.share)
+        self.share = try container.sdkDecodeIfPresent(.share)
     }
 }
 
-public extension NfsGetResponse {
-    init(share: NfsResponse? = nil) {
+extension NfsGetResponse {
+    public init(share: NfsResponse? = nil) {
         self.init()
         self.share = share
     }
@@ -460,19 +395,19 @@ public struct NfsCreateResponse: Codable {
     }
 
     init() {
-        share = nil
+        self.share = nil
     }
 }
 
-public extension NfsCreateResponse {
-    init(from decoder: Decoder) throws {
+extension NfsCreateResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        share = try container.sdkDecodeIfPresent(.share)
+        self.share = try container.sdkDecodeIfPresent(.share)
     }
 }
 
-public extension NfsCreateResponse {
-    init(share: NfsResponse? = nil) {
+extension NfsCreateResponse {
+    public init(share: NfsResponse? = nil) {
         self.init()
         self.share = share
     }
@@ -487,27 +422,21 @@ public struct AccessPointListResponse: Codable {
         case accessPoints = "access_points"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AccessPointListResponse {
-    init(from decoder: Decoder) throws {
+extension AccessPointListResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.accessPoints) else {
-            throw SdkValidationError(
-                field: "access_points",
-                code: "required",
-                message: "Validation failed for 'access_points': value is required"
-            )
+            throw SdkValidationError(field: "access_points", code: "required", message: "Validation failed for 'access_points': value is required")
         }
-        accessPoints = try container.sdkDecodeRequired(.accessPoints)
+        self.accessPoints = try container.sdkDecodeRequired(.accessPoints)
     }
 }
 
-public extension AccessPointListResponse {
-    init(accessPoints: [AccessPointResponse]) {
+extension AccessPointListResponse {
+    public init(accessPoints: [AccessPointResponse]) {
         self.accessPoints = accessPoints
     }
 }
@@ -538,65 +467,37 @@ public struct AccessPolicy: Codable {
         case identityEnforcementEnabled = "identity_enforcement_enabled"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AccessPolicy {
-    init(from decoder: Decoder) throws {
+extension AccessPolicy {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.anonuid) else {
-            throw SdkValidationError(
-                field: "anonuid",
-                code: "required",
-                message: "Validation failed for 'anonuid': value is required"
-            )
+            throw SdkValidationError(field: "anonuid", code: "required", message: "Validation failed for 'anonuid': value is required")
         }
         guard container.contains(.anongid) else {
-            throw SdkValidationError(
-                field: "anongid",
-                code: "required",
-                message: "Validation failed for 'anongid': value is required"
-            )
+            throw SdkValidationError(field: "anongid", code: "required", message: "Validation failed for 'anongid': value is required")
         }
         guard container.contains(.protocols) else {
-            throw SdkValidationError(
-                field: "protocols",
-                code: "required",
-                message: "Validation failed for 'protocols': value is required"
-            )
+            throw SdkValidationError(field: "protocols", code: "required", message: "Validation failed for 'protocols': value is required")
         }
         guard container.contains(.squashConfig) else {
-            throw SdkValidationError(
-                field: "squash_config",
-                code: "required",
-                message: "Validation failed for 'squash_config': value is required"
-            )
+            throw SdkValidationError(field: "squash_config", code: "required", message: "Validation failed for 'squash_config': value is required")
         }
         guard container.contains(.identityEnforcementEnabled) else {
-            throw SdkValidationError(
-                field: "identity_enforcement_enabled",
-                code: "required",
-                message: "Validation failed for 'identity_enforcement_enabled': value is required"
-            )
+            throw SdkValidationError(field: "identity_enforcement_enabled", code: "required", message: "Validation failed for 'identity_enforcement_enabled': value is required")
         }
-        anonuid = try container.sdkDecodeRequired(.anonuid)
-        anongid = try container.sdkDecodeRequired(.anongid)
-        protocols = try container.sdkDecodeRequired(.protocols)
-        squashConfig = try container.sdkDecodeRequired(.squashConfig)
-        identityEnforcementEnabled = try container.sdkDecodeRequired(.identityEnforcementEnabled)
+        self.anonuid = try container.sdkDecodeRequired(.anonuid)
+        self.anongid = try container.sdkDecodeRequired(.anongid)
+        self.protocols = try container.sdkDecodeRequired(.protocols)
+        self.squashConfig = try container.sdkDecodeRequired(.squashConfig)
+        self.identityEnforcementEnabled = try container.sdkDecodeRequired(.identityEnforcementEnabled)
     }
 }
 
-public extension AccessPolicy {
-    init(
-        anonuid: Int,
-        anongid: Int,
-        protocols: [AccessPolicyProtocolsItem],
-        squashConfig: AccessPolicySquashConfig,
-        identityEnforcementEnabled: Bool
-    ) {
+extension AccessPolicy {
+    public init(anonuid: Int, anongid: Int, protocols: [AccessPolicyProtocolsItem], squashConfig: AccessPolicySquashConfig, identityEnforcementEnabled: Bool) {
         (self.anonuid, self.anongid) = (anonuid, anongid)
         (self.protocols, self.squashConfig) = (protocols, squashConfig)
         self.identityEnforcementEnabled = identityEnforcementEnabled

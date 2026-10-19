@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// InsightsLogs domain models
+// InsightsLogs domain models
 /// Optional object value serialized in the `and` wire field.
 public struct LogsFilterExpressionAnd: Codable {
     /// Required array value serialized in the `expressions` wire field.
@@ -13,27 +13,21 @@ public struct LogsFilterExpressionAnd: Codable {
         case expressions
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension LogsFilterExpressionAnd {
-    init(from decoder: Decoder) throws {
+extension LogsFilterExpressionAnd {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.expressions) else {
-            throw SdkValidationError(
-                field: "expressions",
-                code: "required",
-                message: "Validation failed for 'expressions': value is required"
-            )
+            throw SdkValidationError(field: "expressions", code: "required", message: "Validation failed for 'expressions': value is required")
         }
-        expressions = try container.sdkDecodeRequired(.expressions)
+        self.expressions = try container.sdkDecodeRequired(.expressions)
     }
 }
 
-public extension LogsFilterExpressionAnd {
-    init(expressions: [LogsFilterExpression]) {
+extension LogsFilterExpressionAnd {
+    public init(expressions: [LogsFilterExpression]) {
         self.expressions = expressions
     }
 }
@@ -48,30 +42,24 @@ public struct LogsFilterValueStringArrayValue: Codable {
         case values
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension LogsFilterValueStringArrayValue {
-    init(from decoder: Decoder) throws {
+extension LogsFilterValueStringArrayValue {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.values) else {
-            throw SdkValidationError(
-                field: "values",
-                code: "required",
-                message: "Validation failed for 'values': value is required"
-            )
+            throw SdkValidationError(field: "values", code: "required", message: "Validation failed for 'values': value is required")
         }
-        values = try container.sdkDecodeRequired(.values)
-        try validateItems("values", values, min: 1, max: nil)
+        self.values = try container.sdkDecodeRequired(.values)
+            try validateItems("values", self.values, min: 1, max: nil)
     }
 }
 
-public extension LogsFilterValueStringArrayValue {
-    init(values: [String]) throws {
+extension LogsFilterValueStringArrayValue {
+    public init(values: [String]) throws {
         self.values = values
-        try validateItems("values", self.values, min: 1, max: nil)
+            try validateItems("values", self.values, min: 1, max: nil)
     }
 }
 
@@ -95,24 +83,24 @@ public struct LogsTimeInstant: Codable {
     }
 
     init() {
-        (absolute, relative, unixNano) = (nil, nil, nil)
+        (self.absolute, self.relative, self.unixNano) = (nil, nil, nil)
     }
 }
 
-public extension LogsTimeInstant {
-    init(from decoder: Decoder) throws {
+extension LogsTimeInstant {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        absolute = try container.sdkDecodeIfPresent(.absolute)
-        relative = try container.sdkDecodeIfPresent(.relative)
-        unixNano = try container.sdkDecodeIfPresent(.unixNano)
-        if let value = absolute {
+        self.absolute = try container.sdkDecodeIfPresent(.absolute)
+        self.relative = try container.sdkDecodeIfPresent(.relative)
+        self.unixNano = try container.sdkDecodeIfPresent(.unixNano)
+        if let value = self.absolute {
             try sdkValidateDateTime("absolute", sdkWireString(value))
         }
     }
 }
 
-public extension LogsTimeInstant {
-    init(absolute: Date? = nil, relative: String? = nil, unixNano: String? = nil) throws {
+extension LogsTimeInstant {
+    public init(absolute: Date? = nil, relative: String? = nil, unixNano: String? = nil) throws {
         self.init()
         (self.absolute, self.relative) = (absolute, relative)
         self.unixNano = unixNano
@@ -135,20 +123,20 @@ public struct LogsSearchResponse: Codable {
     }
 
     init() {
-        (data, pagination) = (nil, nil)
+        (self.data, self.pagination) = (nil, nil)
     }
 }
 
-public extension LogsSearchResponse {
-    init(from decoder: Decoder) throws {
+extension LogsSearchResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        data = try container.sdkDecodeIfPresent(.data)
-        pagination = try container.sdkDecodeIfPresent(.pagination)
+        self.data = try container.sdkDecodeIfPresent(.data)
+        self.pagination = try container.sdkDecodeIfPresent(.pagination)
     }
 }
 
-public extension LogsSearchResponse {
-    init(data: [LogsLogRecord]? = nil, pagination: LogsPaginationResponse? = nil) {
+extension LogsSearchResponse {
+    public init(data: [LogsLogRecord]? = nil, pagination: LogsPaginationResponse? = nil) {
         self.init()
         (self.data, self.pagination) = (data, pagination)
     }
@@ -170,37 +158,27 @@ public struct LogsFilterCondition: Codable {
         case value
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension LogsFilterCondition {
-    init(from decoder: Decoder) throws {
+extension LogsFilterCondition {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.field) else {
-            throw SdkValidationError(
-                field: "field",
-                code: "required",
-                message: "Validation failed for 'field': value is required"
-            )
+            throw SdkValidationError(field: "field", code: "required", message: "Validation failed for 'field': value is required")
         }
-        guard container.contains(.operator) else {
-            throw SdkValidationError(
-                field: "operator",
-                code: "required",
-                message: "Validation failed for 'operator': value is required"
-            )
+        guard container.contains(.`operator`) else {
+            throw SdkValidationError(field: "operator", code: "required", message: "Validation failed for 'operator': value is required")
         }
-        field = try container.sdkDecodeRequired(.field)
-        self.operator = try container.sdkDecodeRequired(.operator)
-        value = try container.sdkDecodeIfPresent(.value)
+        self.field = try container.sdkDecodeRequired(.field)
+        self.`operator` = try container.sdkDecodeRequired(.`operator`)
+        self.value = try container.sdkDecodeIfPresent(.value)
     }
 }
 
-public extension LogsFilterCondition {
-    init(field: LogsFieldRef, operator: LogsFilterConditionOperator, value: LogsFilterValue? = nil) {
-        (self.field, self.operator) = (field, `operator`)
+extension LogsFilterCondition {
+    public init(field: LogsFieldRef, `operator`: LogsFilterConditionOperator, value: LogsFilterValue? = nil) {
+        (self.field, self.`operator`) = (field, `operator`)
         self.value = value
     }
 }
@@ -247,52 +225,36 @@ public struct LogsLogRecord: Codable {
         case attributes
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension LogsLogRecord {
-    init(from decoder: Decoder) throws {
+extension LogsLogRecord {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.timestamp) else {
-            throw SdkValidationError(
-                field: "timestamp",
-                code: "required",
-                message: "Validation failed for 'timestamp': value is required"
-            )
+            throw SdkValidationError(field: "timestamp", code: "required", message: "Validation failed for 'timestamp': value is required")
         }
-        timestamp = try container.sdkDecodeRequired(.timestamp)
-        severityNumber = try container.sdkDecodeIfPresent(.severityNumber)
-        severityText = try container.sdkDecodeIfPresent(.severityText)
-        body = try container.sdkDecodeIfPresent(.body)
-        traceId = try container.sdkDecodeIfPresent(.traceId)
-        spanId = try container.sdkDecodeIfPresent(.spanId)
-        serviceName = try container.sdkDecodeIfPresent(.serviceName)
-        resource = try container.sdkDecodeIfPresent(.resource)
-        attributes = try container.sdkDecodeIfPresent(.attributes)
-        try sdkValidateDateTime("timestamp", sdkWireString(timestamp))
+        self.timestamp = try container.sdkDecodeRequired(.timestamp)
+        self.severityNumber = try container.sdkDecodeIfPresent(.severityNumber)
+        self.severityText = try container.sdkDecodeIfPresent(.severityText)
+        self.body = try container.sdkDecodeIfPresent(.body)
+        self.traceId = try container.sdkDecodeIfPresent(.traceId)
+        self.spanId = try container.sdkDecodeIfPresent(.spanId)
+        self.serviceName = try container.sdkDecodeIfPresent(.serviceName)
+        self.resource = try container.sdkDecodeIfPresent(.resource)
+        self.attributes = try container.sdkDecodeIfPresent(.attributes)
+            try sdkValidateDateTime("timestamp", sdkWireString(self.timestamp))
     }
 }
 
-public extension LogsLogRecord {
-    init(
-        timestamp: Date,
-        severityNumber: Int? = nil,
-        severityText: String? = nil,
-        body: String? = nil,
-        traceId: String? = nil,
-        spanId: String? = nil,
-        serviceName: String? = nil,
-        resource: [String: String]? = nil,
-        attributes: [String: String]? = nil
-    ) throws {
+extension LogsLogRecord {
+    public init(timestamp: Date, severityNumber: Int? = nil, severityText: String? = nil, body: String? = nil, traceId: String? = nil, spanId: String? = nil, serviceName: String? = nil, resource: [String: String]? = nil, attributes: [String: String]? = nil) throws {
         (self.timestamp, self.severityNumber) = (timestamp, severityNumber)
         (self.severityText, self.body) = (severityText, body)
         (self.traceId, self.spanId) = (traceId, spanId)
         (self.serviceName, self.resource) = (serviceName, resource)
         self.attributes = attributes
-        try sdkValidateDateTime("timestamp", sdkWireString(self.timestamp))
+            try sdkValidateDateTime("timestamp", sdkWireString(self.timestamp))
     }
 }
 
@@ -311,43 +273,27 @@ public struct LogsPaginationRequest: Codable {
     }
 
     init() {
-        (limit, cursor) = (nil, nil)
+        (self.limit, self.cursor) = (nil, nil)
     }
 }
 
-public extension LogsPaginationRequest {
-    init(from decoder: Decoder) throws {
+extension LogsPaginationRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        limit = try container.sdkDecodeIfPresent(.limit)
-        cursor = try container.sdkDecodeIfPresent(.cursor)
-        if let value = limit {
-            try validateRange(
-                "limit",
-                Double(value),
-                min: 1,
-                max: 1000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.limit = try container.sdkDecodeIfPresent(.limit)
+        self.cursor = try container.sdkDecodeIfPresent(.cursor)
+        if let value = self.limit {
+            try validateRange("limit", Double(value), min: 1, max: 1000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
-public extension LogsPaginationRequest {
-    init(limit: Int? = nil, cursor: String? = nil) throws {
+extension LogsPaginationRequest {
+    public init(limit: Int? = nil, cursor: String? = nil) throws {
         self.init()
         (self.limit, self.cursor) = (limit, cursor)
         if let value = self.limit {
-            try validateRange(
-                "limit",
-                Double(value),
-                min: 1,
-                max: 1000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("limit", Double(value), min: 1, max: 1000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -365,28 +311,22 @@ public struct LogsOrderBy: Codable {
         case direction
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension LogsOrderBy {
-    init(from decoder: Decoder) throws {
+extension LogsOrderBy {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.field) else {
-            throw SdkValidationError(
-                field: "field",
-                code: "required",
-                message: "Validation failed for 'field': value is required"
-            )
+            throw SdkValidationError(field: "field", code: "required", message: "Validation failed for 'field': value is required")
         }
-        field = try container.sdkDecodeRequired(.field)
-        direction = try container.sdkDecodeIfPresent(.direction)
+        self.field = try container.sdkDecodeRequired(.field)
+        self.direction = try container.sdkDecodeIfPresent(.direction)
     }
 }
 
-public extension LogsOrderBy {
-    init(field: LogsFieldRef, direction: LogsOrderByDirection? = nil) {
+extension LogsOrderBy {
+    public init(field: LogsFieldRef, direction: LogsOrderByDirection? = nil) {
         (self.field, self.direction) = (field, direction)
     }
 }
@@ -406,20 +346,20 @@ public struct LogsPaginationResponse: Codable {
     }
 
     init() {
-        (hasMore, nextCursor) = (nil, nil)
+        (self.hasMore, self.nextCursor) = (nil, nil)
     }
 }
 
-public extension LogsPaginationResponse {
-    init(from decoder: Decoder) throws {
+extension LogsPaginationResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        nextCursor = try container.sdkDecodeIfPresent(.nextCursor)
+        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        self.nextCursor = try container.sdkDecodeIfPresent(.nextCursor)
     }
 }
 
-public extension LogsPaginationResponse {
-    init(hasMore: Bool? = nil, nextCursor: String? = nil) {
+extension LogsPaginationResponse {
+    public init(hasMore: Bool? = nil, nextCursor: String? = nil) {
         self.init()
         (self.hasMore, self.nextCursor) = (hasMore, nextCursor)
     }
@@ -447,29 +387,23 @@ public struct LogsFilterExpression: Codable {
     }
 
     init() {
-        (condition, and, or, not, textSearch) = (nil, nil, nil, nil, nil)
+        (self.condition, self.and, self.or, self.not, self.textSearch) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension LogsFilterExpression {
-    init(from decoder: Decoder) throws {
+extension LogsFilterExpression {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        condition = try container.sdkDecodeIfPresent(.condition)
-        and = try container.sdkDecodeIfPresent(.and)
-        or = try container.sdkDecodeIfPresent(.or)
-        not = try container.sdkDecodeIfPresent(.not)
-        textSearch = try container.sdkDecodeIfPresent(.textSearch)
+        self.condition = try container.sdkDecodeIfPresent(.condition)
+        self.and = try container.sdkDecodeIfPresent(.and)
+        self.or = try container.sdkDecodeIfPresent(.or)
+        self.not = try container.sdkDecodeIfPresent(.not)
+        self.textSearch = try container.sdkDecodeIfPresent(.textSearch)
     }
 }
 
-public extension LogsFilterExpression {
-    init(
-        condition: LogsFilterCondition? = nil,
-        and: LogsFilterExpressionAnd? = nil,
-        or: LogsFilterExpressionOr? = nil,
-        not: SdkBox<LogsFilterExpression>? = nil,
-        textSearch: LogsFilterExpressionTextSearch? = nil
-    ) {
+extension LogsFilterExpression {
+    public init(condition: LogsFilterCondition? = nil, and: LogsFilterExpressionAnd? = nil, or: LogsFilterExpressionOr? = nil, not: SdkBox<LogsFilterExpression>? = nil, textSearch: LogsFilterExpressionTextSearch? = nil) {
         self.init()
         (self.condition, self.and) = (condition, and)
         (self.or, self.not) = (or, not)
@@ -487,30 +421,24 @@ public struct LogsFilterValueNumberArrayValue: Codable {
         case values
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension LogsFilterValueNumberArrayValue {
-    init(from decoder: Decoder) throws {
+extension LogsFilterValueNumberArrayValue {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.values) else {
-            throw SdkValidationError(
-                field: "values",
-                code: "required",
-                message: "Validation failed for 'values': value is required"
-            )
+            throw SdkValidationError(field: "values", code: "required", message: "Validation failed for 'values': value is required")
         }
-        values = try container.sdkDecodeRequired(.values)
-        try validateItems("values", values, min: 1, max: nil)
+        self.values = try container.sdkDecodeRequired(.values)
+            try validateItems("values", self.values, min: 1, max: nil)
     }
 }
 
-public extension LogsFilterValueNumberArrayValue {
-    init(values: [Double]) throws {
+extension LogsFilterValueNumberArrayValue {
+    public init(values: [Double]) throws {
         self.values = values
-        try validateItems("values", self.values, min: 1, max: nil)
+            try validateItems("values", self.values, min: 1, max: nil)
     }
 }
 
@@ -532,35 +460,24 @@ public struct LogsSearchRequest: Codable {
         case pagination
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension LogsSearchRequest {
-    init(from decoder: Decoder) throws {
+extension LogsSearchRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.timeRange) else {
-            throw SdkValidationError(
-                field: "time_range",
-                code: "required",
-                message: "Validation failed for 'time_range': value is required"
-            )
+            throw SdkValidationError(field: "time_range", code: "required", message: "Validation failed for 'time_range': value is required")
         }
-        timeRange = try container.sdkDecodeRequired(.timeRange)
-        filter = try container.sdkDecodeIfPresent(.filter)
-        orderBy = try container.sdkDecodeIfPresent(.orderBy)
-        pagination = try container.sdkDecodeIfPresent(.pagination)
+        self.timeRange = try container.sdkDecodeRequired(.timeRange)
+        self.filter = try container.sdkDecodeIfPresent(.filter)
+        self.orderBy = try container.sdkDecodeIfPresent(.orderBy)
+        self.pagination = try container.sdkDecodeIfPresent(.pagination)
     }
 }
 
-public extension LogsSearchRequest {
-    init(
-        timeRange: LogsTimeRange,
-        filter: SdkBox<LogsFilterExpression>? = nil,
-        orderBy: [LogsOrderBy]? = nil,
-        pagination: LogsPaginationRequest? = nil
-    ) {
+extension LogsSearchRequest {
+    public init(timeRange: LogsTimeRange, filter: SdkBox<LogsFilterExpression>? = nil, orderBy: [LogsOrderBy]? = nil, pagination: LogsPaginationRequest? = nil) {
         (self.timeRange, self.filter) = (timeRange, filter)
         (self.orderBy, self.pagination) = (orderBy, pagination)
     }
@@ -584,28 +501,22 @@ public struct LogsFieldRef: Codable {
         case scope
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension LogsFieldRef {
-    init(from decoder: Decoder) throws {
+extension LogsFieldRef {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        scope = try container.sdkDecodeIfPresent(.scope)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.scope = try container.sdkDecodeIfPresent(.scope)
     }
 }
 
-public extension LogsFieldRef {
-    init(name: String, scope: LogsFieldRefScope? = nil) {
+extension LogsFieldRef {
+    public init(name: String, scope: LogsFieldRefScope? = nil) {
         (self.name, self.scope) = (name, scope)
     }
 }
@@ -620,21 +531,15 @@ public struct LogsFilterExpressionTextSearch: Codable {
         case query
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension LogsFilterExpressionTextSearch {
-    init(from decoder: Decoder) throws {
+extension LogsFilterExpressionTextSearch {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.query) else {
-            throw SdkValidationError(
-                field: "query",
-                code: "required",
-                message: "Validation failed for 'query': value is required"
-            )
+            throw SdkValidationError(field: "query", code: "required", message: "Validation failed for 'query': value is required")
         }
-        query = try container.sdkDecodeRequired(.query)
+        self.query = try container.sdkDecodeRequired(.query)
     }
 }

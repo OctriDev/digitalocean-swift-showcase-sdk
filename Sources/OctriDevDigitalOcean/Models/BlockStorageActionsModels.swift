@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// BlockStorageActions domain models
+// BlockStorageActions domain models
 public typealias VolumeActionDropletId = Int
 
 /// Typed representation of the `VolumeAction` API schema.
@@ -49,44 +49,34 @@ public struct VolumeAction: Codable {
     }
 
     init() {
-        (type, resourceId, id, status, startedAt) = (nil, nil, nil, nil, nil)
-        (completedAt, resourceType, region, regionSlug) = (nil, nil, nil, nil)
+        (self.type, self.resourceId, self.id, self.status, self.startedAt) = (nil, nil, nil, nil, nil)
+        (self.completedAt, self.resourceType, self.region, self.regionSlug) = (nil, nil, nil, nil)
     }
 }
 
-public extension VolumeAction {
-    init(from decoder: Decoder) throws {
+extension VolumeAction {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        resourceId = try container.sdkDecodeIfPresent(.resourceId)
-        id = try container.sdkDecodeIfPresent(.id)
-        status = try container.sdkDecodeIfPresent(.status)
-        startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        resourceType = try container.sdkDecodeIfPresent(.resourceType)
-        region = try container.sdkDecodeIfPresent(.region)
-        regionSlug = try container.sdkDecodeIfPresent(.regionSlug)
-        if let value = startedAt {
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.resourceId = try container.sdkDecodeIfPresent(.resourceId)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        self.resourceType = try container.sdkDecodeIfPresent(.resourceType)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.regionSlug = try container.sdkDecodeIfPresent(.regionSlug)
+        if let value = self.startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
-        if let value = completedAt {
+        if let value = self.completedAt {
             try sdkValidateDateTime("completed_at", sdkWireString(value))
         }
     }
 }
 
-public extension VolumeAction {
-    init(
-        type: String? = nil,
-        resourceId: Int? = nil,
-        id: Int? = nil,
-        status: ActionStatus? = nil,
-        startedAt: Date? = nil,
-        completedAt: Date? = nil,
-        resourceType: String? = nil,
-        region: Region? = nil,
-        regionSlug: String? = nil
-    ) throws {
+extension VolumeAction {
+    public init(type: String? = nil, resourceId: Int? = nil, id: Int? = nil, status: ActionStatus? = nil, startedAt: Date? = nil, completedAt: Date? = nil, resourceType: String? = nil, region: Region? = nil, regionSlug: String? = nil) throws {
         self.init()
         (self.type, self.resourceId) = (type, resourceId)
         (self.id, self.status) = (id, status)
@@ -125,46 +115,31 @@ public struct VolumeActionPostAttach: Codable {
         case tags
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VolumeActionPostAttach {
-    init(from decoder: Decoder) throws {
+extension VolumeActionPostAttach {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.dropletId) else {
-            throw SdkValidationError(
-                field: "droplet_id",
-                code: "required",
-                message: "Validation failed for 'droplet_id': value is required"
-            )
+            throw SdkValidationError(field: "droplet_id", code: "required", message: "Validation failed for 'droplet_id': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        dropletId = try container.sdkDecodeRequired(.dropletId)
-        region = try container.sdkDecodeIfPresent(.region)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        try sdkValidateRawEnum("type", type, VolumeActionPostBaseType.allCases.map(\.rawValue))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.dropletId = try container.sdkDecodeRequired(.dropletId)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+            try sdkValidateRawEnum("type", self.type, VolumeActionPostBaseType.allCases.map(\.rawValue))
     }
 }
 
-public extension VolumeActionPostAttach {
-    init(
-        type: VolumeActionPostBaseType,
-        dropletId: VolumeActionDropletId,
-        region: RegionSlug? = nil,
-        tags: TagsArray? = nil
-    ) throws {
+extension VolumeActionPostAttach {
+    public init(type: VolumeActionPostBaseType, dropletId: VolumeActionDropletId, region: RegionSlug? = nil, tags: TagsArray? = nil) throws {
         (self.type, self.dropletId) = (type, dropletId)
         (self.region, self.tags) = (region, tags)
-        try sdkValidateRawEnum("type", self.type, VolumeActionPostBaseType.allCases.map(\.rawValue))
+            try sdkValidateRawEnum("type", self.type, VolumeActionPostBaseType.allCases.map(\.rawValue))
     }
 }
 
@@ -177,27 +152,21 @@ public struct VolumeActionPostDetachVariant1: Codable {
         case dropletId = "droplet_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VolumeActionPostDetachVariant1 {
-    init(from decoder: Decoder) throws {
+extension VolumeActionPostDetachVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.dropletId) else {
-            throw SdkValidationError(
-                field: "droplet_id",
-                code: "required",
-                message: "Validation failed for 'droplet_id': value is required"
-            )
+            throw SdkValidationError(field: "droplet_id", code: "required", message: "Validation failed for 'droplet_id': value is required")
         }
-        dropletId = try container.sdkDecodeRequired(.dropletId)
+        self.dropletId = try container.sdkDecodeRequired(.dropletId)
     }
 }
 
-public extension VolumeActionPostDetachVariant1 {
-    init(dropletId: VolumeActionDropletId) {
+extension VolumeActionPostDetachVariant1 {
+    public init(dropletId: VolumeActionDropletId) {
         self.dropletId = dropletId
     }
 }
@@ -219,58 +188,32 @@ public struct VolumeActionPostResize: Codable {
         case region
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VolumeActionPostResize {
-    init(from decoder: Decoder) throws {
+extension VolumeActionPostResize {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.sizeGigabytes) else {
-            throw SdkValidationError(
-                field: "size_gigabytes",
-                code: "required",
-                message: "Validation failed for 'size_gigabytes': value is required"
-            )
+            throw SdkValidationError(field: "size_gigabytes", code: "required", message: "Validation failed for 'size_gigabytes': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        sizeGigabytes = try container.sdkDecodeRequired(.sizeGigabytes)
-        region = try container.sdkDecodeIfPresent(.region)
-        try sdkValidateRawEnum("type", type, VolumeActionPostBaseType.allCases.map(\.rawValue))
-        try validateRange(
-            "size_gigabytes",
-            Double(sizeGigabytes),
-            min: nil,
-            max: 16384,
-            exclusiveMin: nil,
-            exclusiveMax: nil,
-            multipleOf: nil
-        )
+        self.type = try container.sdkDecodeRequired(.type)
+        self.sizeGigabytes = try container.sdkDecodeRequired(.sizeGigabytes)
+        self.region = try container.sdkDecodeIfPresent(.region)
+            try sdkValidateRawEnum("type", self.type, VolumeActionPostBaseType.allCases.map(\.rawValue))
+            try validateRange("size_gigabytes", Double(self.sizeGigabytes), min: nil, max: 16384, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
     }
 }
 
-public extension VolumeActionPostResize {
-    init(type: VolumeActionPostBaseType, sizeGigabytes: Int, region: RegionSlug? = nil) throws {
+extension VolumeActionPostResize {
+    public init(type: VolumeActionPostBaseType, sizeGigabytes: Int, region: RegionSlug? = nil) throws {
         (self.type, self.sizeGigabytes) = (type, sizeGigabytes)
         self.region = region
-        try sdkValidateRawEnum("type", self.type, VolumeActionPostBaseType.allCases.map(\.rawValue))
-        try validateRange(
-            "size_gigabytes",
-            Double(self.sizeGigabytes),
-            min: nil,
-            max: 16384,
-            exclusiveMin: nil,
-            exclusiveMax: nil,
-            multipleOf: nil
-        )
+            try sdkValidateRawEnum("type", self.type, VolumeActionPostBaseType.allCases.map(\.rawValue))
+            try validateRange("size_gigabytes", Double(self.sizeGigabytes), min: nil, max: 16384, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
     }
 }
 
@@ -284,19 +227,19 @@ public struct VolumeActionResponse: Codable {
     }
 
     init() {
-        action = nil
+        self.action = nil
     }
 }
 
-public extension VolumeActionResponse {
-    init(from decoder: Decoder) throws {
+extension VolumeActionResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        action = try container.sdkDecodeIfPresent(.action)
+        self.action = try container.sdkDecodeIfPresent(.action)
     }
 }
 
-public extension VolumeActionResponse {
-    init(action: VolumeAction? = nil) {
+extension VolumeActionResponse {
+    public init(action: VolumeAction? = nil) {
         self.init()
         self.action = action
     }
@@ -316,29 +259,23 @@ public struct VolumeActions: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VolumeActions {
-    init(from decoder: Decoder) throws {
+extension VolumeActions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        actions = try container.sdkDecodeIfPresent(.actions)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.actions = try container.sdkDecodeIfPresent(.actions)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension VolumeActions {
-    init(meta: MetaMeta, actions: [VolumeAction]? = nil, links: PageLinks? = nil) {
+extension VolumeActions {
+    public init(meta: MetaMeta, actions: [VolumeAction]? = nil, links: PageLinks? = nil) {
         (self.meta, self.actions) = (meta, actions)
         self.links = links
     }
@@ -358,28 +295,22 @@ public struct VolumeActionPostAttachVariant1: Codable {
         case tags
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VolumeActionPostAttachVariant1 {
-    init(from decoder: Decoder) throws {
+extension VolumeActionPostAttachVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.dropletId) else {
-            throw SdkValidationError(
-                field: "droplet_id",
-                code: "required",
-                message: "Validation failed for 'droplet_id': value is required"
-            )
+            throw SdkValidationError(field: "droplet_id", code: "required", message: "Validation failed for 'droplet_id': value is required")
         }
-        dropletId = try container.sdkDecodeRequired(.dropletId)
-        tags = try container.sdkDecodeIfPresent(.tags)
+        self.dropletId = try container.sdkDecodeRequired(.dropletId)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-public extension VolumeActionPostAttachVariant1 {
-    init(dropletId: VolumeActionDropletId, tags: TagsArray? = nil) {
+extension VolumeActionPostAttachVariant1 {
+    public init(dropletId: VolumeActionDropletId, tags: TagsArray? = nil) {
         (self.dropletId, self.tags) = (dropletId, tags)
     }
 }
@@ -402,40 +333,30 @@ public struct VolumeActionPostDetach: Codable {
         case region
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VolumeActionPostDetach {
-    init(from decoder: Decoder) throws {
+extension VolumeActionPostDetach {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.dropletId) else {
-            throw SdkValidationError(
-                field: "droplet_id",
-                code: "required",
-                message: "Validation failed for 'droplet_id': value is required"
-            )
+            throw SdkValidationError(field: "droplet_id", code: "required", message: "Validation failed for 'droplet_id': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        dropletId = try container.sdkDecodeRequired(.dropletId)
-        region = try container.sdkDecodeIfPresent(.region)
-        try sdkValidateRawEnum("type", type, VolumeActionPostBaseType.allCases.map(\.rawValue))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.dropletId = try container.sdkDecodeRequired(.dropletId)
+        self.region = try container.sdkDecodeIfPresent(.region)
+            try sdkValidateRawEnum("type", self.type, VolumeActionPostBaseType.allCases.map(\.rawValue))
     }
 }
 
-public extension VolumeActionPostDetach {
-    init(type: VolumeActionPostBaseType, dropletId: VolumeActionDropletId, region: RegionSlug? = nil) throws {
+extension VolumeActionPostDetach {
+    public init(type: VolumeActionPostBaseType, dropletId: VolumeActionDropletId, region: RegionSlug? = nil) throws {
         (self.type, self.dropletId) = (type, dropletId)
         self.region = region
-        try sdkValidateRawEnum("type", self.type, VolumeActionPostBaseType.allCases.map(\.rawValue))
+            try sdkValidateRawEnum("type", self.type, VolumeActionPostBaseType.allCases.map(\.rawValue))
     }
 }
 
@@ -447,19 +368,19 @@ public struct VolumeActionsVariant0: Codable {
     }
 
     init() {
-        actions = nil
+        self.actions = nil
     }
 }
 
-public extension VolumeActionsVariant0 {
-    init(from decoder: Decoder) throws {
+extension VolumeActionsVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        actions = try container.sdkDecodeIfPresent(.actions)
+        self.actions = try container.sdkDecodeIfPresent(.actions)
     }
 }
 
-public extension VolumeActionsVariant0 {
-    init(actions: [VolumeAction]? = nil) {
+extension VolumeActionsVariant0 {
+    public init(actions: [VolumeAction]? = nil) {
         self.init()
         self.actions = actions
     }
@@ -479,31 +400,25 @@ public struct VolumeActionPostBase: Codable {
         case region
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VolumeActionPostBase {
-    init(from decoder: Decoder) throws {
+extension VolumeActionPostBase {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        region = try container.sdkDecodeIfPresent(.region)
-        try sdkValidateRawEnum("type", type, VolumeActionPostBaseType.allCases.map(\.rawValue))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.region = try container.sdkDecodeIfPresent(.region)
+            try sdkValidateRawEnum("type", self.type, VolumeActionPostBaseType.allCases.map(\.rawValue))
     }
 }
 
-public extension VolumeActionPostBase {
-    init(type: VolumeActionPostBaseType, region: RegionSlug? = nil) throws {
+extension VolumeActionPostBase {
+    public init(type: VolumeActionPostBaseType, region: RegionSlug? = nil) throws {
         (self.type, self.region) = (type, region)
-        try sdkValidateRawEnum("type", self.type, VolumeActionPostBaseType.allCases.map(\.rawValue))
+            try sdkValidateRawEnum("type", self.type, VolumeActionPostBaseType.allCases.map(\.rawValue))
     }
 }
 
@@ -522,20 +437,20 @@ public struct VolumeActionVariant0: Codable {
     }
 
     init() {
-        (type, resourceId) = (nil, nil)
+        (self.type, self.resourceId) = (nil, nil)
     }
 }
 
-public extension VolumeActionVariant0 {
-    init(from decoder: Decoder) throws {
+extension VolumeActionVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        resourceId = try container.sdkDecodeIfPresent(.resourceId)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.resourceId = try container.sdkDecodeIfPresent(.resourceId)
     }
 }
 
-public extension VolumeActionVariant0 {
-    init(type: String? = nil, resourceId: Int? = nil) {
+extension VolumeActionVariant0 {
+    public init(type: String? = nil, resourceId: Int? = nil) {
         self.init()
         (self.type, self.resourceId) = (type, resourceId)
     }
@@ -549,46 +464,24 @@ public struct VolumeActionPostResizeVariant1: Codable {
         case sizeGigabytes = "size_gigabytes"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VolumeActionPostResizeVariant1 {
-    init(from decoder: Decoder) throws {
+extension VolumeActionPostResizeVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.sizeGigabytes) else {
-            throw SdkValidationError(
-                field: "size_gigabytes",
-                code: "required",
-                message: "Validation failed for 'size_gigabytes': value is required"
-            )
+            throw SdkValidationError(field: "size_gigabytes", code: "required", message: "Validation failed for 'size_gigabytes': value is required")
         }
-        sizeGigabytes = try container.sdkDecodeRequired(.sizeGigabytes)
-        try validateRange(
-            "size_gigabytes",
-            Double(sizeGigabytes),
-            min: nil,
-            max: 16384,
-            exclusiveMin: nil,
-            exclusiveMax: nil,
-            multipleOf: nil
-        )
+        self.sizeGigabytes = try container.sdkDecodeRequired(.sizeGigabytes)
+            try validateRange("size_gigabytes", Double(self.sizeGigabytes), min: nil, max: 16384, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
     }
 }
 
-public extension VolumeActionPostResizeVariant1 {
-    init(sizeGigabytes: Int) throws {
+extension VolumeActionPostResizeVariant1 {
+    public init(sizeGigabytes: Int) throws {
         self.sizeGigabytes = sizeGigabytes
-        try validateRange(
-            "size_gigabytes",
-            Double(self.sizeGigabytes),
-            min: nil,
-            max: 16384,
-            exclusiveMin: nil,
-            exclusiveMax: nil,
-            multipleOf: nil
-        )
+            try validateRange("size_gigabytes", Double(self.sizeGigabytes), min: nil, max: 16384, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
     }
 }
 

@@ -3,101 +3,46 @@
 
 import Foundation
 
-public extension MonitoringNamespace {
-    /// To list all logging destinations, send a GET request to `/v2/monitoring/sinks/destinations`.
-    func listDestinations(requestOptions: RequestOptions? = nil) async throws -> MonitoringListDestinations {
-        try await MonitoringMethods.monitoringListDestinations(config: config, requestOptions: requestOptions)
+extension MonitoringNamespace {
+/// To list all logging destinations, send a GET request to `/v2/monitoring/sinks/destinations`.
+    public func listDestinations(requestOptions: RequestOptions? = nil) async throws -> MonitoringListDestinations {
+        return try await MonitoringMethods.monitoringListDestinations(config: config, requestOptions: requestOptions)
     }
 
-    /// To get the details of a destination, send a GET request to
-    /// `/v2/monitoring/sinks/destinations/${destination_uuid}`.
-    func getDestination(
-        destinationUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DestinationResponse {
-        try await MonitoringMethods.monitoringGetDestination(
-            config: config,
-            destinationUuid: destinationUuid,
-            requestOptions: requestOptions
-        )
+/// To get the details of a destination, send a GET request to `/v2/monitoring/sinks/destinations/${destination_uuid}`.
+    public func getDestination(destinationUuid: String, requestOptions: RequestOptions? = nil) async throws -> DestinationResponse {
+        return try await MonitoringMethods.monitoringGetDestination(config: config, destinationUuid: destinationUuid, requestOptions: requestOptions)
     }
 
-    /// Updates the configuration of an existing logging destination. Identify it with `destination_uuid` and supply the
-    /// required `type` and `config` fields, including the cluster `endpoint`; credentials are optional if you provide a
-    /// managed cluster's `cluster_uuid`. A 204 response confirms the update and has no response body.
+/// Updates the configuration of an existing logging destination. Identify it with `destination_uuid` and supply the required `type` and `config` fields, including the cluster `endpoint`; credentials are optional if you provide a managed cluster's `cluster_uuid`. A 204 response confirms the update and has no response body.
     ///
-    /// To update the details of a destination, send a PATCH request to
-    /// `/v2/monitoring/sinks/destinations/${destination_uuid}`.
-    func updateDestination(
-        destinationUuid: String,
-        type: DestinationRequestType,
-        config: OpensearchConfigRequest,
-        name: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await MonitoringMethods.monitoringUpdateDestination(
-            config: self.config,
-            destinationUuid: destinationUuid,
-            type: type,
-            config2: config,
-            name: name,
-            requestOptions: requestOptions
-        )
+    /// To update the details of a destination, send a PATCH request to `/v2/monitoring/sinks/destinations/${destination_uuid}`.
+    public func updateDestination(destinationUuid: String, type: DestinationRequestType, config: OpensearchConfigRequest, name: String? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await MonitoringMethods.monitoringUpdateDestination(config: self.config, destinationUuid: destinationUuid, type: type, config2: config, name: name, requestOptions: requestOptions)
     }
 
-    /// To delete a destination and all associated sinks, send a DELETE request to
-    /// `/v2/monitoring/sinks/destinations/${destination_uuid}`.
-    func deleteDestination(
-        destinationUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await MonitoringMethods.monitoringDeleteDestination(
-            config: config,
-            destinationUuid: destinationUuid,
-            requestOptions: requestOptions
-        )
+/// To delete a destination and all associated sinks, send a DELETE request to `/v2/monitoring/sinks/destinations/${destination_uuid}`.
+    public func deleteDestination(destinationUuid: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await MonitoringMethods.monitoringDeleteDestination(config: config, destinationUuid: destinationUuid, requestOptions: requestOptions)
     }
 
-    /// To create a new sink, send a POST request to `/v2/monitoring/sinks`. Forwards logs from the resources identified
-    /// in `resources` to the specified pre-existing destination.
-    func createSink(
-        destinationUuid: String? = nil,
-        resources: [SinkResource]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await MonitoringMethods.monitoringCreateSink(
-            config: config,
-            destinationUuid: destinationUuid,
-            resources: resources,
-            requestOptions: requestOptions
-        )
+/// To create a new sink, send a POST request to `/v2/monitoring/sinks`. Forwards logs from the resources identified in `resources` to the specified pre-existing destination.
+    public func createSink(destinationUuid: String? = nil, resources: [SinkResource]? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await MonitoringMethods.monitoringCreateSink(config: config, destinationUuid: destinationUuid, resources: resources, requestOptions: requestOptions)
     }
 
-    /// To list all sinks, send a GET request to `/v2/monitoring/sinks`.
-    func listSinks(resourceId: Urn? = nil, requestOptions: RequestOptions? = nil) async throws -> ListSinks {
-        try await MonitoringMethods.monitoringListSinks(
-            config: config,
-            resourceId: resourceId,
-            requestOptions: requestOptions
-        )
+/// To list all sinks, send a GET request to `/v2/monitoring/sinks`.
+    public func listSinks(resourceId: Urn? = nil, requestOptions: RequestOptions? = nil) async throws -> ListSinks {
+        return try await MonitoringMethods.monitoringListSinks(config: config, resourceId: resourceId, requestOptions: requestOptions)
     }
 
-    /// To get the details of a sink (resources and destination), send a GET request to
-    /// `/v2/monitoring/sinks/${sink_uuid}`.
-    func getSink(sinkUuid: String, requestOptions: RequestOptions? = nil) async throws -> Sinks {
-        try await MonitoringMethods.monitoringGetSink(
-            config: config,
-            sinkUuid: sinkUuid,
-            requestOptions: requestOptions
-        )
+/// To get the details of a sink (resources and destination), send a GET request to `/v2/monitoring/sinks/${sink_uuid}`.
+    public func getSink(sinkUuid: String, requestOptions: RequestOptions? = nil) async throws -> Sinks {
+        return try await MonitoringMethods.monitoringGetSink(config: config, sinkUuid: sinkUuid, requestOptions: requestOptions)
     }
 
-    /// To delete a sink, send a DELETE request to `/v2/monitoring/sinks/${sink_uuid}`.
-    func deleteSink(sinkUuid: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        try await MonitoringMethods.monitoringDeleteSink(
-            config: config,
-            sinkUuid: sinkUuid,
-            requestOptions: requestOptions
-        )
+/// To delete a sink, send a DELETE request to `/v2/monitoring/sinks/${sink_uuid}`.
+    public func deleteSink(sinkUuid: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await MonitoringMethods.monitoringDeleteSink(config: config, sinkUuid: sinkUuid, requestOptions: requestOptions)
     }
 }

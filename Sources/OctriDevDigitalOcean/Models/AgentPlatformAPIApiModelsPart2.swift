@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApi domain models
+// AgentPlatformAPIApi domain models
 /// Metadata for scheduled indexing entries
 public struct ApiScheduledIndexingInfo: Codable {
     /// Created at timestamp
@@ -50,55 +50,44 @@ public struct ApiScheduledIndexingInfo: Codable {
     }
 
     init() {
-        (createdAt, days, deletedAt, isActive, knowledgeBaseUuid) = (nil, nil, nil, nil, nil)
-        (lastRanAt, nextRunAt, time, updatedAt, uuid) = (nil, nil, nil, nil, nil)
+        (self.createdAt, self.days, self.deletedAt, self.isActive, self.knowledgeBaseUuid) = (nil, nil, nil, nil, nil)
+        (self.lastRanAt, self.nextRunAt, self.time, self.updatedAt, self.uuid) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ApiScheduledIndexingInfo {
-    init(from decoder: Decoder) throws {
+extension ApiScheduledIndexingInfo {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        days = try container.sdkDecodeIfPresent(.days)
-        deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
-        isActive = try container.sdkDecodeIfPresent(.isActive)
-        knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
-        lastRanAt = try container.sdkDecodeIfPresent(.lastRanAt)
-        nextRunAt = try container.sdkDecodeIfPresent(.nextRunAt)
-        time = try container.sdkDecodeIfPresent(.time)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
-        if let value = createdAt {
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.days = try container.sdkDecodeIfPresent(.days)
+        self.deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
+        self.isActive = try container.sdkDecodeIfPresent(.isActive)
+        self.knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
+        self.lastRanAt = try container.sdkDecodeIfPresent(.lastRanAt)
+        self.nextRunAt = try container.sdkDecodeIfPresent(.nextRunAt)
+        self.time = try container.sdkDecodeIfPresent(.time)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = deletedAt {
+        if let value = self.deletedAt {
             try sdkValidateDateTime("deleted_at", sdkWireString(value))
         }
-        if let value = lastRanAt {
+        if let value = self.lastRanAt {
             try sdkValidateDateTime("last_ran_at", sdkWireString(value))
         }
-        if let value = nextRunAt {
+        if let value = self.nextRunAt {
             try sdkValidateDateTime("next_run_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApiScheduledIndexingInfo {
-    init(
-        createdAt: Date? = nil,
-        days: [Int]? = nil,
-        deletedAt: Date? = nil,
-        isActive: Bool? = nil,
-        knowledgeBaseUuid: String? = nil,
-        lastRanAt: Date? = nil,
-        nextRunAt: Date? = nil,
-        time: String? = nil,
-        updatedAt: Date? = nil,
-        uuid: String? = nil
-    ) throws {
+extension ApiScheduledIndexingInfo {
+    public init(createdAt: Date? = nil, days: [Int]? = nil, deletedAt: Date? = nil, isActive: Bool? = nil, knowledgeBaseUuid: String? = nil, lastRanAt: Date? = nil, nextRunAt: Date? = nil, time: String? = nil, updatedAt: Date? = nil, uuid: String? = nil) throws {
         self.init()
         (self.createdAt, self.days) = (createdAt, days)
         (self.deletedAt, self.isActive) = (deletedAt, isActive)
@@ -138,20 +127,20 @@ public struct ApiPresignedUrlFile: Codable {
     }
 
     init() {
-        (fileName, fileSize) = (nil, nil)
+        (self.fileName, self.fileSize) = (nil, nil)
     }
 }
 
-public extension ApiPresignedUrlFile {
-    init(from decoder: Decoder) throws {
+extension ApiPresignedUrlFile {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        fileName = try container.sdkDecodeIfPresent(.fileName)
-        fileSize = try container.sdkDecodeIfPresent(.fileSize)
+        self.fileName = try container.sdkDecodeIfPresent(.fileName)
+        self.fileSize = try container.sdkDecodeIfPresent(.fileSize)
     }
 }
 
-public extension ApiPresignedUrlFile {
-    init(fileName: String? = nil, fileSize: String? = nil) {
+extension ApiPresignedUrlFile {
+    public init(fileName: String? = nil, fileSize: String? = nil) {
         self.init()
         (self.fileName, self.fileSize) = (fileName, fileSize)
     }
@@ -215,45 +204,32 @@ public struct ApiMetricResultSummary: Codable {
     }
 
     init() {
-        (avgAtKPercent, consAtKPercent, description, failCount, failPercent) = (nil, nil, nil, nil, nil)
-        (metricName, metricUuid, passAtKPercent, passCount, passPercent) = (nil, nil, nil, nil, nil)
-        (skipPercent, skippedCount) = (nil, nil)
+        (self.avgAtKPercent, self.consAtKPercent, self.description, self.failCount, self.failPercent) = (nil, nil, nil, nil, nil)
+        (self.metricName, self.metricUuid, self.passAtKPercent, self.passCount, self.passPercent) = (nil, nil, nil, nil, nil)
+        (self.skipPercent, self.skippedCount) = (nil, nil)
     }
 }
 
-public extension ApiMetricResultSummary {
-    init(from decoder: Decoder) throws {
+extension ApiMetricResultSummary {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        avgAtKPercent = try container.sdkDecodeIfPresent(.avgAtKPercent)
-        consAtKPercent = try container.sdkDecodeIfPresent(.consAtKPercent)
-        description = try container.sdkDecodeIfPresent(.description)
-        failCount = try container.sdkDecodeIfPresent(.failCount)
-        failPercent = try container.sdkDecodeIfPresent(.failPercent)
-        metricName = try container.sdkDecodeIfPresent(.metricName)
-        metricUuid = try container.sdkDecodeIfPresent(.metricUuid)
-        passAtKPercent = try container.sdkDecodeIfPresent(.passAtKPercent)
-        passCount = try container.sdkDecodeIfPresent(.passCount)
-        passPercent = try container.sdkDecodeIfPresent(.passPercent)
-        skipPercent = try container.sdkDecodeIfPresent(.skipPercent)
-        skippedCount = try container.sdkDecodeIfPresent(.skippedCount)
+        self.avgAtKPercent = try container.sdkDecodeIfPresent(.avgAtKPercent)
+        self.consAtKPercent = try container.sdkDecodeIfPresent(.consAtKPercent)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.failCount = try container.sdkDecodeIfPresent(.failCount)
+        self.failPercent = try container.sdkDecodeIfPresent(.failPercent)
+        self.metricName = try container.sdkDecodeIfPresent(.metricName)
+        self.metricUuid = try container.sdkDecodeIfPresent(.metricUuid)
+        self.passAtKPercent = try container.sdkDecodeIfPresent(.passAtKPercent)
+        self.passCount = try container.sdkDecodeIfPresent(.passCount)
+        self.passPercent = try container.sdkDecodeIfPresent(.passPercent)
+        self.skipPercent = try container.sdkDecodeIfPresent(.skipPercent)
+        self.skippedCount = try container.sdkDecodeIfPresent(.skippedCount)
     }
 }
 
-public extension ApiMetricResultSummary {
-    init(
-        avgAtKPercent: Double? = nil,
-        consAtKPercent: Double? = nil,
-        description: String? = nil,
-        failCount: Int? = nil,
-        failPercent: Double? = nil,
-        metricName: String? = nil,
-        metricUuid: String? = nil,
-        passAtKPercent: Double? = nil,
-        passCount: Int? = nil,
-        passPercent: Double? = nil,
-        skipPercent: Double? = nil,
-        skippedCount: Int? = nil
-    ) {
+extension ApiMetricResultSummary {
+    public init(avgAtKPercent: Double? = nil, consAtKPercent: Double? = nil, description: String? = nil, failCount: Int? = nil, failPercent: Double? = nil, metricName: String? = nil, metricUuid: String? = nil, passAtKPercent: Double? = nil, passCount: Int? = nil, passPercent: Double? = nil, skipPercent: Double? = nil, skippedCount: Int? = nil) {
         self.init()
         (self.avgAtKPercent, self.consAtKPercent) = (avgAtKPercent, consAtKPercent)
         (self.description, self.failCount) = (description, failCount)
@@ -286,33 +262,28 @@ public struct ApiResourceUsage: Codable {
     }
 
     init() {
-        (measurements, resourceUuid, start, stop) = (nil, nil, nil, nil)
+        (self.measurements, self.resourceUuid, self.start, self.stop) = (nil, nil, nil, nil)
     }
 }
 
-public extension ApiResourceUsage {
-    init(from decoder: Decoder) throws {
+extension ApiResourceUsage {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        measurements = try container.sdkDecodeIfPresent(.measurements)
-        resourceUuid = try container.sdkDecodeIfPresent(.resourceUuid)
-        start = try container.sdkDecodeIfPresent(.start)
-        stop = try container.sdkDecodeIfPresent(.stop)
-        if let value = start {
+        self.measurements = try container.sdkDecodeIfPresent(.measurements)
+        self.resourceUuid = try container.sdkDecodeIfPresent(.resourceUuid)
+        self.start = try container.sdkDecodeIfPresent(.start)
+        self.stop = try container.sdkDecodeIfPresent(.stop)
+        if let value = self.start {
             try sdkValidateDateTime("start", sdkWireString(value))
         }
-        if let value = stop {
+        if let value = self.stop {
             try sdkValidateDateTime("stop", sdkWireString(value))
         }
     }
 }
 
-public extension ApiResourceUsage {
-    init(
-        measurements: [ApiUsageMeasurement]? = nil,
-        resourceUuid: String? = nil,
-        start: Date? = nil,
-        stop: Date? = nil
-    ) throws {
+extension ApiResourceUsage {
+    public init(measurements: [ApiUsageMeasurement]? = nil, resourceUuid: String? = nil, start: Date? = nil, stop: Date? = nil) throws {
         self.init()
         (self.measurements, self.resourceUuid) = (measurements, resourceUuid)
         (self.start, self.stop) = (start, stop)
@@ -340,20 +311,20 @@ public struct ApiUsageMeasurement: Codable {
     }
 
     init() {
-        (tokens, usageType) = (nil, nil)
+        (self.tokens, self.usageType) = (nil, nil)
     }
 }
 
-public extension ApiUsageMeasurement {
-    init(from decoder: Decoder) throws {
+extension ApiUsageMeasurement {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        tokens = try container.sdkDecodeIfPresent(.tokens)
-        usageType = try container.sdkDecodeIfPresent(.usageType)
+        self.tokens = try container.sdkDecodeIfPresent(.tokens)
+        self.usageType = try container.sdkDecodeIfPresent(.usageType)
     }
 }
 
-public extension ApiUsageMeasurement {
-    init(tokens: Int? = nil, usageType: String? = nil) {
+extension ApiUsageMeasurement {
+    public init(tokens: Int? = nil, usageType: String? = nil) {
         self.init()
         (self.tokens, self.usageType) = (tokens, usageType)
     }
@@ -394,34 +365,26 @@ public struct ApiChatbot: Codable {
     }
 
     init() {
-        (allowedDomains, buttonBackgroundColor, logo, name, primaryColor) = (nil, nil, nil, nil, nil)
-        (secondaryColor, startingMessage) = (nil, nil)
+        (self.allowedDomains, self.buttonBackgroundColor, self.logo, self.name, self.primaryColor) = (nil, nil, nil, nil, nil)
+        (self.secondaryColor, self.startingMessage) = (nil, nil)
     }
 }
 
-public extension ApiChatbot {
-    init(from decoder: Decoder) throws {
+extension ApiChatbot {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        allowedDomains = try container.sdkDecodeIfPresent(.allowedDomains)
-        buttonBackgroundColor = try container.sdkDecodeIfPresent(.buttonBackgroundColor)
-        logo = try container.sdkDecodeIfPresent(.logo)
-        name = try container.sdkDecodeIfPresent(.name)
-        primaryColor = try container.sdkDecodeIfPresent(.primaryColor)
-        secondaryColor = try container.sdkDecodeIfPresent(.secondaryColor)
-        startingMessage = try container.sdkDecodeIfPresent(.startingMessage)
+        self.allowedDomains = try container.sdkDecodeIfPresent(.allowedDomains)
+        self.buttonBackgroundColor = try container.sdkDecodeIfPresent(.buttonBackgroundColor)
+        self.logo = try container.sdkDecodeIfPresent(.logo)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.primaryColor = try container.sdkDecodeIfPresent(.primaryColor)
+        self.secondaryColor = try container.sdkDecodeIfPresent(.secondaryColor)
+        self.startingMessage = try container.sdkDecodeIfPresent(.startingMessage)
     }
 }
 
-public extension ApiChatbot {
-    init(
-        allowedDomains: [String]? = nil,
-        buttonBackgroundColor: String? = nil,
-        logo: String? = nil,
-        name: String? = nil,
-        primaryColor: String? = nil,
-        secondaryColor: String? = nil,
-        startingMessage: String? = nil
-    ) {
+extension ApiChatbot {
+    public init(allowedDomains: [String]? = nil, buttonBackgroundColor: String? = nil, logo: String? = nil, name: String? = nil, primaryColor: String? = nil, secondaryColor: String? = nil, startingMessage: String? = nil) {
         self.init()
         (self.allowedDomains, self.buttonBackgroundColor) = (allowedDomains, buttonBackgroundColor)
         (self.logo, self.name) = (logo, name)
@@ -475,49 +438,38 @@ public struct ApiWorkspace: Codable {
     }
 
     init() {
-        (agents, createdAt, createdBy, createdByEmail, deletedAt) = (nil, nil, nil, nil, nil)
-        (description, evaluationTestCases, name, updatedAt, uuid) = (nil, nil, nil, nil, nil)
+        (self.agents, self.createdAt, self.createdBy, self.createdByEmail, self.deletedAt) = (nil, nil, nil, nil, nil)
+        (self.description, self.evaluationTestCases, self.name, self.updatedAt, self.uuid) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ApiWorkspace {
-    init(from decoder: Decoder) throws {
+extension ApiWorkspace {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agents = try container.sdkDecodeIfPresent(.agents)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        createdBy = try container.sdkDecodeIfPresent(.createdBy)
-        createdByEmail = try container.sdkDecodeIfPresent(.createdByEmail)
-        deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
-        description = try container.sdkDecodeIfPresent(.description)
-        evaluationTestCases = try container.sdkDecodeIfPresent(.evaluationTestCases)
-        name = try container.sdkDecodeIfPresent(.name)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
-        if let value = createdAt {
+        self.agents = try container.sdkDecodeIfPresent(.agents)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.createdBy = try container.sdkDecodeIfPresent(.createdBy)
+        self.createdByEmail = try container.sdkDecodeIfPresent(.createdByEmail)
+        self.deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.evaluationTestCases = try container.sdkDecodeIfPresent(.evaluationTestCases)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = deletedAt {
+        if let value = self.deletedAt {
             try sdkValidateDateTime("deleted_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApiWorkspace {
-    init(
-        agents: [ApiAgent]? = nil,
-        createdAt: Date? = nil,
-        createdBy: String? = nil,
-        createdByEmail: String? = nil,
-        deletedAt: Date? = nil,
-        description: String? = nil,
-        evaluationTestCases: [ApiEvaluationTestCase]? = nil,
-        name: String? = nil,
-        updatedAt: Date? = nil,
-        uuid: String? = nil
-    ) throws {
+extension ApiWorkspace {
+    public init(agents: [ApiAgent]? = nil, createdAt: Date? = nil, createdBy: String? = nil, createdByEmail: String? = nil, deletedAt: Date? = nil, description: String? = nil, evaluationTestCases: [ApiEvaluationTestCase]? = nil, name: String? = nil, updatedAt: Date? = nil, uuid: String? = nil) throws {
         self.init()
         (self.agents, self.createdAt) = (agents, createdAt)
         (self.createdBy, self.createdByEmail) = (createdBy, createdByEmail)

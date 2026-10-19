@@ -6,11 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension VpcRoutesPublicPreviewMethods {
-    /// To add a static route to a VPC subnet, send a POST request to `/v2/vpcs/$VPC_UUID/subnets/$SUBNET_UUID/routes`.
-    /// This route is additional to the routes the VPC already propagates to the subnet. The server assigns the route's
-    /// `id` and `type`. Droplet targets must use a numeric ID. A Droplet UUID or another invalid `target_urns` value
-    /// returns a 422 response.
+extension VpcRoutesPublicPreviewMethods {
+    /// To add a static route to a VPC subnet, send a POST request to `/v2/vpcs/$VPC_UUID/subnets/$SUBNET_UUID/routes`. This route is additional to the routes the VPC already propagates to the subnet. The server assigns the route's `id` and `type`. Droplet targets must use a numeric ID. A Droplet UUID or another invalid `target_urns` value returns a 422 response.
     ///
     /// - Parameters:
     /// - vpcUuid: The unique identifier of the VPC.
@@ -19,43 +16,13 @@ public extension VpcRoutesPublicPreviewMethods {
     /// - targetUrns: The URNs of supported next-hop resources. Droplet targets must
     ///   use a numeric ID in the format `do:droplet:<id>`. VPC NAT Gateway targets
     ///   use a UUID in the format `do:nat_gateway:<uuid>`.
-    static func vpcSubnetRoutesCreate(
-        config: ClientConfig,
-        vpcUuid: String,
-        subnetUuid: String,
-        destinationCidr: String,
-        targetUrns: [String],
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SingleRoute {
+    public static func vpcSubnetRoutesCreate(config: ClientConfig, vpcUuid: String, subnetUuid: String, destinationCidr: String, targetUrns: [String], requestOptions: RequestOptions? = nil) async throws -> SingleRoute {
         try sdkValidateUuid("vpc_uuid", vpcUuid)
 
         try sdkValidateUuid("subnet_uuid", subnetUuid)
 
         let requestBody = VpcSubnetRoutesCreateRequestBody(destinationCidr: destinationCidr, targetUrns: targetUrns)
 
-        return try await (sdkRequest(
-            "POST",
-            [
-                "/v2/vpcs/",
-                sdkEncodePathSegment(sdkWireString(vpcUuid)),
-                "/subnets/",
-                sdkEncodePathSegment(sdkWireString(subnetUuid)),
-                "/routes",
-            ].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "vpcSubnetRoutes_create",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "404": Error2.self,
-                "422": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcUuid)), "/subnets/", sdkEncodePathSegment(sdkWireString(subnetUuid)), "/routes"].joined(), config: config, body: requestBody, decoder: .json, operationId: "vpcSubnetRoutes_create", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "422": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

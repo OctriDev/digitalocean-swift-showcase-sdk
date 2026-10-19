@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HarnessRuntimeGet domain models
+// HarnessRuntimeGet domain models
 /// Typed representation of the `GetIngressUrlResponse` API schema.
 public struct GetIngressUrlResponse: Codable {
     /// A publicly routable HTTPS URL to one guest port of the session's sandbox. The hostname is stable while the
@@ -16,19 +16,19 @@ public struct GetIngressUrlResponse: Codable {
     }
 
     init() {
-        ingressUrl = nil
+        self.ingressUrl = nil
     }
 }
 
-public extension GetIngressUrlResponse {
-    init(from decoder: Decoder) throws {
+extension GetIngressUrlResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        ingressUrl = try container.sdkDecodeIfPresent(.ingressUrl)
+        self.ingressUrl = try container.sdkDecodeIfPresent(.ingressUrl)
     }
 }
 
-public extension GetIngressUrlResponse {
-    init(ingressUrl: SessionIngressUrl? = nil) {
+extension GetIngressUrlResponse {
+    public init(ingressUrl: SessionIngressUrl? = nil) {
         self.init()
         self.ingressUrl = ingressUrl
     }
@@ -44,19 +44,19 @@ public struct GetTemplateResponse: Codable {
     }
 
     init() {
-        template = nil
+        self.template = nil
     }
 }
 
-public extension GetTemplateResponse {
-    init(from decoder: Decoder) throws {
+extension GetTemplateResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        template = try container.sdkDecodeIfPresent(.template)
+        self.template = try container.sdkDecodeIfPresent(.template)
     }
 }
 
-public extension GetTemplateResponse {
-    init(template: SandboxTemplate? = nil) {
+extension GetTemplateResponse {
+    public init(template: SandboxTemplate? = nil) {
         self.init()
         self.template = template
     }
@@ -72,19 +72,19 @@ public struct GetTemplateBuildResponse: Codable {
     }
 
     init() {
-        build = nil
+        self.build = nil
     }
 }
 
-public extension GetTemplateBuildResponse {
-    init(from decoder: Decoder) throws {
+extension GetTemplateBuildResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        build = try container.sdkDecodeIfPresent(.build)
+        self.build = try container.sdkDecodeIfPresent(.build)
     }
 }
 
-public extension GetTemplateBuildResponse {
-    init(build: SandboxTemplateBuild? = nil) {
+extension GetTemplateBuildResponse {
+    public init(build: SandboxTemplateBuild? = nil) {
         self.init()
         self.build = build
     }
@@ -103,19 +103,19 @@ public struct GetTriggerResponse: Codable {
     }
 
     init() {
-        trigger = nil
+        self.trigger = nil
     }
 }
 
-public extension GetTriggerResponse {
-    init(from decoder: Decoder) throws {
+extension GetTriggerResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        trigger = try container.sdkDecodeIfPresent(.trigger)
+        self.trigger = try container.sdkDecodeIfPresent(.trigger)
     }
 }
 
-public extension GetTriggerResponse {
-    init(trigger: Trigger? = nil) {
+extension GetTriggerResponse {
+    public init(trigger: Trigger? = nil) {
         self.init()
         self.trigger = trigger
     }
@@ -131,19 +131,19 @@ public struct GetTriggerExecutionResponse: Codable {
     }
 
     init() {
-        execution = nil
+        self.execution = nil
     }
 }
 
-public extension GetTriggerExecutionResponse {
-    init(from decoder: Decoder) throws {
+extension GetTriggerExecutionResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        execution = try container.sdkDecodeIfPresent(.execution)
+        self.execution = try container.sdkDecodeIfPresent(.execution)
     }
 }
 
-public extension GetTriggerExecutionResponse {
-    init(execution: TriggerExecution? = nil) {
+extension GetTriggerExecutionResponse {
+    public init(execution: TriggerExecution? = nil) {
         self.init()
         self.execution = execution
     }
@@ -161,19 +161,19 @@ public struct GetCheckpointResponse: Codable {
     }
 
     init() {
-        checkpoint = nil
+        self.checkpoint = nil
     }
 }
 
-public extension GetCheckpointResponse {
-    init(from decoder: Decoder) throws {
+extension GetCheckpointResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        checkpoint = try container.sdkDecodeIfPresent(.checkpoint)
+        self.checkpoint = try container.sdkDecodeIfPresent(.checkpoint)
     }
 }
 
-public extension GetCheckpointResponse {
-    init(checkpoint: Checkpoint? = nil) {
+extension GetCheckpointResponse {
+    public init(checkpoint: Checkpoint? = nil) {
         self.init()
         self.checkpoint = checkpoint
     }
@@ -189,19 +189,19 @@ public struct GetSessionResponse: Codable {
     }
 
     init() {
-        session = nil
+        self.session = nil
     }
 }
 
-public extension GetSessionResponse {
-    init(from decoder: Decoder) throws {
+extension GetSessionResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        session = try container.sdkDecodeIfPresent(.session)
+        self.session = try container.sdkDecodeIfPresent(.session)
     }
 }
 
-public extension GetSessionResponse {
-    init(session: DefinitionsSession? = nil) {
+extension GetSessionResponse {
+    public init(session: DefinitionsSession? = nil) {
         self.init()
         self.session = session
     }

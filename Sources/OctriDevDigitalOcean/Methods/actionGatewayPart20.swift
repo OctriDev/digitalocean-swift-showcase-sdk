@@ -6,9 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ActionGatewayMethods {
-    /// Returns your team's toolbelts whose name, display name, or description contains query, case-insensitively,
-    /// sorted by name. Cursor-paged with `page_size` and `page_token`; no total is reported.
+extension ActionGatewayMethods {
+    /// Returns your team's toolbelts whose name, display name, or description contains query, case-insensitively, sorted by name. Cursor-paged with `page_size` and `page_token`; no total is reported.
     ///
     /// - Parameters:
     /// - query: Matched case-insensitively as a substring of name, `display_name`,
@@ -18,43 +17,20 @@ public extension ActionGatewayMethods {
     ///   values are rejected with 400.
     /// - pageToken: `next_page_token` from the previous response. Valid only with
     ///   the same query and status; otherwise the request is rejected with 400.
-    static func toolbeltsListSearch(
-        config: ClientConfig,
-        query: String? = nil,
-        status: ToolbeltsListParameter? = nil,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SearchToolbeltsResponse {
-        if let pageSize {
+    public static func toolbeltsListSearch(config: ClientConfig, query: String? = nil, status: ToolbeltsListParameter? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) async throws -> SearchToolbeltsResponse {
+        if let pageSize = pageSize {
             try validateRange("page_size", Double(pageSize), min: 1, max: 100)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/action-gateway/toolbelts/search",
-            config: config,
-            query: [
-                SdkQueryParameter("query", value: query),
-                SdkQueryParameter("status", value: status),
-                SdkQueryParameter("page_size", value: pageSize),
-                SdkQueryParameter("page_token", value: pageToken),
-            ],
-            decoder: .json,
-            operationId: "toolbelts_list_search",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", "/v2/action-gateway/toolbelts/search", config: config, query: [
+            SdkQueryParameter("query", value: query),
+            SdkQueryParameter("status", value: status),
+            SdkQueryParameter("page_size", value: pageSize),
+            SdkQueryParameter("page_token", value: pageToken),
+        ], decoder: .json, operationId: "toolbelts_list_search", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Returns your team's toolbelts whose name, display name, or description contains query, case-insensitively,
-    /// sorted by name. Cursor-paged with `page_size` and `page_token`; no total is reported.
+    /// Returns your team's toolbelts whose name, display name, or description contains query, case-insensitively, sorted by name. Cursor-paged with `page_size` and `page_token`; no total is reported.
     ///
     /// - Parameters:
     /// - query: Matched case-insensitively as a substring of name, `display_name`,
@@ -64,40 +40,17 @@ public extension ActionGatewayMethods {
     ///   values are rejected with 400.
     /// - pageToken: `next_page_token` from the previous response. Valid only with
     ///   the same query and status; otherwise the request is rejected with 400.
-    static func toolbeltsListSearchPaginated(
-        config: ClientConfig,
-        query: String? = nil,
-        status: ToolbeltsListParameter? = nil,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<ToolbeltSummary, Swift.Error> {
-        AsyncThrowingStream<ToolbeltSummary, Swift.Error> { (continuation: AsyncThrowingStream<
-            ToolbeltSummary,
-            Swift.Error
-        >.Continuation) in
+    public static func toolbeltsListSearchPaginated(config: ClientConfig, query: String? = nil, status: ToolbeltsListParameter? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<ToolbeltSummary, Swift.Error> {
+        return AsyncThrowingStream<ToolbeltSummary, Swift.Error> { (continuation: AsyncThrowingStream<ToolbeltSummary, Swift.Error>.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await toolbeltsListSearch(
-                            config: config,
-                            query: query,
-                            status: status,
-                            pageSize: pageSize,
-                            pageToken: pageCursor,
-                            requestOptions: requestOptions
-                        )
+                        let pageResponse = try await toolbeltsListSearch(config: config, query: query, status: status, pageSize: pageSize, pageToken: pageCursor, requestOptions: requestOptions)
                         let pageItems = (pageResponse.toolbelts ?? [])
-                        if pageItems.isEmpty {
-                            break
-                        }
-                        for item in pageItems {
-                            continuation.yield(item)
-                        }
-                        guard let nextCursor = pageResponse.nextPageToken else {
-                            break
-                        }
+                        if pageItems.isEmpty { break }
+                        for item in pageItems { continuation.yield(item) }
+                        guard let nextCursor = pageResponse.nextPageToken else { break }
                         pageCursor = nextCursor
                     }
                 } catch {
@@ -110,52 +63,25 @@ public extension ActionGatewayMethods {
         }
     }
 
-    struct ToolbeltsListSearchPage {
+    public struct ToolbeltsListSearchPage {
         public let data: SearchToolbeltsResponse
         public let items: [ToolbeltSummary]
         public let hasMore: Bool
     }
 
-    static func toolbeltsListSearchPages(
-        config: ClientConfig,
-        query: String? = nil,
-        status: ToolbeltsListParameter? = nil,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<ToolbeltsListSearchPage, Swift.Error> {
-        AsyncThrowingStream<ToolbeltsListSearchPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<
-            ToolbeltsListSearchPage,
-            Swift.Error
-        >.Continuation) in
+    public static func toolbeltsListSearchPages(config: ClientConfig, query: String? = nil, status: ToolbeltsListParameter? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<ToolbeltsListSearchPage, Swift.Error> {
+        return AsyncThrowingStream<ToolbeltsListSearchPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<ToolbeltsListSearchPage, Swift.Error>.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await toolbeltsListSearch(
-                            config: config,
-                            query: query,
-                            status: status,
-                            pageSize: pageSize,
-                            pageToken: pageCursor,
-                            requestOptions: requestOptions
-                        )
+                        let pageResponse = try await toolbeltsListSearch(config: config, query: query, status: status, pageSize: pageSize, pageToken: pageCursor, requestOptions: requestOptions)
                         let pageItems = (pageResponse.toolbelts ?? [])
-                        if pageItems.isEmpty {
-                            break
-                        }
+                        if pageItems.isEmpty { break }
                         let hasMore = pageResponse.nextPageToken != nil
-                        pageContinuation.yield(ToolbeltsListSearchPage(
-                            data: pageResponse,
-                            items: pageItems,
-                            hasMore: hasMore
-                        ))
-                        if !hasMore {
-                            break
-                        }
-                        guard let nextCursor = pageResponse.nextPageToken else {
-                            break
-                        }
+                        pageContinuation.yield(ToolbeltsListSearchPage(data: pageResponse, items: pageItems, hasMore: hasMore))
+                        if !hasMore { break }
+                        guard let nextCursor = pageResponse.nextPageToken else { break }
                         pageCursor = nextCursor
                     }
                 } catch {

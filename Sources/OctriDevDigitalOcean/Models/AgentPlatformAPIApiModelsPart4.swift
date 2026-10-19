@@ -3,9 +3,9 @@
 
 import Foundation
 
-/// AgentPlatformAPIApi domain models
-public extension ApiAgreement {
-    init(description: String? = nil, name: String? = nil, url: String? = nil, uuid: String? = nil) {
+// AgentPlatformAPIApi domain models
+extension ApiAgreement {
+    public init(description: String? = nil, name: String? = nil, url: String? = nil, uuid: String? = nil) {
         self.init()
         (self.description, self.name) = (description, name)
         (self.url, self.uuid) = (url, uuid)
@@ -78,63 +78,47 @@ public struct ApiIndexingJob: Codable {
     }
 
     init() {
-        (completedDatasources, createdAt, dataSourceJobs, dataSourceUuids, finishedAt) = (nil, nil, nil, nil, nil)
-        (isReportAvailable, knowledgeBaseUuid, phase, startedAt, status) = (nil, nil, nil, nil, nil)
-        (tokens, totalDatasources, totalTokens, updatedAt, uuid) = (nil, nil, nil, nil, nil)
+        (self.completedDatasources, self.createdAt, self.dataSourceJobs, self.dataSourceUuids, self.finishedAt) = (nil, nil, nil, nil, nil)
+        (self.isReportAvailable, self.knowledgeBaseUuid, self.phase, self.startedAt, self.status) = (nil, nil, nil, nil, nil)
+        (self.tokens, self.totalDatasources, self.totalTokens, self.updatedAt, self.uuid) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ApiIndexingJob {
-    init(from decoder: Decoder) throws {
+extension ApiIndexingJob {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        completedDatasources = try container.sdkDecodeIfPresent(.completedDatasources)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        dataSourceJobs = try container.sdkDecodeIfPresent(.dataSourceJobs)
-        dataSourceUuids = try container.sdkDecodeIfPresent(.dataSourceUuids)
-        finishedAt = try container.sdkDecodeIfPresent(.finishedAt)
-        isReportAvailable = try container.sdkDecodeIfPresent(.isReportAvailable)
-        knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
-        phase = try container.sdkDecodeIfPresent(.phase)
-        startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        status = try container.sdkDecodeIfPresent(.status)
-        tokens = try container.sdkDecodeIfPresent(.tokens)
-        totalDatasources = try container.sdkDecodeIfPresent(.totalDatasources)
-        totalTokens = try container.sdkDecodeIfPresent(.totalTokens)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
-        if let value = createdAt {
+        self.completedDatasources = try container.sdkDecodeIfPresent(.completedDatasources)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.dataSourceJobs = try container.sdkDecodeIfPresent(.dataSourceJobs)
+        self.dataSourceUuids = try container.sdkDecodeIfPresent(.dataSourceUuids)
+        self.finishedAt = try container.sdkDecodeIfPresent(.finishedAt)
+        self.isReportAvailable = try container.sdkDecodeIfPresent(.isReportAvailable)
+        self.knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
+        self.phase = try container.sdkDecodeIfPresent(.phase)
+        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.tokens = try container.sdkDecodeIfPresent(.tokens)
+        self.totalDatasources = try container.sdkDecodeIfPresent(.totalDatasources)
+        self.totalTokens = try container.sdkDecodeIfPresent(.totalTokens)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = finishedAt {
+        if let value = self.finishedAt {
             try sdkValidateDateTime("finished_at", sdkWireString(value))
         }
-        if let value = startedAt {
+        if let value = self.startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApiIndexingJob {
-    init(
-        completedDatasources: Int? = nil,
-        createdAt: Date? = nil,
-        dataSourceJobs: [ApiIndexedDataSource]? = nil,
-        dataSourceUuids: [String]? = nil,
-        finishedAt: Date? = nil,
-        isReportAvailable: Bool? = nil,
-        knowledgeBaseUuid: String? = nil,
-        phase: ApiBatchJobPhase? = nil,
-        startedAt: Date? = nil,
-        status: ApiIndexJobStatus? = nil,
-        tokens: Int? = nil,
-        totalDatasources: Int? = nil,
-        totalTokens: String? = nil,
-        updatedAt: Date? = nil,
-        uuid: String? = nil
-    ) throws {
+extension ApiIndexingJob {
+    public init(completedDatasources: Int? = nil, createdAt: Date? = nil, dataSourceJobs: [ApiIndexedDataSource]? = nil, dataSourceUuids: [String]? = nil, finishedAt: Date? = nil, isReportAvailable: Bool? = nil, knowledgeBaseUuid: String? = nil, phase: ApiBatchJobPhase? = nil, startedAt: Date? = nil, status: ApiIndexJobStatus? = nil, tokens: Int? = nil, totalDatasources: Int? = nil, totalTokens: String? = nil, updatedAt: Date? = nil, uuid: String? = nil) throws {
         self.init()
         (self.completedDatasources, self.createdAt) = (completedDatasources, createdAt)
         (self.dataSourceJobs, self.dataSourceUuids) = (dataSourceJobs, dataSourceUuids)
@@ -169,19 +153,19 @@ public struct ApiLinks: Codable {
     }
 
     init() {
-        pages = nil
+        self.pages = nil
     }
 }
 
-public extension ApiLinks {
-    init(from decoder: Decoder) throws {
+extension ApiLinks {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        pages = try container.sdkDecodeIfPresent(.pages)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-public extension ApiLinks {
-    init(pages: ApiPages? = nil) {
+extension ApiLinks {
+    public init(pages: ApiPages? = nil) {
         self.init()
         self.pages = pages
     }
@@ -213,27 +197,22 @@ public struct ApiWebCrawlerDataSource: Codable {
     }
 
     init() {
-        (baseUrl, crawlingOption, embedMedia, excludeTags) = (nil, nil, nil, nil)
+        (self.baseUrl, self.crawlingOption, self.embedMedia, self.excludeTags) = (nil, nil, nil, nil)
     }
 }
 
-public extension ApiWebCrawlerDataSource {
-    init(from decoder: Decoder) throws {
+extension ApiWebCrawlerDataSource {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        baseUrl = try container.sdkDecodeIfPresent(.baseUrl)
-        crawlingOption = try container.sdkDecodeIfPresent(.crawlingOption)
-        embedMedia = try container.sdkDecodeIfPresent(.embedMedia)
-        excludeTags = try container.sdkDecodeIfPresent(.excludeTags)
+        self.baseUrl = try container.sdkDecodeIfPresent(.baseUrl)
+        self.crawlingOption = try container.sdkDecodeIfPresent(.crawlingOption)
+        self.embedMedia = try container.sdkDecodeIfPresent(.embedMedia)
+        self.excludeTags = try container.sdkDecodeIfPresent(.excludeTags)
     }
 }
 
-public extension ApiWebCrawlerDataSource {
-    init(
-        baseUrl: String? = nil,
-        crawlingOption: ApiCrawlingOption? = nil,
-        embedMedia: Bool? = nil,
-        excludeTags: [String]? = nil
-    ) {
+extension ApiWebCrawlerDataSource {
+    public init(baseUrl: String? = nil, crawlingOption: ApiCrawlingOption? = nil, embedMedia: Bool? = nil, excludeTags: [String]? = nil) {
         self.init()
         (self.baseUrl, self.crawlingOption) = (baseUrl, crawlingOption)
         (self.embedMedia, self.excludeTags) = (embedMedia, excludeTags)
@@ -263,22 +242,22 @@ public struct ApiCodeSnippets: Codable {
     }
 
     init() {
-        (curl, javascript, python, sdk) = (nil, nil, nil, nil)
+        (self.curl, self.javascript, self.python, self.sdk) = (nil, nil, nil, nil)
     }
 }
 
-public extension ApiCodeSnippets {
-    init(from decoder: Decoder) throws {
+extension ApiCodeSnippets {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        curl = try container.sdkDecodeIfPresent(.curl)
-        javascript = try container.sdkDecodeIfPresent(.javascript)
-        python = try container.sdkDecodeIfPresent(.python)
-        sdk = try container.sdkDecodeIfPresent(.sdk)
+        self.curl = try container.sdkDecodeIfPresent(.curl)
+        self.javascript = try container.sdkDecodeIfPresent(.javascript)
+        self.python = try container.sdkDecodeIfPresent(.python)
+        self.sdk = try container.sdkDecodeIfPresent(.sdk)
     }
 }
 
-public extension ApiCodeSnippets {
-    init(curl: String? = nil, javascript: String? = nil, python: String? = nil, sdk: String? = nil) {
+extension ApiCodeSnippets {
+    public init(curl: String? = nil, javascript: String? = nil, python: String? = nil, sdk: String? = nil) {
         self.init()
         (self.curl, self.javascript) = (curl, javascript)
         (self.python, self.sdk) = (python, sdk)
@@ -308,22 +287,22 @@ public struct ApiPages: Codable {
     }
 
     init() {
-        (first, last, next, previous) = (nil, nil, nil, nil)
+        (self.first, self.last, self.next, self.previous) = (nil, nil, nil, nil)
     }
 }
 
-public extension ApiPages {
-    init(from decoder: Decoder) throws {
+extension ApiPages {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        first = try container.sdkDecodeIfPresent(.first)
-        last = try container.sdkDecodeIfPresent(.last)
-        next = try container.sdkDecodeIfPresent(.next)
-        previous = try container.sdkDecodeIfPresent(.previous)
+        self.first = try container.sdkDecodeIfPresent(.first)
+        self.last = try container.sdkDecodeIfPresent(.last)
+        self.next = try container.sdkDecodeIfPresent(.next)
+        self.previous = try container.sdkDecodeIfPresent(.previous)
     }
 }
 
-public extension ApiPages {
-    init(first: String? = nil, last: String? = nil, next: String? = nil, previous: String? = nil) {
+extension ApiPages {
+    public init(first: String? = nil, last: String? = nil, next: String? = nil, previous: String? = nil) {
         self.init()
         (self.first, self.last) = (first, last)
         (self.next, self.previous) = (next, previous)
@@ -343,20 +322,20 @@ public struct ApiPerformanceMetrics: Codable {
     }
 
     init() {
-        (candidateLatency, tokenUsage) = (nil, nil)
+        (self.candidateLatency, self.tokenUsage) = (nil, nil)
     }
 }
 
-public extension ApiPerformanceMetrics {
-    init(from decoder: Decoder) throws {
+extension ApiPerformanceMetrics {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        candidateLatency = try container.sdkDecodeIfPresent(.candidateLatency)
-        tokenUsage = try container.sdkDecodeIfPresent(.tokenUsage)
+        self.candidateLatency = try container.sdkDecodeIfPresent(.candidateLatency)
+        self.tokenUsage = try container.sdkDecodeIfPresent(.tokenUsage)
     }
 }
 
-public extension ApiPerformanceMetrics {
-    init(candidateLatency: ApiLatencyMetrics? = nil, tokenUsage: ApiTokenUsage? = nil) {
+extension ApiPerformanceMetrics {
+    public init(candidateLatency: ApiLatencyMetrics? = nil, tokenUsage: ApiTokenUsage? = nil) {
         self.init()
         (self.candidateLatency, self.tokenUsage) = (candidateLatency, tokenUsage)
     }
@@ -388,32 +367,26 @@ public struct ApiSpanCommon: Codable {
     }
 
     init() {
-        (createdAt, durationNs, metadata, statusCode, tags) = (nil, nil, nil, nil, nil)
+        (self.createdAt, self.durationNs, self.metadata, self.statusCode, self.tags) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ApiSpanCommon {
-    init(from decoder: Decoder) throws {
+extension ApiSpanCommon {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        durationNs = try container.sdkDecodeIfPresent(.durationNs)
-        metadata = try container.sdkDecodeIfPresent(.metadata)
-        statusCode = try container.sdkDecodeIfPresent(.statusCode)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        if let value = createdAt {
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.durationNs = try container.sdkDecodeIfPresent(.durationNs)
+        self.metadata = try container.sdkDecodeIfPresent(.metadata)
+        self.statusCode = try container.sdkDecodeIfPresent(.statusCode)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApiSpanCommon {
-    init(
-        createdAt: Date? = nil,
-        durationNs: String? = nil,
-        metadata: [String: String]? = nil,
-        statusCode: Int? = nil,
-        tags: [String]? = nil
-    ) throws {
+extension ApiSpanCommon {
+    public init(createdAt: Date? = nil, durationNs: String? = nil, metadata: [String: String]? = nil, statusCode: Int? = nil, tags: [String]? = nil) throws {
         self.init()
         (self.createdAt, self.durationNs) = (createdAt, durationNs)
         (self.metadata, self.statusCode) = (metadata, statusCode)
@@ -455,41 +428,34 @@ public struct ApiAnthropicAPIKeyInfo: Codable {
     }
 
     init() {
-        (createdAt, createdBy, deletedAt, name, updatedAt) = (nil, nil, nil, nil, nil)
-        uuid = nil
+        (self.createdAt, self.createdBy, self.deletedAt, self.name, self.updatedAt) = (nil, nil, nil, nil, nil)
+        self.uuid = nil
     }
 }
 
-public extension ApiAnthropicAPIKeyInfo {
-    init(from decoder: Decoder) throws {
+extension ApiAnthropicAPIKeyInfo {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        createdBy = try container.sdkDecodeIfPresent(.createdBy)
-        deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
-        name = try container.sdkDecodeIfPresent(.name)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
-        if let value = createdAt {
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.createdBy = try container.sdkDecodeIfPresent(.createdBy)
+        self.deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = deletedAt {
+        if let value = self.deletedAt {
             try sdkValidateDateTime("deleted_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApiAnthropicAPIKeyInfo {
-    init(
-        createdAt: Date? = nil,
-        createdBy: String? = nil,
-        deletedAt: Date? = nil,
-        name: String? = nil,
-        updatedAt: Date? = nil,
-        uuid: String? = nil
-    ) throws {
+extension ApiAnthropicAPIKeyInfo {
+    public init(createdAt: Date? = nil, createdBy: String? = nil, deletedAt: Date? = nil, name: String? = nil, updatedAt: Date? = nil, uuid: String? = nil) throws {
         self.init()
         (self.createdAt, self.createdBy) = (createdAt, createdBy)
         (self.deletedAt, self.name) = (deletedAt, name)
@@ -531,29 +497,23 @@ public struct ApiAgentSpan: Codable {
     }
 
     init() {
-        (agentType, common, redactedInput, redactedOutput, spans) = (nil, nil, nil, nil, nil)
+        (self.agentType, self.common, self.redactedInput, self.redactedOutput, self.spans) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ApiAgentSpan {
-    init(from decoder: Decoder) throws {
+extension ApiAgentSpan {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agentType = try container.sdkDecodeIfPresent(.agentType)
-        common = try container.sdkDecodeIfPresent(.common)
-        redactedInput = try container.sdkDecodeIfPresent(.redactedInput)
-        redactedOutput = try container.sdkDecodeIfPresent(.redactedOutput)
-        spans = try container.sdkDecodeIfPresent(.spans)
+        self.agentType = try container.sdkDecodeIfPresent(.agentType)
+        self.common = try container.sdkDecodeIfPresent(.common)
+        self.redactedInput = try container.sdkDecodeIfPresent(.redactedInput)
+        self.redactedOutput = try container.sdkDecodeIfPresent(.redactedOutput)
+        self.spans = try container.sdkDecodeIfPresent(.spans)
     }
 }
 
-public extension ApiAgentSpan {
-    init(
-        agentType: ApiAgentType? = nil,
-        common: ApiSpanCommon? = nil,
-        redactedInput: String? = nil,
-        redactedOutput: String? = nil,
-        spans: [ApiTraceSpan]? = nil
-    ) {
+extension ApiAgentSpan {
+    public init(agentType: ApiAgentType? = nil, common: ApiSpanCommon? = nil, redactedInput: String? = nil, redactedOutput: String? = nil, spans: [ApiTraceSpan]? = nil) {
         self.init()
         (self.agentType, self.common) = (agentType, common)
         (self.redactedInput, self.redactedOutput) = (redactedInput, redactedOutput)
@@ -574,20 +534,20 @@ public struct ApiWorkflowSpan: Codable {
     }
 
     init() {
-        (common, spans) = (nil, nil)
+        (self.common, self.spans) = (nil, nil)
     }
 }
 
-public extension ApiWorkflowSpan {
-    init(from decoder: Decoder) throws {
+extension ApiWorkflowSpan {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        common = try container.sdkDecodeIfPresent(.common)
-        spans = try container.sdkDecodeIfPresent(.spans)
+        self.common = try container.sdkDecodeIfPresent(.common)
+        self.spans = try container.sdkDecodeIfPresent(.spans)
     }
 }
 
-public extension ApiWorkflowSpan {
-    init(common: ApiSpanCommon? = nil, spans: [ApiTraceSpan]? = nil) {
+extension ApiWorkflowSpan {
+    public init(common: ApiSpanCommon? = nil, spans: [ApiTraceSpan]? = nil) {
         self.init()
         (self.common, self.spans) = (common, spans)
     }

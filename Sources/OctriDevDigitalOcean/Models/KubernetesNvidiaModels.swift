@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// KubernetesNvidia domain models
+// KubernetesNvidia domain models
 /// An object specifying whether the NVIDIA GPU DRA Driver should be enabled in the Kubernetes cluster. Mutually
 /// exclusive with `nvidia_gpu_device_plugin`.
 public struct NvidiaGpuDraDriver: Codable {
@@ -16,19 +16,19 @@ public struct NvidiaGpuDraDriver: Codable {
     }
 
     init() {
-        enabled = nil
+        self.enabled = nil
     }
 }
 
-public extension NvidiaGpuDraDriver {
-    init(from decoder: Decoder) throws {
+extension NvidiaGpuDraDriver {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        enabled = try container.sdkDecodeIfPresent(.enabled)
+        self.enabled = try container.sdkDecodeIfPresent(.enabled)
     }
 }
 
-public extension NvidiaGpuDraDriver {
-    init(enabled: Bool? = nil) {
+extension NvidiaGpuDraDriver {
+    public init(enabled: Bool? = nil) {
         self.init()
         self.enabled = enabled
     }
@@ -46,19 +46,19 @@ public struct NvidiaGpuDevicePlugin: Codable {
     }
 
     init() {
-        enabled = nil
+        self.enabled = nil
     }
 }
 
-public extension NvidiaGpuDevicePlugin {
-    init(from decoder: Decoder) throws {
+extension NvidiaGpuDevicePlugin {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        enabled = try container.sdkDecodeIfPresent(.enabled)
+        self.enabled = try container.sdkDecodeIfPresent(.enabled)
     }
 }
 
-public extension NvidiaGpuDevicePlugin {
-    init(enabled: Bool? = nil) {
+extension NvidiaGpuDevicePlugin {
+    public init(enabled: Bool? = nil) {
         self.init()
         self.enabled = enabled
     }

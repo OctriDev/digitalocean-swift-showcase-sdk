@@ -6,88 +6,38 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContainerRegistriesMethods {
-    /// To get information about past garbage collections for a registry, send a GET request to
-    /// `/v2/registry/$REGISTRY_NAME/garbage-collections`.
+extension ContainerRegistriesMethods {
+    /// To get information about past garbage collections for a registry, send a GET request to `/v2/registry/$REGISTRY_NAME/garbage-collections`.
     ///
     /// - Parameters:
     /// - registryName: The name of a container registry.
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func registriesListGarbageCollections(
-        config: ClientConfig,
-        registryName: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> GarbageCollections {
-        if let perPage {
+    public static func registriesListGarbageCollections(config: ClientConfig, registryName: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> GarbageCollections {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/registries/", sdkEncodePathSegment(sdkWireString(registryName)), "/garbage-collections"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "registries_list_garbageCollections",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/registries/", sdkEncodePathSegment(sdkWireString(registryName)), "/garbage-collections"].joined(), config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "registries_list_garbageCollections", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To cancel the currently-active garbage collection for a registry, send a PUT request to
-    /// `/v2/registries/$REGISTRY_NAME/garbage-collection/$GC_UUID` and specify one or more of the attributes below. It
-    /// is similar to PUT `/v2/registries/$REGISTRY_NAME/garbage-collection/$GC_UUID`.
+    /// To cancel the currently-active garbage collection for a registry, send a PUT request to `/v2/registries/$REGISTRY_NAME/garbage-collection/$GC_UUID` and specify one or more of the attributes below. It is similar to PUT `/v2/registries/$REGISTRY_NAME/garbage-collection/$GC_UUID`.
     ///
     /// - Parameters:
     /// - registryName: The name of a container registry.
     /// - garbageCollectionUuid: The UUID of a garbage collection run.
     /// - cancel: A boolean value indicating that the garbage collection should be
     ///   cancelled.
-    static func registriesUpdateGarbageCollection(
-        config: ClientConfig,
-        registryName: String,
-        garbageCollectionUuid: String,
-        cancel: Bool? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> GarbageCollectionResponse {
+    public static func registriesUpdateGarbageCollection(config: ClientConfig, registryName: String, garbageCollectionUuid: String, cancel: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> GarbageCollectionResponse {
         let requestBody = RegistriesUpdateGarbageCollectionRequestBody(cancel: cancel)
 
-        return try await (sdkRequest(
-            "PUT",
-            [
-                "/v2/registries/",
-                sdkEncodePathSegment(sdkWireString(registryName)),
-                "/garbage-collection/",
-                sdkEncodePathSegment(sdkWireString(garbageCollectionUuid)),
-            ].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "registries_update_garbageCollection",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/registries/", sdkEncodePathSegment(sdkWireString(registryName)), "/garbage-collection/", sdkEncodePathSegment(sdkWireString(garbageCollectionUuid))].joined(), config: config, body: requestBody, decoder: .json, operationId: "registries_update_garbageCollection", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

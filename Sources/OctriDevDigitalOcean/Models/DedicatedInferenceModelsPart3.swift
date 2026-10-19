@@ -3,26 +3,20 @@
 
 import Foundation
 
-/// DedicatedInference domain models
-public extension ModelDeploymentSpecRequest {
-    init(from decoder: Decoder) throws {
+// DedicatedInference domain models
+extension ModelDeploymentSpecRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        modelId = try container.sdkDecodeIfPresent(.modelId)
-        modelSlug = try container.sdkDecodeIfPresent(.modelSlug)
-        modelProvider = try container.sdkDecodeIfPresent(.modelProvider)
-        workloadConfig = try container.sdkDecodeIfPresent(.workloadConfig)
-        accelerators = try container.sdkDecodeIfPresent(.accelerators)
+        self.modelId = try container.sdkDecodeIfPresent(.modelId)
+        self.modelSlug = try container.sdkDecodeIfPresent(.modelSlug)
+        self.modelProvider = try container.sdkDecodeIfPresent(.modelProvider)
+        self.workloadConfig = try container.sdkDecodeIfPresent(.workloadConfig)
+        self.accelerators = try container.sdkDecodeIfPresent(.accelerators)
     }
 }
 
-public extension ModelDeploymentSpecRequest {
-    init(
-        modelId: String? = nil,
-        modelSlug: String? = nil,
-        modelProvider: ModelDeploymentSpecRequestModelProvider? = nil,
-        workloadConfig: [String: JSONValue]? = nil,
-        accelerators: [AcceleratorConfigSpecRequest]? = nil
-    ) {
+extension ModelDeploymentSpecRequest {
+    public init(modelId: String? = nil, modelSlug: String? = nil, modelProvider: ModelDeploymentSpecRequestModelProvider? = nil, workloadConfig: [String: JSONValue]? = nil, accelerators: [AcceleratorConfigSpecRequest]? = nil) {
         self.init()
         (self.modelId, self.modelSlug) = (modelId, modelSlug)
         (self.modelProvider, self.workloadConfig) = (modelProvider, workloadConfig)
@@ -57,35 +51,29 @@ public struct DedicatedInferenceAccessToken: Codable {
     }
 
     init() {
-        (id, name, value, createdAt, isManaged) = (nil, nil, nil, nil, nil)
+        (self.id, self.name, self.value, self.createdAt, self.isManaged) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension DedicatedInferenceAccessToken {
-    init(from decoder: Decoder) throws {
+extension DedicatedInferenceAccessToken {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        value = try container.sdkDecodeIfPresent(.value)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        isManaged = try container.sdkDecodeIfPresent(.isManaged)
-        if let value = id {
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.value = try container.sdkDecodeIfPresent(.value)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.isManaged = try container.sdkDecodeIfPresent(.isManaged)
+        if let value = self.id {
             try sdkValidateUuid("id", value)
         }
-        if let value = createdAt {
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-public extension DedicatedInferenceAccessToken {
-    init(
-        id: String? = nil,
-        name: String? = nil,
-        value: String? = nil,
-        createdAt: Date? = nil,
-        isManaged: Bool? = nil
-    ) throws {
+extension DedicatedInferenceAccessToken {
+    public init(id: String? = nil, name: String? = nil, value: String? = nil, createdAt: Date? = nil, isManaged: Bool? = nil) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.value, self.createdAt) = (value, createdAt)
@@ -130,38 +118,31 @@ public struct DedicatedInferenceAccelerator: Codable {
     }
 
     init() {
-        (id, name, slug, role, status) = (nil, nil, nil, nil, nil)
-        createdAt = nil
+        (self.id, self.name, self.slug, self.role, self.status) = (nil, nil, nil, nil, nil)
+        self.createdAt = nil
     }
 }
 
-public extension DedicatedInferenceAccelerator {
-    init(from decoder: Decoder) throws {
+extension DedicatedInferenceAccelerator {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        slug = try container.sdkDecodeIfPresent(.slug)
-        role = try container.sdkDecodeIfPresent(.role)
-        status = try container.sdkDecodeIfPresent(.status)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        if let value = id {
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.slug = try container.sdkDecodeIfPresent(.slug)
+        self.role = try container.sdkDecodeIfPresent(.role)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        if let value = self.id {
             try sdkValidateUuid("id", value)
         }
-        if let value = createdAt {
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-public extension DedicatedInferenceAccelerator {
-    init(
-        id: String? = nil,
-        name: String? = nil,
-        slug: String? = nil,
-        role: String? = nil,
-        status: String? = nil,
-        createdAt: Date? = nil
-    ) throws {
+extension DedicatedInferenceAccelerator {
+    public init(id: String? = nil, name: String? = nil, slug: String? = nil, role: String? = nil, status: String? = nil, createdAt: Date? = nil) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.slug, self.role) = (slug, role)
@@ -202,83 +183,50 @@ public struct DedicatedInferenceSpec: Codable {
         case modelDeployments = "model_deployments"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DedicatedInferenceSpec {
-    init(from decoder: Decoder) throws {
+extension DedicatedInferenceSpec {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.version) else {
-            throw SdkValidationError(
-                field: "version",
-                code: "required",
-                message: "Validation failed for 'version': value is required"
-            )
+            throw SdkValidationError(field: "version", code: "required", message: "Validation failed for 'version': value is required")
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
         guard container.contains(.vpc) else {
-            throw SdkValidationError(
-                field: "vpc",
-                code: "required",
-                message: "Validation failed for 'vpc': value is required"
-            )
+            throw SdkValidationError(field: "vpc", code: "required", message: "Validation failed for 'vpc': value is required")
         }
         guard container.contains(.enablePublicEndpoint) else {
-            throw SdkValidationError(
-                field: "enable_public_endpoint",
-                code: "required",
-                message: "Validation failed for 'enable_public_endpoint': value is required"
-            )
+            throw SdkValidationError(field: "enable_public_endpoint", code: "required", message: "Validation failed for 'enable_public_endpoint': value is required")
         }
         guard container.contains(.modelDeployments) else {
-            throw SdkValidationError(
-                field: "model_deployments",
-                code: "required",
-                message: "Validation failed for 'model_deployments': value is required"
-            )
+            throw SdkValidationError(field: "model_deployments", code: "required", message: "Validation failed for 'model_deployments': value is required")
         }
-        version = try container.sdkDecodeRequired(.version)
-        name = try container.sdkDecodeRequired(.name)
-        region = try container.sdkDecodeRequired(.region)
-        vpc = try container.sdkDecodeRequired(.vpc)
-        enablePublicEndpoint = try container.sdkDecodeRequired(.enablePublicEndpoint)
-        modelDeployments = try container.sdkDecodeRequired(.modelDeployments)
-        try validateLength("name", name, min: nil, max: 255)
-        try sdkValidatePattern("name", name, sdkPatterna828669d9fe5)
-        try validateItems("model_deployments", modelDeployments, min: 1, max: nil)
+        self.version = try container.sdkDecodeRequired(.version)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.vpc = try container.sdkDecodeRequired(.vpc)
+        self.enablePublicEndpoint = try container.sdkDecodeRequired(.enablePublicEndpoint)
+        self.modelDeployments = try container.sdkDecodeRequired(.modelDeployments)
+            try validateLength("name", self.name, min: nil, max: 255)
+            try sdkValidatePattern("name", self.name, sdkPatterna828669d9fe5)
+            try validateItems("model_deployments", self.modelDeployments, min: 1, max: nil)
     }
 }
 
-public extension DedicatedInferenceSpec {
-    init(
-        version: Int,
-        name: String,
-        region: DedicatedInferenceSpecRegion,
-        vpc: DedicatedInferenceSpecVpc,
-        enablePublicEndpoint: Bool,
-        modelDeployments: [ModelDeploymentSpec]
-    ) throws {
+extension DedicatedInferenceSpec {
+    public init(version: Int, name: String, region: DedicatedInferenceSpecRegion, vpc: DedicatedInferenceSpecVpc, enablePublicEndpoint: Bool, modelDeployments: [ModelDeploymentSpec]) throws {
         (self.version, self.name) = (version, name)
         (self.region, self.vpc) = (region, vpc)
         (self.enablePublicEndpoint, self.modelDeployments) = (enablePublicEndpoint, modelDeployments)
-        try validateLength("name", self.name, min: nil, max: 255)
-        try sdkValidatePattern("name", self.name, sdkPatterna828669d9fe5)
-        try validateItems("model_deployments", self.modelDeployments, min: 1, max: nil)
+            try validateLength("name", self.name, min: nil, max: 255)
+            try sdkValidatePattern("name", self.name, sdkPatterna828669d9fe5)
+            try validateItems("model_deployments", self.modelDeployments, min: 1, max: nil)
     }
 }
 
@@ -322,54 +270,44 @@ public struct PendingDeploymentSpec: Codable {
     }
 
     init() {
-        (id, version, name, status, vpc) = (nil, nil, nil, nil, nil)
-        (enablePublicEndpoint, modelDeployments, createdAt, updatedAt) = (nil, nil, nil, nil)
+        (self.id, self.version, self.name, self.status, self.vpc) = (nil, nil, nil, nil, nil)
+        (self.enablePublicEndpoint, self.modelDeployments, self.createdAt, self.updatedAt) = (nil, nil, nil, nil)
     }
 }
 
-public extension PendingDeploymentSpec {
-    init(from decoder: Decoder) throws {
+extension PendingDeploymentSpec {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        version = try container.sdkDecodeIfPresent(.version)
-        name = try container.sdkDecodeIfPresent(.name)
-        status = try container.sdkDecodeIfPresent(.status)
-        vpc = try container.sdkDecodeIfPresent(.vpc)
-        enablePublicEndpoint = try container.sdkDecodeIfPresent(.enablePublicEndpoint)
-        modelDeployments = try container.sdkDecodeIfPresent(.modelDeployments)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = id {
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.version = try container.sdkDecodeIfPresent(.version)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.vpc = try container.sdkDecodeIfPresent(.vpc)
+        self.enablePublicEndpoint = try container.sdkDecodeIfPresent(.enablePublicEndpoint)
+        self.modelDeployments = try container.sdkDecodeIfPresent(.modelDeployments)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = self.id {
             try sdkValidateUuid("id", value)
         }
-        if let value = name {
+        if let value = self.name {
             try validateLength("name", value, min: nil, max: 255)
             try sdkValidatePattern("name", value, sdkPatterna828669d9fe5)
         }
-        if let value = modelDeployments {
+        if let value = self.modelDeployments {
             try validateItems("model_deployments", value, min: 1, max: nil)
         }
-        if let value = createdAt {
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension PendingDeploymentSpec {
-    init(
-        id: String? = nil,
-        version: Int? = nil,
-        name: String? = nil,
-        status: PendingDeploymentSpecStatus? = nil,
-        vpc: PendingDeploymentSpecVpc? = nil,
-        enablePublicEndpoint: Bool? = nil,
-        modelDeployments: [ModelDeploymentSpec]? = nil,
-        createdAt: Date? = nil,
-        updatedAt: Date? = nil
-    ) throws {
+extension PendingDeploymentSpec {
+    public init(id: String? = nil, version: Int? = nil, name: String? = nil, status: PendingDeploymentSpecStatus? = nil, vpc: PendingDeploymentSpecVpc? = nil, enablePublicEndpoint: Bool? = nil, modelDeployments: [ModelDeploymentSpec]? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) throws {
         self.init()
         (self.id, self.version) = (id, version)
         (self.name, self.status) = (name, status)
@@ -408,28 +346,22 @@ public struct DedicatedInferenceCreateRequest: Codable {
         case accessTokens = "access_tokens"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DedicatedInferenceCreateRequest {
-    init(from decoder: Decoder) throws {
+extension DedicatedInferenceCreateRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.spec) else {
-            throw SdkValidationError(
-                field: "spec",
-                code: "required",
-                message: "Validation failed for 'spec': value is required"
-            )
+            throw SdkValidationError(field: "spec", code: "required", message: "Validation failed for 'spec': value is required")
         }
-        spec = try container.sdkDecodeRequired(.spec)
-        accessTokens = try container.sdkDecodeIfPresent(.accessTokens)
+        self.spec = try container.sdkDecodeRequired(.spec)
+        self.accessTokens = try container.sdkDecodeIfPresent(.accessTokens)
     }
 }
 
-public extension DedicatedInferenceCreateRequest {
-    init(spec: DedicatedInferenceSpec, accessTokens: [String: String]? = nil) {
+extension DedicatedInferenceCreateRequest {
+    public init(spec: DedicatedInferenceSpec, accessTokens: [String: String]? = nil) {
         (self.spec, self.accessTokens) = (spec, accessTokens)
     }
 }
@@ -456,22 +388,22 @@ public struct DedicatedInferenceGpuModelConfig: Codable {
     }
 
     init() {
-        (gpuSlugs, modelSlug, modelName, isGatedModel) = (nil, nil, nil, nil)
+        (self.gpuSlugs, self.modelSlug, self.modelName, self.isGatedModel) = (nil, nil, nil, nil)
     }
 }
 
-public extension DedicatedInferenceGpuModelConfig {
-    init(from decoder: Decoder) throws {
+extension DedicatedInferenceGpuModelConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        gpuSlugs = try container.sdkDecodeIfPresent(.gpuSlugs)
-        modelSlug = try container.sdkDecodeIfPresent(.modelSlug)
-        modelName = try container.sdkDecodeIfPresent(.modelName)
-        isGatedModel = try container.sdkDecodeIfPresent(.isGatedModel)
+        self.gpuSlugs = try container.sdkDecodeIfPresent(.gpuSlugs)
+        self.modelSlug = try container.sdkDecodeIfPresent(.modelSlug)
+        self.modelName = try container.sdkDecodeIfPresent(.modelName)
+        self.isGatedModel = try container.sdkDecodeIfPresent(.isGatedModel)
     }
 }
 
-public extension DedicatedInferenceGpuModelConfig {
-    init(gpuSlugs: [String]? = nil, modelSlug: String? = nil, modelName: String? = nil, isGatedModel: Bool? = nil) {
+extension DedicatedInferenceGpuModelConfig {
+    public init(gpuSlugs: [String]? = nil, modelSlug: String? = nil, modelName: String? = nil, isGatedModel: Bool? = nil) {
         self.init()
         (self.gpuSlugs, self.modelSlug) = (gpuSlugs, modelSlug)
         (self.modelName, self.isGatedModel) = (modelName, isGatedModel)
@@ -502,29 +434,23 @@ public struct ModelDeploymentSpec: Codable {
     }
 
     init() {
-        (modelId, modelSlug, modelProvider, workloadConfig, accelerators) = (nil, nil, nil, nil, nil)
+        (self.modelId, self.modelSlug, self.modelProvider, self.workloadConfig, self.accelerators) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ModelDeploymentSpec {
-    init(from decoder: Decoder) throws {
+extension ModelDeploymentSpec {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        modelId = try container.sdkDecodeIfPresent(.modelId)
-        modelSlug = try container.sdkDecodeIfPresent(.modelSlug)
-        modelProvider = try container.sdkDecodeIfPresent(.modelProvider)
-        workloadConfig = try container.sdkDecodeIfPresent(.workloadConfig)
-        accelerators = try container.sdkDecodeIfPresent(.accelerators)
+        self.modelId = try container.sdkDecodeIfPresent(.modelId)
+        self.modelSlug = try container.sdkDecodeIfPresent(.modelSlug)
+        self.modelProvider = try container.sdkDecodeIfPresent(.modelProvider)
+        self.workloadConfig = try container.sdkDecodeIfPresent(.workloadConfig)
+        self.accelerators = try container.sdkDecodeIfPresent(.accelerators)
     }
 }
 
-public extension ModelDeploymentSpec {
-    init(
-        modelId: String? = nil,
-        modelSlug: String? = nil,
-        modelProvider: ModelDeploymentSpecModelProvider? = nil,
-        workloadConfig: [String: JSONValue]? = nil,
-        accelerators: [AcceleratorConfigSpec]? = nil
-    ) {
+extension ModelDeploymentSpec {
+    public init(modelId: String? = nil, modelSlug: String? = nil, modelProvider: ModelDeploymentSpecModelProvider? = nil, workloadConfig: [String: JSONValue]? = nil, accelerators: [AcceleratorConfigSpec]? = nil) {
         self.init()
         (self.modelId, self.modelSlug) = (modelId, modelSlug)
         (self.modelProvider, self.workloadConfig) = (modelProvider, workloadConfig)
@@ -542,19 +468,19 @@ public struct DedicatedInferenceUpdateAccepted: Codable {
     }
 
     init() {
-        dedicatedInference = nil
+        self.dedicatedInference = nil
     }
 }
 
-public extension DedicatedInferenceUpdateAccepted {
-    init(from decoder: Decoder) throws {
+extension DedicatedInferenceUpdateAccepted {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        dedicatedInference = try container.sdkDecodeIfPresent(.dedicatedInference)
+        self.dedicatedInference = try container.sdkDecodeIfPresent(.dedicatedInference)
     }
 }
 
-public extension DedicatedInferenceUpdateAccepted {
-    init(dedicatedInference: DedicatedInference? = nil) {
+extension DedicatedInferenceUpdateAccepted {
+    public init(dedicatedInference: DedicatedInference? = nil) {
         self.init()
         self.dedicatedInference = dedicatedInference
     }
@@ -564,16 +490,13 @@ public extension DedicatedInferenceUpdateAccepted {
 public struct PendingDeploymentSpecStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let provisioning = PendingDeploymentSpecStatus(rawValue: "provisioning")
     public static let updating = PendingDeploymentSpecStatus(rawValue: "updating")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -583,19 +506,15 @@ public struct PendingDeploymentSpecStatus: RawRepresentable, Hashable, Codable, 
 }
 
 /// Model provider.
-public struct ModelDeploymentSpecRequestModelProvider: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct ModelDeploymentSpecRequestModelProvider: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let huggingFace = ModelDeploymentSpecRequestModelProvider(rawValue: "hugging_face")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

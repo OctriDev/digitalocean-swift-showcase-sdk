@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiUpdate domain models
+// AgentPlatformAPIApiUpdate domain models
 /// Information about updating an agent function
 public struct ApiUpdateAgentFunctionInputPublic: Codable {
     /// Agent id
@@ -41,36 +41,27 @@ public struct ApiUpdateAgentFunctionInputPublic: Codable {
     }
 
     init() {
-        (agentUuid, description, faasName, faasNamespace, functionName) = (nil, nil, nil, nil, nil)
-        (functionUuid, inputSchema, outputSchema) = (nil, nil, nil)
+        (self.agentUuid, self.description, self.faasName, self.faasNamespace, self.functionName) = (nil, nil, nil, nil, nil)
+        (self.functionUuid, self.inputSchema, self.outputSchema) = (nil, nil, nil)
     }
 }
 
-public extension ApiUpdateAgentFunctionInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateAgentFunctionInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
-        description = try container.sdkDecodeIfPresent(.description)
-        faasName = try container.sdkDecodeIfPresent(.faasName)
-        faasNamespace = try container.sdkDecodeIfPresent(.faasNamespace)
-        functionName = try container.sdkDecodeIfPresent(.functionName)
-        functionUuid = try container.sdkDecodeIfPresent(.functionUuid)
-        inputSchema = try container.sdkDecodeIfPresent(.inputSchema)
-        outputSchema = try container.sdkDecodeIfPresent(.outputSchema)
+        self.agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.faasName = try container.sdkDecodeIfPresent(.faasName)
+        self.faasNamespace = try container.sdkDecodeIfPresent(.faasNamespace)
+        self.functionName = try container.sdkDecodeIfPresent(.functionName)
+        self.functionUuid = try container.sdkDecodeIfPresent(.functionUuid)
+        self.inputSchema = try container.sdkDecodeIfPresent(.inputSchema)
+        self.outputSchema = try container.sdkDecodeIfPresent(.outputSchema)
     }
 }
 
-public extension ApiUpdateAgentFunctionInputPublic {
-    init(
-        agentUuid: String? = nil,
-        description: String? = nil,
-        faasName: String? = nil,
-        faasNamespace: String? = nil,
-        functionName: String? = nil,
-        functionUuid: String? = nil,
-        inputSchema: [String: JSONValue]? = nil,
-        outputSchema: [String: JSONValue]? = nil
-    ) {
+extension ApiUpdateAgentFunctionInputPublic {
+    public init(agentUuid: String? = nil, description: String? = nil, faasName: String? = nil, faasNamespace: String? = nil, functionName: String? = nil, functionUuid: String? = nil, inputSchema: [String: JSONValue]? = nil, outputSchema: [String: JSONValue]? = nil) {
         self.init()
         (self.agentUuid, self.description) = (agentUuid, description)
         (self.faasName, self.faasNamespace) = (faasName, faasNamespace)
@@ -89,19 +80,19 @@ public struct ApiUpdateSimulationRunOutput: Codable {
     }
 
     init() {
-        simulationRun = nil
+        self.simulationRun = nil
     }
 }
 
-public extension ApiUpdateSimulationRunOutput {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateSimulationRunOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        simulationRun = try container.sdkDecodeIfPresent(.simulationRun)
+        self.simulationRun = try container.sdkDecodeIfPresent(.simulationRun)
     }
 }
 
-public extension ApiUpdateSimulationRunOutput {
-    init(simulationRun: ApiSimulationRun? = nil) {
+extension ApiUpdateSimulationRunOutput {
+    public init(simulationRun: ApiSimulationRun? = nil) {
         self.init()
         self.simulationRun = simulationRun
     }
@@ -126,21 +117,21 @@ public struct ApiUpdateAnthropicAPIKeyInputPublic: Codable {
     }
 
     init() {
-        (apiKey, apiKeyUuid, name) = (nil, nil, nil)
+        (self.apiKey, self.apiKeyUuid, self.name) = (nil, nil, nil)
     }
 }
 
-public extension ApiUpdateAnthropicAPIKeyInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateAnthropicAPIKeyInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apiKey = try container.sdkDecodeIfPresent(.apiKey)
-        apiKeyUuid = try container.sdkDecodeIfPresent(.apiKeyUuid)
-        name = try container.sdkDecodeIfPresent(.name)
+        self.apiKey = try container.sdkDecodeIfPresent(.apiKey)
+        self.apiKeyUuid = try container.sdkDecodeIfPresent(.apiKeyUuid)
+        self.name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-public extension ApiUpdateAnthropicAPIKeyInputPublic {
-    init(apiKey: String? = nil, apiKeyUuid: String? = nil, name: String? = nil) {
+extension ApiUpdateAnthropicAPIKeyInputPublic {
+    public init(apiKey: String? = nil, apiKeyUuid: String? = nil, name: String? = nil) {
         self.init()
         (self.apiKey, self.apiKeyUuid) = (apiKey, apiKeyUuid)
         self.name = name
@@ -162,20 +153,20 @@ public struct ApiUpdateEvaluationTestCaseOutput: Codable {
     }
 
     init() {
-        (testCaseUuid, version) = (nil, nil)
+        (self.testCaseUuid, self.version) = (nil, nil)
     }
 }
 
-public extension ApiUpdateEvaluationTestCaseOutput {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateEvaluationTestCaseOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        testCaseUuid = try container.sdkDecodeIfPresent(.testCaseUuid)
-        version = try container.sdkDecodeIfPresent(.version)
+        self.testCaseUuid = try container.sdkDecodeIfPresent(.testCaseUuid)
+        self.version = try container.sdkDecodeIfPresent(.version)
     }
 }
 
-public extension ApiUpdateEvaluationTestCaseOutput {
-    init(testCaseUuid: String? = nil, version: Int? = nil) {
+extension ApiUpdateEvaluationTestCaseOutput {
+    public init(testCaseUuid: String? = nil, version: Int? = nil) {
         self.init()
         (self.testCaseUuid, self.version) = (testCaseUuid, version)
     }
@@ -191,19 +182,19 @@ public struct ApiUpdateScenarioSetOutput: Codable {
     }
 
     init() {
-        scenarioSet = nil
+        self.scenarioSet = nil
     }
 }
 
-public extension ApiUpdateScenarioSetOutput {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateScenarioSetOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        scenarioSet = try container.sdkDecodeIfPresent(.scenarioSet)
+        self.scenarioSet = try container.sdkDecodeIfPresent(.scenarioSet)
     }
 }
 
-public extension ApiUpdateScenarioSetOutput {
-    init(scenarioSet: ApiScenarioSet? = nil) {
+extension ApiUpdateScenarioSetOutput {
+    public init(scenarioSet: ApiScenarioSet? = nil) {
         self.init()
         self.scenarioSet = scenarioSet
     }
@@ -236,29 +227,23 @@ public struct ApiUpdateLinkedAgentInputPublic: Codable {
     }
 
     init() {
-        (childAgentUuid, ifCase, parentAgentUuid, routeName, uuid) = (nil, nil, nil, nil, nil)
+        (self.childAgentUuid, self.ifCase, self.parentAgentUuid, self.routeName, self.uuid) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ApiUpdateLinkedAgentInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateLinkedAgentInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        childAgentUuid = try container.sdkDecodeIfPresent(.childAgentUuid)
-        ifCase = try container.sdkDecodeIfPresent(.ifCase)
-        parentAgentUuid = try container.sdkDecodeIfPresent(.parentAgentUuid)
-        routeName = try container.sdkDecodeIfPresent(.routeName)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
+        self.childAgentUuid = try container.sdkDecodeIfPresent(.childAgentUuid)
+        self.ifCase = try container.sdkDecodeIfPresent(.ifCase)
+        self.parentAgentUuid = try container.sdkDecodeIfPresent(.parentAgentUuid)
+        self.routeName = try container.sdkDecodeIfPresent(.routeName)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
     }
 }
 
-public extension ApiUpdateLinkedAgentInputPublic {
-    init(
-        childAgentUuid: String? = nil,
-        ifCase: String? = nil,
-        parentAgentUuid: String? = nil,
-        routeName: String? = nil,
-        uuid: String? = nil
-    ) {
+extension ApiUpdateLinkedAgentInputPublic {
+    public init(childAgentUuid: String? = nil, ifCase: String? = nil, parentAgentUuid: String? = nil, routeName: String? = nil, uuid: String? = nil) {
         self.init()
         (self.childAgentUuid, self.ifCase) = (childAgentUuid, ifCase)
         (self.parentAgentUuid, self.routeName) = (parentAgentUuid, routeName)
@@ -276,19 +261,19 @@ public struct ApiUpdateModelAPIKeyOutput: Codable {
     }
 
     init() {
-        apiKeyInfo = nil
+        self.apiKeyInfo = nil
     }
 }
 
-public extension ApiUpdateModelAPIKeyOutput {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateModelAPIKeyOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-public extension ApiUpdateModelAPIKeyOutput {
-    init(apiKeyInfo: ApiModelAPIKeyInfo? = nil) {
+extension ApiUpdateModelAPIKeyOutput {
+    public init(apiKeyInfo: ApiModelAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }
@@ -313,20 +298,20 @@ public struct ApiUpdateAgentDeploymentVisibilityInputPublic: Codable {
     }
 
     init() {
-        (uuid, visibility) = (nil, nil)
+        (self.uuid, self.visibility) = (nil, nil)
     }
 }
 
-public extension ApiUpdateAgentDeploymentVisibilityInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateAgentDeploymentVisibilityInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
-        visibility = try container.sdkDecodeIfPresent(.visibility)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        self.visibility = try container.sdkDecodeIfPresent(.visibility)
     }
 }
 
-public extension ApiUpdateAgentDeploymentVisibilityInputPublic {
-    init(uuid: String? = nil, visibility: ApiDeploymentVisibility? = nil) {
+extension ApiUpdateAgentDeploymentVisibilityInputPublic {
+    public init(uuid: String? = nil, visibility: ApiDeploymentVisibility? = nil) {
         self.init()
         (self.uuid, self.visibility) = (uuid, visibility)
     }
@@ -342,19 +327,19 @@ public struct ApiUpdateOpenAIAPIKeyOutput: Codable {
     }
 
     init() {
-        apiKeyInfo = nil
+        self.apiKeyInfo = nil
     }
 }
 
-public extension ApiUpdateOpenAIAPIKeyOutput {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateOpenAIAPIKeyOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-public extension ApiUpdateOpenAIAPIKeyOutput {
-    init(apiKeyInfo: ApiOpenAIAPIKeyInfo? = nil) {
+extension ApiUpdateOpenAIAPIKeyOutput {
+    public init(apiKeyInfo: ApiOpenAIAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }
@@ -390,32 +375,25 @@ public struct ApiUpdateKnowledgeBaseInputPublic: Codable {
     }
 
     init() {
-        (databaseId, name, projectId, rerankingConfig, tags) = (nil, nil, nil, nil, nil)
-        uuid = nil
+        (self.databaseId, self.name, self.projectId, self.rerankingConfig, self.tags) = (nil, nil, nil, nil, nil)
+        self.uuid = nil
     }
 }
 
-public extension ApiUpdateKnowledgeBaseInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateKnowledgeBaseInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        databaseId = try container.sdkDecodeIfPresent(.databaseId)
-        name = try container.sdkDecodeIfPresent(.name)
-        projectId = try container.sdkDecodeIfPresent(.projectId)
-        rerankingConfig = try container.sdkDecodeIfPresent(.rerankingConfig)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
+        self.databaseId = try container.sdkDecodeIfPresent(.databaseId)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.projectId = try container.sdkDecodeIfPresent(.projectId)
+        self.rerankingConfig = try container.sdkDecodeIfPresent(.rerankingConfig)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
     }
 }
 
-public extension ApiUpdateKnowledgeBaseInputPublic {
-    init(
-        databaseId: String? = nil,
-        name: String? = nil,
-        projectId: String? = nil,
-        rerankingConfig: ApiRerankingConfiguration? = nil,
-        tags: [String]? = nil,
-        uuid: String? = nil
-    ) {
+extension ApiUpdateKnowledgeBaseInputPublic {
+    public init(databaseId: String? = nil, name: String? = nil, projectId: String? = nil, rerankingConfig: ApiRerankingConfiguration? = nil, tags: [String]? = nil, uuid: String? = nil) {
         self.init()
         (self.databaseId, self.name) = (databaseId, name)
         (self.projectId, self.rerankingConfig) = (projectId, rerankingConfig)

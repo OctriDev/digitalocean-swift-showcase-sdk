@@ -6,11 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension InsightsMethods {
-    /// To create a notification channel, send a POST request to `/v2/insights/notification-channels` with a `name` and
-    /// exactly one of `email`, `slack`, or `webhook`. Email recipients must be verified team member addresses. Webhook
-    /// URLs must use HTTPS. Secret fields (`slack.webhook_url`, webhook credentials) are write-only. Subsequent reads
-    /// never return secret values; they include optional `*_status` objects when a secret is configured.
+extension InsightsMethods {
+    /// To create a notification channel, send a POST request to `/v2/insights/notification-channels` with a `name` and exactly one of `email`, `slack`, or `webhook`. Email recipients must be verified team member addresses. Webhook URLs must use HTTPS. Secret fields (`slack.webhook_url`, webhook credentials) are write-only. Subsequent reads never return secret values; they include optional `*_status` objects when a secret is configured.
     ///
     /// - Parameters:
     /// - name: A human-readable name for the notification channel.
@@ -27,36 +24,9 @@ public extension InsightsMethods {
     ///   `bearer_token.token`, `signature.secret`) are write-only: send the full
     ///   value to set or rotate. Omit a secret field on update to keep the existing
     ///   value. Responses return nested `*_status` objects instead of secret values.
-    static func insightsCreateNotificationChannel(
-        config: ClientConfig,
-        name: String,
-        email: EmailNotificationConfig? = nil,
-        slack: SlackNotificationConfigRequest? = nil,
-        webhook: WebhookNotificationConfigRequest? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> NotificationChannelResponse {
-        let requestBody = InsightsCreateNotificationChannelRequestBody(
-            name: name,
-            email: email,
-            slack: slack,
-            webhook: webhook
-        )
+    public static func insightsCreateNotificationChannel(config: ClientConfig, name: String, email: EmailNotificationConfig? = nil, slack: SlackNotificationConfigRequest? = nil, webhook: WebhookNotificationConfigRequest? = nil, requestOptions: RequestOptions? = nil) async throws -> NotificationChannelResponse {
+        let requestBody = InsightsCreateNotificationChannelRequestBody(name: name, email: email, slack: slack, webhook: webhook)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/insights/notification-channels",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "insights_create_notificationChannel",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v2/insights/notification-channels", config: config, body: requestBody, decoder: .json, operationId: "insights_create_notificationChannel", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

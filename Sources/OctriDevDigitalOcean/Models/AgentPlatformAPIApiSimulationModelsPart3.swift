@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiSimulation domain models
+// AgentPlatformAPIApiSimulation domain models
 /// Lifecycle status of the trajectory. Distinct from episode status: the trajectory is updated on every turn
 /// while the episode is executing. - SIMULATION_TRAJECTORY_STATUS_RUNNING: The episode loop is in progress;
 /// messages may grow on each poll. - SIMULATION_TRAJECTORY_STATUS_COMPLETED: The episode reached a stop
@@ -12,24 +12,16 @@ import Foundation
 public struct ApiSimulationTrajectoryStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let simulationTrajectoryStatusUnspecified =
-        ApiSimulationTrajectoryStatus(rawValue: "SIMULATION_TRAJECTORY_STATUS_UNSPECIFIED")
-    public static let simulationTrajectoryStatusRunning =
-        ApiSimulationTrajectoryStatus(rawValue: "SIMULATION_TRAJECTORY_STATUS_RUNNING")
-    public static let simulationTrajectoryStatusCompleted =
-        ApiSimulationTrajectoryStatus(rawValue: "SIMULATION_TRAJECTORY_STATUS_COMPLETED")
-    public static let simulationTrajectoryStatusFailed =
-        ApiSimulationTrajectoryStatus(rawValue: "SIMULATION_TRAJECTORY_STATUS_FAILED")
-    public static let simulationTrajectoryStatusCancelled =
-        ApiSimulationTrajectoryStatus(rawValue: "SIMULATION_TRAJECTORY_STATUS_CANCELLED")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let simulationTrajectoryStatusUnspecified = ApiSimulationTrajectoryStatus(rawValue: "SIMULATION_TRAJECTORY_STATUS_UNSPECIFIED")
+    public static let simulationTrajectoryStatusRunning = ApiSimulationTrajectoryStatus(rawValue: "SIMULATION_TRAJECTORY_STATUS_RUNNING")
+    public static let simulationTrajectoryStatusCompleted = ApiSimulationTrajectoryStatus(rawValue: "SIMULATION_TRAJECTORY_STATUS_COMPLETED")
+    public static let simulationTrajectoryStatusFailed = ApiSimulationTrajectoryStatus(rawValue: "SIMULATION_TRAJECTORY_STATUS_FAILED")
+    public static let simulationTrajectoryStatusCancelled = ApiSimulationTrajectoryStatus(rawValue: "SIMULATION_TRAJECTORY_STATUS_CANCELLED")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -46,24 +38,16 @@ public struct ApiSimulationTrajectoryStatus: RawRepresentable, Hashable, Codable
 public struct ApiSimulationEpisodeStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let simulationEpisodeStatusUnspecified =
-        ApiSimulationEpisodeStatus(rawValue: "SIMULATION_EPISODE_STATUS_UNSPECIFIED")
-    public static let simulationEpisodeStatusRunning =
-        ApiSimulationEpisodeStatus(rawValue: "SIMULATION_EPISODE_STATUS_RUNNING")
-    public static let simulationEpisodeStatusFinished =
-        ApiSimulationEpisodeStatus(rawValue: "SIMULATION_EPISODE_STATUS_FINISHED")
-    public static let simulationEpisodeStatusFailed =
-        ApiSimulationEpisodeStatus(rawValue: "SIMULATION_EPISODE_STATUS_FAILED")
-    public static let simulationEpisodeStatusPreparing =
-        ApiSimulationEpisodeStatus(rawValue: "SIMULATION_EPISODE_STATUS_PREPARING")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let simulationEpisodeStatusUnspecified = ApiSimulationEpisodeStatus(rawValue: "SIMULATION_EPISODE_STATUS_UNSPECIFIED")
+    public static let simulationEpisodeStatusRunning = ApiSimulationEpisodeStatus(rawValue: "SIMULATION_EPISODE_STATUS_RUNNING")
+    public static let simulationEpisodeStatusFinished = ApiSimulationEpisodeStatus(rawValue: "SIMULATION_EPISODE_STATUS_FINISHED")
+    public static let simulationEpisodeStatusFailed = ApiSimulationEpisodeStatus(rawValue: "SIMULATION_EPISODE_STATUS_FAILED")
+    public static let simulationEpisodeStatusPreparing = ApiSimulationEpisodeStatus(rawValue: "SIMULATION_EPISODE_STATUS_PREPARING")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -79,23 +63,16 @@ public struct ApiSimulationEpisodeStatus: RawRepresentable, Hashable, Codable, S
 public struct ApiSimulationRunSortField: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let simulationRunSortFieldUnspecified =
-        ApiSimulationRunSortField(rawValue: "SIMULATION_RUN_SORT_FIELD_UNSPECIFIED")
-    public static let simulationRunSortFieldCreatedAt =
-        ApiSimulationRunSortField(rawValue: "SIMULATION_RUN_SORT_FIELD_CREATED_AT")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let simulationRunSortFieldUnspecified = ApiSimulationRunSortField(rawValue: "SIMULATION_RUN_SORT_FIELD_UNSPECIFIED")
+    public static let simulationRunSortFieldCreatedAt = ApiSimulationRunSortField(rawValue: "SIMULATION_RUN_SORT_FIELD_CREATED_AT")
     public static let simulationRunSortFieldName = ApiSimulationRunSortField(rawValue: "SIMULATION_RUN_SORT_FIELD_NAME")
-    public static let simulationRunSortFieldStatus =
-        ApiSimulationRunSortField(rawValue: "SIMULATION_RUN_SORT_FIELD_STATUS")
-    public static let simulationRunSortFieldUpdatedAt =
-        ApiSimulationRunSortField(rawValue: "SIMULATION_RUN_SORT_FIELD_UPDATED_AT")
+    public static let simulationRunSortFieldStatus = ApiSimulationRunSortField(rawValue: "SIMULATION_RUN_SORT_FIELD_STATUS")
+    public static let simulationRunSortFieldUpdatedAt = ApiSimulationRunSortField(rawValue: "SIMULATION_RUN_SORT_FIELD_UPDATED_AT")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -112,25 +89,19 @@ public struct ApiSimulationRunSortField: RawRepresentable, Hashable, Codable, Se
 public struct ApiSimulationRunStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let simulationRunStatusUnspecified =
-        ApiSimulationRunStatus(rawValue: "SIMULATION_RUN_STATUS_UNSPECIFIED")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let simulationRunStatusUnspecified = ApiSimulationRunStatus(rawValue: "SIMULATION_RUN_STATUS_UNSPECIFIED")
     public static let simulationRunStatusPending = ApiSimulationRunStatus(rawValue: "SIMULATION_RUN_STATUS_PENDING")
     public static let simulationRunStatusRunning = ApiSimulationRunStatus(rawValue: "SIMULATION_RUN_STATUS_RUNNING")
     public static let simulationRunStatusSucceeded = ApiSimulationRunStatus(rawValue: "SIMULATION_RUN_STATUS_SUCCEEDED")
     public static let simulationRunStatusFailed = ApiSimulationRunStatus(rawValue: "SIMULATION_RUN_STATUS_FAILED")
     public static let simulationRunStatusCancelled = ApiSimulationRunStatus(rawValue: "SIMULATION_RUN_STATUS_CANCELLED")
-    public static let simulationRunStatusEvaluating =
-        ApiSimulationRunStatus(rawValue: "SIMULATION_RUN_STATUS_EVALUATING")
-    public static let simulationRunStatusPartiallySuccessful =
-        ApiSimulationRunStatus(rawValue: "SIMULATION_RUN_STATUS_PARTIALLY_SUCCESSFUL")
+    public static let simulationRunStatusEvaluating = ApiSimulationRunStatus(rawValue: "SIMULATION_RUN_STATUS_EVALUATING")
+    public static let simulationRunStatusPartiallySuccessful = ApiSimulationRunStatus(rawValue: "SIMULATION_RUN_STATUS_PARTIALLY_SUCCESSFUL")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

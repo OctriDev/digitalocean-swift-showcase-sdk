@@ -77,8 +77,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actions.get(
-                actionId: decoded("36804636")
-            )
+            actionId: decoded("36804636")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -124,9 +124,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actions.list(
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -172,9 +172,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.actorLimitsDelete(
-                actorId: decoded("\"alice\""),
-                categories: decoded("[\"LIMIT_CATEGORY_WEB_SEARCH_REQUESTS_PER_MINUTE\"]")
-            )
+            actorId: decoded("\"alice\""),
+            categories: decoded("[\"LIMIT_CATEGORY_WEB_SEARCH_REQUESTS_PER_MINUTE\"]")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -219,8 +219,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.actorLimitsGet(
-                actorId: decoded("\"alice\"")
-            )
+            actorId: decoded("\"alice\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -266,9 +266,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.actorLimitsUpdate(
-                actorId: decoded("\"alice\""),
-                overrides: decoded(sdkMethodFixture12Value1)
-            )
+            actorId: decoded("\"alice\""),
+            overrides: decoded(sdkMethodFixture12Value1)
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -318,13 +318,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.addOns.create(
-                appSlug: decoded("\"example-app\""),
-                planSlug: decoded("\"basic_plan\""),
-                name: decoded("\"my-resource-01\""),
-                metadata: decoded("[{\"name\":\"property_name\",\"value\":\"example_value\"}]"),
-                linkedDropletId: decoded("12345678"),
-                fleetUuid: decoded("\"f1234567-89ab-cdef-0123-456789abcdef01\"")
-            )
+            appSlug: decoded("\"example-app\""),
+            planSlug: decoded("\"basic_plan\""),
+            name: decoded("\"my-resource-01\""),
+            metadata: decoded("[{\"name\":\"property_name\",\"value\":\"example_value\"}]"),
+            linkedDropletId: decoded("12345678"),
+            fleetUuid: decoded("\"f1234567-89ab-cdef-0123-456789abcdef01\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -362,8 +362,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.addOns.delete(
-                resourceUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
-            )
+            resourceUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -408,8 +408,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.addOns.get(
-                resourceUuid: decoded("\"123e4567-e89b-12d3-a456-426614174000\"")
-            )
+            resourceUuid: decoded("\"123e4567-e89b-12d3-a456-426614174000\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -496,8 +496,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.addOns.getAppMetadata(
-                appSlug: decoded("\"example_app\"")
-            )
+            appSlug: decoded("\"example_app\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

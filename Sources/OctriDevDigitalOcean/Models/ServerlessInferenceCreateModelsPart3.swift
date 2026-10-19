@@ -3,63 +3,36 @@
 
 import Foundation
 
-/// ServerlessInferenceCreate domain models
-public extension CreateResponseStreamResponse {
-    init(from decoder: Decoder) throws {
+// ServerlessInferenceCreate domain models
+extension CreateResponseStreamResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.object) else {
-            throw SdkValidationError(
-                field: "object",
-                code: "required",
-                message: "Validation failed for 'object': value is required"
-            )
+            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
         }
         guard container.contains(.created) else {
-            throw SdkValidationError(
-                field: "created",
-                code: "required",
-                message: "Validation failed for 'created': value is required"
-            )
+            throw SdkValidationError(field: "created", code: "required", message: "Validation failed for 'created': value is required")
         }
         guard container.contains(.model) else {
-            throw SdkValidationError(
-                field: "model",
-                code: "required",
-                message: "Validation failed for 'model': value is required"
-            )
+            throw SdkValidationError(field: "model", code: "required", message: "Validation failed for 'model': value is required")
         }
         guard container.contains(.choices) else {
-            throw SdkValidationError(
-                field: "choices",
-                code: "required",
-                message: "Validation failed for 'choices': value is required"
-            )
+            throw SdkValidationError(field: "choices", code: "required", message: "Validation failed for 'choices': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        object = try container.sdkDecodeRequired(.object)
-        created = try container.sdkDecodeRequired(.created)
-        model = try container.sdkDecodeRequired(.model)
-        choices = try container.sdkDecodeRequired(.choices)
-        usage = try container.sdkDecodeIfPresent(.usage)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.object = try container.sdkDecodeRequired(.object)
+        self.created = try container.sdkDecodeRequired(.created)
+        self.model = try container.sdkDecodeRequired(.model)
+        self.choices = try container.sdkDecodeRequired(.choices)
+        self.usage = try container.sdkDecodeIfPresent(.usage)
     }
 }
 
-public extension CreateResponseStreamResponse {
-    init(
-        id: String,
-        object: CreateResponseStreamResponseObject,
-        created: Int,
-        model: String,
-        choices: [CreateResponseStreamResponseChoicesItem],
-        usage: ResponseUsage? = nil
-    ) {
+extension CreateResponseStreamResponse {
+    public init(id: String, object: CreateResponseStreamResponseObject, created: Int, model: String, choices: [CreateResponseStreamResponseChoicesItem], usage: ResponseUsage? = nil) {
         (self.id, self.object) = (id, object)
         (self.created, self.model) = (created, model)
         (self.choices, self.usage) = (choices, usage)
@@ -93,49 +66,33 @@ public struct CreateSpeechRequest: Codable {
         case instructions
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateSpeechRequest {
-    init(from decoder: Decoder) throws {
+extension CreateSpeechRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.model) else {
-            throw SdkValidationError(
-                field: "model",
-                code: "required",
-                message: "Validation failed for 'model': value is required"
-            )
+            throw SdkValidationError(field: "model", code: "required", message: "Validation failed for 'model': value is required")
         }
         guard container.contains(.input) else {
-            throw SdkValidationError(
-                field: "input",
-                code: "required",
-                message: "Validation failed for 'input': value is required"
-            )
+            throw SdkValidationError(field: "input", code: "required", message: "Validation failed for 'input': value is required")
         }
-        model = try container.sdkDecodeRequired(.model)
-        input = try container.sdkDecodeRequired(.input)
-        voice = try container.sdkDecodeIfPresent(.voice)
-        responseFormat = try container.sdkDecodeIfPresent(.responseFormat)
-        instructions = try container.sdkDecodeIfPresent(.instructions)
-        try validateLength("input", input, min: 1, max: nil)
+        self.model = try container.sdkDecodeRequired(.model)
+        self.input = try container.sdkDecodeRequired(.input)
+        self.voice = try container.sdkDecodeIfPresent(.voice)
+        self.responseFormat = try container.sdkDecodeIfPresent(.responseFormat)
+        self.instructions = try container.sdkDecodeIfPresent(.instructions)
+            try validateLength("input", self.input, min: 1, max: nil)
     }
 }
 
-public extension CreateSpeechRequest {
-    init(
-        model: String,
-        input: String,
-        voice: String? = nil,
-        responseFormat: String? = nil,
-        instructions: String? = nil
-    ) throws {
+extension CreateSpeechRequest {
+    public init(model: String, input: String, voice: String? = nil, responseFormat: String? = nil, instructions: String? = nil) throws {
         (self.model, self.input) = (model, input)
         (self.voice, self.responseFormat) = (voice, responseFormat)
         self.instructions = instructions
-        try validateLength("input", self.input, min: 1, max: nil)
+            try validateLength("input", self.input, min: 1, max: nil)
     }
 }
 
@@ -152,35 +109,25 @@ public struct CreateResponseRequestToolChoiceVariant1: Codable {
         case function
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateResponseRequestToolChoiceVariant1 {
-    init(from decoder: Decoder) throws {
+extension CreateResponseRequestToolChoiceVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.function) else {
-            throw SdkValidationError(
-                field: "function",
-                code: "required",
-                message: "Validation failed for 'function': value is required"
-            )
+            throw SdkValidationError(field: "function", code: "required", message: "Validation failed for 'function': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        function = try container.sdkDecodeRequired(.function)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.function = try container.sdkDecodeRequired(.function)
     }
 }
 
-public extension CreateResponseRequestToolChoiceVariant1 {
-    init(type: CreateResponseRequestToolChoiceVariant1Type, function: CreateResponseRequestToolChoiceVariant1Function) {
+extension CreateResponseRequestToolChoiceVariant1 {
+    public init(type: CreateResponseRequestToolChoiceVariant1Type, function: CreateResponseRequestToolChoiceVariant1Function) {
         (self.type, self.function) = (type, function)
     }
 }
@@ -243,121 +190,62 @@ public struct CreateImageRequest: Codable {
         case user
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateImageRequest {
-    init(from decoder: Decoder) throws {
+extension CreateImageRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.prompt) else {
-            throw SdkValidationError(
-                field: "prompt",
-                code: "required",
-                message: "Validation failed for 'prompt': value is required"
-            )
+            throw SdkValidationError(field: "prompt", code: "required", message: "Validation failed for 'prompt': value is required")
         }
         guard container.contains(.model) else {
-            throw SdkValidationError(
-                field: "model",
-                code: "required",
-                message: "Validation failed for 'model': value is required"
-            )
+            throw SdkValidationError(field: "model", code: "required", message: "Validation failed for 'model': value is required")
         }
         guard container.contains(.n) else {
-            throw SdkValidationError(
-                field: "n",
-                code: "required",
-                message: "Validation failed for 'n': value is required"
-            )
+            throw SdkValidationError(field: "n", code: "required", message: "Validation failed for 'n': value is required")
         }
-        prompt = try container.sdkDecodeRequired(.prompt)
-        model = try container.sdkDecodeRequired(.model)
-        n = try container.sdkDecodeRequired(.n)
-        moderation = try container.sdkDecodeIfPresent(.moderation)
-        background = try container.sdkDecodeIfPresent(.background)
-        outputFormat = try container.sdkDecodeIfPresent(.outputFormat)
-        outputCompression = try container.sdkDecodeIfPresent(.outputCompression)
-        quality = try container.sdkDecodeIfPresent(.quality)
-        size = try container.sdkDecodeIfPresent(.size)
-        stream = try container.sdkDecodeIfPresent(.stream)
-        partialImages = try container.sdkDecodeIfPresent(.partialImages)
-        user = try container.sdkDecodeIfPresent(.user)
-        try validateLength("prompt", prompt, min: 1, max: nil)
-        try validateRange("n", Double(n), min: 1, max: 10, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
-        if let value = outputCompression {
-            try validateRange(
-                "output_compression",
-                Double(value),
-                min: 0,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.prompt = try container.sdkDecodeRequired(.prompt)
+        self.model = try container.sdkDecodeRequired(.model)
+        self.n = try container.sdkDecodeRequired(.n)
+        self.moderation = try container.sdkDecodeIfPresent(.moderation)
+        self.background = try container.sdkDecodeIfPresent(.background)
+        self.outputFormat = try container.sdkDecodeIfPresent(.outputFormat)
+        self.outputCompression = try container.sdkDecodeIfPresent(.outputCompression)
+        self.quality = try container.sdkDecodeIfPresent(.quality)
+        self.size = try container.sdkDecodeIfPresent(.size)
+        self.stream = try container.sdkDecodeIfPresent(.stream)
+        self.partialImages = try container.sdkDecodeIfPresent(.partialImages)
+        self.user = try container.sdkDecodeIfPresent(.user)
+            try validateLength("prompt", self.prompt, min: 1, max: nil)
+            try validateRange("n", Double(self.n), min: 1, max: 10, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = self.outputCompression {
+            try validateRange("output_compression", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = partialImages {
-            try validateRange(
-                "partial_images",
-                Double(value),
-                min: 0,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.partialImages {
+            try validateRange("partial_images", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = user {
+        if let value = self.user {
             try validateLength("user", value, min: nil, max: 256)
         }
     }
 }
 
-public extension CreateImageRequest {
-    init(
-        prompt: String,
-        model: String,
-        n: Int,
-        moderation: String? = nil,
-        background: String? = nil,
-        outputFormat: String? = nil,
-        outputCompression: Int? = nil,
-        quality: String? = nil,
-        size: CreateImageRequestSize? = nil,
-        stream: Bool? = nil,
-        partialImages: Int? = nil,
-        user: String? = nil
-    ) throws {
+extension CreateImageRequest {
+    public init(prompt: String, model: String, n: Int, moderation: String? = nil, background: String? = nil, outputFormat: String? = nil, outputCompression: Int? = nil, quality: String? = nil, size: CreateImageRequestSize? = nil, stream: Bool? = nil, partialImages: Int? = nil, user: String? = nil) throws {
         (self.prompt, self.model) = (prompt, model)
         (self.n, self.moderation) = (n, moderation)
         (self.background, self.outputFormat) = (background, outputFormat)
         (self.outputCompression, self.quality) = (outputCompression, quality)
         (self.size, self.stream) = (size, stream)
         (self.partialImages, self.user) = (partialImages, user)
-        try validateLength("prompt", self.prompt, min: 1, max: nil)
-        try validateRange("n", Double(self.n), min: 1, max: 10, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateLength("prompt", self.prompt, min: 1, max: nil)
+            try validateRange("n", Double(self.n), min: 1, max: 10, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         if let value = self.outputCompression {
-            try validateRange(
-                "output_compression",
-                Double(value),
-                min: 0,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("output_compression", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.partialImages {
-            try validateRange(
-                "partial_images",
-                Double(value),
-                min: 0,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("partial_images", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.user {
             try validateLength("user", value, min: nil, max: 256)
@@ -366,19 +254,15 @@ public extension CreateImageRequest {
 }
 
 /// The type of the tool call.
-public struct CreateResponseStreamResponseChoicesItemDeltaToolCallsItemType: RawRepresentable, Hashable, Codable,
-    Sendable, SdkWireConvertible {
+public struct CreateResponseStreamResponseChoicesItemDeltaToolCallsItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let function = CreateResponseStreamResponseChoicesItemDeltaToolCallsItemType(rawValue: "function")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -392,17 +276,14 @@ public struct CreateResponseStreamResponseChoicesItemDeltaToolCallsItemType: Raw
 public struct CreateImageRequestSize: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let auto = CreateImageRequestSize(rawValue: "auto")
     public static let value1536x1024 = CreateImageRequestSize(rawValue: "1536x1024")
     public static let value1024x1536 = CreateImageRequestSize(rawValue: "1024x1536")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -412,20 +293,16 @@ public struct CreateImageRequestSize: RawRepresentable, Hashable, Codable, Senda
 }
 
 /// The type of content part. `reasoning_text` for reasoning content, `output_text` for final output text.
-public struct CreateResponseResponseOutputItemContentItemType: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct CreateResponseResponseOutputItemContentItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let reasoningText = CreateResponseResponseOutputItemContentItemType(rawValue: "reasoning_text")
     public static let outputText = CreateResponseResponseOutputItemContentItemType(rawValue: "output_text")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -435,19 +312,15 @@ public struct CreateResponseResponseOutputItemContentItemType: RawRepresentable,
 }
 
 /// The role of the message author. Only present in the first chunk.
-public struct CreateResponseStreamResponseChoicesItemDeltaRole: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct CreateResponseStreamResponseChoicesItemDeltaRole: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let assistant = CreateResponseStreamResponseChoicesItemDeltaRole(rawValue: "assistant")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -460,15 +333,12 @@ public struct CreateResponseStreamResponseChoicesItemDeltaRole: RawRepresentable
 public struct CreateResponseStreamResponseObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let responseChunk = CreateResponseStreamResponseObject(rawValue: "response.chunk")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -478,14 +348,10 @@ public struct CreateResponseStreamResponseObject: RawRepresentable, Hashable, Co
 }
 
 /// The role of the message author.
-public struct CreateResponseRequestInputVariant1ItemRole: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct CreateResponseRequestInputVariant1ItemRole: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let user = CreateResponseRequestInputVariant1ItemRole(rawValue: "user")
     public static let assistant = CreateResponseRequestInputVariant1ItemRole(rawValue: "assistant")
     public static let system = CreateResponseRequestInputVariant1ItemRole(rawValue: "system")
@@ -494,7 +360,7 @@ public struct CreateResponseRequestInputVariant1ItemRole: RawRepresentable, Hash
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -507,15 +373,12 @@ public struct CreateResponseRequestInputVariant1ItemRole: RawRepresentable, Hash
 public struct CreateResponseResponseToolsItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let function = CreateResponseResponseToolsItemType(rawValue: "function")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -528,15 +391,12 @@ public struct CreateResponseResponseToolsItemType: RawRepresentable, Hashable, C
 public struct CreateResponseResponseObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let response = CreateResponseResponseObject(rawValue: "response")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -549,17 +409,14 @@ public struct CreateResponseResponseObject: RawRepresentable, Hashable, Codable,
 public struct CreateResponseResponseOutputItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let reasoning = CreateResponseResponseOutputItemType(rawValue: "reasoning")
     public static let message = CreateResponseResponseOutputItemType(rawValue: "message")
     public static let functionCall = CreateResponseResponseOutputItemType(rawValue: "function_call")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -569,19 +426,15 @@ public struct CreateResponseResponseOutputItemType: RawRepresentable, Hashable, 
 }
 
 /// Required enumerated value serialized in the `type` wire field.
-public struct CreateResponseRequestToolChoiceVariant1Type: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct CreateResponseRequestToolChoiceVariant1Type: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let function = CreateResponseRequestToolChoiceVariant1Type(rawValue: "function")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -594,15 +447,12 @@ public struct CreateResponseRequestToolChoiceVariant1Type: RawRepresentable, Has
 public struct CreateResponseRequestToolsItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let function = CreateResponseRequestToolsItemType(rawValue: "function")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

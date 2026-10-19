@@ -6,39 +6,18 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
+extension AgentPlatformApiMethods {
     /// To list all agent versions, send a GET request to `/v2/gen-ai/agents/{uuid}/versions`.
     ///
     /// - Parameters:
     /// - uuid: Agent uuid
     /// - page: Page number.
     /// - perPage: Items per page.
-    static func genaiListAgentVersions(
-        config: ClientConfig,
-        uuid: String,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiListAgentVersionsOutput {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(uuid)), "/versions"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("page", value: page),
-                SdkQueryParameter("per_page", value: perPage),
-            ],
-            decoder: .json,
-            operationId: "genai_list_agent_versions",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func genaiListAgentVersions(config: ClientConfig, uuid: String, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListAgentVersionsOutput {
+        return try (await sdkRequest("GET", ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(uuid)), "/versions"].joined(), config: config, query: [
+            SdkQueryParameter("page", value: page),
+            SdkQueryParameter("per_page", value: perPage),
+        ], decoder: .json, operationId: "genai_list_agent_versions", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To update to a specific agent version, send a PUT request to `/v2/gen-ai/agents/{uuid}/versions`.
@@ -47,31 +26,10 @@ public extension AgentPlatformApiMethods {
     /// - uuid: Agent unique identifier
     /// - uuid2: Agent unique identifier
     /// - versionHash: Unique identifier
-    static func genaiRollbackToAgentVersion(
-        config: ClientConfig,
-        uuid: String,
-        uuid2: String? = nil,
-        versionHash: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiRollbackToAgentVersionOutput {
+    public static func genaiRollbackToAgentVersion(config: ClientConfig, uuid: String, uuid2: String? = nil, versionHash: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiRollbackToAgentVersionOutput {
         let requestBody = GenaiRollbackToAgentVersionRequestBody(uuid2: uuid2, versionHash: versionHash)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(uuid)), "/versions"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "genai_rollback_to_agent_version",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(uuid)), "/versions"].joined(), config: config, body: requestBody, decoder: .json, operationId: "genai_rollback_to_agent_version", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To list all Anthropic API keys, send a GET request to `/v2/gen-ai/anthropic/keys`.
@@ -79,30 +37,10 @@ public extension AgentPlatformApiMethods {
     /// - Parameters:
     /// - page: Page number.
     /// - perPage: Items per page.
-    static func genaiListAnthropicApiKeys(
-        config: ClientConfig,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiListAnthropicAPIKeysOutput {
-        try await (sdkRequest(
-            "GET",
-            "/v2/gen-ai/anthropic/keys",
-            config: config,
-            query: [
-                SdkQueryParameter("page", value: page),
-                SdkQueryParameter("per_page", value: perPage),
-            ],
-            decoder: .json,
-            operationId: "genai_list_anthropic_api_keys",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func genaiListAnthropicApiKeys(config: ClientConfig, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListAnthropicAPIKeysOutput {
+        return try (await sdkRequest("GET", "/v2/gen-ai/anthropic/keys", config: config, query: [
+            SdkQueryParameter("page", value: page),
+            SdkQueryParameter("per_page", value: perPage),
+        ], decoder: .json, operationId: "genai_list_anthropic_api_keys", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

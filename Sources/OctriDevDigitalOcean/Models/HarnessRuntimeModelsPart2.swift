@@ -3,18 +3,18 @@
 
 import Foundation
 
-/// HarnessRuntime domain models
-public extension InsightsOptIn {
-    init(from decoder: Decoder) throws {
+// HarnessRuntime domain models
+extension InsightsOptIn {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        metrics = try container.sdkDecodeIfPresent(.metrics)
-        logs = try container.sdkDecodeIfPresent(.logs)
-        traces = try container.sdkDecodeIfPresent(.traces)
+        self.metrics = try container.sdkDecodeIfPresent(.metrics)
+        self.logs = try container.sdkDecodeIfPresent(.logs)
+        self.traces = try container.sdkDecodeIfPresent(.traces)
     }
 }
 
-public extension InsightsOptIn {
-    init(metrics: Bool? = nil, logs: Bool? = nil, traces: Bool? = nil) {
+extension InsightsOptIn {
+    public init(metrics: Bool? = nil, logs: Bool? = nil, traces: Bool? = nil) {
         self.init()
         (self.metrics, self.logs) = (metrics, logs)
         self.traces = traces
@@ -40,24 +40,24 @@ public struct CronConfig: Codable {
     }
 
     init() {
-        (cronExpr, timezone, nextRunAt) = (nil, nil, nil)
+        (self.cronExpr, self.timezone, self.nextRunAt) = (nil, nil, nil)
     }
 }
 
-public extension CronConfig {
-    init(from decoder: Decoder) throws {
+extension CronConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        cronExpr = try container.sdkDecodeIfPresent(.cronExpr)
-        timezone = try container.sdkDecodeIfPresent(.timezone)
-        nextRunAt = try container.sdkDecodeIfPresent(.nextRunAt)
-        if let value = nextRunAt {
+        self.cronExpr = try container.sdkDecodeIfPresent(.cronExpr)
+        self.timezone = try container.sdkDecodeIfPresent(.timezone)
+        self.nextRunAt = try container.sdkDecodeIfPresent(.nextRunAt)
+        if let value = self.nextRunAt {
             try sdkValidateDateTime("next_run_at", sdkWireString(value))
         }
     }
 }
 
-public extension CronConfig {
-    init(cronExpr: String? = nil, timezone: String? = nil, nextRunAt: Date? = nil) throws {
+extension CronConfig {
+    public init(cronExpr: String? = nil, timezone: String? = nil, nextRunAt: Date? = nil) throws {
         self.init()
         (self.cronExpr, self.timezone) = (cronExpr, timezone)
         self.nextRunAt = nextRunAt
@@ -96,29 +96,23 @@ public struct RuleVerdict: Codable {
     }
 
     init() {
-        (rule, verdict, rendered, reason, suggestion) = (nil, nil, nil, nil, nil)
+        (self.rule, self.verdict, self.rendered, self.reason, self.suggestion) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension RuleVerdict {
-    init(from decoder: Decoder) throws {
+extension RuleVerdict {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        rule = try container.sdkDecodeIfPresent(.rule)
-        verdict = try container.sdkDecodeIfPresent(.verdict)
-        rendered = try container.sdkDecodeIfPresent(.rendered)
-        reason = try container.sdkDecodeIfPresent(.reason)
-        suggestion = try container.sdkDecodeIfPresent(.suggestion)
+        self.rule = try container.sdkDecodeIfPresent(.rule)
+        self.verdict = try container.sdkDecodeIfPresent(.verdict)
+        self.rendered = try container.sdkDecodeIfPresent(.rendered)
+        self.reason = try container.sdkDecodeIfPresent(.reason)
+        self.suggestion = try container.sdkDecodeIfPresent(.suggestion)
     }
 }
 
-public extension RuleVerdict {
-    init(
-        rule: ResolvedRule? = nil,
-        verdict: RuleVerdictVerdict? = nil,
-        rendered: RuleVerdictRendered? = nil,
-        reason: String? = nil,
-        suggestion: String? = nil
-    ) {
+extension RuleVerdict {
+    public init(rule: ResolvedRule? = nil, verdict: RuleVerdictVerdict? = nil, rendered: RuleVerdictRendered? = nil, reason: String? = nil, suggestion: String? = nil) {
         self.init()
         (self.rule, self.verdict) = (rule, verdict)
         (self.rendered, self.reason) = (rendered, reason)
@@ -137,27 +131,21 @@ public struct SlackOutputWrite: Codable {
         case webhookUrl = "webhook_url"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SlackOutputWrite {
-    init(from decoder: Decoder) throws {
+extension SlackOutputWrite {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.webhookUrl) else {
-            throw SdkValidationError(
-                field: "webhook_url",
-                code: "required",
-                message: "Validation failed for 'webhook_url': value is required"
-            )
+            throw SdkValidationError(field: "webhook_url", code: "required", message: "Validation failed for 'webhook_url': value is required")
         }
-        webhookUrl = try container.sdkDecodeRequired(.webhookUrl)
+        self.webhookUrl = try container.sdkDecodeRequired(.webhookUrl)
     }
 }
 
-public extension SlackOutputWrite {
-    init(webhookUrl: String) {
+extension SlackOutputWrite {
+    public init(webhookUrl: String) {
         self.webhookUrl = webhookUrl
     }
 }
@@ -167,10 +155,7 @@ public extension SlackOutputWrite {
 public struct HitlOutcome: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let hitlOutcomeUnspecified = HitlOutcome(rawValue: "HITL_OUTCOME_UNSPECIFIED")
     public static let hitlOutcomeApprove = HitlOutcome(rawValue: "HITL_OUTCOME_APPROVE")
     public static let hitlOutcomeReject = HitlOutcome(rawValue: "HITL_OUTCOME_REJECT")
@@ -178,7 +163,7 @@ public struct HitlOutcome: RawRepresentable, Hashable, Codable, Sendable, SdkWir
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -191,16 +176,13 @@ public struct HitlOutcome: RawRepresentable, Hashable, Codable, Sendable, SdkWir
 public struct ResolvedRuleEnforcement: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let strict = ResolvedRuleEnforcement(rawValue: "strict")
     public static let bestEffort = ResolvedRuleEnforcement(rawValue: "best-effort")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -214,17 +196,14 @@ public struct ResolvedRuleEnforcement: RawRepresentable, Hashable, Codable, Send
 public struct RuleVerdictRendered: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let allow = RuleVerdictRendered(rawValue: "allow")
     public static let ask = RuleVerdictRendered(rawValue: "ask")
     public static let deny = RuleVerdictRendered(rawValue: "deny")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -237,10 +216,7 @@ public struct RuleVerdictRendered: RawRepresentable, Hashable, Codable, Sendable
 public struct StreamEventProducer: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let agent = StreamEventProducer(rawValue: "agent")
     public static let ohr = StreamEventProducer(rawValue: "ohr")
     public static let ohp = StreamEventProducer(rawValue: "ohp")
@@ -248,7 +224,7 @@ public struct StreamEventProducer: RawRepresentable, Hashable, Codable, Sendable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -261,17 +237,14 @@ public struct StreamEventProducer: RawRepresentable, Hashable, Codable, Sendable
 public struct PermissionsDefaultAction: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let allow = PermissionsDefaultAction(rawValue: "allow")
     public static let ask = PermissionsDefaultAction(rawValue: "ask")
     public static let deny = PermissionsDefaultAction(rawValue: "deny")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -284,10 +257,7 @@ public struct PermissionsDefaultAction: RawRepresentable, Hashable, Codable, Sen
 public struct StreamEventType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let runStarted = StreamEventType(rawValue: "run.started")
     public static let runTokenDelta = StreamEventType(rawValue: "run.token_delta")
     public static let runToolCallStarted = StreamEventType(rawValue: "run.tool_call_started")
@@ -311,7 +281,7 @@ public struct StreamEventType: RawRepresentable, Hashable, Codable, Sendable, Sd
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -325,17 +295,14 @@ public struct StreamEventType: RawRepresentable, Hashable, Codable, Sendable, Sd
 public struct ValidationResultDefaultActionRendered: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let allow = ValidationResultDefaultActionRendered(rawValue: "allow")
     public static let ask = ValidationResultDefaultActionRendered(rawValue: "ask")
     public static let deny = ValidationResultDefaultActionRendered(rawValue: "deny")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -348,17 +315,14 @@ public struct ValidationResultDefaultActionRendered: RawRepresentable, Hashable,
 public struct ResolutionSource: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let resolutionSourceUnspecified = ResolutionSource(rawValue: "RESOLUTION_SOURCE_UNSPECIFIED")
     public static let resolutionSourceInlineKeystroke = ResolutionSource(rawValue: "RESOLUTION_SOURCE_INLINE_KEYSTROKE")
     public static let resolutionSourceOutOfBand = ResolutionSource(rawValue: "RESOLUTION_SOURCE_OUT_OF_BAND")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -373,10 +337,7 @@ public struct ResolutionSource: RawRepresentable, Hashable, Codable, Sendable, S
 public struct RuleVerdictVerdict: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let exact = RuleVerdictVerdict(rawValue: "exact")
     public static let degraded = RuleVerdictVerdict(rawValue: "degraded")
     public static let unsupported = RuleVerdictVerdict(rawValue: "unsupported")
@@ -384,7 +345,7 @@ public struct RuleVerdictVerdict: RawRepresentable, Hashable, Codable, Sendable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -398,16 +359,13 @@ public struct RuleVerdictVerdict: RawRepresentable, Hashable, Codable, Sendable,
 public struct IngressUrlState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let ingressUrlStatePending = IngressUrlState(rawValue: "INGRESS_URL_STATE_PENDING")
     public static let ingressUrlStateReady = IngressUrlState(rawValue: "INGRESS_URL_STATE_READY")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -422,17 +380,14 @@ public struct IngressUrlState: RawRepresentable, Hashable, Codable, Sendable, Sd
 public struct ValidationResultDefaultAction: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let allow = ValidationResultDefaultAction(rawValue: "allow")
     public static let ask = ValidationResultDefaultAction(rawValue: "ask")
     public static let deny = ValidationResultDefaultAction(rawValue: "deny")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -445,17 +400,14 @@ public struct ValidationResultDefaultAction: RawRepresentable, Hashable, Codable
 public struct ResolvedRuleAction: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let allow = ResolvedRuleAction(rawValue: "allow")
     public static let ask = ResolvedRuleAction(rawValue: "ask")
     public static let deny = ResolvedRuleAction(rawValue: "deny")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -470,10 +422,7 @@ public struct ResolvedRuleAction: RawRepresentable, Hashable, Codable, Sendable,
 public struct ValidationResultDefaultActionVerdict: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let exact = ValidationResultDefaultActionVerdict(rawValue: "exact")
     public static let degraded = ValidationResultDefaultActionVerdict(rawValue: "degraded")
     public static let unsupported = ValidationResultDefaultActionVerdict(rawValue: "unsupported")
@@ -481,7 +430,7 @@ public struct ValidationResultDefaultActionVerdict: RawRepresentable, Hashable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

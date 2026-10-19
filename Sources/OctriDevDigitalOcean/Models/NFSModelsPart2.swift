@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// NFS domain models
+// NFS domain models
 /// Typed representation of the `NfsResponse` API schema.
 public struct NfsResponse: Codable {
     /// The unique identifier of the NFS share.
@@ -53,92 +53,54 @@ public struct NfsResponse: Codable {
         case accessPoints = "access_points"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NfsResponse {
-    init(from decoder: Decoder) throws {
+extension NfsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.sizeGib) else {
-            throw SdkValidationError(
-                field: "size_gib",
-                code: "required",
-                message: "Validation failed for 'size_gib': value is required"
-            )
+            throw SdkValidationError(field: "size_gib", code: "required", message: "Validation failed for 'size_gib': value is required")
         }
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        name = try container.sdkDecodeRequired(.name)
-        sizeGib = try container.sdkDecodeRequired(.sizeGib)
-        region = try container.sdkDecodeRequired(.region)
-        status = try container.sdkDecodeRequired(.status)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        vpcIds = try container.sdkDecodeIfPresent(.vpcIds)
-        performanceTier = try container.sdkDecodeIfPresent(.performanceTier)
-        mountPath = try container.sdkDecodeIfPresent(.mountPath)
-        host = try container.sdkDecodeIfPresent(.host)
-        accessPoints = try container.sdkDecodeIfPresent(.accessPoints)
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.id = try container.sdkDecodeRequired(.id)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.sizeGib = try container.sdkDecodeRequired(.sizeGib)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.vpcIds = try container.sdkDecodeIfPresent(.vpcIds)
+        self.performanceTier = try container.sdkDecodeIfPresent(.performanceTier)
+        self.mountPath = try container.sdkDecodeIfPresent(.mountPath)
+        self.host = try container.sdkDecodeIfPresent(.host)
+        self.accessPoints = try container.sdkDecodeIfPresent(.accessPoints)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension NfsResponse {
-    init(
-        id: String,
-        name: String,
-        sizeGib: Int,
-        region: String,
-        status: NfsResponseStatus,
-        createdAt: Date,
-        vpcIds: [String]? = nil,
-        performanceTier: String? = nil,
-        mountPath: String? = nil,
-        host: String? = nil,
-        accessPoints: [AccessPointResponse]? = nil
-    ) throws {
+extension NfsResponse {
+    public init(id: String, name: String, sizeGib: Int, region: String, status: NfsResponseStatus, createdAt: Date, vpcIds: [String]? = nil, performanceTier: String? = nil, mountPath: String? = nil, host: String? = nil, accessPoints: [AccessPointResponse]? = nil) throws {
         (self.id, self.name) = (id, name)
         (self.sizeGib, self.region) = (sizeGib, region)
         (self.status, self.createdAt) = (status, createdAt)
         (self.vpcIds, self.performanceTier) = (vpcIds, performanceTier)
         (self.mountPath, self.host) = (mountPath, host)
         self.accessPoints = accessPoints
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -176,91 +138,53 @@ public struct NfsSnapshotResponse: Codable {
         case shareId = "share_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NfsSnapshotResponse {
-    init(from decoder: Decoder) throws {
+extension NfsSnapshotResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.sizeGib) else {
-            throw SdkValidationError(
-                field: "size_gib",
-                code: "required",
-                message: "Validation failed for 'size_gib': value is required"
-            )
+            throw SdkValidationError(field: "size_gib", code: "required", message: "Validation failed for 'size_gib': value is required")
         }
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.shareId) else {
-            throw SdkValidationError(
-                field: "share_id",
-                code: "required",
-                message: "Validation failed for 'share_id': value is required"
-            )
+            throw SdkValidationError(field: "share_id", code: "required", message: "Validation failed for 'share_id': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        name = try container.sdkDecodeRequired(.name)
-        sizeGib = try container.sdkDecodeRequired(.sizeGib)
-        region = try container.sdkDecodeRequired(.region)
-        status = try container.sdkDecodeRequired(.status)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        shareId = try container.sdkDecodeRequired(.shareId)
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
-        try sdkValidateUuid("share_id", shareId)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.sizeGib = try container.sdkDecodeRequired(.sizeGib)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.shareId = try container.sdkDecodeRequired(.shareId)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateUuid("share_id", self.shareId)
     }
 }
 
-public extension NfsSnapshotResponse {
-    init(
-        id: String,
-        name: String,
-        sizeGib: UInt64,
-        region: String,
-        status: NfsSnapshotResponseStatus,
-        createdAt: Date,
-        shareId: String
-    ) throws {
+extension NfsSnapshotResponse {
+    public init(id: String, name: String, sizeGib: UInt64, region: String, status: NfsSnapshotResponseStatus, createdAt: Date, shareId: String) throws {
         (self.id, self.name) = (id, name)
         (self.sizeGib, self.region) = (sizeGib, region)
         (self.status, self.createdAt) = (status, createdAt)
         self.shareId = shareId
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-        try sdkValidateUuid("share_id", self.shareId)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateUuid("share_id", self.shareId)
     }
 }
 
@@ -276,35 +200,25 @@ public struct AccessPointActionResponse: Codable {
         case action
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AccessPointActionResponse {
-    init(from decoder: Decoder) throws {
+extension AccessPointActionResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.accessPoint) else {
-            throw SdkValidationError(
-                field: "access_point",
-                code: "required",
-                message: "Validation failed for 'access_point': value is required"
-            )
+            throw SdkValidationError(field: "access_point", code: "required", message: "Validation failed for 'access_point': value is required")
         }
         guard container.contains(.action) else {
-            throw SdkValidationError(
-                field: "action",
-                code: "required",
-                message: "Validation failed for 'action': value is required"
-            )
+            throw SdkValidationError(field: "action", code: "required", message: "Validation failed for 'action': value is required")
         }
-        accessPoint = try container.sdkDecodeRequired(.accessPoint)
-        action = try container.sdkDecodeRequired(.action)
+        self.accessPoint = try container.sdkDecodeRequired(.accessPoint)
+        self.action = try container.sdkDecodeRequired(.action)
     }
 }
 
-public extension AccessPointActionResponse {
-    init(accessPoint: AccessPointResponse, action: NfsAction2) {
+extension AccessPointActionResponse {
+    public init(accessPoint: AccessPointResponse, action: NfsAction2) {
         (self.accessPoint, self.action) = (accessPoint, action)
     }
 }
@@ -313,10 +227,7 @@ public extension AccessPointActionResponse {
 public struct NfsResponseStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let creating = NfsResponseStatus(rawValue: "CREATING")
     public static let active = NfsResponseStatus(rawValue: "ACTIVE")
     public static let inactive = NfsResponseStatus(rawValue: "INACTIVE")
@@ -325,7 +236,7 @@ public struct NfsResponseStatus: RawRepresentable, Hashable, Codable, Sendable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -338,16 +249,13 @@ public struct NfsResponseStatus: RawRepresentable, Hashable, Codable, Sendable, 
 public struct AccessPolicyProtocolsItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let nfs4 = AccessPolicyProtocolsItem(rawValue: "NFS4")
     public static let nfs = AccessPolicyProtocolsItem(rawValue: "NFS")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -362,10 +270,7 @@ public struct AccessPolicyProtocolsItem: RawRepresentable, Hashable, Codable, Se
 public struct AccessPointResponseStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let accessPointCreating = AccessPointResponseStatus(rawValue: "ACCESS_POINT_CREATING")
     public static let accessPointActive = AccessPointResponseStatus(rawValue: "ACCESS_POINT_ACTIVE")
     public static let accessPointFailed = AccessPointResponseStatus(rawValue: "ACCESS_POINT_FAILED")
@@ -373,7 +278,7 @@ public struct AccessPointResponseStatus: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -386,10 +291,7 @@ public struct AccessPointResponseStatus: RawRepresentable, Hashable, Codable, Se
 public struct NfsSnapshotResponseStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let unknown = NfsSnapshotResponseStatus(rawValue: "UNKNOWN")
     public static let creating = NfsSnapshotResponseStatus(rawValue: "CREATING")
     public static let active = NfsSnapshotResponseStatus(rawValue: "ACTIVE")
@@ -398,7 +300,7 @@ public struct NfsSnapshotResponseStatus: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -411,17 +313,14 @@ public struct NfsSnapshotResponseStatus: RawRepresentable, Hashable, Codable, Se
 public struct AccessPolicySquashConfig: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let noSquash = AccessPolicySquashConfig(rawValue: "NO_SQUASH")
     public static let rootSquash = AccessPolicySquashConfig(rawValue: "ROOT_SQUASH")
     public static let allSquash = AccessPolicySquashConfig(rawValue: "ALL_SQUASH")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

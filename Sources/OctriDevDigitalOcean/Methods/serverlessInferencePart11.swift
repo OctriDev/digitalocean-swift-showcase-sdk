@@ -6,21 +6,21 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ServerlessInferenceMethods {
-    struct InferenceCreateResponseStreamOptions {
+extension ServerlessInferenceMethods {
+    public struct InferenceCreateResponseStreamOptions {
         public var model: String
         public var input: CreateResponseRequestInput
         public var stream: Bool?
-        public var maxOutputTokens: SdkOptional<Int>?
-        public var temperature: SdkOptional<Double>?
-        public var instructions: SdkOptional<String>?
-        public var topP: SdkOptional<Double>?
-        public var streamOptions: SdkOptional<CreateResponseRequestStreamOptions>?
-        public var tools: SdkOptional<[CreateResponseRequestToolsItem]>?
-        public var toolChoice: CreateResponseRequestToolChoice?
-        public var stop: SdkOptional<CreateResponseRequestStop>?
-        public var metadata: SdkOptional<[String: String]>?
-        public var user: SdkOptional<String>?
+        public var maxOutputTokens: SdkOptional<Int>? = nil
+        public var temperature: SdkOptional<Double>? = nil
+        public var instructions: SdkOptional<String>? = nil
+        public var topP: SdkOptional<Double>? = nil
+        public var streamOptions: SdkOptional<CreateResponseRequestStreamOptions>? = nil
+        public var tools: SdkOptional<[CreateResponseRequestToolsItem]>? = nil
+        public var toolChoice: CreateResponseRequestToolChoice? = nil
+        public var stop: SdkOptional<CreateResponseRequestStop>? = nil
+        public var metadata: SdkOptional<[String: String]>? = nil
+        public var user: SdkOptional<String>? = nil
 
         public init(model: String, input: CreateResponseRequestInput, stream: Bool?) {
             self.model = model
@@ -29,8 +29,7 @@ public extension ServerlessInferenceMethods {
         }
     }
 
-    /// Generate text responses from text prompts. This endpoint supports both streaming and non-streaming responses for
-    /// supported text models.
+    /// Generate text responses from text prompts. This endpoint supports both streaming and non-streaming responses for supported text models.
     ///
     /// - Parameters:
     /// - model: The model ID of the model you want to use. Get the model ID using
@@ -55,12 +54,9 @@ public extension ServerlessInferenceMethods {
     /// - stop: Up to 4 sequences where the API will stop generating further tokens.
     /// - metadata: Set of key-value pairs that can be attached to the request.
     /// - user: A unique identifier representing your end-user.
-    static func inferenceCreateResponseStream(
-        config: ClientConfig,
-        options: InferenceCreateResponseStreamOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AsyncThrowingStream<CreateResponseStreamResponse, Swift.Error> {
+    public static func inferenceCreateResponseStream(config: ClientConfig, options: InferenceCreateResponseStreamOptions, requestOptions: RequestOptions? = nil) async throws -> AsyncThrowingStream<CreateResponseStreamResponse, Swift.Error> {
         let requestBody = InferenceCreateResponseStreamStreamRequestBody(options: options)
+
 
         let upstream = try await sdkStream(
             "POST",
@@ -82,11 +78,8 @@ public extension ServerlessInferenceMethods {
                             continuation.finish()
                             return
                         }
-                        let payload = try sdkDecodeBody(Data(event.data.utf8)) { try sdkJsonDecoder().decode(
-                            CreateResponseStreamResponse.self,
-                            from: Data(event.data.utf8)
-                        ) }
-
+                        let payload = try sdkDecodeBody(Data(event.data.utf8)) { try sdkJsonDecoder().decode(CreateResponseStreamResponse.self, from: Data(event.data.utf8)) }
+                        
                         continuation.yield(payload)
                     }
                     continuation.finish()

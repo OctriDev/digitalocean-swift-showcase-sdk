@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiLink domain models
+// AgentPlatformAPIApiLink domain models
 /// Information about a linked knowledge base
 public struct ApiLinkKnowledgeBaseOutput: Codable {
     /// An Agent
@@ -14,19 +14,19 @@ public struct ApiLinkKnowledgeBaseOutput: Codable {
     }
 
     init() {
-        agent = nil
+        self.agent = nil
     }
 }
 
-public extension ApiLinkKnowledgeBaseOutput {
-    init(from decoder: Decoder) throws {
+extension ApiLinkKnowledgeBaseOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agent = try container.sdkDecodeIfPresent(.agent)
+        self.agent = try container.sdkDecodeIfPresent(.agent)
     }
 }
 
-public extension ApiLinkKnowledgeBaseOutput {
-    init(agent: ApiAgent? = nil) {
+extension ApiLinkKnowledgeBaseOutput {
+    public init(agent: ApiAgent? = nil) {
         self.init()
         self.agent = agent
     }
@@ -42,19 +42,19 @@ public struct ApiLinkAgentFunctionOutput: Codable {
     }
 
     init() {
-        agent = nil
+        self.agent = nil
     }
 }
 
-public extension ApiLinkAgentFunctionOutput {
-    init(from decoder: Decoder) throws {
+extension ApiLinkAgentFunctionOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agent = try container.sdkDecodeIfPresent(.agent)
+        self.agent = try container.sdkDecodeIfPresent(.agent)
     }
 }
 
-public extension ApiLinkAgentFunctionOutput {
-    init(agent: ApiAgent? = nil) {
+extension ApiLinkAgentFunctionOutput {
+    public init(agent: ApiAgent? = nil) {
         self.init()
         self.agent = agent
     }
@@ -83,27 +83,22 @@ public struct ApiLinkAgentInputPublic: Codable {
     }
 
     init() {
-        (childAgentUuid, ifCase, parentAgentUuid, routeName) = (nil, nil, nil, nil)
+        (self.childAgentUuid, self.ifCase, self.parentAgentUuid, self.routeName) = (nil, nil, nil, nil)
     }
 }
 
-public extension ApiLinkAgentInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiLinkAgentInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        childAgentUuid = try container.sdkDecodeIfPresent(.childAgentUuid)
-        ifCase = try container.sdkDecodeIfPresent(.ifCase)
-        parentAgentUuid = try container.sdkDecodeIfPresent(.parentAgentUuid)
-        routeName = try container.sdkDecodeIfPresent(.routeName)
+        self.childAgentUuid = try container.sdkDecodeIfPresent(.childAgentUuid)
+        self.ifCase = try container.sdkDecodeIfPresent(.ifCase)
+        self.parentAgentUuid = try container.sdkDecodeIfPresent(.parentAgentUuid)
+        self.routeName = try container.sdkDecodeIfPresent(.routeName)
     }
 }
 
-public extension ApiLinkAgentInputPublic {
-    init(
-        childAgentUuid: String? = nil,
-        ifCase: String? = nil,
-        parentAgentUuid: String? = nil,
-        routeName: String? = nil
-    ) {
+extension ApiLinkAgentInputPublic {
+    public init(childAgentUuid: String? = nil, ifCase: String? = nil, parentAgentUuid: String? = nil, routeName: String? = nil) {
         self.init()
         (self.childAgentUuid, self.ifCase) = (childAgentUuid, ifCase)
         (self.parentAgentUuid, self.routeName) = (parentAgentUuid, routeName)
@@ -124,20 +119,20 @@ public struct ApiLinkAgentGuardrailsInputPublic: Codable {
     }
 
     init() {
-        (agentUuid, guardrails) = (nil, nil)
+        (self.agentUuid, self.guardrails) = (nil, nil)
     }
 }
 
-public extension ApiLinkAgentGuardrailsInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiLinkAgentGuardrailsInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
-        guardrails = try container.sdkDecodeIfPresent(.guardrails)
+        self.agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
+        self.guardrails = try container.sdkDecodeIfPresent(.guardrails)
     }
 }
 
-public extension ApiLinkAgentGuardrailsInputPublic {
-    init(agentUuid: String? = nil, guardrails: [ApiAgentGuardrailInput]? = nil) {
+extension ApiLinkAgentGuardrailsInputPublic {
+    public init(agentUuid: String? = nil, guardrails: [ApiAgentGuardrailInput]? = nil) {
         self.init()
         (self.agentUuid, self.guardrails) = (agentUuid, guardrails)
     }
@@ -158,20 +153,20 @@ public struct ApiLinkAgentOutput: Codable {
     }
 
     init() {
-        (childAgentUuid, parentAgentUuid) = (nil, nil)
+        (self.childAgentUuid, self.parentAgentUuid) = (nil, nil)
     }
 }
 
-public extension ApiLinkAgentOutput {
-    init(from decoder: Decoder) throws {
+extension ApiLinkAgentOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        childAgentUuid = try container.sdkDecodeIfPresent(.childAgentUuid)
-        parentAgentUuid = try container.sdkDecodeIfPresent(.parentAgentUuid)
+        self.childAgentUuid = try container.sdkDecodeIfPresent(.childAgentUuid)
+        self.parentAgentUuid = try container.sdkDecodeIfPresent(.parentAgentUuid)
     }
 }
 
-public extension ApiLinkAgentOutput {
-    init(childAgentUuid: String? = nil, parentAgentUuid: String? = nil) {
+extension ApiLinkAgentOutput {
+    public init(childAgentUuid: String? = nil, parentAgentUuid: String? = nil) {
         self.init()
         (self.childAgentUuid, self.parentAgentUuid) = (childAgentUuid, parentAgentUuid)
     }
@@ -210,34 +205,26 @@ public struct ApiLinkAgentFunctionInputPublic: Codable {
     }
 
     init() {
-        (agentUuid, description, faasName, faasNamespace, functionName) = (nil, nil, nil, nil, nil)
-        (inputSchema, outputSchema) = (nil, nil)
+        (self.agentUuid, self.description, self.faasName, self.faasNamespace, self.functionName) = (nil, nil, nil, nil, nil)
+        (self.inputSchema, self.outputSchema) = (nil, nil)
     }
 }
 
-public extension ApiLinkAgentFunctionInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiLinkAgentFunctionInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
-        description = try container.sdkDecodeIfPresent(.description)
-        faasName = try container.sdkDecodeIfPresent(.faasName)
-        faasNamespace = try container.sdkDecodeIfPresent(.faasNamespace)
-        functionName = try container.sdkDecodeIfPresent(.functionName)
-        inputSchema = try container.sdkDecodeIfPresent(.inputSchema)
-        outputSchema = try container.sdkDecodeIfPresent(.outputSchema)
+        self.agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.faasName = try container.sdkDecodeIfPresent(.faasName)
+        self.faasNamespace = try container.sdkDecodeIfPresent(.faasNamespace)
+        self.functionName = try container.sdkDecodeIfPresent(.functionName)
+        self.inputSchema = try container.sdkDecodeIfPresent(.inputSchema)
+        self.outputSchema = try container.sdkDecodeIfPresent(.outputSchema)
     }
 }
 
-public extension ApiLinkAgentFunctionInputPublic {
-    init(
-        agentUuid: String? = nil,
-        description: String? = nil,
-        faasName: String? = nil,
-        faasNamespace: String? = nil,
-        functionName: String? = nil,
-        inputSchema: [String: JSONValue]? = nil,
-        outputSchema: [String: JSONValue]? = nil
-    ) {
+extension ApiLinkAgentFunctionInputPublic {
+    public init(agentUuid: String? = nil, description: String? = nil, faasName: String? = nil, faasNamespace: String? = nil, functionName: String? = nil, inputSchema: [String: JSONValue]? = nil, outputSchema: [String: JSONValue]? = nil) {
         self.init()
         (self.agentUuid, self.description) = (agentUuid, description)
         (self.faasName, self.faasNamespace) = (faasName, faasNamespace)
@@ -256,19 +243,19 @@ public struct ApiLinkAgentGuardrailOutput: Codable {
     }
 
     init() {
-        agent = nil
+        self.agent = nil
     }
 }
 
-public extension ApiLinkAgentGuardrailOutput {
-    init(from decoder: Decoder) throws {
+extension ApiLinkAgentGuardrailOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agent = try container.sdkDecodeIfPresent(.agent)
+        self.agent = try container.sdkDecodeIfPresent(.agent)
     }
 }
 
-public extension ApiLinkAgentGuardrailOutput {
-    init(agent: ApiAgent? = nil) {
+extension ApiLinkAgentGuardrailOutput {
+    public init(agent: ApiAgent? = nil) {
         self.init()
         self.agent = agent
     }

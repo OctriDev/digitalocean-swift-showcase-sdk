@@ -6,7 +6,7 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension MonitoringMethods {
+extension MonitoringMethods {
     /// Retrieve disk usage (percent) for a MySQL cluster. Use **aggregate** (avg, max, or min) over the time range.
     ///
     /// - Parameters:
@@ -14,37 +14,15 @@ public extension MonitoringMethods {
     /// - aggregate: Aggregation over the time range (avg, max, or min).
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    static func monitoringGetDatabaseMysqlDiskUsage(
-        config: ClientConfig,
-        dbId: String,
-        aggregate: MonitoringGetDatabaseMysqlCpuUsageParameter,
-        start: String,
-        end: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Metrics {
+    public static func monitoringGetDatabaseMysqlDiskUsage(config: ClientConfig, dbId: String, aggregate: MonitoringGetDatabaseMysqlCpuUsageParameter, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
         try sdkValidateUuid("db_id", dbId)
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/monitoring/metrics/database/mysql/disk_usage",
-            config: config,
-            query: [
-                SdkQueryParameter("db_id", value: dbId),
-                SdkQueryParameter("aggregate", value: aggregate),
-                SdkQueryParameter("start", value: start),
-                SdkQueryParameter("end", value: end),
-            ],
-            decoder: .json,
-            operationId: "monitoring_get_database_mysql_disk_usage",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", "/v2/monitoring/metrics/database/mysql/disk_usage", config: config, query: [
+            SdkQueryParameter("db_id", value: dbId),
+            SdkQueryParameter("aggregate", value: aggregate),
+            SdkQueryParameter("start", value: start),
+            SdkQueryParameter("end", value: end),
+        ], decoder: .json, operationId: "monitoring_get_database_mysql_disk_usage", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// Retrieve current threads connected for a MySQL service (gauge).
@@ -53,34 +31,13 @@ public extension MonitoringMethods {
     /// - dbId: The DBaaS cluster UUID (database ID).
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    static func monitoringGetDatabaseMysqlThreadsConnected(
-        config: ClientConfig,
-        dbId: String,
-        start: String,
-        end: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Metrics {
+    public static func monitoringGetDatabaseMysqlThreadsConnected(config: ClientConfig, dbId: String, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
         try sdkValidateUuid("db_id", dbId)
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/monitoring/metrics/database/mysql/threads_connected",
-            config: config,
-            query: [
-                SdkQueryParameter("db_id", value: dbId),
-                SdkQueryParameter("start", value: start),
-                SdkQueryParameter("end", value: end),
-            ],
-            decoder: .json,
-            operationId: "monitoring_get_database_mysql_threads_connected",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", "/v2/monitoring/metrics/database/mysql/threads_connected", config: config, query: [
+            SdkQueryParameter("db_id", value: dbId),
+            SdkQueryParameter("start", value: start),
+            SdkQueryParameter("end", value: end),
+        ], decoder: .json, operationId: "monitoring_get_database_mysql_threads_connected", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

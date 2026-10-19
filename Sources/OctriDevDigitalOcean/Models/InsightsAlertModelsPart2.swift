@@ -3,23 +3,19 @@
 
 import Foundation
 
-/// InsightsAlert domain models
-public extension AlertInstanceResponse {
-    init(from decoder: Decoder) throws {
+// InsightsAlert domain models
+extension AlertInstanceResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.alertInstance) else {
-            throw SdkValidationError(
-                field: "alert_instance",
-                code: "required",
-                message: "Validation failed for 'alert_instance': value is required"
-            )
+            throw SdkValidationError(field: "alert_instance", code: "required", message: "Validation failed for 'alert_instance': value is required")
         }
-        alertInstance = try container.sdkDecodeRequired(.alertInstance)
+        self.alertInstance = try container.sdkDecodeRequired(.alertInstance)
     }
 }
 
-public extension AlertInstanceResponse {
-    init(alertInstance: AlertInstance) {
+extension AlertInstanceResponse {
+    public init(alertInstance: AlertInstance) {
         self.alertInstance = alertInstance
     }
 }
@@ -46,30 +42,24 @@ public struct AlertThresholds: Codable {
         case critical
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AlertThresholds {
-    init(from decoder: Decoder) throws {
+extension AlertThresholds {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.operator) else {
-            throw SdkValidationError(
-                field: "operator",
-                code: "required",
-                message: "Validation failed for 'operator': value is required"
-            )
+        guard container.contains(.`operator`) else {
+            throw SdkValidationError(field: "operator", code: "required", message: "Validation failed for 'operator': value is required")
         }
-        self.operator = try container.sdkDecodeRequired(.operator)
-        warning = try container.sdkDecodeIfPresent(.warning)
-        critical = try container.sdkDecodeIfPresent(.critical)
+        self.`operator` = try container.sdkDecodeRequired(.`operator`)
+        self.warning = try container.sdkDecodeIfPresent(.warning)
+        self.critical = try container.sdkDecodeIfPresent(.critical)
     }
 }
 
-public extension AlertThresholds {
-    init(operator: AlertThresholdsOperator, warning: Double? = nil, critical: Double? = nil) {
-        (self.operator, self.warning) = (`operator`, warning)
+extension AlertThresholds {
+    public init(`operator`: AlertThresholdsOperator, warning: Double? = nil, critical: Double? = nil) {
+        (self.`operator`, self.warning) = (`operator`, warning)
         self.critical = critical
     }
 }
@@ -82,23 +72,17 @@ public extension AlertThresholds {
 public struct AlertThresholdsOperator: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let thresholdOperatorEqual = AlertThresholdsOperator(rawValue: "THRESHOLD_OPERATOR_EQUAL")
-    public static let thresholdOperatorLessThanOrEqual =
-        AlertThresholdsOperator(rawValue: "THRESHOLD_OPERATOR_LESS_THAN_OR_EQUAL")
+    public static let thresholdOperatorLessThanOrEqual = AlertThresholdsOperator(rawValue: "THRESHOLD_OPERATOR_LESS_THAN_OR_EQUAL")
     public static let thresholdOperatorLessThan = AlertThresholdsOperator(rawValue: "THRESHOLD_OPERATOR_LESS_THAN")
-    public static let thresholdOperatorGreaterThan =
-        AlertThresholdsOperator(rawValue: "THRESHOLD_OPERATOR_GREATER_THAN")
-    public static let thresholdOperatorGreaterThanOrEqual =
-        AlertThresholdsOperator(rawValue: "THRESHOLD_OPERATOR_GREATER_THAN_OR_EQUAL")
+    public static let thresholdOperatorGreaterThan = AlertThresholdsOperator(rawValue: "THRESHOLD_OPERATOR_GREATER_THAN")
+    public static let thresholdOperatorGreaterThanOrEqual = AlertThresholdsOperator(rawValue: "THRESHOLD_OPERATOR_GREATER_THAN_OR_EQUAL")
     public static let thresholdOperatorNotEqual = AlertThresholdsOperator(rawValue: "THRESHOLD_OPERATOR_NOT_EQUAL")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -113,10 +97,7 @@ public struct AlertThresholdsOperator: RawRepresentable, Hashable, Codable, Send
 public struct AlertRuleSpecReAlertDuration: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let reAlertDuration30m = AlertRuleSpecReAlertDuration(rawValue: "RE_ALERT_DURATION_30M")
     public static let reAlertDuration1h = AlertRuleSpecReAlertDuration(rawValue: "RE_ALERT_DURATION_1H")
     public static let reAlertDuration4h = AlertRuleSpecReAlertDuration(rawValue: "RE_ALERT_DURATION_4H")
@@ -124,7 +105,7 @@ public struct AlertRuleSpecReAlertDuration: RawRepresentable, Hashable, Codable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -138,16 +119,13 @@ public struct AlertRuleSpecReAlertDuration: RawRepresentable, Hashable, Codable,
 public struct AlertRuleRequestStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let alertRuleStatusActive = AlertRuleRequestStatus(rawValue: "ALERT_RULE_STATUS_ACTIVE")
     public static let alertRuleStatusPaused = AlertRuleRequestStatus(rawValue: "ALERT_RULE_STATUS_PAUSED")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -162,10 +140,7 @@ public struct AlertRuleRequestStatus: RawRepresentable, Hashable, Codable, Senda
 public struct AlertConditionWindow: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let evaluationWindow1m = AlertConditionWindow(rawValue: "EVALUATION_WINDOW_1M")
     public static let evaluationWindow5m = AlertConditionWindow(rawValue: "EVALUATION_WINDOW_5M")
     public static let evaluationWindow10m = AlertConditionWindow(rawValue: "EVALUATION_WINDOW_10M")
@@ -175,7 +150,7 @@ public struct AlertConditionWindow: RawRepresentable, Hashable, Codable, Sendabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -188,16 +163,13 @@ public struct AlertConditionWindow: RawRepresentable, Hashable, Codable, Sendabl
 public struct AlertInstanceStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let active = AlertInstanceStatus(rawValue: "active")
     public static let resolved = AlertInstanceStatus(rawValue: "resolved")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -211,16 +183,13 @@ public struct AlertInstanceStatus: RawRepresentable, Hashable, Codable, Sendable
 public struct AlertRuleStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let alertRuleStatusActive = AlertRuleStatus(rawValue: "ALERT_RULE_STATUS_ACTIVE")
     public static let alertRuleStatusPaused = AlertRuleStatus(rawValue: "ALERT_RULE_STATUS_PAUSED")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -233,16 +202,13 @@ public struct AlertRuleStatus: RawRepresentable, Hashable, Codable, Sendable, Sd
 public struct AlertInstanceSeverity: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let warning = AlertInstanceSeverity(rawValue: "warning")
     public static let critical = AlertInstanceSeverity(rawValue: "critical")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

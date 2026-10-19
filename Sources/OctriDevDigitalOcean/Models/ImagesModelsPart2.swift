@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Images domain models
+// Images domain models
 public struct ImagesPostAccountTransferAcceptVariant0: Codable {
     /// A unique number that used to identify and reference an image account transfer.
     /// - Example: 3164444
@@ -13,27 +13,21 @@ public struct ImagesPostAccountTransferAcceptVariant0: Codable {
         case transferId = "transfer_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ImagesPostAccountTransferAcceptVariant0 {
-    init(from decoder: Decoder) throws {
+extension ImagesPostAccountTransferAcceptVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.transferId) else {
-            throw SdkValidationError(
-                field: "transfer_id",
-                code: "required",
-                message: "Validation failed for 'transfer_id': value is required"
-            )
+            throw SdkValidationError(field: "transfer_id", code: "required", message: "Validation failed for 'transfer_id': value is required")
         }
-        transferId = try container.sdkDecodeRequired(.transferId)
+        self.transferId = try container.sdkDecodeRequired(.transferId)
     }
 }
 
-public extension ImagesPostAccountTransferAcceptVariant0 {
-    init(transferId: Int) {
+extension ImagesPostAccountTransferAcceptVariant0 {
+    public init(transferId: Int) {
         self.transferId = transferId
     }
 }
@@ -60,21 +54,21 @@ public struct ImageNewCustomVariant1: Codable {
     }
 
     init() {
-        (url, region, tags) = (nil, nil, nil)
+        (self.url, self.region, self.tags) = (nil, nil, nil)
     }
 }
 
-public extension ImageNewCustomVariant1 {
-    init(from decoder: Decoder) throws {
+extension ImageNewCustomVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        url = try container.sdkDecodeIfPresent(.url)
-        region = try container.sdkDecodeIfPresent(.region)
-        tags = try container.sdkDecodeIfPresent(.tags)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-public extension ImageNewCustomVariant1 {
-    init(url: String? = nil, region: RegionSlug? = nil, tags: TagsArray? = nil) {
+extension ImageNewCustomVariant1 {
+    public init(url: String? = nil, region: RegionSlug? = nil, tags: TagsArray? = nil) {
         self.init()
         (self.url, self.region) = (url, region)
         self.tags = tags

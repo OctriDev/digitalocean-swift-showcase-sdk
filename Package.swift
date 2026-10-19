@@ -5,15 +5,15 @@
 
 import PackageDescription
 
-/// HTTP transport: URLSession (Foundation)
+// HTTP transport: URLSession (Foundation)
 let package = Package(
     name: "OctriDevDigitalOcean",
     platforms: [.macOS(.v12), .iOS(.v15), .tvOS(.v15), .watchOS(.v8)],
     products: [
-        .library(name: "OctriDevDigitalOcean", targets: ["OctriDevDigitalOcean"]),
+        .library(name: "OctriDevDigitalOcean", targets: ["OctriDevDigitalOcean"])
     ],
     targets: [
         .target(name: "OctriDevDigitalOcean"),
-        .testTarget(name: "OctriDevDigitalOceanTests", dependencies: ["OctriDevDigitalOcean"]),
+        .testTarget(name: "OctriDevDigitalOceanTests", dependencies: ["OctriDevDigitalOcean"])
     ]
 )

@@ -6,83 +6,38 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension MonitoringMethods {
-    /// Retrieve index vs sequential reads ratio (percent) for a MySQL service — i.e. percentage of reads using an
-    /// index.
+extension MonitoringMethods {
+    /// Retrieve index vs sequential reads ratio (percent) for a MySQL service — i.e. percentage of reads using an index.
     ///
     /// - Parameters:
     /// - dbId: The DBaaS cluster UUID (database ID).
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    static func monitoringGetDatabaseMysqlIndexVsSequentialReads(
-        config: ClientConfig,
-        dbId: String,
-        start: String,
-        end: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Metrics {
+    public static func monitoringGetDatabaseMysqlIndexVsSequentialReads(config: ClientConfig, dbId: String, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
         try sdkValidateUuid("db_id", dbId)
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/monitoring/metrics/database/mysql/index_vs_sequential_reads",
-            config: config,
-            query: [
-                SdkQueryParameter("db_id", value: dbId),
-                SdkQueryParameter("start", value: start),
-                SdkQueryParameter("end", value: end),
-            ],
-            decoder: .json,
-            operationId: "monitoring_get_database_mysql_index_vs_sequential_reads",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", "/v2/monitoring/metrics/database/mysql/index_vs_sequential_reads", config: config, query: [
+            SdkQueryParameter("db_id", value: dbId),
+            SdkQueryParameter("start", value: start),
+            SdkQueryParameter("end", value: end),
+        ], decoder: .json, operationId: "monitoring_get_database_mysql_index_vs_sequential_reads", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Retrieve operations rate (per second) for a MySQL service. Use **metric** to choose select, insert, update, or
-    /// delete.
+    /// Retrieve operations rate (per second) for a MySQL service. Use **metric** to choose select, insert, update, or delete.
     ///
     /// - Parameters:
     /// - dbId: The DBaaS cluster UUID (database ID).
     /// - metric: Operation type (select, insert, update, or delete).
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    static func monitoringGetDatabaseMysqlOpRates(
-        config: ClientConfig,
-        dbId: String,
-        metric: MonitoringGetDatabaseMysqlOpRatesParameter,
-        start: String,
-        end: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Metrics {
+    public static func monitoringGetDatabaseMysqlOpRates(config: ClientConfig, dbId: String, metric: MonitoringGetDatabaseMysqlOpRatesParameter, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
         try sdkValidateUuid("db_id", dbId)
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/monitoring/metrics/database/mysql/op_rates",
-            config: config,
-            query: [
-                SdkQueryParameter("db_id", value: dbId),
-                SdkQueryParameter("metric", value: metric),
-                SdkQueryParameter("start", value: start),
-                SdkQueryParameter("end", value: end),
-            ],
-            decoder: .json,
-            operationId: "monitoring_get_database_mysql_op_rates",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", "/v2/monitoring/metrics/database/mysql/op_rates", config: config, query: [
+            SdkQueryParameter("db_id", value: dbId),
+            SdkQueryParameter("metric", value: metric),
+            SdkQueryParameter("start", value: start),
+            SdkQueryParameter("end", value: end),
+        ], decoder: .json, operationId: "monitoring_get_database_mysql_op_rates", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AppsAppsGet domain models
+// AppsAppsGet domain models
 /// Typed representation of the `AppsGetLogsResponse` API schema.
 public struct AppsGetLogsResponse: Codable {
     /// Optional array value serialized in the `historic_urls` wire field.
@@ -19,20 +19,20 @@ public struct AppsGetLogsResponse: Codable {
     }
 
     init() {
-        (historicUrls, liveUrl) = (nil, nil)
+        (self.historicUrls, self.liveUrl) = (nil, nil)
     }
 }
 
-public extension AppsGetLogsResponse {
-    init(from decoder: Decoder) throws {
+extension AppsGetLogsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        historicUrls = try container.sdkDecodeIfPresent(.historicUrls)
-        liveUrl = try container.sdkDecodeIfPresent(.liveUrl)
+        self.historicUrls = try container.sdkDecodeIfPresent(.historicUrls)
+        self.liveUrl = try container.sdkDecodeIfPresent(.liveUrl)
     }
 }
 
-public extension AppsGetLogsResponse {
-    init(historicUrls: [String]? = nil, liveUrl: String? = nil) {
+extension AppsGetLogsResponse {
+    public init(historicUrls: [String]? = nil, liveUrl: String? = nil) {
         self.init()
         (self.historicUrls, self.liveUrl) = (historicUrls, liveUrl)
     }
@@ -49,19 +49,19 @@ public struct AppsGetExecResponse: Codable {
     }
 
     init() {
-        url = nil
+        self.url = nil
     }
 }
 
-public extension AppsGetExecResponse {
-    init(from decoder: Decoder) throws {
+extension AppsGetExecResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        url = try container.sdkDecodeIfPresent(.url)
+        self.url = try container.sdkDecodeIfPresent(.url)
     }
 }
 
-public extension AppsGetExecResponse {
-    init(url: String? = nil) {
+extension AppsGetExecResponse {
+    public init(url: String? = nil) {
         self.init()
         self.url = url
     }
@@ -77,19 +77,19 @@ public struct AppsGetInstanceSizeResponse: Codable {
     }
 
     init() {
-        instanceSize = nil
+        self.instanceSize = nil
     }
 }
 
-public extension AppsGetInstanceSizeResponse {
-    init(from decoder: Decoder) throws {
+extension AppsGetInstanceSizeResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        instanceSize = try container.sdkDecodeIfPresent(.instanceSize)
+        self.instanceSize = try container.sdkDecodeIfPresent(.instanceSize)
     }
 }
 
-public extension AppsGetInstanceSizeResponse {
-    init(instanceSize: AppsInstanceSize? = nil) {
+extension AppsGetInstanceSizeResponse {
+    public init(instanceSize: AppsInstanceSize? = nil) {
         self.init()
         self.instanceSize = instanceSize
     }

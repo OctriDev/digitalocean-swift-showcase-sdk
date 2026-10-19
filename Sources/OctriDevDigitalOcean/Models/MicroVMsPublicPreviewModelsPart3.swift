@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// MicroVMsPublicPreview domain models
+// MicroVMsPublicPreview domain models
 /// The MicroVM's size. `cpu` and `memory` must be one of the pairs `1`/`2048`, `2`/`4096`, `8`/`16384`, or
 /// `16`/`32768`. The size sets the disk, which is returned in responses.
 public struct MicrovmSize: Codable {
@@ -23,36 +23,26 @@ public struct MicrovmSize: Codable {
         case disk
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension MicrovmSize {
-    init(from decoder: Decoder) throws {
+extension MicrovmSize {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.cpu) else {
-            throw SdkValidationError(
-                field: "cpu",
-                code: "required",
-                message: "Validation failed for 'cpu': value is required"
-            )
+            throw SdkValidationError(field: "cpu", code: "required", message: "Validation failed for 'cpu': value is required")
         }
         guard container.contains(.memory) else {
-            throw SdkValidationError(
-                field: "memory",
-                code: "required",
-                message: "Validation failed for 'memory': value is required"
-            )
+            throw SdkValidationError(field: "memory", code: "required", message: "Validation failed for 'memory': value is required")
         }
-        cpu = try container.sdkDecodeRequired(.cpu)
-        memory = try container.sdkDecodeRequired(.memory)
-        disk = try container.sdkDecodeIfPresent(.disk)
+        self.cpu = try container.sdkDecodeRequired(.cpu)
+        self.memory = try container.sdkDecodeRequired(.memory)
+        self.disk = try container.sdkDecodeIfPresent(.disk)
     }
 }
 
-public extension MicrovmSize {
-    init(cpu: Int, memory: Int, disk: Int? = nil) {
+extension MicrovmSize {
+    public init(cpu: Int, memory: Int, disk: Int? = nil) {
         (self.cpu, self.memory) = (cpu, memory)
         self.disk = disk
     }
@@ -62,16 +52,13 @@ public extension MicrovmSize {
 public struct MicrovmCreateRequestHttpProtocol: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let http = MicrovmCreateRequestHttpProtocol(rawValue: "http")
     public static let http2 = MicrovmCreateRequestHttpProtocol(rawValue: "http2")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -85,16 +72,13 @@ public struct MicrovmCreateRequestHttpProtocol: RawRepresentable, Hashable, Coda
 public struct MicrovmHttpProtocol: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let http = MicrovmHttpProtocol(rawValue: "http")
     public static let http2 = MicrovmHttpProtocol(rawValue: "http2")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -108,16 +92,13 @@ public struct MicrovmHttpProtocol: RawRepresentable, Hashable, Codable, Sendable
 public struct MicrovmCreateRequestNetworking: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let `public` = MicrovmCreateRequestNetworking(rawValue: "public")
     public static let vpc = MicrovmCreateRequestNetworking(rawValue: "vpc")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -131,16 +112,13 @@ public struct MicrovmCreateRequestNetworking: RawRepresentable, Hashable, Codabl
 public struct MicrovmNetworking: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let `public` = MicrovmNetworking(rawValue: "public")
     public static let vpc = MicrovmNetworking(rawValue: "vpc")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -153,10 +131,7 @@ public struct MicrovmNetworking: RawRepresentable, Hashable, Codable, Sendable, 
 public struct MicrovmState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let creating = MicrovmState(rawValue: "creating")
     public static let running = MicrovmState(rawValue: "running")
     public static let pausing = MicrovmState(rawValue: "pausing")
@@ -169,7 +144,7 @@ public struct MicrovmState: RawRepresentable, Hashable, Codable, Sendable, SdkWi
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -182,10 +157,7 @@ public struct MicrovmState: RawRepresentable, Hashable, Codable, Sendable, SdkWi
 public struct Checkpoint2Status: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let checkpointCreating = Checkpoint2Status(rawValue: "CHECKPOINT_CREATING")
     public static let checkpointAvailable = Checkpoint2Status(rawValue: "CHECKPOINT_AVAILABLE")
     public static let checkpointFailed = Checkpoint2Status(rawValue: "CHECKPOINT_FAILED")
@@ -194,7 +166,7 @@ public struct Checkpoint2Status: RawRepresentable, Hashable, Codable, Sendable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -207,16 +179,13 @@ public struct Checkpoint2Status: RawRepresentable, Hashable, Codable, Sendable, 
 public struct MicrovmUrlStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pending = MicrovmUrlStatus(rawValue: "PENDING")
     public static let active = MicrovmUrlStatus(rawValue: "ACTIVE")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

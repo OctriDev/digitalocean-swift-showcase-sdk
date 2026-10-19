@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DatabasesMethods {
-    struct DatabasesAddConnectionPoolOptions: Codable {
+extension DatabasesMethods {
+    public struct DatabasesAddConnectionPoolOptions: Codable {
         public var databaseClusterUuid: String
         public var name: String
         public var mode: String
@@ -28,18 +28,9 @@ public extension DatabasesMethods {
         }
     }
 
-    /// Creates a PgBouncer connection pool for a PostgreSQL database cluster. Supply `name`, `mode`, `size`, and `db`;
-    /// choose a transaction mode supported by PgBouncer and set the pool size according to the primary node's capacity.
-    /// The response includes the created pool and its connection details.
+    /// Creates a PgBouncer connection pool for a PostgreSQL database cluster. Supply `name`, `mode`, `size`, and `db`; choose a transaction mode supported by PgBouncer and set the pool size according to the primary node's capacity. The response includes the created pool and its connection details.
     ///
-    /// For PostgreSQL database clusters, connection pools can be used to allow a database to share its idle
-    /// connections. The popular PostgreSQL connection pooling utility PgBouncer is used to provide this service. [See
-    /// here for more
-    /// information](https://docs.digitalocean.com/products/databases/postgresql/how-to/manage-connection-pools/) about
-    /// how and why to use PgBouncer connection pooling including details about the available transaction modes. To add
-    /// a new connection pool to a PostgreSQL database cluster, send a POST request to
-    /// `/v2/databases/$DATABASE_ID/pools` specifying a name for the pool, the user to connect with, the database to
-    /// connect to, as well as its desired size and transaction mode.
+    /// For PostgreSQL database clusters, connection pools can be used to allow a database to share its idle connections. The popular PostgreSQL connection pooling utility PgBouncer is used to provide this service. [See here for more information](https://docs.digitalocean.com/products/databases/postgresql/how-to/manage-connection-pools/) about how and why to use PgBouncer connection pooling including details about the available transaction modes. To add a new connection pool to a PostgreSQL database cluster, send a POST request to `/v2/databases/$DATABASE_ID/pools` specifying a name for the pool, the user to connect with, the database to connect to, as well as its desired size and transaction mode.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
@@ -57,30 +48,11 @@ public extension DatabasesMethods {
     /// - db: The database for use with the connection pool.
     /// - user: The name of the user for use with the connection pool. When
     ///   excluded, all sessions connect to the database as the inbound user.
-    static func databasesAddConnectionPool(
-        config: ClientConfig,
-        options: DatabasesAddConnectionPoolOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ConnectionPoolResponse {
+    public static func databasesAddConnectionPool(config: ClientConfig, options: DatabasesAddConnectionPoolOptions, requestOptions: RequestOptions? = nil) async throws -> ConnectionPoolResponse {
         try sdkValidateUuid("database_cluster_uuid", options.databaseClusterUuid)
 
         let requestBody = DatabasesAddConnectionPoolRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(options.databaseClusterUuid)), "/pools"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "databases_add_connectionPool",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(options.databaseClusterUuid)), "/pools"].joined(), config: config, body: requestBody, decoder: .json, operationId: "databases_add_connectionPool", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

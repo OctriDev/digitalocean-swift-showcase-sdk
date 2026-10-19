@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AppsAppDomain domain models
+// AppsAppDomain domain models
 /// Typed representation of the `AppDomainSpec` API schema.
 public struct AppDomainSpec: Codable {
     /// The hostname for the domain
@@ -36,47 +36,35 @@ public struct AppDomainSpec: Codable {
         case minimumTlsVersion = "minimum_tls_version"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AppDomainSpec {
-    init(from decoder: Decoder) throws {
+extension AppDomainSpec {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.domain) else {
-            throw SdkValidationError(
-                field: "domain",
-                code: "required",
-                message: "Validation failed for 'domain': value is required"
-            )
+            throw SdkValidationError(field: "domain", code: "required", message: "Validation failed for 'domain': value is required")
         }
-        domain = try container.sdkDecodeRequired(.domain)
-        type = try container.sdkDecodeIfPresent(.type)
-        wildcard = try container.sdkDecodeIfPresent(.wildcard)
-        zone = try container.sdkDecodeIfPresent(.zone)
-        minimumTlsVersion = try container.sdkDecodeIfPresent(.minimumTlsVersion)
-        try validateLength("domain", domain, min: 4, max: 253)
-        try sdkValidatePattern("domain", domain, sdkPatternccd173b3f32a)
-        if let value = minimumTlsVersion {
+        self.domain = try container.sdkDecodeRequired(.domain)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.wildcard = try container.sdkDecodeIfPresent(.wildcard)
+        self.zone = try container.sdkDecodeIfPresent(.zone)
+        self.minimumTlsVersion = try container.sdkDecodeIfPresent(.minimumTlsVersion)
+            try validateLength("domain", self.domain, min: 4, max: 253)
+            try sdkValidatePattern("domain", self.domain, sdkPatternccd173b3f32a)
+        if let value = self.minimumTlsVersion {
             try validateLength("minimum_tls_version", sdkWireString(value), min: 3, max: 3)
         }
     }
 }
 
-public extension AppDomainSpec {
-    init(
-        domain: String,
-        type: AppDomainSpecType? = nil,
-        wildcard: Bool? = nil,
-        zone: String? = nil,
-        minimumTlsVersion: AppDomainSpecMinimumTlsVersion? = nil
-    ) throws {
+extension AppDomainSpec {
+    public init(domain: String, type: AppDomainSpecType? = nil, wildcard: Bool? = nil, zone: String? = nil, minimumTlsVersion: AppDomainSpecMinimumTlsVersion? = nil) throws {
         (self.domain, self.type) = (domain, type)
         (self.wildcard, self.zone) = (wildcard, zone)
         self.minimumTlsVersion = minimumTlsVersion
-        try validateLength("domain", self.domain, min: 4, max: 253)
-        try sdkValidatePattern("domain", self.domain, sdkPatternccd173b3f32a)
+            try validateLength("domain", self.domain, min: 4, max: 253)
+            try sdkValidatePattern("domain", self.domain, sdkPatternccd173b3f32a)
         if let value = self.minimumTlsVersion {
             try validateLength("minimum_tls_version", sdkWireString(value), min: 3, max: 3)
         }
@@ -98,20 +86,20 @@ public struct AppDomainValidation: Codable {
     }
 
     init() {
-        (txtName, txtValue) = (nil, nil)
+        (self.txtName, self.txtValue) = (nil, nil)
     }
 }
 
-public extension AppDomainValidation {
-    init(from decoder: Decoder) throws {
+extension AppDomainValidation {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        txtName = try container.sdkDecodeIfPresent(.txtName)
-        txtValue = try container.sdkDecodeIfPresent(.txtValue)
+        self.txtName = try container.sdkDecodeIfPresent(.txtName)
+        self.txtValue = try container.sdkDecodeIfPresent(.txtValue)
     }
 }
 
-public extension AppDomainValidation {
-    init(txtName: String? = nil, txtValue: String? = nil) {
+extension AppDomainValidation {
+    public init(txtName: String? = nil, txtValue: String? = nil) {
         self.init()
         (self.txtName, self.txtValue) = (txtName, txtValue)
     }
@@ -124,10 +112,7 @@ public extension AppDomainValidation {
 public struct AppDomainSpecType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let unspecified = AppDomainSpecType(rawValue: "UNSPECIFIED")
     public static let `default` = AppDomainSpecType(rawValue: "DEFAULT")
     public static let primary = AppDomainSpecType(rawValue: "PRIMARY")
@@ -135,7 +120,7 @@ public struct AppDomainSpecType: RawRepresentable, Hashable, Codable, Sendable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -149,16 +134,13 @@ public struct AppDomainSpecType: RawRepresentable, Hashable, Codable, Sendable, 
 public struct AppDomainSpecMinimumTlsVersion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let value12 = AppDomainSpecMinimumTlsVersion(rawValue: "1.2")
     public static let value13 = AppDomainSpecMinimumTlsVersion(rawValue: "1.3")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

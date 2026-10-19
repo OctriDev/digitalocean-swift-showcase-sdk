@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Certificates domain models
+// Certificates domain models
 /// Typed representation of the `CertificateRequestCustom` API schema.
 public struct CertificateRequestCustom: Codable {
     /// A unique human-readable name referring to a certificate.
@@ -100,51 +100,31 @@ public struct CertificateRequestCustom: Codable {
         case certificateChain = "certificate_chain"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CertificateRequestCustom {
-    init(from decoder: Decoder) throws {
+extension CertificateRequestCustom {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.privateKey) else {
-            throw SdkValidationError(
-                field: "private_key",
-                code: "required",
-                message: "Validation failed for 'private_key': value is required"
-            )
+            throw SdkValidationError(field: "private_key", code: "required", message: "Validation failed for 'private_key': value is required")
         }
         guard container.contains(.leafCertificate) else {
-            throw SdkValidationError(
-                field: "leaf_certificate",
-                code: "required",
-                message: "Validation failed for 'leaf_certificate': value is required"
-            )
+            throw SdkValidationError(field: "leaf_certificate", code: "required", message: "Validation failed for 'leaf_certificate': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        privateKey = try container.sdkDecodeRequired(.privateKey)
-        leafCertificate = try container.sdkDecodeRequired(.leafCertificate)
-        type = try container.sdkDecodeIfPresent(.type)
-        certificateChain = try container.sdkDecodeIfPresent(.certificateChain)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.privateKey = try container.sdkDecodeRequired(.privateKey)
+        self.leafCertificate = try container.sdkDecodeRequired(.leafCertificate)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.certificateChain = try container.sdkDecodeIfPresent(.certificateChain)
     }
 }
 
-public extension CertificateRequestCustom {
-    init(
-        name: String,
-        privateKey: String,
-        leafCertificate: String,
-        type: CertificateCreateBaseType? = nil,
-        certificateChain: String? = nil
-    ) {
+extension CertificateRequestCustom {
+    public init(name: String, privateKey: String, leafCertificate: String, type: CertificateCreateBaseType? = nil, certificateChain: String? = nil) {
         (self.name, self.privateKey) = (name, privateKey)
         (self.leafCertificate, self.type) = (leafCertificate, type)
         self.certificateChain = certificateChain
@@ -165,29 +145,23 @@ public struct AllCertificates: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllCertificates {
-    init(from decoder: Decoder) throws {
+extension AllCertificates {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        certificates = try container.sdkDecodeIfPresent(.certificates)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.certificates = try container.sdkDecodeIfPresent(.certificates)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllCertificates {
-    init(meta: MetaMeta, certificates: [Certificate]? = nil, links: PageLinks? = nil) {
+extension AllCertificates {
+    public init(meta: MetaMeta, certificates: [Certificate]? = nil, links: PageLinks? = nil) {
         (self.meta, self.certificates) = (meta, certificates)
         self.links = links
     }
@@ -235,45 +209,36 @@ public struct Certificate: Codable {
     }
 
     init() {
-        (id, name, notAfter, sha1Fingerprint, createdAt) = (nil, nil, nil, nil, nil)
-        (dnsNames, state, type) = (nil, nil, nil)
+        (self.id, self.name, self.notAfter, self.sha1Fingerprint, self.createdAt) = (nil, nil, nil, nil, nil)
+        (self.dnsNames, self.state, self.type) = (nil, nil, nil)
     }
 }
 
-public extension Certificate {
-    init(from decoder: Decoder) throws {
+extension Certificate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        notAfter = try container.sdkDecodeIfPresent(.notAfter)
-        sha1Fingerprint = try container.sdkDecodeIfPresent(.sha1Fingerprint)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        dnsNames = try container.sdkDecodeIfPresent(.dnsNames)
-        state = try container.sdkDecodeIfPresent(.state)
-        type = try container.sdkDecodeIfPresent(.type)
-        if let value = id {
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.notAfter = try container.sdkDecodeIfPresent(.notAfter)
+        self.sha1Fingerprint = try container.sdkDecodeIfPresent(.sha1Fingerprint)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.dnsNames = try container.sdkDecodeIfPresent(.dnsNames)
+        self.state = try container.sdkDecodeIfPresent(.state)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        if let value = self.id {
             try sdkValidateUuid("id", value)
         }
-        if let value = notAfter {
+        if let value = self.notAfter {
             try sdkValidateDateTime("not_after", sdkWireString(value))
         }
-        if let value = createdAt {
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-public extension Certificate {
-    init(
-        id: String? = nil,
-        name: String? = nil,
-        notAfter: Date? = nil,
-        sha1Fingerprint: String? = nil,
-        createdAt: Date? = nil,
-        dnsNames: [String]? = nil,
-        state: CertificateState? = nil,
-        type: CertificateType? = nil
-    ) throws {
+extension Certificate {
+    public init(id: String? = nil, name: String? = nil, notAfter: Date? = nil, sha1Fingerprint: String? = nil, createdAt: Date? = nil, dnsNames: [String]? = nil, state: CertificateState? = nil, type: CertificateType? = nil) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.notAfter, self.sha1Fingerprint) = (notAfter, sha1Fingerprint)
@@ -301,19 +266,19 @@ public struct NewCertificate: Codable {
     }
 
     init() {
-        certificate = nil
+        self.certificate = nil
     }
 }
 
-public extension NewCertificate {
-    init(from decoder: Decoder) throws {
+extension NewCertificate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        certificate = try container.sdkDecodeIfPresent(.certificate)
+        self.certificate = try container.sdkDecodeIfPresent(.certificate)
     }
 }
 
-public extension NewCertificate {
-    init(certificate: Certificate? = nil) {
+extension NewCertificate {
+    public init(certificate: Certificate? = nil) {
         self.init()
         self.certificate = certificate
     }
@@ -339,36 +304,26 @@ public struct CertificateRequestLetsEncrypt: Codable {
         case type
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CertificateRequestLetsEncrypt {
-    init(from decoder: Decoder) throws {
+extension CertificateRequestLetsEncrypt {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.dnsNames) else {
-            throw SdkValidationError(
-                field: "dns_names",
-                code: "required",
-                message: "Validation failed for 'dns_names': value is required"
-            )
+            throw SdkValidationError(field: "dns_names", code: "required", message: "Validation failed for 'dns_names': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        dnsNames = try container.sdkDecodeRequired(.dnsNames)
-        type = try container.sdkDecodeIfPresent(.type)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.dnsNames = try container.sdkDecodeRequired(.dnsNames)
+        self.type = try container.sdkDecodeIfPresent(.type)
     }
 }
 
-public extension CertificateRequestLetsEncrypt {
-    init(name: String, dnsNames: [String], type: CertificateCreateBaseType? = nil) {
+extension CertificateRequestLetsEncrypt {
+    public init(name: String, dnsNames: [String], type: CertificateCreateBaseType? = nil) {
         (self.name, self.dnsNames) = (name, dnsNames)
         self.type = type
     }
@@ -382,19 +337,19 @@ public struct AllCertificatesVariant0: Codable {
     }
 
     init() {
-        certificates = nil
+        self.certificates = nil
     }
 }
 
-public extension AllCertificatesVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllCertificatesVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        certificates = try container.sdkDecodeIfPresent(.certificates)
+        self.certificates = try container.sdkDecodeIfPresent(.certificates)
     }
 }
 
-public extension AllCertificatesVariant0 {
-    init(certificates: [Certificate]? = nil) {
+extension AllCertificatesVariant0 {
+    public init(certificates: [Certificate]? = nil) {
         self.init()
         self.certificates = certificates
     }
@@ -410,27 +365,21 @@ public struct CertificateRequestLetsEncryptVariant1: Codable {
         case dnsNames = "dns_names"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CertificateRequestLetsEncryptVariant1 {
-    init(from decoder: Decoder) throws {
+extension CertificateRequestLetsEncryptVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.dnsNames) else {
-            throw SdkValidationError(
-                field: "dns_names",
-                code: "required",
-                message: "Validation failed for 'dns_names': value is required"
-            )
+            throw SdkValidationError(field: "dns_names", code: "required", message: "Validation failed for 'dns_names': value is required")
         }
-        dnsNames = try container.sdkDecodeRequired(.dnsNames)
+        self.dnsNames = try container.sdkDecodeRequired(.dnsNames)
     }
 }
 
-public extension CertificateRequestLetsEncryptVariant1 {
-    init(dnsNames: [String]) {
+extension CertificateRequestLetsEncryptVariant1 {
+    public init(dnsNames: [String]) {
         self.dnsNames = dnsNames
     }
 }
@@ -450,28 +399,22 @@ public struct CertificateCreateBase: Codable {
         case type
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CertificateCreateBase {
-    init(from decoder: Decoder) throws {
+extension CertificateCreateBase {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        type = try container.sdkDecodeIfPresent(.type)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.type = try container.sdkDecodeIfPresent(.type)
     }
 }
 
-public extension CertificateCreateBase {
-    init(name: String, type: CertificateCreateBaseType? = nil) {
+extension CertificateCreateBase {
+    public init(name: String, type: CertificateCreateBaseType? = nil) {
         (self.name, self.type) = (name, type)
     }
 }
@@ -486,19 +429,19 @@ public struct ExistingCertificate: Codable {
     }
 
     init() {
-        certificate = nil
+        self.certificate = nil
     }
 }
 
-public extension ExistingCertificate {
-    init(from decoder: Decoder) throws {
+extension ExistingCertificate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        certificate = try container.sdkDecodeIfPresent(.certificate)
+        self.certificate = try container.sdkDecodeIfPresent(.certificate)
     }
 }
 
-public extension ExistingCertificate {
-    init(certificate: Certificate? = nil) {
+extension ExistingCertificate {
+    public init(certificate: Certificate? = nil) {
         self.init()
         self.certificate = certificate
     }
@@ -590,36 +533,26 @@ public struct CertificateRequestCustomVariant1: Codable {
         case certificateChain = "certificate_chain"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CertificateRequestCustomVariant1 {
-    init(from decoder: Decoder) throws {
+extension CertificateRequestCustomVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.privateKey) else {
-            throw SdkValidationError(
-                field: "private_key",
-                code: "required",
-                message: "Validation failed for 'private_key': value is required"
-            )
+            throw SdkValidationError(field: "private_key", code: "required", message: "Validation failed for 'private_key': value is required")
         }
         guard container.contains(.leafCertificate) else {
-            throw SdkValidationError(
-                field: "leaf_certificate",
-                code: "required",
-                message: "Validation failed for 'leaf_certificate': value is required"
-            )
+            throw SdkValidationError(field: "leaf_certificate", code: "required", message: "Validation failed for 'leaf_certificate': value is required")
         }
-        privateKey = try container.sdkDecodeRequired(.privateKey)
-        leafCertificate = try container.sdkDecodeRequired(.leafCertificate)
-        certificateChain = try container.sdkDecodeIfPresent(.certificateChain)
+        self.privateKey = try container.sdkDecodeRequired(.privateKey)
+        self.leafCertificate = try container.sdkDecodeRequired(.leafCertificate)
+        self.certificateChain = try container.sdkDecodeIfPresent(.certificateChain)
     }
 }
 
-public extension CertificateRequestCustomVariant1 {
-    init(privateKey: String, leafCertificate: String, certificateChain: String? = nil) {
+extension CertificateRequestCustomVariant1 {
+    public init(privateKey: String, leafCertificate: String, certificateChain: String? = nil) {
         (self.privateKey, self.leafCertificate) = (privateKey, leafCertificate)
         self.certificateChain = certificateChain
     }

@@ -6,10 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ActionGatewayMethods {
-    /// Returns availability and latency for each catalog provider over the requested window, sorted by provider ID.
-    /// Metrics are aggregated across all customers; request volumes are not reported. Tools of your team's MCP servers
-    /// are not included. Offset-paged with page and `per_page`.
+extension ActionGatewayMethods {
+    /// Returns availability and latency for each catalog provider over the requested window, sorted by provider ID. Metrics are aggregated across all customers; request volumes are not reported. Tools of your team's MCP servers are not included. Offset-paged with page and `per_page`.
     ///
     /// - Parameters:
     /// - provider: Optional provider ID, matched exactly, to return only that
@@ -22,42 +20,20 @@ public extension ActionGatewayMethods {
     ///   - `HEALTH_WINDOW_THIRTY_DAYS`: Thirty days; history points are 24 hours.
     /// - page: 1-based page number. Values below 1 are treated as 1.
     /// - perPage: Page size. Defaults to 20; values above 100 are capped at 100.
-    static func toolsListHealthProviders(
-        config: ClientConfig,
-        provider: String? = nil,
-        window: ToolsListHealthParameter? = nil,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ListProviderHealthResponse {
-        if let page {
+    public static func toolsListHealthProviders(config: ClientConfig, provider: String? = nil, window: ToolsListHealthParameter? = nil, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ListProviderHealthResponse {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        if let perPage {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 100)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/action-gateway/tools/health/providers",
-            config: config,
-            query: [
-                SdkQueryParameter("provider", value: provider),
-                SdkQueryParameter("window", value: window),
-                SdkQueryParameter("page", value: page),
-                SdkQueryParameter("per_page", value: perPage),
-            ],
-            decoder: .json,
-            operationId: "tools_list_health_providers",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", "/v2/action-gateway/tools/health/providers", config: config, query: [
+            SdkQueryParameter("provider", value: provider),
+            SdkQueryParameter("window", value: window),
+            SdkQueryParameter("page", value: page),
+            SdkQueryParameter("per_page", value: perPage),
+        ], decoder: .json, operationId: "tools_list_health_providers", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

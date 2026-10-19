@@ -31,51 +31,51 @@ struct InferenceCreateChatCompletionRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(messages, forKey: SdkCodingKey("messages"))
-        try keyedContainer.encode(model, forKey: SdkCodingKey("model"))
-        try keyedContainer.encodeIfPresent(maxTokens, forKey: SdkCodingKey("max_tokens"))
-        try keyedContainer.encodeIfPresent(maxCompletionTokens, forKey: SdkCodingKey("max_completion_tokens"))
-        try keyedContainer.encodeIfPresent(frequencyPenalty, forKey: SdkCodingKey("frequency_penalty"))
-        try keyedContainer.encodeIfPresent(presencePenalty, forKey: SdkCodingKey("presence_penalty"))
-        try keyedContainer.encodeIfPresent(topLogprobs, forKey: SdkCodingKey("top_logprobs"))
-        try keyedContainer.encodeIfPresent(tools, forKey: SdkCodingKey("tools"))
-        try keyedContainer.encodeIfPresent(toolChoice, forKey: SdkCodingKey("tool_choice"))
-        try keyedContainer.encodeIfPresent(stream, forKey: SdkCodingKey("stream"))
-        try keyedContainer.encodeIfPresent(stop, forKey: SdkCodingKey("stop"))
-        try keyedContainer.encodeIfPresent(logitBias, forKey: SdkCodingKey("logit_bias"))
-        try keyedContainer.encodeIfPresent(logprobs, forKey: SdkCodingKey("logprobs"))
-        try keyedContainer.encodeIfPresent(n, forKey: SdkCodingKey("n"))
-        try keyedContainer.encodeIfPresent(streamOptions, forKey: SdkCodingKey("stream_options"))
-        try keyedContainer.encodeIfPresent(reasoningEffort, forKey: SdkCodingKey("reasoning_effort"))
-        try keyedContainer.encodeIfPresent(seed, forKey: SdkCodingKey("seed"))
-        try keyedContainer.encodeIfPresent(metadata, forKey: SdkCodingKey("metadata"))
-        try keyedContainer.encodeIfPresent(temperature, forKey: SdkCodingKey("temperature"))
-        try keyedContainer.encodeIfPresent(topP, forKey: SdkCodingKey("top_p"))
-        try keyedContainer.encodeIfPresent(user, forKey: SdkCodingKey("user"))
+        try keyedContainer.encode(self.messages, forKey: SdkCodingKey("messages"))
+        try keyedContainer.encode(self.model, forKey: SdkCodingKey("model"))
+        try keyedContainer.encodeIfPresent(self.maxTokens, forKey: SdkCodingKey("max_tokens"))
+        try keyedContainer.encodeIfPresent(self.maxCompletionTokens, forKey: SdkCodingKey("max_completion_tokens"))
+        try keyedContainer.encodeIfPresent(self.frequencyPenalty, forKey: SdkCodingKey("frequency_penalty"))
+        try keyedContainer.encodeIfPresent(self.presencePenalty, forKey: SdkCodingKey("presence_penalty"))
+        try keyedContainer.encodeIfPresent(self.topLogprobs, forKey: SdkCodingKey("top_logprobs"))
+        try keyedContainer.encodeIfPresent(self.tools, forKey: SdkCodingKey("tools"))
+        try keyedContainer.encodeIfPresent(self.toolChoice, forKey: SdkCodingKey("tool_choice"))
+        try keyedContainer.encodeIfPresent(self.stream, forKey: SdkCodingKey("stream"))
+        try keyedContainer.encodeIfPresent(self.stop, forKey: SdkCodingKey("stop"))
+        try keyedContainer.encodeIfPresent(self.logitBias, forKey: SdkCodingKey("logit_bias"))
+        try keyedContainer.encodeIfPresent(self.logprobs, forKey: SdkCodingKey("logprobs"))
+        try keyedContainer.encodeIfPresent(self.n, forKey: SdkCodingKey("n"))
+        try keyedContainer.encodeIfPresent(self.streamOptions, forKey: SdkCodingKey("stream_options"))
+        try keyedContainer.encodeIfPresent(self.reasoningEffort, forKey: SdkCodingKey("reasoning_effort"))
+        try keyedContainer.encodeIfPresent(self.seed, forKey: SdkCodingKey("seed"))
+        try keyedContainer.encodeIfPresent(self.metadata, forKey: SdkCodingKey("metadata"))
+        try keyedContainer.encodeIfPresent(self.temperature, forKey: SdkCodingKey("temperature"))
+        try keyedContainer.encodeIfPresent(self.topP, forKey: SdkCodingKey("top_p"))
+        try keyedContainer.encodeIfPresent(self.user, forKey: SdkCodingKey("user"))
     }
 
     init(options: ServerlessInferenceMethods.InferenceCreateChatCompletionOptions) {
-        messages = options.messages
-        model = options.model
-        maxTokens = options.maxTokens
-        maxCompletionTokens = options.maxCompletionTokens
-        frequencyPenalty = options.frequencyPenalty
-        presencePenalty = options.presencePenalty
-        topLogprobs = options.topLogprobs
-        tools = options.tools
-        toolChoice = options.toolChoice
-        stream = options.stream
-        stop = options.stop
-        logitBias = options.logitBias
-        logprobs = options.logprobs
-        n = options.n
-        streamOptions = options.streamOptions
-        reasoningEffort = options.reasoningEffort
-        seed = options.seed
-        metadata = options.metadata
-        temperature = options.temperature
-        topP = options.topP
-        user = options.user
+        self.messages = options.messages
+        self.model = options.model
+        self.maxTokens = options.maxTokens
+        self.maxCompletionTokens = options.maxCompletionTokens
+        self.frequencyPenalty = options.frequencyPenalty
+        self.presencePenalty = options.presencePenalty
+        self.topLogprobs = options.topLogprobs
+        self.tools = options.tools
+        self.toolChoice = options.toolChoice
+        self.stream = options.stream
+        self.stop = options.stop
+        self.logitBias = options.logitBias
+        self.logprobs = options.logprobs
+        self.n = options.n
+        self.streamOptions = options.streamOptions
+        self.reasoningEffort = options.reasoningEffort
+        self.seed = options.seed
+        self.metadata = options.metadata
+        self.temperature = options.temperature
+        self.topP = options.topP
+        self.user = options.user
     }
 }
 
@@ -104,51 +104,51 @@ struct InferenceCreateChatCompletionStreamStreamRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(messages, forKey: SdkCodingKey("messages"))
-        try keyedContainer.encode(model, forKey: SdkCodingKey("model"))
-        try keyedContainer.encode(stream, forKey: SdkCodingKey("stream"))
-        try keyedContainer.encodeIfPresent(maxTokens, forKey: SdkCodingKey("max_tokens"))
-        try keyedContainer.encodeIfPresent(maxCompletionTokens, forKey: SdkCodingKey("max_completion_tokens"))
-        try keyedContainer.encodeIfPresent(frequencyPenalty, forKey: SdkCodingKey("frequency_penalty"))
-        try keyedContainer.encodeIfPresent(presencePenalty, forKey: SdkCodingKey("presence_penalty"))
-        try keyedContainer.encodeIfPresent(topLogprobs, forKey: SdkCodingKey("top_logprobs"))
-        try keyedContainer.encodeIfPresent(tools, forKey: SdkCodingKey("tools"))
-        try keyedContainer.encodeIfPresent(toolChoice, forKey: SdkCodingKey("tool_choice"))
-        try keyedContainer.encodeIfPresent(stop, forKey: SdkCodingKey("stop"))
-        try keyedContainer.encodeIfPresent(logitBias, forKey: SdkCodingKey("logit_bias"))
-        try keyedContainer.encodeIfPresent(logprobs, forKey: SdkCodingKey("logprobs"))
-        try keyedContainer.encodeIfPresent(n, forKey: SdkCodingKey("n"))
-        try keyedContainer.encodeIfPresent(streamOptions, forKey: SdkCodingKey("stream_options"))
-        try keyedContainer.encodeIfPresent(reasoningEffort, forKey: SdkCodingKey("reasoning_effort"))
-        try keyedContainer.encodeIfPresent(seed, forKey: SdkCodingKey("seed"))
-        try keyedContainer.encodeIfPresent(metadata, forKey: SdkCodingKey("metadata"))
-        try keyedContainer.encodeIfPresent(temperature, forKey: SdkCodingKey("temperature"))
-        try keyedContainer.encodeIfPresent(topP, forKey: SdkCodingKey("top_p"))
-        try keyedContainer.encodeIfPresent(user, forKey: SdkCodingKey("user"))
+        try keyedContainer.encode(self.messages, forKey: SdkCodingKey("messages"))
+        try keyedContainer.encode(self.model, forKey: SdkCodingKey("model"))
+        try keyedContainer.encode(self.stream, forKey: SdkCodingKey("stream"))
+        try keyedContainer.encodeIfPresent(self.maxTokens, forKey: SdkCodingKey("max_tokens"))
+        try keyedContainer.encodeIfPresent(self.maxCompletionTokens, forKey: SdkCodingKey("max_completion_tokens"))
+        try keyedContainer.encodeIfPresent(self.frequencyPenalty, forKey: SdkCodingKey("frequency_penalty"))
+        try keyedContainer.encodeIfPresent(self.presencePenalty, forKey: SdkCodingKey("presence_penalty"))
+        try keyedContainer.encodeIfPresent(self.topLogprobs, forKey: SdkCodingKey("top_logprobs"))
+        try keyedContainer.encodeIfPresent(self.tools, forKey: SdkCodingKey("tools"))
+        try keyedContainer.encodeIfPresent(self.toolChoice, forKey: SdkCodingKey("tool_choice"))
+        try keyedContainer.encodeIfPresent(self.stop, forKey: SdkCodingKey("stop"))
+        try keyedContainer.encodeIfPresent(self.logitBias, forKey: SdkCodingKey("logit_bias"))
+        try keyedContainer.encodeIfPresent(self.logprobs, forKey: SdkCodingKey("logprobs"))
+        try keyedContainer.encodeIfPresent(self.n, forKey: SdkCodingKey("n"))
+        try keyedContainer.encodeIfPresent(self.streamOptions, forKey: SdkCodingKey("stream_options"))
+        try keyedContainer.encodeIfPresent(self.reasoningEffort, forKey: SdkCodingKey("reasoning_effort"))
+        try keyedContainer.encodeIfPresent(self.seed, forKey: SdkCodingKey("seed"))
+        try keyedContainer.encodeIfPresent(self.metadata, forKey: SdkCodingKey("metadata"))
+        try keyedContainer.encodeIfPresent(self.temperature, forKey: SdkCodingKey("temperature"))
+        try keyedContainer.encodeIfPresent(self.topP, forKey: SdkCodingKey("top_p"))
+        try keyedContainer.encodeIfPresent(self.user, forKey: SdkCodingKey("user"))
     }
 
     init(options: ServerlessInferenceMethods.InferenceCreateChatCompletionStreamOptions) {
-        messages = options.messages
-        model = options.model
-        stream = options.stream
-        maxTokens = options.maxTokens
-        maxCompletionTokens = options.maxCompletionTokens
-        frequencyPenalty = options.frequencyPenalty
-        presencePenalty = options.presencePenalty
-        topLogprobs = options.topLogprobs
-        tools = options.tools
-        toolChoice = options.toolChoice
-        stop = options.stop
-        logitBias = options.logitBias
-        logprobs = options.logprobs
-        n = options.n
-        streamOptions = options.streamOptions
-        reasoningEffort = options.reasoningEffort
-        seed = options.seed
-        metadata = options.metadata
-        temperature = options.temperature
-        topP = options.topP
-        user = options.user
+        self.messages = options.messages
+        self.model = options.model
+        self.stream = options.stream
+        self.maxTokens = options.maxTokens
+        self.maxCompletionTokens = options.maxCompletionTokens
+        self.frequencyPenalty = options.frequencyPenalty
+        self.presencePenalty = options.presencePenalty
+        self.topLogprobs = options.topLogprobs
+        self.tools = options.tools
+        self.toolChoice = options.toolChoice
+        self.stop = options.stop
+        self.logitBias = options.logitBias
+        self.logprobs = options.logprobs
+        self.n = options.n
+        self.streamOptions = options.streamOptions
+        self.reasoningEffort = options.reasoningEffort
+        self.seed = options.seed
+        self.metadata = options.metadata
+        self.temperature = options.temperature
+        self.topP = options.topP
+        self.user = options.user
     }
 }
 
@@ -171,38 +171,38 @@ struct InferenceCreateMessagesRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(model, forKey: SdkCodingKey("model"))
-        try keyedContainer.encode(maxTokens, forKey: SdkCodingKey("max_tokens"))
-        try keyedContainer.encode(messages, forKey: SdkCodingKey("messages"))
-        try keyedContainer.encodeIfPresent(system, forKey: SdkCodingKey("system"))
-        try keyedContainer.encodeIfPresent(stopSequences, forKey: SdkCodingKey("stop_sequences"))
-        try keyedContainer.encodeIfPresent(stream, forKey: SdkCodingKey("stream"))
-        try keyedContainer.encodeIfPresent(temperature, forKey: SdkCodingKey("temperature"))
-        try keyedContainer.encodeIfPresent(topP, forKey: SdkCodingKey("top_p"))
-        try keyedContainer.encodeIfPresent(topK, forKey: SdkCodingKey("top_k"))
-        try keyedContainer.encodeIfPresent(tools, forKey: SdkCodingKey("tools"))
-        try keyedContainer.encodeIfPresent(toolChoice, forKey: SdkCodingKey("tool_choice"))
-        try keyedContainer.encodeIfPresent(metadata, forKey: SdkCodingKey("metadata"))
-        try keyedContainer.encodeIfPresent(reasoningEffort, forKey: SdkCodingKey("reasoning_effort"))
-        try keyedContainer.encodeIfPresent(speed, forKey: SdkCodingKey("speed"))
-        try keyedContainer.encodeIfPresent(thinking, forKey: SdkCodingKey("thinking"))
+        try keyedContainer.encode(self.model, forKey: SdkCodingKey("model"))
+        try keyedContainer.encode(self.maxTokens, forKey: SdkCodingKey("max_tokens"))
+        try keyedContainer.encode(self.messages, forKey: SdkCodingKey("messages"))
+        try keyedContainer.encodeIfPresent(self.system, forKey: SdkCodingKey("system"))
+        try keyedContainer.encodeIfPresent(self.stopSequences, forKey: SdkCodingKey("stop_sequences"))
+        try keyedContainer.encodeIfPresent(self.stream, forKey: SdkCodingKey("stream"))
+        try keyedContainer.encodeIfPresent(self.temperature, forKey: SdkCodingKey("temperature"))
+        try keyedContainer.encodeIfPresent(self.topP, forKey: SdkCodingKey("top_p"))
+        try keyedContainer.encodeIfPresent(self.topK, forKey: SdkCodingKey("top_k"))
+        try keyedContainer.encodeIfPresent(self.tools, forKey: SdkCodingKey("tools"))
+        try keyedContainer.encodeIfPresent(self.toolChoice, forKey: SdkCodingKey("tool_choice"))
+        try keyedContainer.encodeIfPresent(self.metadata, forKey: SdkCodingKey("metadata"))
+        try keyedContainer.encodeIfPresent(self.reasoningEffort, forKey: SdkCodingKey("reasoning_effort"))
+        try keyedContainer.encodeIfPresent(self.speed, forKey: SdkCodingKey("speed"))
+        try keyedContainer.encodeIfPresent(self.thinking, forKey: SdkCodingKey("thinking"))
     }
 
     init(options: ServerlessInferenceMethods.InferenceCreateMessagesOptions) {
-        model = options.model
-        maxTokens = options.maxTokens
-        messages = options.messages
-        system = options.system
-        stopSequences = options.stopSequences
-        stream = options.stream
-        temperature = options.temperature
-        topP = options.topP
-        topK = options.topK
-        tools = options.tools
-        toolChoice = options.toolChoice
-        metadata = options.metadata
-        reasoningEffort = options.reasoningEffort
-        speed = options.speed
-        thinking = options.thinking
+        self.model = options.model
+        self.maxTokens = options.maxTokens
+        self.messages = options.messages
+        self.system = options.system
+        self.stopSequences = options.stopSequences
+        self.stream = options.stream
+        self.temperature = options.temperature
+        self.topP = options.topP
+        self.topK = options.topK
+        self.tools = options.tools
+        self.toolChoice = options.toolChoice
+        self.metadata = options.metadata
+        self.reasoningEffort = options.reasoningEffort
+        self.speed = options.speed
+        self.thinking = options.thinking
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Databases domain models
+// Databases domain models
 /// Typed representation of the `ValkeyAdvancedConfig` API schema.
 public struct ValkeyAdvancedConfig: Codable {
     /// A string specifying the desired eviction policy for a Caching or Valkey cluster. - `noeviction`: Don't evict
@@ -81,60 +81,34 @@ public struct ValkeyAdvancedConfig: Codable {
     }
 
     init() {
-        (
-            valkeyMaxmemoryPolicy,
-            valkeyPubsubClientOutputBufferLimit,
-            valkeyNumberOfDatabases,
-            valkeyIoThreads,
-            valkeyLfuLogFactor
-        ) = (nil, nil, nil, nil, nil)
-        (valkeyLfuDecayTime, valkeySsl, valkeyTimeout, valkeyNotifyKeyspaceEvents, valkeyPersistence) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        (valkeyAclChannelsDefault, frequentSnapshots, valkeyActiveExpireEffort) = (nil, nil, nil)
+        (self.valkeyMaxmemoryPolicy, self.valkeyPubsubClientOutputBufferLimit, self.valkeyNumberOfDatabases, self.valkeyIoThreads, self.valkeyLfuLogFactor) = (nil, nil, nil, nil, nil)
+        (self.valkeyLfuDecayTime, self.valkeySsl, self.valkeyTimeout, self.valkeyNotifyKeyspaceEvents, self.valkeyPersistence) = (nil, nil, nil, nil, nil)
+        (self.valkeyAclChannelsDefault, self.frequentSnapshots, self.valkeyActiveExpireEffort) = (nil, nil, nil)
     }
 }
 
-public extension ValkeyAdvancedConfig {
-    init(from decoder: Decoder) throws {
+extension ValkeyAdvancedConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        valkeyMaxmemoryPolicy = try container.sdkDecodeIfPresent(.valkeyMaxmemoryPolicy)
-        valkeyPubsubClientOutputBufferLimit = try container.sdkDecodeIfPresent(.valkeyPubsubClientOutputBufferLimit)
-        valkeyNumberOfDatabases = try container.sdkDecodeIfPresent(.valkeyNumberOfDatabases)
-        valkeyIoThreads = try container.sdkDecodeIfPresent(.valkeyIoThreads)
-        valkeyLfuLogFactor = try container.sdkDecodeIfPresent(.valkeyLfuLogFactor)
-        valkeyLfuDecayTime = try container.sdkDecodeIfPresent(.valkeyLfuDecayTime)
-        valkeySsl = try container.sdkDecodeIfPresent(.valkeySsl)
-        valkeyTimeout = try container.sdkDecodeIfPresent(.valkeyTimeout)
-        valkeyNotifyKeyspaceEvents = try container.sdkDecodeIfPresent(.valkeyNotifyKeyspaceEvents)
-        valkeyPersistence = try container.sdkDecodeIfPresent(.valkeyPersistence)
-        valkeyAclChannelsDefault = try container.sdkDecodeIfPresent(.valkeyAclChannelsDefault)
-        frequentSnapshots = try container.sdkDecodeIfPresent(.frequentSnapshots)
-        valkeyActiveExpireEffort = try container.sdkDecodeIfPresent(.valkeyActiveExpireEffort)
+        self.valkeyMaxmemoryPolicy = try container.sdkDecodeIfPresent(.valkeyMaxmemoryPolicy)
+        self.valkeyPubsubClientOutputBufferLimit = try container.sdkDecodeIfPresent(.valkeyPubsubClientOutputBufferLimit)
+        self.valkeyNumberOfDatabases = try container.sdkDecodeIfPresent(.valkeyNumberOfDatabases)
+        self.valkeyIoThreads = try container.sdkDecodeIfPresent(.valkeyIoThreads)
+        self.valkeyLfuLogFactor = try container.sdkDecodeIfPresent(.valkeyLfuLogFactor)
+        self.valkeyLfuDecayTime = try container.sdkDecodeIfPresent(.valkeyLfuDecayTime)
+        self.valkeySsl = try container.sdkDecodeIfPresent(.valkeySsl)
+        self.valkeyTimeout = try container.sdkDecodeIfPresent(.valkeyTimeout)
+        self.valkeyNotifyKeyspaceEvents = try container.sdkDecodeIfPresent(.valkeyNotifyKeyspaceEvents)
+        self.valkeyPersistence = try container.sdkDecodeIfPresent(.valkeyPersistence)
+        self.valkeyAclChannelsDefault = try container.sdkDecodeIfPresent(.valkeyAclChannelsDefault)
+        self.frequentSnapshots = try container.sdkDecodeIfPresent(.frequentSnapshots)
+        self.valkeyActiveExpireEffort = try container.sdkDecodeIfPresent(.valkeyActiveExpireEffort)
         try sdkValidateConstraints()
     }
 }
 
-public extension ValkeyAdvancedConfig {
-    init(
-        valkeyMaxmemoryPolicy: EvictionPolicyModel? = nil,
-        valkeyPubsubClientOutputBufferLimit: Int? = nil,
-        valkeyNumberOfDatabases: Int? = nil,
-        valkeyIoThreads: Int? = nil,
-        valkeyLfuLogFactor: Int? = nil,
-        valkeyLfuDecayTime: Int? = nil,
-        valkeySsl: Bool? = nil,
-        valkeyTimeout: Int? = nil,
-        valkeyNotifyKeyspaceEvents: String? = nil,
-        valkeyPersistence: ValkeyAdvancedConfigValkeyPersistence? = nil,
-        valkeyAclChannelsDefault: ValkeyAdvancedConfigValkeyAclChannelsDefault? = nil,
-        frequentSnapshots: Bool? = nil,
-        valkeyActiveExpireEffort: Int? = nil
-    ) throws {
+extension ValkeyAdvancedConfig {
+    public init(valkeyMaxmemoryPolicy: EvictionPolicyModel? = nil, valkeyPubsubClientOutputBufferLimit: Int? = nil, valkeyNumberOfDatabases: Int? = nil, valkeyIoThreads: Int? = nil, valkeyLfuLogFactor: Int? = nil, valkeyLfuDecayTime: Int? = nil, valkeySsl: Bool? = nil, valkeyTimeout: Int? = nil, valkeyNotifyKeyspaceEvents: String? = nil, valkeyPersistence: ValkeyAdvancedConfigValkeyPersistence? = nil, valkeyAclChannelsDefault: ValkeyAdvancedConfigValkeyAclChannelsDefault? = nil, frequentSnapshots: Bool? = nil, valkeyActiveExpireEffort: Int? = nil) throws {
         self.init()
         self.valkeyMaxmemoryPolicy = valkeyMaxmemoryPolicy
         self.valkeyPubsubClientOutputBufferLimit = valkeyPubsubClientOutputBufferLimit
@@ -152,86 +126,30 @@ public extension ValkeyAdvancedConfig {
 
 extension ValkeyAdvancedConfig {
     func sdkValidateConstraints() throws {
-        if let value = valkeyPubsubClientOutputBufferLimit {
-            try validateRange(
-                "valkey_pubsub_client_output_buffer_limit",
-                Double(value),
-                min: 32,
-                max: 512,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.valkeyPubsubClientOutputBufferLimit {
+            try validateRange("valkey_pubsub_client_output_buffer_limit", Double(value), min: 32, max: 512, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = valkeyNumberOfDatabases {
-            try validateRange(
-                "valkey_number_of_databases",
-                Double(value),
-                min: 1,
-                max: 128,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.valkeyNumberOfDatabases {
+            try validateRange("valkey_number_of_databases", Double(value), min: 1, max: 128, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = valkeyIoThreads {
-            try validateRange(
-                "valkey_io_threads",
-                Double(value),
-                min: 1,
-                max: 32,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.valkeyIoThreads {
+            try validateRange("valkey_io_threads", Double(value), min: 1, max: 32, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = valkeyLfuLogFactor {
-            try validateRange(
-                "valkey_lfu_log_factor",
-                Double(value),
-                min: 0,
-                max: 100,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.valkeyLfuLogFactor {
+            try validateRange("valkey_lfu_log_factor", Double(value), min: 0, max: 100, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = valkeyLfuDecayTime {
-            try validateRange(
-                "valkey_lfu_decay_time",
-                Double(value),
-                min: 1,
-                max: 120,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.valkeyLfuDecayTime {
+            try validateRange("valkey_lfu_decay_time", Double(value), min: 1, max: 120, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = valkeyTimeout {
-            try validateRange(
-                "valkey_timeout",
-                Double(value),
-                min: 0,
-                max: 31_536_000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.valkeyTimeout {
+            try validateRange("valkey_timeout", Double(value), min: 0, max: 31536000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = valkeyNotifyKeyspaceEvents {
+        if let value = self.valkeyNotifyKeyspaceEvents {
             try validateLength("valkey_notify_keyspace_events", value, min: nil, max: 32)
             try sdkValidatePattern("valkey_notify_keyspace_events", value, sdkPatterna2b5ab460d71)
         }
-        if let value = valkeyActiveExpireEffort {
-            try validateRange(
-                "valkey_active_expire_effort",
-                Double(value),
-                min: 1,
-                max: 10,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.valkeyActiveExpireEffort {
+            try validateRange("valkey_active_expire_effort", Double(value), min: 1, max: 10, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -253,40 +171,30 @@ public struct Backup: Codable {
         case incremental
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Backup {
-    init(from decoder: Decoder) throws {
+extension Backup {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.sizeGigabytes) else {
-            throw SdkValidationError(
-                field: "size_gigabytes",
-                code: "required",
-                message: "Validation failed for 'size_gigabytes': value is required"
-            )
+            throw SdkValidationError(field: "size_gigabytes", code: "required", message: "Validation failed for 'size_gigabytes': value is required")
         }
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        sizeGigabytes = try container.sdkDecodeRequired(.sizeGigabytes)
-        incremental = try container.sdkDecodeIfPresent(.incremental)
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.sizeGigabytes = try container.sdkDecodeRequired(.sizeGigabytes)
+        self.incremental = try container.sdkDecodeIfPresent(.incremental)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension Backup {
-    init(createdAt: Date, sizeGigabytes: Double, incremental: Bool? = nil) throws {
+extension Backup {
+    public init(createdAt: Date, sizeGigabytes: Double, incremental: Bool? = nil) throws {
         (self.createdAt, self.sizeGigabytes) = (createdAt, sizeGigabytes)
         self.incremental = incremental
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -300,19 +208,19 @@ public struct Users: Codable {
     }
 
     init() {
-        users = nil
+        self.users = nil
     }
 }
 
-public extension Users {
-    init(from decoder: Decoder) throws {
+extension Users {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        users = try container.sdkDecodeIfPresent(.users)
+        self.users = try container.sdkDecodeIfPresent(.users)
     }
 }
 
-public extension Users {
-    init(users: [DatabaseUser]? = nil) {
+extension Users {
+    public init(users: [DatabaseUser]? = nil) {
         self.init()
         self.users = users
     }
@@ -328,19 +236,19 @@ public struct Autoscale: Codable {
     }
 
     init() {
-        autoscale = nil
+        self.autoscale = nil
     }
 }
 
-public extension Autoscale {
-    init(from decoder: Decoder) throws {
+extension Autoscale {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        autoscale = try container.sdkDecodeIfPresent(.autoscale)
+        self.autoscale = try container.sdkDecodeIfPresent(.autoscale)
     }
 }
 
-public extension Autoscale {
-    init(autoscale: DatabaseAutoscaleParams? = nil) {
+extension Autoscale {
+    public init(autoscale: DatabaseAutoscaleParams? = nil) {
         self.init()
         self.autoscale = autoscale
     }
@@ -380,38 +288,28 @@ public struct OptionsOptions: Codable {
     }
 
     init() {
-        (kafka, mongodb, pg, mysql, redis) = (nil, nil, nil, nil, nil)
-        (valkey, opensearch, advancedPg, advancedMysql) = (nil, nil, nil, nil)
+        (self.kafka, self.mongodb, self.pg, self.mysql, self.redis) = (nil, nil, nil, nil, nil)
+        (self.valkey, self.opensearch, self.advancedPg, self.advancedMysql) = (nil, nil, nil, nil)
     }
 }
 
-public extension OptionsOptions {
-    init(from decoder: Decoder) throws {
+extension OptionsOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        kafka = try container.sdkDecodeIfPresent(.kafka)
-        mongodb = try container.sdkDecodeIfPresent(.mongodb)
-        pg = try container.sdkDecodeIfPresent(.pg)
-        mysql = try container.sdkDecodeIfPresent(.mysql)
-        redis = try container.sdkDecodeIfPresent(.redis)
-        valkey = try container.sdkDecodeIfPresent(.valkey)
-        opensearch = try container.sdkDecodeIfPresent(.opensearch)
-        advancedPg = try container.sdkDecodeIfPresent(.advancedPg)
-        advancedMysql = try container.sdkDecodeIfPresent(.advancedMysql)
+        self.kafka = try container.sdkDecodeIfPresent(.kafka)
+        self.mongodb = try container.sdkDecodeIfPresent(.mongodb)
+        self.pg = try container.sdkDecodeIfPresent(.pg)
+        self.mysql = try container.sdkDecodeIfPresent(.mysql)
+        self.redis = try container.sdkDecodeIfPresent(.redis)
+        self.valkey = try container.sdkDecodeIfPresent(.valkey)
+        self.opensearch = try container.sdkDecodeIfPresent(.opensearch)
+        self.advancedPg = try container.sdkDecodeIfPresent(.advancedPg)
+        self.advancedMysql = try container.sdkDecodeIfPresent(.advancedMysql)
     }
 }
 
-public extension OptionsOptions {
-    init(
-        kafka: OptionsOptionsKafka? = nil,
-        mongodb: OptionsOptionsMongodb? = nil,
-        pg: OptionsOptionsPg? = nil,
-        mysql: OptionsOptionsMysql? = nil,
-        redis: OptionsOptionsRedis? = nil,
-        valkey: OptionsOptionsValkey? = nil,
-        opensearch: OptionsOptionsOpensearch? = nil,
-        advancedPg: OptionsOptionsAdvancedPg? = nil,
-        advancedMysql: OptionsOptionsAdvancedMysql? = nil
-    ) {
+extension OptionsOptions {
+    public init(kafka: OptionsOptionsKafka? = nil, mongodb: OptionsOptionsMongodb? = nil, pg: OptionsOptionsPg? = nil, mysql: OptionsOptionsMysql? = nil, redis: OptionsOptionsRedis? = nil, valkey: OptionsOptionsValkey? = nil, opensearch: OptionsOptionsOpensearch? = nil, advancedPg: OptionsOptionsAdvancedPg? = nil, advancedMysql: OptionsOptionsAdvancedMysql? = nil) {
         self.init()
         (self.kafka, self.mongodb) = (kafka, mongodb)
         (self.pg, self.mysql) = (pg, mysql)
@@ -440,21 +338,21 @@ public struct OnlineMigration: Codable {
     }
 
     init() {
-        (id, status, createdAt) = (nil, nil, nil)
+        (self.id, self.status, self.createdAt) = (nil, nil, nil)
     }
 }
 
-public extension OnlineMigration {
-    init(from decoder: Decoder) throws {
+extension OnlineMigration {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        status = try container.sdkDecodeIfPresent(.status)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
     }
 }
 
-public extension OnlineMigration {
-    init(id: String? = nil, status: OnlineMigrationStatus? = nil, createdAt: String? = nil) {
+extension OnlineMigration {
+    public init(id: String? = nil, status: OnlineMigrationStatus? = nil, createdAt: String? = nil) {
         self.init()
         (self.id, self.status) = (id, status)
         self.createdAt = createdAt
@@ -481,21 +379,21 @@ public struct OptionsOptionsOpensearch: Codable {
     }
 
     init() {
-        (regions, versions, layouts) = (nil, nil, nil)
+        (self.regions, self.versions, self.layouts) = (nil, nil, nil)
     }
 }
 
-public extension OptionsOptionsOpensearch {
-    init(from decoder: Decoder) throws {
+extension OptionsOptionsOpensearch {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        regions = try container.sdkDecodeIfPresent(.regions)
-        versions = try container.sdkDecodeIfPresent(.versions)
-        layouts = try container.sdkDecodeIfPresent(.layouts)
+        self.regions = try container.sdkDecodeIfPresent(.regions)
+        self.versions = try container.sdkDecodeIfPresent(.versions)
+        self.layouts = try container.sdkDecodeIfPresent(.layouts)
     }
 }
 
-public extension OptionsOptionsOpensearch {
-    init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
+extension OptionsOptionsOpensearch {
+    public init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
         self.init()
         (self.regions, self.versions) = (regions, versions)
         self.layouts = layouts
@@ -522,21 +420,21 @@ public struct OptionsOptionsKafka: Codable {
     }
 
     init() {
-        (regions, versions, layouts) = (nil, nil, nil)
+        (self.regions, self.versions, self.layouts) = (nil, nil, nil)
     }
 }
 
-public extension OptionsOptionsKafka {
-    init(from decoder: Decoder) throws {
+extension OptionsOptionsKafka {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        regions = try container.sdkDecodeIfPresent(.regions)
-        versions = try container.sdkDecodeIfPresent(.versions)
-        layouts = try container.sdkDecodeIfPresent(.layouts)
+        self.regions = try container.sdkDecodeIfPresent(.regions)
+        self.versions = try container.sdkDecodeIfPresent(.versions)
+        self.layouts = try container.sdkDecodeIfPresent(.layouts)
     }
 }
 
-public extension OptionsOptionsKafka {
-    init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
+extension OptionsOptionsKafka {
+    public init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
         self.init()
         (self.regions, self.versions) = (regions, versions)
         self.layouts = layouts
@@ -554,19 +452,19 @@ public struct Version2: Codable {
     }
 
     init() {
-        version = nil
+        self.version = nil
     }
 }
 
-public extension Version2 {
-    init(from decoder: Decoder) throws {
+extension Version2 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        version = try container.sdkDecodeIfPresent(.version)
+        self.version = try container.sdkDecodeIfPresent(.version)
     }
 }
 
-public extension Version2 {
-    init(version: Version? = nil) {
+extension Version2 {
+    public init(version: Version? = nil) {
         self.init()
         self.version = version
     }
@@ -593,20 +491,20 @@ public struct PostgresAdvancedConfigPgaudit: Codable {
     }
 
     init() {
-        (featureEnabled, log) = (nil, nil)
+        (self.featureEnabled, self.log) = (nil, nil)
     }
 }
 
-public extension PostgresAdvancedConfigPgaudit {
-    init(from decoder: Decoder) throws {
+extension PostgresAdvancedConfigPgaudit {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        featureEnabled = try container.sdkDecodeIfPresent(.featureEnabled)
-        log = try container.sdkDecodeIfPresent(.log)
+        self.featureEnabled = try container.sdkDecodeIfPresent(.featureEnabled)
+        self.log = try container.sdkDecodeIfPresent(.log)
     }
 }
 
-public extension PostgresAdvancedConfigPgaudit {
-    init(featureEnabled: Bool? = nil, log: [PostgresAdvancedConfigPgauditLogItem]? = nil) {
+extension PostgresAdvancedConfigPgaudit {
+    public init(featureEnabled: Bool? = nil, log: [PostgresAdvancedConfigPgauditLogItem]? = nil) {
         self.init()
         (self.featureEnabled, self.log) = (featureEnabled, log)
     }

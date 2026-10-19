@@ -13,9 +13,9 @@ struct ByoipPrefixesCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(prefix, forKey: SdkCodingKey("prefix"))
-        try keyedContainer.encode(region, forKey: SdkCodingKey("region"))
-        try keyedContainer.encode(signature, forKey: SdkCodingKey("signature"))
+        try keyedContainer.encode(self.prefix, forKey: SdkCodingKey("prefix"))
+        try keyedContainer.encode(self.region, forKey: SdkCodingKey("region"))
+        try keyedContainer.encode(self.signature, forKey: SdkCodingKey("signature"))
     }
 }
 
@@ -24,7 +24,7 @@ struct ByoipPrefixesPatchRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(advertise, forKey: SdkCodingKey("advertise"))
+        try keyedContainer.encodeIfPresent(self.advertise, forKey: SdkCodingKey("advertise"))
     }
 }
 
@@ -33,7 +33,7 @@ struct SecurityCreateScanRuleRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(resource, forKey: SdkCodingKey("resource"))
+        try keyedContainer.encodeIfPresent(self.resource, forKey: SdkCodingKey("resource"))
     }
 }
 
@@ -42,7 +42,7 @@ struct SecurityUpdateSettingsPlanRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(tierCoverage, forKey: SdkCodingKey("tier_coverage"))
+        try keyedContainer.encodeIfPresent(self.tierCoverage, forKey: SdkCodingKey("tier_coverage"))
     }
 }
 
@@ -52,8 +52,8 @@ struct SecurityCreateSuppressionRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(ruleUuid, forKey: SdkCodingKey("rule_uuid"))
-        try keyedContainer.encodeIfPresent(resources, forKey: SdkCodingKey("resources"))
+        try keyedContainer.encodeIfPresent(self.ruleUuid, forKey: SdkCodingKey("rule_uuid"))
+        try keyedContainer.encodeIfPresent(self.resources, forKey: SdkCodingKey("resources"))
     }
 }
 
@@ -63,8 +63,8 @@ struct SpacesKeyCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(grants, forKey: SdkCodingKey("grants"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.grants, forKey: SdkCodingKey("grants"))
     }
 }
 
@@ -74,8 +74,8 @@ struct SpacesKeyUpdateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(grants, forKey: SdkCodingKey("grants"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.grants, forKey: SdkCodingKey("grants"))
     }
 }
 
@@ -85,8 +85,8 @@ struct SpacesKeyPatchRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(grants, forKey: SdkCodingKey("grants"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.grants, forKey: SdkCodingKey("grants"))
     }
 }
 
@@ -95,7 +95,7 @@ struct TagsCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
     }
 }
 
@@ -104,7 +104,7 @@ struct TagsAssignResourcesRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(resources, forKey: SdkCodingKey("resources"))
+        try keyedContainer.encode(self.resources, forKey: SdkCodingKey("resources"))
     }
 }
 
@@ -113,7 +113,7 @@ struct TagsUnassignResourcesRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(resources, forKey: SdkCodingKey("resources"))
+        try keyedContainer.encode(self.resources, forKey: SdkCodingKey("resources"))
     }
 }
 
@@ -126,11 +126,11 @@ struct VectorDatabasesCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(projectId, forKey: SdkCodingKey("project_id"))
-        try keyedContainer.encodeIfPresent(region, forKey: SdkCodingKey("region"))
-        try keyedContainer.encodeIfPresent(size, forKey: SdkCodingKey("size"))
-        try keyedContainer.encodeIfPresent(tags, forKey: SdkCodingKey("tags"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.projectId, forKey: SdkCodingKey("project_id"))
+        try keyedContainer.encodeIfPresent(self.region, forKey: SdkCodingKey("region"))
+        try keyedContainer.encodeIfPresent(self.size, forKey: SdkCodingKey("size"))
+        try keyedContainer.encodeIfPresent(self.tags, forKey: SdkCodingKey("tags"))
     }
 }
 
@@ -141,9 +141,9 @@ struct VectorDatabasesUpdateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(config2, forKey: SdkCodingKey("config"))
-        try keyedContainer.encodeIfPresent(id2, forKey: SdkCodingKey("id"))
-        try keyedContainer.encodeIfPresent(projectId, forKey: SdkCodingKey("project_id"))
+        try keyedContainer.encodeIfPresent(self.config2, forKey: SdkCodingKey("config"))
+        try keyedContainer.encodeIfPresent(self.id2, forKey: SdkCodingKey("id"))
+        try keyedContainer.encodeIfPresent(self.projectId, forKey: SdkCodingKey("project_id"))
     }
 }
 
@@ -153,8 +153,8 @@ struct VectorDatabasesPostRestoreBackupRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(backupId2, forKey: SdkCodingKey("backup_id"))
-        try keyedContainer.encodeIfPresent(id2, forKey: SdkCodingKey("id"))
+        try keyedContainer.encodeIfPresent(self.backupId2, forKey: SdkCodingKey("backup_id"))
+        try keyedContainer.encodeIfPresent(self.id2, forKey: SdkCodingKey("id"))
     }
 }
 
@@ -164,8 +164,8 @@ struct VectorDatabasesPostResizeRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(id2, forKey: SdkCodingKey("id"))
-        try keyedContainer.encodeIfPresent(size, forKey: SdkCodingKey("size"))
+        try keyedContainer.encodeIfPresent(self.id2, forKey: SdkCodingKey("id"))
+        try keyedContainer.encodeIfPresent(self.size, forKey: SdkCodingKey("size"))
     }
 }
 
@@ -175,8 +175,8 @@ struct VectorDatabasesUpdateTagsRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(id2, forKey: SdkCodingKey("id"))
-        try keyedContainer.encodeIfPresent(tags, forKey: SdkCodingKey("tags"))
+        try keyedContainer.encodeIfPresent(self.id2, forKey: SdkCodingKey("id"))
+        try keyedContainer.encodeIfPresent(self.tags, forKey: SdkCodingKey("tags"))
     }
 }
 
@@ -186,8 +186,8 @@ struct VolumeSnapshotsCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(tags, forKey: SdkCodingKey("tags"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.tags, forKey: SdkCodingKey("tags"))
     }
 }
 
@@ -197,7 +197,7 @@ struct VpcsCreatePeeringsRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(vpcId2, forKey: SdkCodingKey("vpc_id"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.vpcId2, forKey: SdkCodingKey("vpc_id"))
     }
 }

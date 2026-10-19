@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApi domain models
+// AgentPlatformAPIApi domain models
 /// Aggregation across epochs when a run repeats each dataset row k times. Only populated when epochs > 1; at epochs
 /// == 1 every number here would equal overall_score_percent, so it is omitted rather than duplicated.
 public struct ApiEpochResultSummary: Codable {
@@ -49,36 +49,27 @@ public struct ApiEpochResultSummary: Codable {
     }
 
     init() {
-        (avgAtKPercent, consAtKPercent, epochs, passAtKPercent, perEpoch) = (nil, nil, nil, nil, nil)
-        (rowsExcluded, rowsScored, scoreStddevPercent) = (nil, nil, nil)
+        (self.avgAtKPercent, self.consAtKPercent, self.epochs, self.passAtKPercent, self.perEpoch) = (nil, nil, nil, nil, nil)
+        (self.rowsExcluded, self.rowsScored, self.scoreStddevPercent) = (nil, nil, nil)
     }
 }
 
-public extension ApiEpochResultSummary {
-    init(from decoder: Decoder) throws {
+extension ApiEpochResultSummary {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        avgAtKPercent = try container.sdkDecodeIfPresent(.avgAtKPercent)
-        consAtKPercent = try container.sdkDecodeIfPresent(.consAtKPercent)
-        epochs = try container.sdkDecodeIfPresent(.epochs)
-        passAtKPercent = try container.sdkDecodeIfPresent(.passAtKPercent)
-        perEpoch = try container.sdkDecodeIfPresent(.perEpoch)
-        rowsExcluded = try container.sdkDecodeIfPresent(.rowsExcluded)
-        rowsScored = try container.sdkDecodeIfPresent(.rowsScored)
-        scoreStddevPercent = try container.sdkDecodeIfPresent(.scoreStddevPercent)
+        self.avgAtKPercent = try container.sdkDecodeIfPresent(.avgAtKPercent)
+        self.consAtKPercent = try container.sdkDecodeIfPresent(.consAtKPercent)
+        self.epochs = try container.sdkDecodeIfPresent(.epochs)
+        self.passAtKPercent = try container.sdkDecodeIfPresent(.passAtKPercent)
+        self.perEpoch = try container.sdkDecodeIfPresent(.perEpoch)
+        self.rowsExcluded = try container.sdkDecodeIfPresent(.rowsExcluded)
+        self.rowsScored = try container.sdkDecodeIfPresent(.rowsScored)
+        self.scoreStddevPercent = try container.sdkDecodeIfPresent(.scoreStddevPercent)
     }
 }
 
-public extension ApiEpochResultSummary {
-    init(
-        avgAtKPercent: Double? = nil,
-        consAtKPercent: Double? = nil,
-        epochs: Int? = nil,
-        passAtKPercent: Double? = nil,
-        perEpoch: [ApiPerEpochResultSummary]? = nil,
-        rowsExcluded: Int? = nil,
-        rowsScored: Int? = nil,
-        scoreStddevPercent: Double? = nil
-    ) {
+extension ApiEpochResultSummary {
+    public init(avgAtKPercent: Double? = nil, consAtKPercent: Double? = nil, epochs: Int? = nil, passAtKPercent: Double? = nil, perEpoch: [ApiPerEpochResultSummary]? = nil, rowsExcluded: Int? = nil, rowsScored: Int? = nil, scoreStddevPercent: Double? = nil) {
         self.init()
         (self.avgAtKPercent, self.consAtKPercent) = (avgAtKPercent, consAtKPercent)
         (self.epochs, self.passAtKPercent) = (epochs, passAtKPercent)
@@ -103,20 +94,20 @@ public struct ApiAssociatedModelEvaluationPreset: Codable {
     }
 
     init() {
-        (evalPresetUuid, name) = (nil, nil)
+        (self.evalPresetUuid, self.name) = (nil, nil)
     }
 }
 
-public extension ApiAssociatedModelEvaluationPreset {
-    init(from decoder: Decoder) throws {
+extension ApiAssociatedModelEvaluationPreset {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        evalPresetUuid = try container.sdkDecodeIfPresent(.evalPresetUuid)
-        name = try container.sdkDecodeIfPresent(.name)
+        self.evalPresetUuid = try container.sdkDecodeIfPresent(.evalPresetUuid)
+        self.name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-public extension ApiAssociatedModelEvaluationPreset {
-    init(evalPresetUuid: String? = nil, name: String? = nil) {
+extension ApiAssociatedModelEvaluationPreset {
+    public init(evalPresetUuid: String? = nil, name: String? = nil) {
         self.init()
         (self.evalPresetUuid, self.name) = (evalPresetUuid, name)
     }
@@ -162,43 +153,32 @@ public struct ApiTraceSpan: Codable {
     }
 
     init() {
-        (agent, createdAt, input, llm, name) = (nil, nil, nil, nil, nil)
-        (output, retriever, tool, type, workflow) = (nil, nil, nil, nil, nil)
+        (self.agent, self.createdAt, self.input, self.llm, self.name) = (nil, nil, nil, nil, nil)
+        (self.output, self.retriever, self.tool, self.type, self.workflow) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ApiTraceSpan {
-    init(from decoder: Decoder) throws {
+extension ApiTraceSpan {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agent = try container.sdkDecodeIfPresent(.agent)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        input = try container.sdkDecodeIfPresent(.input)
-        llm = try container.sdkDecodeIfPresent(.llm)
-        name = try container.sdkDecodeIfPresent(.name)
-        output = try container.sdkDecodeIfPresent(.output)
-        retriever = try container.sdkDecodeIfPresent(.retriever)
-        tool = try container.sdkDecodeIfPresent(.tool)
-        type = try container.sdkDecodeIfPresent(.type)
-        workflow = try container.sdkDecodeIfPresent(.workflow)
-        if let value = createdAt {
+        self.agent = try container.sdkDecodeIfPresent(.agent)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.input = try container.sdkDecodeIfPresent(.input)
+        self.llm = try container.sdkDecodeIfPresent(.llm)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.output = try container.sdkDecodeIfPresent(.output)
+        self.retriever = try container.sdkDecodeIfPresent(.retriever)
+        self.tool = try container.sdkDecodeIfPresent(.tool)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.workflow = try container.sdkDecodeIfPresent(.workflow)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApiTraceSpan {
-    init(
-        agent: ApiAgentSpan? = nil,
-        createdAt: Date? = nil,
-        input: [String: JSONValue]? = nil,
-        llm: ApiLLMSpan? = nil,
-        name: String? = nil,
-        output: [String: JSONValue]? = nil,
-        retriever: ApiRetrieverSpan? = nil,
-        tool: ApiToolSpan? = nil,
-        type: ApiTraceSpanType? = nil,
-        workflow: ApiWorkflowSpan? = nil
-    ) throws {
+extension ApiTraceSpan {
+    public init(agent: ApiAgentSpan? = nil, createdAt: Date? = nil, input: [String: JSONValue]? = nil, llm: ApiLLMSpan? = nil, name: String? = nil, output: [String: JSONValue]? = nil, retriever: ApiRetrieverSpan? = nil, tool: ApiToolSpan? = nil, type: ApiTraceSpanType? = nil, workflow: ApiWorkflowSpan? = nil) throws {
         self.init()
         (self.agent, self.createdAt) = (agent, createdAt)
         (self.input, self.llm) = (input, llm)
@@ -230,21 +210,21 @@ public struct ApiMeta: Codable {
     }
 
     init() {
-        (page, pages, total) = (nil, nil, nil)
+        (self.page, self.pages, self.total) = (nil, nil, nil)
     }
 }
 
-public extension ApiMeta {
-    init(from decoder: Decoder) throws {
+extension ApiMeta {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        page = try container.sdkDecodeIfPresent(.page)
-        pages = try container.sdkDecodeIfPresent(.pages)
-        total = try container.sdkDecodeIfPresent(.total)
+        self.page = try container.sdkDecodeIfPresent(.page)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
+        self.total = try container.sdkDecodeIfPresent(.total)
     }
 }
 
-public extension ApiMeta {
-    init(page: Int? = nil, pages: Int? = nil, total: Int? = nil) {
+extension ApiMeta {
+    public init(page: Int? = nil, pages: Int? = nil, total: Int? = nil) {
         self.init()
         (self.page, self.pages) = (page, pages)
         self.total = total
@@ -270,21 +250,21 @@ public struct ApiSpacesDataSource: Codable {
     }
 
     init() {
-        (bucketName, itemPath, region) = (nil, nil, nil)
+        (self.bucketName, self.itemPath, self.region) = (nil, nil, nil)
     }
 }
 
-public extension ApiSpacesDataSource {
-    init(from decoder: Decoder) throws {
+extension ApiSpacesDataSource {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        bucketName = try container.sdkDecodeIfPresent(.bucketName)
-        itemPath = try container.sdkDecodeIfPresent(.itemPath)
-        region = try container.sdkDecodeIfPresent(.region)
+        self.bucketName = try container.sdkDecodeIfPresent(.bucketName)
+        self.itemPath = try container.sdkDecodeIfPresent(.itemPath)
+        self.region = try container.sdkDecodeIfPresent(.region)
     }
 }
 
-public extension ApiSpacesDataSource {
-    init(bucketName: String? = nil, itemPath: String? = nil, region: String? = nil) {
+extension ApiSpacesDataSource {
+    public init(bucketName: String? = nil, itemPath: String? = nil, region: String? = nil) {
         self.init()
         (self.bucketName, self.itemPath) = (bucketName, itemPath)
         self.region = region
@@ -335,49 +315,31 @@ public struct ApiKBDataSource: Codable {
     }
 
     init() {
-        (awsDataSource, bucketName, bucketRegion, chunkingAlgorithm, chunkingOptions) = (nil, nil, nil, nil, nil)
-        (dropboxDataSource, fileUploadDataSource, googleDriveDataSource, itemPath, spacesDataSource) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        webCrawlerDataSource = nil
+        (self.awsDataSource, self.bucketName, self.bucketRegion, self.chunkingAlgorithm, self.chunkingOptions) = (nil, nil, nil, nil, nil)
+        (self.dropboxDataSource, self.fileUploadDataSource, self.googleDriveDataSource, self.itemPath, self.spacesDataSource) = (nil, nil, nil, nil, nil)
+        self.webCrawlerDataSource = nil
     }
 }
 
-public extension ApiKBDataSource {
-    init(from decoder: Decoder) throws {
+extension ApiKBDataSource {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        awsDataSource = try container.sdkDecodeIfPresent(.awsDataSource)
-        bucketName = try container.sdkDecodeIfPresent(.bucketName)
-        bucketRegion = try container.sdkDecodeIfPresent(.bucketRegion)
-        chunkingAlgorithm = try container.sdkDecodeIfPresent(.chunkingAlgorithm)
-        chunkingOptions = try container.sdkDecodeIfPresent(.chunkingOptions)
-        dropboxDataSource = try container.sdkDecodeIfPresent(.dropboxDataSource)
-        fileUploadDataSource = try container.sdkDecodeIfPresent(.fileUploadDataSource)
-        googleDriveDataSource = try container.sdkDecodeIfPresent(.googleDriveDataSource)
-        itemPath = try container.sdkDecodeIfPresent(.itemPath)
-        spacesDataSource = try container.sdkDecodeIfPresent(.spacesDataSource)
-        webCrawlerDataSource = try container.sdkDecodeIfPresent(.webCrawlerDataSource)
+        self.awsDataSource = try container.sdkDecodeIfPresent(.awsDataSource)
+        self.bucketName = try container.sdkDecodeIfPresent(.bucketName)
+        self.bucketRegion = try container.sdkDecodeIfPresent(.bucketRegion)
+        self.chunkingAlgorithm = try container.sdkDecodeIfPresent(.chunkingAlgorithm)
+        self.chunkingOptions = try container.sdkDecodeIfPresent(.chunkingOptions)
+        self.dropboxDataSource = try container.sdkDecodeIfPresent(.dropboxDataSource)
+        self.fileUploadDataSource = try container.sdkDecodeIfPresent(.fileUploadDataSource)
+        self.googleDriveDataSource = try container.sdkDecodeIfPresent(.googleDriveDataSource)
+        self.itemPath = try container.sdkDecodeIfPresent(.itemPath)
+        self.spacesDataSource = try container.sdkDecodeIfPresent(.spacesDataSource)
+        self.webCrawlerDataSource = try container.sdkDecodeIfPresent(.webCrawlerDataSource)
     }
 }
 
-public extension ApiKBDataSource {
-    init(
-        awsDataSource: ApiAWSDataSource? = nil,
-        bucketName: String? = nil,
-        bucketRegion: String? = nil,
-        chunkingAlgorithm: ApiChunkingAlgorithm? = nil,
-        chunkingOptions: ApiChunkingOptions? = nil,
-        dropboxDataSource: ApiDropboxDataSource? = nil,
-        fileUploadDataSource: ApiFileUploadDataSource? = nil,
-        googleDriveDataSource: ApiGoogleDriveDataSource? = nil,
-        itemPath: String? = nil,
-        spacesDataSource: ApiSpacesDataSource? = nil,
-        webCrawlerDataSource: ApiWebCrawlerDataSource? = nil
-    ) {
+extension ApiKBDataSource {
+    public init(awsDataSource: ApiAWSDataSource? = nil, bucketName: String? = nil, bucketRegion: String? = nil, chunkingAlgorithm: ApiChunkingAlgorithm? = nil, chunkingOptions: ApiChunkingOptions? = nil, dropboxDataSource: ApiDropboxDataSource? = nil, fileUploadDataSource: ApiFileUploadDataSource? = nil, googleDriveDataSource: ApiGoogleDriveDataSource? = nil, itemPath: String? = nil, spacesDataSource: ApiSpacesDataSource? = nil, webCrawlerDataSource: ApiWebCrawlerDataSource? = nil) {
         self.init()
         (self.awsDataSource, self.bucketName) = (awsDataSource, bucketName)
         (self.bucketRegion, self.chunkingAlgorithm) = (bucketRegion, chunkingAlgorithm)
@@ -414,29 +376,23 @@ public struct ApiMcpServer: Codable {
     }
 
     init() {
-        (allowedTools, authorization, headers, serverLabel, serverUrl) = (nil, nil, nil, nil, nil)
+        (self.allowedTools, self.authorization, self.headers, self.serverLabel, self.serverUrl) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ApiMcpServer {
-    init(from decoder: Decoder) throws {
+extension ApiMcpServer {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        allowedTools = try container.sdkDecodeIfPresent(.allowedTools)
-        authorization = try container.sdkDecodeIfPresent(.authorization)
-        headers = try container.sdkDecodeIfPresent(.headers)
-        serverLabel = try container.sdkDecodeIfPresent(.serverLabel)
-        serverUrl = try container.sdkDecodeIfPresent(.serverUrl)
+        self.allowedTools = try container.sdkDecodeIfPresent(.allowedTools)
+        self.authorization = try container.sdkDecodeIfPresent(.authorization)
+        self.headers = try container.sdkDecodeIfPresent(.headers)
+        self.serverLabel = try container.sdkDecodeIfPresent(.serverLabel)
+        self.serverUrl = try container.sdkDecodeIfPresent(.serverUrl)
     }
 }
 
-public extension ApiMcpServer {
-    init(
-        allowedTools: [String]? = nil,
-        authorization: String? = nil,
-        headers: [String: String]? = nil,
-        serverLabel: String? = nil,
-        serverUrl: String? = nil
-    ) {
+extension ApiMcpServer {
+    public init(allowedTools: [String]? = nil, authorization: String? = nil, headers: [String: String]? = nil, serverLabel: String? = nil, serverUrl: String? = nil) {
         self.init()
         (self.allowedTools, self.authorization) = (allowedTools, authorization)
         (self.headers, self.serverLabel) = (headers, serverLabel)
@@ -459,20 +415,20 @@ public struct ApiRerankingConfiguration: Codable {
     }
 
     init() {
-        (enabled, model) = (nil, nil)
+        (self.enabled, self.model) = (nil, nil)
     }
 }
 
-public extension ApiRerankingConfiguration {
-    init(from decoder: Decoder) throws {
+extension ApiRerankingConfiguration {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        enabled = try container.sdkDecodeIfPresent(.enabled)
-        model = try container.sdkDecodeIfPresent(.model)
+        self.enabled = try container.sdkDecodeIfPresent(.enabled)
+        self.model = try container.sdkDecodeIfPresent(.model)
     }
 }
 
-public extension ApiRerankingConfiguration {
-    init(enabled: Bool? = nil, model: String? = nil) {
+extension ApiRerankingConfiguration {
+    public init(enabled: Bool? = nil, model: String? = nil) {
         self.init()
         (self.enabled, self.model) = (enabled, model)
     }
@@ -509,32 +465,25 @@ public struct ApiLatencyMetrics: Codable {
     }
 
     init() {
-        (avgE2eLatencyMs, maxE2eLatencyMs, minE2eLatencyMs, p50LatencyMs, p90LatencyMs) = (nil, nil, nil, nil, nil)
-        p95LatencyMs = nil
+        (self.avgE2eLatencyMs, self.maxE2eLatencyMs, self.minE2eLatencyMs, self.p50LatencyMs, self.p90LatencyMs) = (nil, nil, nil, nil, nil)
+        self.p95LatencyMs = nil
     }
 }
 
-public extension ApiLatencyMetrics {
-    init(from decoder: Decoder) throws {
+extension ApiLatencyMetrics {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        avgE2eLatencyMs = try container.sdkDecodeIfPresent(.avgE2eLatencyMs)
-        maxE2eLatencyMs = try container.sdkDecodeIfPresent(.maxE2eLatencyMs)
-        minE2eLatencyMs = try container.sdkDecodeIfPresent(.minE2eLatencyMs)
-        p50LatencyMs = try container.sdkDecodeIfPresent(.p50LatencyMs)
-        p90LatencyMs = try container.sdkDecodeIfPresent(.p90LatencyMs)
-        p95LatencyMs = try container.sdkDecodeIfPresent(.p95LatencyMs)
+        self.avgE2eLatencyMs = try container.sdkDecodeIfPresent(.avgE2eLatencyMs)
+        self.maxE2eLatencyMs = try container.sdkDecodeIfPresent(.maxE2eLatencyMs)
+        self.minE2eLatencyMs = try container.sdkDecodeIfPresent(.minE2eLatencyMs)
+        self.p50LatencyMs = try container.sdkDecodeIfPresent(.p50LatencyMs)
+        self.p90LatencyMs = try container.sdkDecodeIfPresent(.p90LatencyMs)
+        self.p95LatencyMs = try container.sdkDecodeIfPresent(.p95LatencyMs)
     }
 }
 
-public extension ApiLatencyMetrics {
-    init(
-        avgE2eLatencyMs: Double? = nil,
-        maxE2eLatencyMs: Double? = nil,
-        minE2eLatencyMs: Double? = nil,
-        p50LatencyMs: Double? = nil,
-        p90LatencyMs: Double? = nil,
-        p95LatencyMs: Double? = nil
-    ) {
+extension ApiLatencyMetrics {
+    public init(avgE2eLatencyMs: Double? = nil, maxE2eLatencyMs: Double? = nil, minE2eLatencyMs: Double? = nil, p50LatencyMs: Double? = nil, p90LatencyMs: Double? = nil, p95LatencyMs: Double? = nil) {
         self.init()
         (self.avgE2eLatencyMs, self.maxE2eLatencyMs) = (avgE2eLatencyMs, maxE2eLatencyMs)
         (self.minE2eLatencyMs, self.p50LatencyMs) = (minE2eLatencyMs, p50LatencyMs)
@@ -565,16 +514,16 @@ public struct ApiAgreement: Codable {
     }
 
     init() {
-        (description, name, url, uuid) = (nil, nil, nil, nil)
+        (self.description, self.name, self.url, self.uuid) = (nil, nil, nil, nil)
     }
 }
 
-public extension ApiAgreement {
-    init(from decoder: Decoder) throws {
+extension ApiAgreement {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        description = try container.sdkDecodeIfPresent(.description)
-        name = try container.sdkDecodeIfPresent(.name)
-        url = try container.sdkDecodeIfPresent(.url)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
     }
 }

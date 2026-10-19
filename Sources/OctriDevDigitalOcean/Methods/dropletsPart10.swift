@@ -6,30 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DropletsMethods {
-    /// To retrieve a list of all Droplets that are co-located on the same physical hardware, send a GET request to
-    /// `/v2/reports/droplet_neighbors_ids`. The results will be returned as a JSON object with a key of `neighbor_ids`.
-    /// This will be set to an array of arrays. Each array will contain a set of Droplet IDs for Droplets that share a
-    /// physical server. An empty array indicates that all Droplets associated with your account are located on separate
-    /// physical hardware.
-    static func dropletsListNeighborsIds(
-        config: ClientConfig,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> NeighborIds {
-        try await (sdkRequest(
-            "GET",
-            "/v2/reports/droplet_neighbors_ids",
-            config: config,
-            decoder: .json,
-            operationId: "droplets_list_neighborsIds",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+extension DropletsMethods {
+    /// To retrieve a list of all Droplets that are co-located on the same physical hardware, send a GET request to `/v2/reports/droplet_neighbors_ids`. The results will be returned as a JSON object with a key of `neighbor_ids`. This will be set to an array of arrays. Each array will contain a set of Droplet IDs for Droplets that share a physical server. An empty array indicates that all Droplets associated with your account are located on separate physical hardware.
+    public static func dropletsListNeighborsIds(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> NeighborIds {
+        return try (await sdkRequest("GET", "/v2/reports/droplet_neighbors_ids", config: config, decoder: .json, operationId: "droplets_list_neighborsIds", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

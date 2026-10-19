@@ -6,12 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AppsMethods {
-    /// Rollback an app to a previous deployment. A new deployment will be created to perform the rollback. The app will
-    /// be pinned to the rollback deployment preventing any new deployments from being created, either manually or
-    /// through Auto Deploy on Push webhooks. To resume deployments, the rollback must be either committed or reverted.
-    /// It is recommended to use the Validate App Rollback endpoint to double check if the rollback is valid and if
-    /// there are any warnings.
+extension AppsMethods {
+    /// Rollback an app to a previous deployment. A new deployment will be created to perform the rollback. The app will be pinned to the rollback deployment preventing any new deployments from being created, either manually or through Auto Deploy on Push webhooks. To resume deployments, the rollback must be either committed or reverted. It is recommended to use the Validate App Rollback endpoint to double check if the rollback is valid and if there are any warnings.
     ///
     /// - Parameters:
     /// - appId: The app ID
@@ -22,30 +18,9 @@ public extension AppsMethods {
     ///   committed or reverted via the CommitAppRollback or RevertAppRollback
     ///   endpoints respectively. If true, the rollback will be immediately committed
     ///   and the app will remain unpinned.
-    static func appsCreateRollback(
-        config: ClientConfig,
-        appId: String,
-        deploymentId: String? = nil,
-        skipPin: Bool? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppsDeploymentResponse {
+    public static func appsCreateRollback(config: ClientConfig, appId: String, deploymentId: String? = nil, skipPin: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsDeploymentResponse {
         let requestBody = AppsCreateRollbackRequestBody(deploymentId: deploymentId, skipPin: skipPin)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/rollback"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "apps_create_rollback",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/rollback"].joined(), config: config, body: requestBody, decoder: .json, operationId: "apps_create_rollback", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// SharedSubscription domain models
+// SharedSubscription domain models
 /// Typed representation of the `SubscriptionTierBase` API schema.
 public struct SubscriptionTierBase: Codable {
     /// The name of the subscription tier.
@@ -45,36 +45,27 @@ public struct SubscriptionTierBase: Codable {
     }
 
     init() {
-        (name, slug, includedRepositories, includedStorageBytes, allowStorageOverage) = (nil, nil, nil, nil, nil)
-        (includedBandwidthBytes, monthlyPriceInCents, storageOveragePriceInCents) = (nil, nil, nil)
+        (self.name, self.slug, self.includedRepositories, self.includedStorageBytes, self.allowStorageOverage) = (nil, nil, nil, nil, nil)
+        (self.includedBandwidthBytes, self.monthlyPriceInCents, self.storageOveragePriceInCents) = (nil, nil, nil)
     }
 }
 
-public extension SubscriptionTierBase {
-    init(from decoder: Decoder) throws {
+extension SubscriptionTierBase {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        slug = try container.sdkDecodeIfPresent(.slug)
-        includedRepositories = try container.sdkDecodeIfPresent(.includedRepositories)
-        includedStorageBytes = try container.sdkDecodeIfPresent(.includedStorageBytes)
-        allowStorageOverage = try container.sdkDecodeIfPresent(.allowStorageOverage)
-        includedBandwidthBytes = try container.sdkDecodeIfPresent(.includedBandwidthBytes)
-        monthlyPriceInCents = try container.sdkDecodeIfPresent(.monthlyPriceInCents)
-        storageOveragePriceInCents = try container.sdkDecodeIfPresent(.storageOveragePriceInCents)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.slug = try container.sdkDecodeIfPresent(.slug)
+        self.includedRepositories = try container.sdkDecodeIfPresent(.includedRepositories)
+        self.includedStorageBytes = try container.sdkDecodeIfPresent(.includedStorageBytes)
+        self.allowStorageOverage = try container.sdkDecodeIfPresent(.allowStorageOverage)
+        self.includedBandwidthBytes = try container.sdkDecodeIfPresent(.includedBandwidthBytes)
+        self.monthlyPriceInCents = try container.sdkDecodeIfPresent(.monthlyPriceInCents)
+        self.storageOveragePriceInCents = try container.sdkDecodeIfPresent(.storageOveragePriceInCents)
     }
 }
 
-public extension SubscriptionTierBase {
-    init(
-        name: String? = nil,
-        slug: String? = nil,
-        includedRepositories: Int? = nil,
-        includedStorageBytes: Int? = nil,
-        allowStorageOverage: Bool? = nil,
-        includedBandwidthBytes: Int? = nil,
-        monthlyPriceInCents: Int? = nil,
-        storageOveragePriceInCents: Int? = nil
-    ) {
+extension SubscriptionTierBase {
+    public init(name: String? = nil, slug: String? = nil, includedRepositories: Int? = nil, includedStorageBytes: Int? = nil, allowStorageOverage: Bool? = nil, includedBandwidthBytes: Int? = nil, monthlyPriceInCents: Int? = nil, storageOveragePriceInCents: Int? = nil) {
         self.init()
         (self.name, self.slug) = (name, slug)
         self.includedRepositories = includedRepositories
@@ -103,27 +94,27 @@ public struct Subscription: Codable {
     }
 
     init() {
-        (tier, createdAt, updatedAt) = (nil, nil, nil)
+        (self.tier, self.createdAt, self.updatedAt) = (nil, nil, nil)
     }
 }
 
-public extension Subscription {
-    init(from decoder: Decoder) throws {
+extension Subscription {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        tier = try container.sdkDecodeIfPresent(.tier)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = createdAt {
+        self.tier = try container.sdkDecodeIfPresent(.tier)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension Subscription {
-    init(tier: SubscriptionTierBase? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) throws {
+extension Subscription {
+    public init(tier: SubscriptionTierBase? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) throws {
         self.init()
         (self.tier, self.createdAt) = (tier, createdAt)
         self.updatedAt = updatedAt
@@ -146,19 +137,19 @@ public struct SubscriptionResponse: Codable {
     }
 
     init() {
-        subscription = nil
+        self.subscription = nil
     }
 }
 
-public extension SubscriptionResponse {
-    init(from decoder: Decoder) throws {
+extension SubscriptionResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        subscription = try container.sdkDecodeIfPresent(.subscription)
+        self.subscription = try container.sdkDecodeIfPresent(.subscription)
     }
 }
 
-public extension SubscriptionResponse {
-    init(subscription: Subscription? = nil) {
+extension SubscriptionResponse {
+    public init(subscription: Subscription? = nil) {
         self.init()
         self.subscription = subscription
     }

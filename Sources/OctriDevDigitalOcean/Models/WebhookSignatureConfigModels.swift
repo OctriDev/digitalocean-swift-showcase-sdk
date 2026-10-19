@@ -3,15 +3,15 @@
 
 import Foundation
 
-/// WebhookSignatureConfig domain models
+// WebhookSignatureConfig domain models
 /// Optional HMAC signature configuration for a webhook create or update request. `secret` is write-only: send the
 /// full value to set or rotate. Omit `secret` on update to keep the existing secret.
 public struct WebhookSignatureConfig: Codable {
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension WebhookSignatureConfig {
-    init() {}
+extension WebhookSignatureConfig {
+    public init() {
+    }
 }

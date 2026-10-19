@@ -6,9 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ActionGatewayMethods {
-    /// Returns the latest version of the named toolbelt, or the version requested, with catalog metadata for one page
-    /// of its members in `tool_details`. A deleted toolbelt returns 404 unless a version is requested.
+extension ActionGatewayMethods {
+    /// Returns the latest version of the named toolbelt, or the version requested, with catalog metadata for one page of its members in `tool_details`. A deleted toolbelt returns 404 unless a version is requested.
     ///
     /// - Parameters:
     /// - name: Toolbelt name.
@@ -22,51 +21,26 @@ public extension ActionGatewayMethods {
     ///   description, provider, or category contains this value, case-insensitively.
     ///   It does not filter toolbelt.tools. This is a substring match, not a filter
     ///   expression.
-    static func toolbeltsGet(
-        config: ClientConfig,
-        name: String,
-        version: String? = nil,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        search: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> GetToolbeltResponse {
+    public static func toolbeltsGet(config: ClientConfig, name: String, version: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, search: String? = nil, requestOptions: RequestOptions? = nil) async throws -> GetToolbeltResponse {
         try sdkValidatePattern("name", name, sdkPattern96f04f9d57bc)
 
-        if let version {
+        if let version = version {
             try sdkValidatePattern("version", version, sdkPatternb0b1c6a4b4f4)
         }
 
-        if let pageSize {
+        if let pageSize = pageSize {
             try validateRange("page_size", Double(pageSize), min: 1, max: 100)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/action-gateway/toolbelts/", sdkEncodePathSegment(sdkWireString(name))].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("version", value: version),
-                SdkQueryParameter("page_size", value: pageSize),
-                SdkQueryParameter("page_token", value: pageToken),
-                SdkQueryParameter("search", value: search),
-            ],
-            decoder: .json,
-            operationId: "toolbelts_get",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/action-gateway/toolbelts/", sdkEncodePathSegment(sdkWireString(name))].joined(), config: config, query: [
+            SdkQueryParameter("version", value: version),
+            SdkQueryParameter("page_size", value: pageSize),
+            SdkQueryParameter("page_token", value: pageToken),
+            SdkQueryParameter("search", value: search),
+        ], decoder: .json, operationId: "toolbelts_get", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Returns the latest version of the named toolbelt, or the version requested, with catalog metadata for one page
-    /// of its members in `tool_details`. A deleted toolbelt returns 404 unless a version is requested.
+    /// Returns the latest version of the named toolbelt, or the version requested, with catalog metadata for one page of its members in `tool_details`. A deleted toolbelt returns 404 unless a version is requested.
     ///
     /// - Parameters:
     /// - name: Toolbelt name.
@@ -80,42 +54,17 @@ public extension ActionGatewayMethods {
     ///   description, provider, or category contains this value, case-insensitively.
     ///   It does not filter toolbelt.tools. This is a substring match, not a filter
     ///   expression.
-    static func toolbeltsGetPaginated(
-        config: ClientConfig,
-        name: String,
-        version: String? = nil,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        search: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<ToolbeltToolDetail, Swift.Error> {
-        AsyncThrowingStream<ToolbeltToolDetail, Swift.Error> { (continuation: AsyncThrowingStream<
-            ToolbeltToolDetail,
-            Swift.Error
-        >.Continuation) in
+    public static func toolbeltsGetPaginated(config: ClientConfig, name: String, version: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, search: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<ToolbeltToolDetail, Swift.Error> {
+        return AsyncThrowingStream<ToolbeltToolDetail, Swift.Error> { (continuation: AsyncThrowingStream<ToolbeltToolDetail, Swift.Error>.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await toolbeltsGet(
-                            config: config,
-                            name: name,
-                            version: version,
-                            pageSize: pageSize,
-                            pageToken: pageCursor,
-                            search: search,
-                            requestOptions: requestOptions
-                        )
+                        let pageResponse = try await toolbeltsGet(config: config, name: name, version: version, pageSize: pageSize, pageToken: pageCursor, search: search, requestOptions: requestOptions)
                         let pageItems = (pageResponse.toolDetails ?? [])
-                        if pageItems.isEmpty {
-                            break
-                        }
-                        for item in pageItems {
-                            continuation.yield(item)
-                        }
-                        guard let nextCursor = pageResponse.nextPageToken else {
-                            break
-                        }
+                        if pageItems.isEmpty { break }
+                        for item in pageItems { continuation.yield(item) }
+                        guard let nextCursor = pageResponse.nextPageToken else { break }
                         pageCursor = nextCursor
                     }
                 } catch {
@@ -128,50 +77,25 @@ public extension ActionGatewayMethods {
         }
     }
 
-    struct ToolbeltsGetPage {
+    public struct ToolbeltsGetPage {
         public let data: GetToolbeltResponse
         public let items: [ToolbeltToolDetail]
         public let hasMore: Bool
     }
 
-    static func toolbeltsGetPages(
-        config: ClientConfig,
-        name: String,
-        version: String? = nil,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        search: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<ToolbeltsGetPage, Swift.Error> {
-        AsyncThrowingStream<ToolbeltsGetPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<
-            ToolbeltsGetPage,
-            Swift.Error
-        >.Continuation) in
+    public static func toolbeltsGetPages(config: ClientConfig, name: String, version: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, search: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<ToolbeltsGetPage, Swift.Error> {
+        return AsyncThrowingStream<ToolbeltsGetPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<ToolbeltsGetPage, Swift.Error>.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await toolbeltsGet(
-                            config: config,
-                            name: name,
-                            version: version,
-                            pageSize: pageSize,
-                            pageToken: pageCursor,
-                            search: search,
-                            requestOptions: requestOptions
-                        )
+                        let pageResponse = try await toolbeltsGet(config: config, name: name, version: version, pageSize: pageSize, pageToken: pageCursor, search: search, requestOptions: requestOptions)
                         let pageItems = (pageResponse.toolDetails ?? [])
-                        if pageItems.isEmpty {
-                            break
-                        }
+                        if pageItems.isEmpty { break }
                         let hasMore = pageResponse.nextPageToken != nil
                         pageContinuation.yield(ToolbeltsGetPage(data: pageResponse, items: pageItems, hasMore: hasMore))
-                        if !hasMore {
-                            break
-                        }
-                        guard let nextCursor = pageResponse.nextPageToken else {
-                            break
-                        }
+                        if !hasMore { break }
+                        guard let nextCursor = pageResponse.nextPageToken else { break }
                         pageCursor = nextCursor
                     }
                 } catch {

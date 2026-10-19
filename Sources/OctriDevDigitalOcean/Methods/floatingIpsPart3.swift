@@ -6,32 +6,12 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension FloatingIpsMethods {
-    /// To delete a floating IP and remove it from your account, send a DELETE request to
-    /// `/v2/floating_ips/$FLOATING_IP_ADDR`. A successful request will receive a 204 status code with no body in
-    /// response. This indicates that the request was processed successfully.
+extension FloatingIpsMethods {
+    /// To delete a floating IP and remove it from your account, send a DELETE request to `/v2/floating_ips/$FLOATING_IP_ADDR`. A successful request will receive a 204 status code with no body in response. This indicates that the request was processed successfully.
     ///
     /// - Parameters:
     /// - floatingIp: A floating IP address.
-    static func floatingIpsDelete(
-        config: ClientConfig,
-        floatingIp: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await (sdkRequest(
-            "DELETE",
-            ["/v2/floating_ips/", sdkEncodePathSegment(sdkWireString(floatingIp))].joined(),
-            config: config,
-            decoder: .empty,
-            operationId: "floatingIPs_delete",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func floatingIpsDelete(config: ClientConfig, floatingIp: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try (await sdkRequest("DELETE", ["/v2/floating_ips/", sdkEncodePathSegment(sdkWireString(floatingIp))].joined(), config: config, decoder: .empty, operationId: "floatingIPs_delete", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

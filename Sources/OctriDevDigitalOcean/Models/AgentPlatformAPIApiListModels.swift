@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiList domain models
+// AgentPlatformAPIApiList domain models
 /// Output for listing the scenarios in a scenario set.
 public struct ApiListScenariosOutput: Codable {
     /// Sort-by values available for this list request.
@@ -26,29 +26,23 @@ public struct ApiListScenariosOutput: Codable {
     }
 
     init() {
-        (availableSortBy, availableSortDirections, links, meta, scenarios) = (nil, nil, nil, nil, nil)
+        (self.availableSortBy, self.availableSortDirections, self.links, self.meta, self.scenarios) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ApiListScenariosOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListScenariosOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
-        availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
-        scenarios = try container.sdkDecodeIfPresent(.scenarios)
+        self.availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
+        self.availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
+        self.scenarios = try container.sdkDecodeIfPresent(.scenarios)
     }
 }
 
-public extension ApiListScenariosOutput {
-    init(
-        availableSortBy: [ApiScenarioSortField]? = nil,
-        availableSortDirections: [ApiSortDirection]? = nil,
-        links: ApiLinks? = nil,
-        meta: ApiMeta? = nil,
-        scenarios: [ApiScenario]? = nil
-    ) {
+extension ApiListScenariosOutput {
+    public init(availableSortBy: [ApiScenarioSortField]? = nil, availableSortDirections: [ApiSortDirection]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil, scenarios: [ApiScenario]? = nil) {
         self.init()
         (self.availableSortBy, self.availableSortDirections) = (availableSortBy, availableSortDirections)
         (self.links, self.meta) = (links, meta)
@@ -72,21 +66,21 @@ public struct ApiListAgentVersionsOutput: Codable {
     }
 
     init() {
-        (agentVersions, links, meta) = (nil, nil, nil)
+        (self.agentVersions, self.links, self.meta) = (nil, nil, nil)
     }
 }
 
-public extension ApiListAgentVersionsOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListAgentVersionsOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agentVersions = try container.sdkDecodeIfPresent(.agentVersions)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
+        self.agentVersions = try container.sdkDecodeIfPresent(.agentVersions)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-public extension ApiListAgentVersionsOutput {
-    init(agentVersions: [ApiAgentVersion]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+extension ApiListAgentVersionsOutput {
+    public init(agentVersions: [ApiAgentVersion]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.agentVersions, self.links) = (agentVersions, links)
         self.meta = meta
@@ -109,21 +103,21 @@ public struct ApiListKnowledgeBasesOutput: Codable {
     }
 
     init() {
-        (knowledgeBases, links, meta) = (nil, nil, nil)
+        (self.knowledgeBases, self.links, self.meta) = (nil, nil, nil)
     }
 }
 
-public extension ApiListKnowledgeBasesOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListKnowledgeBasesOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        knowledgeBases = try container.sdkDecodeIfPresent(.knowledgeBases)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
+        self.knowledgeBases = try container.sdkDecodeIfPresent(.knowledgeBases)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-public extension ApiListKnowledgeBasesOutput {
-    init(knowledgeBases: [ApiKnowledgeBase]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+extension ApiListKnowledgeBasesOutput {
+    public init(knowledgeBases: [ApiKnowledgeBase]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.knowledgeBases, self.links) = (knowledgeBases, links)
         self.meta = meta
@@ -146,21 +140,21 @@ public struct ApiListKnowledgeBaseIndexingJobsOutput: Codable {
     }
 
     init() {
-        (jobs, links, meta) = (nil, nil, nil)
+        (self.jobs, self.links, self.meta) = (nil, nil, nil)
     }
 }
 
-public extension ApiListKnowledgeBaseIndexingJobsOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListKnowledgeBaseIndexingJobsOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        jobs = try container.sdkDecodeIfPresent(.jobs)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
+        self.jobs = try container.sdkDecodeIfPresent(.jobs)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-public extension ApiListKnowledgeBaseIndexingJobsOutput {
-    init(jobs: [ApiIndexingJob]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+extension ApiListKnowledgeBaseIndexingJobsOutput {
+    public init(jobs: [ApiIndexingJob]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.jobs, self.links) = (jobs, links)
         self.meta = meta
@@ -195,40 +189,26 @@ public struct ApiListScenarioSetsOutput: Codable {
     }
 
     init() {
-        (availableSortBy, availableSortDirections, availableSourceKinds, availableStatuses, links) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        (meta, scenarioSets) = (nil, nil)
+        (self.availableSortBy, self.availableSortDirections, self.availableSourceKinds, self.availableStatuses, self.links) = (nil, nil, nil, nil, nil)
+        (self.meta, self.scenarioSets) = (nil, nil)
     }
 }
 
-public extension ApiListScenarioSetsOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListScenarioSetsOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
-        availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
-        availableSourceKinds = try container.sdkDecodeIfPresent(.availableSourceKinds)
-        availableStatuses = try container.sdkDecodeIfPresent(.availableStatuses)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
-        scenarioSets = try container.sdkDecodeIfPresent(.scenarioSets)
+        self.availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
+        self.availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
+        self.availableSourceKinds = try container.sdkDecodeIfPresent(.availableSourceKinds)
+        self.availableStatuses = try container.sdkDecodeIfPresent(.availableStatuses)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
+        self.scenarioSets = try container.sdkDecodeIfPresent(.scenarioSets)
     }
 }
 
-public extension ApiListScenarioSetsOutput {
-    init(
-        availableSortBy: [ApiScenarioSetSortField]? = nil,
-        availableSortDirections: [ApiSortDirection]? = nil,
-        availableSourceKinds: [ApiScenarioSetSourceKind]? = nil,
-        availableStatuses: [ApiScenarioSetStatus]? = nil,
-        links: ApiLinks? = nil,
-        meta: ApiMeta? = nil,
-        scenarioSets: [ApiScenarioSet]? = nil
-    ) {
+extension ApiListScenarioSetsOutput {
+    public init(availableSortBy: [ApiScenarioSetSortField]? = nil, availableSortDirections: [ApiSortDirection]? = nil, availableSourceKinds: [ApiScenarioSetSourceKind]? = nil, availableStatuses: [ApiScenarioSetStatus]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil, scenarioSets: [ApiScenarioSet]? = nil) {
         self.init()
         (self.availableSortBy, self.availableSortDirections) = (availableSortBy, availableSortDirections)
         (self.availableSourceKinds, self.availableStatuses) = (availableSourceKinds, availableStatuses)
@@ -253,21 +233,21 @@ public struct ApiListModelsOutputPublic: Codable {
     }
 
     init() {
-        (links, meta, models) = (nil, nil, nil)
+        (self.links, self.meta, self.models) = (nil, nil, nil)
     }
 }
 
-public extension ApiListModelsOutputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiListModelsOutputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
-        models = try container.sdkDecodeIfPresent(.models)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
+        self.models = try container.sdkDecodeIfPresent(.models)
     }
 }
 
-public extension ApiListModelsOutputPublic {
-    init(links: ApiLinks? = nil, meta: ApiMeta? = nil, models: [ApiModelPublic]? = nil) {
+extension ApiListModelsOutputPublic {
+    public init(links: ApiLinks? = nil, meta: ApiMeta? = nil, models: [ApiModelPublic]? = nil) {
         self.init()
         (self.links, self.meta) = (links, meta)
         self.models = models
@@ -290,21 +270,21 @@ public struct ApiListAnthropicAPIKeysOutput: Codable {
     }
 
     init() {
-        (apiKeyInfos, links, meta) = (nil, nil, nil)
+        (self.apiKeyInfos, self.links, self.meta) = (nil, nil, nil)
     }
 }
 
-public extension ApiListAnthropicAPIKeysOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListAnthropicAPIKeysOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apiKeyInfos = try container.sdkDecodeIfPresent(.apiKeyInfos)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
+        self.apiKeyInfos = try container.sdkDecodeIfPresent(.apiKeyInfos)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-public extension ApiListAnthropicAPIKeysOutput {
-    init(apiKeyInfos: [ApiAnthropicAPIKeyInfo]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+extension ApiListAnthropicAPIKeysOutput {
+    public init(apiKeyInfos: [ApiAnthropicAPIKeyInfo]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.apiKeyInfos, self.links) = (apiKeyInfos, links)
         self.meta = meta
@@ -327,21 +307,21 @@ public struct ApiListKnowledgeBaseDataSourcesOutput: Codable {
     }
 
     init() {
-        (knowledgeBaseDataSources, links, meta) = (nil, nil, nil)
+        (self.knowledgeBaseDataSources, self.links, self.meta) = (nil, nil, nil)
     }
 }
 
-public extension ApiListKnowledgeBaseDataSourcesOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListKnowledgeBaseDataSourcesOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        knowledgeBaseDataSources = try container.sdkDecodeIfPresent(.knowledgeBaseDataSources)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
+        self.knowledgeBaseDataSources = try container.sdkDecodeIfPresent(.knowledgeBaseDataSources)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-public extension ApiListKnowledgeBaseDataSourcesOutput {
-    init(knowledgeBaseDataSources: [ApiKnowledgeBaseDataSource]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+extension ApiListKnowledgeBaseDataSourcesOutput {
+    public init(knowledgeBaseDataSources: [ApiKnowledgeBaseDataSource]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.knowledgeBaseDataSources, self.links) = (knowledgeBaseDataSources, links)
         self.meta = meta
@@ -358,19 +338,19 @@ public struct ApiListModelEvaluationPresetsOutput: Codable {
     }
 
     init() {
-        presets = nil
+        self.presets = nil
     }
 }
 
-public extension ApiListModelEvaluationPresetsOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListModelEvaluationPresetsOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        presets = try container.sdkDecodeIfPresent(.presets)
+        self.presets = try container.sdkDecodeIfPresent(.presets)
     }
 }
 
-public extension ApiListModelEvaluationPresetsOutput {
-    init(presets: [ApiModelEvaluationPreset]? = nil) {
+extension ApiListModelEvaluationPresetsOutput {
+    public init(presets: [ApiModelEvaluationPreset]? = nil) {
         self.init()
         self.presets = presets
     }
@@ -386,19 +366,19 @@ public struct ApiListEvaluationRunsByTestCaseOutput: Codable {
     }
 
     init() {
-        evaluationRuns = nil
+        self.evaluationRuns = nil
     }
 }
 
-public extension ApiListEvaluationRunsByTestCaseOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListEvaluationRunsByTestCaseOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        evaluationRuns = try container.sdkDecodeIfPresent(.evaluationRuns)
+        self.evaluationRuns = try container.sdkDecodeIfPresent(.evaluationRuns)
     }
 }
 
-public extension ApiListEvaluationRunsByTestCaseOutput {
-    init(evaluationRuns: [ApiEvaluationRun]? = nil) {
+extension ApiListEvaluationRunsByTestCaseOutput {
+    public init(evaluationRuns: [ApiEvaluationRun]? = nil) {
         self.init()
         self.evaluationRuns = evaluationRuns
     }
@@ -430,32 +410,25 @@ public struct ApiListScenarioLibraryOutput: Codable {
     }
 
     init() {
-        (availableCategories, availableSortBy, availableSortDirections, links, meta) = (nil, nil, nil, nil, nil)
-        scenarios = nil
+        (self.availableCategories, self.availableSortBy, self.availableSortDirections, self.links, self.meta) = (nil, nil, nil, nil, nil)
+        self.scenarios = nil
     }
 }
 
-public extension ApiListScenarioLibraryOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListScenarioLibraryOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        availableCategories = try container.sdkDecodeIfPresent(.availableCategories)
-        availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
-        availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
-        scenarios = try container.sdkDecodeIfPresent(.scenarios)
+        self.availableCategories = try container.sdkDecodeIfPresent(.availableCategories)
+        self.availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
+        self.availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
+        self.scenarios = try container.sdkDecodeIfPresent(.scenarios)
     }
 }
 
-public extension ApiListScenarioLibraryOutput {
-    init(
-        availableCategories: [String]? = nil,
-        availableSortBy: [ApiScenarioLibrarySortField]? = nil,
-        availableSortDirections: [ApiSortDirection]? = nil,
-        links: ApiLinks? = nil,
-        meta: ApiMeta? = nil,
-        scenarios: [ApiScenarioLibraryEntry]? = nil
-    ) {
+extension ApiListScenarioLibraryOutput {
+    public init(availableCategories: [String]? = nil, availableSortBy: [ApiScenarioLibrarySortField]? = nil, availableSortDirections: [ApiSortDirection]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil, scenarios: [ApiScenarioLibraryEntry]? = nil) {
         self.init()
         (self.availableCategories, self.availableSortBy) = (availableCategories, availableSortBy)
         (self.availableSortDirections, self.links) = (availableSortDirections, links)
@@ -473,19 +446,19 @@ public struct ApiListIndexingJobDataSourcesOutput: Codable {
     }
 
     init() {
-        indexedDataSources = nil
+        self.indexedDataSources = nil
     }
 }
 
-public extension ApiListIndexingJobDataSourcesOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListIndexingJobDataSourcesOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        indexedDataSources = try container.sdkDecodeIfPresent(.indexedDataSources)
+        self.indexedDataSources = try container.sdkDecodeIfPresent(.indexedDataSources)
     }
 }
 
-public extension ApiListIndexingJobDataSourcesOutput {
-    init(indexedDataSources: [ApiIndexedDataSource]? = nil) {
+extension ApiListIndexingJobDataSourcesOutput {
+    public init(indexedDataSources: [ApiIndexedDataSource]? = nil) {
         self.init()
         self.indexedDataSources = indexedDataSources
     }
@@ -507,21 +480,21 @@ public struct ApiListOpenAIAPIKeysOutput: Codable {
     }
 
     init() {
-        (apiKeyInfos, links, meta) = (nil, nil, nil)
+        (self.apiKeyInfos, self.links, self.meta) = (nil, nil, nil)
     }
 }
 
-public extension ApiListOpenAIAPIKeysOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListOpenAIAPIKeysOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apiKeyInfos = try container.sdkDecodeIfPresent(.apiKeyInfos)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
+        self.apiKeyInfos = try container.sdkDecodeIfPresent(.apiKeyInfos)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-public extension ApiListOpenAIAPIKeysOutput {
-    init(apiKeyInfos: [ApiOpenAIAPIKeyInfo]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+extension ApiListOpenAIAPIKeysOutput {
+    public init(apiKeyInfos: [ApiOpenAIAPIKeyInfo]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.apiKeyInfos, self.links) = (apiKeyInfos, links)
         self.meta = meta
@@ -553,32 +526,25 @@ public struct ApiListSimulationRunsOutput: Codable {
     }
 
     init() {
-        (availableSortBy, availableSortDirections, availableStatuses, links, meta) = (nil, nil, nil, nil, nil)
-        simulationRuns = nil
+        (self.availableSortBy, self.availableSortDirections, self.availableStatuses, self.links, self.meta) = (nil, nil, nil, nil, nil)
+        self.simulationRuns = nil
     }
 }
 
-public extension ApiListSimulationRunsOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListSimulationRunsOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
-        availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
-        availableStatuses = try container.sdkDecodeIfPresent(.availableStatuses)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
-        simulationRuns = try container.sdkDecodeIfPresent(.simulationRuns)
+        self.availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
+        self.availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
+        self.availableStatuses = try container.sdkDecodeIfPresent(.availableStatuses)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
+        self.simulationRuns = try container.sdkDecodeIfPresent(.simulationRuns)
     }
 }
 
-public extension ApiListSimulationRunsOutput {
-    init(
-        availableSortBy: [ApiSimulationRunSortField]? = nil,
-        availableSortDirections: [ApiSortDirection]? = nil,
-        availableStatuses: [ApiSimulationRunStatus]? = nil,
-        links: ApiLinks? = nil,
-        meta: ApiMeta? = nil,
-        simulationRuns: [ApiSimulationRun]? = nil
-    ) {
+extension ApiListSimulationRunsOutput {
+    public init(availableSortBy: [ApiSimulationRunSortField]? = nil, availableSortDirections: [ApiSortDirection]? = nil, availableStatuses: [ApiSimulationRunStatus]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil, simulationRuns: [ApiSimulationRun]? = nil) {
         self.init()
         (self.availableSortBy, self.availableSortDirections) = (availableSortBy, availableSortDirections)
         (self.availableStatuses, self.links) = (availableStatuses, links)

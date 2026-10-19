@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-/// Canonical vpcPeerings operation model declarations
+// Canonical vpcPeerings operation model declarations
 public struct VpcPeeringsCreateRequestBody: Codable {
     /// The name of the VPC peering. Must be unique within the team and may only contain alphanumeric characters and
     /// dashes.
@@ -22,39 +22,29 @@ public struct VpcPeeringsCreateRequestBody: Codable {
         case vpcIds = "vpc_ids"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VpcPeeringsCreateRequestBody {
-    init(from decoder: Decoder) throws {
+extension VpcPeeringsCreateRequestBody {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.vpcIds) else {
-            throw SdkValidationError(
-                field: "vpc_ids",
-                code: "required",
-                message: "Validation failed for 'vpc_ids': value is required"
-            )
+            throw SdkValidationError(field: "vpc_ids", code: "required", message: "Validation failed for 'vpc_ids': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        vpcIds = try container.sdkDecodeRequired(.vpcIds)
-        try sdkValidatePattern("name", name, sdkPattern651e90d87583)
-        try validateItems("vpc_ids", vpcIds, min: 2, max: 2)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.vpcIds = try container.sdkDecodeRequired(.vpcIds)
+            try sdkValidatePattern("name", self.name, sdkPattern651e90d87583)
+            try validateItems("vpc_ids", self.vpcIds, min: 2, max: 2)
     }
 }
 
-public extension VpcPeeringsCreateRequestBody {
-    init(name: String, vpcIds: [String]) throws {
+extension VpcPeeringsCreateRequestBody {
+    public init(name: String, vpcIds: [String]) throws {
         (self.name, self.vpcIds) = (name, vpcIds)
-        try sdkValidatePattern("name", self.name, sdkPattern651e90d87583)
-        try validateItems("vpc_ids", self.vpcIds, min: 2, max: 2)
+            try sdkValidatePattern("name", self.name, sdkPattern651e90d87583)
+            try validateItems("vpc_ids", self.vpcIds, min: 2, max: 2)
     }
 }

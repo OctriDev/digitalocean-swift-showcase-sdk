@@ -6,9 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
-    /// Check whether an agent is public or private. To update the agent status, send a PUT request to
-    /// `/v2/gen-ai/agents/{uuid}/deployment_visibility`.
+extension AgentPlatformApiMethods {
+    /// Check whether an agent is public or private. To update the agent status, send a PUT request to `/v2/gen-ai/agents/{uuid}/deployment_visibility`.
     ///
     /// - Parameters:
     /// - uuid: Unique id
@@ -19,66 +18,23 @@ public extension AgentPlatformApiMethods {
     ///   VISIBILITY_PUBLIC: The deployment is public and will service requests from
     ///   the public internet - VISIBILITY_PRIVATE: The deployment is private and will
     ///   only service requests from other agents, or through API keys
-    static func genaiUpdateAgentDeploymentVisibility(
-        config: ClientConfig,
-        uuid: String,
-        uuid2: String? = nil,
-        visibility: ApiDeploymentVisibility? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiUpdateAgentDeploymentVisbilityOutput {
+    public static func genaiUpdateAgentDeploymentVisibility(config: ClientConfig, uuid: String, uuid2: String? = nil, visibility: ApiDeploymentVisibility? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiUpdateAgentDeploymentVisbilityOutput {
         let requestBody = GenaiUpdateAgentDeploymentVisibilityRequestBody(uuid2: uuid2, visibility: visibility)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(uuid)), "/deployment_visibility"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "genai_update_agent_deployment_visibility",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(uuid)), "/deployment_visibility"].joined(), config: config, body: requestBody, decoder: .json, operationId: "genai_update_agent_deployment_visibility", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To get agent usage, send a GET request to `/v2/gen-ai/agents/{uuid}/usage`. Returns usage metrics for the
-    /// specified agent within the provided time range.
+    /// To get agent usage, send a GET request to `/v2/gen-ai/agents/{uuid}/usage`. Returns usage metrics for the specified agent within the provided time range.
     ///
     /// - Parameters:
     /// - uuid: Agent id
     /// - start: Return all usage data from this date.
     /// - stop: Return all usage data up to this date, if omitted, will return up to
     ///   the current date.
-    static func genaiGetAgentUsage(
-        config: ClientConfig,
-        uuid: String,
-        start: String? = nil,
-        stop: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiGetAgentUsageOutput {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(uuid)), "/usage"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("start", value: start),
-                SdkQueryParameter("stop", value: stop),
-            ],
-            decoder: .json,
-            operationId: "genai_get_agent_usage",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func genaiGetAgentUsage(config: ClientConfig, uuid: String, start: String? = nil, stop: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiGetAgentUsageOutput {
+        return try (await sdkRequest("GET", ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(uuid)), "/usage"].joined(), config: config, query: [
+            SdkQueryParameter("start", value: start),
+            SdkQueryParameter("stop", value: stop),
+        ], decoder: .json, operationId: "genai_get_agent_usage", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

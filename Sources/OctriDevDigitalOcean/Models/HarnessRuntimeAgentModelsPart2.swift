@@ -3,91 +3,55 @@
 
 import Foundation
 
-/// HarnessRuntimeAgent domain models
-public extension AgentConfigSummary {
-    init(from decoder: Decoder) throws {
+// HarnessRuntimeAgent domain models
+extension AgentConfigSummary {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.agentspecSchemaVersion) else {
-            throw SdkValidationError(
-                field: "agentspec_schema_version",
-                code: "required",
-                message: "Validation failed for 'agentspec_schema_version': value is required"
-            )
+            throw SdkValidationError(field: "agentspec_schema_version", code: "required", message: "Validation failed for 'agentspec_schema_version': value is required")
         }
         guard container.contains(.contentHash) else {
-            throw SdkValidationError(
-                field: "content_hash",
-                code: "required",
-                message: "Validation failed for 'content_hash': value is required"
-            )
+            throw SdkValidationError(field: "content_hash", code: "required", message: "Validation failed for 'content_hash': value is required")
         }
         guard container.contains(.createdBy) else {
-            throw SdkValidationError(
-                field: "created_by",
-                code: "required",
-                message: "Validation failed for 'created_by': value is required"
-            )
+            throw SdkValidationError(field: "created_by", code: "required", message: "Validation failed for 'created_by': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.updatedAt) else {
-            throw SdkValidationError(
-                field: "updated_at",
-                code: "required",
-                message: "Validation failed for 'updated_at': value is required"
-            )
+            throw SdkValidationError(field: "updated_at", code: "required", message: "Validation failed for 'updated_at': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        name = try container.sdkDecodeRequired(.name)
-        agentspecSchemaVersion = try container.sdkDecodeRequired(.agentspecSchemaVersion)
-        contentHash = try container.sdkDecodeRequired(.contentHash)
-        createdBy = try container.sdkDecodeRequired(.createdBy)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        try sdkValidateUuid("id", id)
-        try sdkValidatePattern("content_hash", contentHash, sdkPattern52f851fad882)
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
-        try sdkValidateDateTime("updated_at", sdkWireString(updatedAt))
+        self.id = try container.sdkDecodeRequired(.id)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.agentspecSchemaVersion = try container.sdkDecodeRequired(.agentspecSchemaVersion)
+        self.contentHash = try container.sdkDecodeRequired(.contentHash)
+        self.createdBy = try container.sdkDecodeRequired(.createdBy)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
+            try sdkValidateUuid("id", self.id)
+            try sdkValidatePattern("content_hash", self.contentHash, sdkPattern52f851fad882)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
-public extension AgentConfigSummary {
-    init(
-        id: String,
-        name: String,
-        agentspecSchemaVersion: String,
-        contentHash: String,
-        createdBy: String,
-        createdAt: Date,
-        updatedAt: Date
-    ) throws {
+extension AgentConfigSummary {
+    public init(id: String, name: String, agentspecSchemaVersion: String, contentHash: String, createdBy: String, createdAt: Date, updatedAt: Date) throws {
         (self.id, self.name) = (id, name)
         (self.agentspecSchemaVersion, self.contentHash) = (agentspecSchemaVersion, contentHash)
         (self.createdBy, self.createdAt) = (createdBy, createdAt)
         self.updatedAt = updatedAt
-        try sdkValidateUuid("id", self.id)
-        try sdkValidatePattern("content_hash", self.contentHash, sdkPattern52f851fad882)
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-        try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+            try sdkValidateUuid("id", self.id)
+            try sdkValidatePattern("content_hash", self.contentHash, sdkPattern52f851fad882)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
@@ -124,64 +88,43 @@ public struct AgentManifestSpecSkillsItem: Codable {
         case allowedTools
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AgentManifestSpecSkillsItem {
-    init(from decoder: Decoder) throws {
+extension AgentManifestSpecSkillsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.description) else {
-            throw SdkValidationError(
-                field: "description",
-                code: "required",
-                message: "Validation failed for 'description': value is required"
-            )
+            throw SdkValidationError(field: "description", code: "required", message: "Validation failed for 'description': value is required")
         }
         guard container.contains(.instructions) else {
-            throw SdkValidationError(
-                field: "instructions",
-                code: "required",
-                message: "Validation failed for 'instructions': value is required"
-            )
+            throw SdkValidationError(field: "instructions", code: "required", message: "Validation failed for 'instructions': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        description = try container.sdkDecodeRequired(.description)
-        instructions = try container.sdkDecodeRequired(.instructions)
-        license = try container.sdkDecodeIfPresent(.license)
-        metadata = try container.sdkDecodeIfPresent(.metadata)
-        allowedTools = try container.sdkDecodeIfPresent(.allowedTools)
-        try validateLength("name", name, min: nil, max: 64)
-        try sdkValidatePattern("name", name, sdkPattern8cfd8337f988)
-        try validateLength("description", description, min: nil, max: 1024)
-        try validateLength("instructions", instructions, min: nil, max: 32768)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.description = try container.sdkDecodeRequired(.description)
+        self.instructions = try container.sdkDecodeRequired(.instructions)
+        self.license = try container.sdkDecodeIfPresent(.license)
+        self.metadata = try container.sdkDecodeIfPresent(.metadata)
+        self.allowedTools = try container.sdkDecodeIfPresent(.allowedTools)
+            try validateLength("name", self.name, min: nil, max: 64)
+            try sdkValidatePattern("name", self.name, sdkPattern8cfd8337f988)
+            try validateLength("description", self.description, min: nil, max: 1024)
+            try validateLength("instructions", self.instructions, min: nil, max: 32768)
     }
 }
 
-public extension AgentManifestSpecSkillsItem {
-    init(
-        name: String,
-        description: String,
-        instructions: String,
-        license: String? = nil,
-        metadata: [String: String]? = nil,
-        allowedTools: [String]? = nil
-    ) throws {
+extension AgentManifestSpecSkillsItem {
+    public init(name: String, description: String, instructions: String, license: String? = nil, metadata: [String: String]? = nil, allowedTools: [String]? = nil) throws {
         (self.name, self.description) = (name, description)
         (self.instructions, self.license) = (instructions, license)
         (self.metadata, self.allowedTools) = (metadata, allowedTools)
-        try validateLength("name", self.name, min: nil, max: 64)
-        try sdkValidatePattern("name", self.name, sdkPattern8cfd8337f988)
-        try validateLength("description", self.description, min: nil, max: 1024)
-        try validateLength("instructions", self.instructions, min: nil, max: 32768)
+            try validateLength("name", self.name, min: nil, max: 64)
+            try sdkValidatePattern("name", self.name, sdkPattern8cfd8337f988)
+            try validateLength("description", self.description, min: nil, max: 1024)
+            try validateLength("instructions", self.instructions, min: nil, max: 32768)
     }
 }
 
@@ -195,27 +138,21 @@ public struct AgentManifestSpecSandboxEgressAllowItem: Codable {
         case host
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AgentManifestSpecSandboxEgressAllowItem {
-    init(from decoder: Decoder) throws {
+extension AgentManifestSpecSandboxEgressAllowItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.host) else {
-            throw SdkValidationError(
-                field: "host",
-                code: "required",
-                message: "Validation failed for 'host': value is required"
-            )
+            throw SdkValidationError(field: "host", code: "required", message: "Validation failed for 'host': value is required")
         }
-        host = try container.sdkDecodeRequired(.host)
+        self.host = try container.sdkDecodeRequired(.host)
     }
 }
 
-public extension AgentManifestSpecSandboxEgressAllowItem {
-    init(host: String) {
+extension AgentManifestSpecSandboxEgressAllowItem {
+    public init(host: String) {
         self.host = host
     }
 }
@@ -231,19 +168,19 @@ public struct AgentConfigResponse: Codable {
     }
 
     init() {
-        config = nil
+        self.config = nil
     }
 }
 
-public extension AgentConfigResponse {
-    init(from decoder: Decoder) throws {
+extension AgentConfigResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        config = try container.sdkDecodeIfPresent(.config)
+        self.config = try container.sdkDecodeIfPresent(.config)
     }
 }
 
-public extension AgentConfigResponse {
-    init(config: AgentConfig? = nil) {
+extension AgentConfigResponse {
+    public init(config: AgentConfig? = nil) {
         self.init()
         self.config = config
     }
@@ -263,28 +200,22 @@ public struct AgentManifestSpecMemory: Codable {
         case scope
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AgentManifestSpecMemory {
-    init(from decoder: Decoder) throws {
+extension AgentManifestSpecMemory {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.backend) else {
-            throw SdkValidationError(
-                field: "backend",
-                code: "required",
-                message: "Validation failed for 'backend': value is required"
-            )
+            throw SdkValidationError(field: "backend", code: "required", message: "Validation failed for 'backend': value is required")
         }
-        backend = try container.sdkDecodeRequired(.backend)
-        scope = try container.sdkDecodeIfPresent(.scope)
+        self.backend = try container.sdkDecodeRequired(.backend)
+        self.scope = try container.sdkDecodeIfPresent(.scope)
     }
 }
 
-public extension AgentManifestSpecMemory {
-    init(backend: String, scope: AgentManifestSpecMemoryScope? = nil) {
+extension AgentManifestSpecMemory {
+    public init(backend: String, scope: AgentManifestSpecMemoryScope? = nil) {
         (self.backend, self.scope) = (backend, scope)
     }
 }
@@ -311,21 +242,21 @@ public struct AgentManifestMetadata: Codable {
     }
 
     init() {
-        (name, description, labels) = (nil, nil, nil)
+        (self.name, self.description, self.labels) = (nil, nil, nil)
     }
 }
 
-public extension AgentManifestMetadata {
-    init(from decoder: Decoder) throws {
+extension AgentManifestMetadata {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        labels = try container.sdkDecodeIfPresent(.labels)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.labels = try container.sdkDecodeIfPresent(.labels)
     }
 }
 
-public extension AgentManifestMetadata {
-    init(name: String? = nil, description: String? = nil, labels: [String: String]? = nil) {
+extension AgentManifestMetadata {
+    public init(name: String? = nil, description: String? = nil, labels: [String: String]? = nil) {
         self.init()
         (self.name, self.description) = (name, description)
         self.labels = labels
@@ -343,19 +274,19 @@ public struct AgentManifestSpecServingScaleToZero: Codable {
     }
 
     init() {
-        idleSeconds = nil
+        self.idleSeconds = nil
     }
 }
 
-public extension AgentManifestSpecServingScaleToZero {
-    init(from decoder: Decoder) throws {
+extension AgentManifestSpecServingScaleToZero {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        idleSeconds = try container.sdkDecodeIfPresent(.idleSeconds)
+        self.idleSeconds = try container.sdkDecodeIfPresent(.idleSeconds)
     }
 }
 
-public extension AgentManifestSpecServingScaleToZero {
-    init(idleSeconds: Int? = nil) {
+extension AgentManifestSpecServingScaleToZero {
+    public init(idleSeconds: Int? = nil) {
         self.init()
         self.idleSeconds = idleSeconds
     }
@@ -392,46 +323,29 @@ public struct AgentManifestSpecSecretsItem: Codable {
         case env
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AgentManifestSpecSecretsItem {
-    init(from decoder: Decoder) throws {
+extension AgentManifestSpecSecretsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.source) else {
-            throw SdkValidationError(
-                field: "source",
-                code: "required",
-                message: "Validation failed for 'source': value is required"
-            )
+            throw SdkValidationError(field: "source", code: "required", message: "Validation failed for 'source': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        source = try container.sdkDecodeRequired(.source)
-        provider = try container.sdkDecodeIfPresent(.provider)
-        ref = try container.sdkDecodeIfPresent(.ref)
-        value = try container.sdkDecodeIfPresent(.value)
-        env = try container.sdkDecodeIfPresent(.env)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.source = try container.sdkDecodeRequired(.source)
+        self.provider = try container.sdkDecodeIfPresent(.provider)
+        self.ref = try container.sdkDecodeIfPresent(.ref)
+        self.value = try container.sdkDecodeIfPresent(.value)
+        self.env = try container.sdkDecodeIfPresent(.env)
     }
 }
 
-public extension AgentManifestSpecSecretsItem {
-    init(
-        name: String,
-        source: AgentManifestSpecSecretsItemSource,
-        provider: String? = nil,
-        ref: String? = nil,
-        value: String? = nil,
-        env: Bool? = nil
-    ) {
+extension AgentManifestSpecSecretsItem {
+    public init(name: String, source: AgentManifestSpecSecretsItemSource, provider: String? = nil, ref: String? = nil, value: String? = nil, env: Bool? = nil) {
         (self.name, self.source) = (name, source)
         (self.provider, self.ref) = (provider, ref)
         (self.value, self.env) = (value, env)
@@ -452,28 +366,22 @@ public struct AgentManifestSpecRuntimeCustom: Codable {
         case entrypoint
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AgentManifestSpecRuntimeCustom {
-    init(from decoder: Decoder) throws {
+extension AgentManifestSpecRuntimeCustom {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.image) else {
-            throw SdkValidationError(
-                field: "image",
-                code: "required",
-                message: "Validation failed for 'image': value is required"
-            )
+            throw SdkValidationError(field: "image", code: "required", message: "Validation failed for 'image': value is required")
         }
-        image = try container.sdkDecodeRequired(.image)
-        entrypoint = try container.sdkDecodeIfPresent(.entrypoint)
+        self.image = try container.sdkDecodeRequired(.image)
+        self.entrypoint = try container.sdkDecodeIfPresent(.entrypoint)
     }
 }
 
-public extension AgentManifestSpecRuntimeCustom {
-    init(image: String, entrypoint: [String]? = nil) {
+extension AgentManifestSpecRuntimeCustom {
+    public init(image: String, entrypoint: [String]? = nil) {
         (self.image, self.entrypoint) = (image, entrypoint)
     }
 }
@@ -497,23 +405,23 @@ public struct AgentManifestSpecModel: Codable {
     }
 
     init() {
-        (self.default, routing, profile) = (nil, nil, nil)
+        (self.`default`, self.routing, self.profile) = (nil, nil, nil)
     }
 }
 
-public extension AgentManifestSpecModel {
-    init(from decoder: Decoder) throws {
+extension AgentManifestSpecModel {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.default = try container.sdkDecodeIfPresent(.default)
-        routing = try container.sdkDecodeIfPresent(.routing)
-        profile = try container.sdkDecodeIfPresent(.profile)
+        self.`default` = try container.sdkDecodeIfPresent(.`default`)
+        self.routing = try container.sdkDecodeIfPresent(.routing)
+        self.profile = try container.sdkDecodeIfPresent(.profile)
     }
 }
 
-public extension AgentManifestSpecModel {
-    init(default: String? = nil, routing: String? = nil, profile: String? = nil) {
+extension AgentManifestSpecModel {
+    public init(`default`: String? = nil, routing: String? = nil, profile: String? = nil) {
         self.init()
-        (self.default, self.routing) = (`default`, routing)
+        (self.`default`, self.routing) = (`default`, routing)
         self.profile = profile
     }
 }
@@ -549,29 +457,23 @@ public struct AgentManifestSpecSandboxEgress: Codable {
     }
 
     init() {
-        (allow, allowIps, vpcUuid, subnetUuid, unrestricted) = (nil, nil, nil, nil, nil)
+        (self.allow, self.allowIps, self.vpcUuid, self.subnetUuid, self.unrestricted) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension AgentManifestSpecSandboxEgress {
-    init(from decoder: Decoder) throws {
+extension AgentManifestSpecSandboxEgress {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        allow = try container.sdkDecodeIfPresent(.allow)
-        allowIps = try container.sdkDecodeIfPresent(.allowIps)
-        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
-        unrestricted = try container.sdkDecodeIfPresent(.unrestricted)
+        self.allow = try container.sdkDecodeIfPresent(.allow)
+        self.allowIps = try container.sdkDecodeIfPresent(.allowIps)
+        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        self.subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
+        self.unrestricted = try container.sdkDecodeIfPresent(.unrestricted)
     }
 }
 
-public extension AgentManifestSpecSandboxEgress {
-    init(
-        allow: [AgentManifestSpecSandboxEgressAllowItem]? = nil,
-        allowIps: [String]? = nil,
-        vpcUuid: String? = nil,
-        subnetUuid: String? = nil,
-        unrestricted: Bool? = nil
-    ) {
+extension AgentManifestSpecSandboxEgress {
+    public init(allow: [AgentManifestSpecSandboxEgressAllowItem]? = nil, allowIps: [String]? = nil, vpcUuid: String? = nil, subnetUuid: String? = nil, unrestricted: Bool? = nil) {
         self.init()
         (self.allow, self.allowIps) = (allow, allowIps)
         (self.vpcUuid, self.subnetUuid) = (vpcUuid, subnetUuid)
@@ -606,27 +508,22 @@ public struct AgentManifest: Codable {
     }
 
     init() {
-        (apiVersion, kind, metadata, spec) = (nil, nil, nil, nil)
+        (self.apiVersion, self.kind, self.metadata, self.spec) = (nil, nil, nil, nil)
     }
 }
 
-public extension AgentManifest {
-    init(from decoder: Decoder) throws {
+extension AgentManifest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apiVersion = try container.sdkDecodeIfPresent(.apiVersion)
-        kind = try container.sdkDecodeIfPresent(.kind)
-        metadata = try container.sdkDecodeIfPresent(.metadata)
-        spec = try container.sdkDecodeIfPresent(.spec)
+        self.apiVersion = try container.sdkDecodeIfPresent(.apiVersion)
+        self.kind = try container.sdkDecodeIfPresent(.kind)
+        self.metadata = try container.sdkDecodeIfPresent(.metadata)
+        self.spec = try container.sdkDecodeIfPresent(.spec)
     }
 }
 
-public extension AgentManifest {
-    init(
-        apiVersion: AgentManifestApiVersion? = nil,
-        kind: AgentManifestKind? = nil,
-        metadata: AgentManifestMetadata? = nil,
-        spec: AgentManifestSpec? = nil
-    ) {
+extension AgentManifest {
+    public init(apiVersion: AgentManifestApiVersion? = nil, kind: AgentManifestKind? = nil, metadata: AgentManifestMetadata? = nil, spec: AgentManifestSpec? = nil) {
         self.init()
         (self.apiVersion, self.kind) = (apiVersion, kind)
         (self.metadata, self.spec) = (metadata, spec)

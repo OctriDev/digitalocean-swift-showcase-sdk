@@ -3,22 +3,19 @@
 
 import Foundation
 
-/// DedicatedInference domain models
+// DedicatedInference domain models
 /// DigitalOcean region where the Dedicated Inference is hosted.
 public struct DedicatedInferenceSpecRequestRegion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let atl1 = DedicatedInferenceSpecRequestRegion(rawValue: "atl1")
     public static let nyc2 = DedicatedInferenceSpecRequestRegion(rawValue: "nyc2")
     public static let tor1 = DedicatedInferenceSpecRequestRegion(rawValue: "tor1")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -31,17 +28,14 @@ public struct DedicatedInferenceSpecRequestRegion: RawRepresentable, Hashable, C
 public struct DedicatedInferenceSpecRegion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let atl1 = DedicatedInferenceSpecRegion(rawValue: "atl1")
     public static let nyc2 = DedicatedInferenceSpecRegion(rawValue: "nyc2")
     public static let tor1 = DedicatedInferenceSpecRegion(rawValue: "tor1")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -54,10 +48,7 @@ public struct DedicatedInferenceSpecRegion: RawRepresentable, Hashable, Codable,
 public struct DedicatedInferenceStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let active = DedicatedInferenceStatus(rawValue: "active")
     public static let new = DedicatedInferenceStatus(rawValue: "new")
     public static let provisioning = DedicatedInferenceStatus(rawValue: "provisioning")
@@ -67,7 +58,7 @@ public struct DedicatedInferenceStatus: RawRepresentable, Hashable, Codable, Sen
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -80,17 +71,14 @@ public struct DedicatedInferenceStatus: RawRepresentable, Hashable, Codable, Sen
 public struct AcceleratorConfigSpecStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let new = AcceleratorConfigSpecStatus(rawValue: "new")
     public static let provisioning = AcceleratorConfigSpecStatus(rawValue: "provisioning")
     public static let active = AcceleratorConfigSpecStatus(rawValue: "active")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -103,15 +91,12 @@ public struct AcceleratorConfigSpecStatus: RawRepresentable, Hashable, Codable, 
 public struct ModelDeploymentSpecModelProvider: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let huggingFace = ModelDeploymentSpecModelProvider(rawValue: "hugging_face")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

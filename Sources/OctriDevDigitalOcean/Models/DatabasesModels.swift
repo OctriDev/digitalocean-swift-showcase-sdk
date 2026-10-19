@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Databases domain models
+// Databases domain models
 public typealias Version = String
 
 /// Optional object value serialized in the `version_availability` wire field.
@@ -49,38 +49,28 @@ public struct OptionsVersionAvailability: Codable {
     }
 
     init() {
-        (kafka, pg, mysql, redis, valkey) = (nil, nil, nil, nil, nil)
-        (mongodb, opensearch, advancedPg, advancedMysql) = (nil, nil, nil, nil)
+        (self.kafka, self.pg, self.mysql, self.redis, self.valkey) = (nil, nil, nil, nil, nil)
+        (self.mongodb, self.opensearch, self.advancedPg, self.advancedMysql) = (nil, nil, nil, nil)
     }
 }
 
-public extension OptionsVersionAvailability {
-    init(from decoder: Decoder) throws {
+extension OptionsVersionAvailability {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        kafka = try container.sdkDecodeIfPresent(.kafka)
-        pg = try container.sdkDecodeIfPresent(.pg)
-        mysql = try container.sdkDecodeIfPresent(.mysql)
-        redis = try container.sdkDecodeIfPresent(.redis)
-        valkey = try container.sdkDecodeIfPresent(.valkey)
-        mongodb = try container.sdkDecodeIfPresent(.mongodb)
-        opensearch = try container.sdkDecodeIfPresent(.opensearch)
-        advancedPg = try container.sdkDecodeIfPresent(.advancedPg)
-        advancedMysql = try container.sdkDecodeIfPresent(.advancedMysql)
+        self.kafka = try container.sdkDecodeIfPresent(.kafka)
+        self.pg = try container.sdkDecodeIfPresent(.pg)
+        self.mysql = try container.sdkDecodeIfPresent(.mysql)
+        self.redis = try container.sdkDecodeIfPresent(.redis)
+        self.valkey = try container.sdkDecodeIfPresent(.valkey)
+        self.mongodb = try container.sdkDecodeIfPresent(.mongodb)
+        self.opensearch = try container.sdkDecodeIfPresent(.opensearch)
+        self.advancedPg = try container.sdkDecodeIfPresent(.advancedPg)
+        self.advancedMysql = try container.sdkDecodeIfPresent(.advancedMysql)
     }
 }
 
-public extension OptionsVersionAvailability {
-    init(
-        kafka: DatabaseVersionAvailabilities? = nil,
-        pg: DatabaseVersionAvailabilities? = nil,
-        mysql: DatabaseVersionAvailabilities? = nil,
-        redis: DatabaseVersionAvailabilities? = nil,
-        valkey: DatabaseVersionAvailabilities? = nil,
-        mongodb: DatabaseVersionAvailabilities? = nil,
-        opensearch: DatabaseVersionAvailabilities? = nil,
-        advancedPg: DatabaseVersionAvailabilities? = nil,
-        advancedMysql: DatabaseVersionAvailabilities? = nil
-    ) {
+extension OptionsVersionAvailability {
+    public init(kafka: DatabaseVersionAvailabilities? = nil, pg: DatabaseVersionAvailabilities? = nil, mysql: DatabaseVersionAvailabilities? = nil, redis: DatabaseVersionAvailabilities? = nil, valkey: DatabaseVersionAvailabilities? = nil, mongodb: DatabaseVersionAvailabilities? = nil, opensearch: DatabaseVersionAvailabilities? = nil, advancedPg: DatabaseVersionAvailabilities? = nil, advancedMysql: DatabaseVersionAvailabilities? = nil) {
         self.init()
         (self.kafka, self.pg) = (kafka, pg)
         (self.mysql, self.redis) = (mysql, redis)
@@ -106,29 +96,23 @@ public struct SourceDatabase: Codable {
         case ignoreDbs = "ignore_dbs"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SourceDatabase {
-    init(from decoder: Decoder) throws {
+extension SourceDatabase {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.source) else {
-            throw SdkValidationError(
-                field: "source",
-                code: "required",
-                message: "Validation failed for 'source': value is required"
-            )
+            throw SdkValidationError(field: "source", code: "required", message: "Validation failed for 'source': value is required")
         }
-        source = try container.sdkDecodeRequired(.source)
-        disableSsl = try container.sdkDecodeIfPresent(.disableSsl)
-        ignoreDbs = try container.sdkDecodeIfPresent(.ignoreDbs)
+        self.source = try container.sdkDecodeRequired(.source)
+        self.disableSsl = try container.sdkDecodeIfPresent(.disableSsl)
+        self.ignoreDbs = try container.sdkDecodeIfPresent(.ignoreDbs)
     }
 }
 
-public extension SourceDatabase {
-    init(source: SourceDatabaseSource, disableSsl: Bool? = nil, ignoreDbs: [String]? = nil) {
+extension SourceDatabase {
+    public init(source: SourceDatabaseSource, disableSsl: Bool? = nil, ignoreDbs: [String]? = nil) {
         (self.source, self.disableSsl) = (source, disableSsl)
         self.ignoreDbs = ignoreDbs
     }
@@ -154,21 +138,21 @@ public struct OptionsOptionsAdvancedPg: Codable {
     }
 
     init() {
-        (regions, versions, layouts) = (nil, nil, nil)
+        (self.regions, self.versions, self.layouts) = (nil, nil, nil)
     }
 }
 
-public extension OptionsOptionsAdvancedPg {
-    init(from decoder: Decoder) throws {
+extension OptionsOptionsAdvancedPg {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        regions = try container.sdkDecodeIfPresent(.regions)
-        versions = try container.sdkDecodeIfPresent(.versions)
-        layouts = try container.sdkDecodeIfPresent(.layouts)
+        self.regions = try container.sdkDecodeIfPresent(.regions)
+        self.versions = try container.sdkDecodeIfPresent(.versions)
+        self.layouts = try container.sdkDecodeIfPresent(.layouts)
     }
 }
 
-public extension OptionsOptionsAdvancedPg {
-    init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
+extension OptionsOptionsAdvancedPg {
+    public init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
         self.init()
         (self.regions, self.versions) = (regions, versions)
         self.layouts = layouts
@@ -220,45 +204,29 @@ public struct PgbouncerAdvancedConfig: Codable {
     }
 
     init() {
-        (serverResetQueryAlways, ignoreStartupParameters, minPoolSize, serverLifetime, serverIdleTimeout) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        (autodbPoolSize, autodbPoolMode, autodbMaxDbConnections, autodbIdleTimeout) = (nil, nil, nil, nil)
+        (self.serverResetQueryAlways, self.ignoreStartupParameters, self.minPoolSize, self.serverLifetime, self.serverIdleTimeout) = (nil, nil, nil, nil, nil)
+        (self.autodbPoolSize, self.autodbPoolMode, self.autodbMaxDbConnections, self.autodbIdleTimeout) = (nil, nil, nil, nil)
     }
 }
 
-public extension PgbouncerAdvancedConfig {
-    init(from decoder: Decoder) throws {
+extension PgbouncerAdvancedConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        serverResetQueryAlways = try container.sdkDecodeIfPresent(.serverResetQueryAlways)
-        ignoreStartupParameters = try container.sdkDecodeIfPresent(.ignoreStartupParameters)
-        minPoolSize = try container.sdkDecodeIfPresent(.minPoolSize)
-        serverLifetime = try container.sdkDecodeIfPresent(.serverLifetime)
-        serverIdleTimeout = try container.sdkDecodeIfPresent(.serverIdleTimeout)
-        autodbPoolSize = try container.sdkDecodeIfPresent(.autodbPoolSize)
-        autodbPoolMode = try container.sdkDecodeIfPresent(.autodbPoolMode)
-        autodbMaxDbConnections = try container.sdkDecodeIfPresent(.autodbMaxDbConnections)
-        autodbIdleTimeout = try container.sdkDecodeIfPresent(.autodbIdleTimeout)
+        self.serverResetQueryAlways = try container.sdkDecodeIfPresent(.serverResetQueryAlways)
+        self.ignoreStartupParameters = try container.sdkDecodeIfPresent(.ignoreStartupParameters)
+        self.minPoolSize = try container.sdkDecodeIfPresent(.minPoolSize)
+        self.serverLifetime = try container.sdkDecodeIfPresent(.serverLifetime)
+        self.serverIdleTimeout = try container.sdkDecodeIfPresent(.serverIdleTimeout)
+        self.autodbPoolSize = try container.sdkDecodeIfPresent(.autodbPoolSize)
+        self.autodbPoolMode = try container.sdkDecodeIfPresent(.autodbPoolMode)
+        self.autodbMaxDbConnections = try container.sdkDecodeIfPresent(.autodbMaxDbConnections)
+        self.autodbIdleTimeout = try container.sdkDecodeIfPresent(.autodbIdleTimeout)
         try sdkValidateConstraints()
     }
 }
 
-public extension PgbouncerAdvancedConfig {
-    init(
-        serverResetQueryAlways: Bool? = nil,
-        ignoreStartupParameters: [PgbouncerAdvancedConfigIgnoreStartupParametersItem]? = nil,
-        minPoolSize: Int? = nil,
-        serverLifetime: Int? = nil,
-        serverIdleTimeout: Int? = nil,
-        autodbPoolSize: Int? = nil,
-        autodbPoolMode: PgbouncerAdvancedConfigAutodbPoolMode? = nil,
-        autodbMaxDbConnections: Int? = nil,
-        autodbIdleTimeout: Int? = nil
-    ) throws {
+extension PgbouncerAdvancedConfig {
+    public init(serverResetQueryAlways: Bool? = nil, ignoreStartupParameters: [PgbouncerAdvancedConfigIgnoreStartupParametersItem]? = nil, minPoolSize: Int? = nil, serverLifetime: Int? = nil, serverIdleTimeout: Int? = nil, autodbPoolSize: Int? = nil, autodbPoolMode: PgbouncerAdvancedConfigAutodbPoolMode? = nil, autodbMaxDbConnections: Int? = nil, autodbIdleTimeout: Int? = nil) throws {
         self.init()
         self.serverResetQueryAlways = serverResetQueryAlways
         (self.ignoreStartupParameters, self.minPoolSize) = (ignoreStartupParameters, minPoolSize)
@@ -271,74 +239,26 @@ public extension PgbouncerAdvancedConfig {
 
 extension PgbouncerAdvancedConfig {
     func sdkValidateConstraints() throws {
-        if let value = ignoreStartupParameters {
+        if let value = self.ignoreStartupParameters {
             try validateItems("ignore_startup_parameters", value, min: nil, max: 32)
         }
-        if let value = minPoolSize {
-            try validateRange(
-                "min_pool_size",
-                Double(value),
-                min: 0,
-                max: 10000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.minPoolSize {
+            try validateRange("min_pool_size", Double(value), min: 0, max: 10000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = serverLifetime {
-            try validateRange(
-                "server_lifetime",
-                Double(value),
-                min: 60,
-                max: 86400,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.serverLifetime {
+            try validateRange("server_lifetime", Double(value), min: 60, max: 86400, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = serverIdleTimeout {
-            try validateRange(
-                "server_idle_timeout",
-                Double(value),
-                min: 0,
-                max: 86400,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.serverIdleTimeout {
+            try validateRange("server_idle_timeout", Double(value), min: 0, max: 86400, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = autodbPoolSize {
-            try validateRange(
-                "autodb_pool_size",
-                Double(value),
-                min: 0,
-                max: 10000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.autodbPoolSize {
+            try validateRange("autodb_pool_size", Double(value), min: 0, max: 10000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = autodbMaxDbConnections {
-            try validateRange(
-                "autodb_max_db_connections",
-                Double(value),
-                min: 0,
-                max: 2_147_483_647,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.autodbMaxDbConnections {
+            try validateRange("autodb_max_db_connections", Double(value), min: 0, max: 2147483647, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = autodbIdleTimeout {
-            try validateRange(
-                "autodb_idle_timeout",
-                Double(value),
-                min: 0,
-                max: 86400,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.autodbIdleTimeout {
+            try validateRange("autodb_idle_timeout", Double(value), min: 0, max: 86400, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -357,35 +277,25 @@ public struct DatadogLogsink: Codable {
         case datadogApiKey = "datadog_api_key"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DatadogLogsink {
-    init(from decoder: Decoder) throws {
+extension DatadogLogsink {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.site) else {
-            throw SdkValidationError(
-                field: "site",
-                code: "required",
-                message: "Validation failed for 'site': value is required"
-            )
+            throw SdkValidationError(field: "site", code: "required", message: "Validation failed for 'site': value is required")
         }
         guard container.contains(.datadogApiKey) else {
-            throw SdkValidationError(
-                field: "datadog_api_key",
-                code: "required",
-                message: "Validation failed for 'datadog_api_key': value is required"
-            )
+            throw SdkValidationError(field: "datadog_api_key", code: "required", message: "Validation failed for 'datadog_api_key': value is required")
         }
-        site = try container.sdkDecodeRequired(.site)
-        datadogApiKey = try container.sdkDecodeRequired(.datadogApiKey)
+        self.site = try container.sdkDecodeRequired(.site)
+        self.datadogApiKey = try container.sdkDecodeRequired(.datadogApiKey)
     }
 }
 
-public extension DatadogLogsink {
-    init(site: String, datadogApiKey: String) {
+extension DatadogLogsink {
+    public init(site: String, datadogApiKey: String) {
         (self.site, self.datadogApiKey) = (site, datadogApiKey)
     }
 }
@@ -410,21 +320,21 @@ public struct OptionsOptionsValkey: Codable {
     }
 
     init() {
-        (regions, versions, layouts) = (nil, nil, nil)
+        (self.regions, self.versions, self.layouts) = (nil, nil, nil)
     }
 }
 
-public extension OptionsOptionsValkey {
-    init(from decoder: Decoder) throws {
+extension OptionsOptionsValkey {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        regions = try container.sdkDecodeIfPresent(.regions)
-        versions = try container.sdkDecodeIfPresent(.versions)
-        layouts = try container.sdkDecodeIfPresent(.layouts)
+        self.regions = try container.sdkDecodeIfPresent(.regions)
+        self.versions = try container.sdkDecodeIfPresent(.versions)
+        self.layouts = try container.sdkDecodeIfPresent(.layouts)
     }
 }
 
-public extension OptionsOptionsValkey {
-    init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
+extension OptionsOptionsValkey {
+    public init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
         self.init()
         (self.regions, self.versions) = (regions, versions)
         self.layouts = layouts
@@ -458,29 +368,23 @@ public struct SourceDatabaseSource: Codable {
     }
 
     init() {
-        (host, port, dbname, username, password) = (nil, nil, nil, nil, nil)
+        (self.host, self.port, self.dbname, self.username, self.password) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension SourceDatabaseSource {
-    init(from decoder: Decoder) throws {
+extension SourceDatabaseSource {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        host = try container.sdkDecodeIfPresent(.host)
-        port = try container.sdkDecodeIfPresent(.port)
-        dbname = try container.sdkDecodeIfPresent(.dbname)
-        username = try container.sdkDecodeIfPresent(.username)
-        password = try container.sdkDecodeIfPresent(.password)
+        self.host = try container.sdkDecodeIfPresent(.host)
+        self.port = try container.sdkDecodeIfPresent(.port)
+        self.dbname = try container.sdkDecodeIfPresent(.dbname)
+        self.username = try container.sdkDecodeIfPresent(.username)
+        self.password = try container.sdkDecodeIfPresent(.password)
     }
 }
 
-public extension SourceDatabaseSource {
-    init(
-        host: String? = nil,
-        port: Int? = nil,
-        dbname: String? = nil,
-        username: String? = nil,
-        password: String? = nil
-    ) {
+extension SourceDatabaseSource {
+    public init(host: String? = nil, port: Int? = nil, dbname: String? = nil, username: String? = nil, password: String? = nil) {
         self.init()
         (self.host, self.port) = (host, port)
         (self.dbname, self.username) = (dbname, username)
@@ -508,21 +412,21 @@ public struct OptionsOptionsMysql: Codable {
     }
 
     init() {
-        (regions, versions, layouts) = (nil, nil, nil)
+        (self.regions, self.versions, self.layouts) = (nil, nil, nil)
     }
 }
 
-public extension OptionsOptionsMysql {
-    init(from decoder: Decoder) throws {
+extension OptionsOptionsMysql {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        regions = try container.sdkDecodeIfPresent(.regions)
-        versions = try container.sdkDecodeIfPresent(.versions)
-        layouts = try container.sdkDecodeIfPresent(.layouts)
+        self.regions = try container.sdkDecodeIfPresent(.regions)
+        self.versions = try container.sdkDecodeIfPresent(.versions)
+        self.layouts = try container.sdkDecodeIfPresent(.layouts)
     }
 }
 
-public extension OptionsOptionsMysql {
-    init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
+extension OptionsOptionsMysql {
+    public init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
         self.init()
         (self.regions, self.versions) = (regions, versions)
         self.layouts = layouts

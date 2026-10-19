@@ -6,39 +6,18 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
+extension AgentPlatformApiMethods {
     /// To list all agent API keys, send a GET request to `/v2/gen-ai/agents/{agent_uuid}/api_keys`.
     ///
     /// - Parameters:
     /// - agentUuid: Agent id
     /// - page: Page number.
     /// - perPage: Items per page.
-    static func genaiListAgentApiKeys(
-        config: ClientConfig,
-        agentUuid: String,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiListAgentAPIKeysOutput {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(agentUuid)), "/api_keys"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("page", value: page),
-                SdkQueryParameter("per_page", value: perPage),
-            ],
-            decoder: .json,
-            operationId: "genai_list_agent_api_keys",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func genaiListAgentApiKeys(config: ClientConfig, agentUuid: String, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListAgentAPIKeysOutput {
+        return try (await sdkRequest("GET", ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(agentUuid)), "/api_keys"].joined(), config: config, query: [
+            SdkQueryParameter("page", value: page),
+            SdkQueryParameter("per_page", value: perPage),
+        ], decoder: .json, operationId: "genai_list_agent_api_keys", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To create an agent API key, send a POST request to `/v2/gen-ai/agents/{agent_uuid}/api_keys`.
@@ -47,30 +26,9 @@ public extension AgentPlatformApiMethods {
     /// - agentUuid: Agent id
     /// - agentUuid2: Agent id
     /// - name: A human friendly name to identify the key
-    static func genaiCreateAgentApiKey(
-        config: ClientConfig,
-        agentUuid: String,
-        agentUuid2: String? = nil,
-        name: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiCreateAgentAPIKeyOutput {
+    public static func genaiCreateAgentApiKey(config: ClientConfig, agentUuid: String, agentUuid2: String? = nil, name: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiCreateAgentAPIKeyOutput {
         let requestBody = GenaiCreateAgentApiKeyRequestBody(agentUuid2: agentUuid2, name: name)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(agentUuid)), "/api_keys"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "genai_create_agent_api_key",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(agentUuid)), "/api_keys"].joined(), config: config, body: requestBody, decoder: .json, operationId: "genai_create_agent_api_key", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

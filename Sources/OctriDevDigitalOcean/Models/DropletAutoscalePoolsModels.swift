@@ -3,33 +3,25 @@
 
 import Foundation
 
-/// DropletAutoscalePools domain models
+// DropletAutoscalePools domain models
 public indirect enum AutoscalePoolConfig {
     case autoscalePoolStaticConfig(AutoscalePoolStaticConfig)
     case autoscalePoolDynamicConfig(AutoscalePoolDynamicConfig)
 }
 
 extension AutoscalePoolConfig: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for AutoscalePoolConfig"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for AutoscalePoolConfig")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -47,14 +39,8 @@ extension AutoscalePoolConfig {
 
 extension AutoscalePoolConfig {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container
-            .decode(AutoscalePoolStaticConfig.self) {
-            return .autoscalePoolStaticConfig(value)
-        }
-        if let value = try? container
-            .decode(AutoscalePoolDynamicConfig.self) {
-            return .autoscalePoolDynamicConfig(value)
-        }
+        if let value = try? container.decode(AutoscalePoolStaticConfig.self) { return .autoscalePoolStaticConfig(value) }
+        if let value = try? container.decode(AutoscalePoolDynamicConfig.self) { return .autoscalePoolDynamicConfig(value) }
         return nil
     }
 }
@@ -75,26 +61,18 @@ public indirect enum AutoscalePoolCreateConfig {
 }
 
 extension AutoscalePoolCreateConfig: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for AutoscalePoolCreateConfig"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for AutoscalePoolCreateConfig")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -112,14 +90,8 @@ extension AutoscalePoolCreateConfig {
 
 extension AutoscalePoolCreateConfig {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container
-            .decode(AutoscalePoolStaticConfig.self) {
-            return .autoscalePoolStaticConfig(value)
-        }
-        if let value = try? container
-            .decode(AutoscalePoolDynamicConfig.self) {
-            return .autoscalePoolDynamicConfig(value)
-        }
+        if let value = try? container.decode(AutoscalePoolStaticConfig.self) { return .autoscalePoolStaticConfig(value) }
+        if let value = try? container.decode(AutoscalePoolDynamicConfig.self) { return .autoscalePoolDynamicConfig(value) }
         return nil
     }
 }
@@ -148,29 +120,23 @@ public struct AllAutoscalePools: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllAutoscalePools {
-    init(from decoder: Decoder) throws {
+extension AllAutoscalePools {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        autoscalePools = try container.sdkDecodeIfPresent(.autoscalePools)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.autoscalePools = try container.sdkDecodeIfPresent(.autoscalePools)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllAutoscalePools {
-    init(meta: MetaMeta, autoscalePools: [AutoscalePool]? = nil, links: PageLinks? = nil) {
+extension AllAutoscalePools {
+    public init(meta: MetaMeta, autoscalePools: [AutoscalePool]? = nil, links: PageLinks? = nil) {
         (self.meta, self.autoscalePools) = (meta, autoscalePools)
         self.links = links
     }
@@ -184,19 +150,19 @@ public struct AllMembersVariant0: Codable {
     }
 
     init() {
-        droplets = nil
+        self.droplets = nil
     }
 }
 
-public extension AllMembersVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllMembersVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        droplets = try container.sdkDecodeIfPresent(.droplets)
+        self.droplets = try container.sdkDecodeIfPresent(.droplets)
     }
 }
 
-public extension AllMembersVariant0 {
-    init(droplets: [Member]? = nil) {
+extension AllMembersVariant0 {
+    public init(droplets: [Member]? = nil) {
         self.init()
         self.droplets = droplets
     }
@@ -228,148 +194,52 @@ public struct AutoscalePoolDynamicConfig: Codable {
         case cooldownMinutes = "cooldown_minutes"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AutoscalePoolDynamicConfig {
-    init(from decoder: Decoder) throws {
+extension AutoscalePoolDynamicConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.minInstances) else {
-            throw SdkValidationError(
-                field: "min_instances",
-                code: "required",
-                message: "Validation failed for 'min_instances': value is required"
-            )
+            throw SdkValidationError(field: "min_instances", code: "required", message: "Validation failed for 'min_instances': value is required")
         }
         guard container.contains(.maxInstances) else {
-            throw SdkValidationError(
-                field: "max_instances",
-                code: "required",
-                message: "Validation failed for 'max_instances': value is required"
-            )
+            throw SdkValidationError(field: "max_instances", code: "required", message: "Validation failed for 'max_instances': value is required")
         }
-        minInstances = try container.sdkDecodeRequired(.minInstances)
-        maxInstances = try container.sdkDecodeRequired(.maxInstances)
-        targetCpuUtilization = try container.sdkDecodeIfPresent(.targetCpuUtilization)
-        targetMemoryUtilization = try container.sdkDecodeIfPresent(.targetMemoryUtilization)
-        cooldownMinutes = try container.sdkDecodeIfPresent(.cooldownMinutes)
-        try validateRange(
-            "min_instances",
-            Double(minInstances),
-            min: 1,
-            max: 500,
-            exclusiveMin: nil,
-            exclusiveMax: nil,
-            multipleOf: nil
-        )
-        try validateRange(
-            "max_instances",
-            Double(maxInstances),
-            min: 1,
-            max: 1000,
-            exclusiveMin: nil,
-            exclusiveMax: nil,
-            multipleOf: nil
-        )
-        if let value = targetCpuUtilization {
-            try validateRange(
-                "target_cpu_utilization",
-                Double(value),
-                min: 0.05,
-                max: 1,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.minInstances = try container.sdkDecodeRequired(.minInstances)
+        self.maxInstances = try container.sdkDecodeRequired(.maxInstances)
+        self.targetCpuUtilization = try container.sdkDecodeIfPresent(.targetCpuUtilization)
+        self.targetMemoryUtilization = try container.sdkDecodeIfPresent(.targetMemoryUtilization)
+        self.cooldownMinutes = try container.sdkDecodeIfPresent(.cooldownMinutes)
+            try validateRange("min_instances", Double(self.minInstances), min: 1, max: 500, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange("max_instances", Double(self.maxInstances), min: 1, max: 1000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = self.targetCpuUtilization {
+            try validateRange("target_cpu_utilization", Double(value), min: 0.05, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = targetMemoryUtilization {
-            try validateRange(
-                "target_memory_utilization",
-                Double(value),
-                min: 0.05,
-                max: 1,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.targetMemoryUtilization {
+            try validateRange("target_memory_utilization", Double(value), min: 0.05, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = cooldownMinutes {
-            try validateRange(
-                "cooldown_minutes",
-                Double(value),
-                min: 5,
-                max: 20,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.cooldownMinutes {
+            try validateRange("cooldown_minutes", Double(value), min: 5, max: 20, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
-public extension AutoscalePoolDynamicConfig {
-    init(
-        minInstances: Int,
-        maxInstances: Int,
-        targetCpuUtilization: Double? = nil,
-        targetMemoryUtilization: Double? = nil,
-        cooldownMinutes: Int? = nil
-    ) throws {
+extension AutoscalePoolDynamicConfig {
+    public init(minInstances: Int, maxInstances: Int, targetCpuUtilization: Double? = nil, targetMemoryUtilization: Double? = nil, cooldownMinutes: Int? = nil) throws {
         (self.minInstances, self.maxInstances) = (minInstances, maxInstances)
         self.targetCpuUtilization = targetCpuUtilization
         (self.targetMemoryUtilization, self.cooldownMinutes) = (targetMemoryUtilization, cooldownMinutes)
-        try validateRange(
-            "min_instances",
-            Double(self.minInstances),
-            min: 1,
-            max: 500,
-            exclusiveMin: nil,
-            exclusiveMax: nil,
-            multipleOf: nil
-        )
-        try validateRange(
-            "max_instances",
-            Double(self.maxInstances),
-            min: 1,
-            max: 1000,
-            exclusiveMin: nil,
-            exclusiveMax: nil,
-            multipleOf: nil
-        )
+            try validateRange("min_instances", Double(self.minInstances), min: 1, max: 500, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange("max_instances", Double(self.maxInstances), min: 1, max: 1000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         if let value = self.targetCpuUtilization {
-            try validateRange(
-                "target_cpu_utilization",
-                Double(value),
-                min: 0.05,
-                max: 1,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("target_cpu_utilization", Double(value), min: 0.05, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.targetMemoryUtilization {
-            try validateRange(
-                "target_memory_utilization",
-                Double(value),
-                min: 0.05,
-                max: 1,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("target_memory_utilization", Double(value), min: 0.05, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.cooldownMinutes {
-            try validateRange(
-                "cooldown_minutes",
-                Double(value),
-                min: 5,
-                max: 20,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("cooldown_minutes", Double(value), min: 5, max: 20, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -436,72 +306,41 @@ public struct AutoscalePoolDropletTemplate: Codable {
         case publicNetworking = "public_networking"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AutoscalePoolDropletTemplate {
-    init(from decoder: Decoder) throws {
+extension AutoscalePoolDropletTemplate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
         guard container.contains(.size) else {
-            throw SdkValidationError(
-                field: "size",
-                code: "required",
-                message: "Validation failed for 'size': value is required"
-            )
+            throw SdkValidationError(field: "size", code: "required", message: "Validation failed for 'size': value is required")
         }
         guard container.contains(.image) else {
-            throw SdkValidationError(
-                field: "image",
-                code: "required",
-                message: "Validation failed for 'image': value is required"
-            )
+            throw SdkValidationError(field: "image", code: "required", message: "Validation failed for 'image': value is required")
         }
         guard container.contains(.sshKeys) else {
-            throw SdkValidationError(
-                field: "ssh_keys",
-                code: "required",
-                message: "Validation failed for 'ssh_keys': value is required"
-            )
+            throw SdkValidationError(field: "ssh_keys", code: "required", message: "Validation failed for 'ssh_keys': value is required")
         }
-        region = try container.sdkDecodeRequired(.region)
-        size = try container.sdkDecodeRequired(.size)
-        image = try container.sdkDecodeRequired(.image)
-        sshKeys = try container.sdkDecodeRequired(.sshKeys)
-        name = try container.sdkDecodeIfPresent(.name)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        withDropletAgent = try container.sdkDecodeIfPresent(.withDropletAgent)
-        projectId = try container.sdkDecodeIfPresent(.projectId)
-        ipv6 = try container.sdkDecodeIfPresent(.ipv6)
-        userData = try container.sdkDecodeIfPresent(.userData)
-        publicNetworking = try container.sdkDecodeIfPresent(.publicNetworking)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.size = try container.sdkDecodeRequired(.size)
+        self.image = try container.sdkDecodeRequired(.image)
+        self.sshKeys = try container.sdkDecodeRequired(.sshKeys)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        self.withDropletAgent = try container.sdkDecodeIfPresent(.withDropletAgent)
+        self.projectId = try container.sdkDecodeIfPresent(.projectId)
+        self.ipv6 = try container.sdkDecodeIfPresent(.ipv6)
+        self.userData = try container.sdkDecodeIfPresent(.userData)
+        self.publicNetworking = try container.sdkDecodeIfPresent(.publicNetworking)
     }
 }
 
-public extension AutoscalePoolDropletTemplate {
-    init(
-        region: AutoscalePoolDropletTemplateRegion,
-        size: String,
-        image: String,
-        sshKeys: [String],
-        name: String? = nil,
-        tags: [String]? = nil,
-        vpcUuid: String? = nil,
-        withDropletAgent: Bool? = nil,
-        projectId: String? = nil,
-        ipv6: Bool? = nil,
-        userData: String? = nil,
-        publicNetworking: Bool? = nil
-    ) {
+extension AutoscalePoolDropletTemplate {
+    public init(region: AutoscalePoolDropletTemplateRegion, size: String, image: String, sshKeys: [String], name: String? = nil, tags: [String]? = nil, vpcUuid: String? = nil, withDropletAgent: Bool? = nil, projectId: String? = nil, ipv6: Bool? = nil, userData: String? = nil, publicNetworking: Bool? = nil) {
         (self.region, self.size) = (region, size)
         (self.image, self.sshKeys) = (image, sshKeys)
         (self.name, self.tags) = (name, tags)
@@ -521,19 +360,19 @@ public struct ExistingAutoscalePool: Codable {
     }
 
     init() {
-        autoscalePool = nil
+        self.autoscalePool = nil
     }
 }
 
-public extension ExistingAutoscalePool {
-    init(from decoder: Decoder) throws {
+extension ExistingAutoscalePool {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        autoscalePool = try container.sdkDecodeIfPresent(.autoscalePool)
+        self.autoscalePool = try container.sdkDecodeIfPresent(.autoscalePool)
     }
 }
 
-public extension ExistingAutoscalePool {
-    init(autoscalePool: AutoscalePool? = nil) {
+extension ExistingAutoscalePool {
+    public init(autoscalePool: AutoscalePool? = nil) {
         self.init()
         self.autoscalePool = autoscalePool
     }
@@ -553,29 +392,23 @@ public struct HistoryEvents: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension HistoryEvents {
-    init(from decoder: Decoder) throws {
+extension HistoryEvents {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        history = try container.sdkDecodeIfPresent(.history)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.history = try container.sdkDecodeIfPresent(.history)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension HistoryEvents {
-    init(meta: MetaMeta, history: [History]? = nil, links: PageLinks? = nil) {
+extension HistoryEvents {
+    public init(meta: MetaMeta, history: [History]? = nil, links: PageLinks? = nil) {
         (self.meta, self.history) = (meta, history)
         self.links = links
     }
@@ -591,19 +424,19 @@ public struct AutoscalePoolCreateResponse: Codable {
     }
 
     init() {
-        autoscalePool = nil
+        self.autoscalePool = nil
     }
 }
 
-public extension AutoscalePoolCreateResponse {
-    init(from decoder: Decoder) throws {
+extension AutoscalePoolCreateResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        autoscalePool = try container.sdkDecodeIfPresent(.autoscalePool)
+        self.autoscalePool = try container.sdkDecodeIfPresent(.autoscalePool)
     }
 }
 
-public extension AutoscalePoolCreateResponse {
-    init(autoscalePool: AutoscalePool? = nil) {
+extension AutoscalePoolCreateResponse {
+    public init(autoscalePool: AutoscalePool? = nil) {
         self.init()
         self.autoscalePool = autoscalePool
     }
@@ -619,7 +452,5 @@ public struct AutoscalePoolStaticConfig: Codable {
         case targetNumberInstances = "target_number_instances"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// ActionGatewaySearch domain models
+// ActionGatewaySearch domain models
 /// One page of matching toolbelts.
 public struct SearchToolbeltsResponse: Codable {
     /// Matching toolbelts sorted by name.
@@ -17,20 +17,20 @@ public struct SearchToolbeltsResponse: Codable {
     }
 
     init() {
-        (toolbelts, nextPageToken) = (nil, nil)
+        (self.toolbelts, self.nextPageToken) = (nil, nil)
     }
 }
 
-public extension SearchToolbeltsResponse {
-    init(from decoder: Decoder) throws {
+extension SearchToolbeltsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        toolbelts = try container.sdkDecodeIfPresent(.toolbelts)
-        nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
+        self.toolbelts = try container.sdkDecodeIfPresent(.toolbelts)
+        self.nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
     }
 }
 
-public extension SearchToolbeltsResponse {
-    init(toolbelts: [ToolbeltSummary]? = nil, nextPageToken: NextPageToken? = nil) {
+extension SearchToolbeltsResponse {
+    public init(toolbelts: [ToolbeltSummary]? = nil, nextPageToken: NextPageToken? = nil) {
         self.init()
         (self.toolbelts, self.nextPageToken) = (toolbelts, nextPageToken)
     }
@@ -49,20 +49,20 @@ public struct SearchSessionsResponse: Codable {
     }
 
     init() {
-        (sessions, nextPageToken) = (nil, nil)
+        (self.sessions, self.nextPageToken) = (nil, nil)
     }
 }
 
-public extension SearchSessionsResponse {
-    init(from decoder: Decoder) throws {
+extension SearchSessionsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        sessions = try container.sdkDecodeIfPresent(.sessions)
-        nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
+        self.sessions = try container.sdkDecodeIfPresent(.sessions)
+        self.nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
     }
 }
 
-public extension SearchSessionsResponse {
-    init(sessions: [Session]? = nil, nextPageToken: NextPageToken? = nil) {
+extension SearchSessionsResponse {
+    public init(sessions: [Session]? = nil, nextPageToken: NextPageToken? = nil) {
         self.init()
         (self.sessions, self.nextPageToken) = (sessions, nextPageToken)
     }
@@ -82,20 +82,20 @@ public struct SearchToolsResponse: Codable {
     }
 
     init() {
-        (tools, nextPageToken) = (nil, nil)
+        (self.tools, self.nextPageToken) = (nil, nil)
     }
 }
 
-public extension SearchToolsResponse {
-    init(from decoder: Decoder) throws {
+extension SearchToolsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        tools = try container.sdkDecodeIfPresent(.tools)
-        nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
+        self.tools = try container.sdkDecodeIfPresent(.tools)
+        self.nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
     }
 }
 
-public extension SearchToolsResponse {
-    init(tools: [ToolSearchResult]? = nil, nextPageToken: NextPageToken? = nil) {
+extension SearchToolsResponse {
+    public init(tools: [ToolSearchResult]? = nil, nextPageToken: NextPageToken? = nil) {
         self.init()
         (self.tools, self.nextPageToken) = (tools, nextPageToken)
     }
@@ -114,20 +114,20 @@ public struct SearchProvidersResponse: Codable {
     }
 
     init() {
-        (providers, nextPageToken) = (nil, nil)
+        (self.providers, self.nextPageToken) = (nil, nil)
     }
 }
 
-public extension SearchProvidersResponse {
-    init(from decoder: Decoder) throws {
+extension SearchProvidersResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        providers = try container.sdkDecodeIfPresent(.providers)
-        nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
+        self.providers = try container.sdkDecodeIfPresent(.providers)
+        self.nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
     }
 }
 
-public extension SearchProvidersResponse {
-    init(providers: [ProviderSummary]? = nil, nextPageToken: NextPageToken? = nil) {
+extension SearchProvidersResponse {
+    public init(providers: [ProviderSummary]? = nil, nextPageToken: NextPageToken? = nil) {
         self.init()
         (self.providers, self.nextPageToken) = (providers, nextPageToken)
     }

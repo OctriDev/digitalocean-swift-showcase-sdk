@@ -6,14 +6,10 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public struct MonitoringGetDatabaseMysqlOpRatesParameter: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct MonitoringGetDatabaseMysqlOpRatesParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let select = MonitoringGetDatabaseMysqlOpRatesParameter(rawValue: "select")
     public static let insert = MonitoringGetDatabaseMysqlOpRatesParameter(rawValue: "insert")
     public static let update = MonitoringGetDatabaseMysqlOpRatesParameter(rawValue: "update")
@@ -21,7 +17,7 @@ public struct MonitoringGetDatabaseMysqlOpRatesParameter: RawRepresentable, Hash
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -30,22 +26,17 @@ public struct MonitoringGetDatabaseMysqlOpRatesParameter: RawRepresentable, Hash
     }
 }
 
-public struct GenaiListModelCatalogParameterX3917d42e: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct GenaiListModelCatalogParameterX3917d42e: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let sortDirectionUnspecified =
-        GenaiListModelCatalogParameterX3917d42e(rawValue: "SORT_DIRECTION_UNSPECIFIED")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let sortDirectionUnspecified = GenaiListModelCatalogParameterX3917d42e(rawValue: "SORT_DIRECTION_UNSPECIFIED")
     public static let sortDirectionAsc = GenaiListModelCatalogParameterX3917d42e(rawValue: "SORT_DIRECTION_ASC")
     public static let sortDirectionDesc = GenaiListModelCatalogParameterX3917d42e(rawValue: "SORT_DIRECTION_DESC")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -57,32 +48,20 @@ public struct GenaiListModelCatalogParameterX3917d42e: RawRepresentable, Hashabl
 public struct GenaiListModelEvaluationRunsParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let modelEvaluationRunStatusUnspecified =
-        GenaiListModelEvaluationRunsParameter(rawValue: "MODEL_EVALUATION_RUN_STATUS_UNSPECIFIED")
-    public static let modelEvaluationRunQueued =
-        GenaiListModelEvaluationRunsParameter(rawValue: "MODEL_EVALUATION_RUN_QUEUED")
-    public static let modelEvaluationRunRunningDataset =
-        GenaiListModelEvaluationRunsParameter(rawValue: "MODEL_EVALUATION_RUN_RUNNING_DATASET")
-    public static let modelEvaluationRunEvaluatingResults =
-        GenaiListModelEvaluationRunsParameter(rawValue: "MODEL_EVALUATION_RUN_EVALUATING_RESULTS")
-    public static let modelEvaluationRunCancelling =
-        GenaiListModelEvaluationRunsParameter(rawValue: "MODEL_EVALUATION_RUN_CANCELLING")
-    public static let modelEvaluationRunCancelled =
-        GenaiListModelEvaluationRunsParameter(rawValue: "MODEL_EVALUATION_RUN_CANCELLED")
-    public static let modelEvaluationRunSuccessful =
-        GenaiListModelEvaluationRunsParameter(rawValue: "MODEL_EVALUATION_RUN_SUCCESSFUL")
-    public static let modelEvaluationRunPartiallySuccessful =
-        GenaiListModelEvaluationRunsParameter(rawValue: "MODEL_EVALUATION_RUN_PARTIALLY_SUCCESSFUL")
-    public static let modelEvaluationRunFailed =
-        GenaiListModelEvaluationRunsParameter(rawValue: "MODEL_EVALUATION_RUN_FAILED")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let modelEvaluationRunStatusUnspecified = GenaiListModelEvaluationRunsParameter(rawValue: "MODEL_EVALUATION_RUN_STATUS_UNSPECIFIED")
+    public static let modelEvaluationRunQueued = GenaiListModelEvaluationRunsParameter(rawValue: "MODEL_EVALUATION_RUN_QUEUED")
+    public static let modelEvaluationRunRunningDataset = GenaiListModelEvaluationRunsParameter(rawValue: "MODEL_EVALUATION_RUN_RUNNING_DATASET")
+    public static let modelEvaluationRunEvaluatingResults = GenaiListModelEvaluationRunsParameter(rawValue: "MODEL_EVALUATION_RUN_EVALUATING_RESULTS")
+    public static let modelEvaluationRunCancelling = GenaiListModelEvaluationRunsParameter(rawValue: "MODEL_EVALUATION_RUN_CANCELLING")
+    public static let modelEvaluationRunCancelled = GenaiListModelEvaluationRunsParameter(rawValue: "MODEL_EVALUATION_RUN_CANCELLED")
+    public static let modelEvaluationRunSuccessful = GenaiListModelEvaluationRunsParameter(rawValue: "MODEL_EVALUATION_RUN_SUCCESSFUL")
+    public static let modelEvaluationRunPartiallySuccessful = GenaiListModelEvaluationRunsParameter(rawValue: "MODEL_EVALUATION_RUN_PARTIALLY_SUCCESSFUL")
+    public static let modelEvaluationRunFailed = GenaiListModelEvaluationRunsParameter(rawValue: "MODEL_EVALUATION_RUN_FAILED")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -94,17 +73,14 @@ public struct GenaiListModelEvaluationRunsParameter: RawRepresentable, Hashable,
 public struct ConnectionsListParameterX0feec021: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pending = ConnectionsListParameterX0feec021(rawValue: "pending")
     public static let active = ConnectionsListParameterX0feec021(rawValue: "active")
     public static let expired = ConnectionsListParameterX0feec021(rawValue: "expired")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -117,10 +93,7 @@ public struct ConnectionsListParameterX0feec021: RawRepresentable, Hashable, Cod
 public struct UptimeUpdateAlertRequestBodyPeriod: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let value2m = UptimeUpdateAlertRequestBodyPeriod(rawValue: "2m")
     public static let value3m = UptimeUpdateAlertRequestBodyPeriod(rawValue: "3m")
     public static let value5m = UptimeUpdateAlertRequestBodyPeriod(rawValue: "5m")
@@ -131,7 +104,7 @@ public struct UptimeUpdateAlertRequestBodyPeriod: RawRepresentable, Hashable, Co
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -140,22 +113,17 @@ public struct UptimeUpdateAlertRequestBodyPeriod: RawRepresentable, Hashable, Co
     }
 }
 
-public struct GenaiListSimulationEpisodesParameterXc80e8848: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct GenaiListSimulationEpisodesParameterXc80e8848: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let sortDirectionUnspecified =
-        GenaiListSimulationEpisodesParameterXc80e8848(rawValue: "SORT_DIRECTION_UNSPECIFIED")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let sortDirectionUnspecified = GenaiListSimulationEpisodesParameterXc80e8848(rawValue: "SORT_DIRECTION_UNSPECIFIED")
     public static let sortDirectionAsc = GenaiListSimulationEpisodesParameterXc80e8848(rawValue: "SORT_DIRECTION_ASC")
     public static let sortDirectionDesc = GenaiListSimulationEpisodesParameterXc80e8848(rawValue: "SORT_DIRECTION_DESC")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -165,20 +133,16 @@ public struct GenaiListSimulationEpisodesParameterXc80e8848: RawRepresentable, H
 }
 
 /// The comparison operator used against the alert's threshold.
-public struct UptimeCreateAlertRequestBodyComparison: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct UptimeCreateAlertRequestBodyComparison: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let greaterThan = UptimeCreateAlertRequestBodyComparison(rawValue: "greater_than")
     public static let lessThan = UptimeCreateAlertRequestBodyComparison(rawValue: "less_than")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -190,16 +154,13 @@ public struct UptimeCreateAlertRequestBodyComparison: RawRepresentable, Hashable
 public struct AppsCreateParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let applicationJson = AppsCreateParameter(rawValue: "application/json")
     public static let applicationYaml = AppsCreateParameter(rawValue: "application/yaml")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -211,10 +172,7 @@ public struct AppsCreateParameter: RawRepresentable, Hashable, Codable, Sendable
 public struct VpcsListMembersParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let droplet = VpcsListMembersParameter(rawValue: "droplet")
     public static let loadbalancer = VpcsListMembersParameter(rawValue: "loadbalancer")
     public static let kubernetes = VpcsListMembersParameter(rawValue: "kubernetes")
@@ -225,7 +183,7 @@ public struct VpcsListMembersParameter: RawRepresentable, Hashable, Codable, Sen
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -234,24 +192,17 @@ public struct VpcsListMembersParameter: RawRepresentable, Hashable, Codable, Sen
     }
 }
 
-public struct GenaiListScenarioLibraryScenariosParameterXe499f100: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct GenaiListScenarioLibraryScenariosParameterXe499f100: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let sortDirectionUnspecified =
-        GenaiListScenarioLibraryScenariosParameterXe499f100(rawValue: "SORT_DIRECTION_UNSPECIFIED")
-    public static let sortDirectionAsc =
-        GenaiListScenarioLibraryScenariosParameterXe499f100(rawValue: "SORT_DIRECTION_ASC")
-    public static let sortDirectionDesc =
-        GenaiListScenarioLibraryScenariosParameterXe499f100(rawValue: "SORT_DIRECTION_DESC")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let sortDirectionUnspecified = GenaiListScenarioLibraryScenariosParameterXe499f100(rawValue: "SORT_DIRECTION_UNSPECIFIED")
+    public static let sortDirectionAsc = GenaiListScenarioLibraryScenariosParameterXe499f100(rawValue: "SORT_DIRECTION_ASC")
+    public static let sortDirectionDesc = GenaiListScenarioLibraryScenariosParameterXe499f100(rawValue: "SORT_DIRECTION_DESC")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

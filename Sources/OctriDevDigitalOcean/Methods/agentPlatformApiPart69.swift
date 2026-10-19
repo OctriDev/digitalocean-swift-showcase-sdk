@@ -6,7 +6,7 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
+extension AgentPlatformApiMethods {
     /// To cancel an in-progress simulation run, send a PATCH request to `/v2/gen-ai/simulation_runs/{run_uuid}/cancel`.
     ///
     /// - Parameters:
@@ -14,29 +14,9 @@ public extension AgentPlatformApiMethods {
     ///   `CreateSimulationRun` and listed via `ListSimulationRuns`. The run must be
     ///   in a non-terminal status; already-terminal runs return an error.
     /// - runUuid2: UUID of the run to cancel.
-    static func genaiPatchCancelSimulationRun(
-        config: ClientConfig,
-        runUuid: String,
-        runUuid2: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiCancelSimulationRunOutput {
+    public static func genaiPatchCancelSimulationRun(config: ClientConfig, runUuid: String, runUuid2: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiCancelSimulationRunOutput {
         let requestBody = GenaiPatchCancelSimulationRunRequestBody(runUuid2: runUuid2)
 
-        return try await (sdkRequest(
-            "PATCH",
-            ["/v2/gen-ai/simulation_runs/", sdkEncodePathSegment(sdkWireString(runUuid)), "/cancel"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "genai_patch_cancel_simulation_run",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PATCH", ["/v2/gen-ai/simulation_runs/", sdkEncodePathSegment(sdkWireString(runUuid)), "/cancel"].joined(), config: config, body: requestBody, decoder: .json, operationId: "genai_patch_cancel_simulation_run", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

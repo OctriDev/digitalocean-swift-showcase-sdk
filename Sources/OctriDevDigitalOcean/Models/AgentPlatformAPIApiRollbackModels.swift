@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiRollback domain models
+// AgentPlatformAPIApiRollback domain models
 /// Typed representation of the `ApiRollbackToAgentVersionOutput` API schema.
 public struct ApiRollbackToAgentVersionOutput: Codable {
     /// An alternative way to provide auth information. for internal use only.
@@ -18,20 +18,20 @@ public struct ApiRollbackToAgentVersionOutput: Codable {
     }
 
     init() {
-        (auditHeader, versionHash) = (nil, nil)
+        (self.auditHeader, self.versionHash) = (nil, nil)
     }
 }
 
-public extension ApiRollbackToAgentVersionOutput {
-    init(from decoder: Decoder) throws {
+extension ApiRollbackToAgentVersionOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        auditHeader = try container.sdkDecodeIfPresent(.auditHeader)
-        versionHash = try container.sdkDecodeIfPresent(.versionHash)
+        self.auditHeader = try container.sdkDecodeIfPresent(.auditHeader)
+        self.versionHash = try container.sdkDecodeIfPresent(.versionHash)
     }
 }
 
-public extension ApiRollbackToAgentVersionOutput {
-    init(auditHeader: ApiAuditHeader? = nil, versionHash: String? = nil) {
+extension ApiRollbackToAgentVersionOutput {
+    public init(auditHeader: ApiAuditHeader? = nil, versionHash: String? = nil) {
         self.init()
         (self.auditHeader, self.versionHash) = (auditHeader, versionHash)
     }
@@ -52,20 +52,20 @@ public struct ApiRollbackToAgentVersionInputPublic: Codable {
     }
 
     init() {
-        (uuid, versionHash) = (nil, nil)
+        (self.uuid, self.versionHash) = (nil, nil)
     }
 }
 
-public extension ApiRollbackToAgentVersionInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiRollbackToAgentVersionInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
-        versionHash = try container.sdkDecodeIfPresent(.versionHash)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        self.versionHash = try container.sdkDecodeIfPresent(.versionHash)
     }
 }
 
-public extension ApiRollbackToAgentVersionInputPublic {
-    init(uuid: String? = nil, versionHash: String? = nil) {
+extension ApiRollbackToAgentVersionInputPublic {
+    public init(uuid: String? = nil, versionHash: String? = nil) {
         self.init()
         (self.uuid, self.versionHash) = (uuid, versionHash)
     }

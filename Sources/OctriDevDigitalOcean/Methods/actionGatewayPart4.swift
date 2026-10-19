@@ -6,14 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ActionGatewayMethods {
-    /// Connects one of your users, identified by `user_id`, to a provider so tools can act on their account. An OAuth
-    /// connection starts pending, and authorization carries the URL to send the user to; read the connection until it
-    /// is active or expired. A connection through a team API-key credential is active immediately. There is one
-    /// connection per provider and `user_id` for each DigitalOcean user who creates connections. Repeating the request
-    /// returns the existing connection when its scopes cover the request, reusing a pending connection's link, and
-    /// restarts an expired or revoked connection under the same ID. Requesting scopes beyond an existing connection's,
-    /// or a different credential, returns 400 until that connection is deleted.
+extension ActionGatewayMethods {
+    /// Connects one of your users, identified by `user_id`, to a provider so tools can act on their account. An OAuth connection starts pending, and authorization carries the URL to send the user to; read the connection until it is active or expired. A connection through a team API-key credential is active immediately. There is one connection per provider and `user_id` for each DigitalOcean user who creates connections. Repeating the request returns the existing connection when its scopes cover the request, reusing a pending connection's link, and restarts an expired or revoked connection under the same ID. Requesting scopes beyond an existing connection's, or a different credential, returns 400 until that connection is deleted.
     ///
     /// - Parameters:
     /// - provider: Required provider slug, from the provider list.
@@ -29,43 +23,11 @@ public extension ActionGatewayMethods {
     ///   DigitalOcean's shared OAuth application.
     /// - network: Optional private network for the connection's calls. Requires VPC
     ///   networking to be enabled for your account (403 otherwise).
-    static func connectionsCreate(
-        config: ClientConfig,
-        provider: String,
-        userId: String,
-        scopes: [String]? = nil,
-        connectionParameters: [String: JSONValue]? = nil,
-        credential: ConnectionCreateCredential? = nil,
-        network: ConnectionCreateNetwork? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ConnectionResponse {
+    public static func connectionsCreate(config: ClientConfig, provider: String, userId: String, scopes: [String]? = nil, connectionParameters: [String: JSONValue]? = nil, credential: ConnectionCreateCredential? = nil, network: ConnectionCreateNetwork? = nil, requestOptions: RequestOptions? = nil) async throws -> ConnectionResponse {
         try sdkValidatePattern("user_id", userId, sdkPatternd665a9126795)
 
-        let requestBody = ConnectionsCreateRequestBody(
-            provider: provider,
-            userId: userId,
-            scopes: scopes,
-            connectionParameters: connectionParameters,
-            credential: credential,
-            network: network
-        )
+        let requestBody = ConnectionsCreateRequestBody(provider: provider, userId: userId, scopes: scopes, connectionParameters: connectionParameters, credential: credential, network: network)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/action-gateway/connections",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "connections_create",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "409": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v2/action-gateway/connections", config: config, body: requestBody, decoder: .json, operationId: "connections_create", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "409": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

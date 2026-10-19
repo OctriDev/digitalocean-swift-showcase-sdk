@@ -6,9 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension MicroVmsPublicPreviewMethods {
-    /// To list all of the MicroVMs on your team, send a GET request to `/v2/microvms`. The `region`, `name`, and
-    /// `tag_name` filters combine with AND.
+extension MicroVmsPublicPreviewMethods {
+    /// To list all of the MicroVMs on your team, send a GET request to `/v2/microvms`. The `region`, `name`, and `tag_name` filters combine with AND.
     ///
     /// - Parameters:
     /// - page: Which 'page' of paginated results to return.
@@ -17,38 +16,21 @@ public extension MicroVmsPublicPreviewMethods {
     /// - name: Only return the MicroVM with this exact name.
     /// - tagName: Only return MicroVMs with this tag. A tag that matches no
     ///   MicroVMs returns an empty list.
-    static func microvmsList(
-        config: ClientConfig,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        region: String? = nil,
-        name: String? = nil,
-        tagName: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AllMicrovms {
-        if let page {
+    public static func microvmsList(config: ClientConfig, page: Int? = nil, perPage: Int? = nil, region: String? = nil, name: String? = nil, tagName: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AllMicrovms {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        if let perPage {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/microvms",
-            config: config,
-            query: [
-                SdkQueryParameter("page", value: page),
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("region", value: region),
-                SdkQueryParameter("name", value: name),
-                SdkQueryParameter("tag_name", value: tagName),
-            ],
-            decoder: .json,
-            operationId: "microvms_list",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+        return try (await sdkRequest("GET", "/v2/microvms", config: config, query: [
+            SdkQueryParameter("page", value: page),
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("region", value: region),
+            SdkQueryParameter("name", value: name),
+            SdkQueryParameter("tag_name", value: tagName),
+        ], decoder: .json, operationId: "microvms_list", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

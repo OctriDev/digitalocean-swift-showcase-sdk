@@ -6,35 +6,15 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension SecurityMethods {
+extension SecurityMethods {
     /// To update CSPM plan coverage, send a PUT request to `/v2/security/settings/plan`.
     ///
     /// - Parameters:
     /// - tierCoverage: Scan coverage for each available plan tier.
-    static func securityUpdateSettingsPlan(
-        config: ClientConfig,
-        tierCoverage: [String: SecurityUpdateSettingsPlanRequestBodyTierCoverageValue]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> TierCoverage {
+    public static func securityUpdateSettingsPlan(config: ClientConfig, tierCoverage: [String: SecurityUpdateSettingsPlanRequestBodyTierCoverageValue]? = nil, requestOptions: RequestOptions? = nil) async throws -> TierCoverage {
         let requestBody = SecurityUpdateSettingsPlanRequestBody(tierCoverage: tierCoverage)
 
-        return try await (sdkRequest(
-            "PUT",
-            "/v2/security/settings/plan",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "security_update_settings_plan",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", "/v2/security/settings/plan", config: config, body: requestBody, decoder: .json, operationId: "security_update_settings_plan", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To suppress scan findings, send a POST request to `/v2/security/settings/suppressions`.
@@ -42,58 +22,19 @@ public extension SecurityMethods {
     /// - Parameters:
     /// - ruleUuid: The rule UUID to suppress for the listed resources.
     /// - resources: The URNs of resources to suppress for the rule.
-    static func securityCreateSuppression(
-        config: ClientConfig,
-        ruleUuid: String? = nil,
-        resources: [String]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SuppressedResourceRoot {
+    public static func securityCreateSuppression(config: ClientConfig, ruleUuid: String? = nil, resources: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> SuppressedResourceRoot {
         let requestBody = SecurityCreateSuppressionRequestBody(ruleUuid: ruleUuid, resources: resources)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/security/settings/suppressions",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "security_create_suppression",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v2/security/settings/suppressions", config: config, body: requestBody, decoder: .json, operationId: "security_create_suppression", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To remove a suppression, send a DELETE request to `/v2/security/settings/suppressions/{suppression_uuid}`.
     ///
     /// - Parameters:
     /// - suppressionUuid: The suppression UUID to remove.
-    static func securityDeleteSuppression(
-        config: ClientConfig,
-        suppressionUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
+    public static func securityDeleteSuppression(config: ClientConfig, suppressionUuid: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("suppression_uuid", suppressionUuid)
 
-        return try await (sdkRequest(
-            "DELETE",
-            ["/v2/security/settings/suppressions/", sdkEncodePathSegment(sdkWireString(suppressionUuid))].joined(),
-            config: config,
-            decoder: .empty,
-            operationId: "security_delete_suppression",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("DELETE", ["/v2/security/settings/suppressions/", sdkEncodePathSegment(sdkWireString(suppressionUuid))].joined(), config: config, decoder: .empty, operationId: "security_delete_suppression", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

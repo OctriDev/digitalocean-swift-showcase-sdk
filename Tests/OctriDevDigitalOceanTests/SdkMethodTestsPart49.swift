@@ -17,8 +17,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.microVmsPublicPreview.microvmsGet(
-                microvmId: decoded("\"01a0ef1a-d873-793d-ae6a-5dd6239be62a\"")
-            )
+            microvmId: decoded("\"01a0ef1a-d873-793d-ae6a-5dd6239be62a\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -65,10 +65,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.microVmsPublicPreview.microvmsGetConsole(
-                microvmId: decoded("\"01a0ef1a-d873-793d-ae6a-5dd6239be62a\""),
-                rows: decoded("24"),
-                cols: decoded("80")
-            )
+            microvmId: decoded("\"01a0ef1a-d873-793d-ae6a-5dd6239be62a\""),
+            rows: decoded("24"),
+            cols: decoded("80")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -159,12 +159,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.microVmsPublicPreview.microvmsList(
-                page: decoded("1"),
-                perPage: decoded("25"),
-                region: decoded("\"mkc1\""),
-                name: decoded("\"example-microvm\""),
-                tagName: decoded("\"example\"")
-            )
+            page: decoded("1"),
+            perPage: decoded("25"),
+            region: decoded("\"mkc1\""),
+            name: decoded("\"example-microvm\""),
+            tagName: decoded("\"example\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -209,8 +209,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.microVmsPublicPreview.microvmsPostPause(
-                microvmId: decoded("\"01a0ef1a-d873-793d-ae6a-5dd6239be62a\"")
-            )
+            microvmId: decoded("\"01a0ef1a-d873-793d-ae6a-5dd6239be62a\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -255,8 +255,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.microVmsPublicPreview.microvmsPostResume(
-                microvmId: decoded("\"01a0ef1a-d873-793d-ae6a-5dd6239be62a\"")
-            )
+            microvmId: decoded("\"01a0ef1a-d873-793d-ae6a-5dd6239be62a\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -303,10 +303,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.microVmsPublicPreview.microvmsRunCommand(
-                microvmId: decoded("\"01a0ef1a-d873-793d-ae6a-5dd6239be62a\""),
-                argv: decoded("[\"nginx\",\"-v\"]"),
-                cwd: decoded("null")
-            )
+            microvmId: decoded("\"01a0ef1a-d873-793d-ae6a-5dd6239be62a\""),
+            argv: decoded("[\"nginx\",\"-v\"]"),
+            cwd: decoded("null")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -328,18 +328,7 @@ extension SdkMethodTests {
         }
         _ = client
         let actual = try await client.monitoring.createAlertPolicy(
-            options: MonitoringMethods.MonitoringCreateAlertPolicyOptions(
-                required1: MonitoringCreateAlertPolicyOptionsRequired1(
-                    alerts: decoded(sdkMethodFixture1113Value1),
-                    compare: decoded("\"GreaterThan\""),
-                    description: decoded("\"CPU Alert\""),
-                    enabled: decoded("true"),
-                    entities: decoded("[\"192018292\"]"),
-                    tags: decoded("[\"droplet_tag\"]"),
-                    type: decoded("\"v1/insights/droplet/cpu\"")
-                ),
-                required2: MonitoringCreateAlertPolicyOptionsRequired2(value: decoded("80"), window: decoded("\"5m\""))
-            )
+            options: MonitoringMethods.MonitoringCreateAlertPolicyOptions(required1: MonitoringCreateAlertPolicyOptionsRequired1(alerts: decoded(sdkMethodFixture1113Value1), compare: decoded("\"GreaterThan\""), description: decoded("\"CPU Alert\""), enabled: decoded("true"), entities: decoded("[\"192018292\"]"), tags: decoded("[\"droplet_tag\"]"), type: decoded("\"v1/insights/droplet/cpu\"")), required2: MonitoringCreateAlertPolicyOptionsRequired2(value: decoded("80"), window: decoded("\"5m\"")))
         )
         let expected = try JSONSerialization.jsonObject(
             with: Data(sdkMethodFixture1113Expected.utf8),
@@ -362,22 +351,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.createAlertPolicy(
-                options: MonitoringMethods.MonitoringCreateAlertPolicyOptions(
-                    required1: MonitoringCreateAlertPolicyOptionsRequired1(
-                        alerts: decoded(sdkMethodFixture1114Value1),
-                        compare: decoded("\"GreaterThan\""),
-                        description: decoded("\"CPU Alert\""),
-                        enabled: decoded("true"),
-                        entities: decoded("[\"192018292\"]"),
-                        tags: decoded("[\"droplet_tag\"]"),
-                        type: decoded("\"v1/insights/droplet/cpu\"")
-                    ),
-                    required2: MonitoringCreateAlertPolicyOptionsRequired2(
-                        value: decoded("80"),
-                        window: decoded("\"5m\"")
-                    )
-                )
-            )
+            options: MonitoringMethods.MonitoringCreateAlertPolicyOptions(required1: MonitoringCreateAlertPolicyOptionsRequired1(alerts: decoded(sdkMethodFixture1114Value1), compare: decoded("\"GreaterThan\""), description: decoded("\"CPU Alert\""), enabled: decoded("true"), entities: decoded("[\"192018292\"]"), tags: decoded("[\"droplet_tag\"]"), type: decoded("\"v1/insights/droplet/cpu\"")), required2: MonitoringCreateAlertPolicyOptionsRequired2(value: decoded("80"), window: decoded("\"5m\"")))
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -424,10 +399,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.createDestination(
-                type: decoded("\"opensearch_dbaas\""),
-                config: decoded(sdkMethodFixture1116Value1),
-                name: decoded("\"managed_opensearch_cluster\"")
-            )
+            type: decoded("\"opensearch_dbaas\""),
+            config: decoded(sdkMethodFixture1116Value1),
+            name: decoded("\"managed_opensearch_cluster\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -466,9 +441,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.createSink(
-                destinationUuid: decoded("\"9df2b7e9-3fb2-4577-b60a-e9c0d53f9a99\""),
-                resources: decoded(sdkMethodFixture1118Value1)
-            )
+            destinationUuid: decoded("\"9df2b7e9-3fb2-4577-b60a-e9c0d53f9a99\""),
+            resources: decoded(sdkMethodFixture1118Value1)
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -506,8 +481,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.deleteAlertPolicy(
-                alertUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
-            )
+            alertUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -545,8 +520,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.deleteDestination(
-                destinationUuid: decoded("\"1a64809f-1708-48ee-a742-dec8d481b8d1\"")
-            )
+            destinationUuid: decoded("\"1a64809f-1708-48ee-a742-dec8d481b8d1\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// ActionGatewayHealth domain models
+// ActionGatewayHealth domain models
 /// Describes when health metrics were computed.
 public struct HealthSnapshot: Codable {
     /// When the metrics were computed. They are recomputed at most every five minutes.
@@ -22,24 +22,24 @@ public struct HealthSnapshot: Codable {
     }
 
     init() {
-        (measuredAt, window, stale) = (nil, nil, nil)
+        (self.measuredAt, self.window, self.stale) = (nil, nil, nil)
     }
 }
 
-public extension HealthSnapshot {
-    init(from decoder: Decoder) throws {
+extension HealthSnapshot {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        measuredAt = try container.sdkDecodeIfPresent(.measuredAt)
-        window = try container.sdkDecodeIfPresent(.window)
-        stale = try container.sdkDecodeIfPresent(.stale)
-        if let value = measuredAt {
+        self.measuredAt = try container.sdkDecodeIfPresent(.measuredAt)
+        self.window = try container.sdkDecodeIfPresent(.window)
+        self.stale = try container.sdkDecodeIfPresent(.stale)
+        if let value = self.measuredAt {
             try sdkValidateDateTime("measured_at", sdkWireString(value))
         }
     }
 }
 
-public extension HealthSnapshot {
-    init(measuredAt: Date? = nil, window: String? = nil, stale: Bool? = nil) throws {
+extension HealthSnapshot {
+    public init(measuredAt: Date? = nil, window: String? = nil, stale: Bool? = nil) throws {
         self.init()
         (self.measuredAt, self.window) = (measuredAt, window)
         self.stale = stale
@@ -76,27 +76,22 @@ public struct HealthMetrics: Codable {
     }
 
     init() {
-        (dataStatus, uptimePercentage, latencyP50Ms, latencyP95Ms) = (nil, nil, nil, nil)
+        (self.dataStatus, self.uptimePercentage, self.latencyP50Ms, self.latencyP95Ms) = (nil, nil, nil, nil)
     }
 }
 
-public extension HealthMetrics {
-    init(from decoder: Decoder) throws {
+extension HealthMetrics {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        dataStatus = try container.sdkDecodeIfPresent(.dataStatus)
-        uptimePercentage = try container.sdkDecodeIfPresent(.uptimePercentage)
-        latencyP50Ms = try container.sdkDecodeIfPresent(.latencyP50Ms)
-        latencyP95Ms = try container.sdkDecodeIfPresent(.latencyP95Ms)
+        self.dataStatus = try container.sdkDecodeIfPresent(.dataStatus)
+        self.uptimePercentage = try container.sdkDecodeIfPresent(.uptimePercentage)
+        self.latencyP50Ms = try container.sdkDecodeIfPresent(.latencyP50Ms)
+        self.latencyP95Ms = try container.sdkDecodeIfPresent(.latencyP95Ms)
     }
 }
 
-public extension HealthMetrics {
-    init(
-        dataStatus: HealthMetricsDataStatus? = nil,
-        uptimePercentage: Double? = nil,
-        latencyP50Ms: Double? = nil,
-        latencyP95Ms: Double? = nil
-    ) {
+extension HealthMetrics {
+    public init(dataStatus: HealthMetricsDataStatus? = nil, uptimePercentage: Double? = nil, latencyP50Ms: Double? = nil, latencyP95Ms: Double? = nil) {
         self.init()
         (self.dataStatus, self.uptimePercentage) = (dataStatus, uptimePercentage)
         (self.latencyP50Ms, self.latencyP95Ms) = (latencyP50Ms, latencyP95Ms)
@@ -108,16 +103,13 @@ public extension HealthMetrics {
 public struct HealthMetricsDataStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let healthDataStatusAvailable = HealthMetricsDataStatus(rawValue: "HEALTH_DATA_STATUS_AVAILABLE")
     public static let healthDataStatusNoData = HealthMetricsDataStatus(rawValue: "HEALTH_DATA_STATUS_NO_DATA")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -19,27 +19,27 @@ struct HarnessCreateTriggerRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(kind, forKey: SdkCodingKey("kind"))
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(sessionMode, forKey: SdkCodingKey("session_mode"))
-        try keyedContainer.encode(promptTemplate, forKey: SdkCodingKey("prompt_template"))
-        try keyedContainer.encode(output, forKey: SdkCodingKey("output"))
-        try keyedContainer.encodeIfPresent(sessionTemplate, forKey: SdkCodingKey("session_template"))
-        try keyedContainer.encodeIfPresent(boundSessionId, forKey: SdkCodingKey("bound_session_id"))
-        try keyedContainer.encodeIfPresent(webhook, forKey: SdkCodingKey("webhook"))
-        try keyedContainer.encodeIfPresent(cron, forKey: SdkCodingKey("cron"))
+        try keyedContainer.encode(self.kind, forKey: SdkCodingKey("kind"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.sessionMode, forKey: SdkCodingKey("session_mode"))
+        try keyedContainer.encode(self.promptTemplate, forKey: SdkCodingKey("prompt_template"))
+        try keyedContainer.encode(self.output, forKey: SdkCodingKey("output"))
+        try keyedContainer.encodeIfPresent(self.sessionTemplate, forKey: SdkCodingKey("session_template"))
+        try keyedContainer.encodeIfPresent(self.boundSessionId, forKey: SdkCodingKey("bound_session_id"))
+        try keyedContainer.encodeIfPresent(self.webhook, forKey: SdkCodingKey("webhook"))
+        try keyedContainer.encodeIfPresent(self.cron, forKey: SdkCodingKey("cron"))
     }
 
     init(options: HarnessRuntimeMethods.HarnessCreateTriggerOptions) {
-        kind = options.kind
-        name = options.name
-        sessionMode = options.sessionMode
-        promptTemplate = options.promptTemplate
-        output = options.output
-        sessionTemplate = options.sessionTemplate
-        boundSessionId = options.boundSessionId
-        webhook = options.webhook
-        cron = options.cron
+        self.kind = options.kind
+        self.name = options.name
+        self.sessionMode = options.sessionMode
+        self.promptTemplate = options.promptTemplate
+        self.output = options.output
+        self.sessionTemplate = options.sessionTemplate
+        self.boundSessionId = options.boundSessionId
+        self.webhook = options.webhook
+        self.cron = options.cron
     }
 }
 
@@ -54,23 +54,23 @@ struct HarnessUpdateTriggerRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(status, forKey: SdkCodingKey("status"))
-        try keyedContainer.encodeIfPresent(promptTemplate, forKey: SdkCodingKey("prompt_template"))
-        try keyedContainer.encodeIfPresent(output, forKey: SdkCodingKey("output"))
-        try keyedContainer.encodeIfPresent(sessionTemplate, forKey: SdkCodingKey("session_template"))
-        try keyedContainer.encodeIfPresent(boundSessionId, forKey: SdkCodingKey("bound_session_id"))
-        try keyedContainer.encodeIfPresent(cron, forKey: SdkCodingKey("cron"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.status, forKey: SdkCodingKey("status"))
+        try keyedContainer.encodeIfPresent(self.promptTemplate, forKey: SdkCodingKey("prompt_template"))
+        try keyedContainer.encodeIfPresent(self.output, forKey: SdkCodingKey("output"))
+        try keyedContainer.encodeIfPresent(self.sessionTemplate, forKey: SdkCodingKey("session_template"))
+        try keyedContainer.encodeIfPresent(self.boundSessionId, forKey: SdkCodingKey("bound_session_id"))
+        try keyedContainer.encodeIfPresent(self.cron, forKey: SdkCodingKey("cron"))
     }
 
     init(options: HarnessRuntimeMethods.HarnessUpdateTriggerOptions) {
-        name = options.name
-        status = options.status
-        promptTemplate = options.promptTemplate
-        output = options.output
-        sessionTemplate = options.sessionTemplate
-        boundSessionId = options.boundSessionId
-        cron = options.cron
+        self.name = options.name
+        self.status = options.status
+        self.promptTemplate = options.promptTemplate
+        self.output = options.output
+        self.sessionTemplate = options.sessionTemplate
+        self.boundSessionId = options.boundSessionId
+        self.cron = options.cron
     }
 }
 
@@ -80,8 +80,8 @@ struct AppsCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(spec, forKey: SdkCodingKey("spec"))
-        try keyedContainer.encodeIfPresent(projectId, forKey: SdkCodingKey("project_id"))
+        try keyedContainer.encode(self.spec, forKey: SdkCodingKey("spec"))
+        try keyedContainer.encodeIfPresent(self.projectId, forKey: SdkCodingKey("project_id"))
     }
 }
 
@@ -91,8 +91,8 @@ struct AppsUpdateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(spec, forKey: SdkCodingKey("spec"))
-        try keyedContainer.encodeIfPresent(updateAllSourceVersions, forKey: SdkCodingKey("update_all_source_versions"))
+        try keyedContainer.encode(self.spec, forKey: SdkCodingKey("spec"))
+        try keyedContainer.encodeIfPresent(self.updateAllSourceVersions, forKey: SdkCodingKey("update_all_source_versions"))
     }
 }
 
@@ -101,7 +101,7 @@ struct AppsRestartRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(components, forKey: SdkCodingKey("components"))
+        try keyedContainer.encodeIfPresent(self.components, forKey: SdkCodingKey("components"))
     }
 }
 
@@ -110,7 +110,7 @@ struct AppsCreateDeploymentRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(forceBuild, forKey: SdkCodingKey("force_build"))
+        try keyedContainer.encodeIfPresent(self.forceBuild, forKey: SdkCodingKey("force_build"))
     }
 }
 
@@ -120,8 +120,8 @@ struct AppsValidateAppSpecRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(spec, forKey: SdkCodingKey("spec"))
-        try keyedContainer.encodeIfPresent(appId, forKey: SdkCodingKey("app_id"))
+        try keyedContainer.encode(self.spec, forKey: SdkCodingKey("spec"))
+        try keyedContainer.encodeIfPresent(self.appId, forKey: SdkCodingKey("app_id"))
     }
 }
 
@@ -131,8 +131,8 @@ struct AppsAssignAlertDestinationsRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(emails, forKey: SdkCodingKey("emails"))
-        try keyedContainer.encodeIfPresent(slackWebhooks, forKey: SdkCodingKey("slack_webhooks"))
+        try keyedContainer.encodeIfPresent(self.emails, forKey: SdkCodingKey("emails"))
+        try keyedContainer.encodeIfPresent(self.slackWebhooks, forKey: SdkCodingKey("slack_webhooks"))
     }
 }
 
@@ -142,8 +142,8 @@ struct AppsCreateRollbackRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(deploymentId, forKey: SdkCodingKey("deployment_id"))
-        try keyedContainer.encodeIfPresent(skipPin, forKey: SdkCodingKey("skip_pin"))
+        try keyedContainer.encodeIfPresent(self.deploymentId, forKey: SdkCodingKey("deployment_id"))
+        try keyedContainer.encodeIfPresent(self.skipPin, forKey: SdkCodingKey("skip_pin"))
     }
 }
 
@@ -153,8 +153,8 @@ struct AppsValidateRollbackRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(deploymentId, forKey: SdkCodingKey("deployment_id"))
-        try keyedContainer.encodeIfPresent(skipPin, forKey: SdkCodingKey("skip_pin"))
+        try keyedContainer.encodeIfPresent(self.deploymentId, forKey: SdkCodingKey("deployment_id"))
+        try keyedContainer.encodeIfPresent(self.skipPin, forKey: SdkCodingKey("skip_pin"))
     }
 }
 
@@ -164,8 +164,8 @@ struct AppsListMetricsBandwidthDailyRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(appIds, forKey: SdkCodingKey("app_ids"))
-        try keyedContainer.encodeIfPresent(date, forKey: SdkCodingKey("date"))
+        try keyedContainer.encode(self.appIds, forKey: SdkCodingKey("app_ids"))
+        try keyedContainer.encodeIfPresent(self.date, forKey: SdkCodingKey("date"))
     }
 }
 
@@ -177,10 +177,10 @@ struct CdnCreateEndpointRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(origin, forKey: SdkCodingKey("origin"))
-        try keyedContainer.encodeIfPresent(ttl, forKey: SdkCodingKey("ttl"))
-        try keyedContainer.encodeIfPresent(certificateId, forKey: SdkCodingKey("certificate_id"))
-        try keyedContainer.encodeIfPresent(customDomain, forKey: SdkCodingKey("custom_domain"))
+        try keyedContainer.encode(self.origin, forKey: SdkCodingKey("origin"))
+        try keyedContainer.encodeIfPresent(self.ttl, forKey: SdkCodingKey("ttl"))
+        try keyedContainer.encodeIfPresent(self.certificateId, forKey: SdkCodingKey("certificate_id"))
+        try keyedContainer.encodeIfPresent(self.customDomain, forKey: SdkCodingKey("custom_domain"))
     }
 }
 
@@ -191,9 +191,9 @@ struct CdnUpdateEndpointsRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(ttl, forKey: SdkCodingKey("ttl"))
-        try keyedContainer.encodeIfPresent(certificateId, forKey: SdkCodingKey("certificate_id"))
-        try keyedContainer.encodeIfPresent(customDomain, forKey: SdkCodingKey("custom_domain"))
+        try keyedContainer.encodeIfPresent(self.ttl, forKey: SdkCodingKey("ttl"))
+        try keyedContainer.encodeIfPresent(self.certificateId, forKey: SdkCodingKey("certificate_id"))
+        try keyedContainer.encodeIfPresent(self.customDomain, forKey: SdkCodingKey("custom_domain"))
     }
 }
 
@@ -202,6 +202,6 @@ struct CdnPurgeCacheRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(files, forKey: SdkCodingKey("files"))
+        try keyedContainer.encode(self.files, forKey: SdkCodingKey("files"))
     }
 }

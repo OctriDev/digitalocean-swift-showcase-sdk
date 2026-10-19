@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HarnessRuntimeWorkspace domain models
+// HarnessRuntimeWorkspace domain models
 /// Typed representation of the `WorkspacePartUploadUrls` API schema.
 public struct WorkspacePartUploadUrls: Codable {
     /// Optional `string` value serialized in the `transfer_id` wire field.
@@ -22,24 +22,24 @@ public struct WorkspacePartUploadUrls: Codable {
     }
 
     init() {
-        (transferId, partUrls, expiresAt) = (nil, nil, nil)
+        (self.transferId, self.partUrls, self.expiresAt) = (nil, nil, nil)
     }
 }
 
-public extension WorkspacePartUploadUrls {
-    init(from decoder: Decoder) throws {
+extension WorkspacePartUploadUrls {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        transferId = try container.sdkDecodeIfPresent(.transferId)
-        partUrls = try container.sdkDecodeIfPresent(.partUrls)
-        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
-        if let value = expiresAt {
+        self.transferId = try container.sdkDecodeIfPresent(.transferId)
+        self.partUrls = try container.sdkDecodeIfPresent(.partUrls)
+        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+        if let value = self.expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
     }
 }
 
-public extension WorkspacePartUploadUrls {
-    init(transferId: String? = nil, partUrls: [WorkspacePartUploadUrl]? = nil, expiresAt: Date? = nil) throws {
+extension WorkspacePartUploadUrls {
+    public init(transferId: String? = nil, partUrls: [WorkspacePartUploadUrl]? = nil, expiresAt: Date? = nil) throws {
         self.init()
         (self.transferId, self.partUrls) = (transferId, partUrls)
         self.expiresAt = expiresAt
@@ -68,21 +68,21 @@ public struct WorkspaceTransferCancelled: Codable {
     }
 
     init() {
-        (transferId, aborted, status) = (nil, nil, nil)
+        (self.transferId, self.aborted, self.status) = (nil, nil, nil)
     }
 }
 
-public extension WorkspaceTransferCancelled {
-    init(from decoder: Decoder) throws {
+extension WorkspaceTransferCancelled {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        transferId = try container.sdkDecodeIfPresent(.transferId)
-        aborted = try container.sdkDecodeIfPresent(.aborted)
-        status = try container.sdkDecodeIfPresent(.status)
+        self.transferId = try container.sdkDecodeIfPresent(.transferId)
+        self.aborted = try container.sdkDecodeIfPresent(.aborted)
+        self.status = try container.sdkDecodeIfPresent(.status)
     }
 }
 
-public extension WorkspaceTransferCancelled {
-    init(transferId: String? = nil, aborted: Bool? = nil, status: WorkspaceTransferCancelledStatus? = nil) {
+extension WorkspaceTransferCancelled {
+    public init(transferId: String? = nil, aborted: Bool? = nil, status: WorkspaceTransferCancelledStatus? = nil) {
         self.init()
         (self.transferId, self.aborted) = (transferId, aborted)
         self.status = status
@@ -104,24 +104,28 @@ public struct WorkspaceUploadResponse: Codable {
     }
 
     init() {
-        (path, bytesWritten) = (nil, nil)
+        (self.path, self.bytesWritten) = (nil, nil)
     }
 }
 
-public extension WorkspaceUploadResponse {
-    init(from decoder: Decoder) throws {
+extension WorkspaceUploadResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        path = try container.sdkDecodeIfPresent(.path)
-        bytesWritten = try container.sdkDecodeIfPresent(.bytesWritten)
+        self.path = try container.sdkDecodeIfPresent(.path)
+        self.bytesWritten = try container.sdkDecodeIfPresent(.bytesWritten)
     }
 }
 
-public extension WorkspaceUploadResponse {
-    init(path: String? = nil, bytesWritten: Int? = nil) {
+extension WorkspaceUploadResponse {
+    public init(path: String? = nil, bytesWritten: Int? = nil) {
         self.init()
         (self.path, self.bytesWritten) = (path, bytesWritten)
     }
 }
+
+
+
+
 
 /// Response to CreateWorkspaceTransfer. Upload responses carry `upload_id`, `part_size`, and `expires_at`; download
 /// responses carry only `transfer_id`, `direction`, and `status`.
@@ -155,35 +159,28 @@ public struct WorkspaceTransferCreated: Codable {
     }
 
     init() {
-        (transferId, direction, status, uploadId, partSize) = (nil, nil, nil, nil, nil)
-        expiresAt = nil
+        (self.transferId, self.direction, self.status, self.uploadId, self.partSize) = (nil, nil, nil, nil, nil)
+        self.expiresAt = nil
     }
 }
 
-public extension WorkspaceTransferCreated {
-    init(from decoder: Decoder) throws {
+extension WorkspaceTransferCreated {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        transferId = try container.sdkDecodeIfPresent(.transferId)
-        direction = try container.sdkDecodeIfPresent(.direction)
-        status = try container.sdkDecodeIfPresent(.status)
-        uploadId = try container.sdkDecodeIfPresent(.uploadId)
-        partSize = try container.sdkDecodeIfPresent(.partSize)
-        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
-        if let value = expiresAt {
+        self.transferId = try container.sdkDecodeIfPresent(.transferId)
+        self.direction = try container.sdkDecodeIfPresent(.direction)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.uploadId = try container.sdkDecodeIfPresent(.uploadId)
+        self.partSize = try container.sdkDecodeIfPresent(.partSize)
+        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+        if let value = self.expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
     }
 }
 
-public extension WorkspaceTransferCreated {
-    init(
-        transferId: String? = nil,
-        direction: WorkspaceTransferCreatedDirection? = nil,
-        status: WorkspaceTransferCreatedStatus? = nil,
-        uploadId: String? = nil,
-        partSize: Int? = nil,
-        expiresAt: Date? = nil
-    ) throws {
+extension WorkspaceTransferCreated {
+    public init(transferId: String? = nil, direction: WorkspaceTransferCreatedDirection? = nil, status: WorkspaceTransferCreatedStatus? = nil, uploadId: String? = nil, partSize: Int? = nil, expiresAt: Date? = nil) throws {
         self.init()
         (self.transferId, self.direction) = (transferId, direction)
         (self.status, self.uploadId) = (status, uploadId)
@@ -193,6 +190,10 @@ public extension WorkspaceTransferCreated {
         }
     }
 }
+
+
+
+
 
 /// Typed representation of the `WorkspaceTransferStatus` API schema.
 public struct WorkspaceTransferStatus: Codable {
@@ -233,39 +234,30 @@ public struct WorkspaceTransferStatus: Codable {
     }
 
     init() {
-        (transferId, direction, status, bytesWritten, sha256) = (nil, nil, nil, nil, nil)
-        (downloadUrl, expiresAt, errorMessage) = (nil, nil, nil)
+        (self.transferId, self.direction, self.status, self.bytesWritten, self.sha256) = (nil, nil, nil, nil, nil)
+        (self.downloadUrl, self.expiresAt, self.errorMessage) = (nil, nil, nil)
     }
 }
 
-public extension WorkspaceTransferStatus {
-    init(from decoder: Decoder) throws {
+extension WorkspaceTransferStatus {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        transferId = try container.sdkDecodeIfPresent(.transferId)
-        direction = try container.sdkDecodeIfPresent(.direction)
-        status = try container.sdkDecodeIfPresent(.status)
-        bytesWritten = try container.sdkDecodeIfPresent(.bytesWritten)
-        sha256 = try container.sdkDecodeIfPresent(.sha256)
-        downloadUrl = try container.sdkDecodeIfPresent(.downloadUrl)
-        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
-        errorMessage = try container.sdkDecodeIfPresent(.errorMessage)
-        if let value = expiresAt {
+        self.transferId = try container.sdkDecodeIfPresent(.transferId)
+        self.direction = try container.sdkDecodeIfPresent(.direction)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.bytesWritten = try container.sdkDecodeIfPresent(.bytesWritten)
+        self.sha256 = try container.sdkDecodeIfPresent(.sha256)
+        self.downloadUrl = try container.sdkDecodeIfPresent(.downloadUrl)
+        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+        self.errorMessage = try container.sdkDecodeIfPresent(.errorMessage)
+        if let value = self.expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
     }
 }
 
-public extension WorkspaceTransferStatus {
-    init(
-        transferId: String? = nil,
-        direction: WorkspaceTransferStatusDirection? = nil,
-        status: WorkspaceTransferStatusStatus? = nil,
-        bytesWritten: Int? = nil,
-        sha256: String? = nil,
-        downloadUrl: String? = nil,
-        expiresAt: Date? = nil,
-        errorMessage: String? = nil
-    ) throws {
+extension WorkspaceTransferStatus {
+    public init(transferId: String? = nil, direction: WorkspaceTransferStatusDirection? = nil, status: WorkspaceTransferStatusStatus? = nil, bytesWritten: Int? = nil, sha256: String? = nil, downloadUrl: String? = nil, expiresAt: Date? = nil, errorMessage: String? = nil) throws {
         self.init()
         (self.transferId, self.direction) = (transferId, direction)
         (self.status, self.bytesWritten) = (status, bytesWritten)
@@ -296,21 +288,21 @@ public struct WorkspaceUploadCommitted: Codable {
     }
 
     init() {
-        (transferId, status, sizeBytes) = (nil, nil, nil)
+        (self.transferId, self.status, self.sizeBytes) = (nil, nil, nil)
     }
 }
 
-public extension WorkspaceUploadCommitted {
-    init(from decoder: Decoder) throws {
+extension WorkspaceUploadCommitted {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        transferId = try container.sdkDecodeIfPresent(.transferId)
-        status = try container.sdkDecodeIfPresent(.status)
-        sizeBytes = try container.sdkDecodeIfPresent(.sizeBytes)
+        self.transferId = try container.sdkDecodeIfPresent(.transferId)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.sizeBytes = try container.sdkDecodeIfPresent(.sizeBytes)
     }
 }
 
-public extension WorkspaceUploadCommitted {
-    init(transferId: String? = nil, status: WorkspaceUploadCommittedStatus? = nil, sizeBytes: Int? = nil) {
+extension WorkspaceUploadCommitted {
+    public init(transferId: String? = nil, status: WorkspaceUploadCommittedStatus? = nil, sizeBytes: Int? = nil) {
         self.init()
         (self.transferId, self.status) = (transferId, status)
         self.sizeBytes = sizeBytes
@@ -332,20 +324,20 @@ public struct WorkspacePartUploadUrl: Codable {
     }
 
     init() {
-        (partNumber, uploadUrl) = (nil, nil)
+        (self.partNumber, self.uploadUrl) = (nil, nil)
     }
 }
 
-public extension WorkspacePartUploadUrl {
-    init(from decoder: Decoder) throws {
+extension WorkspacePartUploadUrl {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        partNumber = try container.sdkDecodeIfPresent(.partNumber)
-        uploadUrl = try container.sdkDecodeIfPresent(.uploadUrl)
+        self.partNumber = try container.sdkDecodeIfPresent(.partNumber)
+        self.uploadUrl = try container.sdkDecodeIfPresent(.uploadUrl)
     }
 }
 
-public extension WorkspacePartUploadUrl {
-    init(partNumber: Int? = nil, uploadUrl: String? = nil) {
+extension WorkspacePartUploadUrl {
+    public init(partNumber: Int? = nil, uploadUrl: String? = nil) {
         self.init()
         (self.partNumber, self.uploadUrl) = (partNumber, uploadUrl)
     }
@@ -355,16 +347,13 @@ public extension WorkspacePartUploadUrl {
 public struct WorkspaceTransferCreatedDirection: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let upload = WorkspaceTransferCreatedDirection(rawValue: "upload")
     public static let download = WorkspaceTransferCreatedDirection(rawValue: "download")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -377,10 +366,7 @@ public struct WorkspaceTransferCreatedDirection: RawRepresentable, Hashable, Cod
 public struct WorkspaceTransferStatusStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pending = WorkspaceTransferStatusStatus(rawValue: "pending")
     public static let inProgress = WorkspaceTransferStatusStatus(rawValue: "in_progress")
     public static let completed = WorkspaceTransferStatusStatus(rawValue: "completed")
@@ -388,7 +374,7 @@ public struct WorkspaceTransferStatusStatus: RawRepresentable, Hashable, Codable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -401,10 +387,7 @@ public struct WorkspaceTransferStatusStatus: RawRepresentable, Hashable, Codable
 public struct WorkspaceUploadCommittedStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pending = WorkspaceUploadCommittedStatus(rawValue: "pending")
     public static let inProgress = WorkspaceUploadCommittedStatus(rawValue: "in_progress")
     public static let completed = WorkspaceUploadCommittedStatus(rawValue: "completed")
@@ -412,7 +395,7 @@ public struct WorkspaceUploadCommittedStatus: RawRepresentable, Hashable, Codabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -425,10 +408,7 @@ public struct WorkspaceUploadCommittedStatus: RawRepresentable, Hashable, Codabl
 public struct WorkspaceTransferCreatedStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pending = WorkspaceTransferCreatedStatus(rawValue: "pending")
     public static let inProgress = WorkspaceTransferCreatedStatus(rawValue: "in_progress")
     public static let completed = WorkspaceTransferCreatedStatus(rawValue: "completed")
@@ -436,7 +416,7 @@ public struct WorkspaceTransferCreatedStatus: RawRepresentable, Hashable, Codabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -449,10 +429,7 @@ public struct WorkspaceTransferCreatedStatus: RawRepresentable, Hashable, Codabl
 public struct WorkspaceTransferCancelledStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pending = WorkspaceTransferCancelledStatus(rawValue: "pending")
     public static let inProgress = WorkspaceTransferCancelledStatus(rawValue: "in_progress")
     public static let completed = WorkspaceTransferCancelledStatus(rawValue: "completed")
@@ -460,7 +437,7 @@ public struct WorkspaceTransferCancelledStatus: RawRepresentable, Hashable, Coda
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -473,16 +450,13 @@ public struct WorkspaceTransferCancelledStatus: RawRepresentable, Hashable, Coda
 public struct WorkspaceTransferStatusDirection: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let upload = WorkspaceTransferStatusDirection(rawValue: "upload")
     public static let download = WorkspaceTransferStatusDirection(rawValue: "download")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

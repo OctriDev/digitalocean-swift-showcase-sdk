@@ -6,14 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DropletsMethods {
-    /// To list all Droplets in your account, send a GET request to `/v2/droplets`. The response body will be a JSON
-    /// object with a key of `droplets`. This will be set to an array containing objects each representing a Droplet.
-    /// These will contain the standard Droplet attributes. ### Filtering Results by Tag It's possible to request
-    /// filtered results by including certain query parameters. To only list Droplets assigned to a specific tag,
-    /// include the `tag_name` query parameter set to the name of the tag in your GET request. For example,
-    /// `/v2/droplets?tag_name=$TAG_NAME`. ### GPU Droplets By default, only non-GPU Droplets are returned. To list only
-    /// GPU Droplets, set the `type` query parameter to `gpus`. For example, `/v2/droplets?type=gpus`.
+extension DropletsMethods {
+    /// To list all Droplets in your account, send a GET request to `/v2/droplets`. The response body will be a JSON object with a key of `droplets`. This will be set to an array containing objects each representing a Droplet. These will contain the standard Droplet attributes. ### Filtering Results by Tag It's possible to request filtered results by including certain query parameters. To only list Droplets assigned to a specific tag, include the `tag_name` query parameter set to the name of the tag in your GET request. For example, `/v2/droplets?tag_name=$TAG_NAME`. ### GPU Droplets By default, only non-GPU Droplets are returned. To list only GPU Droplets, set the `type` query parameter to `gpus`. For example, `/v2/droplets?type=gpus`.
     ///
     /// - Parameters:
     /// - perPage: Number of items returned per page
@@ -25,73 +19,28 @@ public extension DropletsMethods {
     /// - type: When `type` is set to `gpus`, only GPU Droplets will be returned. By
     ///   default, only non-GPU Droplets are returned. Can not be combined with
     ///   `tag_name`.
-    static func dropletsList(
-        config: ClientConfig,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        tagName: String? = nil,
-        name: String? = nil,
-        type: DropletsListParameter? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AllDroplets {
-        if let perPage {
+    public static func dropletsList(config: ClientConfig, perPage: Int? = nil, page: Int? = nil, tagName: String? = nil, name: String? = nil, type: DropletsListParameter? = nil, requestOptions: RequestOptions? = nil) async throws -> AllDroplets {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/droplets",
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-                SdkQueryParameter("tag_name", value: tagName),
-                SdkQueryParameter("name", value: name),
-                SdkQueryParameter("type", value: type),
-            ],
-            decoder: .json,
-            operationId: "droplets_list",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+        return try (await sdkRequest("GET", "/v2/droplets", config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+            SdkQueryParameter("tag_name", value: tagName),
+            SdkQueryParameter("name", value: name),
+            SdkQueryParameter("type", value: type),
+        ], decoder: .json, operationId: "droplets_list", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Creates one or more Droplets using the supplied configuration. Include `size` and `image`, and provide either
-    /// `name` for one Droplet or `names` for multiple Droplets; `names` supports up to ten Droplets per request. The
-    /// 202 response means the request was accepted for processing, not that creation is complete; use the returned
-    /// `actions` links to check progress.
+    /// Creates one or more Droplets using the supplied configuration. Include `size` and `image`, and provide either `name` for one Droplet or `names` for multiple Droplets; `names` supports up to ten Droplets per request. The 202 response means the request was accepted for processing, not that creation is complete; use the returned `actions` links to check progress.
     ///
-    /// To create a new Droplet, send a POST request to `/v2/droplets` setting the required attributes. A Droplet will
-    /// be created using the provided information. The response body will contain a JSON object with a key called
-    /// `droplet`. The value will be an object containing the standard attributes for your new Droplet. The response
-    /// code, 202 Accepted, does not indicate the success or failure of the operation, just that the request has been
-    /// accepted for processing. The `actions` returned as part of the response's `links` object can be used to check
-    /// the status of the Droplet create event. ### Create Multiple Droplets Creating multiple Droplets is very similar
-    /// to creating a single Droplet. Instead of sending `name` as a string, send `names` as an array of strings. A
-    /// Droplet will be created for each name you send using the associated information. Up to ten Droplets may be
-    /// created this way at a time. Rather than returning a single Droplet, the response body will contain a JSON array
-    /// with a key called `droplets`. This will be set to an array of JSON objects, each of which will contain the
-    /// standard Droplet attributes. The response code, 202 Accepted, does not indicate the success or failure of any
-    /// operation, just that the request has been accepted for processing. The array of `actions` returned as part of
-    /// the response's `links` object can be used to check the status of each individual Droplet create event.
-    static func dropletsCreate(
-        config: ClientConfig,
-        body: DropletsCreateRequestBody? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DropletsCreateResponse {
-        try await (sdkRequest(
-            "POST",
-            "/v2/droplets",
-            config: config,
-            rawBody: (body.map { try sdkEncodeBody($0, contentType: "application/json") }),
-            decoder: .json,
-            operationId: "droplets_create",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    /// To create a new Droplet, send a POST request to `/v2/droplets` setting the required attributes. A Droplet will be created using the provided information. The response body will contain a JSON object with a key called `droplet`. The value will be an object containing the standard attributes for your new Droplet. The response code, 202 Accepted, does not indicate the success or failure of the operation, just that the request has been accepted for processing. The `actions` returned as part of the response's `links` object can be used to check the status of the Droplet create event. ### Create Multiple Droplets Creating multiple Droplets is very similar to creating a single Droplet. Instead of sending `name` as a string, send `names` as an array of strings. A Droplet will be created for each name you send using the associated information. Up to ten Droplets may be created this way at a time. Rather than returning a single Droplet, the response body will contain a JSON array with a key called `droplets`. This will be set to an array of JSON objects, each of which will contain the standard Droplet attributes. The response code, 202 Accepted, does not indicate the success or failure of any operation, just that the request has been accepted for processing. The array of `actions` returned as part of the response's `links` object can be used to check the status of each individual Droplet create event.
+    public static func dropletsCreate(config: ClientConfig, body: DropletsCreateRequestBody? = nil, requestOptions: RequestOptions? = nil) async throws -> DropletsCreateResponse {
+        return try (await sdkRequest("POST", "/v2/droplets", config: config, rawBody: (try body.map { try sdkEncodeBody($0, contentType: "application/json") }), decoder: .json, operationId: "droplets_create", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

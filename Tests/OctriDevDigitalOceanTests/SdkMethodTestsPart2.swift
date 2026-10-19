@@ -17,9 +17,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.addOns.patch(
-                resourceUuid: decoded("\"123e4567-e89b-12d3-a456-426614174000\""),
-                name: decoded("\"new-name\"")
-            )
+            resourceUuid: decoded("\"123e4567-e89b-12d3-a456-426614174000\""),
+            name: decoded("\"new-name\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -65,9 +65,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.addOns.patchPlan(
-                resourceUuid: decoded("\"123e4567-e89b-12d3-a456-426614174000\""),
-                planSlug: decoded("\"basic_plan\"")
-            )
+            resourceUuid: decoded("\"123e4567-e89b-12d3-a456-426614174000\""),
+            planSlug: decoded("\"basic_plan\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -83,17 +83,12 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testAgentInferenceCreateChatCompletionAgentInferenceCreateChatCompletionReachesMockAndDecodesResponse(
-    ) async throws {
+    func testAgentInferenceCreateChatCompletionAgentInferenceCreateChatCompletionReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
         _ = client
-        var options = try AgentInferenceMethods.AgentInferenceCreateChatCompletionOptions(
-            agent: decoded("true"),
-            messages: decoded(sdkMethodFixture29Value1),
-            model: decoded("\"llama3-8b-instruct\"")
-        )
+        var options = try AgentInferenceMethods.AgentInferenceCreateChatCompletionOptions(agent: decoded("true"), messages: decoded(sdkMethodFixture29Value1), model: decoded("\"llama3-8b-instruct\""))
         options.maxTokens = try decoded("0")
         options.maxCompletionTokens = try decoded("256")
         options.frequencyPenalty = try decoded("0")
@@ -126,17 +121,12 @@ extension SdkMethodTests {
         )
     }
 
-    func testAgentInferenceCreateChatCompletionAgentInferenceCreateChatCompletion401ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testAgentInferenceCreateChatCompletionAgentInferenceCreateChatCompletion401ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
         _ = client
-        var options = try AgentInferenceMethods.AgentInferenceCreateChatCompletionOptions(
-            agent: decoded("true"),
-            messages: decoded(sdkMethodFixture30Value1),
-            model: decoded("\"llama3-8b-instruct\"")
-        )
+        var options = try AgentInferenceMethods.AgentInferenceCreateChatCompletionOptions(agent: decoded("true"), messages: decoded(sdkMethodFixture30Value1), model: decoded("\"llama3-8b-instruct\""))
         options.maxTokens = try decoded("0")
         options.maxCompletionTokens = try decoded("256")
         options.frequencyPenalty = try decoded("0")
@@ -162,8 +152,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentInference.createChatCompletion(
-                options: options
-            )
+            options: options
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -179,19 +169,13 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testAgentInferenceCreateChatCompletionAgentInferenceCreateChatComX89cde60e2dReachesMockAndDecodesResponse(
-    ) async throws {
+    func testAgentInferenceCreateChatCompletionAgentInferenceCreateChatComX89cde60e2dReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
         _ = client
         let stream = try await client.agentInference.createChatCompletionStream(
-            options: AgentInferenceMethods.AgentInferenceCreateChatCompletionStreamOptions(
-                agent: decoded("true"),
-                messages: decoded(sdkMethodFixture31Value1),
-                model: decoded("\"llama3-8b-instruct\""),
-                stream: decoded("false")
-            )
+            options: AgentInferenceMethods.AgentInferenceCreateChatCompletionStreamOptions(agent: decoded("true"), messages: decoded(sdkMethodFixture31Value1), model: decoded("\"llama3-8b-instruct\""), stream: decoded("false"))
         )
         var events = stream.makeAsyncIterator()
         guard let actual = try await events.next() else {
@@ -240,11 +224,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.apps.assignAlertDestinations(
-                appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
-                alertId: decoded("\"5a624ab5-dd58-4b39-b7dd-8b7c36e8a91d\""),
-                emails: decoded("[\"sammy@digitalocean.com\"]"),
-                slackWebhooks: decoded(sdkMethodFixture33Value1)
-            )
+            appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
+            alertId: decoded("\"5a624ab5-dd58-4b39-b7dd-8b7c36e8a91d\""),
+            emails: decoded("[\"sammy@digitalocean.com\"]"),
+            slackWebhooks: decoded(sdkMethodFixture33Value1)
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -290,9 +274,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.apps.cancelDeployment(
-                appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
-                deploymentId: decoded("\"3aa4d20e-5527-4c00-b496-601fbd22520a\"")
-            )
+            appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
+            deploymentId: decoded("\"3aa4d20e-5527-4c00-b496-601fbd22520a\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -338,9 +322,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.apps.cancelEvent(
-                appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
-                eventId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\"")
-            )
+            appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
+            eventId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -387,10 +371,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.apps.cancelJobInvocation(
-                appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
-                jobInvocationId: decoded("\"123e4567-e89b-12d3-a456-426\""),
-                jobName: decoded("\"component\"")
-            )
+            appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
+            jobInvocationId: decoded("\"123e4567-e89b-12d3-a456-426\""),
+            jobName: decoded("\"component\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -428,8 +412,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.apps.commitRollback(
-                appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\"")
-            )
+            appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -476,10 +460,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.apps.create(
-                spec: decoded(sdkMethodFixture43Value1),
-                accept: decoded("\"application/json\""),
-                projectId: decoded("null")
-            )
+            spec: decoded(sdkMethodFixture43Value1),
+            accept: decoded("\"application/json\""),
+            projectId: decoded("null")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -525,9 +509,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.apps.createDeployment(
-                appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
-                forceBuild: decoded("true")
-            )
+            appId: decoded("\"4f6c71e2-1e90-4762-9fee-6cc4a0a9f2cf\""),
+            forceBuild: decoded("true")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

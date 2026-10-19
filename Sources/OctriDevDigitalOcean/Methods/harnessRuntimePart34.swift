@@ -6,31 +6,12 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension HarnessRuntimeMethods {
-    /// GetTrigger returns a single trigger by id. Write-only fields (webhook secret, output destination,
-    /// session_template env values) are never included.
+extension HarnessRuntimeMethods {
+    /// GetTrigger returns a single trigger by id. Write-only fields (webhook secret, output destination, session_template env values) are never included.
     ///
     /// - Parameters:
     /// - triggerId: The trigger UUID.
-    static func harnessGetTrigger(
-        config: ClientConfig,
-        triggerId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> GetTriggerResponse {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/agents/triggers/", sdkEncodePathSegment(sdkWireString(triggerId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "harness_get_trigger",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func harnessGetTrigger(config: ClientConfig, triggerId: String, requestOptions: RequestOptions? = nil) async throws -> GetTriggerResponse {
+        return try (await sdkRequest("GET", ["/v2/agents/triggers/", sdkEncodePathSegment(sdkWireString(triggerId))].joined(), config: config, decoder: .json, operationId: "harness_get_trigger", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

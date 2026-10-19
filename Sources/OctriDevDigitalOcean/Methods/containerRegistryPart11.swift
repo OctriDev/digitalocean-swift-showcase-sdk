@@ -6,40 +6,18 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContainerRegistryMethods {
-    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To get information
-    /// about the currently-active garbage collection for a registry, send a GET request to
-    /// `/v2/registry/$REGISTRY_NAME/garbage-collection`.
+extension ContainerRegistryMethods {
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To get information about the currently-active garbage collection for a registry, send a GET request to `/v2/registry/$REGISTRY_NAME/garbage-collection`.
     ///
     /// - Parameters:
     /// - registryName: The name of a container registry.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    static func registryGetGarbageCollection(
-        config: ClientConfig,
-        registryName: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> GarbageCollectionResponse {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/registry/", sdkEncodePathSegment(sdkWireString(registryName)), "/garbage-collection"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "registry_get_garbageCollection",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func registryGetGarbageCollection(config: ClientConfig, registryName: String, requestOptions: RequestOptions? = nil) async throws -> GarbageCollectionResponse {
+        return try (await sdkRequest("GET", ["/v2/registry/", sdkEncodePathSegment(sdkWireString(registryName)), "/garbage-collection"].joined(), config: config, decoder: .json, operationId: "registry_get_garbageCollection", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To get information
-    /// about past garbage collections for a registry, send a GET request to
-    /// `/v2/registry/$REGISTRY_NAME/garbage-collections`.
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To get information about past garbage collections for a registry, send a GET request to `/v2/registry/$REGISTRY_NAME/garbage-collections`.
     ///
     /// - Parameters:
     /// - registryName: The name of a container registry.
@@ -47,39 +25,18 @@ public extension ContainerRegistryMethods {
     /// - page: Which 'page' of paginated results to return.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    static func registryListGarbageCollections(
-        config: ClientConfig,
-        registryName: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> GarbageCollections {
-        if let perPage {
+    public static func registryListGarbageCollections(config: ClientConfig, registryName: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> GarbageCollections {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/registry/", sdkEncodePathSegment(sdkWireString(registryName)), "/garbage-collections"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "registry_list_garbageCollections",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/registry/", sdkEncodePathSegment(sdkWireString(registryName)), "/garbage-collections"].joined(), config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "registry_list_garbageCollections", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

@@ -6,11 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AppsMethods {
-    /// Returns a websocket URL that allows sending/receiving console input and output to a component of the specified
-    /// deployment if one exists. Optionally, the instance_name parameter can be provided to retrieve the exec URL for a
-    /// specific instance. Note that instances are ephemeral; therefore, we recommended to avoid making persistent
-    /// changes or such scripting around them.
+extension AppsMethods {
+    /// Returns a websocket URL that allows sending/receiving console input and output to a component of the specified deployment if one exists. Optionally, the instance_name parameter can be provided to retrieve the exec URL for a specific instance. Note that instances are ephemeral; therefore, we recommended to avoid making persistent changes or such scripting around them.
     ///
     /// - Parameters:
     /// - appId: The app ID
@@ -18,39 +15,9 @@ public extension AppsMethods {
     /// - componentName: An optional component name. If set, logs will be limited to
     ///   this component only.
     /// - instanceName: The name of the actively running ephemeral compute instance
-    static func appsGetExec(
-        config: ClientConfig,
-        appId: String,
-        deploymentId: String,
-        componentName: String,
-        instanceName: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppsGetExecResponse {
-        try await (sdkRequest(
-            "GET",
-            [
-                "/v2/apps/",
-                sdkEncodePathSegment(sdkWireString(appId)),
-                "/deployments/",
-                sdkEncodePathSegment(sdkWireString(deploymentId)),
-                "/components/",
-                sdkEncodePathSegment(sdkWireString(componentName)),
-                "/exec",
-            ].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("instance_name", value: instanceName),
-            ],
-            decoder: .json,
-            operationId: "apps_get_exec",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func appsGetExec(config: ClientConfig, appId: String, deploymentId: String, componentName: String, instanceName: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsGetExecResponse {
+        return try (await sdkRequest("GET", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/deployments/", sdkEncodePathSegment(sdkWireString(deploymentId)), "/components/", sdkEncodePathSegment(sdkWireString(componentName)), "/exec"].joined(), config: config, query: [
+            SdkQueryParameter("instance_name", value: instanceName),
+        ], decoder: .json, operationId: "apps_get_exec", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

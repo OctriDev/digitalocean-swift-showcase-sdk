@@ -6,60 +6,31 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension SecurityMethods {
-    /// To get affected resources for a scan finding, send a GET request to
-    /// `/v2/security/scans/{scan_id}/findings/{finding_uuid}/affected_resources`.
+extension SecurityMethods {
+    /// To get affected resources for a scan finding, send a GET request to `/v2/security/scans/{scan_id}/findings/{finding_uuid}/affected_resources`.
     ///
     /// - Parameters:
     /// - scanId: The scan UUID.
     /// - findingUuid: The finding UUID.
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func securityListScanFindingAffectedResources(
-        config: ClientConfig,
-        scanId: String,
-        findingUuid: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AffectedResources {
+    public static func securityListScanFindingAffectedResources(config: ClientConfig, scanId: String, findingUuid: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AffectedResources {
         try sdkValidateUuid("scan_id", scanId)
 
         try sdkValidateUuid("finding_uuid", findingUuid)
 
-        if let perPage {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            [
-                "/v2/security/scans/",
-                sdkEncodePathSegment(sdkWireString(scanId)),
-                "/findings/",
-                sdkEncodePathSegment(sdkWireString(findingUuid)),
-                "/affected_resources",
-            ].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "security_list_scan_finding_affected_resources",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/security/scans/", sdkEncodePathSegment(sdkWireString(scanId)), "/findings/", sdkEncodePathSegment(sdkWireString(findingUuid)), "/affected_resources"].joined(), config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "security_list_scan_finding_affected_resources", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To list CSPM scan settings, send a GET request to `/v2/security/settings`.
@@ -67,38 +38,18 @@ public extension SecurityMethods {
     /// - Parameters:
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func securityListSettings(
-        config: ClientConfig,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Settings {
-        if let perPage {
+    public static func securityListSettings(config: ClientConfig, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> Settings {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/security/settings",
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "security_list_settings",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", "/v2/security/settings", config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "security_list_settings", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

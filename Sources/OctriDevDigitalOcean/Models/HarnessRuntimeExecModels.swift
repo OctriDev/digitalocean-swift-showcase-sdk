@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HarnessRuntimeExec domain models
+// HarnessRuntimeExec domain models
 /// Typed representation of the `ExecInSandboxRequest` API schema.
 public struct ExecInSandboxRequest: Codable {
     /// Program and arguments. Required and non-empty; run directly, with no shell interpretation.
@@ -27,30 +27,24 @@ public struct ExecInSandboxRequest: Codable {
         case timeoutSeconds = "timeout_seconds"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ExecInSandboxRequest {
-    init(from decoder: Decoder) throws {
+extension ExecInSandboxRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.argv) else {
-            throw SdkValidationError(
-                field: "argv",
-                code: "required",
-                message: "Validation failed for 'argv': value is required"
-            )
+            throw SdkValidationError(field: "argv", code: "required", message: "Validation failed for 'argv': value is required")
         }
-        argv = try container.sdkDecodeRequired(.argv)
-        workdir = try container.sdkDecodeIfPresent(.workdir)
-        stdin = try container.sdkDecodeIfPresent(.stdin)
-        timeoutSeconds = try container.sdkDecodeIfPresent(.timeoutSeconds)
+        self.argv = try container.sdkDecodeRequired(.argv)
+        self.workdir = try container.sdkDecodeIfPresent(.workdir)
+        self.stdin = try container.sdkDecodeIfPresent(.stdin)
+        self.timeoutSeconds = try container.sdkDecodeIfPresent(.timeoutSeconds)
     }
 }
 
-public extension ExecInSandboxRequest {
-    init(argv: [String], workdir: String? = nil, stdin: Data? = nil, timeoutSeconds: Int? = nil) {
+extension ExecInSandboxRequest {
+    public init(argv: [String], workdir: String? = nil, stdin: Data? = nil, timeoutSeconds: Int? = nil) {
         (self.argv, self.workdir) = (argv, workdir)
         (self.stdin, self.timeoutSeconds) = (stdin, timeoutSeconds)
     }
@@ -77,22 +71,22 @@ public struct ExecInSandboxResponse: Codable {
     }
 
     init() {
-        (exitCode, stdout, stderr, durationMs) = (nil, nil, nil, nil)
+        (self.exitCode, self.stdout, self.stderr, self.durationMs) = (nil, nil, nil, nil)
     }
 }
 
-public extension ExecInSandboxResponse {
-    init(from decoder: Decoder) throws {
+extension ExecInSandboxResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        exitCode = try container.sdkDecodeIfPresent(.exitCode)
-        stdout = try container.sdkDecodeIfPresent(.stdout)
-        stderr = try container.sdkDecodeIfPresent(.stderr)
-        durationMs = try container.sdkDecodeIfPresent(.durationMs)
+        self.exitCode = try container.sdkDecodeIfPresent(.exitCode)
+        self.stdout = try container.sdkDecodeIfPresent(.stdout)
+        self.stderr = try container.sdkDecodeIfPresent(.stderr)
+        self.durationMs = try container.sdkDecodeIfPresent(.durationMs)
     }
 }
 
-public extension ExecInSandboxResponse {
-    init(exitCode: Int? = nil, stdout: String? = nil, stderr: String? = nil, durationMs: Int? = nil) {
+extension ExecInSandboxResponse {
+    public init(exitCode: Int? = nil, stdout: String? = nil, stderr: String? = nil, durationMs: Int? = nil) {
         self.init()
         (self.exitCode, self.stdout) = (exitCode, stdout)
         (self.stderr, self.durationMs) = (stderr, durationMs)

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Sizes domain models
+// Sizes domain models
 public struct AllSizesVariant0: Codable {
     public var sizes: [Size]
 
@@ -11,27 +11,21 @@ public struct AllSizesVariant0: Codable {
         case sizes
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllSizesVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllSizesVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.sizes) else {
-            throw SdkValidationError(
-                field: "sizes",
-                code: "required",
-                message: "Validation failed for 'sizes': value is required"
-            )
+            throw SdkValidationError(field: "sizes", code: "required", message: "Validation failed for 'sizes': value is required")
         }
-        sizes = try container.sdkDecodeRequired(.sizes)
+        self.sizes = try container.sdkDecodeRequired(.sizes)
     }
 }
 
-public extension AllSizesVariant0 {
-    init(sizes: [Size]) {
+extension AllSizesVariant0 {
+    public init(sizes: [Size]) {
         self.sizes = sizes
     }
 }
@@ -50,36 +44,26 @@ public struct AllSizes: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllSizes {
-    init(from decoder: Decoder) throws {
+extension AllSizes {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.sizes) else {
-            throw SdkValidationError(
-                field: "sizes",
-                code: "required",
-                message: "Validation failed for 'sizes': value is required"
-            )
+            throw SdkValidationError(field: "sizes", code: "required", message: "Validation failed for 'sizes': value is required")
         }
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        sizes = try container.sdkDecodeRequired(.sizes)
-        meta = try container.sdkDecodeRequired(.meta)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.sizes = try container.sdkDecodeRequired(.sizes)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllSizes {
-    init(sizes: [Size], meta: MetaMeta, links: PageLinks? = nil) {
+extension AllSizes {
+    public init(sizes: [Size], meta: MetaMeta, links: PageLinks? = nil) {
         (self.sizes, self.meta) = (sizes, meta)
         self.links = links
     }

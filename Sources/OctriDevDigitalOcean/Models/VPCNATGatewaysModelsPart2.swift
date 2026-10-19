@@ -3,23 +3,9 @@
 
 import Foundation
 
-/// VPCNATGateways domain models
-public extension VpcNatGatewayGet {
-    init(
-        id: String? = nil,
-        name: String? = nil,
-        type: VpcNatGatewayGetType? = nil,
-        state: VpcNatGatewayGetState? = nil,
-        region: VpcNatGatewayGetRegion? = nil,
-        size: Int? = nil,
-        vpcs: [VpcNatGatewayGetVpcsItem]? = nil,
-        egresses: VpcNatGatewayGetEgresses? = nil,
-        udpTimeoutSeconds: Int? = nil,
-        icmpTimeoutSeconds: Int? = nil,
-        tcpTimeoutSeconds: Int? = nil,
-        createdAt: Date? = nil,
-        updatedAt: Date? = nil
-    ) throws {
+// VPCNATGateways domain models
+extension VpcNatGatewayGet {
+    public init(id: String? = nil, name: String? = nil, type: VpcNatGatewayGetType? = nil, state: VpcNatGatewayGetState? = nil, region: VpcNatGatewayGetRegion? = nil, size: Int? = nil, vpcs: [VpcNatGatewayGetVpcsItem]? = nil, egresses: VpcNatGatewayGetEgresses? = nil, udpTimeoutSeconds: Int? = nil, icmpTimeoutSeconds: Int? = nil, tcpTimeoutSeconds: Int? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.type, self.state) = (type, state)
@@ -47,19 +33,19 @@ public struct VpcNatGatewayGetEgresses: Codable {
     }
 
     init() {
-        publicGateways = nil
+        self.publicGateways = nil
     }
 }
 
-public extension VpcNatGatewayGetEgresses {
-    init(from decoder: Decoder) throws {
+extension VpcNatGatewayGetEgresses {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        publicGateways = try container.sdkDecodeIfPresent(.publicGateways)
+        self.publicGateways = try container.sdkDecodeIfPresent(.publicGateways)
     }
 }
 
-public extension VpcNatGatewayGetEgresses {
-    init(publicGateways: [VpcNatGatewayGetEgressesPublicGatewaysItem]? = nil) {
+extension VpcNatGatewayGetEgresses {
+    public init(publicGateways: [VpcNatGatewayGetEgressesPublicGatewaysItem]? = nil) {
         self.init()
         self.publicGateways = publicGateways
     }
@@ -83,27 +69,27 @@ public struct VpcNatGatewayUpdateVpcsItem: Codable {
     }
 
     init() {
-        (vpcUuid, subnetUuid, defaultGateway) = (nil, nil, nil)
+        (self.vpcUuid, self.subnetUuid, self.defaultGateway) = (nil, nil, nil)
     }
 }
 
-public extension VpcNatGatewayUpdateVpcsItem {
-    init(from decoder: Decoder) throws {
+extension VpcNatGatewayUpdateVpcsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
-        defaultGateway = try container.sdkDecodeIfPresent(.defaultGateway)
-        if let value = vpcUuid {
+        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        self.subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
+        self.defaultGateway = try container.sdkDecodeIfPresent(.defaultGateway)
+        if let value = self.vpcUuid {
             try sdkValidateUuid("vpc_uuid", value)
         }
-        if let value = subnetUuid {
+        if let value = self.subnetUuid {
             try sdkValidateUuid("subnet_uuid", value)
         }
     }
 }
 
-public extension VpcNatGatewayUpdateVpcsItem {
-    init(vpcUuid: String? = nil, subnetUuid: String? = nil, defaultGateway: Bool? = nil) throws {
+extension VpcNatGatewayUpdateVpcsItem {
+    public init(vpcUuid: String? = nil, subnetUuid: String? = nil, defaultGateway: Bool? = nil) throws {
         self.init()
         (self.vpcUuid, self.subnetUuid) = (vpcUuid, subnetUuid)
         self.defaultGateway = defaultGateway
@@ -124,19 +110,19 @@ public struct VpcNatGatewaysVariant0: Codable {
     }
 
     init() {
-        vpcNatGateways = nil
+        self.vpcNatGateways = nil
     }
 }
 
-public extension VpcNatGatewaysVariant0 {
-    init(from decoder: Decoder) throws {
+extension VpcNatGatewaysVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        vpcNatGateways = try container.sdkDecodeIfPresent(.vpcNatGateways)
+        self.vpcNatGateways = try container.sdkDecodeIfPresent(.vpcNatGateways)
     }
 }
 
-public extension VpcNatGatewaysVariant0 {
-    init(vpcNatGateways: [VpcNatGatewayGet]? = nil) {
+extension VpcNatGatewaysVariant0 {
+    public init(vpcNatGateways: [VpcNatGatewayGet]? = nil) {
         self.init()
         self.vpcNatGateways = vpcNatGateways
     }
@@ -146,10 +132,7 @@ public extension VpcNatGatewaysVariant0 {
 public struct VpcNatGatewayGetRegion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let nyc1 = VpcNatGatewayGetRegion(rawValue: "nyc1")
     public static let nyc2 = VpcNatGatewayGetRegion(rawValue: "nyc2")
     public static let nyc3 = VpcNatGatewayGetRegion(rawValue: "nyc3")
@@ -168,7 +151,7 @@ public struct VpcNatGatewayGetRegion: RawRepresentable, Hashable, Codable, Senda
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -181,10 +164,7 @@ public struct VpcNatGatewayGetRegion: RawRepresentable, Hashable, Codable, Senda
 public struct VpcNatGatewayCreateRegion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let nyc1 = VpcNatGatewayCreateRegion(rawValue: "nyc1")
     public static let nyc2 = VpcNatGatewayCreateRegion(rawValue: "nyc2")
     public static let nyc3 = VpcNatGatewayCreateRegion(rawValue: "nyc3")
@@ -203,7 +183,7 @@ public struct VpcNatGatewayCreateRegion: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -216,15 +196,12 @@ public struct VpcNatGatewayCreateRegion: RawRepresentable, Hashable, Codable, Se
 public struct VpcNatGatewayGetType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let `public` = VpcNatGatewayGetType(rawValue: "PUBLIC")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -237,10 +214,7 @@ public struct VpcNatGatewayGetType: RawRepresentable, Hashable, Codable, Sendabl
 public struct VpcNatGatewayGetState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let new = VpcNatGatewayGetState(rawValue: "NEW")
     public static let provisioning = VpcNatGatewayGetState(rawValue: "PROVISIONING")
     public static let active = VpcNatGatewayGetState(rawValue: "ACTIVE")
@@ -250,7 +224,7 @@ public struct VpcNatGatewayGetState: RawRepresentable, Hashable, Codable, Sendab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -263,15 +237,12 @@ public struct VpcNatGatewayGetState: RawRepresentable, Hashable, Codable, Sendab
 public struct VpcNatGatewayCreateType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let `public` = VpcNatGatewayCreateType(rawValue: "PUBLIC")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

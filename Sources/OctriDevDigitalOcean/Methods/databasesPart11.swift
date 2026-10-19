@@ -6,109 +6,36 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DatabasesMethods {
-    /// To list all of the cluster events, send a GET request to `/v2/databases/$DATABASE_ID/events`. The result will be
-    /// a JSON object with a `events` key.
+extension DatabasesMethods {
+    /// To list all of the cluster events, send a GET request to `/v2/databases/$DATABASE_ID/events`. The result will be a JSON object with a `events` key.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    static func databasesListEventsLogs(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> EventsLogsResponse {
+    public static func databasesListEventsLogs(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> EventsLogsResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/events"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "databases_list_events_logs",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/events"].joined(), config: config, decoder: .json, operationId: "databases_list_events_logs", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To show information about an existing database replica, send a GET request to
-    /// `/v2/databases/$DATABASE_ID/replicas/$REPLICA_NAME`. **Note**: Read-only replicas are not supported for Caching
-    /// or Valkey clusters. The response will be a JSON object with a `replica key`. This will be set to an object
-    /// containing the standard database replica attributes.
+    /// To show information about an existing database replica, send a GET request to `/v2/databases/$DATABASE_ID/replicas/$REPLICA_NAME`. **Note**: Read-only replicas are not supported for Caching or Valkey clusters. The response will be a JSON object with a `replica key`. This will be set to an object containing the standard database replica attributes.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - replicaName: The name of the database replica.
-    static func databasesGetReplica(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        replicaName: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DatabaseReplicaResponse {
+    public static func databasesGetReplica(config: ClientConfig, databaseClusterUuid: String, replicaName: String, requestOptions: RequestOptions? = nil) async throws -> DatabaseReplicaResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try await (sdkRequest(
-            "GET",
-            [
-                "/v2/databases/",
-                sdkEncodePathSegment(sdkWireString(databaseClusterUuid)),
-                "/replicas/",
-                sdkEncodePathSegment(sdkWireString(replicaName)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "databases_get_replica",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/replicas/", sdkEncodePathSegment(sdkWireString(replicaName))].joined(), config: config, decoder: .json, operationId: "databases_get_replica", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To destroy a specific read-only replica, send a DELETE request to
-    /// `/v2/databases/$DATABASE_ID/replicas/$REPLICA_NAME`. **Note**: Read-only replicas are not supported for Caching
-    /// or Valkey clusters. A status of 204 will be given. This indicates that the request was processed successfully,
-    /// but that no response body is needed.
+    /// To destroy a specific read-only replica, send a DELETE request to `/v2/databases/$DATABASE_ID/replicas/$REPLICA_NAME`. **Note**: Read-only replicas are not supported for Caching or Valkey clusters. A status of 204 will be given. This indicates that the request was processed successfully, but that no response body is needed.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - replicaName: The name of the database replica.
-    static func databasesDestroyReplica(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        replicaName: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
+    public static func databasesDestroyReplica(config: ClientConfig, databaseClusterUuid: String, replicaName: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try await (sdkRequest(
-            "DELETE",
-            [
-                "/v2/databases/",
-                sdkEncodePathSegment(sdkWireString(databaseClusterUuid)),
-                "/replicas/",
-                sdkEncodePathSegment(sdkWireString(replicaName)),
-            ].joined(),
-            config: config,
-            decoder: .empty,
-            operationId: "databases_destroy_replica",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("DELETE", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/replicas/", sdkEncodePathSegment(sdkWireString(replicaName))].joined(), config: config, decoder: .empty, operationId: "databases_destroy_replica", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

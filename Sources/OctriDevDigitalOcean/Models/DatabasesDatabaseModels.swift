@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DatabasesDatabase domain models
+// DatabasesDatabase domain models
 public indirect enum DatabaseConfigConfig {
     case mysqlAdvancedConfig(MysqlAdvancedConfig)
     case postgresAdvancedConfig(PostgresAdvancedConfig)
@@ -15,26 +15,18 @@ public indirect enum DatabaseConfigConfig {
 }
 
 extension DatabaseConfigConfig: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for DatabaseConfigConfig"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for DatabaseConfigConfig")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -67,27 +59,13 @@ extension DatabaseConfigConfig {
 
 extension DatabaseConfigConfig {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(MysqlAdvancedConfig.self) {
-            return .mysqlAdvancedConfig(value)
-        }
-        if let value = try? container.decode(PostgresAdvancedConfig.self) {
-            return .postgresAdvancedConfig(value)
-        }
-        if let value = try? container.decode(RedisAdvancedConfig.self) {
-            return .redisAdvancedConfig(value)
-        }
-        if let value = try? container.decode(ValkeyAdvancedConfig.self) {
-            return .valkeyAdvancedConfig(value)
-        }
-        if let value = try? container.decode(MongoAdvancedConfig.self) {
-            return .mongoAdvancedConfig(value)
-        }
-        if let value = try? container.decode(KafkaAdvancedConfig.self) {
-            return .kafkaAdvancedConfig(value)
-        }
-        if let value = try? container.decode(OpensearchAdvancedConfig.self) {
-            return .opensearchAdvancedConfig(value)
-        }
+        if let value = try? container.decode(MysqlAdvancedConfig.self) { return .mysqlAdvancedConfig(value) }
+        if let value = try? container.decode(PostgresAdvancedConfig.self) { return .postgresAdvancedConfig(value) }
+        if let value = try? container.decode(RedisAdvancedConfig.self) { return .redisAdvancedConfig(value) }
+        if let value = try? container.decode(ValkeyAdvancedConfig.self) { return .valkeyAdvancedConfig(value) }
+        if let value = try? container.decode(MongoAdvancedConfig.self) { return .mongoAdvancedConfig(value) }
+        if let value = try? container.decode(KafkaAdvancedConfig.self) { return .kafkaAdvancedConfig(value) }
+        if let value = try? container.decode(OpensearchAdvancedConfig.self) { return .opensearchAdvancedConfig(value) }
         return nil
     }
 }
@@ -118,26 +96,18 @@ public indirect enum DatabaseConfigResponseConfig {
 }
 
 extension DatabaseConfigResponseConfig: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for DatabaseConfigResponseConfig"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for DatabaseConfigResponseConfig")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -170,27 +140,13 @@ extension DatabaseConfigResponseConfig {
 
 extension DatabaseConfigResponseConfig {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(MysqlAdvancedConfig.self) {
-            return .mysqlAdvancedConfig(value)
-        }
-        if let value = try? container.decode(PostgresAdvancedConfig.self) {
-            return .postgresAdvancedConfig(value)
-        }
-        if let value = try? container.decode(RedisAdvancedConfig.self) {
-            return .redisAdvancedConfig(value)
-        }
-        if let value = try? container.decode(ValkeyAdvancedConfig.self) {
-            return .valkeyAdvancedConfig(value)
-        }
-        if let value = try? container.decode(KafkaAdvancedConfig.self) {
-            return .kafkaAdvancedConfig(value)
-        }
-        if let value = try? container.decode(OpensearchAdvancedConfig.self) {
-            return .opensearchAdvancedConfig(value)
-        }
-        if let value = try? container.decode(MongoAdvancedConfig.self) {
-            return .mongoAdvancedConfig(value)
-        }
+        if let value = try? container.decode(MysqlAdvancedConfig.self) { return .mysqlAdvancedConfig(value) }
+        if let value = try? container.decode(PostgresAdvancedConfig.self) { return .postgresAdvancedConfig(value) }
+        if let value = try? container.decode(RedisAdvancedConfig.self) { return .redisAdvancedConfig(value) }
+        if let value = try? container.decode(ValkeyAdvancedConfig.self) { return .valkeyAdvancedConfig(value) }
+        if let value = try? container.decode(KafkaAdvancedConfig.self) { return .kafkaAdvancedConfig(value) }
+        if let value = try? container.decode(OpensearchAdvancedConfig.self) { return .opensearchAdvancedConfig(value) }
+        if let value = try? container.decode(MongoAdvancedConfig.self) { return .mongoAdvancedConfig(value) }
         return nil
     }
 }
@@ -214,13 +170,13 @@ public typealias DatabaseVersionAvailabilities = [DatabaseVersionAvailability]
 
 /// The connection details for Schema Registry.
 public struct DatabaseClusterRequestSchemaRegistryConnection: Codable {
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DatabaseClusterRequestSchemaRegistryConnection {
-    init() {}
+extension DatabaseClusterRequestSchemaRegistryConnection {
+    public init() {
+    }
 }
 
 /// Typed representation of the `DatabaseMetricsAuth` API schema.
@@ -233,19 +189,19 @@ public struct DatabaseMetricsAuth: Codable {
     }
 
     init() {
-        credentials = nil
+        self.credentials = nil
     }
 }
 
-public extension DatabaseMetricsAuth {
-    init(from decoder: Decoder) throws {
+extension DatabaseMetricsAuth {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        credentials = try container.sdkDecodeIfPresent(.credentials)
+        self.credentials = try container.sdkDecodeIfPresent(.credentials)
     }
 }
 
-public extension DatabaseMetricsAuth {
-    init(credentials: DatabaseMetricsCredentials? = nil) {
+extension DatabaseMetricsAuth {
+    public init(credentials: DatabaseMetricsCredentials? = nil) {
         self.init()
         self.credentials = credentials
     }
@@ -287,34 +243,26 @@ public struct DatabaseClusterRequestStandbyPrivateConnection: Codable {
     }
 
     init() {
-        (uri, database, host, port, user) = (nil, nil, nil, nil, nil)
-        (password, ssl) = (nil, nil)
+        (self.uri, self.database, self.host, self.port, self.user) = (nil, nil, nil, nil, nil)
+        (self.password, self.ssl) = (nil, nil)
     }
 }
 
-public extension DatabaseClusterRequestStandbyPrivateConnection {
-    init(from decoder: Decoder) throws {
+extension DatabaseClusterRequestStandbyPrivateConnection {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        uri = try container.sdkDecodeIfPresent(.uri)
-        database = try container.sdkDecodeIfPresent(.database)
-        host = try container.sdkDecodeIfPresent(.host)
-        port = try container.sdkDecodeIfPresent(.port)
-        user = try container.sdkDecodeIfPresent(.user)
-        password = try container.sdkDecodeIfPresent(.password)
-        ssl = try container.sdkDecodeIfPresent(.ssl)
+        self.uri = try container.sdkDecodeIfPresent(.uri)
+        self.database = try container.sdkDecodeIfPresent(.database)
+        self.host = try container.sdkDecodeIfPresent(.host)
+        self.port = try container.sdkDecodeIfPresent(.port)
+        self.user = try container.sdkDecodeIfPresent(.user)
+        self.password = try container.sdkDecodeIfPresent(.password)
+        self.ssl = try container.sdkDecodeIfPresent(.ssl)
     }
 }
 
-public extension DatabaseClusterRequestStandbyPrivateConnection {
-    init(
-        uri: String? = nil,
-        database: String? = nil,
-        host: String? = nil,
-        port: Int? = nil,
-        user: String? = nil,
-        password: String? = nil,
-        ssl: Bool? = nil
-    ) {
+extension DatabaseClusterRequestStandbyPrivateConnection {
+    public init(uri: String? = nil, database: String? = nil, host: String? = nil, port: Int? = nil, user: String? = nil, password: String? = nil, ssl: Bool? = nil) {
         self.init()
         (self.uri, self.database) = (uri, database)
         (self.host, self.port) = (host, port)
@@ -325,13 +273,13 @@ public extension DatabaseClusterRequestStandbyPrivateConnection {
 
 /// The connection details for OpenSearch dashboard.
 public struct DatabaseClusterRequestUiConnection: Codable {
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DatabaseClusterRequestUiConnection {
-    init() {}
+extension DatabaseClusterRequestUiConnection {
+    public init() {
+    }
 }
 
 /// Typed representation of the `DatabaseClusterRead` API schema.
@@ -452,123 +400,72 @@ public struct DatabaseClusterRead: Codable {
         case doSettings = "do_settings"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DatabaseClusterRead {
-    init(from decoder: Decoder) throws {
+extension DatabaseClusterRead {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.engine) else {
-            throw SdkValidationError(
-                field: "engine",
-                code: "required",
-                message: "Validation failed for 'engine': value is required"
-            )
+            throw SdkValidationError(field: "engine", code: "required", message: "Validation failed for 'engine': value is required")
         }
         guard container.contains(.numNodes) else {
-            throw SdkValidationError(
-                field: "num_nodes",
-                code: "required",
-                message: "Validation failed for 'num_nodes': value is required"
-            )
+            throw SdkValidationError(field: "num_nodes", code: "required", message: "Validation failed for 'num_nodes': value is required")
         }
         guard container.contains(.size) else {
-            throw SdkValidationError(
-                field: "size",
-                code: "required",
-                message: "Validation failed for 'size': value is required"
-            )
+            throw SdkValidationError(field: "size", code: "required", message: "Validation failed for 'size': value is required")
         }
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        engine = try container.sdkDecodeRequired(.engine)
-        numNodes = try container.sdkDecodeRequired(.numNodes)
-        size = try container.sdkDecodeRequired(.size)
-        region = try container.sdkDecodeRequired(.region)
-        id = try container.sdkDecodeIfPresent(.id)
-        version = try container.sdkDecodeIfPresent(.version)
-        semanticVersion = try container.sdkDecodeIfPresent(.semanticVersion)
-        status = try container.sdkDecodeIfPresent(.status)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        privateNetworkUuid = try container.sdkDecodeIfPresent(.privateNetworkUuid)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        dbNames = try container.sdkDecodeIfPresent(.dbNames)
-        uiConnection = try container.sdkDecodeIfPresent(.uiConnection)
-        schemaRegistryConnection = try container.sdkDecodeIfPresent(.schemaRegistryConnection)
-        connection = try container.sdkDecodeIfPresent(.connection)
-        privateConnection = try container.sdkDecodeIfPresent(.privateConnection)
-        standbyConnection = try container.sdkDecodeIfPresent(.standbyConnection)
-        standbyPrivateConnection = try container.sdkDecodeIfPresent(.standbyPrivateConnection)
-        users = try container.sdkDecodeIfPresent(.users)
-        maintenanceWindow = try container.sdkDecodeIfPresent(.maintenanceWindow)
-        projectId = try container.sdkDecodeIfPresent(.projectId)
-        rules = try container.sdkDecodeIfPresent(.rules)
-        versionEndOfLife = try container.sdkDecodeIfPresent(.versionEndOfLife)
-        versionEndOfAvailability = try container.sdkDecodeIfPresent(.versionEndOfAvailability)
-        storageSizeMib = try container.sdkDecodeIfPresent(.storageSizeMib)
-        metricsEndpoints = try container.sdkDecodeIfPresent(.metricsEndpoints)
-        doSettings = try container.sdkDecodeIfPresent(.doSettings)
-        if let value = id {
+        self.name = try container.sdkDecodeRequired(.name)
+        self.engine = try container.sdkDecodeRequired(.engine)
+        self.numNodes = try container.sdkDecodeRequired(.numNodes)
+        self.size = try container.sdkDecodeRequired(.size)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.version = try container.sdkDecodeIfPresent(.version)
+        self.semanticVersion = try container.sdkDecodeIfPresent(.semanticVersion)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.privateNetworkUuid = try container.sdkDecodeIfPresent(.privateNetworkUuid)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.dbNames = try container.sdkDecodeIfPresent(.dbNames)
+        self.uiConnection = try container.sdkDecodeIfPresent(.uiConnection)
+        self.schemaRegistryConnection = try container.sdkDecodeIfPresent(.schemaRegistryConnection)
+        self.connection = try container.sdkDecodeIfPresent(.connection)
+        self.privateConnection = try container.sdkDecodeIfPresent(.privateConnection)
+        self.standbyConnection = try container.sdkDecodeIfPresent(.standbyConnection)
+        self.standbyPrivateConnection = try container.sdkDecodeIfPresent(.standbyPrivateConnection)
+        self.users = try container.sdkDecodeIfPresent(.users)
+        self.maintenanceWindow = try container.sdkDecodeIfPresent(.maintenanceWindow)
+        self.projectId = try container.sdkDecodeIfPresent(.projectId)
+        self.rules = try container.sdkDecodeIfPresent(.rules)
+        self.versionEndOfLife = try container.sdkDecodeIfPresent(.versionEndOfLife)
+        self.versionEndOfAvailability = try container.sdkDecodeIfPresent(.versionEndOfAvailability)
+        self.storageSizeMib = try container.sdkDecodeIfPresent(.storageSizeMib)
+        self.metricsEndpoints = try container.sdkDecodeIfPresent(.metricsEndpoints)
+        self.doSettings = try container.sdkDecodeIfPresent(.doSettings)
+        if let value = self.id {
             try sdkValidateUuid("id", value)
         }
-        if let value = createdAt {
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = privateNetworkUuid {
+        if let value = self.privateNetworkUuid {
             try sdkValidatePattern("private_network_uuid", value, sdkPattern6ef5a9518225)
         }
-        if let value = projectId {
+        if let value = self.projectId {
             try sdkValidateUuid("project_id", value)
         }
     }
 }
 
-public extension DatabaseClusterRead {
-    init(
-        name: String,
-        engine: DatabaseClusterReadEngine,
-        numNodes: Int,
-        size: String,
-        region: String,
-        id: String? = nil,
-        version: String? = nil,
-        semanticVersion: String? = nil,
-        status: DatabaseClusterReadStatus? = nil,
-        createdAt: Date? = nil,
-        privateNetworkUuid: String? = nil,
-        tags: [String]? = nil,
-        dbNames: [String]? = nil,
-        uiConnection: DatabaseClusterReadUiConnection? = nil,
-        schemaRegistryConnection: DatabaseClusterReadSchemaRegistryConnection? = nil,
-        connection: DatabaseClusterReadConnection? = nil,
-        privateConnection: DatabaseClusterReadPrivateConnection? = nil,
-        standbyConnection: DatabaseClusterReadStandbyConnection? = nil,
-        standbyPrivateConnection: DatabaseClusterReadStandbyPrivateConnection? = nil,
-        users: [DatabaseUser]? = nil,
-        maintenanceWindow: DatabaseClusterReadMaintenanceWindow? = nil,
-        projectId: String? = nil,
-        rules: [FirewallRule]? = nil,
-        versionEndOfLife: String? = nil,
-        versionEndOfAvailability: String? = nil,
-        storageSizeMib: Int? = nil,
-        metricsEndpoints: [DatabaseServiceEndpoint]? = nil,
-        doSettings: DoSettings? = nil
-    ) throws {
+extension DatabaseClusterRead {
+    public init(name: String, engine: DatabaseClusterReadEngine, numNodes: Int, size: String, region: String, id: String? = nil, version: String? = nil, semanticVersion: String? = nil, status: DatabaseClusterReadStatus? = nil, createdAt: Date? = nil, privateNetworkUuid: String? = nil, tags: [String]? = nil, dbNames: [String]? = nil, uiConnection: DatabaseClusterReadUiConnection? = nil, schemaRegistryConnection: DatabaseClusterReadSchemaRegistryConnection? = nil, connection: DatabaseClusterReadConnection? = nil, privateConnection: DatabaseClusterReadPrivateConnection? = nil, standbyConnection: DatabaseClusterReadStandbyConnection? = nil, standbyPrivateConnection: DatabaseClusterReadStandbyPrivateConnection? = nil, users: [DatabaseUser]? = nil, maintenanceWindow: DatabaseClusterReadMaintenanceWindow? = nil, projectId: String? = nil, rules: [FirewallRule]? = nil, versionEndOfLife: String? = nil, versionEndOfAvailability: String? = nil, storageSizeMib: Int? = nil, metricsEndpoints: [DatabaseServiceEndpoint]? = nil, doSettings: DoSettings? = nil) throws {
         (self.name, self.engine) = (name, engine)
         (self.numNodes, self.size) = (numNodes, size)
         (self.region, self.id) = (region, id)
@@ -607,21 +504,15 @@ public struct DatabaseResponse: Codable {
         case db
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DatabaseResponse {
-    init(from decoder: Decoder) throws {
+extension DatabaseResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.db) else {
-            throw SdkValidationError(
-                field: "db",
-                code: "required",
-                message: "Validation failed for 'db': value is required"
-            )
+            throw SdkValidationError(field: "db", code: "required", message: "Validation failed for 'db': value is required")
         }
-        db = try container.sdkDecodeRequired(.db)
+        self.db = try container.sdkDecodeRequired(.db)
     }
 }

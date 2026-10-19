@@ -3,53 +3,35 @@
 
 import Foundation
 
-/// BatchInference domain models
-public extension BatchListResponse {
-    init(from decoder: Decoder) throws {
+// BatchInference domain models
+extension BatchListResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.object) else {
-            throw SdkValidationError(
-                field: "object",
-                code: "required",
-                message: "Validation failed for 'object': value is required"
-            )
+            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
         }
         guard container.contains(.data) else {
-            throw SdkValidationError(
-                field: "data",
-                code: "required",
-                message: "Validation failed for 'data': value is required"
-            )
+            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
         }
         guard container.contains(.hasMore) else {
-            throw SdkValidationError(
-                field: "has_more",
-                code: "required",
-                message: "Validation failed for 'has_more': value is required"
-            )
+            throw SdkValidationError(field: "has_more", code: "required", message: "Validation failed for 'has_more': value is required")
         }
-        object = try container.sdkDecodeRequired(.object)
-        data = try container.sdkDecodeRequired(.data)
-        hasMore = try container.sdkDecodeRequired(.hasMore)
-        firstId = try container.sdkDecodeIfPresent(.firstId)
-        lastId = try container.sdkDecodeIfPresent(.lastId)
-        if let value = firstId {
+        self.object = try container.sdkDecodeRequired(.object)
+        self.data = try container.sdkDecodeRequired(.data)
+        self.hasMore = try container.sdkDecodeRequired(.hasMore)
+        self.firstId = try container.sdkDecodeIfPresent(.firstId)
+        self.lastId = try container.sdkDecodeIfPresent(.lastId)
+        if let value = self.firstId {
             try sdkValidateUuid("first_id", value)
         }
-        if let value = lastId {
+        if let value = self.lastId {
             try sdkValidateUuid("last_id", value)
         }
     }
 }
 
-public extension BatchListResponse {
-    init(
-        object: BatchListResponseObject,
-        data: [Batch],
-        hasMore: Bool,
-        firstId: String? = nil,
-        lastId: String? = nil
-    ) throws {
+extension BatchListResponse {
+    public init(object: BatchListResponseObject, data: [Batch], hasMore: Bool, firstId: String? = nil, lastId: String? = nil) throws {
         (self.object, self.data) = (object, data)
         (self.hasMore, self.firstId) = (hasMore, firstId)
         self.lastId = lastId
@@ -66,16 +48,13 @@ public extension BatchListResponse {
 public struct BatchProvider: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let openai = BatchProvider(rawValue: "openai")
     public static let anthropic = BatchProvider(rawValue: "anthropic")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -88,15 +67,12 @@ public struct BatchProvider: RawRepresentable, Hashable, Codable, Sendable, SdkW
 public struct BatchListResponseObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = BatchListResponseObject(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -110,16 +86,13 @@ public struct BatchListResponseObject: RawRepresentable, Hashable, Codable, Send
 public struct BatchCreateRequestEndpoint: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let v1Responses = BatchCreateRequestEndpoint(rawValue: "/v1/responses")
     public static let v1ChatCompletions = BatchCreateRequestEndpoint(rawValue: "/v1/chat/completions")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -132,15 +105,12 @@ public struct BatchCreateRequestEndpoint: RawRepresentable, Hashable, Codable, S
 public struct BatchCompletionWindow: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let value24h = BatchCompletionWindow(rawValue: "24h")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -153,15 +123,12 @@ public struct BatchCompletionWindow: RawRepresentable, Hashable, Codable, Sendab
 public struct BatchCreateRequestCompletionWindow: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let value24h = BatchCreateRequestCompletionWindow(rawValue: "24h")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -174,10 +141,7 @@ public struct BatchCreateRequestCompletionWindow: RawRepresentable, Hashable, Co
 public struct BatchStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let validating = BatchStatus(rawValue: "validating")
     public static let inProgress = BatchStatus(rawValue: "in_progress")
     public static let finalizing = BatchStatus(rawValue: "finalizing")
@@ -189,7 +153,7 @@ public struct BatchStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWir
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -204,16 +168,13 @@ public struct BatchStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWir
 public struct BatchCreateRequestProvider: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let openai = BatchCreateRequestProvider(rawValue: "openai")
     public static let anthropic = BatchCreateRequestProvider(rawValue: "anthropic")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

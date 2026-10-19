@@ -6,14 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContainerRegistryMethods {
-    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To delete a container
-    /// repository manifest by digest, send a DELETE request to
-    /// `/v2/registry/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/digests/$MANIFEST_DIGEST`. Note that if your
-    /// repository name contains `/` characters, it must be URL-encoded in the request URL. For example, to delete
-    /// `registry.digitalocean.com/example/my/repo@sha256:abcd`, the path would be
-    /// `/v2/registry/example/repositories/my%2Frepo/digests/sha256:abcd`. A successful request will receive a 204
-    /// status code with no body in response. This indicates that the request was processed successfully.
+extension ContainerRegistryMethods {
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To delete a container repository manifest by digest, send a DELETE request to `/v2/registry/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/digests/$MANIFEST_DIGEST`. Note that if your repository name contains `/` characters, it must be URL-encoded in the request URL. For example, to delete `registry.digitalocean.com/example/my/repo@sha256:abcd`, the path would be `/v2/registry/example/repositories/my%2Frepo/digests/sha256:abcd`. A successful request will receive a 204 status code with no body in response. This indicates that the request was processed successfully.
     ///
     /// - Parameters:
     /// - registryName: The name of a container registry.
@@ -23,80 +17,20 @@ public extension ContainerRegistryMethods {
     ///   tag.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    static func registryDeleteRepositoryManifest(
-        config: ClientConfig,
-        registryName: String,
-        repositoryName: String,
-        manifestDigest: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await (sdkRequest(
-            "DELETE",
-            [
-                "/v2/registry/",
-                sdkEncodePathSegment(sdkWireString(registryName)),
-                "/repositories/",
-                sdkEncodePathSegment(sdkWireString(repositoryName)),
-                "/digests/",
-                sdkEncodePathSegment(sdkWireString(manifestDigest)),
-            ].joined(),
-            config: config,
-            decoder: .empty,
-            operationId: "registry_delete_repositoryManifest",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func registryDeleteRepositoryManifest(config: ClientConfig, registryName: String, repositoryName: String, manifestDigest: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try (await sdkRequest("DELETE", ["/v2/registry/", sdkEncodePathSegment(sdkWireString(registryName)), "/repositories/", sdkEncodePathSegment(sdkWireString(repositoryName)), "/digests/", sdkEncodePathSegment(sdkWireString(manifestDigest))].joined(), config: config, decoder: .empty, operationId: "registry_delete_repositoryManifest", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** Garbage collection
-    /// enables users to clear out unreferenced blobs (layer & manifest data) after deleting one or more manifests from
-    /// a repository. If there are no unreferenced blobs resulting from the deletion of one or more manifests, garbage
-    /// collection is effectively a noop. [See here for more
-    /// information](https://docs.digitalocean.com/products/container-registry/how-to/clean-up-container-registry/)
-    /// about how and why you should clean up your container registry periodically. To request a garbage collection run
-    /// on your registry, send a POST request to `/v2/registry/$REGISTRY_NAME/garbage-collection`. This will initiate
-    /// the following sequence of events on your registry. * Set the registry to read-only mode, meaning no further
-    /// write-scoped JWTs will be issued to registry clients. Existing write-scoped JWTs will continue to work until
-    /// they expire which can take up to 15 minutes. * Wait until all existing write-scoped JWTs have expired. * Scan
-    /// all registry manifests to determine which blobs are unreferenced. * Delete all unreferenced blobs from the
-    /// registry. * Record the number of blobs deleted and bytes freed, mark the garbage collection status as `success`.
-    /// * Remove the read-only mode restriction from the registry, meaning write-scoped JWTs will once again be issued
-    /// to registry clients.
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** Garbage collection enables users to clear out unreferenced blobs (layer & manifest data) after deleting one or more manifests from a repository. If there are no unreferenced blobs resulting from the deletion of one or more manifests, garbage collection is effectively a noop. [See here for more information](https://docs.digitalocean.com/products/container-registry/how-to/clean-up-container-registry/) about how and why you should clean up your container registry periodically. To request a garbage collection run on your registry, send a POST request to `/v2/registry/$REGISTRY_NAME/garbage-collection`. This will initiate the following sequence of events on your registry. * Set the registry to read-only mode, meaning no further write-scoped JWTs will be issued to registry clients. Existing write-scoped JWTs will continue to work until they expire which can take up to 15 minutes. * Wait until all existing write-scoped JWTs have expired. * Scan all registry manifests to determine which blobs are unreferenced. * Delete all unreferenced blobs from the registry. * Record the number of blobs deleted and bytes freed, mark the garbage collection status as `success`. * Remove the read-only mode restriction from the registry, meaning write-scoped JWTs will once again be issued to registry clients.
     ///
     /// - Parameters:
     /// - registryName: The name of a container registry.
     /// - type: Type of the garbage collection to run against this registry
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    static func registryRunGarbageCollection(
-        config: ClientConfig,
-        registryName: String,
-        type: RegistryRunGcType? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> GarbageCollectionResponse {
+    public static func registryRunGarbageCollection(config: ClientConfig, registryName: String, type: RegistryRunGcType? = nil, requestOptions: RequestOptions? = nil) async throws -> GarbageCollectionResponse {
         let requestBody = RegistryRunGarbageCollectionRequestBody(type: type)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/registry/", sdkEncodePathSegment(sdkWireString(registryName)), "/garbage-collection"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "registry_run_garbageCollection",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/registry/", sdkEncodePathSegment(sdkWireString(registryName)), "/garbage-collection"].joined(), config: config, body: requestBody, decoder: .json, operationId: "registry_run_garbageCollection", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

@@ -6,21 +6,10 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ActionGatewayMethods {
+extension ActionGatewayMethods {
     /// Returns every MCP server your team has registered, sorted by `serverRef`.
-    static func mcpServersList(
-        config: ClientConfig,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ListMcpServersResponse {
-        try await (sdkRequest(
-            "GET",
-            "/v2/action-gateway/mcp-servers",
-            config: config,
-            decoder: .json,
-            operationId: "mcpServers_list",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    public static func mcpServersList(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> ListMcpServersResponse {
+        return try (await sdkRequest("GET", "/v2/action-gateway/mcp-servers", config: config, decoder: .json, operationId: "mcpServers_list", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// Returns one of your team's MCP servers, or 404 when your team has none with this `serverRef`.
@@ -28,69 +17,26 @@ public extension ActionGatewayMethods {
     /// - Parameters:
     /// - serverRef: Server identifier (`serverRef`) of one of your team's MCP
     ///   servers.
-    static func mcpServersGet(
-        config: ClientConfig,
-        serverRef: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> McpServerResponse {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/action-gateway/mcp-servers/", sdkEncodePathSegment(sdkWireString(serverRef))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "mcpServers_get",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func mcpServersGet(config: ClientConfig, serverRef: String, requestOptions: RequestOptions? = nil) async throws -> McpServerResponse {
+        return try (await sdkRequest("GET", ["/v2/action-gateway/mcp-servers/", sdkEncodePathSegment(sdkWireString(serverRef))].joined(), config: config, decoder: .json, operationId: "mcpServers_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Updates the description of a registered MCP server, which appears on its catalog card immediately. Supply
-    /// `description` to replace the stored text, or an empty value to clear it; the description can contain at most
-    /// 1024 characters. You cannot change the server endpoint or credentials with this operation; delete the server and
-    /// register it again to change them.
+    /// Updates the description of a registered MCP server, which appears on its catalog card immediately. Supply `description` to replace the stored text, or an empty value to clear it; the description can contain at most 1024 characters. You cannot change the server endpoint or credentials with this operation; delete the server and register it again to change them.
     ///
-    /// Changes the server's description, which is shown on its catalog card immediately. The endpoint and credentials
-    /// cannot be changed; to change them, delete the server and register it again.
+    /// Changes the server's description, which is shown on its catalog card immediately. The endpoint and credentials cannot be changed; to change them, delete the server and register it again.
     ///
     /// - Parameters:
     /// - serverRef: Server identifier (`serverRef`) of one of your team's MCP
     ///   servers.
     /// - description: Replaces the stored description; empty clears it. At most
     ///   1024 characters.
-    static func mcpServersPatch(
-        config: ClientConfig,
-        serverRef: String,
-        description: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> McpServerResponse {
-        if let description {
+    public static func mcpServersPatch(config: ClientConfig, serverRef: String, description: String? = nil, requestOptions: RequestOptions? = nil) async throws -> McpServerResponse {
+        if let description = description {
             try validateLength("description", description, max: 1024)
         }
 
         let requestBody = McpServersPatchRequestBody(description: description)
 
-        return try await (sdkRequest(
-            "PATCH",
-            ["/v2/action-gateway/mcp-servers/", sdkEncodePathSegment(sdkWireString(serverRef))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "mcpServers_patch",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PATCH", ["/v2/action-gateway/mcp-servers/", sdkEncodePathSegment(sdkWireString(serverRef))].joined(), config: config, body: requestBody, decoder: .json, operationId: "mcpServers_patch", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

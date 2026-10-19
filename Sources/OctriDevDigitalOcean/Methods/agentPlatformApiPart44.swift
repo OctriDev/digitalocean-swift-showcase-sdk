@@ -6,36 +6,13 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
-    /// To get a presigned download URL for model evaluation run results (gzip-compressed JSON), send a GET request to
-    /// `/v2/genai/model_evaluation_runs/{eval_run_uuid}/results/download_url`.
+extension AgentPlatformApiMethods {
+    /// To get a presigned download URL for model evaluation run results (gzip-compressed JSON), send a GET request to `/v2/genai/model_evaluation_runs/{eval_run_uuid}/results/download_url`.
     ///
     /// - Parameters:
     /// - evalRunUuid: UUID of the evaluation run.
-    static func genaiGetModelEvaluationRunResultsDownloadUrl(
-        config: ClientConfig,
-        evalRunUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiGetModelEvaluationRunResultsDownloadURLOutput {
-        try await (sdkRequest(
-            "GET",
-            [
-                "/v2/gen-ai/model_evaluation_runs/",
-                sdkEncodePathSegment(sdkWireString(evalRunUuid)),
-                "/results/download_url",
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "genai_get_model_evaluation_run_results_download_url",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func genaiGetModelEvaluationRunResultsDownloadUrl(config: ClientConfig, evalRunUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiGetModelEvaluationRunResultsDownloadURLOutput {
+        return try (await sdkRequest("GET", ["/v2/gen-ai/model_evaluation_runs/", sdkEncodePathSegment(sdkWireString(evalRunUuid)), "/results/download_url"].joined(), config: config, decoder: .json, operationId: "genai_get_model_evaluation_run_results_download_url", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To list all models, send a GET request to `/v2/gen-ai/models`.
@@ -52,34 +29,12 @@ public extension AgentPlatformApiMethods {
     /// - publicOnly: Only include models that are publicly available.
     /// - page: Page number.
     /// - perPage: Items per page.
-    static func genaiListModels(
-        config: ClientConfig,
-        usecases: [GenaiListModelsParameterItem]? = nil,
-        publicOnly: Bool? = nil,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiListModelsOutputPublic {
-        try await (sdkRequest(
-            "GET",
-            "/v2/gen-ai/models",
-            config: config,
-            query: [
-                SdkQueryParameter("usecases", values: usecases, style: "form", explode: true),
-                SdkQueryParameter("public_only", value: publicOnly),
-                SdkQueryParameter("page", value: page),
-                SdkQueryParameter("per_page", value: perPage),
-            ],
-            decoder: .json,
-            operationId: "genai_list_models",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func genaiListModels(config: ClientConfig, usecases: [GenaiListModelsParameterItem]? = nil, publicOnly: Bool? = nil, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListModelsOutputPublic {
+        return try (await sdkRequest("GET", "/v2/gen-ai/models", config: config, query: [
+            SdkQueryParameter("usecases", values: usecases, style: "form", explode: true),
+            SdkQueryParameter("public_only", value: publicOnly),
+            SdkQueryParameter("page", value: page),
+            SdkQueryParameter("per_page", value: perPage),
+        ], decoder: .json, operationId: "genai_list_models", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

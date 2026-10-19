@@ -17,9 +17,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.updateSqlMode(
-                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                sqlMode: decoded(sdkMethodFixture309Value1)
-            )
+            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            sqlMode: decoded(sdkMethodFixture309Value1)
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -66,10 +66,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.updateUser(
-                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                username: decoded("\"app-01\""),
-                body: decoded("{\"settings\":{\"pg_allow_replication\":true}}")
-            )
+            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            username: decoded("\"app-01\""),
+            body: decoded("{\"settings\":{\"pg_allow_replication\":true}}")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -115,9 +115,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dedicatedInference.create(
-                spec: decoded(sdkMethodFixture313Value1),
-                accessTokens: decoded("{\"hugging_face_token\":\"$HF_TOKEN\"}")
-            )
+            spec: decoded(sdkMethodFixture313Value1),
+            accessTokens: decoded("{\"hugging_face_token\":\"$HF_TOKEN\"}")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -152,8 +152,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testDedicatedInferencesCreateTokensDedicatedInferencesCreateTokens401ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testDedicatedInferencesCreateTokensDedicatedInferencesCreateTokens401ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -164,9 +163,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dedicatedInference.createTokens(
-                dedicatedInferenceId: decoded("\"6b5c619c-359c-44ca-87e2-47e98170c01d\""),
-                name: decoded("\"new-inference-token\"")
-            )
+            dedicatedInferenceId: decoded("\"6b5c619c-359c-44ca-87e2-47e98170c01d\""),
+            name: decoded("\"new-inference-token\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -204,8 +203,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dedicatedInference.delete(
-                dedicatedInferenceId: decoded("\"6b5c619c-359c-44ca-87e2-47e98170c01d\"")
-            )
+            dedicatedInferenceId: decoded("\"6b5c619c-359c-44ca-87e2-47e98170c01d\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -233,8 +232,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testDedicatedInferencesDeleteTokensDedicatedInferencesDeleteTokens401ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testDedicatedInferencesDeleteTokensDedicatedInferencesDeleteTokens401ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -245,9 +243,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dedicatedInference.deleteTokens(
-                dedicatedInferenceId: decoded("\"6b5c619c-359c-44ca-87e2-47e98170c01d\""),
-                tokenId: decoded("\"f11d4795-c1db-4ac3-9aa6-a0ea3c58877e\"")
-            )
+            dedicatedInferenceId: decoded("\"6b5c619c-359c-44ca-87e2-47e98170c01d\""),
+            tokenId: decoded("\"f11d4795-c1db-4ac3-9aa6-a0ea3c58877e\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -292,8 +290,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dedicatedInference.get(
-                dedicatedInferenceId: decoded("\"6b5c619c-359c-44ca-87e2-47e98170c01d\"")
-            )
+            dedicatedInferenceId: decoded("\"6b5c619c-359c-44ca-87e2-47e98170c01d\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -309,8 +307,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testDedicatedInferencesGetAcceleratorDedicatedInferencesGetAcceleratorReachesMockAndDecodesResponse(
-    ) async throws {
+    func testDedicatedInferencesGetAcceleratorDedicatedInferencesGetAcceleratorReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -329,8 +326,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testDedicatedInferencesGetAcceleratorDedicatedInferencesGetAccelerator401ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testDedicatedInferencesGetAcceleratorDedicatedInferencesGetAccelerator401ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -341,9 +337,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dedicatedInference.getAccelerator(
-                dedicatedInferenceId: decoded("\"6b5c619c-359c-44ca-87e2-47e98170c01d\""),
-                acceleratorId: decoded("\"5b5c619c-359c-44ca-87e2-47e98170c02f\"")
-            )
+            dedicatedInferenceId: decoded("\"6b5c619c-359c-44ca-87e2-47e98170c01d\""),
+            acceleratorId: decoded("\"5b5c619c-359c-44ca-87e2-47e98170c02f\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -388,8 +384,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dedicatedInference.getCa(
-                dedicatedInferenceId: decoded("\"6b5c619c-359c-44ca-87e2-47e98170c01d\"")
-            )
+            dedicatedInferenceId: decoded("\"6b5c619c-359c-44ca-87e2-47e98170c01d\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -405,8 +401,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testDedicatedInferencesGetGpuModelConfigDedicatedInferencesGetGpuModelConfigReachesMockAndDecodesResponse(
-    ) async throws {
+    func testDedicatedInferencesGetGpuModelConfigDedicatedInferencesGetGpuModelConfigReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -422,8 +417,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testDedicatedInferencesGetGpuModelConfigDedicatedInferencesGetGpuX5ea18dbb47ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testDedicatedInferencesGetGpuModelConfigDedicatedInferencesGetGpuX5ea18dbb47ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -480,10 +474,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dedicatedInference.list(
-                perPage: decoded("2"),
-                page: decoded("1"),
-                region: decoded("\"atl1\"")
-            )
+            perPage: decoded("2"),
+            page: decoded("1"),
+            region: decoded("\"atl1\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -499,8 +493,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testDedicatedInferencesListAcceleratorsDedicatedInferencesListAcceleratorsReachesMockAndDecodesResponse(
-    ) async throws {
+    func testDedicatedInferencesListAcceleratorsDedicatedInferencesListAcceleratorsReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -521,8 +514,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testDedicatedInferencesListAcceleratorsDedicatedInferencesListAccXb0ed0cfdd3ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testDedicatedInferencesListAcceleratorsDedicatedInferencesListAccXb0ed0cfdd3ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -533,11 +525,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dedicatedInference.listAccelerators(
-                dedicatedInferenceId: decoded("\"6b5c619c-359c-44ca-87e2-47e98170c01d\""),
-                perPage: decoded("20"),
-                page: decoded("1"),
-                slug: decoded("\"gpu-mi300x1-192gb\"")
-            )
+            dedicatedInferenceId: decoded("\"6b5c619c-359c-44ca-87e2-47e98170c01d\""),
+            perPage: decoded("20"),
+            page: decoded("1"),
+            slug: decoded("\"gpu-mi300x1-192gb\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

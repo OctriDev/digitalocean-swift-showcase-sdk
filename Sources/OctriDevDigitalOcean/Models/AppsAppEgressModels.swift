@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AppsAppEgress domain models
+// AppsAppEgress domain models
 /// Specification for app egress configurations.
 public struct AppEgressSpec: Codable {
     /// Optional enumerated value serialized in the `type` wire field.
@@ -15,19 +15,19 @@ public struct AppEgressSpec: Codable {
     }
 
     init() {
-        type = nil
+        self.type = nil
     }
 }
 
-public extension AppEgressSpec {
-    init(from decoder: Decoder) throws {
+extension AppEgressSpec {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
+        self.type = try container.sdkDecodeIfPresent(.type)
     }
 }
 
-public extension AppEgressSpec {
-    init(type: AppEgressTypeSpec? = nil) {
+extension AppEgressSpec {
+    public init(type: AppEgressTypeSpec? = nil) {
         self.init()
         self.type = type
     }
@@ -37,16 +37,13 @@ public extension AppEgressSpec {
 public struct AppEgressTypeSpec: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let autoassign = AppEgressTypeSpec(rawValue: "AUTOASSIGN")
     public static let dedicatedIp = AppEgressTypeSpec(rawValue: "DEDICATED_IP")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

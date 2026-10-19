@@ -11,7 +11,7 @@ struct DatabasesUpdateAutoscaleRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(storage, forKey: SdkCodingKey("storage"))
+        try keyedContainer.encodeIfPresent(self.storage, forKey: SdkCodingKey("storage"))
     }
 }
 
@@ -23,10 +23,10 @@ struct DatabasesCreateKafkaTopicRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(replicationFactor, forKey: SdkCodingKey("replication_factor"))
-        try keyedContainer.encodeIfPresent(partitionCount, forKey: SdkCodingKey("partition_count"))
-        try keyedContainer.encodeIfPresent(config2, forKey: SdkCodingKey("config"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.replicationFactor, forKey: SdkCodingKey("replication_factor"))
+        try keyedContainer.encodeIfPresent(self.partitionCount, forKey: SdkCodingKey("partition_count"))
+        try keyedContainer.encodeIfPresent(self.config2, forKey: SdkCodingKey("config"))
     }
 }
 
@@ -37,9 +37,9 @@ struct DatabasesCreateLogsinkRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(sinkName, forKey: SdkCodingKey("sink_name"))
-        try keyedContainer.encode(sinkType, forKey: SdkCodingKey("sink_type"))
-        try keyedContainer.encode(config2, forKey: SdkCodingKey("config"))
+        try keyedContainer.encode(self.sinkName, forKey: SdkCodingKey("sink_name"))
+        try keyedContainer.encode(self.sinkType, forKey: SdkCodingKey("sink_type"))
+        try keyedContainer.encode(self.config2, forKey: SdkCodingKey("config"))
     }
 }
 
@@ -48,7 +48,7 @@ struct DatabasesUpdateLogsinkRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(config2, forKey: SdkCodingKey("config"))
+        try keyedContainer.encode(self.config2, forKey: SdkCodingKey("config"))
     }
 }
 
@@ -59,9 +59,9 @@ struct DatabasesCreateKafkaSchemaRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(subjectName, forKey: SdkCodingKey("subject_name"))
-        try keyedContainer.encode(schemaType, forKey: SdkCodingKey("schema_type"))
-        try keyedContainer.encode(schema, forKey: SdkCodingKey("schema"))
+        try keyedContainer.encode(self.subjectName, forKey: SdkCodingKey("subject_name"))
+        try keyedContainer.encode(self.schemaType, forKey: SdkCodingKey("schema_type"))
+        try keyedContainer.encode(self.schema, forKey: SdkCodingKey("schema"))
     }
 }
 
@@ -70,7 +70,7 @@ struct DatabasesUpdateKafkaSchemaConfigRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(compatibilityLevel, forKey: SdkCodingKey("compatibility_level"))
+        try keyedContainer.encode(self.compatibilityLevel, forKey: SdkCodingKey("compatibility_level"))
     }
 }
 
@@ -79,7 +79,7 @@ struct DatabasesUpdateKafkaSchemaSubjectConfigRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(compatibilityLevel, forKey: SdkCodingKey("compatibility_level"))
+        try keyedContainer.encode(self.compatibilityLevel, forKey: SdkCodingKey("compatibility_level"))
     }
 }
 
@@ -89,8 +89,8 @@ struct DedicatedInferencesPatchRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(spec, forKey: SdkCodingKey("spec"))
-        try keyedContainer.encodeIfPresent(accessTokens, forKey: SdkCodingKey("access_tokens"))
+        try keyedContainer.encodeIfPresent(self.spec, forKey: SdkCodingKey("spec"))
+        try keyedContainer.encodeIfPresent(self.accessTokens, forKey: SdkCodingKey("access_tokens"))
     }
 }
 
@@ -100,8 +100,8 @@ struct DedicatedInferencesCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(spec, forKey: SdkCodingKey("spec"))
-        try keyedContainer.encodeIfPresent(accessTokens, forKey: SdkCodingKey("access_tokens"))
+        try keyedContainer.encode(self.spec, forKey: SdkCodingKey("spec"))
+        try keyedContainer.encodeIfPresent(self.accessTokens, forKey: SdkCodingKey("access_tokens"))
     }
 }
 
@@ -110,7 +110,7 @@ struct DedicatedInferencesCreateTokensRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
     }
 }
 
@@ -120,8 +120,8 @@ struct DomainsCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(ipAddress, forKey: SdkCodingKey("ip_address"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.ipAddress, forKey: SdkCodingKey("ip_address"))
     }
 }
 
@@ -138,27 +138,27 @@ struct DomainsPatchRecordRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(type, forKey: SdkCodingKey("type"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(data, forKey: SdkCodingKey("data"))
-        try keyedContainer.encodeIfPresent(priority, forKey: SdkCodingKey("priority"))
-        try keyedContainer.encodeIfPresent(port, forKey: SdkCodingKey("port"))
-        try keyedContainer.encodeIfPresent(ttl, forKey: SdkCodingKey("ttl"))
-        try keyedContainer.encodeIfPresent(weight, forKey: SdkCodingKey("weight"))
-        try keyedContainer.encodeIfPresent(flags, forKey: SdkCodingKey("flags"))
-        try keyedContainer.encodeIfPresent(tag, forKey: SdkCodingKey("tag"))
+        try keyedContainer.encode(self.type, forKey: SdkCodingKey("type"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.data, forKey: SdkCodingKey("data"))
+        try keyedContainer.encodeIfPresent(self.priority, forKey: SdkCodingKey("priority"))
+        try keyedContainer.encodeIfPresent(self.port, forKey: SdkCodingKey("port"))
+        try keyedContainer.encodeIfPresent(self.ttl, forKey: SdkCodingKey("ttl"))
+        try keyedContainer.encodeIfPresent(self.weight, forKey: SdkCodingKey("weight"))
+        try keyedContainer.encodeIfPresent(self.flags, forKey: SdkCodingKey("flags"))
+        try keyedContainer.encodeIfPresent(self.tag, forKey: SdkCodingKey("tag"))
     }
 
     init(options: DomainRecordsMethods.DomainsPatchRecordOptions) {
-        type = options.type
-        name = options.name
-        data = options.data
-        priority = options.priority
-        port = options.port
-        ttl = options.ttl
-        weight = options.weight
-        flags = options.flags
-        tag = options.tag
+        self.type = options.type
+        self.name = options.name
+        self.data = options.data
+        self.priority = options.priority
+        self.port = options.port
+        self.ttl = options.ttl
+        self.weight = options.weight
+        self.flags = options.flags
+        self.tag = options.tag
     }
 }
 
@@ -175,26 +175,26 @@ struct DomainsUpdateRecordRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(type, forKey: SdkCodingKey("type"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(data, forKey: SdkCodingKey("data"))
-        try keyedContainer.encodeIfPresent(priority, forKey: SdkCodingKey("priority"))
-        try keyedContainer.encodeIfPresent(port, forKey: SdkCodingKey("port"))
-        try keyedContainer.encodeIfPresent(ttl, forKey: SdkCodingKey("ttl"))
-        try keyedContainer.encodeIfPresent(weight, forKey: SdkCodingKey("weight"))
-        try keyedContainer.encodeIfPresent(flags, forKey: SdkCodingKey("flags"))
-        try keyedContainer.encodeIfPresent(tag, forKey: SdkCodingKey("tag"))
+        try keyedContainer.encode(self.type, forKey: SdkCodingKey("type"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.data, forKey: SdkCodingKey("data"))
+        try keyedContainer.encodeIfPresent(self.priority, forKey: SdkCodingKey("priority"))
+        try keyedContainer.encodeIfPresent(self.port, forKey: SdkCodingKey("port"))
+        try keyedContainer.encodeIfPresent(self.ttl, forKey: SdkCodingKey("ttl"))
+        try keyedContainer.encodeIfPresent(self.weight, forKey: SdkCodingKey("weight"))
+        try keyedContainer.encodeIfPresent(self.flags, forKey: SdkCodingKey("flags"))
+        try keyedContainer.encodeIfPresent(self.tag, forKey: SdkCodingKey("tag"))
     }
 
     init(options: DomainRecordsMethods.DomainsUpdateRecordOptions) {
-        type = options.type
-        name = options.name
-        data = options.data
-        priority = options.priority
-        port = options.port
-        ttl = options.ttl
-        weight = options.weight
-        flags = options.flags
-        tag = options.tag
+        self.type = options.type
+        self.name = options.name
+        self.data = options.data
+        self.priority = options.priority
+        self.port = options.port
+        self.ttl = options.ttl
+        self.weight = options.weight
+        self.flags = options.flags
+        self.tag = options.tag
     }
 }

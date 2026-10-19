@@ -6,30 +6,12 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AppsMethods {
+extension AppsMethods {
     /// Retrieve information like health status, cpu and memory utilization of app components.
     ///
     /// - Parameters:
     /// - appId: The app ID
-    static func appsGetHealth(
-        config: ClientConfig,
-        appId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppHealthResponse {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/health"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "apps_get_health",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func appsGetHealth(config: ClientConfig, appId: String, requestOptions: RequestOptions? = nil) async throws -> AppHealthResponse {
+        return try (await sdkRequest("GET", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/health"].joined(), config: config, decoder: .json, operationId: "apps_get_health", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

@@ -6,87 +6,23 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension HarnessRuntimeMethods {
-    /// Upgrades the request to a WebSocket and bridges it to one TCP connection on the session sandbox's guest `port`.
-    /// Binary frames carry the opaque byte stream in both directions; the server closes with a descriptive WebSocket
-    /// close code when the tunnel ends. This is the raw TCP tunnel; browser clients reaching the in-guest OpenHands
-    /// Agent Server use the ingress URL (`GET /v2/agents/sessions/{session_id}/ingress`), which has replaced this
-    /// bridge for them. WebSocket is not expressible in OpenAPI; this documents the GET that initiates the upgrade
-    /// handshake (HTTP 101 Switching Protocols). The handler dials the guest before upgrading, so a PAUSED session is
-    /// woken and served rather than rejected. `port` must be between 1024 and 65535. A request without the WebSocket
-    /// upgrade headers is answered 400 by the handshake layer.
+extension HarnessRuntimeMethods {
+    /// Upgrades the request to a WebSocket and bridges it to one TCP connection on the session sandbox's guest `port`. Binary frames carry the opaque byte stream in both directions; the server closes with a descriptive WebSocket close code when the tunnel ends. This is the raw TCP tunnel; browser clients reaching the in-guest OpenHands Agent Server use the ingress URL (`GET /v2/agents/sessions/{session_id}/ingress`), which has replaced this bridge for them. WebSocket is not expressible in OpenAPI; this documents the GET that initiates the upgrade handshake (HTTP 101 Switching Protocols). The handler dials the guest before upgrading, so a PAUSED session is woken and served rather than rejected. `port` must be between 1024 and 65535. A request without the WebSocket upgrade headers is answered 400 by the handshake layer.
     ///
     /// - Parameters:
     /// - sessionId: The session UUID.
     /// - port: The guest TCP port to connect to. Must be between 1024 and 65535.
-    static func harnessGetSessionPortForward(
-        config: ClientConfig,
-        sessionId: String,
-        port: Int,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Error2 {
+    public static func harnessGetSessionPortForward(config: ClientConfig, sessionId: String, port: Int, requestOptions: RequestOptions? = nil) async throws -> Error2 {
         try validateRange("port", Double(port), min: 1024, max: 65535)
 
-        return try await (sdkRequest(
-            "GET",
-            [
-                "/v2/agents/sessions/",
-                sdkEncodePathSegment(sdkWireString(sessionId)),
-                "/port-forward/",
-                sdkEncodePathSegment(sdkWireString(port)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "harness_get_session_port_forward",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "402": Error2.self,
-                "403": Error2.self,
-                "404": Error2.self,
-                "409": Error2.self,
-                "423": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "502": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/agents/sessions/", sdkEncodePathSegment(sdkWireString(sessionId)), "/port-forward/", sdkEncodePathSegment(sdkWireString(port))].joined(), config: config, decoder: .json, operationId: "harness_get_session_port_forward", options: requestOptions, errors: ["401": Error2.self, "402": Error2.self, "403": Error2.self, "404": Error2.self, "409": Error2.self, "423": Error2.self, "429": Error2.self, "500": Error2.self, "502": Error2.self, "default": Error2.self])).data
     }
 
-    /// Publishes the URL on first call and returns it. Idempotent while the session runs: the same URL is returned
-    /// until the session is paused, locked or rolled back, after which the next call returns a new hostname (pause and
-    /// lock revoke the URL; rollback moves the session to a new sandbox, so re-fetch after resume, unlock or rollback).
-    /// The URL fronts guest port 8000 (the OpenHands Agent Server, HTTP + WebSocket) and replaces the port-forward
-    /// bridge for browser clients. Requests to the URL carry the caller's DO token as a Bearer header. Poll until
-    /// `state` is INGRESS_URL_STATE_READY; there is no failed state. Only OpenHands sessions support ingress, and it is
-    /// gated per team.
+    /// Publishes the URL on first call and returns it. Idempotent while the session runs: the same URL is returned until the session is paused, locked or rolled back, after which the next call returns a new hostname (pause and lock revoke the URL; rollback moves the session to a new sandbox, so re-fetch after resume, unlock or rollback). The URL fronts guest port 8000 (the OpenHands Agent Server, HTTP + WebSocket) and replaces the port-forward bridge for browser clients. Requests to the URL carry the caller's DO token as a Bearer header. Poll until `state` is INGRESS_URL_STATE_READY; there is no failed state. Only OpenHands sessions support ingress, and it is gated per team.
     ///
     /// - Parameters:
     /// - sessionId: The session UUID.
-    static func harnessGetSessionIngress(
-        config: ClientConfig,
-        sessionId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> GetIngressUrlResponse {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/agents/sessions/", sdkEncodePathSegment(sdkWireString(sessionId)), "/ingress"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "harness_get_session_ingress",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "403": Error2.self,
-                "404": Error2.self,
-                "409": Error2.self,
-                "423": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "501": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func harnessGetSessionIngress(config: ClientConfig, sessionId: String, requestOptions: RequestOptions? = nil) async throws -> GetIngressUrlResponse {
+        return try (await sdkRequest("GET", ["/v2/agents/sessions/", sdkEncodePathSegment(sdkWireString(sessionId)), "/ingress"].joined(), config: config, decoder: .json, operationId: "harness_get_session_ingress", options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self, "409": Error2.self, "423": Error2.self, "429": Error2.self, "500": Error2.self, "501": Error2.self, "default": Error2.self])).data
     }
 }

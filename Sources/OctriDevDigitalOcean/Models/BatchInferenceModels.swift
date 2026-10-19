@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// BatchInference domain models
+// BatchInference domain models
 /// A Batch Inference job.
 public struct Batch: Codable {
     /// Unique identifier for the batch job.
@@ -81,101 +81,55 @@ public struct Batch: Codable {
         case failedAt = "failed_at"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Batch {
-    init(from decoder: Decoder) throws {
+extension Batch {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.batchId) else {
-            throw SdkValidationError(
-                field: "batch_id",
-                code: "required",
-                message: "Validation failed for 'batch_id': value is required"
-            )
+            throw SdkValidationError(field: "batch_id", code: "required", message: "Validation failed for 'batch_id': value is required")
         }
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.provider) else {
-            throw SdkValidationError(
-                field: "provider",
-                code: "required",
-                message: "Validation failed for 'provider': value is required"
-            )
+            throw SdkValidationError(field: "provider", code: "required", message: "Validation failed for 'provider': value is required")
         }
         guard container.contains(.completionWindow) else {
-            throw SdkValidationError(
-                field: "completion_window",
-                code: "required",
-                message: "Validation failed for 'completion_window': value is required"
-            )
+            throw SdkValidationError(field: "completion_window", code: "required", message: "Validation failed for 'completion_window': value is required")
         }
         guard container.contains(.inputFileId) else {
-            throw SdkValidationError(
-                field: "input_file_id",
-                code: "required",
-                message: "Validation failed for 'input_file_id': value is required"
-            )
+            throw SdkValidationError(field: "input_file_id", code: "required", message: "Validation failed for 'input_file_id': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
-        batchId = try container.sdkDecodeRequired(.batchId)
-        status = try container.sdkDecodeRequired(.status)
-        provider = try container.sdkDecodeRequired(.provider)
-        completionWindow = try container.sdkDecodeRequired(.completionWindow)
-        inputFileId = try container.sdkDecodeRequired(.inputFileId)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        endpoint = try container.sdkDecodeIfPresent(.endpoint)
-        outputFileId = try container.sdkDecodeIfPresent(.outputFileId)
-        errorFileId = try container.sdkDecodeIfPresent(.errorFileId)
-        requestCounts = try container.sdkDecodeIfPresent(.requestCounts)
-        requestId = try container.sdkDecodeIfPresent(.requestId)
-        metadata = try container.sdkDecodeIfPresent(.metadata)
-        errors = try container.sdkDecodeIfPresent(.errors)
-        inProgressAt = try container.sdkDecodeIfPresent(.inProgressAt)
-        finalizingAt = try container.sdkDecodeIfPresent(.finalizingAt)
-        completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
-        cancelledAt = try container.sdkDecodeIfPresent(.cancelledAt)
-        failedAt = try container.sdkDecodeIfPresent(.failedAt)
+        self.batchId = try container.sdkDecodeRequired(.batchId)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.provider = try container.sdkDecodeRequired(.provider)
+        self.completionWindow = try container.sdkDecodeRequired(.completionWindow)
+        self.inputFileId = try container.sdkDecodeRequired(.inputFileId)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.endpoint = try container.sdkDecodeIfPresent(.endpoint)
+        self.outputFileId = try container.sdkDecodeIfPresent(.outputFileId)
+        self.errorFileId = try container.sdkDecodeIfPresent(.errorFileId)
+        self.requestCounts = try container.sdkDecodeIfPresent(.requestCounts)
+        self.requestId = try container.sdkDecodeIfPresent(.requestId)
+        self.metadata = try container.sdkDecodeIfPresent(.metadata)
+        self.errors = try container.sdkDecodeIfPresent(.errors)
+        self.inProgressAt = try container.sdkDecodeIfPresent(.inProgressAt)
+        self.finalizingAt = try container.sdkDecodeIfPresent(.finalizingAt)
+        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+        self.cancelledAt = try container.sdkDecodeIfPresent(.cancelledAt)
+        self.failedAt = try container.sdkDecodeIfPresent(.failedAt)
         try sdkValidateConstraints()
     }
 }
 
-public extension Batch {
-    init(
-        batchId: String,
-        status: BatchStatus,
-        provider: BatchProvider,
-        completionWindow: BatchCompletionWindow,
-        inputFileId: String,
-        createdAt: Date,
-        endpoint: String? = nil,
-        outputFileId: String? = nil,
-        errorFileId: String? = nil,
-        requestCounts: BatchRequestCounts? = nil,
-        requestId: String? = nil,
-        metadata: [String: String]? = nil,
-        errors: [BatchErrorsItem]? = nil,
-        inProgressAt: Date? = nil,
-        finalizingAt: Date? = nil,
-        completedAt: Date? = nil,
-        expiresAt: Date? = nil,
-        cancelledAt: Date? = nil,
-        failedAt: Date? = nil
-    ) throws {
+extension Batch {
+    public init(batchId: String, status: BatchStatus, provider: BatchProvider, completionWindow: BatchCompletionWindow, inputFileId: String, createdAt: Date, endpoint: String? = nil, outputFileId: String? = nil, errorFileId: String? = nil, requestCounts: BatchRequestCounts? = nil, requestId: String? = nil, metadata: [String: String]? = nil, errors: [BatchErrorsItem]? = nil, inProgressAt: Date? = nil, finalizingAt: Date? = nil, completedAt: Date? = nil, expiresAt: Date? = nil, cancelledAt: Date? = nil, failedAt: Date? = nil) throws {
         (self.batchId, self.status) = (batchId, status)
         (self.provider, self.completionWindow) = (provider, completionWindow)
         (self.inputFileId, self.createdAt) = (inputFileId, createdAt)
@@ -192,31 +146,31 @@ public extension Batch {
 
 extension Batch {
     func sdkValidateConstraints() throws {
-        try sdkValidateUuid("batch_id", batchId)
-        try sdkValidateUuid("input_file_id", inputFileId)
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
-        if let value = outputFileId {
+            try sdkValidateUuid("batch_id", self.batchId)
+            try sdkValidateUuid("input_file_id", self.inputFileId)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+        if let value = self.outputFileId {
             try sdkValidateUuid("output_file_id", value)
         }
-        if let value = errorFileId {
+        if let value = self.errorFileId {
             try sdkValidateUuid("error_file_id", value)
         }
-        if let value = inProgressAt {
+        if let value = self.inProgressAt {
             try sdkValidateDateTime("in_progress_at", sdkWireString(value))
         }
-        if let value = finalizingAt {
+        if let value = self.finalizingAt {
             try sdkValidateDateTime("finalizing_at", sdkWireString(value))
         }
-        if let value = completedAt {
+        if let value = self.completedAt {
             try sdkValidateDateTime("completed_at", sdkWireString(value))
         }
-        if let value = expiresAt {
+        if let value = self.expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
-        if let value = cancelledAt {
+        if let value = self.cancelledAt {
             try sdkValidateDateTime("cancelled_at", sdkWireString(value))
         }
-        if let value = failedAt {
+        if let value = self.failedAt {
             try sdkValidateDateTime("failed_at", sdkWireString(value))
         }
     }
@@ -249,58 +203,42 @@ public struct BatchResultsResponse: Codable {
         case expiresAt = "expires_at"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension BatchResultsResponse {
-    init(from decoder: Decoder) throws {
+extension BatchResultsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.batchId) else {
-            throw SdkValidationError(
-                field: "batch_id",
-                code: "required",
-                message: "Validation failed for 'batch_id': value is required"
-            )
+            throw SdkValidationError(field: "batch_id", code: "required", message: "Validation failed for 'batch_id': value is required")
         }
         guard container.contains(.resultAvailable) else {
-            throw SdkValidationError(
-                field: "result_available",
-                code: "required",
-                message: "Validation failed for 'result_available': value is required"
-            )
+            throw SdkValidationError(field: "result_available", code: "required", message: "Validation failed for 'result_available': value is required")
         }
-        batchId = try container.sdkDecodeRequired(.batchId)
-        resultAvailable = try container.sdkDecodeRequired(.resultAvailable)
-        outputFileUrl = try container.sdkDecodeIfPresent(.outputFileUrl)
-        errorFileUrl = try container.sdkDecodeIfPresent(.errorFileUrl)
-        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
-        try sdkValidateUuid("batch_id", batchId)
-        if let value = outputFileUrl {
+        self.batchId = try container.sdkDecodeRequired(.batchId)
+        self.resultAvailable = try container.sdkDecodeRequired(.resultAvailable)
+        self.outputFileUrl = try container.sdkDecodeIfPresent(.outputFileUrl)
+        self.errorFileUrl = try container.sdkDecodeIfPresent(.errorFileUrl)
+        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+            try sdkValidateUuid("batch_id", self.batchId)
+        if let value = self.outputFileUrl {
             try sdkValidateUri("output_file_url", value)
         }
-        if let value = errorFileUrl {
+        if let value = self.errorFileUrl {
             try sdkValidateUri("error_file_url", value)
         }
-        if let value = expiresAt {
+        if let value = self.expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
     }
 }
 
-public extension BatchResultsResponse {
-    init(
-        batchId: String,
-        resultAvailable: Bool,
-        outputFileUrl: String? = nil,
-        errorFileUrl: String? = nil,
-        expiresAt: Date? = nil
-    ) throws {
+extension BatchResultsResponse {
+    public init(batchId: String, resultAvailable: Bool, outputFileUrl: String? = nil, errorFileUrl: String? = nil, expiresAt: Date? = nil) throws {
         (self.batchId, self.resultAvailable) = (batchId, resultAvailable)
         (self.outputFileUrl, self.errorFileUrl) = (outputFileUrl, errorFileUrl)
         self.expiresAt = expiresAt
-        try sdkValidateUuid("batch_id", self.batchId)
+            try sdkValidateUuid("batch_id", self.batchId)
         if let value = self.outputFileUrl {
             try sdkValidateUri("output_file_url", value)
         }
@@ -334,45 +272,35 @@ public struct BatchFileCreateResponse: Codable {
         case expiresAt = "expires_at"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension BatchFileCreateResponse {
-    init(from decoder: Decoder) throws {
+extension BatchFileCreateResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.fileId) else {
-            throw SdkValidationError(
-                field: "file_id",
-                code: "required",
-                message: "Validation failed for 'file_id': value is required"
-            )
+            throw SdkValidationError(field: "file_id", code: "required", message: "Validation failed for 'file_id': value is required")
         }
         guard container.contains(.uploadUrl) else {
-            throw SdkValidationError(
-                field: "upload_url",
-                code: "required",
-                message: "Validation failed for 'upload_url': value is required"
-            )
+            throw SdkValidationError(field: "upload_url", code: "required", message: "Validation failed for 'upload_url': value is required")
         }
-        fileId = try container.sdkDecodeRequired(.fileId)
-        uploadUrl = try container.sdkDecodeRequired(.uploadUrl)
-        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
-        try sdkValidateUuid("file_id", fileId)
-        try sdkValidateUri("upload_url", uploadUrl)
-        if let value = expiresAt {
+        self.fileId = try container.sdkDecodeRequired(.fileId)
+        self.uploadUrl = try container.sdkDecodeRequired(.uploadUrl)
+        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+            try sdkValidateUuid("file_id", self.fileId)
+            try sdkValidateUri("upload_url", self.uploadUrl)
+        if let value = self.expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
     }
 }
 
-public extension BatchFileCreateResponse {
-    init(fileId: String, uploadUrl: String, expiresAt: Date? = nil) throws {
+extension BatchFileCreateResponse {
+    public init(fileId: String, uploadUrl: String, expiresAt: Date? = nil) throws {
         (self.fileId, self.uploadUrl) = (fileId, uploadUrl)
         self.expiresAt = expiresAt
-        try sdkValidateUuid("file_id", self.fileId)
-        try sdkValidateUri("upload_url", self.uploadUrl)
+            try sdkValidateUuid("file_id", self.fileId)
+            try sdkValidateUri("upload_url", self.uploadUrl)
         if let value = self.expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
@@ -398,21 +326,21 @@ public struct BatchErrorsItem: Codable {
     }
 
     init() {
-        (code, message, line) = (nil, nil, nil)
+        (self.code, self.message, self.line) = (nil, nil, nil)
     }
 }
 
-public extension BatchErrorsItem {
-    init(from decoder: Decoder) throws {
+extension BatchErrorsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        code = try container.sdkDecodeIfPresent(.code)
-        message = try container.sdkDecodeIfPresent(.message)
-        line = try container.sdkDecodeIfPresent(.line)
+        self.code = try container.sdkDecodeIfPresent(.code)
+        self.message = try container.sdkDecodeIfPresent(.message)
+        self.line = try container.sdkDecodeIfPresent(.line)
     }
 }
 
-public extension BatchErrorsItem {
-    init(code: String? = nil, message: String? = nil, line: Int? = nil) {
+extension BatchErrorsItem {
+    public init(code: String? = nil, message: String? = nil, line: Int? = nil) {
         self.init()
         (self.code, self.message) = (code, message)
         self.line = line
@@ -436,21 +364,21 @@ public struct BatchRequestCounts: Codable {
     }
 
     init() {
-        (total, completed, failed) = (nil, nil, nil)
+        (self.total, self.completed, self.failed) = (nil, nil, nil)
     }
 }
 
-public extension BatchRequestCounts {
-    init(from decoder: Decoder) throws {
+extension BatchRequestCounts {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        total = try container.sdkDecodeIfPresent(.total)
-        completed = try container.sdkDecodeIfPresent(.completed)
-        failed = try container.sdkDecodeIfPresent(.failed)
+        self.total = try container.sdkDecodeIfPresent(.total)
+        self.completed = try container.sdkDecodeIfPresent(.completed)
+        self.failed = try container.sdkDecodeIfPresent(.failed)
     }
 }
 
-public extension BatchRequestCounts {
-    init(total: Int? = nil, completed: Int? = nil, failed: Int? = nil) {
+extension BatchRequestCounts {
+    public init(total: Int? = nil, completed: Int? = nil, failed: Int? = nil) {
         self.init()
         (self.total, self.completed) = (total, completed)
         self.failed = failed
@@ -468,32 +396,26 @@ public struct BatchFileCreateRequest: Codable {
         case fileName = "file_name"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension BatchFileCreateRequest {
-    init(from decoder: Decoder) throws {
+extension BatchFileCreateRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.fileName) else {
-            throw SdkValidationError(
-                field: "file_name",
-                code: "required",
-                message: "Validation failed for 'file_name': value is required"
-            )
+            throw SdkValidationError(field: "file_name", code: "required", message: "Validation failed for 'file_name': value is required")
         }
-        fileName = try container.sdkDecodeRequired(.fileName)
-        try validateLength("file_name", fileName, min: 7, max: nil)
-        try sdkValidatePattern("file_name", fileName, sdkPatterna3234e480eb3)
+        self.fileName = try container.sdkDecodeRequired(.fileName)
+            try validateLength("file_name", self.fileName, min: 7, max: nil)
+            try sdkValidatePattern("file_name", self.fileName, sdkPatterna3234e480eb3)
     }
 }
 
-public extension BatchFileCreateRequest {
-    init(fileName: String) throws {
+extension BatchFileCreateRequest {
+    public init(fileName: String) throws {
         self.fileName = fileName
-        try validateLength("file_name", self.fileName, min: 7, max: nil)
-        try sdkValidatePattern("file_name", self.fileName, sdkPatterna3234e480eb3)
+            try validateLength("file_name", self.fileName, min: 7, max: nil)
+            try sdkValidatePattern("file_name", self.fileName, sdkPatterna3234e480eb3)
     }
 }
 
@@ -533,65 +455,40 @@ public struct BatchCreateRequest: Codable {
         case metadata
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension BatchCreateRequest {
-    init(from decoder: Decoder) throws {
+extension BatchCreateRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.fileId) else {
-            throw SdkValidationError(
-                field: "file_id",
-                code: "required",
-                message: "Validation failed for 'file_id': value is required"
-            )
+            throw SdkValidationError(field: "file_id", code: "required", message: "Validation failed for 'file_id': value is required")
         }
         guard container.contains(.provider) else {
-            throw SdkValidationError(
-                field: "provider",
-                code: "required",
-                message: "Validation failed for 'provider': value is required"
-            )
+            throw SdkValidationError(field: "provider", code: "required", message: "Validation failed for 'provider': value is required")
         }
         guard container.contains(.completionWindow) else {
-            throw SdkValidationError(
-                field: "completion_window",
-                code: "required",
-                message: "Validation failed for 'completion_window': value is required"
-            )
+            throw SdkValidationError(field: "completion_window", code: "required", message: "Validation failed for 'completion_window': value is required")
         }
         guard container.contains(.requestId) else {
-            throw SdkValidationError(
-                field: "request_id",
-                code: "required",
-                message: "Validation failed for 'request_id': value is required"
-            )
+            throw SdkValidationError(field: "request_id", code: "required", message: "Validation failed for 'request_id': value is required")
         }
-        fileId = try container.sdkDecodeRequired(.fileId)
-        provider = try container.sdkDecodeRequired(.provider)
-        completionWindow = try container.sdkDecodeRequired(.completionWindow)
-        requestId = try container.sdkDecodeRequired(.requestId)
-        endpoint = try container.sdkDecodeIfPresent(.endpoint)
-        metadata = try container.sdkDecodeIfPresent(.metadata)
-        try sdkValidateUuid("file_id", fileId)
+        self.fileId = try container.sdkDecodeRequired(.fileId)
+        self.provider = try container.sdkDecodeRequired(.provider)
+        self.completionWindow = try container.sdkDecodeRequired(.completionWindow)
+        self.requestId = try container.sdkDecodeRequired(.requestId)
+        self.endpoint = try container.sdkDecodeIfPresent(.endpoint)
+        self.metadata = try container.sdkDecodeIfPresent(.metadata)
+            try sdkValidateUuid("file_id", self.fileId)
     }
 }
 
-public extension BatchCreateRequest {
-    init(
-        fileId: String,
-        provider: BatchCreateRequestProvider,
-        completionWindow: BatchCreateRequestCompletionWindow,
-        requestId: String,
-        endpoint: BatchCreateRequestEndpoint? = nil,
-        metadata: [String: String]? = nil
-    ) throws {
+extension BatchCreateRequest {
+    public init(fileId: String, provider: BatchCreateRequestProvider, completionWindow: BatchCreateRequestCompletionWindow, requestId: String, endpoint: BatchCreateRequestEndpoint? = nil, metadata: [String: String]? = nil) throws {
         (self.fileId, self.provider) = (fileId, provider)
         (self.completionWindow, self.requestId) = (completionWindow, requestId)
         (self.endpoint, self.metadata) = (endpoint, metadata)
-        try sdkValidateUuid("file_id", self.fileId)
+            try sdkValidateUuid("file_id", self.fileId)
     }
 }
 
@@ -619,7 +516,5 @@ public struct BatchListResponse: Codable {
         case lastId = "last_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }

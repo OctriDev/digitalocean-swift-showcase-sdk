@@ -6,10 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
-    /// Replaces the configuration of an evaluation test case. Use the `test_case_uuid` path parameter to select the
-    /// test case, and provide any configuration fields to update, such as its name, dataset, metrics, or star metric. A
-    /// 200 response returns the test case UUID and its new version.
+extension AgentPlatformApiMethods {
+    /// Replaces the configuration of an evaluation test case. Use the `test_case_uuid` path parameter to select the test case, and provide any configuration fields to update, such as its name, dataset, metrics, or star metric. A 200 response returns the test case UUID and its new version.
     ///
     /// To update an evaluation test-case send a PUT request to `/v2/gen-ai/evaluation_test_cases/{test_case_uuid}`.
     ///
@@ -22,42 +20,10 @@ public extension AgentPlatformApiMethods {
     /// - starMetric: Optional object value serialized in the `star_metric` wire
     ///   field.
     /// - testCaseUuid2: Test-case UUID to update
-    static func genaiUpdateEvaluationTestCase(
-        config: ClientConfig,
-        testCaseUuid: String,
-        datasetUuid: String? = nil,
-        description: String? = nil,
-        metrics: ApiEvaluationTestCaseMetricList? = nil,
-        name: String? = nil,
-        starMetric: ApiStarMetric? = nil,
-        testCaseUuid2: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiUpdateEvaluationTestCaseOutput {
-        let requestBody = GenaiUpdateEvaluationTestCaseRequestBody(
-            datasetUuid: datasetUuid,
-            description: description,
-            metrics: metrics,
-            name: name,
-            starMetric: starMetric,
-            testCaseUuid2: testCaseUuid2
-        )
+    public static func genaiUpdateEvaluationTestCase(config: ClientConfig, testCaseUuid: String, datasetUuid: String? = nil, description: String? = nil, metrics: ApiEvaluationTestCaseMetricList? = nil, name: String? = nil, starMetric: ApiStarMetric? = nil, testCaseUuid2: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiUpdateEvaluationTestCaseOutput {
+        let requestBody = GenaiUpdateEvaluationTestCaseRequestBody(datasetUuid: datasetUuid, description: description, metrics: metrics, name: name, starMetric: starMetric, testCaseUuid2: testCaseUuid2)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/gen-ai/evaluation_test_cases/", sdkEncodePathSegment(sdkWireString(testCaseUuid))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "genai_update_evaluation_test_case",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/gen-ai/evaluation_test_cases/", sdkEncodePathSegment(sdkWireString(testCaseUuid))].joined(), config: config, body: requestBody, decoder: .json, operationId: "genai_update_evaluation_test_case", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To list all indexing jobs for a knowledge base, send a GET request to `/v2/gen-ai/indexing_jobs`.
@@ -65,30 +31,10 @@ public extension AgentPlatformApiMethods {
     /// - Parameters:
     /// - page: Page number.
     /// - perPage: Items per page.
-    static func genaiListIndexingJobs(
-        config: ClientConfig,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiListKnowledgeBaseIndexingJobsOutput {
-        try await (sdkRequest(
-            "GET",
-            "/v2/gen-ai/indexing_jobs",
-            config: config,
-            query: [
-                SdkQueryParameter("page", value: page),
-                SdkQueryParameter("per_page", value: perPage),
-            ],
-            decoder: .json,
-            operationId: "genai_list_indexing_jobs",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func genaiListIndexingJobs(config: ClientConfig, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListKnowledgeBaseIndexingJobsOutput {
+        return try (await sdkRequest("GET", "/v2/gen-ai/indexing_jobs", config: config, query: [
+            SdkQueryParameter("page", value: page),
+            SdkQueryParameter("per_page", value: perPage),
+        ], decoder: .json, operationId: "genai_list_indexing_jobs", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

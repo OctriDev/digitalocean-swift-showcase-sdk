@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension KubernetesMethods {
-    struct KubernetesCreateClusterOptions: Codable {
+extension KubernetesMethods {
+    public struct KubernetesCreateClusterOptions: Codable {
         public var name: String
         public var region: String
         public var version: String
@@ -45,11 +45,7 @@ public extension KubernetesMethods {
         }
     }
 
-    /// To create a new Kubernetes cluster, send a POST request to `/v2/kubernetes/clusters`. The request must contain
-    /// at least one node pool with at least one worker. The request may contain a maintenance window policy describing
-    /// a time period when disruptive maintenance tasks may be carried out. Omitting the policy implies that a window
-    /// will be chosen automatically. See
-    /// [here](https://docs.digitalocean.com/products/kubernetes/how-to/upgrade-cluster/) for details.
+    /// To create a new Kubernetes cluster, send a POST request to `/v2/kubernetes/clusters`. The request must contain at least one node pool with at least one worker. The request may contain a maintenance window policy describing a time period when disruptive maintenance tasks may be carried out. Omitting the policy implies that a window will be chosen automatically. See [here](https://docs.digitalocean.com/products/kubernetes/how-to/upgrade-cluster/) for details.
     ///
     /// - Parameters:
     /// - name: A human-readable name for a Kubernetes cluster.
@@ -130,11 +126,7 @@ public extension KubernetesMethods {
     /// - corednsAutoscaler: An object specifying whether the Cluster Proportional
     ///   Autoscaler (CPA) add-on for CoreDNS should be enabled for the Kubernetes
     ///   cluster.
-    static func kubernetesCreateCluster(
-        config: ClientConfig,
-        options: KubernetesCreateClusterOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ClusterCreate {
+    public static func kubernetesCreateCluster(config: ClientConfig, options: KubernetesCreateClusterOptions, requestOptions: RequestOptions? = nil) async throws -> ClusterCreate {
         if let vpcUuid = options.vpcUuid {
             try sdkValidateUuid("vpc_uuid", vpcUuid)
         }
@@ -145,15 +137,6 @@ public extension KubernetesMethods {
 
         let requestBody = KubernetesCreateClusterRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/kubernetes/clusters",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "kubernetes_create_cluster",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+        return try (await sdkRequest("POST", "/v2/kubernetes/clusters", config: config, body: requestBody, decoder: .json, operationId: "kubernetes_create_cluster", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

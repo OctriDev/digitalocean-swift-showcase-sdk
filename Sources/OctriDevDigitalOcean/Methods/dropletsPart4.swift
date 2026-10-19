@@ -6,79 +6,37 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DropletsMethods {
-    /// To retrieve any backups associated with a Droplet, send a GET request to `/v2/droplets/$DROPLET_ID/backups`. You
-    /// will get back a JSON object that has a `backups` key. This will be set to an array of backup objects, each of
-    /// which contain the standard Droplet backup attributes.
+extension DropletsMethods {
+    /// To retrieve any backups associated with a Droplet, send a GET request to `/v2/droplets/$DROPLET_ID/backups`. You will get back a JSON object that has a `backups` key. This will be set to an array of backup objects, each of which contain the standard Droplet backup attributes.
     ///
     /// - Parameters:
     /// - dropletId: A unique identifier for a Droplet instance.
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func dropletsListBackups(
-        config: ClientConfig,
-        dropletId: Int,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AllDropletBackups {
+    public static func dropletsListBackups(config: ClientConfig, dropletId: Int, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AllDropletBackups {
         try validateRange("droplet_id", Double(dropletId), min: 1)
 
-        if let perPage {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/droplets/", sdkEncodePathSegment(sdkWireString(dropletId)), "/backups"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "droplets_list_backups",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/droplets/", sdkEncodePathSegment(sdkWireString(dropletId)), "/backups"].joined(), config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "droplets_list_backups", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To show information about an individual Droplet's backup policy, send a GET request to
-    /// `/v2/droplets/$DROPLET_ID/backups/policy`.
+    /// To show information about an individual Droplet's backup policy, send a GET request to `/v2/droplets/$DROPLET_ID/backups/policy`.
     ///
     /// - Parameters:
     /// - dropletId: A unique identifier for a Droplet instance.
-    static func dropletsGetBackupPolicy(
-        config: ClientConfig,
-        dropletId: Int,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DropletBackupPolicyResponse {
+    public static func dropletsGetBackupPolicy(config: ClientConfig, dropletId: Int, requestOptions: RequestOptions? = nil) async throws -> DropletBackupPolicyResponse {
         try validateRange("droplet_id", Double(dropletId), min: 1)
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/droplets/", sdkEncodePathSegment(sdkWireString(dropletId)), "/backups/policy"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "droplets_get_backup_policy",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/droplets/", sdkEncodePathSegment(sdkWireString(dropletId)), "/backups/policy"].joined(), config: config, decoder: .json, operationId: "droplets_get_backup_policy", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

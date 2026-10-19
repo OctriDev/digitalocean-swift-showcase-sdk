@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiList domain models
+// AgentPlatformAPIApiList domain models
 /// List of Agents that are linked to a specific OpenAI Key
 public struct ApiListAgentsByOpenAIKeyOutput: Codable {
     /// Optional array value serialized in the `agents` wire field.
@@ -20,21 +20,21 @@ public struct ApiListAgentsByOpenAIKeyOutput: Codable {
     }
 
     init() {
-        (agents, links, meta) = (nil, nil, nil)
+        (self.agents, self.links, self.meta) = (nil, nil, nil)
     }
 }
 
-public extension ApiListAgentsByOpenAIKeyOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListAgentsByOpenAIKeyOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agents = try container.sdkDecodeIfPresent(.agents)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
+        self.agents = try container.sdkDecodeIfPresent(.agents)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-public extension ApiListAgentsByOpenAIKeyOutput {
-    init(agents: [ApiAgent]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+extension ApiListAgentsByOpenAIKeyOutput {
+    public init(agents: [ApiAgent]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.agents, self.links) = (agents, links)
         self.meta = meta
@@ -57,21 +57,21 @@ public struct ApiListModelRouterTaskPresetsOutput: Codable {
     }
 
     init() {
-        (links, meta, tasks) = (nil, nil, nil)
+        (self.links, self.meta, self.tasks) = (nil, nil, nil)
     }
 }
 
-public extension ApiListModelRouterTaskPresetsOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListModelRouterTaskPresetsOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
-        tasks = try container.sdkDecodeIfPresent(.tasks)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
+        self.tasks = try container.sdkDecodeIfPresent(.tasks)
     }
 }
 
-public extension ApiListModelRouterTaskPresetsOutput {
-    init(links: ApiLinks? = nil, meta: ApiMeta? = nil, tasks: [ApiModelRouterTaskPreset]? = nil) {
+extension ApiListModelRouterTaskPresetsOutput {
+    public init(links: ApiLinks? = nil, meta: ApiMeta? = nil, tasks: [ApiModelRouterTaskPreset]? = nil) {
         self.init()
         (self.links, self.meta) = (links, meta)
         self.tasks = tasks
@@ -88,19 +88,19 @@ public struct ApiListModelEvaluationMetricsOutput: Codable {
     }
 
     init() {
-        metrics = nil
+        self.metrics = nil
     }
 }
 
-public extension ApiListModelEvaluationMetricsOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListModelEvaluationMetricsOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        metrics = try container.sdkDecodeIfPresent(.metrics)
+        self.metrics = try container.sdkDecodeIfPresent(.metrics)
     }
 }
 
-public extension ApiListModelEvaluationMetricsOutput {
-    init(metrics: [ApiEvaluationMetric]? = nil) {
+extension ApiListModelEvaluationMetricsOutput {
+    public init(metrics: [ApiEvaluationMetric]? = nil) {
         self.init()
         self.metrics = metrics
     }
@@ -116,19 +116,19 @@ public struct ApiListEvaluationDatasetsOutput: Codable {
     }
 
     init() {
-        evaluationDatasets = nil
+        self.evaluationDatasets = nil
     }
 }
 
-public extension ApiListEvaluationDatasetsOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListEvaluationDatasetsOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        evaluationDatasets = try container.sdkDecodeIfPresent(.evaluationDatasets)
+        self.evaluationDatasets = try container.sdkDecodeIfPresent(.evaluationDatasets)
     }
 }
 
-public extension ApiListEvaluationDatasetsOutput {
-    init(evaluationDatasets: [ApiEvaluationDataset]? = nil) {
+extension ApiListEvaluationDatasetsOutput {
+    public init(evaluationDatasets: [ApiEvaluationDataset]? = nil) {
         self.init()
         self.evaluationDatasets = evaluationDatasets
     }
@@ -157,29 +157,23 @@ public struct ApiListModelEvaluationRunsOutput: Codable {
     }
 
     init() {
-        (availableCandidateTypes, availableStatuses, links, meta, runs) = (nil, nil, nil, nil, nil)
+        (self.availableCandidateTypes, self.availableStatuses, self.links, self.meta, self.runs) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ApiListModelEvaluationRunsOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListModelEvaluationRunsOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        availableCandidateTypes = try container.sdkDecodeIfPresent(.availableCandidateTypes)
-        availableStatuses = try container.sdkDecodeIfPresent(.availableStatuses)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
-        runs = try container.sdkDecodeIfPresent(.runs)
+        self.availableCandidateTypes = try container.sdkDecodeIfPresent(.availableCandidateTypes)
+        self.availableStatuses = try container.sdkDecodeIfPresent(.availableStatuses)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
+        self.runs = try container.sdkDecodeIfPresent(.runs)
     }
 }
 
-public extension ApiListModelEvaluationRunsOutput {
-    init(
-        availableCandidateTypes: [ApiCandidateModelSource]? = nil,
-        availableStatuses: [ApiModelEvaluationRunStatus]? = nil,
-        links: ApiLinks? = nil,
-        meta: ApiMeta? = nil,
-        runs: [ApiModelEvaluationRunSummary]? = nil
-    ) {
+extension ApiListModelEvaluationRunsOutput {
+    public init(availableCandidateTypes: [ApiCandidateModelSource]? = nil, availableStatuses: [ApiModelEvaluationRunStatus]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil, runs: [ApiModelEvaluationRunSummary]? = nil) {
         self.init()
         self.availableCandidateTypes = availableCandidateTypes
         (self.availableStatuses, self.links) = (availableStatuses, links)
@@ -203,21 +197,21 @@ public struct ApiListAgentAPIKeysOutput: Codable {
     }
 
     init() {
-        (apiKeyInfos, links, meta) = (nil, nil, nil)
+        (self.apiKeyInfos, self.links, self.meta) = (nil, nil, nil)
     }
 }
 
-public extension ApiListAgentAPIKeysOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListAgentAPIKeysOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apiKeyInfos = try container.sdkDecodeIfPresent(.apiKeyInfos)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
+        self.apiKeyInfos = try container.sdkDecodeIfPresent(.apiKeyInfos)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-public extension ApiListAgentAPIKeysOutput {
-    init(apiKeyInfos: [ApiAgentAPIKeyInfo]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+extension ApiListAgentAPIKeysOutput {
+    public init(apiKeyInfos: [ApiAgentAPIKeyInfo]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.apiKeyInfos, self.links) = (apiKeyInfos, links)
         self.meta = meta
@@ -234,19 +228,19 @@ public struct ApiListWorkspacesOutput: Codable {
     }
 
     init() {
-        workspaces = nil
+        self.workspaces = nil
     }
 }
 
-public extension ApiListWorkspacesOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListWorkspacesOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        workspaces = try container.sdkDecodeIfPresent(.workspaces)
+        self.workspaces = try container.sdkDecodeIfPresent(.workspaces)
     }
 }
 
-public extension ApiListWorkspacesOutput {
-    init(workspaces: [ApiWorkspace]? = nil) {
+extension ApiListWorkspacesOutput {
+    public init(workspaces: [ApiWorkspace]? = nil) {
         self.init()
         self.workspaces = workspaces
     }
@@ -268,21 +262,21 @@ public struct ApiListAgentsByWorkspaceOutput: Codable {
     }
 
     init() {
-        (agents, links, meta) = (nil, nil, nil)
+        (self.agents, self.links, self.meta) = (nil, nil, nil)
     }
 }
 
-public extension ApiListAgentsByWorkspaceOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListAgentsByWorkspaceOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agents = try container.sdkDecodeIfPresent(.agents)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
+        self.agents = try container.sdkDecodeIfPresent(.agents)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-public extension ApiListAgentsByWorkspaceOutput {
-    init(agents: [ApiAgent]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+extension ApiListAgentsByWorkspaceOutput {
+    public init(agents: [ApiAgent]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.agents, self.links) = (agents, links)
         self.meta = meta
@@ -299,19 +293,19 @@ public struct ApiListEvaluationMetricsOutput: Codable {
     }
 
     init() {
-        metrics = nil
+        self.metrics = nil
     }
 }
 
-public extension ApiListEvaluationMetricsOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListEvaluationMetricsOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        metrics = try container.sdkDecodeIfPresent(.metrics)
+        self.metrics = try container.sdkDecodeIfPresent(.metrics)
     }
 }
 
-public extension ApiListEvaluationMetricsOutput {
-    init(metrics: [ApiEvaluationMetric]? = nil) {
+extension ApiListEvaluationMetricsOutput {
+    public init(metrics: [ApiEvaluationMetric]? = nil) {
         self.init()
         self.metrics = metrics
     }
@@ -333,21 +327,21 @@ public struct ApiListModelRoutersOutput: Codable {
     }
 
     init() {
-        (links, meta, modelRouters) = (nil, nil, nil)
+        (self.links, self.meta, self.modelRouters) = (nil, nil, nil)
     }
 }
 
-public extension ApiListModelRoutersOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListModelRoutersOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
-        modelRouters = try container.sdkDecodeIfPresent(.modelRouters)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
+        self.modelRouters = try container.sdkDecodeIfPresent(.modelRouters)
     }
 }
 
-public extension ApiListModelRoutersOutput {
-    init(links: ApiLinks? = nil, meta: ApiMeta? = nil, modelRouters: [ApiModelRouter]? = nil) {
+extension ApiListModelRoutersOutput {
+    public init(links: ApiLinks? = nil, meta: ApiMeta? = nil, modelRouters: [ApiModelRouter]? = nil) {
         self.init()
         (self.links, self.meta) = (links, meta)
         self.modelRouters = modelRouters
@@ -364,19 +358,19 @@ public struct ApiListEvaluationTestCasesOutput: Codable {
     }
 
     init() {
-        evaluationTestCases = nil
+        self.evaluationTestCases = nil
     }
 }
 
-public extension ApiListEvaluationTestCasesOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListEvaluationTestCasesOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        evaluationTestCases = try container.sdkDecodeIfPresent(.evaluationTestCases)
+        self.evaluationTestCases = try container.sdkDecodeIfPresent(.evaluationTestCases)
     }
 }
 
-public extension ApiListEvaluationTestCasesOutput {
-    init(evaluationTestCases: [ApiEvaluationTestCase]? = nil) {
+extension ApiListEvaluationTestCasesOutput {
+    public init(evaluationTestCases: [ApiEvaluationTestCase]? = nil) {
         self.init()
         self.evaluationTestCases = evaluationTestCases
     }
@@ -392,19 +386,19 @@ public struct ApiListRegionsOutput: Codable {
     }
 
     init() {
-        regions = nil
+        self.regions = nil
     }
 }
 
-public extension ApiListRegionsOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListRegionsOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        regions = try container.sdkDecodeIfPresent(.regions)
+        self.regions = try container.sdkDecodeIfPresent(.regions)
     }
 }
 
-public extension ApiListRegionsOutput {
-    init(regions: [GenaiapiRegion]? = nil) {
+extension ApiListRegionsOutput {
+    public init(regions: [GenaiapiRegion]? = nil) {
         self.init()
         self.regions = regions
     }
@@ -426,21 +420,21 @@ public struct ApiListAgentsByAnthropicKeyOutput: Codable {
     }
 
     init() {
-        (agents, links, meta) = (nil, nil, nil)
+        (self.agents, self.links, self.meta) = (nil, nil, nil)
     }
 }
 
-public extension ApiListAgentsByAnthropicKeyOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListAgentsByAnthropicKeyOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agents = try container.sdkDecodeIfPresent(.agents)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
+        self.agents = try container.sdkDecodeIfPresent(.agents)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-public extension ApiListAgentsByAnthropicKeyOutput {
-    init(agents: [ApiAgent]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+extension ApiListAgentsByAnthropicKeyOutput {
+    public init(agents: [ApiAgent]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.agents, self.links) = (agents, links)
         self.meta = meta
@@ -475,40 +469,26 @@ public struct ApiListSimulationEpisodesOutput: Codable {
     }
 
     init() {
-        (availableSortBy, availableSortDirections, availableStatuses, availableVerdicts, episodes) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        (links, meta) = (nil, nil)
+        (self.availableSortBy, self.availableSortDirections, self.availableStatuses, self.availableVerdicts, self.episodes) = (nil, nil, nil, nil, nil)
+        (self.links, self.meta) = (nil, nil)
     }
 }
 
-public extension ApiListSimulationEpisodesOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListSimulationEpisodesOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
-        availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
-        availableStatuses = try container.sdkDecodeIfPresent(.availableStatuses)
-        availableVerdicts = try container.sdkDecodeIfPresent(.availableVerdicts)
-        episodes = try container.sdkDecodeIfPresent(.episodes)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
+        self.availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
+        self.availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
+        self.availableStatuses = try container.sdkDecodeIfPresent(.availableStatuses)
+        self.availableVerdicts = try container.sdkDecodeIfPresent(.availableVerdicts)
+        self.episodes = try container.sdkDecodeIfPresent(.episodes)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-public extension ApiListSimulationEpisodesOutput {
-    init(
-        availableSortBy: [ApiSimulationEpisodeSortField]? = nil,
-        availableSortDirections: [ApiSortDirection]? = nil,
-        availableStatuses: [ApiSimulationEpisodeStatus]? = nil,
-        availableVerdicts: [ApiSimulationEpisodeVerdict]? = nil,
-        episodes: [ApiSimulationEpisode]? = nil,
-        links: ApiLinks? = nil,
-        meta: ApiMeta? = nil
-    ) {
+extension ApiListSimulationEpisodesOutput {
+    public init(availableSortBy: [ApiSimulationEpisodeSortField]? = nil, availableSortDirections: [ApiSortDirection]? = nil, availableStatuses: [ApiSimulationEpisodeStatus]? = nil, availableVerdicts: [ApiSimulationEpisodeVerdict]? = nil, episodes: [ApiSimulationEpisode]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.availableSortBy, self.availableSortDirections) = (availableSortBy, availableSortDirections)
         (self.availableStatuses, self.availableVerdicts) = (availableStatuses, availableVerdicts)
@@ -533,21 +513,21 @@ public struct ApiListModelAPIKeysOutput: Codable {
     }
 
     init() {
-        (apiKeyInfos, links, meta) = (nil, nil, nil)
+        (self.apiKeyInfos, self.links, self.meta) = (nil, nil, nil)
     }
 }
 
-public extension ApiListModelAPIKeysOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListModelAPIKeysOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apiKeyInfos = try container.sdkDecodeIfPresent(.apiKeyInfos)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
+        self.apiKeyInfos = try container.sdkDecodeIfPresent(.apiKeyInfos)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-public extension ApiListModelAPIKeysOutput {
-    init(apiKeyInfos: [ApiModelAPIKeyInfo]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+extension ApiListModelAPIKeysOutput {
+    public init(apiKeyInfos: [ApiModelAPIKeyInfo]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.apiKeyInfos, self.links) = (apiKeyInfos, links)
         self.meta = meta
@@ -570,21 +550,21 @@ public struct ApiListAgentsOutputPublic: Codable {
     }
 
     init() {
-        (agents, links, meta) = (nil, nil, nil)
+        (self.agents, self.links, self.meta) = (nil, nil, nil)
     }
 }
 
-public extension ApiListAgentsOutputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiListAgentsOutputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agents = try container.sdkDecodeIfPresent(.agents)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
+        self.agents = try container.sdkDecodeIfPresent(.agents)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-public extension ApiListAgentsOutputPublic {
-    init(agents: [ApiAgentPublic]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+extension ApiListAgentsOutputPublic {
+    public init(agents: [ApiAgentPublic]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.agents, self.links) = (agents, links)
         self.meta = meta

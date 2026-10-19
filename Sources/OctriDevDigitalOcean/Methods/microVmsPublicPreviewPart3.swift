@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension MicroVmsPublicPreviewMethods {
-    struct MicrovmsCreateOptions: Codable {
+extension MicroVmsPublicPreviewMethods {
+    public struct MicrovmsCreateOptions: Codable {
         public var name: String
         public var source: MicrovmSource
         public var region: String?
@@ -28,12 +28,7 @@ public extension MicroVmsPublicPreviewMethods {
         }
     }
 
-    /// To create a MicroVM, send a POST request to `/v2/microvms`. `name` and `source` are required. Set
-    /// `source.oci_ref` to create the MicroVM from a `linux/amd64` container image, or `source.checkpoint_id` to create
-    /// it from a checkpoint. With `oci_ref`, `region` and `size` are also required. A MicroVM created from an image is
-    /// returned with `state` set to `creating`. Poll `GET /v2/microvms/{microvm_id}` until `state` is `running`. A
-    /// MicroVM created from a checkpoint is usually returned already `running`. All settings are fixed at creation.
-    /// There is no update endpoint.
+    /// To create a MicroVM, send a POST request to `/v2/microvms`. `name` and `source` are required. Set `source.oci_ref` to create the MicroVM from a `linux/amd64` container image, or `source.checkpoint_id` to create it from a checkpoint. With `oci_ref`, `region` and `size` are also required. A MicroVM created from an image is returned with `state` set to `creating`. Poll `GET /v2/microvms/{microvm_id}` until `state` is `running`. A MicroVM created from a checkpoint is usually returned already `running`. All settings are fixed at creation. There is no update endpoint.
     ///
     /// - Parameters:
     /// - name: The name of the MicroVM. Must be unique in the region and contain 1
@@ -63,11 +58,7 @@ public extension MicroVmsPublicPreviewMethods {
     /// - environment: Environment variables passed into the MicroVM at boot, as key
     ///   and value pairs. Not returned in responses.
     /// - tags: Tags to apply to the MicroVM.
-    static func microvmsCreate(
-        config: ClientConfig,
-        options: MicrovmsCreateOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> MicrovmCreated {
+    public static func microvmsCreate(config: ClientConfig, options: MicrovmsCreateOptions, requestOptions: RequestOptions? = nil) async throws -> MicrovmCreated {
         try sdkValidatePattern("name", options.name, sdkPattern41dd286f4dc3)
 
         if let vpcUuid = options.vpcUuid {
@@ -80,22 +71,6 @@ public extension MicroVmsPublicPreviewMethods {
 
         let requestBody = MicrovmsCreateRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/microvms",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "microvms_create",
-            options: requestOptions,
-            errors: [
-                "400": MicrovmError.self,
-                "401": Error2.self,
-                "403": MicrovmError.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v2/microvms", config: config, body: requestBody, decoder: .json, operationId: "microvms_create", options: requestOptions, errors: ["400": MicrovmError.self, "401": Error2.self, "403": MicrovmError.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

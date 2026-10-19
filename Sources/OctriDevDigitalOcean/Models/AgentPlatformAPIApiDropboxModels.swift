@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiDropbox domain models
+// AgentPlatformAPIApiDropbox domain models
 /// Dropbox Data Source
 public struct ApiDropboxDataSource: Codable {
     /// Optional `string` value serialized in the `folder` wire field.
@@ -20,20 +20,20 @@ public struct ApiDropboxDataSource: Codable {
     }
 
     init() {
-        (folder, refreshToken) = (nil, nil)
+        (self.folder, self.refreshToken) = (nil, nil)
     }
 }
 
-public extension ApiDropboxDataSource {
-    init(from decoder: Decoder) throws {
+extension ApiDropboxDataSource {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        folder = try container.sdkDecodeIfPresent(.folder)
-        refreshToken = try container.sdkDecodeIfPresent(.refreshToken)
+        self.folder = try container.sdkDecodeIfPresent(.folder)
+        self.refreshToken = try container.sdkDecodeIfPresent(.refreshToken)
     }
 }
 
-public extension ApiDropboxDataSource {
-    init(folder: String? = nil, refreshToken: String? = nil) {
+extension ApiDropboxDataSource {
+    public init(folder: String? = nil, refreshToken: String? = nil) {
         self.init()
         (self.folder, self.refreshToken) = (folder, refreshToken)
     }
@@ -54,20 +54,20 @@ public struct ApiDropboxOauth2GetTokensInput: Codable {
     }
 
     init() {
-        (code, redirectUrl) = (nil, nil)
+        (self.code, self.redirectUrl) = (nil, nil)
     }
 }
 
-public extension ApiDropboxOauth2GetTokensInput {
-    init(from decoder: Decoder) throws {
+extension ApiDropboxOauth2GetTokensInput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        code = try container.sdkDecodeIfPresent(.code)
-        redirectUrl = try container.sdkDecodeIfPresent(.redirectUrl)
+        self.code = try container.sdkDecodeIfPresent(.code)
+        self.redirectUrl = try container.sdkDecodeIfPresent(.redirectUrl)
     }
 }
 
-public extension ApiDropboxOauth2GetTokensInput {
-    init(code: String? = nil, redirectUrl: String? = nil) {
+extension ApiDropboxOauth2GetTokensInput {
+    public init(code: String? = nil, redirectUrl: String? = nil) {
         self.init()
         (self.code, self.redirectUrl) = (code, redirectUrl)
     }
@@ -84,19 +84,19 @@ public struct ApiDropboxDataSourceDisplay: Codable {
     }
 
     init() {
-        folder = nil
+        self.folder = nil
     }
 }
 
-public extension ApiDropboxDataSourceDisplay {
-    init(from decoder: Decoder) throws {
+extension ApiDropboxDataSourceDisplay {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        folder = try container.sdkDecodeIfPresent(.folder)
+        self.folder = try container.sdkDecodeIfPresent(.folder)
     }
 }
 
-public extension ApiDropboxDataSourceDisplay {
-    init(folder: String? = nil) {
+extension ApiDropboxDataSourceDisplay {
+    public init(folder: String? = nil) {
         self.init()
         self.folder = folder
     }
@@ -117,20 +117,20 @@ public struct ApiDropboxOauth2GetTokensOutput: Codable {
     }
 
     init() {
-        (refreshToken, token) = (nil, nil)
+        (self.refreshToken, self.token) = (nil, nil)
     }
 }
 
-public extension ApiDropboxOauth2GetTokensOutput {
-    init(from decoder: Decoder) throws {
+extension ApiDropboxOauth2GetTokensOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        refreshToken = try container.sdkDecodeIfPresent(.refreshToken)
-        token = try container.sdkDecodeIfPresent(.token)
+        self.refreshToken = try container.sdkDecodeIfPresent(.refreshToken)
+        self.token = try container.sdkDecodeIfPresent(.token)
     }
 }
 
-public extension ApiDropboxOauth2GetTokensOutput {
-    init(refreshToken: String? = nil, token: String? = nil) {
+extension ApiDropboxOauth2GetTokensOutput {
+    public init(refreshToken: String? = nil, token: String? = nil) {
         self.init()
         (self.refreshToken, self.token) = (refreshToken, token)
     }

@@ -6,108 +6,49 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension BlockStorageActionsMethods {
-    /// Triggers an attach or detach action on a block storage volume identified by name. Set `type` to `attach` or
-    /// `detach` and provide the volume, Droplet, and region details for the action. Use `page` and `per_page` to
-    /// paginate the results.
+extension BlockStorageActionsMethods {
+    /// Triggers an attach or detach action on a block storage volume identified by name. Set `type` to `attach` or `detach` and provide the volume, Droplet, and region details for the action. Use `page` and `per_page` to paginate the results.
     ///
-    /// To initiate an action on a block storage volume by Name, send a POST request to `~/v2/volumes/actions`. The body
-    /// should contain the appropriate attributes for the respective action. ## Attach a Block Storage Volume to a
-    /// Droplet | Attribute | Details | | ----------- |
-    /// ------------------------------------------------------------------- | | type | This must be `attach` | |
-    /// volume_name | The name of the block storage volume | | droplet_id | Set to the Droplet's ID | | region | Set to
-    /// the slug representing the region where the volume is located | Each volume may only be attached to a single
-    /// Droplet. However, up to fifteen volumes may be attached to a Droplet at a time. Pre-formatted volumes will be
-    /// automatically mounted to Ubuntu, Debian, Fedora, Fedora Atomic, and CentOS Droplets created on or after April
-    /// 26, 2018 when attached. On older Droplets, [additional
-    /// configuration](https://docs.digitalocean.com/products/volumes/how-to/mount/) is required. ## Remove a Block
-    /// Storage Volume from a Droplet | Attribute | Details | | ----------- |
-    /// ------------------------------------------------------------------- | | type | This must be `detach` | |
-    /// volume_name | The name of the block storage volume | | droplet_id | Set to the Droplet's ID | | region | Set to
-    /// the slug representing the region where the volume is located |
+    /// To initiate an action on a block storage volume by Name, send a POST request to `~/v2/volumes/actions`. The body should contain the appropriate attributes for the respective action. ## Attach a Block Storage Volume to a Droplet | Attribute | Details | | ----------- | ------------------------------------------------------------------- | | type | This must be `attach` | | volume_name | The name of the block storage volume | | droplet_id | Set to the Droplet's ID | | region | Set to the slug representing the region where the volume is located | Each volume may only be attached to a single Droplet. However, up to fifteen volumes may be attached to a Droplet at a time. Pre-formatted volumes will be automatically mounted to Ubuntu, Debian, Fedora, Fedora Atomic, and CentOS Droplets created on or after April 26, 2018 when attached. On older Droplets, [additional configuration](https://docs.digitalocean.com/products/volumes/how-to/mount/) is required. ## Remove a Block Storage Volume from a Droplet | Attribute | Details | | ----------- | ------------------------------------------------------------------- | | type | This must be `detach` | | volume_name | The name of the block storage volume | | droplet_id | Set to the Droplet's ID | | region | Set to the slug representing the region where the volume is located |
     ///
     /// - Parameters:
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func volumeActionsPost(
-        config: ClientConfig,
-        body: VolumeActionsPostRequestBody,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VolumeActionResponse {
-        if let perPage {
+    public static func volumeActionsPost(config: ClientConfig, body: VolumeActionsPostRequestBody, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> VolumeActionResponse {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/volumes/actions",
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            rawBody: sdkEncodeBody(body, contentType: "application/json"),
-            decoder: .json,
-            operationId: "volumeActions_post",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v2/volumes/actions", config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], rawBody: (try sdkEncodeBody(body, contentType: "application/json")), decoder: .json, operationId: "volumeActions_post", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To retrieve all actions that have been executed on a volume, send a GET request to
-    /// `/v2/volumes/$VOLUME_ID/actions`.
+    /// To retrieve all actions that have been executed on a volume, send a GET request to `/v2/volumes/$VOLUME_ID/actions`.
     ///
     /// - Parameters:
     /// - volumeId: The ID of the block storage volume.
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func volumeActionsList(
-        config: ClientConfig,
-        volumeId: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VolumeActions {
+    public static func volumeActionsList(config: ClientConfig, volumeId: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> VolumeActions {
         try sdkValidateUuid("volume_id", volumeId)
 
-        if let perPage {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/volumes/", sdkEncodePathSegment(sdkWireString(volumeId)), "/actions"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "volumeActions_list",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/volumes/", sdkEncodePathSegment(sdkWireString(volumeId)), "/actions"].joined(), config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "volumeActions_list", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

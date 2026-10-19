@@ -6,11 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ActionGatewayMethods {
-    /// Returns the tools your team can use that match query, optionally restricted to some providers or to the members
-    /// of one of your toolbelts. Results are ranked across the whole result set: exact tool name matches first, then
-    /// name or title prefixes, then name or title substrings, then other matches. Cursor-paged with `page_size` and
-    /// `page_token`; no total is reported.
+extension ActionGatewayMethods {
+    /// Returns the tools your team can use that match query, optionally restricted to some providers or to the members of one of your toolbelts. Results are ranked across the whole result set: exact tool name matches first, then name or title prefixes, then name or title substrings, then other matches. Cursor-paged with `page_size` and `page_token`; no total is reported.
     ///
     /// - Parameters:
     /// - query: Matched case- and accent-insensitively as a substring of the tool's
@@ -28,48 +25,21 @@ public extension ActionGatewayMethods {
     /// - pageToken: A `next_page_token` from the preceding response. It is pinned
     ///   to the query and filters that produced it: replaying one against a different
     ///   search is rejected with 400, not a silent restart from the top.
-    static func toolsListSearch(
-        config: ClientConfig,
-        query: String? = nil,
-        provider: [String]? = nil,
-        toolbelt: String? = nil,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SearchToolsResponse {
-        if let pageSize {
+    public static func toolsListSearch(config: ClientConfig, query: String? = nil, provider: [String]? = nil, toolbelt: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) async throws -> SearchToolsResponse {
+        if let pageSize = pageSize {
             try validateRange("page_size", Double(pageSize), min: 1, max: 100)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/action-gateway/tools/search",
-            config: config,
-            query: [
-                SdkQueryParameter("query", value: query),
-                SdkQueryParameter("provider", values: provider, style: "form", explode: true),
-                SdkQueryParameter("toolbelt", value: toolbelt),
-                SdkQueryParameter("page_size", value: pageSize),
-                SdkQueryParameter("page_token", value: pageToken),
-            ],
-            decoder: .json,
-            operationId: "tools_list_search",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", "/v2/action-gateway/tools/search", config: config, query: [
+            SdkQueryParameter("query", value: query),
+            SdkQueryParameter("provider", values: provider, style: "form", explode: true),
+            SdkQueryParameter("toolbelt", value: toolbelt),
+            SdkQueryParameter("page_size", value: pageSize),
+            SdkQueryParameter("page_token", value: pageToken),
+        ], decoder: .json, operationId: "tools_list_search", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Returns the tools your team can use that match query, optionally restricted to some providers or to the members
-    /// of one of your toolbelts. Results are ranked across the whole result set: exact tool name matches first, then
-    /// name or title prefixes, then name or title substrings, then other matches. Cursor-paged with `page_size` and
-    /// `page_token`; no total is reported.
+    /// Returns the tools your team can use that match query, optionally restricted to some providers or to the members of one of your toolbelts. Results are ranked across the whole result set: exact tool name matches first, then name or title prefixes, then name or title substrings, then other matches. Cursor-paged with `page_size` and `page_token`; no total is reported.
     ///
     /// - Parameters:
     /// - query: Matched case- and accent-insensitively as a substring of the tool's
@@ -87,42 +57,17 @@ public extension ActionGatewayMethods {
     /// - pageToken: A `next_page_token` from the preceding response. It is pinned
     ///   to the query and filters that produced it: replaying one against a different
     ///   search is rejected with 400, not a silent restart from the top.
-    static func toolsListSearchPaginated(
-        config: ClientConfig,
-        query: String? = nil,
-        provider: [String]? = nil,
-        toolbelt: String? = nil,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<ToolSearchResult, Swift.Error> {
-        AsyncThrowingStream<ToolSearchResult, Swift.Error> { (continuation: AsyncThrowingStream<
-            ToolSearchResult,
-            Swift.Error
-        >.Continuation) in
+    public static func toolsListSearchPaginated(config: ClientConfig, query: String? = nil, provider: [String]? = nil, toolbelt: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<ToolSearchResult, Swift.Error> {
+        return AsyncThrowingStream<ToolSearchResult, Swift.Error> { (continuation: AsyncThrowingStream<ToolSearchResult, Swift.Error>.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await toolsListSearch(
-                            config: config,
-                            query: query,
-                            provider: provider,
-                            toolbelt: toolbelt,
-                            pageSize: pageSize,
-                            pageToken: pageCursor,
-                            requestOptions: requestOptions
-                        )
+                        let pageResponse = try await toolsListSearch(config: config, query: query, provider: provider, toolbelt: toolbelt, pageSize: pageSize, pageToken: pageCursor, requestOptions: requestOptions)
                         let pageItems = (pageResponse.tools ?? [])
-                        if pageItems.isEmpty {
-                            break
-                        }
-                        for item in pageItems {
-                            continuation.yield(item)
-                        }
-                        guard let nextCursor = pageResponse.nextPageToken else {
-                            break
-                        }
+                        if pageItems.isEmpty { break }
+                        for item in pageItems { continuation.yield(item) }
+                        guard let nextCursor = pageResponse.nextPageToken else { break }
                         pageCursor = nextCursor
                     }
                 } catch {
@@ -135,54 +80,25 @@ public extension ActionGatewayMethods {
         }
     }
 
-    struct ToolsListSearchPage {
+    public struct ToolsListSearchPage {
         public let data: SearchToolsResponse
         public let items: [ToolSearchResult]
         public let hasMore: Bool
     }
 
-    static func toolsListSearchPages(
-        config: ClientConfig,
-        query: String? = nil,
-        provider: [String]? = nil,
-        toolbelt: String? = nil,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<ToolsListSearchPage, Swift.Error> {
-        AsyncThrowingStream<ToolsListSearchPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<
-            ToolsListSearchPage,
-            Swift.Error
-        >.Continuation) in
+    public static func toolsListSearchPages(config: ClientConfig, query: String? = nil, provider: [String]? = nil, toolbelt: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<ToolsListSearchPage, Swift.Error> {
+        return AsyncThrowingStream<ToolsListSearchPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<ToolsListSearchPage, Swift.Error>.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await toolsListSearch(
-                            config: config,
-                            query: query,
-                            provider: provider,
-                            toolbelt: toolbelt,
-                            pageSize: pageSize,
-                            pageToken: pageCursor,
-                            requestOptions: requestOptions
-                        )
+                        let pageResponse = try await toolsListSearch(config: config, query: query, provider: provider, toolbelt: toolbelt, pageSize: pageSize, pageToken: pageCursor, requestOptions: requestOptions)
                         let pageItems = (pageResponse.tools ?? [])
-                        if pageItems.isEmpty {
-                            break
-                        }
+                        if pageItems.isEmpty { break }
                         let hasMore = pageResponse.nextPageToken != nil
-                        pageContinuation.yield(ToolsListSearchPage(
-                            data: pageResponse,
-                            items: pageItems,
-                            hasMore: hasMore
-                        ))
-                        if !hasMore {
-                            break
-                        }
-                        guard let nextCursor = pageResponse.nextPageToken else {
-                            break
-                        }
+                        pageContinuation.yield(ToolsListSearchPage(data: pageResponse, items: pageItems, hasMore: hasMore))
+                        if !hasMore { break }
+                        guard let nextCursor = pageResponse.nextPageToken else { break }
                         pageCursor = nextCursor
                     }
                 } catch {

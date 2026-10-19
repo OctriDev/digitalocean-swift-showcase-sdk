@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// ActionGatewayProvider domain models
+// ActionGatewayProvider domain models
 /// Describes a catalog provider and how to authenticate to it.
 public struct ProviderSummary: Codable {
     /// Provider slug, used as provider when creating a connection or a provider credential.
@@ -61,46 +61,29 @@ public struct ProviderSummary: Codable {
     }
 
     init() {
-        (name, displayName, description, authTypes, authType) = (nil, nil, nil, nil, nil)
-        (scopes, connectionParameters, credentialParameters, oauthRedirectUrl, oauthClientSetupUrl) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
+        (self.name, self.displayName, self.description, self.authTypes, self.authType) = (nil, nil, nil, nil, nil)
+        (self.scopes, self.connectionParameters, self.credentialParameters, self.oauthRedirectUrl, self.oauthClientSetupUrl) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ProviderSummary {
-    init(from decoder: Decoder) throws {
+extension ProviderSummary {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        displayName = try container.sdkDecodeIfPresent(.displayName)
-        description = try container.sdkDecodeIfPresent(.description)
-        authTypes = try container.sdkDecodeIfPresent(.authTypes)
-        authType = try container.sdkDecodeIfPresent(.authType)
-        scopes = try container.sdkDecodeIfPresent(.scopes)
-        connectionParameters = try container.sdkDecodeIfPresent(.connectionParameters)
-        credentialParameters = try container.sdkDecodeIfPresent(.credentialParameters)
-        oauthRedirectUrl = try container.sdkDecodeIfPresent(.oauthRedirectUrl)
-        oauthClientSetupUrl = try container.sdkDecodeIfPresent(.oauthClientSetupUrl)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.displayName = try container.sdkDecodeIfPresent(.displayName)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.authTypes = try container.sdkDecodeIfPresent(.authTypes)
+        self.authType = try container.sdkDecodeIfPresent(.authType)
+        self.scopes = try container.sdkDecodeIfPresent(.scopes)
+        self.connectionParameters = try container.sdkDecodeIfPresent(.connectionParameters)
+        self.credentialParameters = try container.sdkDecodeIfPresent(.credentialParameters)
+        self.oauthRedirectUrl = try container.sdkDecodeIfPresent(.oauthRedirectUrl)
+        self.oauthClientSetupUrl = try container.sdkDecodeIfPresent(.oauthClientSetupUrl)
     }
 }
 
-public extension ProviderSummary {
-    init(
-        name: String? = nil,
-        displayName: String? = nil,
-        description: String? = nil,
-        authTypes: [String]? = nil,
-        authType: String? = nil,
-        scopes: [String]? = nil,
-        connectionParameters: [ConnectionParameterSpec]? = nil,
-        credentialParameters: [ConnectionParameterSpec]? = nil,
-        oauthRedirectUrl: String? = nil,
-        oauthClientSetupUrl: String? = nil
-    ) {
+extension ProviderSummary {
+    public init(name: String? = nil, displayName: String? = nil, description: String? = nil, authTypes: [String]? = nil, authType: String? = nil, scopes: [String]? = nil, connectionParameters: [ConnectionParameterSpec]? = nil, credentialParameters: [ConnectionParameterSpec]? = nil, oauthRedirectUrl: String? = nil, oauthClientSetupUrl: String? = nil) {
         self.init()
         (self.name, self.displayName) = (name, displayName)
         (self.description, self.authTypes) = (description, authTypes)
@@ -125,20 +108,20 @@ public struct ProviderHealth: Codable {
     }
 
     init() {
-        (provider, health) = (nil, nil)
+        (self.provider, self.health) = (nil, nil)
     }
 }
 
-public extension ProviderHealth {
-    init(from decoder: Decoder) throws {
+extension ProviderHealth {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        provider = try container.sdkDecodeIfPresent(.provider)
-        health = try container.sdkDecodeIfPresent(.health)
+        self.provider = try container.sdkDecodeIfPresent(.provider)
+        self.health = try container.sdkDecodeIfPresent(.health)
     }
 }
 
-public extension ProviderHealth {
-    init(provider: String? = nil, health: HealthMetrics? = nil) {
+extension ProviderHealth {
+    public init(provider: String? = nil, health: HealthMetrics? = nil) {
         self.init()
         (self.provider, self.health) = (provider, health)
     }

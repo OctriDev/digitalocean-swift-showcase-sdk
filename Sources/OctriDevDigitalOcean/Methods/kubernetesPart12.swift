@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension KubernetesMethods {
-    struct KubernetesUpdateNodePoolOptions: Codable {
+extension KubernetesMethods {
+    public struct KubernetesUpdateNodePoolOptions: Codable {
         public var clusterId: String
         public var nodePoolId: String
         public var name: String
@@ -27,8 +27,7 @@ public extension KubernetesMethods {
         }
     }
 
-    /// To update the name of a node pool, edit the tags applied to it, or adjust its number of nodes, send a PUT
-    /// request to `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/node_pools/$NODE_POOL_ID` with the following attributes.
+    /// To update the name of a node pool, edit the tags applied to it, or adjust its number of nodes, send a PUT request to `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/node_pools/$NODE_POOL_ID` with the following attributes.
     ///
     /// - Parameters:
     /// - clusterId: A unique ID that can be used to reference a Kubernetes cluster.
@@ -53,37 +52,13 @@ public extension KubernetesMethods {
     ///   auto-scaled to. The value will be `0` if `auto_scale` is set to `false`.
     /// - maxNodes: The maximum number of nodes that this node pool can be
     ///   auto-scaled to. The value will be `0` if `auto_scale` is set to `false`.
-    static func kubernetesUpdateNodePool(
-        config: ClientConfig,
-        options: KubernetesUpdateNodePoolOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> NodePoolUpdate {
+    public static func kubernetesUpdateNodePool(config: ClientConfig, options: KubernetesUpdateNodePoolOptions, requestOptions: RequestOptions? = nil) async throws -> NodePoolUpdate {
         try sdkValidateUuid("cluster_id", options.clusterId)
 
         try sdkValidateUuid("node_pool_id", options.nodePoolId)
 
         let requestBody = KubernetesUpdateNodePoolRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "PUT",
-            [
-                "/v2/kubernetes/clusters/",
-                sdkEncodePathSegment(sdkWireString(options.clusterId)),
-                "/node_pools/",
-                sdkEncodePathSegment(sdkWireString(options.nodePoolId)),
-            ].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "kubernetes_update_nodePool",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(options.clusterId)), "/node_pools/", sdkEncodePathSegment(sdkWireString(options.nodePoolId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "kubernetes_update_nodePool", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

@@ -35,8 +35,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.connectionsDelete(
-                id: decoded("\"39f9f768-a7f9-4c91-9557-3328c53dd054\"")
-            )
+            id: decoded("\"39f9f768-a7f9-4c91-9557-3328c53dd054\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -81,8 +81,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.connectionsGet(
-                id: decoded("\"39f9f768-a7f9-4c91-9557-3328c53dd054\"")
-            )
+            id: decoded("\"39f9f768-a7f9-4c91-9557-3328c53dd054\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -133,14 +133,14 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.connectionsList(
-                provider: decoded("\"jira\""),
-                userId: decoded("\"alice\""),
-                status: decoded("\"active\""),
-                sort: decoded("\"created_at\""),
-                sortDirection: decoded("\"desc\""),
-                page: decoded("1"),
-                perPage: decoded("20")
-            )
+            provider: decoded("\"jira\""),
+            userId: decoded("\"alice\""),
+            status: decoded("\"active\""),
+            sort: decoded("\"created_at\""),
+            sortDirection: decoded("\"desc\""),
+            page: decoded("1"),
+            perPage: decoded("20")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -186,9 +186,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.add(
-                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                name: decoded("\"alpha\"")
-            )
+            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            name: decoded("\"alpha\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -209,13 +209,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try DatabasesMethods.DatabasesAddConnectionPoolOptions(
-            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-            name: decoded("\"backend-pool\""),
-            mode: decoded("\"transaction\""),
-            size: decoded("10"),
-            db: decoded("\"defaultdb\"")
-        )
+        var options = try DatabasesMethods.DatabasesAddConnectionPoolOptions(databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""), name: decoded("\"backend-pool\""), mode: decoded("\"transaction\""), size: decoded("10"), db: decoded("\"defaultdb\""))
         options.user = try decoded("\"doadmin\"")
         options.connection = try decoded("null")
         options.privateConnection = try decoded("null")
@@ -239,13 +233,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try DatabasesMethods.DatabasesAddConnectionPoolOptions(
-            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-            name: decoded("\"backend-pool\""),
-            mode: decoded("\"transaction\""),
-            size: decoded("10"),
-            db: decoded("\"defaultdb\"")
-        )
+        var options = try DatabasesMethods.DatabasesAddConnectionPoolOptions(databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""), name: decoded("\"backend-pool\""), mode: decoded("\"transaction\""), size: decoded("10"), db: decoded("\"defaultdb\""))
         options.user = try decoded("\"doadmin\"")
         options.connection = try decoded("null")
         options.privateConnection = try decoded("null")
@@ -257,8 +245,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.addConnectionPool(
-                options: options
-            )
+            options: options
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -304,9 +292,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.addUser(
-                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                body: decoded("{\"name\":\"app-01\"}")
-            )
+            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            body: decoded("{\"name\":\"app-01\"}")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -351,8 +339,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.createCluster(
-                body: decoded(sdkMethodFixture177Value1)
-            )
+            body: decoded(sdkMethodFixture177Value1)
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -400,11 +388,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.createKafkaSchema(
-                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                subjectName: decoded("\"customer-schema\""),
-                schemaType: decoded("\"AVRO\""),
-                schema: decoded(sdkMethodFixture179Value1)
-            )
+            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            subjectName: decoded("\"customer-schema\""),
+            schemaType: decoded("\"AVRO\""),
+            schema: decoded(sdkMethodFixture179Value1)
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -453,12 +441,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.createKafkaTopic(
-                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                name: decoded("\"customer-events\""),
-                replicationFactor: decoded("null"),
-                partitionCount: decoded("null"),
-                config: decoded("{\"retention_bytes\":-1,\"retention_ms\":100000}")
-            )
+            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            name: decoded("\"customer-events\""),
+            replicationFactor: decoded("null"),
+            partitionCount: decoded("null"),
+            config: decoded("{\"retention_bytes\":-1,\"retention_ms\":100000}")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -506,11 +494,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.createLogsink(
-                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                sinkName: decoded("\"logs-sink\""),
-                sinkType: decoded("\"opensearch\""),
-                config: decoded(sdkMethodFixture183Value1)
-            )
+            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            sinkName: decoded("\"logs-sink\""),
+            sinkType: decoded("\"opensearch\""),
+            config: decoded(sdkMethodFixture183Value1)
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -531,11 +519,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try DatabasesMethods.DatabasesCreateReplicaOptions(
-            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-            name: decoded("\"read-nyc3-01\""),
-            size: decoded("\"db-s-2vcpu-4gb\"")
-        )
+        var options = try DatabasesMethods.DatabasesCreateReplicaOptions(databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""), name: decoded("\"read-nyc3-01\""), size: decoded("\"db-s-2vcpu-4gb\""))
         options.region = try decoded("\"nyc3\"")
         options.tags = try decoded("null")
         options.privateNetworkUuid = try decoded("null")

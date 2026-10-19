@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiAwsdata domain models
+// AgentPlatformAPIApiAwsdata domain models
 /// AWS S3 Data Source for Display
 public struct ApiAWSDataSourceDisplay: Codable {
     /// Spaces bucket name
@@ -23,21 +23,21 @@ public struct ApiAWSDataSourceDisplay: Codable {
     }
 
     init() {
-        (bucketName, itemPath, region) = (nil, nil, nil)
+        (self.bucketName, self.itemPath, self.region) = (nil, nil, nil)
     }
 }
 
-public extension ApiAWSDataSourceDisplay {
-    init(from decoder: Decoder) throws {
+extension ApiAWSDataSourceDisplay {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        bucketName = try container.sdkDecodeIfPresent(.bucketName)
-        itemPath = try container.sdkDecodeIfPresent(.itemPath)
-        region = try container.sdkDecodeIfPresent(.region)
+        self.bucketName = try container.sdkDecodeIfPresent(.bucketName)
+        self.itemPath = try container.sdkDecodeIfPresent(.itemPath)
+        self.region = try container.sdkDecodeIfPresent(.region)
     }
 }
 
-public extension ApiAWSDataSourceDisplay {
-    init(bucketName: String? = nil, itemPath: String? = nil, region: String? = nil) {
+extension ApiAWSDataSourceDisplay {
+    public init(bucketName: String? = nil, itemPath: String? = nil, region: String? = nil) {
         self.init()
         (self.bucketName, self.itemPath) = (bucketName, itemPath)
         self.region = region
@@ -71,29 +71,23 @@ public struct ApiAWSDataSource: Codable {
     }
 
     init() {
-        (bucketName, itemPath, keyId, region, secretKey) = (nil, nil, nil, nil, nil)
+        (self.bucketName, self.itemPath, self.keyId, self.region, self.secretKey) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ApiAWSDataSource {
-    init(from decoder: Decoder) throws {
+extension ApiAWSDataSource {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        bucketName = try container.sdkDecodeIfPresent(.bucketName)
-        itemPath = try container.sdkDecodeIfPresent(.itemPath)
-        keyId = try container.sdkDecodeIfPresent(.keyId)
-        region = try container.sdkDecodeIfPresent(.region)
-        secretKey = try container.sdkDecodeIfPresent(.secretKey)
+        self.bucketName = try container.sdkDecodeIfPresent(.bucketName)
+        self.itemPath = try container.sdkDecodeIfPresent(.itemPath)
+        self.keyId = try container.sdkDecodeIfPresent(.keyId)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.secretKey = try container.sdkDecodeIfPresent(.secretKey)
     }
 }
 
-public extension ApiAWSDataSource {
-    init(
-        bucketName: String? = nil,
-        itemPath: String? = nil,
-        keyId: String? = nil,
-        region: String? = nil,
-        secretKey: String? = nil
-    ) {
+extension ApiAWSDataSource {
+    public init(bucketName: String? = nil, itemPath: String? = nil, keyId: String? = nil, region: String? = nil, secretKey: String? = nil) {
         self.init()
         (self.bucketName, self.itemPath) = (bucketName, itemPath)
         (self.keyId, self.region) = (keyId, region)

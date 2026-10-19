@@ -6,13 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContainerRegistryMethods {
-    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To delete a container
-    /// repository tag, send a DELETE request to `/v2/registry/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/tags/$TAG`.
-    /// Note that if your repository name contains `/` characters, it must be URL-encoded in the request URL. For
-    /// example, to delete `registry.digitalocean.com/example/my/repo:mytag`, the path would be
-    /// `/v2/registry/example/repositories/my%2Frepo/tags/mytag`. A successful request will receive a 204 status code
-    /// with no body in response. This indicates that the request was processed successfully.
+extension ContainerRegistryMethods {
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To delete a container repository tag, send a DELETE request to `/v2/registry/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/tags/$TAG`. Note that if your repository name contains `/` characters, it must be URL-encoded in the request URL. For example, to delete `registry.digitalocean.com/example/my/repo:mytag`, the path would be `/v2/registry/example/repositories/my%2Frepo/tags/mytag`. A successful request will receive a 204 status code with no body in response. This indicates that the request was processed successfully.
     ///
     /// - Parameters:
     /// - registryName: The name of a container registry.
@@ -21,34 +16,7 @@ public extension ContainerRegistryMethods {
     /// - repositoryTag: The name of a container registry repository tag.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    static func registryDeleteRepositoryTag(
-        config: ClientConfig,
-        registryName: String,
-        repositoryName: String,
-        repositoryTag: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await (sdkRequest(
-            "DELETE",
-            [
-                "/v2/registry/",
-                sdkEncodePathSegment(sdkWireString(registryName)),
-                "/repositories/",
-                sdkEncodePathSegment(sdkWireString(repositoryName)),
-                "/tags/",
-                sdkEncodePathSegment(sdkWireString(repositoryTag)),
-            ].joined(),
-            config: config,
-            decoder: .empty,
-            operationId: "registry_delete_repositoryTag",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func registryDeleteRepositoryTag(config: ClientConfig, registryName: String, repositoryName: String, repositoryTag: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try (await sdkRequest("DELETE", ["/v2/registry/", sdkEncodePathSegment(sdkWireString(registryName)), "/repositories/", sdkEncodePathSegment(sdkWireString(repositoryName)), "/tags/", sdkEncodePathSegment(sdkWireString(repositoryTag))].joined(), config: config, decoder: .empty, operationId: "registry_delete_repositoryTag", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

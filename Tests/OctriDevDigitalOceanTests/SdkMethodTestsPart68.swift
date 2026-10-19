@@ -17,9 +17,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.sshKeys.list(
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -65,9 +65,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.sshKeys.update(
-                sshKeyIdentifier: decoded("512189"),
-                name: decoded("\"My SSH Public Key\"")
-            )
+            sshKeyIdentifier: decoded("512189"),
+            name: decoded("\"My SSH Public Key\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -106,9 +106,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.tags.assignResources(
-                tagId: decoded("\"awesome\""),
-                resources: decoded(sdkMethodFixture1534Value1)
-            )
+            tagId: decoded("\"awesome\""),
+            resources: decoded(sdkMethodFixture1534Value1)
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -153,8 +153,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.tags.create(
-                name: decoded("\"extra-awesome\"")
-            )
+            name: decoded("\"extra-awesome\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -192,8 +192,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.tags.delete(
-                tagId: decoded("\"awesome\"")
-            )
+            tagId: decoded("\"awesome\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -238,8 +238,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.tags.get(
-                tagId: decoded("\"awesome\"")
-            )
+            tagId: decoded("\"awesome\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -285,9 +285,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.tags.list(
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -326,9 +326,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.tags.unassignResources(
-                tagId: decoded("\"awesome\""),
-                resources: decoded(sdkMethodFixture1544Value1)
-            )
+            tagId: decoded("\"awesome\""),
+            resources: decoded(sdkMethodFixture1544Value1)
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -374,9 +374,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.toolbeltsAddTools(
-                name: decoded("\"search-toolbelt\""),
-                tools: decoded("[\"jira_create_issue\"]")
-            )
+            name: decoded("\"search-toolbelt\""),
+            tools: decoded("[\"jira_create_issue\"]")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -425,12 +425,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.toolbeltsCreate(
-                name: decoded("\"search-toolbelt\""),
-                version: decoded("null"),
-                displayName: decoded("\"Search Tools\""),
-                description: decoded("\"Tools for searching and fetching public web pages.\""),
-                tools: decoded("[\"exa_web_search\",\"exa_web_fetch\"]")
-            )
+            name: decoded("\"search-toolbelt\""),
+            version: decoded("null"),
+            displayName: decoded("\"Search Tools\""),
+            description: decoded("\"Tools for searching and fetching public web pages.\""),
+            tools: decoded("[\"exa_web_search\",\"exa_web_fetch\"]")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -475,8 +475,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.toolbeltsDelete(
-                name: decoded("\"search-toolbelt\"")
-            )
+            name: decoded("\"search-toolbelt\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -522,9 +522,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.toolbeltsDeleteTools(
-                name: decoded("\"search-toolbelt\""),
-                tools: decoded("[\"exa_web_fetch\"]")
-            )
+            name: decoded("\"search-toolbelt\""),
+            tools: decoded("[\"exa_web_fetch\"]")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)

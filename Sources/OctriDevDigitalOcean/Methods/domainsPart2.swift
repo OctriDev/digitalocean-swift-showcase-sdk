@@ -6,44 +6,28 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DomainsMethods {
+extension DomainsMethods {
     /// To retrieve a list of all of the domains in your account, send a GET request to `/v2/domains`.
     ///
     /// - Parameters:
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func domainsList(
-        config: ClientConfig,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AllDomainsResponse {
-        if let perPage {
+    public static func domainsList(config: ClientConfig, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AllDomainsResponse {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/domains",
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "domains_list",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+        return try (await sdkRequest("GET", "/v2/domains", config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "domains_list", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To create a new domain, send a POST request to `/v2/domains`. Set the "name" attribute to the domain name you
-    /// are adding. Optionally, you may set the "ip_address" attribute, and an A record will be automatically created
-    /// pointing to the apex domain.
+    /// To create a new domain, send a POST request to `/v2/domains`. Set the "name" attribute to the domain name you are adding. Optionally, you may set the "ip_address" attribute, and an A record will be automatically created pointing to the apex domain.
     ///
     /// - Parameters:
     /// - name: The name of the domain itself. This should follow the standard
@@ -52,23 +36,9 @@ public extension DomainsMethods {
     /// - ipAddress: This optional attribute may contain an IP address. When
     ///   provided, an A record will be automatically created pointing to the apex
     ///   domain.
-    static func domainsCreate(
-        config: ClientConfig,
-        name: String? = nil,
-        ipAddress: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> CreateDomainResponse {
+    public static func domainsCreate(config: ClientConfig, name: String? = nil, ipAddress: String? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateDomainResponse {
         let requestBody = DomainsCreateRequestBody(name: name, ipAddress: ipAddress)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/domains",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "domains_create",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+        return try (await sdkRequest("POST", "/v2/domains", config: config, body: requestBody, decoder: .json, operationId: "domains_create", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

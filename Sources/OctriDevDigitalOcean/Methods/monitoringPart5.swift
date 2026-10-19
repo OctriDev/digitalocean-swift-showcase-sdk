@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension MonitoringMethods {
-    struct MonitoringUpdateAlertPolicyOptions: Codable {
+extension MonitoringMethods {
+    public struct MonitoringUpdateAlertPolicyOptions: Codable {
         public var alertUuid: String
         public var alerts: Alerts
         public var compare: AlertPolicyRequestCompare
@@ -19,26 +19,21 @@ public extension MonitoringMethods {
         public var value: Double
         public var window: AlertPolicyRequestWindow
 
-        public init(
-            required1: MonitoringUpdateAlertPolicyOptionsRequired1,
-            required2: MonitoringUpdateAlertPolicyOptionsRequired2
-        ) {
-            alertUuid = required1.alertUuid
-            alerts = required1.alerts
-            compare = required1.compare
-            description = required1.description
-            enabled = required1.enabled
-            entities = required1.entities
-            tags = required1.tags
-            type = required2.type
-            value = required2.value
-            window = required2.window
+        public init(required1: MonitoringUpdateAlertPolicyOptionsRequired1, required2: MonitoringUpdateAlertPolicyOptionsRequired2) {
+            self.alertUuid = required1.alertUuid
+            self.alerts = required1.alerts
+            self.compare = required1.compare
+            self.description = required1.description
+            self.enabled = required1.enabled
+            self.entities = required1.entities
+            self.tags = required1.tags
+            self.type = required2.type
+            self.value = required2.value
+            self.window = required2.window
         }
     }
 
-    /// Replaces the configuration of an existing alert policy identified by its UUID. Provide the complete policy
-    /// configuration, including its metric type, threshold, evaluation window, monitored entities, tags, notifications,
-    /// and enabled state. A 200 response returns the updated alert policy.
+    /// Replaces the configuration of an existing alert policy identified by its UUID. Provide the complete policy configuration, including its metric type, threshold, evaluation window, monitored entities, tags, notifications, and enabled state. A 200 response returns the updated alert policy.
     ///
     /// To update en existing policy, send a PUT request to `v2/monitoring/alerts/{alert_uuid}`.
     ///
@@ -55,28 +50,9 @@ public extension MonitoringMethods {
     /// - value: Required `float`-formatted value serialized in the `value` wire
     ///   field.
     /// - window: Required enumerated value serialized in the `window` wire field.
-    static func monitoringUpdateAlertPolicy(
-        config: ClientConfig,
-        options: MonitoringUpdateAlertPolicyOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AlertPolicyResponse {
+    public static func monitoringUpdateAlertPolicy(config: ClientConfig, options: MonitoringUpdateAlertPolicyOptions, requestOptions: RequestOptions? = nil) async throws -> AlertPolicyResponse {
         let requestBody = MonitoringUpdateAlertPolicyRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/monitoring/alerts/", sdkEncodePathSegment(sdkWireString(options.alertUuid))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "monitoring_update_alertPolicy",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/monitoring/alerts/", sdkEncodePathSegment(sdkWireString(options.alertUuid))].joined(), config: config, body: requestBody, decoder: .json, operationId: "monitoring_update_alertPolicy", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

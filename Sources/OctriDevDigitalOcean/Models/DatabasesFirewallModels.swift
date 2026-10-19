@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DatabasesFirewall domain models
+// DatabasesFirewall domain models
 /// Typed representation of the `FirewallRule` API schema.
 public struct FirewallRule: Codable {
     /// The type of resource that the firewall rule allows to access the database cluster.
@@ -36,55 +36,38 @@ public struct FirewallRule: Codable {
         case description
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension FirewallRule {
-    init(from decoder: Decoder) throws {
+extension FirewallRule {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.value) else {
-            throw SdkValidationError(
-                field: "value",
-                code: "required",
-                message: "Validation failed for 'value': value is required"
-            )
+            throw SdkValidationError(field: "value", code: "required", message: "Validation failed for 'value': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        value = try container.sdkDecodeRequired(.value)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
-        clusterUuid = try container.sdkDecodeIfPresent(.clusterUuid)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        description = try container.sdkDecodeIfPresent(.description)
-        if let value = uuid {
+        self.type = try container.sdkDecodeRequired(.type)
+        self.value = try container.sdkDecodeRequired(.value)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        self.clusterUuid = try container.sdkDecodeIfPresent(.clusterUuid)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        if let value = self.uuid {
             try sdkValidatePattern("uuid", value, sdkPattern6ef5a9518225)
         }
-        if let value = clusterUuid {
+        if let value = self.clusterUuid {
             try sdkValidatePattern("cluster_uuid", value, sdkPattern6ef5a9518225)
         }
-        if let value = createdAt {
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-public extension FirewallRule {
-    init(
-        type: FirewallRuleType,
-        value: String,
-        uuid: String? = nil,
-        clusterUuid: String? = nil,
-        createdAt: Date? = nil,
-        description: String? = nil
-    ) throws {
+extension FirewallRule {
+    public init(type: FirewallRuleType, value: String, uuid: String? = nil, clusterUuid: String? = nil, createdAt: Date? = nil, description: String? = nil) throws {
         (self.type, self.value) = (type, value)
         (self.uuid, self.clusterUuid) = (uuid, clusterUuid)
         (self.createdAt, self.description) = (createdAt, description)
@@ -110,19 +93,19 @@ public struct FirewallRulesResponse: Codable {
     }
 
     init() {
-        rules = nil
+        self.rules = nil
     }
 }
 
-public extension FirewallRulesResponse {
-    init(from decoder: Decoder) throws {
+extension FirewallRulesResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        rules = try container.sdkDecodeIfPresent(.rules)
+        self.rules = try container.sdkDecodeIfPresent(.rules)
     }
 }
 
-public extension FirewallRulesResponse {
-    init(rules: [FirewallRule]? = nil) {
+extension FirewallRulesResponse {
+    public init(rules: [FirewallRule]? = nil) {
         self.init()
         self.rules = rules
     }
@@ -151,40 +134,30 @@ public struct FirewallRuleRequest: Codable {
         case description
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension FirewallRuleRequest {
-    init(from decoder: Decoder) throws {
+extension FirewallRuleRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.value) else {
-            throw SdkValidationError(
-                field: "value",
-                code: "required",
-                message: "Validation failed for 'value': value is required"
-            )
+            throw SdkValidationError(field: "value", code: "required", message: "Validation failed for 'value': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        value = try container.sdkDecodeRequired(.value)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
-        description = try container.sdkDecodeIfPresent(.description)
-        if let value = uuid {
+        self.type = try container.sdkDecodeRequired(.type)
+        self.value = try container.sdkDecodeRequired(.value)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        if let value = self.uuid {
             try sdkValidatePattern("uuid", value, sdkPattern6ef5a9518225)
         }
     }
 }
 
-public extension FirewallRuleRequest {
-    init(type: FirewallRuleRequestType, value: String, uuid: String? = nil, description: String? = nil) throws {
+extension FirewallRuleRequest {
+    public init(type: FirewallRuleRequestType, value: String, uuid: String? = nil, description: String? = nil) throws {
         (self.type, self.value) = (type, value)
         (self.uuid, self.description) = (uuid, description)
         if let value = self.uuid {
@@ -197,10 +170,7 @@ public extension FirewallRuleRequest {
 public struct FirewallRuleRequestType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let droplet = FirewallRuleRequestType(rawValue: "droplet")
     public static let k8s = FirewallRuleRequestType(rawValue: "k8s")
     public static let ipAddr = FirewallRuleRequestType(rawValue: "ip_addr")
@@ -209,7 +179,7 @@ public struct FirewallRuleRequestType: RawRepresentable, Hashable, Codable, Send
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -222,10 +192,7 @@ public struct FirewallRuleRequestType: RawRepresentable, Hashable, Codable, Send
 public struct FirewallRuleType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let droplet = FirewallRuleType(rawValue: "droplet")
     public static let k8s = FirewallRuleType(rawValue: "k8s")
     public static let ipAddr = FirewallRuleType(rawValue: "ip_addr")
@@ -234,7 +201,7 @@ public struct FirewallRuleType: RawRepresentable, Hashable, Codable, Sendable, S
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

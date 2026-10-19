@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// VectorDatabases domain models
+// VectorDatabases domain models
 /// Typed representation of the `VectordbUpdateVectorDBResponse` API schema.
 public struct VectordbUpdateVectorDBResponse: Codable {
     /// VectorDB represents a provisioned vector database instance.
@@ -14,19 +14,19 @@ public struct VectordbUpdateVectorDBResponse: Codable {
     }
 
     init() {
-        vectorDb = nil
+        self.vectorDb = nil
     }
 }
 
-public extension VectordbUpdateVectorDBResponse {
-    init(from decoder: Decoder) throws {
+extension VectordbUpdateVectorDBResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        vectorDb = try container.sdkDecodeIfPresent(.vectorDb)
+        self.vectorDb = try container.sdkDecodeIfPresent(.vectorDb)
     }
 }
 
-public extension VectordbUpdateVectorDBResponse {
-    init(vectorDb: VectordbVectorDB? = nil) {
+extension VectordbUpdateVectorDBResponse {
+    public init(vectorDb: VectordbVectorDB? = nil) {
         self.init()
         self.vectorDb = vectorDb
     }
@@ -42,19 +42,19 @@ public struct VectordbCreateVectorDBResponse: Codable {
     }
 
     init() {
-        vectorDb = nil
+        self.vectorDb = nil
     }
 }
 
-public extension VectordbCreateVectorDBResponse {
-    init(from decoder: Decoder) throws {
+extension VectordbCreateVectorDBResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        vectorDb = try container.sdkDecodeIfPresent(.vectorDb)
+        self.vectorDb = try container.sdkDecodeIfPresent(.vectorDb)
     }
 }
 
-public extension VectordbCreateVectorDBResponse {
-    init(vectorDb: VectordbVectorDB? = nil) {
+extension VectordbCreateVectorDBResponse {
+    public init(vectorDb: VectordbVectorDB? = nil) {
         self.init()
         self.vectorDb = vectorDb
     }
@@ -70,19 +70,19 @@ public struct VectordbListBackupsResponse: Codable {
     }
 
     init() {
-        backups = nil
+        self.backups = nil
     }
 }
 
-public extension VectordbListBackupsResponse {
-    init(from decoder: Decoder) throws {
+extension VectordbListBackupsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        backups = try container.sdkDecodeIfPresent(.backups)
+        self.backups = try container.sdkDecodeIfPresent(.backups)
     }
 }
 
-public extension VectordbListBackupsResponse {
-    init(backups: [VectordbBackup]? = nil) {
+extension VectordbListBackupsResponse {
+    public init(backups: [VectordbBackup]? = nil) {
         self.init()
         self.backups = backups
     }
@@ -107,21 +107,21 @@ public struct VectordbGetRestoreStatusResponse: Codable {
     }
 
     init() {
-        (backupId, error, status) = (nil, nil, nil)
+        (self.backupId, self.error, self.status) = (nil, nil, nil)
     }
 }
 
-public extension VectordbGetRestoreStatusResponse {
-    init(from decoder: Decoder) throws {
+extension VectordbGetRestoreStatusResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        backupId = try container.sdkDecodeIfPresent(.backupId)
-        error = try container.sdkDecodeIfPresent(.error)
-        status = try container.sdkDecodeIfPresent(.status)
+        self.backupId = try container.sdkDecodeIfPresent(.backupId)
+        self.error = try container.sdkDecodeIfPresent(.error)
+        self.status = try container.sdkDecodeIfPresent(.status)
     }
 }
 
-public extension VectordbGetRestoreStatusResponse {
-    init(backupId: String? = nil, error: String? = nil, status: String? = nil) {
+extension VectordbGetRestoreStatusResponse {
+    public init(backupId: String? = nil, error: String? = nil, status: String? = nil) {
         self.init()
         (self.backupId, self.error) = (backupId, error)
         self.status = status
@@ -143,20 +143,20 @@ public struct VectordbRestoreBackupRequest: Codable {
     }
 
     init() {
-        (backupId, id) = (nil, nil)
+        (self.backupId, self.id) = (nil, nil)
     }
 }
 
-public extension VectordbRestoreBackupRequest {
-    init(from decoder: Decoder) throws {
+extension VectordbRestoreBackupRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        backupId = try container.sdkDecodeIfPresent(.backupId)
-        id = try container.sdkDecodeIfPresent(.id)
+        self.backupId = try container.sdkDecodeIfPresent(.backupId)
+        self.id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-public extension VectordbRestoreBackupRequest {
-    init(backupId: String? = nil, id: String? = nil) {
+extension VectordbRestoreBackupRequest {
+    public init(backupId: String? = nil, id: String? = nil) {
         self.init()
         (self.backupId, self.id) = (backupId, id)
     }

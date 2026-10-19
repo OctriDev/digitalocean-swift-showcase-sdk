@@ -7,102 +7,31 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum ReservedIpActionsMethods {
-    /// To retrieve all actions that have been executed on a reserved IP, send a GET request to
-    /// `/v2/reserved_ips/$RESERVED_IP/actions`.
+    /// To retrieve all actions that have been executed on a reserved IP, send a GET request to `/v2/reserved_ips/$RESERVED_IP/actions`.
     ///
     /// - Parameters:
     /// - reservedIp: A reserved IP address.
-    public static func reservedIpsActionsList(
-        config: ClientConfig,
-        reservedIp: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ReservedIpActions {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/reserved_ips/", sdkEncodePathSegment(sdkWireString(reservedIp)), "/actions"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "reservedIPsActions_list",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func reservedIpsActionsList(config: ClientConfig, reservedIp: String, requestOptions: RequestOptions? = nil) async throws -> ReservedIpActions {
+        return try (await sdkRequest("GET", ["/v2/reserved_ips/", sdkEncodePathSegment(sdkWireString(reservedIp)), "/actions"].joined(), config: config, decoder: .json, operationId: "reservedIPsActions_list", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
-
-    /// Submits an action to assign or unassign a reserved IP. Set `type` to `assign` or `unassign`, and include
-    /// `droplet_id` when assigning the address to a Droplet. The response contains the action object for the requested
-    /// operation.
+    /// Submits an action to assign or unassign a reserved IP. Set `type` to `assign` or `unassign`, and include `droplet_id` when assigning the address to a Droplet. The response contains the action object for the requested operation.
     ///
-    /// To initiate an action on a reserved IP send a POST request to `/v2/reserved_ips/$RESERVED_IP/actions`. In the
-    /// JSON body to the request, set the `type` attribute to on of the supported action types: | Action | Details
-    /// |------------|-------- | `assign` | Assigns a reserved IP to a Droplet | `unassign` | Unassign a reserved IP
-    /// from a Droplet
+    /// To initiate an action on a reserved IP send a POST request to `/v2/reserved_ips/$RESERVED_IP/actions`. In the JSON body to the request, set the `type` attribute to on of the supported action types: | Action | Details |------------|-------- | `assign` | Assigns a reserved IP to a Droplet | `unassign` | Unassign a reserved IP from a Droplet
     ///
     /// - Parameters:
     /// - reservedIp: A reserved IP address.
-    public static func reservedIpsActionsPost(
-        config: ClientConfig,
-        reservedIp: String,
-        body: ReservedIPsActionsPostRequestBody? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ReservedIpAction {
-        try await (sdkRequest(
-            "POST",
-            ["/v2/reserved_ips/", sdkEncodePathSegment(sdkWireString(reservedIp)), "/actions"].joined(),
-            config: config,
-            rawBody: (body.map { try sdkEncodeBody($0, contentType: "application/json") }),
-            decoder: .json,
-            operationId: "reservedIPsActions_post",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func reservedIpsActionsPost(config: ClientConfig, reservedIp: String, body: ReservedIPsActionsPostRequestBody? = nil, requestOptions: RequestOptions? = nil) async throws -> ReservedIpAction {
+        return try (await sdkRequest("POST", ["/v2/reserved_ips/", sdkEncodePathSegment(sdkWireString(reservedIp)), "/actions"].joined(), config: config, rawBody: (try body.map { try sdkEncodeBody($0, contentType: "application/json") }), decoder: .json, operationId: "reservedIPsActions_post", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
-
-    /// To retrieve the status of a reserved IP action, send a GET request to
-    /// `/v2/reserved_ips/$RESERVED_IP/actions/$ACTION_ID`.
+    /// To retrieve the status of a reserved IP action, send a GET request to `/v2/reserved_ips/$RESERVED_IP/actions/$ACTION_ID`.
     ///
     /// - Parameters:
     /// - reservedIp: A reserved IP address.
     /// - actionId: A unique numeric ID that can be used to identify and reference
     ///   an action.
-    public static func reservedIpsActionsGet(
-        config: ClientConfig,
-        reservedIp: String,
-        actionId: Int,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ReservedIpAction {
+    public static func reservedIpsActionsGet(config: ClientConfig, reservedIp: String, actionId: Int, requestOptions: RequestOptions? = nil) async throws -> ReservedIpAction {
         try validateRange("action_id", Double(actionId), min: 1)
 
-        return try await (sdkRequest(
-            "GET",
-            [
-                "/v2/reserved_ips/",
-                sdkEncodePathSegment(sdkWireString(reservedIp)),
-                "/actions/",
-                sdkEncodePathSegment(sdkWireString(actionId)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "reservedIPsActions_get",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/reserved_ips/", sdkEncodePathSegment(sdkWireString(reservedIp)), "/actions/", sdkEncodePathSegment(sdkWireString(actionId))].joined(), config: config, decoder: .json, operationId: "reservedIPsActions_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

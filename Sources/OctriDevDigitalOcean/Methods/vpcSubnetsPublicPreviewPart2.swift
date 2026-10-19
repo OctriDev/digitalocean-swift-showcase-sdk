@@ -6,66 +6,38 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension VpcSubnetsPublicPreviewMethods {
+extension VpcSubnetsPublicPreviewMethods {
     /// To list all subnets within a VPC, send a GET request to `/v2/vpcs/$VPC_UUID/subnets`.
     ///
     /// - Parameters:
     /// - vpcUuid: The unique identifier of the VPC to which the subnet belongs.
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func vpcSubnetsList(
-        config: ClientConfig,
-        vpcUuid: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AllVpcSubnets {
+    public static func vpcSubnetsList(config: ClientConfig, vpcUuid: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AllVpcSubnets {
         try sdkValidateUuid("vpc_uuid", vpcUuid)
 
-        if let perPage {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcUuid)), "/subnets"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "vpcSubnets_list",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcUuid)), "/subnets"].joined(), config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "vpcSubnets_list", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To create a subnet within a VPC, send a POST request to `/v2/vpcs/$VPC_UUID/subnets` with a name and,
-    /// optionally, an IP range.
+    /// To create a subnet within a VPC, send a POST request to `/v2/vpcs/$VPC_UUID/subnets` with a name and, optionally, an IP range.
     ///
     /// - Parameters:
     /// - vpcUuid: The unique identifier of the VPC to which the subnet belongs.
     /// - name: The human-readable name of the VPC subnet.
     /// - ipRange: An RFC1918 CIDR range between /16 and /24 that does not overlap
     ///   another team or VPC network.
-    static func vpcSubnetsCreate(
-        config: ClientConfig,
-        vpcUuid: String,
-        name: String,
-        ipRange: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SingleVpcSubnet {
+    public static func vpcSubnetsCreate(config: ClientConfig, vpcUuid: String, name: String, ipRange: String? = nil, requestOptions: RequestOptions? = nil) async throws -> SingleVpcSubnet {
         try sdkValidateUuid("vpc_uuid", vpcUuid)
 
         try validateLength("name", name, max: 255)
@@ -73,21 +45,6 @@ public extension VpcSubnetsPublicPreviewMethods {
 
         let requestBody = VpcSubnetsCreateRequestBody(name: name, ipRange: ipRange)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcUuid)), "/subnets"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "vpcSubnets_create",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcUuid)), "/subnets"].joined(), config: config, body: requestBody, decoder: .json, operationId: "vpcSubnets_create", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

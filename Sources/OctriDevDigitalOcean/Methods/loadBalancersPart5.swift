@@ -6,44 +6,18 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension LoadBalancersMethods {
-    /// Removes one or more forwarding rules from a load balancer. Provide at least one rule in `forwarding_rules`,
-    /// including each rule's entry and target protocols and ports. A 204 response confirms the rules were removed and
-    /// returns no body.
+extension LoadBalancersMethods {
+    /// Removes one or more forwarding rules from a load balancer. Provide at least one rule in `forwarding_rules`, including each rule's entry and target protocols and ports. A 204 response confirms the rules were removed and returns no body.
     ///
-    /// To remove forwarding rules from a load balancer instance, send a DELETE request to
-    /// `/v2/load_balancers/$LOAD_BALANCER_ID/forwarding_rules`. In the body of the request, there should be a
-    /// `forwarding_rules` attribute containing an array of rules to be removed. No response body will be sent back, but
-    /// the response code will indicate success. Specifically, the response code will be a 204, which means that the
-    /// action was successful with no returned body data.
+    /// To remove forwarding rules from a load balancer instance, send a DELETE request to `/v2/load_balancers/$LOAD_BALANCER_ID/forwarding_rules`. In the body of the request, there should be a `forwarding_rules` attribute containing an array of rules to be removed. No response body will be sent back, but the response code will indicate success. Specifically, the response code will be a 204, which means that the action was successful with no returned body data.
     ///
     /// - Parameters:
     /// - lbId: A unique identifier for a load balancer.
-    static func loadBalancersRemoveForwardingRules(
-        config: ClientConfig,
-        lbId: String,
-        forwardingRules: [ForwardingRule],
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
+    public static func loadBalancersRemoveForwardingRules(config: ClientConfig, lbId: String, forwardingRules: [ForwardingRule], requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
         try validateItems("forwarding_rules", forwardingRules, min: 1)
 
         let requestBody = LoadBalancersRemoveForwardingRulesRequestBody(forwardingRules: forwardingRules)
 
-        return try await (sdkRequest(
-            "DELETE",
-            ["/v2/load_balancers/", sdkEncodePathSegment(sdkWireString(lbId)), "/forwarding_rules"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .empty,
-            operationId: "loadBalancers_remove_forwardingRules",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("DELETE", ["/v2/load_balancers/", sdkEncodePathSegment(sdkWireString(lbId)), "/forwarding_rules"].joined(), config: config, body: requestBody, decoder: .empty, operationId: "loadBalancers_remove_forwardingRules", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

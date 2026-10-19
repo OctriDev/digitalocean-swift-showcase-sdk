@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AppsAppAlert domain models
+// AppsAppAlert domain models
 public typealias AppAlertEmail = String
 
 /// Typed representation of the `AppAlert` API schema.
@@ -38,34 +38,26 @@ public struct AppAlert: Codable {
     }
 
     init() {
-        (id, componentName, spec, emails, slackWebhooks) = (nil, nil, nil, nil, nil)
-        (phase, progress) = (nil, nil)
+        (self.id, self.componentName, self.spec, self.emails, self.slackWebhooks) = (nil, nil, nil, nil, nil)
+        (self.phase, self.progress) = (nil, nil)
     }
 }
 
-public extension AppAlert {
-    init(from decoder: Decoder) throws {
+extension AppAlert {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        componentName = try container.sdkDecodeIfPresent(.componentName)
-        spec = try container.sdkDecodeIfPresent(.spec)
-        emails = try container.sdkDecodeIfPresent(.emails)
-        slackWebhooks = try container.sdkDecodeIfPresent(.slackWebhooks)
-        phase = try container.sdkDecodeIfPresent(.phase)
-        progress = try container.sdkDecodeIfPresent(.progress)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.componentName = try container.sdkDecodeIfPresent(.componentName)
+        self.spec = try container.sdkDecodeIfPresent(.spec)
+        self.emails = try container.sdkDecodeIfPresent(.emails)
+        self.slackWebhooks = try container.sdkDecodeIfPresent(.slackWebhooks)
+        self.phase = try container.sdkDecodeIfPresent(.phase)
+        self.progress = try container.sdkDecodeIfPresent(.progress)
     }
 }
 
-public extension AppAlert {
-    init(
-        id: String? = nil,
-        componentName: String? = nil,
-        spec: AppAlertSpec? = nil,
-        emails: [AppAlertEmail]? = nil,
-        slackWebhooks: [AppAlertSlackWebhook]? = nil,
-        phase: AppAlertPhase? = nil,
-        progress: AppAlertProgress? = nil
-    ) {
+extension AppAlert {
+    public init(id: String? = nil, componentName: String? = nil, spec: AppAlertSpec? = nil, emails: [AppAlertEmail]? = nil, slackWebhooks: [AppAlertSlackWebhook]? = nil, phase: AppAlertPhase? = nil, progress: AppAlertProgress? = nil) {
         self.init()
         (self.id, self.componentName) = (id, componentName)
         (self.spec, self.emails) = (spec, emails)
@@ -89,20 +81,20 @@ public struct AppAlertProgressStepReason: Codable {
     }
 
     init() {
-        (code, message) = (nil, nil)
+        (self.code, self.message) = (nil, nil)
     }
 }
 
-public extension AppAlertProgressStepReason {
-    init(from decoder: Decoder) throws {
+extension AppAlertProgressStepReason {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        code = try container.sdkDecodeIfPresent(.code)
-        message = try container.sdkDecodeIfPresent(.message)
+        self.code = try container.sdkDecodeIfPresent(.code)
+        self.message = try container.sdkDecodeIfPresent(.message)
     }
 }
 
-public extension AppAlertProgressStepReason {
-    init(code: String? = nil, message: String? = nil) {
+extension AppAlertProgressStepReason {
+    public init(code: String? = nil, message: String? = nil) {
         self.init()
         (self.code, self.message) = (code, message)
     }
@@ -118,19 +110,19 @@ public struct AppAlertProgress: Codable {
     }
 
     init() {
-        steps = nil
+        self.steps = nil
     }
 }
 
-public extension AppAlertProgress {
-    init(from decoder: Decoder) throws {
+extension AppAlertProgress {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        steps = try container.sdkDecodeIfPresent(.steps)
+        self.steps = try container.sdkDecodeIfPresent(.steps)
     }
 }
 
-public extension AppAlertProgress {
-    init(steps: [AppAlertProgressStep]? = nil) {
+extension AppAlertProgress {
+    public init(steps: [AppAlertProgressStep]? = nil) {
         self.init()
         self.steps = steps
     }
@@ -162,35 +154,29 @@ public struct AppAlertProgressStep: Codable {
     }
 
     init() {
-        (name, status, startedAt, endedAt, reason) = (nil, nil, nil, nil, nil)
+        (self.name, self.status, self.startedAt, self.endedAt, self.reason) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension AppAlertProgressStep {
-    init(from decoder: Decoder) throws {
+extension AppAlertProgressStep {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        status = try container.sdkDecodeIfPresent(.status)
-        startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        endedAt = try container.sdkDecodeIfPresent(.endedAt)
-        reason = try container.sdkDecodeIfPresent(.reason)
-        if let value = startedAt {
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        self.endedAt = try container.sdkDecodeIfPresent(.endedAt)
+        self.reason = try container.sdkDecodeIfPresent(.reason)
+        if let value = self.startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
-        if let value = endedAt {
+        if let value = self.endedAt {
             try sdkValidateDateTime("ended_at", sdkWireString(value))
         }
     }
 }
 
-public extension AppAlertProgressStep {
-    init(
-        name: String? = nil,
-        status: AppAlertProgressStepStatus? = nil,
-        startedAt: Date? = nil,
-        endedAt: Date? = nil,
-        reason: AppAlertProgressStepReason? = nil
-    ) throws {
+extension AppAlertProgressStep {
+    public init(name: String? = nil, status: AppAlertProgressStepStatus? = nil, startedAt: Date? = nil, endedAt: Date? = nil, reason: AppAlertProgressStepReason? = nil) throws {
         self.init()
         (self.name, self.status) = (name, status)
         (self.startedAt, self.endedAt) = (startedAt, endedAt)
@@ -230,32 +216,26 @@ public struct AppAlertSpec: Codable {
     }
 
     init() {
-        (rule, disabled, self.operator, value, window) = (nil, nil, nil, nil, nil)
+        (self.rule, self.disabled, self.`operator`, self.value, self.window) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension AppAlertSpec {
-    init(from decoder: Decoder) throws {
+extension AppAlertSpec {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        rule = try container.sdkDecodeIfPresent(.rule)
-        disabled = try container.sdkDecodeIfPresent(.disabled)
-        self.operator = try container.sdkDecodeIfPresent(.operator)
-        value = try container.sdkDecodeIfPresent(.value)
-        window = try container.sdkDecodeIfPresent(.window)
+        self.rule = try container.sdkDecodeIfPresent(.rule)
+        self.disabled = try container.sdkDecodeIfPresent(.disabled)
+        self.`operator` = try container.sdkDecodeIfPresent(.`operator`)
+        self.value = try container.sdkDecodeIfPresent(.value)
+        self.window = try container.sdkDecodeIfPresent(.window)
     }
 }
 
-public extension AppAlertSpec {
-    init(
-        rule: AppAlertSpecRule? = nil,
-        disabled: Bool? = nil,
-        operator: AppAlertSpecOperator? = nil,
-        value: Double? = nil,
-        window: AppAlertSpecWindow? = nil
-    ) {
+extension AppAlertSpec {
+    public init(rule: AppAlertSpecRule? = nil, disabled: Bool? = nil, `operator`: AppAlertSpecOperator? = nil, value: Double? = nil, window: AppAlertSpecWindow? = nil) {
         self.init()
         (self.rule, self.disabled) = (rule, disabled)
-        (self.operator, self.value) = (`operator`, value)
+        (self.`operator`, self.value) = (`operator`, value)
         self.window = window
     }
 }
@@ -275,20 +255,20 @@ public struct AppAlertSlackWebhook: Codable {
     }
 
     init() {
-        (url, channel) = (nil, nil)
+        (self.url, self.channel) = (nil, nil)
     }
 }
 
-public extension AppAlertSlackWebhook {
-    init(from decoder: Decoder) throws {
+extension AppAlertSlackWebhook {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        url = try container.sdkDecodeIfPresent(.url)
-        channel = try container.sdkDecodeIfPresent(.channel)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.channel = try container.sdkDecodeIfPresent(.channel)
     }
 }
 
-public extension AppAlertSlackWebhook {
-    init(url: String? = nil, channel: String? = nil) {
+extension AppAlertSlackWebhook {
+    public init(url: String? = nil, channel: String? = nil) {
         self.init()
         (self.url, self.channel) = (url, channel)
     }
@@ -298,10 +278,7 @@ public extension AppAlertSlackWebhook {
 public struct AppAlertProgressStepStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let unknown = AppAlertProgressStepStatus(rawValue: "UNKNOWN")
     public static let pending = AppAlertProgressStepStatus(rawValue: "PENDING")
     public static let running = AppAlertProgressStepStatus(rawValue: "RUNNING")
@@ -310,7 +287,7 @@ public struct AppAlertProgressStepStatus: RawRepresentable, Hashable, Codable, S
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -323,17 +300,14 @@ public struct AppAlertProgressStepStatus: RawRepresentable, Hashable, Codable, S
 public struct AppAlertSpecOperator: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let unspecifiedOperator = AppAlertSpecOperator(rawValue: "UNSPECIFIED_OPERATOR")
     public static let greaterThan = AppAlertSpecOperator(rawValue: "GREATER_THAN")
     public static let lessThan = AppAlertSpecOperator(rawValue: "LESS_THAN")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -346,10 +320,7 @@ public struct AppAlertSpecOperator: RawRepresentable, Hashable, Codable, Sendabl
 public struct AppAlertSpecRule: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let unspecifiedRule = AppAlertSpecRule(rawValue: "UNSPECIFIED_RULE")
     public static let cpuUtilization = AppAlertSpecRule(rawValue: "CPU_UTILIZATION")
     public static let memUtilization = AppAlertSpecRule(rawValue: "MEM_UTILIZATION")
@@ -371,7 +342,7 @@ public struct AppAlertSpecRule: RawRepresentable, Hashable, Codable, Sendable, S
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -384,10 +355,7 @@ public struct AppAlertSpecRule: RawRepresentable, Hashable, Codable, Sendable, S
 public struct AppAlertPhase: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let unknown = AppAlertPhase(rawValue: "UNKNOWN")
     public static let pending = AppAlertPhase(rawValue: "PENDING")
     public static let configuring = AppAlertPhase(rawValue: "CONFIGURING")
@@ -396,7 +364,7 @@ public struct AppAlertPhase: RawRepresentable, Hashable, Codable, Sendable, SdkW
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -409,10 +377,7 @@ public struct AppAlertPhase: RawRepresentable, Hashable, Codable, Sendable, SdkW
 public struct AppAlertSpecWindow: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let unspecifiedWindow = AppAlertSpecWindow(rawValue: "UNSPECIFIED_WINDOW")
     public static let fiveMinutes = AppAlertSpecWindow(rawValue: "FIVE_MINUTES")
     public static let tenMinutes = AppAlertSpecWindow(rawValue: "TEN_MINUTES")
@@ -421,7 +386,7 @@ public struct AppAlertSpecWindow: RawRepresentable, Hashable, Codable, Sendable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

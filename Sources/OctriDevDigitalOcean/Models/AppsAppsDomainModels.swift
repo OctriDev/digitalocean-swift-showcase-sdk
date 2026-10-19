@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AppsAppsDomain domain models
+// AppsAppsDomain domain models
 /// Typed representation of the `AppsDomain` API schema.
 public struct AppsDomain: Codable {
     /// Optional `string` value serialized in the `id` wire field.
@@ -35,37 +35,29 @@ public struct AppsDomain: Codable {
     }
 
     init() {
-        (id, phase, progress, spec, validations) = (nil, nil, nil, nil, nil)
-        (rotateValidationRecords, certificateExpiresAt) = (nil, nil)
+        (self.id, self.phase, self.progress, self.spec, self.validations) = (nil, nil, nil, nil, nil)
+        (self.rotateValidationRecords, self.certificateExpiresAt) = (nil, nil)
     }
 }
 
-public extension AppsDomain {
-    init(from decoder: Decoder) throws {
+extension AppsDomain {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        phase = try container.sdkDecodeIfPresent(.phase)
-        progress = try container.sdkDecodeIfPresent(.progress)
-        spec = try container.sdkDecodeIfPresent(.spec)
-        validations = try container.sdkDecodeIfPresent(.validations)
-        rotateValidationRecords = try container.sdkDecodeIfPresent(.rotateValidationRecords)
-        certificateExpiresAt = try container.sdkDecodeIfPresent(.certificateExpiresAt)
-        if let value = certificateExpiresAt {
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.phase = try container.sdkDecodeIfPresent(.phase)
+        self.progress = try container.sdkDecodeIfPresent(.progress)
+        self.spec = try container.sdkDecodeIfPresent(.spec)
+        self.validations = try container.sdkDecodeIfPresent(.validations)
+        self.rotateValidationRecords = try container.sdkDecodeIfPresent(.rotateValidationRecords)
+        self.certificateExpiresAt = try container.sdkDecodeIfPresent(.certificateExpiresAt)
+        if let value = self.certificateExpiresAt {
             try sdkValidateDateTime("certificate_expires_at", sdkWireString(value))
         }
     }
 }
 
-public extension AppsDomain {
-    init(
-        id: String? = nil,
-        phase: AppsDomainPhase? = nil,
-        progress: AppsDomainProgress? = nil,
-        spec: AppDomainSpec? = nil,
-        validations: [AppDomainValidation]? = nil,
-        rotateValidationRecords: Bool? = nil,
-        certificateExpiresAt: Date? = nil
-    ) throws {
+extension AppsDomain {
+    public init(id: String? = nil, phase: AppsDomainPhase? = nil, progress: AppsDomainProgress? = nil, spec: AppDomainSpec? = nil, validations: [AppDomainValidation]? = nil, rotateValidationRecords: Bool? = nil, certificateExpiresAt: Date? = nil) throws {
         self.init()
         (self.id, self.phase) = (id, phase)
         (self.progress, self.spec) = (progress, spec)
@@ -87,19 +79,19 @@ public struct AppsDomainProgress: Codable {
     }
 
     init() {
-        steps = nil
+        self.steps = nil
     }
 }
 
-public extension AppsDomainProgress {
-    init(from decoder: Decoder) throws {
+extension AppsDomainProgress {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        steps = try container.sdkDecodeIfPresent(.steps)
+        self.steps = try container.sdkDecodeIfPresent(.steps)
     }
 }
 
-public extension AppsDomainProgress {
-    init(steps: [[String: JSONValue]]? = nil) {
+extension AppsDomainProgress {
+    public init(steps: [[String: JSONValue]]? = nil) {
         self.init()
         self.steps = steps
     }
@@ -109,10 +101,7 @@ public extension AppsDomainProgress {
 public struct AppsDomainPhase: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let unknown = AppsDomainPhase(rawValue: "UNKNOWN")
     public static let pending = AppsDomainPhase(rawValue: "PENDING")
     public static let configuring = AppsDomainPhase(rawValue: "CONFIGURING")
@@ -121,7 +110,7 @@ public struct AppsDomainPhase: RawRepresentable, Hashable, Codable, Sendable, Sd
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// ServerlessInferenceVideo domain models
+// ServerlessInferenceVideo domain models
 /// Download location for a completed video when a presigned URL is available.
 public struct VideoGenerationOutput: Codable {
     /// Presigned URL for the generated MP4.
@@ -15,22 +15,22 @@ public struct VideoGenerationOutput: Codable {
     }
 
     init() {
-        url = nil
+        self.url = nil
     }
 }
 
-public extension VideoGenerationOutput {
-    init(from decoder: Decoder) throws {
+extension VideoGenerationOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        url = try container.sdkDecodeIfPresent(.url)
-        if let value = url {
+        self.url = try container.sdkDecodeIfPresent(.url)
+        if let value = self.url {
             try sdkValidateUri("url", value)
         }
     }
 }
 
-public extension VideoGenerationOutput {
-    init(url: String? = nil) throws {
+extension VideoGenerationOutput {
+    public init(url: String? = nil) throws {
         self.init()
         self.url = url
         if let value = self.url {
@@ -76,50 +76,31 @@ public struct VideoGeneration: Codable {
         case xRequestId = "x_request_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VideoGeneration {
-    init(from decoder: Decoder) throws {
+extension VideoGeneration {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        status = try container.sdkDecodeRequired(.status)
-        object = try container.sdkDecodeIfPresent(.object)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        model = try container.sdkDecodeIfPresent(.model)
-        output = try container.sdkDecodeIfPresent(.output)
-        error = try container.sdkDecodeIfPresent(.error)
-        xRequestId = try container.sdkDecodeIfPresent(.xRequestId)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.model = try container.sdkDecodeIfPresent(.model)
+        self.output = try container.sdkDecodeIfPresent(.output)
+        self.error = try container.sdkDecodeIfPresent(.error)
+        self.xRequestId = try container.sdkDecodeIfPresent(.xRequestId)
     }
 }
 
-public extension VideoGeneration {
-    init(
-        id: String,
-        status: String,
-        object: String? = nil,
-        createdAt: Int? = nil,
-        model: String? = nil,
-        output: VideoGenerationOutput? = nil,
-        error: [String: JSONValue]? = nil,
-        xRequestId: String? = nil
-    ) {
+extension VideoGeneration {
+    public init(id: String, status: String, object: String? = nil, createdAt: Int? = nil, model: String? = nil, output: VideoGenerationOutput? = nil, error: [String: JSONValue]? = nil, xRequestId: String? = nil) {
         (self.id, self.status) = (id, status)
         (self.object, self.createdAt) = (object, createdAt)
         (self.model, self.output) = (model, output)

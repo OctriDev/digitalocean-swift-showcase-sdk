@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AppsAppSpec domain models
+// AppsAppSpec domain models
 /// The desired configuration of an application.
 public struct AppSpec: Codable {
     /// The name of the app. Must be unique across all apps in the same account.
@@ -66,61 +66,38 @@ public struct AppSpec: Codable {
         case vpc
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AppSpec {
-    init(from decoder: Decoder) throws {
+extension AppSpec {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        region = try container.sdkDecodeIfPresent(.region)
-        disableEdgeCache = try container.sdkDecodeIfPresent(.disableEdgeCache)
-        disableEmailObfuscation = try container.sdkDecodeIfPresent(.disableEmailObfuscation)
-        enhancedThreatControlEnabled = try container.sdkDecodeIfPresent(.enhancedThreatControlEnabled)
-        domains = try container.sdkDecodeIfPresent(.domains)
-        services = try container.sdkDecodeIfPresent(.services)
-        staticSites = try container.sdkDecodeIfPresent(.staticSites)
-        jobs = try container.sdkDecodeIfPresent(.jobs)
-        workers = try container.sdkDecodeIfPresent(.workers)
-        functions = try container.sdkDecodeIfPresent(.functions)
-        databases = try container.sdkDecodeIfPresent(.databases)
-        ingress = try container.sdkDecodeIfPresent(.ingress)
-        egress = try container.sdkDecodeIfPresent(.egress)
-        maintenance = try container.sdkDecodeIfPresent(.maintenance)
-        vpc = try container.sdkDecodeIfPresent(.vpc)
-        try validateLength("name", name, min: 2, max: 32)
-        try sdkValidatePattern("name", name, sdkPattern3c600f7d20be)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.disableEdgeCache = try container.sdkDecodeIfPresent(.disableEdgeCache)
+        self.disableEmailObfuscation = try container.sdkDecodeIfPresent(.disableEmailObfuscation)
+        self.enhancedThreatControlEnabled = try container.sdkDecodeIfPresent(.enhancedThreatControlEnabled)
+        self.domains = try container.sdkDecodeIfPresent(.domains)
+        self.services = try container.sdkDecodeIfPresent(.services)
+        self.staticSites = try container.sdkDecodeIfPresent(.staticSites)
+        self.jobs = try container.sdkDecodeIfPresent(.jobs)
+        self.workers = try container.sdkDecodeIfPresent(.workers)
+        self.functions = try container.sdkDecodeIfPresent(.functions)
+        self.databases = try container.sdkDecodeIfPresent(.databases)
+        self.ingress = try container.sdkDecodeIfPresent(.ingress)
+        self.egress = try container.sdkDecodeIfPresent(.egress)
+        self.maintenance = try container.sdkDecodeIfPresent(.maintenance)
+        self.vpc = try container.sdkDecodeIfPresent(.vpc)
+            try validateLength("name", self.name, min: 2, max: 32)
+            try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
     }
 }
 
-public extension AppSpec {
-    init(
-        name: String,
-        region: AppSpecRegion? = nil,
-        disableEdgeCache: Bool? = nil,
-        disableEmailObfuscation: Bool? = nil,
-        enhancedThreatControlEnabled: Bool? = nil,
-        domains: [AppDomainSpec]? = nil,
-        services: [AppServiceSpec]? = nil,
-        staticSites: [AppStaticSiteSpec]? = nil,
-        jobs: [AppJobSpec]? = nil,
-        workers: [AppWorkerSpec]? = nil,
-        functions: [AppFunctionsSpec]? = nil,
-        databases: [AppDatabaseSpec]? = nil,
-        ingress: AppIngressSpec? = nil,
-        egress: AppEgressSpec? = nil,
-        maintenance: AppMaintenanceSpec? = nil,
-        vpc: AppsVpc? = nil
-    ) throws {
+extension AppSpec {
+    public init(name: String, region: AppSpecRegion? = nil, disableEdgeCache: Bool? = nil, disableEmailObfuscation: Bool? = nil, enhancedThreatControlEnabled: Bool? = nil, domains: [AppDomainSpec]? = nil, services: [AppServiceSpec]? = nil, staticSites: [AppStaticSiteSpec]? = nil, jobs: [AppJobSpec]? = nil, workers: [AppWorkerSpec]? = nil, functions: [AppFunctionsSpec]? = nil, databases: [AppDatabaseSpec]? = nil, ingress: AppIngressSpec? = nil, egress: AppEgressSpec? = nil, maintenance: AppMaintenanceSpec? = nil, vpc: AppsVpc? = nil) throws {
         (self.name, self.region) = (name, region)
         (self.disableEdgeCache, self.disableEmailObfuscation) = (disableEdgeCache, disableEmailObfuscation)
         (self.enhancedThreatControlEnabled, self.domains) = (enhancedThreatControlEnabled, domains)
@@ -129,8 +106,8 @@ public extension AppSpec {
         (self.functions, self.databases) = (functions, databases)
         (self.ingress, self.egress) = (ingress, egress)
         (self.maintenance, self.vpc) = (maintenance, vpc)
-        try validateLength("name", self.name, min: 2, max: 32)
-        try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
+            try validateLength("name", self.name, min: 2, max: 32)
+            try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
     }
 }
 
@@ -193,59 +170,37 @@ public struct AppSpecRequest: Codable {
         case maintenance
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AppSpecRequest {
-    init(from decoder: Decoder) throws {
+extension AppSpecRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        region = try container.sdkDecodeIfPresent(.region)
-        disableEdgeCache = try container.sdkDecodeIfPresent(.disableEdgeCache)
-        disableEmailObfuscation = try container.sdkDecodeIfPresent(.disableEmailObfuscation)
-        enhancedThreatControlEnabled = try container.sdkDecodeIfPresent(.enhancedThreatControlEnabled)
-        domains = try container.sdkDecodeIfPresent(.domains)
-        services = try container.sdkDecodeIfPresent(.services)
-        staticSites = try container.sdkDecodeIfPresent(.staticSites)
-        jobs = try container.sdkDecodeIfPresent(.jobs)
-        workers = try container.sdkDecodeIfPresent(.workers)
-        functions = try container.sdkDecodeIfPresent(.functions)
-        databases = try container.sdkDecodeIfPresent(.databases)
-        ingress = try container.sdkDecodeIfPresent(.ingress)
-        egress = try container.sdkDecodeIfPresent(.egress)
-        maintenance = try container.sdkDecodeIfPresent(.maintenance)
-        try validateLength("name", name, min: 2, max: 32)
-        try sdkValidatePattern("name", name, sdkPattern3c600f7d20be)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.disableEdgeCache = try container.sdkDecodeIfPresent(.disableEdgeCache)
+        self.disableEmailObfuscation = try container.sdkDecodeIfPresent(.disableEmailObfuscation)
+        self.enhancedThreatControlEnabled = try container.sdkDecodeIfPresent(.enhancedThreatControlEnabled)
+        self.domains = try container.sdkDecodeIfPresent(.domains)
+        self.services = try container.sdkDecodeIfPresent(.services)
+        self.staticSites = try container.sdkDecodeIfPresent(.staticSites)
+        self.jobs = try container.sdkDecodeIfPresent(.jobs)
+        self.workers = try container.sdkDecodeIfPresent(.workers)
+        self.functions = try container.sdkDecodeIfPresent(.functions)
+        self.databases = try container.sdkDecodeIfPresent(.databases)
+        self.ingress = try container.sdkDecodeIfPresent(.ingress)
+        self.egress = try container.sdkDecodeIfPresent(.egress)
+        self.maintenance = try container.sdkDecodeIfPresent(.maintenance)
+            try validateLength("name", self.name, min: 2, max: 32)
+            try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
     }
 }
 
-public extension AppSpecRequest {
-    init(
-        name: String,
-        region: AppSpecRequestRegion? = nil,
-        disableEdgeCache: Bool? = nil,
-        disableEmailObfuscation: Bool? = nil,
-        enhancedThreatControlEnabled: Bool? = nil,
-        domains: [AppDomainSpec]? = nil,
-        services: [AppServiceSpec]? = nil,
-        staticSites: [AppStaticSiteSpec]? = nil,
-        jobs: [AppJobSpec]? = nil,
-        workers: [AppWorkerSpec]? = nil,
-        functions: [AppFunctionsSpec]? = nil,
-        databases: [AppDatabaseSpec]? = nil,
-        ingress: AppIngressSpec? = nil,
-        egress: AppEgressSpec? = nil,
-        maintenance: AppMaintenanceSpec? = nil
-    ) throws {
+extension AppSpecRequest {
+    public init(name: String, region: AppSpecRequestRegion? = nil, disableEdgeCache: Bool? = nil, disableEmailObfuscation: Bool? = nil, enhancedThreatControlEnabled: Bool? = nil, domains: [AppDomainSpec]? = nil, services: [AppServiceSpec]? = nil, staticSites: [AppStaticSiteSpec]? = nil, jobs: [AppJobSpec]? = nil, workers: [AppWorkerSpec]? = nil, functions: [AppFunctionsSpec]? = nil, databases: [AppDatabaseSpec]? = nil, ingress: AppIngressSpec? = nil, egress: AppEgressSpec? = nil, maintenance: AppMaintenanceSpec? = nil) throws {
         (self.name, self.region) = (name, region)
         (self.disableEdgeCache, self.disableEmailObfuscation) = (disableEdgeCache, disableEmailObfuscation)
         (self.enhancedThreatControlEnabled, self.domains) = (enhancedThreatControlEnabled, domains)
@@ -254,8 +209,8 @@ public extension AppSpecRequest {
         (self.functions, self.databases) = (functions, databases)
         (self.ingress, self.egress) = (ingress, egress)
         self.maintenance = maintenance
-        try validateLength("name", self.name, min: 2, max: 32)
-        try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
+            try validateLength("name", self.name, min: 2, max: 32)
+            try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
     }
 }
 
@@ -263,10 +218,7 @@ public extension AppSpecRequest {
 public struct AppSpecRequestRegion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let atl = AppSpecRequestRegion(rawValue: "atl")
     public static let nyc = AppSpecRequestRegion(rawValue: "nyc")
     public static let sfo = AppSpecRequestRegion(rawValue: "sfo")
@@ -280,7 +232,7 @@ public struct AppSpecRequestRegion: RawRepresentable, Hashable, Codable, Sendabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -293,10 +245,7 @@ public struct AppSpecRequestRegion: RawRepresentable, Hashable, Codable, Sendabl
 public struct AppSpecRegion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let atl = AppSpecRegion(rawValue: "atl")
     public static let nyc = AppSpecRegion(rawValue: "nyc")
     public static let sfo = AppSpecRegion(rawValue: "sfo")
@@ -310,7 +259,7 @@ public struct AppSpecRegion: RawRepresentable, Hashable, Codable, Sendable, SdkW
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

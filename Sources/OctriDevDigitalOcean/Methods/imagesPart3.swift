@@ -6,37 +6,18 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ImagesMethods {
+extension ImagesMethods {
     /// To retrieve information about an image, send a `GET` request to `/v2/images/$IDENTIFIER`.
     ///
     /// - Parameters:
     /// - imageId: A unique number (id) or string (slug) used to identify and
     ///   reference a specific image. **Public** images can be identified by image
     ///   `id` or `slug`. **Private** images *must* be identified by image `id`.
-    static func imagesGet(
-        config: ClientConfig,
-        imageId: ImagesGetParameter,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExistingImage {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/images/", sdkEncodePathSegment(sdkWireString(imageId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "images_get",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func imagesGet(config: ClientConfig, imageId: ImagesGetParameter, requestOptions: RequestOptions? = nil) async throws -> ExistingImage {
+        return try (await sdkRequest("GET", ["/v2/images/", sdkEncodePathSegment(sdkWireString(imageId))].joined(), config: config, decoder: .json, operationId: "images_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To update an image, send a `PUT` request to `/v2/images/$IMAGE_ID`. Set the `name` attribute to the new value
-    /// you would like to use. For custom images, the `description` and `distribution` attributes may also be updated.
+    /// To update an image, send a `PUT` request to `/v2/images/$IMAGE_ID`. Set the `name` attribute to the new value you would like to use. For custom images, the `description` and `distribution` attributes may also be updated.
     ///
     /// - Parameters:
     /// - imageId: A unique number that can be used to identify and reference a
@@ -50,31 +31,9 @@ public extension ImagesMethods {
     ///   Linux`, `Ubuntu`, and `Unknown`. Any other value will be accepted but
     ///   ignored, and `Unknown` will be used in its place.
     /// - description: An optional free-form text field to describe an image.
-    static func imagesUpdate(
-        config: ClientConfig,
-        imageId: Int,
-        name: ImageName? = nil,
-        distribution: Distribution? = nil,
-        description: ImageDescription? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> UpdatedImage {
+    public static func imagesUpdate(config: ClientConfig, imageId: Int, name: ImageName? = nil, distribution: Distribution? = nil, description: ImageDescription? = nil, requestOptions: RequestOptions? = nil) async throws -> UpdatedImage {
         let requestBody = ImagesUpdateRequestBody(name: name, distribution: distribution, description: description)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/images/", sdkEncodePathSegment(sdkWireString(imageId))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "images_update",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/images/", sdkEncodePathSegment(sdkWireString(imageId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "images_update", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

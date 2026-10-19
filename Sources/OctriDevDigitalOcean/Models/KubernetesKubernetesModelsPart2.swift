@@ -3,39 +3,28 @@
 
 import Foundation
 
-/// KubernetesKubernetes domain models
-public extension KubernetesNodePoolBase {
-    init(from decoder: Decoder) throws {
+// KubernetesKubernetes domain models
+extension KubernetesNodePoolBase {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        count = try container.sdkDecodeIfPresent(.count)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        labels = try container.sdkDecodeIfPresent(.labels)
-        taints = try container.sdkDecodeIfPresent(.taints)
-        autoScale = try container.sdkDecodeIfPresent(.autoScale)
-        minNodes = try container.sdkDecodeIfPresent(.minNodes)
-        maxNodes = try container.sdkDecodeIfPresent(.maxNodes)
-        nodes = try container.sdkDecodeIfPresent(.nodes)
-        if let value = id {
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.count = try container.sdkDecodeIfPresent(.count)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.labels = try container.sdkDecodeIfPresent(.labels)
+        self.taints = try container.sdkDecodeIfPresent(.taints)
+        self.autoScale = try container.sdkDecodeIfPresent(.autoScale)
+        self.minNodes = try container.sdkDecodeIfPresent(.minNodes)
+        self.maxNodes = try container.sdkDecodeIfPresent(.maxNodes)
+        self.nodes = try container.sdkDecodeIfPresent(.nodes)
+        if let value = self.id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-public extension KubernetesNodePoolBase {
-    init(
-        id: String? = nil,
-        name: String? = nil,
-        count: Int? = nil,
-        tags: [String]? = nil,
-        labels: [String: JSONValue]? = nil,
-        taints: [KubernetesNodePoolTaint]? = nil,
-        autoScale: Bool? = nil,
-        minNodes: Int? = nil,
-        maxNodes: Int? = nil,
-        nodes: [Node]? = nil
-    ) throws {
+extension KubernetesNodePoolBase {
+    public init(id: String? = nil, name: String? = nil, count: Int? = nil, tags: [String]? = nil, labels: [String: JSONValue]? = nil, taints: [KubernetesNodePoolTaint]? = nil, autoScale: Bool? = nil, minNodes: Int? = nil, maxNodes: Int? = nil, nodes: [Node]? = nil) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.count, self.tags) = (count, tags)
@@ -72,21 +61,21 @@ public struct KubernetesNodePoolTaint: Codable {
     }
 
     init() {
-        (key, value, effect) = (nil, nil, nil)
+        (self.key, self.value, self.effect) = (nil, nil, nil)
     }
 }
 
-public extension KubernetesNodePoolTaint {
-    init(from decoder: Decoder) throws {
+extension KubernetesNodePoolTaint {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        key = try container.sdkDecodeIfPresent(.key)
-        value = try container.sdkDecodeIfPresent(.value)
-        effect = try container.sdkDecodeIfPresent(.effect)
+        self.key = try container.sdkDecodeIfPresent(.key)
+        self.value = try container.sdkDecodeIfPresent(.value)
+        self.effect = try container.sdkDecodeIfPresent(.effect)
     }
 }
 
-public extension KubernetesNodePoolTaint {
-    init(key: String? = nil, value: String? = nil, effect: KubernetesNodePoolTaintEffect? = nil) {
+extension KubernetesNodePoolTaint {
+    public init(key: String? = nil, value: String? = nil, effect: KubernetesNodePoolTaintEffect? = nil) {
         self.init()
         (self.key, self.value) = (key, value)
         self.effect = effect
@@ -104,19 +93,19 @@ public struct KubernetesNodePoolSize: Codable {
     }
 
     init() {
-        size = nil
+        self.size = nil
     }
 }
 
-public extension KubernetesNodePoolSize {
-    init(from decoder: Decoder) throws {
+extension KubernetesNodePoolSize {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        size = try container.sdkDecodeIfPresent(.size)
+        self.size = try container.sdkDecodeIfPresent(.size)
     }
 }
 
-public extension KubernetesNodePoolSize {
-    init(size: String? = nil) {
+extension KubernetesNodePoolSize {
+    public init(size: String? = nil) {
         self.init()
         self.size = size
     }
@@ -181,68 +170,41 @@ public struct KubernetesNodePool: Codable {
         case gpuPartitionMode = "gpu_partition_mode"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension KubernetesNodePool {
-    init(from decoder: Decoder) throws {
+extension KubernetesNodePool {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.size) else {
-            throw SdkValidationError(
-                field: "size",
-                code: "required",
-                message: "Validation failed for 'size': value is required"
-            )
+            throw SdkValidationError(field: "size", code: "required", message: "Validation failed for 'size': value is required")
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.count) else {
-            throw SdkValidationError(
-                field: "count",
-                code: "required",
-                message: "Validation failed for 'count': value is required"
-            )
+            throw SdkValidationError(field: "count", code: "required", message: "Validation failed for 'count': value is required")
         }
-        size = try container.sdkDecodeRequired(.size)
-        name = try container.sdkDecodeRequired(.name)
-        count = try container.sdkDecodeRequired(.count)
-        id = try container.sdkDecodeIfPresent(.id)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        labels = try container.sdkDecodeIfPresent(.labels)
-        taints = try container.sdkDecodeIfPresent(.taints)
-        autoScale = try container.sdkDecodeIfPresent(.autoScale)
-        minNodes = try container.sdkDecodeIfPresent(.minNodes)
-        maxNodes = try container.sdkDecodeIfPresent(.maxNodes)
-        nodes = try container.sdkDecodeIfPresent(.nodes)
-        gpuPartitionMode = try container.sdkDecodeIfPresent(.gpuPartitionMode)
-        if let value = id {
+        self.size = try container.sdkDecodeRequired(.size)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.count = try container.sdkDecodeRequired(.count)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.labels = try container.sdkDecodeIfPresent(.labels)
+        self.taints = try container.sdkDecodeIfPresent(.taints)
+        self.autoScale = try container.sdkDecodeIfPresent(.autoScale)
+        self.minNodes = try container.sdkDecodeIfPresent(.minNodes)
+        self.maxNodes = try container.sdkDecodeIfPresent(.maxNodes)
+        self.nodes = try container.sdkDecodeIfPresent(.nodes)
+        self.gpuPartitionMode = try container.sdkDecodeIfPresent(.gpuPartitionMode)
+        if let value = self.id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-public extension KubernetesNodePool {
-    init(
-        size: String,
-        name: String,
-        count: Int,
-        id: String? = nil,
-        tags: [String]? = nil,
-        labels: [String: JSONValue]? = nil,
-        taints: [KubernetesNodePoolTaint]? = nil,
-        autoScale: Bool? = nil,
-        minNodes: Int? = nil,
-        maxNodes: Int? = nil,
-        nodes: [Node]? = nil,
-        gpuPartitionMode: KubernetesNodePoolGpuPartitionGpuPartitionMode? = nil
-    ) throws {
+extension KubernetesNodePool {
+    public init(size: String, name: String, count: Int, id: String? = nil, tags: [String]? = nil, labels: [String: JSONValue]? = nil, taints: [KubernetesNodePoolTaint]? = nil, autoScale: Bool? = nil, minNodes: Int? = nil, maxNodes: Int? = nil, nodes: [Node]? = nil, gpuPartitionMode: KubernetesNodePoolGpuPartitionGpuPartitionMode? = nil) throws {
         (self.size, self.name) = (size, name)
         (self.count, self.id) = (count, id)
         (self.tags, self.labels) = (tags, labels)
@@ -275,21 +237,21 @@ public struct KubernetesVersion: Codable {
     }
 
     init() {
-        (slug, kubernetesVersion, supportedFeatures) = (nil, nil, nil)
+        (self.slug, self.kubernetesVersion, self.supportedFeatures) = (nil, nil, nil)
     }
 }
 
-public extension KubernetesVersion {
-    init(from decoder: Decoder) throws {
+extension KubernetesVersion {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        slug = try container.sdkDecodeIfPresent(.slug)
-        kubernetesVersion = try container.sdkDecodeIfPresent(.kubernetesVersion)
-        supportedFeatures = try container.sdkDecodeIfPresent(.supportedFeatures)
+        self.slug = try container.sdkDecodeIfPresent(.slug)
+        self.kubernetesVersion = try container.sdkDecodeIfPresent(.kubernetesVersion)
+        self.supportedFeatures = try container.sdkDecodeIfPresent(.supportedFeatures)
     }
 }
 
-public extension KubernetesVersion {
-    init(slug: String? = nil, kubernetesVersion: String? = nil, supportedFeatures: [String]? = nil) {
+extension KubernetesVersion {
+    public init(slug: String? = nil, kubernetesVersion: String? = nil, supportedFeatures: [String]? = nil) {
         self.init()
         (self.slug, self.kubernetesVersion) = (slug, kubernetesVersion)
         self.supportedFeatures = supportedFeatures
@@ -298,22 +260,16 @@ public extension KubernetesVersion {
 
 /// The AMD GPU partition mode for this node pool. Only applicable to AMD GPU sizes that support partitioning.
 /// Immutable after the node pool is created. When omitted, the GPUs in the pool are left unpartitioned.
-public struct KubernetesNodePoolGpuPartitionGpuPartitionMode: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct KubernetesNodePoolGpuPartitionGpuPartitionMode: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let amdPartitionModeSpxNps1 =
-        KubernetesNodePoolGpuPartitionGpuPartitionMode(rawValue: "AMD_PARTITION_MODE_SPX_NPS1")
-    public static let amdPartitionModeDpxNps2 =
-        KubernetesNodePoolGpuPartitionGpuPartitionMode(rawValue: "AMD_PARTITION_MODE_DPX_NPS2")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let amdPartitionModeSpxNps1 = KubernetesNodePoolGpuPartitionGpuPartitionMode(rawValue: "AMD_PARTITION_MODE_SPX_NPS1")
+    public static let amdPartitionModeDpxNps2 = KubernetesNodePoolGpuPartitionGpuPartitionMode(rawValue: "AMD_PARTITION_MODE_DPX_NPS2")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -327,17 +283,14 @@ public struct KubernetesNodePoolGpuPartitionGpuPartitionMode: RawRepresentable, 
 public struct KubernetesNodePoolTaintEffect: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let noSchedule = KubernetesNodePoolTaintEffect(rawValue: "NoSchedule")
     public static let preferNoSchedule = KubernetesNodePoolTaintEffect(rawValue: "PreferNoSchedule")
     public static let noExecute = KubernetesNodePoolTaintEffect(rawValue: "NoExecute")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

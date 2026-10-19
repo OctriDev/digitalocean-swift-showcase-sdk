@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// VectorDatabases domain models
+// VectorDatabases domain models
 /// Typed representation of the `VectordbUpdateVectorDBTagsResponse` API schema.
 public struct VectordbUpdateVectorDBTagsResponse: Codable {
     /// VectorDB represents a provisioned vector database instance.
@@ -14,19 +14,19 @@ public struct VectordbUpdateVectorDBTagsResponse: Codable {
     }
 
     init() {
-        vectorDb = nil
+        self.vectorDb = nil
     }
 }
 
-public extension VectordbUpdateVectorDBTagsResponse {
-    init(from decoder: Decoder) throws {
+extension VectordbUpdateVectorDBTagsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        vectorDb = try container.sdkDecodeIfPresent(.vectorDb)
+        self.vectorDb = try container.sdkDecodeIfPresent(.vectorDb)
     }
 }
 
-public extension VectordbUpdateVectorDBTagsResponse {
-    init(vectorDb: VectordbVectorDB? = nil) {
+extension VectordbUpdateVectorDBTagsResponse {
+    public init(vectorDb: VectordbVectorDB? = nil) {
         self.init()
         self.vectorDb = vectorDb
     }
@@ -47,20 +47,20 @@ public struct VectordbVectorDBEndpoints: Codable {
     }
 
     init() {
-        (grpc, http) = (nil, nil)
+        (self.grpc, self.http) = (nil, nil)
     }
 }
 
-public extension VectordbVectorDBEndpoints {
-    init(from decoder: Decoder) throws {
+extension VectordbVectorDBEndpoints {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        grpc = try container.sdkDecodeIfPresent(.grpc)
-        http = try container.sdkDecodeIfPresent(.http)
+        self.grpc = try container.sdkDecodeIfPresent(.grpc)
+        self.http = try container.sdkDecodeIfPresent(.http)
     }
 }
 
-public extension VectordbVectorDBEndpoints {
-    init(grpc: String? = nil, http: String? = nil) {
+extension VectordbVectorDBEndpoints {
+    public init(grpc: String? = nil, http: String? = nil) {
         self.init()
         (self.grpc, self.http) = (grpc, http)
     }
@@ -93,29 +93,23 @@ public struct VectordbCreateVectorDBRequest: Codable {
     }
 
     init() {
-        (name, projectId, region, size, tags) = (nil, nil, nil, nil, nil)
+        (self.name, self.projectId, self.region, self.size, self.tags) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension VectordbCreateVectorDBRequest {
-    init(from decoder: Decoder) throws {
+extension VectordbCreateVectorDBRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        projectId = try container.sdkDecodeIfPresent(.projectId)
-        region = try container.sdkDecodeIfPresent(.region)
-        size = try container.sdkDecodeIfPresent(.size)
-        tags = try container.sdkDecodeIfPresent(.tags)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.projectId = try container.sdkDecodeIfPresent(.projectId)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.size = try container.sdkDecodeIfPresent(.size)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-public extension VectordbCreateVectorDBRequest {
-    init(
-        name: String? = nil,
-        projectId: String? = nil,
-        region: String? = nil,
-        size: String? = nil,
-        tags: [String]? = nil
-    ) {
+extension VectordbCreateVectorDBRequest {
+    public init(name: String? = nil, projectId: String? = nil, region: String? = nil, size: String? = nil, tags: [String]? = nil) {
         self.init()
         (self.name, self.projectId) = (name, projectId)
         (self.region, self.size) = (region, size)
@@ -141,21 +135,21 @@ public struct VectordbUpdateVectorDBRequest: Codable {
     }
 
     init() {
-        (config, id, projectId) = (nil, nil, nil)
+        (self.config, self.id, self.projectId) = (nil, nil, nil)
     }
 }
 
-public extension VectordbUpdateVectorDBRequest {
-    init(from decoder: Decoder) throws {
+extension VectordbUpdateVectorDBRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        config = try container.sdkDecodeIfPresent(.config)
-        id = try container.sdkDecodeIfPresent(.id)
-        projectId = try container.sdkDecodeIfPresent(.projectId)
+        self.config = try container.sdkDecodeIfPresent(.config)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.projectId = try container.sdkDecodeIfPresent(.projectId)
     }
 }
 
-public extension VectordbUpdateVectorDBRequest {
-    init(config: VectordbVectorDBConfig? = nil, id: String? = nil, projectId: String? = nil) {
+extension VectordbUpdateVectorDBRequest {
+    public init(config: VectordbVectorDBConfig? = nil, id: String? = nil, projectId: String? = nil) {
         self.init()
         (self.config, self.id) = (config, id)
         self.projectId = projectId
@@ -176,20 +170,20 @@ public struct VectordbListVectorDBsResponse: Codable {
     }
 
     init() {
-        (total, vectorDbs) = (nil, nil)
+        (self.total, self.vectorDbs) = (nil, nil)
     }
 }
 
-public extension VectordbListVectorDBsResponse {
-    init(from decoder: Decoder) throws {
+extension VectordbListVectorDBsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        total = try container.sdkDecodeIfPresent(.total)
-        vectorDbs = try container.sdkDecodeIfPresent(.vectorDbs)
+        self.total = try container.sdkDecodeIfPresent(.total)
+        self.vectorDbs = try container.sdkDecodeIfPresent(.vectorDbs)
     }
 }
 
-public extension VectordbListVectorDBsResponse {
-    init(total: Int? = nil, vectorDbs: [VectordbVectorDB]? = nil) {
+extension VectordbListVectorDBsResponse {
+    public init(total: Int? = nil, vectorDbs: [VectordbVectorDB]? = nil) {
         self.init()
         (self.total, self.vectorDbs) = (total, vectorDbs)
     }
@@ -205,19 +199,19 @@ public struct VectordbResizeVectorDBResponse: Codable {
     }
 
     init() {
-        vectorDb = nil
+        self.vectorDb = nil
     }
 }
 
-public extension VectordbResizeVectorDBResponse {
-    init(from decoder: Decoder) throws {
+extension VectordbResizeVectorDBResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        vectorDb = try container.sdkDecodeIfPresent(.vectorDb)
+        self.vectorDb = try container.sdkDecodeIfPresent(.vectorDb)
     }
 }
 
-public extension VectordbResizeVectorDBResponse {
-    init(vectorDb: VectordbVectorDB? = nil) {
+extension VectordbResizeVectorDBResponse {
+    public init(vectorDb: VectordbVectorDB? = nil) {
         self.init()
         self.vectorDb = vectorDb
     }
@@ -233,19 +227,19 @@ public struct VectordbGetVectorDBResponse: Codable {
     }
 
     init() {
-        vectorDb = nil
+        self.vectorDb = nil
     }
 }
 
-public extension VectordbGetVectorDBResponse {
-    init(from decoder: Decoder) throws {
+extension VectordbGetVectorDBResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        vectorDb = try container.sdkDecodeIfPresent(.vectorDb)
+        self.vectorDb = try container.sdkDecodeIfPresent(.vectorDb)
     }
 }
 
-public extension VectordbGetVectorDBResponse {
-    init(vectorDb: VectordbVectorDB? = nil) {
+extension VectordbGetVectorDBResponse {
+    public init(vectorDb: VectordbVectorDB? = nil) {
         self.init()
         self.vectorDb = vectorDb
     }
@@ -266,20 +260,20 @@ public struct VectordbGetVectorDBAdminCredentialsResponse: Codable {
     }
 
     init() {
-        (apiToken, userId) = (nil, nil)
+        (self.apiToken, self.userId) = (nil, nil)
     }
 }
 
-public extension VectordbGetVectorDBAdminCredentialsResponse {
-    init(from decoder: Decoder) throws {
+extension VectordbGetVectorDBAdminCredentialsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apiToken = try container.sdkDecodeIfPresent(.apiToken)
-        userId = try container.sdkDecodeIfPresent(.userId)
+        self.apiToken = try container.sdkDecodeIfPresent(.apiToken)
+        self.userId = try container.sdkDecodeIfPresent(.userId)
     }
 }
 
-public extension VectordbGetVectorDBAdminCredentialsResponse {
-    init(apiToken: String? = nil, userId: String? = nil) {
+extension VectordbGetVectorDBAdminCredentialsResponse {
+    public init(apiToken: String? = nil, userId: String? = nil) {
         self.init()
         (self.apiToken, self.userId) = (apiToken, userId)
     }
@@ -300,20 +294,20 @@ public struct VectordbUpdateVectorDBTagsRequest: Codable {
     }
 
     init() {
-        (id, tags) = (nil, nil)
+        (self.id, self.tags) = (nil, nil)
     }
 }
 
-public extension VectordbUpdateVectorDBTagsRequest {
-    init(from decoder: Decoder) throws {
+extension VectordbUpdateVectorDBTagsRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        tags = try container.sdkDecodeIfPresent(.tags)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-public extension VectordbUpdateVectorDBTagsRequest {
-    init(id: String? = nil, tags: [String]? = nil) {
+extension VectordbUpdateVectorDBTagsRequest {
+    public init(id: String? = nil, tags: [String]? = nil) {
         self.init()
         (self.id, self.tags) = (id, tags)
     }
@@ -383,55 +377,40 @@ public struct VectordbVectorDB: Codable {
     }
 
     init() {
-        (config, createdAt, endpoints, forkedFromId, id) = (nil, nil, nil, nil, nil)
-        (lastRestoreId, name, ownerUuid, projectId, region) = (nil, nil, nil, nil, nil)
-        (size, status, tags, updatedAt) = (nil, nil, nil, nil)
+        (self.config, self.createdAt, self.endpoints, self.forkedFromId, self.id) = (nil, nil, nil, nil, nil)
+        (self.lastRestoreId, self.name, self.ownerUuid, self.projectId, self.region) = (nil, nil, nil, nil, nil)
+        (self.size, self.status, self.tags, self.updatedAt) = (nil, nil, nil, nil)
     }
 }
 
-public extension VectordbVectorDB {
-    init(from decoder: Decoder) throws {
+extension VectordbVectorDB {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        config = try container.sdkDecodeIfPresent(.config)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        endpoints = try container.sdkDecodeIfPresent(.endpoints)
-        forkedFromId = try container.sdkDecodeIfPresent(.forkedFromId)
-        id = try container.sdkDecodeIfPresent(.id)
-        lastRestoreId = try container.sdkDecodeIfPresent(.lastRestoreId)
-        name = try container.sdkDecodeIfPresent(.name)
-        ownerUuid = try container.sdkDecodeIfPresent(.ownerUuid)
-        projectId = try container.sdkDecodeIfPresent(.projectId)
-        region = try container.sdkDecodeIfPresent(.region)
-        size = try container.sdkDecodeIfPresent(.size)
-        status = try container.sdkDecodeIfPresent(.status)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = createdAt {
+        self.config = try container.sdkDecodeIfPresent(.config)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.endpoints = try container.sdkDecodeIfPresent(.endpoints)
+        self.forkedFromId = try container.sdkDecodeIfPresent(.forkedFromId)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.lastRestoreId = try container.sdkDecodeIfPresent(.lastRestoreId)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.ownerUuid = try container.sdkDecodeIfPresent(.ownerUuid)
+        self.projectId = try container.sdkDecodeIfPresent(.projectId)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.size = try container.sdkDecodeIfPresent(.size)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension VectordbVectorDB {
-    init(
-        config: VectordbVectorDBConfig? = nil,
-        createdAt: Date? = nil,
-        endpoints: VectordbVectorDBEndpoints? = nil,
-        forkedFromId: String? = nil,
-        id: String? = nil,
-        lastRestoreId: String? = nil,
-        name: String? = nil,
-        ownerUuid: String? = nil,
-        projectId: String? = nil,
-        region: String? = nil,
-        size: String? = nil,
-        status: String? = nil,
-        tags: [String]? = nil,
-        updatedAt: Date? = nil
-    ) throws {
+extension VectordbVectorDB {
+    public init(config: VectordbVectorDBConfig? = nil, createdAt: Date? = nil, endpoints: VectordbVectorDBEndpoints? = nil, forkedFromId: String? = nil, id: String? = nil, lastRestoreId: String? = nil, name: String? = nil, ownerUuid: String? = nil, projectId: String? = nil, region: String? = nil, size: String? = nil, status: String? = nil, tags: [String]? = nil, updatedAt: Date? = nil) throws {
         self.init()
         (self.config, self.createdAt) = (config, createdAt)
         (self.endpoints, self.forkedFromId) = (endpoints, forkedFromId)
@@ -468,21 +447,21 @@ public struct VectordbVectorDBConfig: Codable {
     }
 
     init() {
-        (defaultQuantization, enableAutoSchema, weaviateVersion) = (nil, nil, nil)
+        (self.defaultQuantization, self.enableAutoSchema, self.weaviateVersion) = (nil, nil, nil)
     }
 }
 
-public extension VectordbVectorDBConfig {
-    init(from decoder: Decoder) throws {
+extension VectordbVectorDBConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        defaultQuantization = try container.sdkDecodeIfPresent(.defaultQuantization)
-        enableAutoSchema = try container.sdkDecodeIfPresent(.enableAutoSchema)
-        weaviateVersion = try container.sdkDecodeIfPresent(.weaviateVersion)
+        self.defaultQuantization = try container.sdkDecodeIfPresent(.defaultQuantization)
+        self.enableAutoSchema = try container.sdkDecodeIfPresent(.enableAutoSchema)
+        self.weaviateVersion = try container.sdkDecodeIfPresent(.weaviateVersion)
     }
 }
 
-public extension VectordbVectorDBConfig {
-    init(defaultQuantization: String? = nil, enableAutoSchema: Bool? = nil, weaviateVersion: String? = nil) {
+extension VectordbVectorDBConfig {
+    public init(defaultQuantization: String? = nil, enableAutoSchema: Bool? = nil, weaviateVersion: String? = nil) {
         self.init()
         (self.defaultQuantization, self.enableAutoSchema) = (defaultQuantization, enableAutoSchema)
         self.weaviateVersion = weaviateVersion
@@ -504,20 +483,20 @@ public struct VectordbRestoreBackupResponse: Codable {
     }
 
     init() {
-        (backupId, status) = (nil, nil)
+        (self.backupId, self.status) = (nil, nil)
     }
 }
 
-public extension VectordbRestoreBackupResponse {
-    init(from decoder: Decoder) throws {
+extension VectordbRestoreBackupResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        backupId = try container.sdkDecodeIfPresent(.backupId)
-        status = try container.sdkDecodeIfPresent(.status)
+        self.backupId = try container.sdkDecodeIfPresent(.backupId)
+        self.status = try container.sdkDecodeIfPresent(.status)
     }
 }
 
-public extension VectordbRestoreBackupResponse {
-    init(backupId: String? = nil, status: String? = nil) {
+extension VectordbRestoreBackupResponse {
+    public init(backupId: String? = nil, status: String? = nil) {
         self.init()
         (self.backupId, self.status) = (backupId, status)
     }
@@ -538,20 +517,20 @@ public struct VectordbResizeVectorDBRequest: Codable {
     }
 
     init() {
-        (id, size) = (nil, nil)
+        (self.id, self.size) = (nil, nil)
     }
 }
 
-public extension VectordbResizeVectorDBRequest {
-    init(from decoder: Decoder) throws {
+extension VectordbResizeVectorDBRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        size = try container.sdkDecodeIfPresent(.size)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.size = try container.sdkDecodeIfPresent(.size)
     }
 }
 
-public extension VectordbResizeVectorDBRequest {
-    init(id: String? = nil, size: String? = nil) {
+extension VectordbResizeVectorDBRequest {
+    public init(id: String? = nil, size: String? = nil) {
         self.init()
         (self.id, self.size) = (id, size)
     }
@@ -580,28 +559,28 @@ public struct VectordbBackup: Codable {
     }
 
     init() {
-        (backupId, completedAt, startedAt, status) = (nil, nil, nil, nil)
+        (self.backupId, self.completedAt, self.startedAt, self.status) = (nil, nil, nil, nil)
     }
 }
 
-public extension VectordbBackup {
-    init(from decoder: Decoder) throws {
+extension VectordbBackup {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        backupId = try container.sdkDecodeIfPresent(.backupId)
-        completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        status = try container.sdkDecodeIfPresent(.status)
-        if let value = completedAt {
+        self.backupId = try container.sdkDecodeIfPresent(.backupId)
+        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        if let value = self.completedAt {
             try sdkValidateDateTime("completed_at", sdkWireString(value))
         }
-        if let value = startedAt {
+        if let value = self.startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
     }
 }
 
-public extension VectordbBackup {
-    init(backupId: String? = nil, completedAt: Date? = nil, startedAt: Date? = nil, status: String? = nil) throws {
+extension VectordbBackup {
+    public init(backupId: String? = nil, completedAt: Date? = nil, startedAt: Date? = nil, status: String? = nil) throws {
         self.init()
         (self.backupId, self.completedAt) = (backupId, completedAt)
         (self.startedAt, self.status) = (startedAt, status)

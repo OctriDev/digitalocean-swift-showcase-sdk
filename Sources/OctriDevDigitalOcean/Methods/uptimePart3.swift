@@ -6,92 +6,34 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension UptimeMethods {
+extension UptimeMethods {
     /// To show information about an existing check, send a GET request to `/v2/uptime/checks/$CHECK_ID`.
     ///
     /// - Parameters:
     /// - checkId: A unique identifier for a check.
-    static func uptimeGetCheck(
-        config: ClientConfig,
-        checkId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExistingCheck {
+    public static func uptimeGetCheck(config: ClientConfig, checkId: String, requestOptions: RequestOptions? = nil) async throws -> ExistingCheck {
         try sdkValidateUuid("check_id", checkId)
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/uptime/checks/", sdkEncodePathSegment(sdkWireString(checkId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "uptime_get_check",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/uptime/checks/", sdkEncodePathSegment(sdkWireString(checkId))].joined(), config: config, decoder: .json, operationId: "uptime_get_check", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To update the settings of an Uptime check, send a PUT request to `/v2/uptime/checks/$CHECK_ID`.
     ///
     /// - Parameters:
     /// - checkId: A unique identifier for a check.
-    static func uptimeUpdateCheck(
-        config: ClientConfig,
-        checkId: String,
-        body: [String: JSONValue],
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExistingCheck {
+    public static func uptimeUpdateCheck(config: ClientConfig, checkId: String, body: [String: JSONValue], requestOptions: RequestOptions? = nil) async throws -> ExistingCheck {
         try sdkValidateUuid("check_id", checkId)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/uptime/checks/", sdkEncodePathSegment(sdkWireString(checkId))].joined(),
-            config: config,
-            rawBody: sdkEncodeBody(body, contentType: "application/json"),
-            decoder: .json,
-            operationId: "uptime_update_check",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/uptime/checks/", sdkEncodePathSegment(sdkWireString(checkId))].joined(), config: config, rawBody: (try sdkEncodeBody(body, contentType: "application/json")), decoder: .json, operationId: "uptime_update_check", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To delete an Uptime check, send a DELETE request to `/v2/uptime/checks/$CHECK_ID`. A 204 status code with no
-    /// body will be returned in response to a successful request. Deleting a check will also delete alerts associated
-    /// with the check.
+    /// To delete an Uptime check, send a DELETE request to `/v2/uptime/checks/$CHECK_ID`. A 204 status code with no body will be returned in response to a successful request. Deleting a check will also delete alerts associated with the check.
     ///
     /// - Parameters:
     /// - checkId: A unique identifier for a check.
-    static func uptimeDeleteCheck(
-        config: ClientConfig,
-        checkId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
+    public static func uptimeDeleteCheck(config: ClientConfig, checkId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("check_id", checkId)
 
-        return try await (sdkRequest(
-            "DELETE",
-            ["/v2/uptime/checks/", sdkEncodePathSegment(sdkWireString(checkId))].joined(),
-            config: config,
-            decoder: .empty,
-            operationId: "uptime_delete_check",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("DELETE", ["/v2/uptime/checks/", sdkEncodePathSegment(sdkWireString(checkId))].joined(), config: config, decoder: .empty, operationId: "uptime_delete_check", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

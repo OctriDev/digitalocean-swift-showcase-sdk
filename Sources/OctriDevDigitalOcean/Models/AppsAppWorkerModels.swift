@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AppsAppWorker domain models
+// AppsAppWorker domain models
 /// Required object value serialized in the `workers[]` wire field.
 public struct AppWorkerSpecVariant2: Codable {
     /// Configuration for automatically scaling this component based on metrics.
@@ -20,25 +20,21 @@ public struct AppWorkerSpecVariant2: Codable {
     }
 
     init() {
-        (autoscaling, termination, livenessHealthCheck) = (nil, nil, nil)
+        (self.autoscaling, self.termination, self.livenessHealthCheck) = (nil, nil, nil)
     }
 }
 
-public extension AppWorkerSpecVariant2 {
-    init(from decoder: Decoder) throws {
+extension AppWorkerSpecVariant2 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        autoscaling = try container.sdkDecodeIfPresent(.autoscaling)
-        termination = try container.sdkDecodeIfPresent(.termination)
-        livenessHealthCheck = try container.sdkDecodeIfPresent(.livenessHealthCheck)
+        self.autoscaling = try container.sdkDecodeIfPresent(.autoscaling)
+        self.termination = try container.sdkDecodeIfPresent(.termination)
+        self.livenessHealthCheck = try container.sdkDecodeIfPresent(.livenessHealthCheck)
     }
 }
 
-public extension AppWorkerSpecVariant2 {
-    init(
-        autoscaling: AppAutoscalingSpec? = nil,
-        termination: AppWorkerSpecTermination? = nil,
-        livenessHealthCheck: AppHealthCheckSpec? = nil
-    ) {
+extension AppWorkerSpecVariant2 {
+    public init(autoscaling: AppAutoscalingSpec? = nil, termination: AppWorkerSpecTermination? = nil, livenessHealthCheck: AppHealthCheckSpec? = nil) {
         self.init()
         (self.autoscaling, self.termination) = (autoscaling, termination)
         self.livenessHealthCheck = livenessHealthCheck
@@ -57,42 +53,26 @@ public struct AppWorkerSpecTermination: Codable {
     }
 
     init() {
-        gracePeriodSeconds = nil
+        self.gracePeriodSeconds = nil
     }
 }
 
-public extension AppWorkerSpecTermination {
-    init(from decoder: Decoder) throws {
+extension AppWorkerSpecTermination {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        gracePeriodSeconds = try container.sdkDecodeIfPresent(.gracePeriodSeconds)
-        if let value = gracePeriodSeconds {
-            try validateRange(
-                "grace_period_seconds",
-                Double(value),
-                min: 1,
-                max: 600,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.gracePeriodSeconds = try container.sdkDecodeIfPresent(.gracePeriodSeconds)
+        if let value = self.gracePeriodSeconds {
+            try validateRange("grace_period_seconds", Double(value), min: 1, max: 600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
-public extension AppWorkerSpecTermination {
-    init(gracePeriodSeconds: Int? = nil) throws {
+extension AppWorkerSpecTermination {
+    public init(gracePeriodSeconds: Int? = nil) throws {
         self.init()
         self.gracePeriodSeconds = gracePeriodSeconds
         if let value = self.gracePeriodSeconds {
-            try validateRange(
-                "grace_period_seconds",
-                Double(value),
-                min: 1,
-                max: 600,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("grace_period_seconds", Double(value), min: 1, max: 600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -169,76 +149,43 @@ public struct AppWorkerSpec: Codable {
         case livenessHealthCheck = "liveness_health_check"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AppWorkerSpec {
-    init(from decoder: Decoder) throws {
+extension AppWorkerSpec {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        git = try container.sdkDecodeIfPresent(.git)
-        github = try container.sdkDecodeIfPresent(.github)
-        gitlab = try container.sdkDecodeIfPresent(.gitlab)
-        bitbucket = try container.sdkDecodeIfPresent(.bitbucket)
-        image = try container.sdkDecodeIfPresent(.image)
-        dockerfilePath = try container.sdkDecodeIfPresent(.dockerfilePath)
-        buildCommand = try container.sdkDecodeIfPresent(.buildCommand)
-        runCommand = try container.sdkDecodeIfPresent(.runCommand)
-        sourceDir = try container.sdkDecodeIfPresent(.sourceDir)
-        envs = try container.sdkDecodeIfPresent(.envs)
-        environmentSlug = try container.sdkDecodeIfPresent(.environmentSlug)
-        logDestinations = try container.sdkDecodeIfPresent(.logDestinations)
-        instanceCount = try container.sdkDecodeIfPresent(.instanceCount)
-        instanceSizeSlug = try container.sdkDecodeIfPresent(.instanceSizeSlug)
-        autoscaling = try container.sdkDecodeIfPresent(.autoscaling)
-        termination = try container.sdkDecodeIfPresent(.termination)
-        livenessHealthCheck = try container.sdkDecodeIfPresent(.livenessHealthCheck)
-        try validateLength("name", name, min: 2, max: 32)
-        try sdkValidatePattern("name", name, sdkPattern3c600f7d20be)
-        if let value = instanceCount {
-            try validateRange(
-                "instance_count",
-                Double(value),
-                min: 1,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.name = try container.sdkDecodeRequired(.name)
+        self.git = try container.sdkDecodeIfPresent(.git)
+        self.github = try container.sdkDecodeIfPresent(.github)
+        self.gitlab = try container.sdkDecodeIfPresent(.gitlab)
+        self.bitbucket = try container.sdkDecodeIfPresent(.bitbucket)
+        self.image = try container.sdkDecodeIfPresent(.image)
+        self.dockerfilePath = try container.sdkDecodeIfPresent(.dockerfilePath)
+        self.buildCommand = try container.sdkDecodeIfPresent(.buildCommand)
+        self.runCommand = try container.sdkDecodeIfPresent(.runCommand)
+        self.sourceDir = try container.sdkDecodeIfPresent(.sourceDir)
+        self.envs = try container.sdkDecodeIfPresent(.envs)
+        self.environmentSlug = try container.sdkDecodeIfPresent(.environmentSlug)
+        self.logDestinations = try container.sdkDecodeIfPresent(.logDestinations)
+        self.instanceCount = try container.sdkDecodeIfPresent(.instanceCount)
+        self.instanceSizeSlug = try container.sdkDecodeIfPresent(.instanceSizeSlug)
+        self.autoscaling = try container.sdkDecodeIfPresent(.autoscaling)
+        self.termination = try container.sdkDecodeIfPresent(.termination)
+        self.livenessHealthCheck = try container.sdkDecodeIfPresent(.livenessHealthCheck)
+            try validateLength("name", self.name, min: 2, max: 32)
+            try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
+        if let value = self.instanceCount {
+            try validateRange("instance_count", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
-public extension AppWorkerSpec {
-    init(
-        name: String,
-        git: AppsGitSourceSpec? = nil,
-        github: AppsGithubSourceSpec? = nil,
-        gitlab: AppsGitlabSourceSpec? = nil,
-        bitbucket: AppsBitbucketSourceSpec? = nil,
-        image: AppsImageSourceSpec? = nil,
-        dockerfilePath: String? = nil,
-        buildCommand: String? = nil,
-        runCommand: String? = nil,
-        sourceDir: String? = nil,
-        envs: [AppVariableDefinition]? = nil,
-        environmentSlug: String? = nil,
-        logDestinations: [AppLogDestinationDefinition]? = nil,
-        instanceCount: Int? = nil,
-        instanceSizeSlug: AppComponentInstanceBaseInstanceSizeSlug? = nil,
-        autoscaling: AppAutoscalingSpec? = nil,
-        termination: AppWorkerSpecTermination? = nil,
-        livenessHealthCheck: AppHealthCheckSpec? = nil
-    ) throws {
+extension AppWorkerSpec {
+    public init(name: String, git: AppsGitSourceSpec? = nil, github: AppsGithubSourceSpec? = nil, gitlab: AppsGitlabSourceSpec? = nil, bitbucket: AppsBitbucketSourceSpec? = nil, image: AppsImageSourceSpec? = nil, dockerfilePath: String? = nil, buildCommand: String? = nil, runCommand: String? = nil, sourceDir: String? = nil, envs: [AppVariableDefinition]? = nil, environmentSlug: String? = nil, logDestinations: [AppLogDestinationDefinition]? = nil, instanceCount: Int? = nil, instanceSizeSlug: AppComponentInstanceBaseInstanceSizeSlug? = nil, autoscaling: AppAutoscalingSpec? = nil, termination: AppWorkerSpecTermination? = nil, livenessHealthCheck: AppHealthCheckSpec? = nil) throws {
         (self.name, self.git) = (name, git)
         (self.github, self.gitlab) = (github, gitlab)
         (self.bitbucket, self.image) = (bitbucket, image)
@@ -248,18 +195,10 @@ public extension AppWorkerSpec {
         (self.logDestinations, self.instanceCount) = (logDestinations, instanceCount)
         (self.instanceSizeSlug, self.autoscaling) = (instanceSizeSlug, autoscaling)
         (self.termination, self.livenessHealthCheck) = (termination, livenessHealthCheck)
-        try validateLength("name", self.name, min: 2, max: 32)
-        try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
+            try validateLength("name", self.name, min: 2, max: 32)
+            try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
         if let value = self.instanceCount {
-            try validateRange(
-                "instance_count",
-                Double(value),
-                min: 1,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("instance_count", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }

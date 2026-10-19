@@ -6,9 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
-    /// To list the scenarios inside a Common Scenario & Goal Library entry without creating a team-owned scenario set,
-    /// send a GET request to `/v2/gen-ai/scenario_library/{library_scenario_uuid}/scenarios`.
+extension AgentPlatformApiMethods {
+    /// To list the scenarios inside a Common Scenario & Goal Library entry without creating a team-owned scenario set, send a GET request to `/v2/gen-ai/scenario_library/{library_scenario_uuid}/scenarios`.
     ///
     /// - Parameters:
     /// - libraryScenarioUuid: UUID of the library entry to read.
@@ -23,38 +22,13 @@ public extension AgentPlatformApiMethods {
     ///   SCENARIO_SORT_FIELD_DESCRIPTION: Sort by scenario description
     ///   (case-insensitive).
     /// - sortDirection: Sort direction. Defaults to ascending when unspecified.
-    static func genaiListScenarioLibraryScenarios(
-        config: ClientConfig,
-        libraryScenarioUuid: String,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        search: String? = nil,
-        sortBy: GenaiListScenarioLibraryScenariosParameter? = nil,
-        sortDirection: GenaiListScenarioLibraryScenariosParameterXe499f100? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiListScenariosOutput {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/gen-ai/scenario_library/", sdkEncodePathSegment(sdkWireString(libraryScenarioUuid)), "/scenarios"]
-                .joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("page", value: page),
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("search", value: search),
-                SdkQueryParameter("sort_by", value: sortBy),
-                SdkQueryParameter("sort_direction", value: sortDirection),
-            ],
-            decoder: .json,
-            operationId: "genai_list_scenario_library_scenarios",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func genaiListScenarioLibraryScenarios(config: ClientConfig, libraryScenarioUuid: String, page: Int? = nil, perPage: Int? = nil, search: String? = nil, sortBy: GenaiListScenarioLibraryScenariosParameter? = nil, sortDirection: GenaiListScenarioLibraryScenariosParameterXe499f100? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListScenariosOutput {
+        return try (await sdkRequest("GET", ["/v2/gen-ai/scenario_library/", sdkEncodePathSegment(sdkWireString(libraryScenarioUuid)), "/scenarios"].joined(), config: config, query: [
+            SdkQueryParameter("page", value: page),
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("search", value: search),
+            SdkQueryParameter("sort_by", value: sortBy),
+            SdkQueryParameter("sort_direction", value: sortDirection),
+        ], decoder: .json, operationId: "genai_list_scenario_library_scenarios", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DatabasesDatabase domain models
+// DatabasesDatabase domain models
 /// The connection details for Schema Registry.
 public struct DatabaseClusterReadSchemaRegistryConnection: Codable {
     /// This is provided as a convenience and should be able to be constructed by the other attributes.
@@ -35,32 +35,25 @@ public struct DatabaseClusterReadSchemaRegistryConnection: Codable {
     }
 
     init() {
-        (uri, host, port, user, password) = (nil, nil, nil, nil, nil)
-        ssl = nil
+        (self.uri, self.host, self.port, self.user, self.password) = (nil, nil, nil, nil, nil)
+        self.ssl = nil
     }
 }
 
-public extension DatabaseClusterReadSchemaRegistryConnection {
-    init(from decoder: Decoder) throws {
+extension DatabaseClusterReadSchemaRegistryConnection {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        uri = try container.sdkDecodeIfPresent(.uri)
-        host = try container.sdkDecodeIfPresent(.host)
-        port = try container.sdkDecodeIfPresent(.port)
-        user = try container.sdkDecodeIfPresent(.user)
-        password = try container.sdkDecodeIfPresent(.password)
-        ssl = try container.sdkDecodeIfPresent(.ssl)
+        self.uri = try container.sdkDecodeIfPresent(.uri)
+        self.host = try container.sdkDecodeIfPresent(.host)
+        self.port = try container.sdkDecodeIfPresent(.port)
+        self.user = try container.sdkDecodeIfPresent(.user)
+        self.password = try container.sdkDecodeIfPresent(.password)
+        self.ssl = try container.sdkDecodeIfPresent(.ssl)
     }
 }
 
-public extension DatabaseClusterReadSchemaRegistryConnection {
-    init(
-        uri: String? = nil,
-        host: String? = nil,
-        port: Int? = nil,
-        user: String? = nil,
-        password: String? = nil,
-        ssl: Bool? = nil
-    ) {
+extension DatabaseClusterReadSchemaRegistryConnection {
+    public init(uri: String? = nil, host: String? = nil, port: Int? = nil, user: String? = nil, password: String? = nil, ssl: Bool? = nil) {
         self.init()
         (self.uri, self.host) = (uri, host)
         (self.port, self.user) = (port, user)
@@ -124,57 +117,38 @@ public struct DatabaseReplicaRead: Codable {
         case doSettings = "do_settings"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DatabaseReplicaRead {
-    init(from decoder: Decoder) throws {
+extension DatabaseReplicaRead {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        id = try container.sdkDecodeIfPresent(.id)
-        region = try container.sdkDecodeIfPresent(.region)
-        size = try container.sdkDecodeIfPresent(.size)
-        status = try container.sdkDecodeIfPresent(.status)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        privateNetworkUuid = try container.sdkDecodeIfPresent(.privateNetworkUuid)
-        connection = try container.sdkDecodeIfPresent(.connection)
-        privateConnection = try container.sdkDecodeIfPresent(.privateConnection)
-        storageSizeMib = try container.sdkDecodeIfPresent(.storageSizeMib)
-        doSettings = try container.sdkDecodeIfPresent(.doSettings)
-        if let value = id {
+        self.name = try container.sdkDecodeRequired(.name)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.size = try container.sdkDecodeIfPresent(.size)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.privateNetworkUuid = try container.sdkDecodeIfPresent(.privateNetworkUuid)
+        self.connection = try container.sdkDecodeIfPresent(.connection)
+        self.privateConnection = try container.sdkDecodeIfPresent(.privateConnection)
+        self.storageSizeMib = try container.sdkDecodeIfPresent(.storageSizeMib)
+        self.doSettings = try container.sdkDecodeIfPresent(.doSettings)
+        if let value = self.id {
             try sdkValidateUuid("id", value)
         }
-        if let value = createdAt {
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-public extension DatabaseReplicaRead {
-    init(
-        name: String,
-        id: String? = nil,
-        region: String? = nil,
-        size: String? = nil,
-        status: DatabaseReplicaReadStatus? = nil,
-        tags: [String]? = nil,
-        createdAt: Date? = nil,
-        privateNetworkUuid: String? = nil,
-        connection: DatabaseReplicaReadConnection? = nil,
-        privateConnection: DatabaseReplicaReadPrivateConnection? = nil,
-        storageSizeMib: Int? = nil,
-        doSettings: DoSettings? = nil
-    ) throws {
+extension DatabaseReplicaRead {
+    public init(name: String, id: String? = nil, region: String? = nil, size: String? = nil, status: DatabaseReplicaReadStatus? = nil, tags: [String]? = nil, createdAt: Date? = nil, privateNetworkUuid: String? = nil, connection: DatabaseReplicaReadConnection? = nil, privateConnection: DatabaseReplicaReadPrivateConnection? = nil, storageSizeMib: Int? = nil, doSettings: DoSettings? = nil) throws {
         (self.name, self.id) = (name, id)
         (self.region, self.size) = (region, size)
         (self.status, self.tags) = (status, tags)
@@ -200,19 +174,19 @@ public struct DatabaseAutoscaleParams: Codable {
     }
 
     init() {
-        storage = nil
+        self.storage = nil
     }
 }
 
-public extension DatabaseAutoscaleParams {
-    init(from decoder: Decoder) throws {
+extension DatabaseAutoscaleParams {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        storage = try container.sdkDecodeIfPresent(.storage)
+        self.storage = try container.sdkDecodeIfPresent(.storage)
     }
 }
 
-public extension DatabaseAutoscaleParams {
-    init(storage: DatabaseStorageAutoscaleParams? = nil) {
+extension DatabaseAutoscaleParams {
+    public init(storage: DatabaseStorageAutoscaleParams? = nil) {
         self.init()
         self.storage = storage
     }
@@ -228,19 +202,19 @@ public struct DatabaseReplicaResponse: Codable {
     }
 
     init() {
-        replica = nil
+        self.replica = nil
     }
 }
 
-public extension DatabaseReplicaResponse {
-    init(from decoder: Decoder) throws {
+extension DatabaseReplicaResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        replica = try container.sdkDecodeIfPresent(.replica)
+        self.replica = try container.sdkDecodeIfPresent(.replica)
     }
 }
 
-public extension DatabaseReplicaResponse {
-    init(replica: DatabaseReplicaRead? = nil) {
+extension DatabaseReplicaResponse {
+    public init(replica: DatabaseReplicaRead? = nil) {
         self.init()
         self.replica = replica
     }
@@ -282,34 +256,26 @@ public struct DatabaseClusterRequestPrivateConnection: Codable {
     }
 
     init() {
-        (uri, database, host, port, user) = (nil, nil, nil, nil, nil)
-        (password, ssl) = (nil, nil)
+        (self.uri, self.database, self.host, self.port, self.user) = (nil, nil, nil, nil, nil)
+        (self.password, self.ssl) = (nil, nil)
     }
 }
 
-public extension DatabaseClusterRequestPrivateConnection {
-    init(from decoder: Decoder) throws {
+extension DatabaseClusterRequestPrivateConnection {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        uri = try container.sdkDecodeIfPresent(.uri)
-        database = try container.sdkDecodeIfPresent(.database)
-        host = try container.sdkDecodeIfPresent(.host)
-        port = try container.sdkDecodeIfPresent(.port)
-        user = try container.sdkDecodeIfPresent(.user)
-        password = try container.sdkDecodeIfPresent(.password)
-        ssl = try container.sdkDecodeIfPresent(.ssl)
+        self.uri = try container.sdkDecodeIfPresent(.uri)
+        self.database = try container.sdkDecodeIfPresent(.database)
+        self.host = try container.sdkDecodeIfPresent(.host)
+        self.port = try container.sdkDecodeIfPresent(.port)
+        self.user = try container.sdkDecodeIfPresent(.user)
+        self.password = try container.sdkDecodeIfPresent(.password)
+        self.ssl = try container.sdkDecodeIfPresent(.ssl)
     }
 }
 
-public extension DatabaseClusterRequestPrivateConnection {
-    init(
-        uri: String? = nil,
-        database: String? = nil,
-        host: String? = nil,
-        port: Int? = nil,
-        user: String? = nil,
-        password: String? = nil,
-        ssl: Bool? = nil
-    ) {
+extension DatabaseClusterRequestPrivateConnection {
+    public init(uri: String? = nil, database: String? = nil, host: String? = nil, port: Int? = nil, user: String? = nil, password: String? = nil, ssl: Bool? = nil) {
         self.init()
         (self.uri, self.database) = (uri, database)
         (self.host, self.port) = (host, port)
@@ -354,34 +320,26 @@ public struct DatabaseClusterReadStandbyConnection: Codable {
     }
 
     init() {
-        (uri, database, host, port, user) = (nil, nil, nil, nil, nil)
-        (password, ssl) = (nil, nil)
+        (self.uri, self.database, self.host, self.port, self.user) = (nil, nil, nil, nil, nil)
+        (self.password, self.ssl) = (nil, nil)
     }
 }
 
-public extension DatabaseClusterReadStandbyConnection {
-    init(from decoder: Decoder) throws {
+extension DatabaseClusterReadStandbyConnection {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        uri = try container.sdkDecodeIfPresent(.uri)
-        database = try container.sdkDecodeIfPresent(.database)
-        host = try container.sdkDecodeIfPresent(.host)
-        port = try container.sdkDecodeIfPresent(.port)
-        user = try container.sdkDecodeIfPresent(.user)
-        password = try container.sdkDecodeIfPresent(.password)
-        ssl = try container.sdkDecodeIfPresent(.ssl)
+        self.uri = try container.sdkDecodeIfPresent(.uri)
+        self.database = try container.sdkDecodeIfPresent(.database)
+        self.host = try container.sdkDecodeIfPresent(.host)
+        self.port = try container.sdkDecodeIfPresent(.port)
+        self.user = try container.sdkDecodeIfPresent(.user)
+        self.password = try container.sdkDecodeIfPresent(.password)
+        self.ssl = try container.sdkDecodeIfPresent(.ssl)
     }
 }
 
-public extension DatabaseClusterReadStandbyConnection {
-    init(
-        uri: String? = nil,
-        database: String? = nil,
-        host: String? = nil,
-        port: Int? = nil,
-        user: String? = nil,
-        password: String? = nil,
-        ssl: Bool? = nil
-    ) {
+extension DatabaseClusterReadStandbyConnection {
+    public init(uri: String? = nil, database: String? = nil, host: String? = nil, port: Int? = nil, user: String? = nil, password: String? = nil, ssl: Bool? = nil) {
         self.init()
         (self.uri, self.database) = (uri, database)
         (self.host, self.port) = (host, port)
@@ -400,19 +358,19 @@ public struct DatabaseReplicas: Codable {
     }
 
     init() {
-        replicas = nil
+        self.replicas = nil
     }
 }
 
-public extension DatabaseReplicas {
-    init(from decoder: Decoder) throws {
+extension DatabaseReplicas {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        replicas = try container.sdkDecodeIfPresent(.replicas)
+        self.replicas = try container.sdkDecodeIfPresent(.replicas)
     }
 }
 
-public extension DatabaseReplicas {
-    init(replicas: [DatabaseReplicaRead]? = nil) {
+extension DatabaseReplicas {
+    public init(replicas: [DatabaseReplicaRead]? = nil) {
         self.init()
         self.replicas = replicas
     }
@@ -437,74 +395,36 @@ public struct DatabaseStorageAutoscaleParams: Codable {
         case incrementGib = "increment_gib"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DatabaseStorageAutoscaleParams {
-    init(from decoder: Decoder) throws {
+extension DatabaseStorageAutoscaleParams {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.enabled) else {
-            throw SdkValidationError(
-                field: "enabled",
-                code: "required",
-                message: "Validation failed for 'enabled': value is required"
-            )
+            throw SdkValidationError(field: "enabled", code: "required", message: "Validation failed for 'enabled': value is required")
         }
-        enabled = try container.sdkDecodeRequired(.enabled)
-        thresholdPercent = try container.sdkDecodeIfPresent(.thresholdPercent)
-        incrementGib = try container.sdkDecodeIfPresent(.incrementGib)
-        if let value = thresholdPercent {
-            try validateRange(
-                "threshold_percent",
-                Double(value),
-                min: 15,
-                max: 95,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.enabled = try container.sdkDecodeRequired(.enabled)
+        self.thresholdPercent = try container.sdkDecodeIfPresent(.thresholdPercent)
+        self.incrementGib = try container.sdkDecodeIfPresent(.incrementGib)
+        if let value = self.thresholdPercent {
+            try validateRange("threshold_percent", Double(value), min: 15, max: 95, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = incrementGib {
-            try validateRange(
-                "increment_gib",
-                Double(value),
-                min: 10,
-                max: 500,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.incrementGib {
+            try validateRange("increment_gib", Double(value), min: 10, max: 500, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
-public extension DatabaseStorageAutoscaleParams {
-    init(enabled: Bool, thresholdPercent: Int? = nil, incrementGib: Int? = nil) throws {
+extension DatabaseStorageAutoscaleParams {
+    public init(enabled: Bool, thresholdPercent: Int? = nil, incrementGib: Int? = nil) throws {
         (self.enabled, self.thresholdPercent) = (enabled, thresholdPercent)
         self.incrementGib = incrementGib
         if let value = self.thresholdPercent {
-            try validateRange(
-                "threshold_percent",
-                Double(value),
-                min: 15,
-                max: 95,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("threshold_percent", Double(value), min: 15, max: 95, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.incrementGib {
-            try validateRange(
-                "increment_gib",
-                Double(value),
-                min: 10,
-                max: 500,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("increment_gib", Double(value), min: 10, max: 500, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -545,34 +465,26 @@ public struct DatabaseReplicaReadConnection: Codable {
     }
 
     init() {
-        (uri, database, host, port, user) = (nil, nil, nil, nil, nil)
-        (password, ssl) = (nil, nil)
+        (self.uri, self.database, self.host, self.port, self.user) = (nil, nil, nil, nil, nil)
+        (self.password, self.ssl) = (nil, nil)
     }
 }
 
-public extension DatabaseReplicaReadConnection {
-    init(from decoder: Decoder) throws {
+extension DatabaseReplicaReadConnection {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        uri = try container.sdkDecodeIfPresent(.uri)
-        database = try container.sdkDecodeIfPresent(.database)
-        host = try container.sdkDecodeIfPresent(.host)
-        port = try container.sdkDecodeIfPresent(.port)
-        user = try container.sdkDecodeIfPresent(.user)
-        password = try container.sdkDecodeIfPresent(.password)
-        ssl = try container.sdkDecodeIfPresent(.ssl)
+        self.uri = try container.sdkDecodeIfPresent(.uri)
+        self.database = try container.sdkDecodeIfPresent(.database)
+        self.host = try container.sdkDecodeIfPresent(.host)
+        self.port = try container.sdkDecodeIfPresent(.port)
+        self.user = try container.sdkDecodeIfPresent(.user)
+        self.password = try container.sdkDecodeIfPresent(.password)
+        self.ssl = try container.sdkDecodeIfPresent(.ssl)
     }
 }
 
-public extension DatabaseReplicaReadConnection {
-    init(
-        uri: String? = nil,
-        database: String? = nil,
-        host: String? = nil,
-        port: Int? = nil,
-        user: String? = nil,
-        password: String? = nil,
-        ssl: Bool? = nil
-    ) {
+extension DatabaseReplicaReadConnection {
+    public init(uri: String? = nil, database: String? = nil, host: String? = nil, port: Int? = nil, user: String? = nil, password: String? = nil, ssl: Bool? = nil) {
         self.init()
         (self.uri, self.database) = (uri, database)
         (self.host, self.port) = (host, port)
@@ -583,13 +495,13 @@ public extension DatabaseReplicaReadConnection {
 
 /// Optional API value serialized in the `connection` wire field.
 public struct DatabaseClusterRequestConnection: Codable {
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DatabaseClusterRequestConnection {
-    init() {}
+extension DatabaseClusterRequestConnection {
+    public init() {
+    }
 }
 
 /// Typed representation of the `Database` API schema.
@@ -602,27 +514,21 @@ public struct Database: Codable {
         case name
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Database {
-    init(from decoder: Decoder) throws {
+extension Database {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
+        self.name = try container.sdkDecodeRequired(.name)
     }
 }
 
-public extension Database {
-    init(name: String) {
+extension Database {
+    public init(name: String) {
         self.name = name
     }
 }

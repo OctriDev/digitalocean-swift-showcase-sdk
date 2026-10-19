@@ -12,8 +12,8 @@ struct GenaiCreateScenarioSetFromLibraryRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(libraryScenarioUuid2, forKey: SdkCodingKey("library_scenario_uuid"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.libraryScenarioUuid2, forKey: SdkCodingKey("library_scenario_uuid"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
     }
 }
 
@@ -24,9 +24,9 @@ struct GenaiCreateScenarioSetRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(fileUploadScenarioSet, forKey: SdkCodingKey("file_upload_scenario_set"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(scenarios, forKey: SdkCodingKey("scenarios"))
+        try keyedContainer.encodeIfPresent(self.fileUploadScenarioSet, forKey: SdkCodingKey("file_upload_scenario_set"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.scenarios, forKey: SdkCodingKey("scenarios"))
     }
 }
 
@@ -35,7 +35,7 @@ struct GenaiCreateScenarioSetUploadPresignedUrlsRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(files, forKey: SdkCodingKey("files"))
+        try keyedContainer.encodeIfPresent(self.files, forKey: SdkCodingKey("files"))
     }
 }
 
@@ -47,10 +47,10 @@ struct GenaiCreateGeneratedScenarioSetRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(generatorModelUuid, forKey: SdkCodingKey("generator_model_uuid"))
-        try keyedContainer.encodeIfPresent(goalDescription, forKey: SdkCodingKey("goal_description"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(numScenarios, forKey: SdkCodingKey("num_scenarios"))
+        try keyedContainer.encodeIfPresent(self.generatorModelUuid, forKey: SdkCodingKey("generator_model_uuid"))
+        try keyedContainer.encodeIfPresent(self.goalDescription, forKey: SdkCodingKey("goal_description"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.numScenarios, forKey: SdkCodingKey("num_scenarios"))
     }
 }
 
@@ -61,9 +61,9 @@ struct GenaiUpdateScenarioSetRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(scenarioSetUuid2, forKey: SdkCodingKey("scenario_set_uuid"))
-        try keyedContainer.encodeIfPresent(scenarios, forKey: SdkCodingKey("scenarios"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.scenarioSetUuid2, forKey: SdkCodingKey("scenario_set_uuid"))
+        try keyedContainer.encodeIfPresent(self.scenarios, forKey: SdkCodingKey("scenarios"))
     }
 }
 
@@ -72,7 +72,7 @@ struct GenaiCreateDuplicateScenarioSetRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(scenarioSetUuid2, forKey: SdkCodingKey("scenario_set_uuid"))
+        try keyedContainer.encodeIfPresent(self.scenarioSetUuid2, forKey: SdkCodingKey("scenario_set_uuid"))
     }
 }
 
@@ -83,9 +83,9 @@ struct GenaiCreateScheduledIndexingRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(days, forKey: SdkCodingKey("days"))
-        try keyedContainer.encodeIfPresent(knowledgeBaseUuid, forKey: SdkCodingKey("knowledge_base_uuid"))
-        try keyedContainer.encodeIfPresent(time, forKey: SdkCodingKey("time"))
+        try keyedContainer.encodeIfPresent(self.days, forKey: SdkCodingKey("days"))
+        try keyedContainer.encodeIfPresent(self.knowledgeBaseUuid, forKey: SdkCodingKey("knowledge_base_uuid"))
+        try keyedContainer.encodeIfPresent(self.time, forKey: SdkCodingKey("time"))
     }
 }
 
@@ -102,27 +102,27 @@ struct GenaiCreateSimulationRunRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(agentConfig, forKey: SdkCodingKey("agent_config"))
-        try keyedContainer.encodeIfPresent(evaluationConfig, forKey: SdkCodingKey("evaluation_config"))
-        try keyedContainer.encodeIfPresent(explorationBudget, forKey: SdkCodingKey("exploration_budget"))
-        try keyedContainer.encodeIfPresent(judgeModelUuid, forKey: SdkCodingKey("judge_model_uuid"))
-        try keyedContainer.encodeIfPresent(maxTurns, forKey: SdkCodingKey("max_turns"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(scenarioSetUuid, forKey: SdkCodingKey("scenario_set_uuid"))
-        try keyedContainer.encodeIfPresent(userSimulatorConfig, forKey: SdkCodingKey("user_simulator_config"))
-        try keyedContainer.encodeIfPresent(userSimulatorModelUuid, forKey: SdkCodingKey("user_simulator_model_uuid"))
+        try keyedContainer.encodeIfPresent(self.agentConfig, forKey: SdkCodingKey("agent_config"))
+        try keyedContainer.encodeIfPresent(self.evaluationConfig, forKey: SdkCodingKey("evaluation_config"))
+        try keyedContainer.encodeIfPresent(self.explorationBudget, forKey: SdkCodingKey("exploration_budget"))
+        try keyedContainer.encodeIfPresent(self.judgeModelUuid, forKey: SdkCodingKey("judge_model_uuid"))
+        try keyedContainer.encodeIfPresent(self.maxTurns, forKey: SdkCodingKey("max_turns"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.scenarioSetUuid, forKey: SdkCodingKey("scenario_set_uuid"))
+        try keyedContainer.encodeIfPresent(self.userSimulatorConfig, forKey: SdkCodingKey("user_simulator_config"))
+        try keyedContainer.encodeIfPresent(self.userSimulatorModelUuid, forKey: SdkCodingKey("user_simulator_model_uuid"))
     }
 
     init(options: AgentPlatformApiMethods.GenaiCreateSimulationRunOptions) {
-        agentConfig = options.agentConfig
-        evaluationConfig = options.evaluationConfig
-        explorationBudget = options.explorationBudget
-        judgeModelUuid = options.judgeModelUuid
-        maxTurns = options.maxTurns
-        name = options.name
-        scenarioSetUuid = options.scenarioSetUuid
-        userSimulatorConfig = options.userSimulatorConfig
-        userSimulatorModelUuid = options.userSimulatorModelUuid
+        self.agentConfig = options.agentConfig
+        self.evaluationConfig = options.evaluationConfig
+        self.explorationBudget = options.explorationBudget
+        self.judgeModelUuid = options.judgeModelUuid
+        self.maxTurns = options.maxTurns
+        self.name = options.name
+        self.scenarioSetUuid = options.scenarioSetUuid
+        self.userSimulatorConfig = options.userSimulatorConfig
+        self.userSimulatorModelUuid = options.userSimulatorModelUuid
     }
 }
 
@@ -132,8 +132,8 @@ struct GenaiUpdateSimulationRunRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(runUuid2, forKey: SdkCodingKey("run_uuid"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.runUuid2, forKey: SdkCodingKey("run_uuid"))
     }
 }
 
@@ -142,7 +142,7 @@ struct GenaiPatchCancelSimulationRunRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(runUuid2, forKey: SdkCodingKey("run_uuid"))
+        try keyedContainer.encodeIfPresent(self.runUuid2, forKey: SdkCodingKey("run_uuid"))
     }
 }
 
@@ -153,9 +153,9 @@ struct GenaiCreateWorkspaceRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(agentUuids, forKey: SdkCodingKey("agent_uuids"))
-        try keyedContainer.encodeIfPresent(description, forKey: SdkCodingKey("description"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.agentUuids, forKey: SdkCodingKey("agent_uuids"))
+        try keyedContainer.encodeIfPresent(self.description, forKey: SdkCodingKey("description"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
     }
 }
 
@@ -166,9 +166,9 @@ struct GenaiUpdateWorkspaceRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(description, forKey: SdkCodingKey("description"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(workspaceUuid2, forKey: SdkCodingKey("workspace_uuid"))
+        try keyedContainer.encodeIfPresent(self.description, forKey: SdkCodingKey("description"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.workspaceUuid2, forKey: SdkCodingKey("workspace_uuid"))
     }
 }
 
@@ -178,7 +178,7 @@ struct GenaiUpdateAgentsWorkspaceRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(agentUuids, forKey: SdkCodingKey("agent_uuids"))
-        try keyedContainer.encodeIfPresent(workspaceUuid2, forKey: SdkCodingKey("workspace_uuid"))
+        try keyedContainer.encodeIfPresent(self.agentUuids, forKey: SdkCodingKey("agent_uuids"))
+        try keyedContainer.encodeIfPresent(self.workspaceUuid2, forKey: SdkCodingKey("workspace_uuid"))
     }
 }

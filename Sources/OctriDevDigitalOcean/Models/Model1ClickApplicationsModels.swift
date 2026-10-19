@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// 1ClickApplications domain models
+// 1ClickApplications domain models
 /// Typed representation of the `OneClicks` API schema.
 public struct OneClicks: Codable {
     /// The slug identifier for the 1-Click application.
@@ -18,35 +18,25 @@ public struct OneClicks: Codable {
         case type
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension OneClicks {
-    init(from decoder: Decoder) throws {
+extension OneClicks {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.slug) else {
-            throw SdkValidationError(
-                field: "slug",
-                code: "required",
-                message: "Validation failed for 'slug': value is required"
-            )
+            throw SdkValidationError(field: "slug", code: "required", message: "Validation failed for 'slug': value is required")
         }
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        slug = try container.sdkDecodeRequired(.slug)
-        type = try container.sdkDecodeRequired(.type)
+        self.slug = try container.sdkDecodeRequired(.slug)
+        self.type = try container.sdkDecodeRequired(.type)
     }
 }
 
-public extension OneClicks {
-    init(slug: String, type: String) {
+extension OneClicks {
+    public init(slug: String, type: String) {
         (self.slug, self.type) = (slug, type)
     }
 }
@@ -61,19 +51,19 @@ public struct OneClicksAll: Codable {
     }
 
     init() {
-        n1Clicks = nil
+        self.n1Clicks = nil
     }
 }
 
-public extension OneClicksAll {
-    init(from decoder: Decoder) throws {
+extension OneClicksAll {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        n1Clicks = try container.sdkDecodeIfPresent(.n1Clicks)
+        self.n1Clicks = try container.sdkDecodeIfPresent(.n1Clicks)
     }
 }
 
-public extension OneClicksAll {
-    init(n1Clicks: [OneClicks]? = nil) {
+extension OneClicksAll {
+    public init(n1Clicks: [OneClicks]? = nil) {
         self.init()
         self.n1Clicks = n1Clicks
     }
@@ -90,19 +80,19 @@ public struct OneClicksCreateResponse: Codable {
     }
 
     init() {
-        message = nil
+        self.message = nil
     }
 }
 
-public extension OneClicksCreateResponse {
-    init(from decoder: Decoder) throws {
+extension OneClicksCreateResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        message = try container.sdkDecodeIfPresent(.message)
+        self.message = try container.sdkDecodeIfPresent(.message)
     }
 }
 
-public extension OneClicksCreateResponse {
-    init(message: String? = nil) {
+extension OneClicksCreateResponse {
+    public init(message: String? = nil) {
         self.init()
         self.message = message
     }
@@ -122,35 +112,25 @@ public struct OneClicksCreate: Codable {
         case clusterUuid = "cluster_uuid"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension OneClicksCreate {
-    init(from decoder: Decoder) throws {
+extension OneClicksCreate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.addonSlugs) else {
-            throw SdkValidationError(
-                field: "addon_slugs",
-                code: "required",
-                message: "Validation failed for 'addon_slugs': value is required"
-            )
+            throw SdkValidationError(field: "addon_slugs", code: "required", message: "Validation failed for 'addon_slugs': value is required")
         }
         guard container.contains(.clusterUuid) else {
-            throw SdkValidationError(
-                field: "cluster_uuid",
-                code: "required",
-                message: "Validation failed for 'cluster_uuid': value is required"
-            )
+            throw SdkValidationError(field: "cluster_uuid", code: "required", message: "Validation failed for 'cluster_uuid': value is required")
         }
-        addonSlugs = try container.sdkDecodeRequired(.addonSlugs)
-        clusterUuid = try container.sdkDecodeRequired(.clusterUuid)
+        self.addonSlugs = try container.sdkDecodeRequired(.addonSlugs)
+        self.clusterUuid = try container.sdkDecodeRequired(.clusterUuid)
     }
 }
 
-public extension OneClicksCreate {
-    init(addonSlugs: [String], clusterUuid: String) {
+extension OneClicksCreate {
+    public init(addonSlugs: [String], clusterUuid: String) {
         (self.addonSlugs, self.clusterUuid) = (addonSlugs, clusterUuid)
     }
 }

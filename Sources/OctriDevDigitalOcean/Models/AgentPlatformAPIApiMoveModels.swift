@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiMove domain models
+// AgentPlatformAPIApiMove domain models
 /// Parameters for Moving agents to a Workspace
 public struct ApiMoveAgentsToWorkspaceInputPublic: Codable {
     /// Agent uuids
@@ -19,20 +19,20 @@ public struct ApiMoveAgentsToWorkspaceInputPublic: Codable {
     }
 
     init() {
-        (agentUuids, workspaceUuid) = (nil, nil)
+        (self.agentUuids, self.workspaceUuid) = (nil, nil)
     }
 }
 
-public extension ApiMoveAgentsToWorkspaceInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiMoveAgentsToWorkspaceInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agentUuids = try container.sdkDecodeIfPresent(.agentUuids)
-        workspaceUuid = try container.sdkDecodeIfPresent(.workspaceUuid)
+        self.agentUuids = try container.sdkDecodeIfPresent(.agentUuids)
+        self.workspaceUuid = try container.sdkDecodeIfPresent(.workspaceUuid)
     }
 }
 
-public extension ApiMoveAgentsToWorkspaceInputPublic {
-    init(agentUuids: [String]? = nil, workspaceUuid: String? = nil) {
+extension ApiMoveAgentsToWorkspaceInputPublic {
+    public init(agentUuids: [String]? = nil, workspaceUuid: String? = nil) {
         self.init()
         (self.agentUuids, self.workspaceUuid) = (agentUuids, workspaceUuid)
     }
@@ -48,19 +48,19 @@ public struct ApiMoveAgentsToWorkspaceOutput: Codable {
     }
 
     init() {
-        workspace = nil
+        self.workspace = nil
     }
 }
 
-public extension ApiMoveAgentsToWorkspaceOutput {
-    init(from decoder: Decoder) throws {
+extension ApiMoveAgentsToWorkspaceOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        workspace = try container.sdkDecodeIfPresent(.workspace)
+        self.workspace = try container.sdkDecodeIfPresent(.workspace)
     }
 }
 
-public extension ApiMoveAgentsToWorkspaceOutput {
-    init(workspace: ApiWorkspace? = nil) {
+extension ApiMoveAgentsToWorkspaceOutput {
+    public init(workspace: ApiWorkspace? = nil) {
         self.init()
         self.workspace = workspace
     }

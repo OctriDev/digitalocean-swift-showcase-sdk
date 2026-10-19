@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// InsightsSpans domain models
+// InsightsSpans domain models
 public indirect enum SpansFilterValue {
     case stringValue(String)
     case doubleValue(Double)
@@ -13,41 +13,25 @@ public indirect enum SpansFilterValue {
 }
 
 extension SpansFilterValue: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for SpansFilterValue"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for SpansFilterValue")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension SpansFilterValue {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) {
-            return .stringValue(value)
-        }
-        if let value = try? container.decode(Double.self) {
-            return .doubleValue(value)
-        }
-        if let value = try? container.decode(Bool.self) {
-            return .boolValue(value)
-        }
-        if let value = try? container.decode([String].self) {
-            return .stringList(value)
-        }
-        if let value = try? container.decode(SpansFilterValueVariant4.self) {
-            return .spansFilterValueVariant4(value)
-        }
+        if let value = try? container.decode(String.self) { return .stringValue(value) }
+        if let value = try? container.decode(Double.self) { return .doubleValue(value) }
+        if let value = try? container.decode(Bool.self) { return .boolValue(value) }
+        if let value = try? container.decode([String].self) { return .stringList(value) }
+        if let value = try? container.decode(SpansFilterValueVariant4.self) { return .spansFilterValueVariant4(value) }
         return nil
     }
 }
@@ -105,41 +89,28 @@ public struct SpansFilterExpression: Codable {
         case query
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SpansFilterExpression {
-    init(from decoder: Decoder) throws {
+extension SpansFilterExpression {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        field = try container.sdkDecodeIfPresent(.field)
-        self.operator = try container.sdkDecodeIfPresent(.operator)
-        value = try container.sdkDecodeIfPresent(.value)
-        expressions = try container.sdkDecodeIfPresent(.expressions)
-        query = try container.sdkDecodeIfPresent(.query)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.field = try container.sdkDecodeIfPresent(.field)
+        self.`operator` = try container.sdkDecodeIfPresent(.`operator`)
+        self.value = try container.sdkDecodeIfPresent(.value)
+        self.expressions = try container.sdkDecodeIfPresent(.expressions)
+        self.query = try container.sdkDecodeIfPresent(.query)
     }
 }
 
-public extension SpansFilterExpression {
-    init(
-        type: SpansFilterExpressionType,
-        field: SpansFilterField? = nil,
-        operator: SpansFilterExpressionOperator? = nil,
-        value: SpansFilterValue? = nil,
-        expressions: [SpansFilterExpression]? = nil,
-        query: String? = nil
-    ) {
+extension SpansFilterExpression {
+    public init(type: SpansFilterExpressionType, field: SpansFilterField? = nil, `operator`: SpansFilterExpressionOperator? = nil, value: SpansFilterValue? = nil, expressions: [SpansFilterExpression]? = nil, query: String? = nil) {
         (self.type, self.field) = (type, field)
-        (self.operator, self.value) = (`operator`, value)
+        (self.`operator`, self.value) = (`operator`, value)
         (self.expressions, self.query) = (expressions, query)
     }
 }
@@ -155,19 +126,19 @@ public struct SpansPaginationResponse: Codable {
     }
 
     init() {
-        hasMore = nil
+        self.hasMore = nil
     }
 }
 
-public extension SpansPaginationResponse {
-    init(from decoder: Decoder) throws {
+extension SpansPaginationResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
     }
 }
 
-public extension SpansPaginationResponse {
-    init(hasMore: Bool? = nil) {
+extension SpansPaginationResponse {
+    public init(hasMore: Bool? = nil) {
         self.init()
         self.hasMore = hasMore
     }
@@ -181,38 +152,24 @@ public indirect enum SpansFilterValueVariant4Value {
 }
 
 extension SpansFilterValueVariant4Value: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for SpansFilterValueVariant4Value"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for SpansFilterValueVariant4Value")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension SpansFilterValueVariant4Value {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) {
-            return .stringValue(value)
-        }
-        if let value = try? container.decode(Double.self) {
-            return .doubleValue(value)
-        }
-        if let value = try? container.decode(Bool.self) {
-            return .boolValue(value)
-        }
-        if let value = try? container.decode([String].self) {
-            return .stringList(value)
-        }
+        if let value = try? container.decode(String.self) { return .stringValue(value) }
+        if let value = try? container.decode(Double.self) { return .doubleValue(value) }
+        if let value = try? container.decode(Bool.self) { return .boolValue(value) }
+        if let value = try? container.decode([String].self) { return .stringList(value) }
         return nil
     }
 }
@@ -255,28 +212,22 @@ public struct SpansFilterField: Codable {
         case scope
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SpansFilterField {
-    init(from decoder: Decoder) throws {
+extension SpansFilterField {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        scope = try container.sdkDecodeIfPresent(.scope)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.scope = try container.sdkDecodeIfPresent(.scope)
     }
 }
 
-public extension SpansFilterField {
-    init(name: String, scope: SpansFilterFieldScope? = nil) {
+extension SpansFilterField {
+    public init(name: String, scope: SpansFilterFieldScope? = nil) {
         (self.name, self.scope) = (name, scope)
     }
 }
@@ -298,20 +249,20 @@ public struct SpansTimeBound: Codable {
     }
 
     init() {
-        (relative, absolute) = (nil, nil)
+        (self.relative, self.absolute) = (nil, nil)
     }
 }
 
-public extension SpansTimeBound {
-    init(from decoder: Decoder) throws {
+extension SpansTimeBound {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        relative = try container.sdkDecodeIfPresent(.relative)
-        absolute = try container.sdkDecodeIfPresent(.absolute)
+        self.relative = try container.sdkDecodeIfPresent(.relative)
+        self.absolute = try container.sdkDecodeIfPresent(.absolute)
     }
 }
 
-public extension SpansTimeBound {
-    init(relative: String? = nil, absolute: String? = nil) {
+extension SpansTimeBound {
+    public init(relative: String? = nil, absolute: String? = nil) {
         self.init()
         (self.relative, self.absolute) = (relative, absolute)
     }
@@ -331,28 +282,22 @@ public struct SpansFilterValueVariant4: Codable {
         case type
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SpansFilterValueVariant4 {
-    init(from decoder: Decoder) throws {
+extension SpansFilterValueVariant4 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.value) else {
-            throw SdkValidationError(
-                field: "value",
-                code: "required",
-                message: "Validation failed for 'value': value is required"
-            )
+            throw SdkValidationError(field: "value", code: "required", message: "Validation failed for 'value': value is required")
         }
-        value = try container.sdkDecodeRequired(.value)
-        type = try container.sdkDecodeIfPresent(.type)
+        self.value = try container.sdkDecodeRequired(.value)
+        self.type = try container.sdkDecodeIfPresent(.type)
     }
 }
 
-public extension SpansFilterValueVariant4 {
-    init(value: SpansFilterValueVariant4Value, type: SpansFilterValueVariant4Type? = nil) {
+extension SpansFilterValueVariant4 {
+    public init(value: SpansFilterValueVariant4Value, type: SpansFilterValueVariant4Type? = nil) {
         (self.value, self.type) = (value, type)
     }
 }
@@ -369,35 +314,25 @@ public struct SpansTimeRange: Codable {
         case to
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SpansTimeRange {
-    init(from decoder: Decoder) throws {
+extension SpansTimeRange {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.from) else {
-            throw SdkValidationError(
-                field: "from",
-                code: "required",
-                message: "Validation failed for 'from': value is required"
-            )
+            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
         }
         guard container.contains(.to) else {
-            throw SdkValidationError(
-                field: "to",
-                code: "required",
-                message: "Validation failed for 'to': value is required"
-            )
+            throw SdkValidationError(field: "to", code: "required", message: "Validation failed for 'to': value is required")
         }
-        from = try container.sdkDecodeRequired(.from)
-        to = try container.sdkDecodeRequired(.to)
+        self.from = try container.sdkDecodeRequired(.from)
+        self.to = try container.sdkDecodeRequired(.to)
     }
 }
 
-public extension SpansTimeRange {
-    init(from: SpansTimeBound, to: SpansTimeBound) {
+extension SpansTimeRange {
+    public init(from: SpansTimeBound, to: SpansTimeBound) {
         (self.from, self.to) = (from, to)
     }
 }
@@ -415,20 +350,20 @@ public struct SpansSearchResponse: Codable {
     }
 
     init() {
-        (data, pagination) = (nil, nil)
+        (self.data, self.pagination) = (nil, nil)
     }
 }
 
-public extension SpansSearchResponse {
-    init(from decoder: Decoder) throws {
+extension SpansSearchResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        data = try container.sdkDecodeIfPresent(.data)
-        pagination = try container.sdkDecodeIfPresent(.pagination)
+        self.data = try container.sdkDecodeIfPresent(.data)
+        self.pagination = try container.sdkDecodeIfPresent(.pagination)
     }
 }
 
-public extension SpansSearchResponse {
-    init(data: [SpanRecord]? = nil, pagination: SpansPaginationResponse? = nil) {
+extension SpansSearchResponse {
+    public init(data: [SpanRecord]? = nil, pagination: SpansPaginationResponse? = nil) {
         self.init()
         (self.data, self.pagination) = (data, pagination)
     }
@@ -454,35 +389,24 @@ public struct SpansSearchRequest: Codable {
         case pagination
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SpansSearchRequest {
-    init(from decoder: Decoder) throws {
+extension SpansSearchRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.timeRange) else {
-            throw SdkValidationError(
-                field: "timeRange",
-                code: "required",
-                message: "Validation failed for 'timeRange': value is required"
-            )
+            throw SdkValidationError(field: "timeRange", code: "required", message: "Validation failed for 'timeRange': value is required")
         }
-        timeRange = try container.sdkDecodeRequired(.timeRange)
-        filter = try container.sdkDecodeIfPresent(.filter)
-        orderBy = try container.sdkDecodeIfPresent(.orderBy)
-        pagination = try container.sdkDecodeIfPresent(.pagination)
+        self.timeRange = try container.sdkDecodeRequired(.timeRange)
+        self.filter = try container.sdkDecodeIfPresent(.filter)
+        self.orderBy = try container.sdkDecodeIfPresent(.orderBy)
+        self.pagination = try container.sdkDecodeIfPresent(.pagination)
     }
 }
 
-public extension SpansSearchRequest {
-    init(
-        timeRange: SpansTimeRange,
-        filter: SpansFilterExpression? = nil,
-        orderBy: [SpansOrderBy]? = nil,
-        pagination: SpansPaginationRequest? = nil
-    ) {
+extension SpansSearchRequest {
+    public init(timeRange: SpansTimeRange, filter: SpansFilterExpression? = nil, orderBy: [SpansOrderBy]? = nil, pagination: SpansPaginationRequest? = nil) {
         (self.timeRange, self.filter) = (timeRange, filter)
         (self.orderBy, self.pagination) = (orderBy, pagination)
     }
@@ -501,28 +425,22 @@ public struct SpansOrderBy: Codable {
         case direction
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SpansOrderBy {
-    init(from decoder: Decoder) throws {
+extension SpansOrderBy {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.field) else {
-            throw SdkValidationError(
-                field: "field",
-                code: "required",
-                message: "Validation failed for 'field': value is required"
-            )
+            throw SdkValidationError(field: "field", code: "required", message: "Validation failed for 'field': value is required")
         }
-        field = try container.sdkDecodeRequired(.field)
-        direction = try container.sdkDecodeIfPresent(.direction)
+        self.field = try container.sdkDecodeRequired(.field)
+        self.direction = try container.sdkDecodeIfPresent(.direction)
     }
 }
 
-public extension SpansOrderBy {
-    init(field: SpansFilterField, direction: SpansOrderByDirection? = nil) {
+extension SpansOrderBy {
+    public init(field: SpansFilterField, direction: SpansOrderByDirection? = nil) {
         (self.field, self.direction) = (field, direction)
     }
 }
@@ -538,42 +456,26 @@ public struct SpansPaginationRequest: Codable {
     }
 
     init() {
-        limit = nil
+        self.limit = nil
     }
 }
 
-public extension SpansPaginationRequest {
-    init(from decoder: Decoder) throws {
+extension SpansPaginationRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        limit = try container.sdkDecodeIfPresent(.limit)
-        if let value = limit {
-            try validateRange(
-                "limit",
-                Double(value),
-                min: 1,
-                max: 1000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.limit = try container.sdkDecodeIfPresent(.limit)
+        if let value = self.limit {
+            try validateRange("limit", Double(value), min: 1, max: 1000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
-public extension SpansPaginationRequest {
-    init(limit: Int? = nil) throws {
+extension SpansPaginationRequest {
+    public init(limit: Int? = nil) throws {
         self.init()
         self.limit = limit
         if let value = self.limit {
-            try validateRange(
-                "limit",
-                Double(value),
-                min: 1,
-                max: 1000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("limit", Double(value), min: 1, max: 1000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -583,16 +485,13 @@ public extension SpansPaginationRequest {
 public struct SpansFilterFieldScope: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let resource = SpansFilterFieldScope(rawValue: "resource")
     public static let attributes = SpansFilterFieldScope(rawValue: "attributes")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -605,10 +504,7 @@ public struct SpansFilterFieldScope: RawRepresentable, Hashable, Codable, Sendab
 public struct SpansFilterValueVariant4Type: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let string = SpansFilterValueVariant4Type(rawValue: "string")
     public static let number = SpansFilterValueVariant4Type(rawValue: "number")
     public static let bool = SpansFilterValueVariant4Type(rawValue: "bool")
@@ -616,7 +512,7 @@ public struct SpansFilterValueVariant4Type: RawRepresentable, Hashable, Codable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

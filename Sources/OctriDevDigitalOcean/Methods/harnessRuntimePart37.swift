@@ -6,7 +6,7 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension HarnessRuntimeMethods {
+extension HarnessRuntimeMethods {
     /// Keyset-paginated. The large `payload` field is omitted from list items; fetch a single execution to read it.
     ///
     /// - Parameters:
@@ -16,38 +16,16 @@ public extension HarnessRuntimeMethods {
     /// - pageToken: Opaque keyset cursor returned by the previous page. Empty
     ///   starts from the beginning.
     /// - status: Optional filter by execution status.
-    static func harnessListTriggerExecutions(
-        config: ClientConfig,
-        triggerId: String,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        status: TriggerExecutionStatus? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ListTriggerExecutionsResponse {
-        if let pageSize {
+    public static func harnessListTriggerExecutions(config: ClientConfig, triggerId: String, pageSize: Int? = nil, pageToken: String? = nil, status: TriggerExecutionStatus? = nil, requestOptions: RequestOptions? = nil) async throws -> ListTriggerExecutionsResponse {
+        if let pageSize = pageSize {
             try validateRange("page_size", Double(pageSize), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/agents/triggers/", sdkEncodePathSegment(sdkWireString(triggerId)), "/executions"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("page_size", value: pageSize),
-                SdkQueryParameter("page_token", value: pageToken),
-                SdkQueryParameter("status", value: status),
-            ],
-            decoder: .json,
-            operationId: "harness_list_trigger_executions",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/agents/triggers/", sdkEncodePathSegment(sdkWireString(triggerId)), "/executions"].joined(), config: config, query: [
+            SdkQueryParameter("page_size", value: pageSize),
+            SdkQueryParameter("page_token", value: pageToken),
+            SdkQueryParameter("status", value: status),
+        ], decoder: .json, operationId: "harness_list_trigger_executions", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// Keyset-paginated. The large `payload` field is omitted from list items; fetch a single execution to read it.
@@ -59,40 +37,17 @@ public extension HarnessRuntimeMethods {
     /// - pageToken: Opaque keyset cursor returned by the previous page. Empty
     ///   starts from the beginning.
     /// - status: Optional filter by execution status.
-    static func harnessListTriggerExecutionsPaginated(
-        config: ClientConfig,
-        triggerId: String,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        status: TriggerExecutionStatus? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<TriggerExecution, Swift.Error> {
-        AsyncThrowingStream<TriggerExecution, Swift.Error> { (continuation: AsyncThrowingStream<
-            TriggerExecution,
-            Swift.Error
-        >.Continuation) in
+    public static func harnessListTriggerExecutionsPaginated(config: ClientConfig, triggerId: String, pageSize: Int? = nil, pageToken: String? = nil, status: TriggerExecutionStatus? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<TriggerExecution, Swift.Error> {
+        return AsyncThrowingStream<TriggerExecution, Swift.Error> { (continuation: AsyncThrowingStream<TriggerExecution, Swift.Error>.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await harnessListTriggerExecutions(
-                            config: config,
-                            triggerId: triggerId,
-                            pageSize: pageSize,
-                            pageToken: pageCursor,
-                            status: status,
-                            requestOptions: requestOptions
-                        )
+                        let pageResponse = try await harnessListTriggerExecutions(config: config, triggerId: triggerId, pageSize: pageSize, pageToken: pageCursor, status: status, requestOptions: requestOptions)
                         let pageItems = (pageResponse.executions ?? [])
-                        if pageItems.isEmpty {
-                            break
-                        }
-                        for item in pageItems {
-                            continuation.yield(item)
-                        }
-                        guard let nextCursor = pageResponse.nextPageToken else {
-                            break
-                        }
+                        if pageItems.isEmpty { break }
+                        for item in pageItems { continuation.yield(item) }
+                        guard let nextCursor = pageResponse.nextPageToken else { break }
                         pageCursor = nextCursor
                     }
                 } catch {
@@ -105,52 +60,25 @@ public extension HarnessRuntimeMethods {
         }
     }
 
-    struct HarnessListTriggerExecutionsPage {
+    public struct HarnessListTriggerExecutionsPage {
         public let data: ListTriggerExecutionsResponse
         public let items: [TriggerExecution]
         public let hasMore: Bool
     }
 
-    static func harnessListTriggerExecutionsPages(
-        config: ClientConfig,
-        triggerId: String,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        status: TriggerExecutionStatus? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<HarnessListTriggerExecutionsPage, Swift.Error> {
-        AsyncThrowingStream<HarnessListTriggerExecutionsPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<
-            HarnessListTriggerExecutionsPage,
-            Swift.Error
-        >.Continuation) in
+    public static func harnessListTriggerExecutionsPages(config: ClientConfig, triggerId: String, pageSize: Int? = nil, pageToken: String? = nil, status: TriggerExecutionStatus? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<HarnessListTriggerExecutionsPage, Swift.Error> {
+        return AsyncThrowingStream<HarnessListTriggerExecutionsPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<HarnessListTriggerExecutionsPage, Swift.Error>.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await harnessListTriggerExecutions(
-                            config: config,
-                            triggerId: triggerId,
-                            pageSize: pageSize,
-                            pageToken: pageCursor,
-                            status: status,
-                            requestOptions: requestOptions
-                        )
+                        let pageResponse = try await harnessListTriggerExecutions(config: config, triggerId: triggerId, pageSize: pageSize, pageToken: pageCursor, status: status, requestOptions: requestOptions)
                         let pageItems = (pageResponse.executions ?? [])
-                        if pageItems.isEmpty {
-                            break
-                        }
+                        if pageItems.isEmpty { break }
                         let hasMore = pageResponse.nextPageToken != nil
-                        pageContinuation.yield(HarnessListTriggerExecutionsPage(
-                            data: pageResponse,
-                            items: pageItems,
-                            hasMore: hasMore
-                        ))
-                        if !hasMore {
-                            break
-                        }
-                        guard let nextCursor = pageResponse.nextPageToken else {
-                            break
-                        }
+                        pageContinuation.yield(HarnessListTriggerExecutionsPage(data: pageResponse, items: pageItems, hasMore: hasMore))
+                        if !hasMore { break }
+                        guard let nextCursor = pageResponse.nextPageToken else { break }
                         pageCursor = nextCursor
                     }
                 } catch {

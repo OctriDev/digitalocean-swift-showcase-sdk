@@ -6,56 +6,20 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension BillingMethods {
+extension BillingMethods {
     /// To retrieve a PDF for an invoice, send a GET request to `/v2/customers/my/invoices/$INVOICE_UUID/pdf`.
     ///
     /// - Parameters:
     /// - invoiceUuid: UUID of the invoice
-    static func invoicesGetPdfByUuid(
-        config: ClientConfig,
-        invoiceUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Data {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/customers/my/invoices/", sdkEncodePathSegment(sdkWireString(invoiceUuid)), "/pdf"].joined(),
-            config: config,
-            decoder: .bytes,
-            operationId: "invoices_get_pdfByUUID",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func invoicesGetPdfByUuid(config: ClientConfig, invoiceUuid: String, requestOptions: RequestOptions? = nil) async throws -> Data {
+        return try (await sdkRequest("GET", ["/v2/customers/my/invoices/", sdkEncodePathSegment(sdkWireString(invoiceUuid)), "/pdf"].joined(), config: config, decoder: .bytes, operationId: "invoices_get_pdfByUUID", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To retrieve a summary for an invoice, send a GET request to `/v2/customers/my/invoices/$INVOICE_UUID/summary`.
     ///
     /// - Parameters:
     /// - invoiceUuid: UUID of the invoice
-    static func invoicesGetSummaryByUuid(
-        config: ClientConfig,
-        invoiceUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> InvoiceSummary {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/customers/my/invoices/", sdkEncodePathSegment(sdkWireString(invoiceUuid)), "/summary"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "invoices_get_summaryByUUID",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func invoicesGetSummaryByUuid(config: ClientConfig, invoiceUuid: String, requestOptions: RequestOptions? = nil) async throws -> InvoiceSummary {
+        return try (await sdkRequest("GET", ["/v2/customers/my/invoices/", sdkEncodePathSegment(sdkWireString(invoiceUuid)), "/summary"].joined(), config: config, decoder: .json, operationId: "invoices_get_summaryByUUID", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

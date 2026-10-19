@@ -3,70 +3,39 @@
 
 import Foundation
 
-/// AddOns domain models
-public extension AddonsDimensionWithPrice {
-    init(from decoder: Decoder) throws {
+// AddOns domain models
+extension AddonsDimensionWithPrice {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.sku) else {
-            throw SdkValidationError(
-                field: "sku",
-                code: "required",
-                message: "Validation failed for 'sku': value is required"
-            )
+            throw SdkValidationError(field: "sku", code: "required", message: "Validation failed for 'sku': value is required")
         }
         guard container.contains(.slug) else {
-            throw SdkValidationError(
-                field: "slug",
-                code: "required",
-                message: "Validation failed for 'slug': value is required"
-            )
+            throw SdkValidationError(field: "slug", code: "required", message: "Validation failed for 'slug': value is required")
         }
         guard container.contains(.displayName) else {
-            throw SdkValidationError(
-                field: "display_name",
-                code: "required",
-                message: "Validation failed for 'display_name': value is required"
-            )
+            throw SdkValidationError(field: "display_name", code: "required", message: "Validation failed for 'display_name': value is required")
         }
         guard container.contains(.featureName) else {
-            throw SdkValidationError(
-                field: "feature_name",
-                code: "required",
-                message: "Validation failed for 'feature_name': value is required"
-            )
+            throw SdkValidationError(field: "feature_name", code: "required", message: "Validation failed for 'feature_name': value is required")
         }
         guard container.contains(.volumes) else {
-            throw SdkValidationError(
-                field: "volumes",
-                code: "required",
-                message: "Validation failed for 'volumes': value is required"
-            )
+            throw SdkValidationError(field: "volumes", code: "required", message: "Validation failed for 'volumes': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        sku = try container.sdkDecodeRequired(.sku)
-        slug = try container.sdkDecodeRequired(.slug)
-        displayName = try container.sdkDecodeRequired(.displayName)
-        featureName = try container.sdkDecodeRequired(.featureName)
-        volumes = try container.sdkDecodeRequired(.volumes)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.sku = try container.sdkDecodeRequired(.sku)
+        self.slug = try container.sdkDecodeRequired(.slug)
+        self.displayName = try container.sdkDecodeRequired(.displayName)
+        self.featureName = try container.sdkDecodeRequired(.featureName)
+        self.volumes = try container.sdkDecodeRequired(.volumes)
     }
 }
 
-public extension AddonsDimensionWithPrice {
-    init(
-        id: Int,
-        sku: String,
-        slug: String,
-        displayName: String,
-        featureName: String,
-        volumes: [AddonsDimensionVolumeWithPrice]
-    ) {
+extension AddonsDimensionWithPrice {
+    public init(id: Int, sku: String, slug: String, displayName: String, featureName: String, volumes: [AddonsDimensionVolumeWithPrice]) {
         (self.id, self.sku) = (id, sku)
         (self.slug, self.displayName) = (slug, displayName)
         (self.featureName, self.volumes) = (featureName, volumes)
@@ -107,84 +76,50 @@ public struct AddonsFeature: Codable {
         case unit
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AddonsFeature {
-    init(from decoder: Decoder) throws {
+extension AddonsFeature {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.value) else {
-            throw SdkValidationError(
-                field: "value",
-                code: "required",
-                message: "Validation failed for 'value': value is required"
-            )
+            throw SdkValidationError(field: "value", code: "required", message: "Validation failed for 'value': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.updatedAt) else {
-            throw SdkValidationError(
-                field: "updated_at",
-                code: "required",
-                message: "Validation failed for 'updated_at': value is required"
-            )
+            throw SdkValidationError(field: "updated_at", code: "required", message: "Validation failed for 'updated_at': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        name = try container.sdkDecodeRequired(.name)
-        type = try container.sdkDecodeRequired(.type)
-        value = try container.sdkDecodeRequired(.value)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        unit = try container.sdkDecodeIfPresent(.unit)
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
-        try sdkValidateDateTime("updated_at", sdkWireString(updatedAt))
+        self.id = try container.sdkDecodeRequired(.id)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.value = try container.sdkDecodeRequired(.value)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
+        self.unit = try container.sdkDecodeIfPresent(.unit)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
-public extension AddonsFeature {
-    init(
-        id: Int,
-        name: String,
-        type: AddonsFeatureType,
-        value: AddonsFeatureValue,
-        createdAt: Date,
-        updatedAt: Date,
-        unit: AddonsFeatureUnit? = nil
-    ) throws {
+extension AddonsFeature {
+    public init(id: Int, name: String, type: AddonsFeatureType, value: AddonsFeatureValue, createdAt: Date, updatedAt: Date, unit: AddonsFeatureUnit? = nil) throws {
         (self.id, self.name) = (id, name)
         (self.type, self.value) = (type, value)
         (self.createdAt, self.updatedAt) = (createdAt, updatedAt)
         self.unit = unit
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-        try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
@@ -209,51 +144,33 @@ public struct AddonsAppInfo: Codable {
         case plans
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AddonsAppInfo {
-    init(from decoder: Decoder) throws {
+extension AddonsAppInfo {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.appSlug) else {
-            throw SdkValidationError(
-                field: "app_slug",
-                code: "required",
-                message: "Validation failed for 'app_slug': value is required"
-            )
+            throw SdkValidationError(field: "app_slug", code: "required", message: "Validation failed for 'app_slug': value is required")
         }
         guard container.contains(.tos) else {
-            throw SdkValidationError(
-                field: "tos",
-                code: "required",
-                message: "Validation failed for 'tos': value is required"
-            )
+            throw SdkValidationError(field: "tos", code: "required", message: "Validation failed for 'tos': value is required")
         }
         guard container.contains(.eula) else {
-            throw SdkValidationError(
-                field: "eula",
-                code: "required",
-                message: "Validation failed for 'eula': value is required"
-            )
+            throw SdkValidationError(field: "eula", code: "required", message: "Validation failed for 'eula': value is required")
         }
         guard container.contains(.plans) else {
-            throw SdkValidationError(
-                field: "plans",
-                code: "required",
-                message: "Validation failed for 'plans': value is required"
-            )
+            throw SdkValidationError(field: "plans", code: "required", message: "Validation failed for 'plans': value is required")
         }
-        appSlug = try container.sdkDecodeRequired(.appSlug)
-        tos = try container.sdkDecodeRequired(.tos)
-        eula = try container.sdkDecodeRequired(.eula)
-        plans = try container.sdkDecodeRequired(.plans)
+        self.appSlug = try container.sdkDecodeRequired(.appSlug)
+        self.tos = try container.sdkDecodeRequired(.tos)
+        self.eula = try container.sdkDecodeRequired(.eula)
+        self.plans = try container.sdkDecodeRequired(.plans)
     }
 }
 
-public extension AddonsAppInfo {
-    init(appSlug: String, tos: String, eula: String, plans: [AddonsPlan]) {
+extension AddonsAppInfo {
+    public init(appSlug: String, tos: String, eula: String, plans: [AddonsPlan]) {
         (self.appSlug, self.tos) = (appSlug, tos)
         (self.eula, self.plans) = (eula, plans)
     }
@@ -269,19 +186,19 @@ public struct AddonsCreate: Codable {
     }
 
     init() {
-        resource = nil
+        self.resource = nil
     }
 }
 
-public extension AddonsCreate {
-    init(from decoder: Decoder) throws {
+extension AddonsCreate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        resource = try container.sdkDecodeIfPresent(.resource)
+        self.resource = try container.sdkDecodeIfPresent(.resource)
     }
 }
 
-public extension AddonsCreate {
-    init(resource: AddonsResource? = nil) {
+extension AddonsCreate {
+    public init(resource: AddonsResource? = nil) {
         self.init()
         self.resource = resource
     }
@@ -340,86 +257,47 @@ public struct AddonsResource: Codable {
         case message
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AddonsResource {
-    init(from decoder: Decoder) throws {
+extension AddonsResource {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.uuid) else {
-            throw SdkValidationError(
-                field: "uuid",
-                code: "required",
-                message: "Validation failed for 'uuid': value is required"
-            )
+            throw SdkValidationError(field: "uuid", code: "required", message: "Validation failed for 'uuid': value is required")
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.state) else {
-            throw SdkValidationError(
-                field: "state",
-                code: "required",
-                message: "Validation failed for 'state': value is required"
-            )
+            throw SdkValidationError(field: "state", code: "required", message: "Validation failed for 'state': value is required")
         }
         guard container.contains(.appSlug) else {
-            throw SdkValidationError(
-                field: "app_slug",
-                code: "required",
-                message: "Validation failed for 'app_slug': value is required"
-            )
+            throw SdkValidationError(field: "app_slug", code: "required", message: "Validation failed for 'app_slug': value is required")
         }
         guard container.contains(.planSlug) else {
-            throw SdkValidationError(
-                field: "plan_slug",
-                code: "required",
-                message: "Validation failed for 'plan_slug': value is required"
-            )
+            throw SdkValidationError(field: "plan_slug", code: "required", message: "Validation failed for 'plan_slug': value is required")
         }
         guard container.contains(.hasConfig) else {
-            throw SdkValidationError(
-                field: "has_config",
-                code: "required",
-                message: "Validation failed for 'has_config': value is required"
-            )
+            throw SdkValidationError(field: "has_config", code: "required", message: "Validation failed for 'has_config': value is required")
         }
-        uuid = try container.sdkDecodeRequired(.uuid)
-        name = try container.sdkDecodeRequired(.name)
-        state = try container.sdkDecodeRequired(.state)
-        appSlug = try container.sdkDecodeRequired(.appSlug)
-        planSlug = try container.sdkDecodeRequired(.planSlug)
-        hasConfig = try container.sdkDecodeRequired(.hasConfig)
-        appName = try container.sdkDecodeIfPresent(.appName)
-        planName = try container.sdkDecodeIfPresent(.planName)
-        planPricePerMonth = try container.sdkDecodeIfPresent(.planPricePerMonth)
-        metadata = try container.sdkDecodeIfPresent(.metadata)
-        ssoUrl = try container.sdkDecodeIfPresent(.ssoUrl)
-        message = try container.sdkDecodeIfPresent(.message)
+        self.uuid = try container.sdkDecodeRequired(.uuid)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.state = try container.sdkDecodeRequired(.state)
+        self.appSlug = try container.sdkDecodeRequired(.appSlug)
+        self.planSlug = try container.sdkDecodeRequired(.planSlug)
+        self.hasConfig = try container.sdkDecodeRequired(.hasConfig)
+        self.appName = try container.sdkDecodeIfPresent(.appName)
+        self.planName = try container.sdkDecodeIfPresent(.planName)
+        self.planPricePerMonth = try container.sdkDecodeIfPresent(.planPricePerMonth)
+        self.metadata = try container.sdkDecodeIfPresent(.metadata)
+        self.ssoUrl = try container.sdkDecodeIfPresent(.ssoUrl)
+        self.message = try container.sdkDecodeIfPresent(.message)
     }
 }
 
-public extension AddonsResource {
-    init(
-        uuid: String,
-        name: String,
-        state: AddonsResourceState,
-        appSlug: String,
-        planSlug: String,
-        hasConfig: Bool,
-        appName: String? = nil,
-        planName: String? = nil,
-        planPricePerMonth: Int? = nil,
-        metadata: [AddonsResourceMetadata]? = nil,
-        ssoUrl: String? = nil,
-        message: String? = nil
-    ) {
+extension AddonsResource {
+    public init(uuid: String, name: String, state: AddonsResourceState, appSlug: String, planSlug: String, hasConfig: Bool, appName: String? = nil, planName: String? = nil, planPricePerMonth: Int? = nil, metadata: [AddonsResourceMetadata]? = nil, ssoUrl: String? = nil, message: String? = nil) {
         (self.uuid, self.name) = (uuid, name)
         (self.state, self.appSlug) = (state, appSlug)
         (self.planSlug, self.hasConfig) = (planSlug, hasConfig)
@@ -439,19 +317,19 @@ public struct AddonsGetApp: Codable {
     }
 
     init() {
-        apps = nil
+        self.apps = nil
     }
 }
 
-public extension AddonsGetApp {
-    init(from decoder: Decoder) throws {
+extension AddonsGetApp {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apps = try container.sdkDecodeIfPresent(.apps)
+        self.apps = try container.sdkDecodeIfPresent(.apps)
     }
 }
 
-public extension AddonsGetApp {
-    init(apps: [AddonsAppInfo]? = nil) {
+extension AddonsGetApp {
+    public init(apps: [AddonsAppInfo]? = nil) {
         self.init()
         self.apps = apps
     }
@@ -461,10 +339,7 @@ public extension AddonsGetApp {
 public struct AddonsFeatureType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let unknown = AddonsFeatureType(rawValue: "unknown")
     public static let string = AddonsFeatureType(rawValue: "string")
     public static let boolean = AddonsFeatureType(rawValue: "boolean")
@@ -472,7 +347,7 @@ public struct AddonsFeatureType: RawRepresentable, Hashable, Codable, Sendable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -485,16 +360,13 @@ public struct AddonsFeatureType: RawRepresentable, Hashable, Codable, Sendable, 
 public struct AddonsAppMetadataType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let string = AddonsAppMetadataType(rawValue: "string")
     public static let boolean = AddonsAppMetadataType(rawValue: "boolean")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -507,10 +379,7 @@ public struct AddonsAppMetadataType: RawRepresentable, Hashable, Codable, Sendab
 public struct AddonsPlanState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let unknown = AddonsPlanState(rawValue: "unknown")
     public static let draft = AddonsPlanState(rawValue: "draft")
     public static let inReview = AddonsPlanState(rawValue: "in_review")
@@ -520,7 +389,7 @@ public struct AddonsPlanState: RawRepresentable, Hashable, Codable, Sendable, Sd
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -533,10 +402,7 @@ public struct AddonsPlanState: RawRepresentable, Hashable, Codable, Sendable, Sd
 public struct AddonsResourceState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pending = AddonsResourceState(rawValue: "pending")
     public static let provisioning = AddonsResourceState(rawValue: "provisioning")
     public static let provisioned = AddonsResourceState(rawValue: "provisioned")
@@ -548,7 +414,7 @@ public struct AddonsResourceState: RawRepresentable, Hashable, Codable, Sendable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -561,10 +427,7 @@ public struct AddonsResourceState: RawRepresentable, Hashable, Codable, Sendable
 public struct AddonsFeatureUnit: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let unitUnknown = AddonsFeatureUnit(rawValue: "unit_unknown")
     public static let gb = AddonsFeatureUnit(rawValue: "GB")
     public static let gib = AddonsFeatureUnit(rawValue: "GIB")
@@ -574,7 +437,7 @@ public struct AddonsFeatureUnit: RawRepresentable, Hashable, Codable, Sendable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -6,42 +6,16 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AppsMethods {
-    /// Cancels an in-progress autoscaling event for a specified app. Use `app_id` and `event_id` to identify the event
-    /// to cancel. The response includes the event details after the cancellation request.
+extension AppsMethods {
+    /// Cancels an in-progress autoscaling event for a specified app. Use `app_id` and `event_id` to identify the event to cancel. The response includes the event details after the cancellation request.
     ///
     /// Cancel an in-progress autoscaling event.
     ///
     /// - Parameters:
     /// - appId: The app ID
     /// - eventId: The event ID
-    static func appsCancelEvent(
-        config: ClientConfig,
-        appId: String,
-        eventId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> CancelEvent {
-        try await (sdkRequest(
-            "POST",
-            [
-                "/v2/apps/",
-                sdkEncodePathSegment(sdkWireString(appId)),
-                "/events/",
-                sdkEncodePathSegment(sdkWireString(eventId)),
-                "/cancel",
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "apps_cancel_event",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func appsCancelEvent(config: ClientConfig, appId: String, eventId: String, requestOptions: RequestOptions? = nil) async throws -> CancelEvent {
+        return try (await sdkRequest("POST", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/events/", sdkEncodePathSegment(sdkWireString(eventId)), "/cancel"].joined(), config: config, decoder: .json, operationId: "apps_cancel_event", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// Retrieve the logs of an autoscaling event for an app.
@@ -56,40 +30,11 @@ public extension AppsMethods {
     /// - follow: Whether the logs should follow live updates.
     /// - podConnectionTimeout: An optional time duration to wait if the underlying
     ///   component instance is not immediately available. Default: `3m`.
-    static func appsGetEventLogs(
-        config: ClientConfig,
-        appId: String,
-        eventId: String,
-        type: AppsGetLogsActiveDeploymentParameter,
-        follow: Bool? = nil,
-        podConnectionTimeout: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppsGetLogsResponse {
-        try await (sdkRequest(
-            "GET",
-            [
-                "/v2/apps/",
-                sdkEncodePathSegment(sdkWireString(appId)),
-                "/events/",
-                sdkEncodePathSegment(sdkWireString(eventId)),
-                "/logs",
-            ].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("type", value: type),
-                SdkQueryParameter("follow", value: follow),
-                SdkQueryParameter("pod_connection_timeout", value: podConnectionTimeout),
-            ],
-            decoder: .json,
-            operationId: "apps_get_event_logs",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func appsGetEventLogs(config: ClientConfig, appId: String, eventId: String, type: AppsGetLogsActiveDeploymentParameter, follow: Bool? = nil, podConnectionTimeout: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsGetLogsResponse {
+        return try (await sdkRequest("GET", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/events/", sdkEncodePathSegment(sdkWireString(eventId)), "/logs"].joined(), config: config, query: [
+            SdkQueryParameter("type", value: type),
+            SdkQueryParameter("follow", value: follow),
+            SdkQueryParameter("pod_connection_timeout", value: podConnectionTimeout),
+        ], decoder: .json, operationId: "apps_get_event_logs", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

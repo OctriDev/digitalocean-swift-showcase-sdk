@@ -6,29 +6,29 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ServerlessInferenceMethods {
-    struct InferenceCreateChatCompletionStreamOptions {
+extension ServerlessInferenceMethods {
+    public struct InferenceCreateChatCompletionStreamOptions {
         public var messages: [ChatMessage]
         public var model: String
         public var stream: Bool?
-        public var maxTokens: SdkOptional<Int>?
-        public var maxCompletionTokens: SdkOptional<Int>?
-        public var frequencyPenalty: SdkOptional<Double>?
-        public var presencePenalty: SdkOptional<Double>?
-        public var topLogprobs: SdkOptional<Int>?
-        public var tools: [ChatCompletionTool]?
-        public var toolChoice: ChatCompletionRequestToolChoice?
-        public var stop: ChatCompletionRequestStop?
-        public var logitBias: SdkOptional<[String: Int]>?
-        public var logprobs: SdkOptional<Bool>?
-        public var n: SdkOptional<Int>?
-        public var streamOptions: SdkOptional<ChatCompletionRequestStreamOptions>?
-        public var reasoningEffort: SdkOptional<ChatCompletionRequestReasoningEffort>?
-        public var seed: SdkOptional<Int>?
-        public var metadata: SdkOptional<[String: String]>?
-        public var temperature: SdkOptional<Double>?
-        public var topP: SdkOptional<Double>?
-        public var user: String?
+        public var maxTokens: SdkOptional<Int>? = nil
+        public var maxCompletionTokens: SdkOptional<Int>? = nil
+        public var frequencyPenalty: SdkOptional<Double>? = nil
+        public var presencePenalty: SdkOptional<Double>? = nil
+        public var topLogprobs: SdkOptional<Int>? = nil
+        public var tools: [ChatCompletionTool]? = nil
+        public var toolChoice: ChatCompletionRequestToolChoice? = nil
+        public var stop: ChatCompletionRequestStop? = nil
+        public var logitBias: SdkOptional<[String: Int]>? = nil
+        public var logprobs: SdkOptional<Bool>? = nil
+        public var n: SdkOptional<Int>? = nil
+        public var streamOptions: SdkOptional<ChatCompletionRequestStreamOptions>? = nil
+        public var reasoningEffort: SdkOptional<ChatCompletionRequestReasoningEffort>? = nil
+        public var seed: SdkOptional<Int>? = nil
+        public var metadata: SdkOptional<[String: String]>? = nil
+        public var temperature: SdkOptional<Double>? = nil
+        public var topP: SdkOptional<Double>? = nil
+        public var user: String? = nil
 
         public init(messages: [ChatMessage], model: String, stream: Bool?) {
             self.messages = messages
@@ -106,12 +106,9 @@ public extension ServerlessInferenceMethods {
     ///   temperature but not both.
     /// - user: A unique identifier representing your end-user, which can help
     ///   DigitalOcean to monitor and detect abuse.
-    static func inferenceCreateChatCompletionStream(
-        config: ClientConfig,
-        options: InferenceCreateChatCompletionStreamOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AsyncThrowingStream<ChatCompletionChunk, Swift.Error> {
+    public static func inferenceCreateChatCompletionStream(config: ClientConfig, options: InferenceCreateChatCompletionStreamOptions, requestOptions: RequestOptions? = nil) async throws -> AsyncThrowingStream<ChatCompletionChunk, Swift.Error> {
         let requestBody = InferenceCreateChatCompletionStreamStreamRequestBody(options: options)
+
 
         let upstream = try await sdkStream(
             "POST",
@@ -133,11 +130,8 @@ public extension ServerlessInferenceMethods {
                             continuation.finish()
                             return
                         }
-                        let payload = try sdkDecodeBody(Data(event.data.utf8)) { try sdkJsonDecoder().decode(
-                            ChatCompletionChunk.self,
-                            from: Data(event.data.utf8)
-                        ) }
-
+                        let payload = try sdkDecodeBody(Data(event.data.utf8)) { try sdkJsonDecoder().decode(ChatCompletionChunk.self, from: Data(event.data.utf8)) }
+                        
                         continuation.yield(payload)
                     }
                     continuation.finish()

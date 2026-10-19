@@ -7,33 +7,25 @@ import Foundation
     import FoundationNetworking
 #endif
 
-/// Canonical blockStorage operation model declarations
+// Canonical blockStorage operation model declarations
 public indirect enum VolumesCreateRequestBody {
     case volumesExt4Request(VolumesExt4Request)
     case volumesXfs(VolumesXfs)
 }
 
 extension VolumesCreateRequestBody: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for VolumesCreateRequestBody"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for VolumesCreateRequestBody")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -51,12 +43,8 @@ extension VolumesCreateRequestBody {
 
 extension VolumesCreateRequestBody {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(VolumesExt4Request.self) {
-            return .volumesExt4Request(value)
-        }
-        if let value = try? container.decode(VolumesXfs.self) {
-            return .volumesXfs(value)
-        }
+        if let value = try? container.decode(VolumesExt4Request.self) { return .volumesExt4Request(value) }
+        if let value = try? container.decode(VolumesXfs.self) { return .volumesXfs(value) }
         return nil
     }
 }

@@ -6,56 +6,30 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension VpcsMethods {
-    /// To list all of the resources that are members of a VPC, send a GET request to `/v2/vpcs/$VPC_ID/members`. To
-    /// only list resources of a specific type that are members of the VPC, included a `resource_type` query parameter.
-    /// For example, to only list Droplets in the VPC, send a GET request to
-    /// `/v2/vpcs/$VPC_ID/members?resource_type=droplet`. Only resources that you are authorized to see will be returned
-    /// (e.g. to see Droplets, you must have `droplet:read`).
+extension VpcsMethods {
+    /// To list all of the resources that are members of a VPC, send a GET request to `/v2/vpcs/$VPC_ID/members`. To only list resources of a specific type that are members of the VPC, included a `resource_type` query parameter. For example, to only list Droplets in the VPC, send a GET request to `/v2/vpcs/$VPC_ID/members?resource_type=droplet`. Only resources that you are authorized to see will be returned (e.g. to see Droplets, you must have `droplet:read`).
     ///
     /// - Parameters:
     /// - vpcId: A unique identifier for a VPC.
     /// - resourceType: Used to filter VPC members by a resource type.
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func vpcsListMembers(
-        config: ClientConfig,
-        vpcId: String,
-        resourceType: VpcsListMembersParameter? = nil,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VpcMembers {
+    public static func vpcsListMembers(config: ClientConfig, vpcId: String, resourceType: VpcsListMembersParameter? = nil, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> VpcMembers {
         try sdkValidateUuid("vpc_id", vpcId)
 
-        if let perPage {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcId)), "/members"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("resource_type", value: resourceType),
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "vpcs_list_members",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcId)), "/members"].joined(), config: config, query: [
+            SdkQueryParameter("resource_type", value: resourceType),
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "vpcs_list_members", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To list all of a VPC's peerings, send a GET request to `/v2/vpcs/$VPC_ID/peerings`.
@@ -64,41 +38,20 @@ public extension VpcsMethods {
     /// - vpcId: A unique identifier for a VPC.
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func vpcsListPeerings(
-        config: ClientConfig,
-        vpcId: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VpcPeerings {
+    public static func vpcsListPeerings(config: ClientConfig, vpcId: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> VpcPeerings {
         try sdkValidateUuid("vpc_id", vpcId)
 
-        if let perPage {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcId)), "/peerings"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "vpcs_list_peerings",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcId)), "/peerings"].joined(), config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "vpcs_list_peerings", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

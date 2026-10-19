@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiIndexed domain models
+// AgentPlatformAPIApiIndexed domain models
 /// Typed representation of the `ApiIndexedDataSource` API schema.
 public struct ApiIndexedDataSource: Codable {
     /// Timestamp when data source completed indexing
@@ -67,55 +67,40 @@ public struct ApiIndexedDataSource: Codable {
     }
 
     init() {
-        (completedAt, dataSourceUuid, errorDetails, errorMsg, failedItemCount) = (nil, nil, nil, nil, nil)
-        (indexedFileCount, indexedItemCount, removedItemCount, skippedItemCount, startedAt) = (nil, nil, nil, nil, nil)
-        (status, totalBytes, totalBytesIndexed, totalFileCount) = (nil, nil, nil, nil)
+        (self.completedAt, self.dataSourceUuid, self.errorDetails, self.errorMsg, self.failedItemCount) = (nil, nil, nil, nil, nil)
+        (self.indexedFileCount, self.indexedItemCount, self.removedItemCount, self.skippedItemCount, self.startedAt) = (nil, nil, nil, nil, nil)
+        (self.status, self.totalBytes, self.totalBytesIndexed, self.totalFileCount) = (nil, nil, nil, nil)
     }
 }
 
-public extension ApiIndexedDataSource {
-    init(from decoder: Decoder) throws {
+extension ApiIndexedDataSource {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        dataSourceUuid = try container.sdkDecodeIfPresent(.dataSourceUuid)
-        errorDetails = try container.sdkDecodeIfPresent(.errorDetails)
-        errorMsg = try container.sdkDecodeIfPresent(.errorMsg)
-        failedItemCount = try container.sdkDecodeIfPresent(.failedItemCount)
-        indexedFileCount = try container.sdkDecodeIfPresent(.indexedFileCount)
-        indexedItemCount = try container.sdkDecodeIfPresent(.indexedItemCount)
-        removedItemCount = try container.sdkDecodeIfPresent(.removedItemCount)
-        skippedItemCount = try container.sdkDecodeIfPresent(.skippedItemCount)
-        startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        status = try container.sdkDecodeIfPresent(.status)
-        totalBytes = try container.sdkDecodeIfPresent(.totalBytes)
-        totalBytesIndexed = try container.sdkDecodeIfPresent(.totalBytesIndexed)
-        totalFileCount = try container.sdkDecodeIfPresent(.totalFileCount)
-        if let value = completedAt {
+        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        self.dataSourceUuid = try container.sdkDecodeIfPresent(.dataSourceUuid)
+        self.errorDetails = try container.sdkDecodeIfPresent(.errorDetails)
+        self.errorMsg = try container.sdkDecodeIfPresent(.errorMsg)
+        self.failedItemCount = try container.sdkDecodeIfPresent(.failedItemCount)
+        self.indexedFileCount = try container.sdkDecodeIfPresent(.indexedFileCount)
+        self.indexedItemCount = try container.sdkDecodeIfPresent(.indexedItemCount)
+        self.removedItemCount = try container.sdkDecodeIfPresent(.removedItemCount)
+        self.skippedItemCount = try container.sdkDecodeIfPresent(.skippedItemCount)
+        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.totalBytes = try container.sdkDecodeIfPresent(.totalBytes)
+        self.totalBytesIndexed = try container.sdkDecodeIfPresent(.totalBytesIndexed)
+        self.totalFileCount = try container.sdkDecodeIfPresent(.totalFileCount)
+        if let value = self.completedAt {
             try sdkValidateDateTime("completed_at", sdkWireString(value))
         }
-        if let value = startedAt {
+        if let value = self.startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApiIndexedDataSource {
-    init(
-        completedAt: Date? = nil,
-        dataSourceUuid: String? = nil,
-        errorDetails: String? = nil,
-        errorMsg: String? = nil,
-        failedItemCount: String? = nil,
-        indexedFileCount: String? = nil,
-        indexedItemCount: String? = nil,
-        removedItemCount: String? = nil,
-        skippedItemCount: String? = nil,
-        startedAt: Date? = nil,
-        status: ApiIndexedDataSourceStatus? = nil,
-        totalBytes: String? = nil,
-        totalBytesIndexed: String? = nil,
-        totalFileCount: String? = nil
-    ) throws {
+extension ApiIndexedDataSource {
+    public init(completedAt: Date? = nil, dataSourceUuid: String? = nil, errorDetails: String? = nil, errorMsg: String? = nil, failedItemCount: String? = nil, indexedFileCount: String? = nil, indexedItemCount: String? = nil, removedItemCount: String? = nil, skippedItemCount: String? = nil, startedAt: Date? = nil, status: ApiIndexedDataSourceStatus? = nil, totalBytes: String? = nil, totalBytesIndexed: String? = nil, totalFileCount: String? = nil) throws {
         self.init()
         (self.completedAt, self.dataSourceUuid) = (completedAt, dataSourceUuid)
         (self.errorDetails, self.errorMsg) = (errorDetails, errorMsg)
@@ -137,24 +122,18 @@ public extension ApiIndexedDataSource {
 public struct ApiIndexedDataSourceStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let dataSourceStatusUnknown = ApiIndexedDataSourceStatus(rawValue: "DATA_SOURCE_STATUS_UNKNOWN")
-    public static let dataSourceStatusInProgress =
-        ApiIndexedDataSourceStatus(rawValue: "DATA_SOURCE_STATUS_IN_PROGRESS")
+    public static let dataSourceStatusInProgress = ApiIndexedDataSourceStatus(rawValue: "DATA_SOURCE_STATUS_IN_PROGRESS")
     public static let dataSourceStatusUpdated = ApiIndexedDataSourceStatus(rawValue: "DATA_SOURCE_STATUS_UPDATED")
-    public static let dataSourceStatusPartiallyUpdated =
-        ApiIndexedDataSourceStatus(rawValue: "DATA_SOURCE_STATUS_PARTIALLY_UPDATED")
-    public static let dataSourceStatusNotUpdated =
-        ApiIndexedDataSourceStatus(rawValue: "DATA_SOURCE_STATUS_NOT_UPDATED")
+    public static let dataSourceStatusPartiallyUpdated = ApiIndexedDataSourceStatus(rawValue: "DATA_SOURCE_STATUS_PARTIALLY_UPDATED")
+    public static let dataSourceStatusNotUpdated = ApiIndexedDataSourceStatus(rawValue: "DATA_SOURCE_STATUS_NOT_UPDATED")
     public static let dataSourceStatusFailed = ApiIndexedDataSourceStatus(rawValue: "DATA_SOURCE_STATUS_FAILED")
     public static let dataSourceStatusCancelled = ApiIndexedDataSourceStatus(rawValue: "DATA_SOURCE_STATUS_CANCELLED")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

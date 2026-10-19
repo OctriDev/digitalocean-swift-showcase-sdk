@@ -7,106 +7,41 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum SnapshotsMethods {
-    /// To list all of the snapshots available on your account, send a GET request to `/v2/snapshots`. The response will
-    /// be a JSON object with a key called `snapshots`. This will be set to an array of `snapshot` objects, each of
-    /// which will contain the standard snapshot attributes. ### Filtering Results by Resource Type It's possible to
-    /// request filtered results by including certain query parameters. #### List Droplet Snapshots To retrieve only
-    /// snapshots based on Droplets, include the `resource_type` query parameter set to `droplet`. For example,
-    /// `/v2/snapshots?resource_type=droplet`. #### List Volume Snapshots To retrieve only snapshots based on volumes,
-    /// include the `resource_type` query parameter set to `volume`. For example, `/v2/snapshots?resource_type=volume`.
+    /// To list all of the snapshots available on your account, send a GET request to `/v2/snapshots`. The response will be a JSON object with a key called `snapshots`. This will be set to an array of `snapshot` objects, each of which will contain the standard snapshot attributes. ### Filtering Results by Resource Type It's possible to request filtered results by including certain query parameters. #### List Droplet Snapshots To retrieve only snapshots based on Droplets, include the `resource_type` query parameter set to `droplet`. For example, `/v2/snapshots?resource_type=droplet`. #### List Volume Snapshots To retrieve only snapshots based on volumes, include the `resource_type` query parameter set to `volume`. For example, `/v2/snapshots?resource_type=volume`.
     ///
     /// - Parameters:
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
     /// - resourceType: Used to filter snapshots by a resource type.
-    public static func snapshotsList(
-        config: ClientConfig,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        resourceType: SnapshotsListParameter? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SnapshotsResponse {
-        if let perPage {
+    public static func snapshotsList(config: ClientConfig, perPage: Int? = nil, page: Int? = nil, resourceType: SnapshotsListParameter? = nil, requestOptions: RequestOptions? = nil) async throws -> SnapshotsResponse {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/snapshots",
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-                SdkQueryParameter("resource_type", value: resourceType),
-            ],
-            decoder: .json,
-            operationId: "snapshots_list",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+        return try (await sdkRequest("GET", "/v2/snapshots", config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+            SdkQueryParameter("resource_type", value: resourceType),
+        ], decoder: .json, operationId: "snapshots_list", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
-
-    /// To retrieve information about a snapshot, send a GET request to `/v2/snapshots/$SNAPSHOT_ID`. The response will
-    /// be a JSON object with a key called `snapshot`. The value of this will be an snapshot object containing the
-    /// standard snapshot attributes.
+    /// To retrieve information about a snapshot, send a GET request to `/v2/snapshots/$SNAPSHOT_ID`. The response will be a JSON object with a key called `snapshot`. The value of this will be an snapshot object containing the standard snapshot attributes.
     ///
     /// - Parameters:
     /// - snapshotId: Either the ID of an existing snapshot. This will be an integer
     ///   for a Droplet snapshot or a string for a volume snapshot.
-    public static func snapshotsGet(
-        config: ClientConfig,
-        snapshotId: SnapshotsDeleteParameter,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SnapshotsExisting {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/snapshots/", sdkEncodePathSegment(sdkWireString(snapshotId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "snapshots_get",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func snapshotsGet(config: ClientConfig, snapshotId: SnapshotsDeleteParameter, requestOptions: RequestOptions? = nil) async throws -> SnapshotsExisting {
+        return try (await sdkRequest("GET", ["/v2/snapshots/", sdkEncodePathSegment(sdkWireString(snapshotId))].joined(), config: config, decoder: .json, operationId: "snapshots_get", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
-
-    /// Both Droplet and volume snapshots are managed through the `/v2/snapshots/` endpoint. To delete a snapshot, send
-    /// a DELETE request to `/v2/snapshots/$SNAPSHOT_ID`. A status of 204 will be given. This indicates that the request
-    /// was processed successfully, but that no response body is needed.
+    /// Both Droplet and volume snapshots are managed through the `/v2/snapshots/` endpoint. To delete a snapshot, send a DELETE request to `/v2/snapshots/$SNAPSHOT_ID`. A status of 204 will be given. This indicates that the request was processed successfully, but that no response body is needed.
     ///
     /// - Parameters:
     /// - snapshotId: Either the ID of an existing snapshot. This will be an integer
     ///   for a Droplet snapshot or a string for a volume snapshot.
-    public static func snapshotsDelete(
-        config: ClientConfig,
-        snapshotId: SnapshotsDeleteParameter,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await (sdkRequest(
-            "DELETE",
-            ["/v2/snapshots/", sdkEncodePathSegment(sdkWireString(snapshotId))].joined(),
-            config: config,
-            decoder: .empty,
-            operationId: "snapshots_delete",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func snapshotsDelete(config: ClientConfig, snapshotId: SnapshotsDeleteParameter, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try (await sdkRequest("DELETE", ["/v2/snapshots/", sdkEncodePathSegment(sdkWireString(snapshotId))].joined(), config: config, decoder: .empty, operationId: "snapshots_delete", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

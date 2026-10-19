@@ -3,97 +3,35 @@
 
 import Foundation
 
-public extension AgentPlatformApiNamespace {
-    /// To retrieve details of a workspace, GET request to `/v2/gen-ai/workspaces/{workspace_uuid}`. The response body
-    /// is a JSON object containing the workspace.
-    func genaiGetWorkspace(
-        workspaceUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiGetWorkspaceOutput {
-        try await AgentPlatformApiMethods.genaiGetWorkspace(
-            config: config,
-            workspaceUuid: workspaceUuid,
-            requestOptions: requestOptions
-        )
+extension AgentPlatformApiNamespace {
+/// To retrieve details of a workspace, GET request to `/v2/gen-ai/workspaces/{workspace_uuid}`. The response body is a JSON object containing the workspace.
+    public func genaiGetWorkspace(workspaceUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiGetWorkspaceOutput {
+        return try await AgentPlatformApiMethods.genaiGetWorkspace(config: config, workspaceUuid: workspaceUuid, requestOptions: requestOptions)
     }
 
-    /// To update a workspace, send a PUT request to `/v2/gen-ai/workspaces/{workspace_uuid}`. The response body is a
-    /// JSON object containing the workspace.
-    func genaiUpdateWorkspace(
-        workspaceUuid: String,
-        description: String? = nil,
-        name: String? = nil,
-        workspaceUuid2: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiUpdateWorkspaceOutput {
-        try await AgentPlatformApiMethods.genaiUpdateWorkspace(
-            config: config,
-            workspaceUuid: workspaceUuid,
-            description: description,
-            name: name,
-            workspaceUuid2: workspaceUuid2,
-            requestOptions: requestOptions
-        )
+/// To update a workspace, send a PUT request to `/v2/gen-ai/workspaces/{workspace_uuid}`. The response body is a JSON object containing the workspace.
+    public func genaiUpdateWorkspace(workspaceUuid: String, description: String? = nil, name: String? = nil, workspaceUuid2: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiUpdateWorkspaceOutput {
+        return try await AgentPlatformApiMethods.genaiUpdateWorkspace(config: config, workspaceUuid: workspaceUuid, description: description, name: name, workspaceUuid2: workspaceUuid2, requestOptions: requestOptions)
     }
 
-    /// To delete a workspace, send a DELETE request to `/v2/gen-ai/workspace/{workspace_uuid}`.
-    func genaiDeleteWorkspace(
-        workspaceUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiDeleteWorkspaceOutput {
-        try await AgentPlatformApiMethods.genaiDeleteWorkspace(
-            config: config,
-            workspaceUuid: workspaceUuid,
-            requestOptions: requestOptions
-        )
+/// To delete a workspace, send a DELETE request to `/v2/gen-ai/workspace/{workspace_uuid}`.
+    public func genaiDeleteWorkspace(workspaceUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiDeleteWorkspaceOutput {
+        return try await AgentPlatformApiMethods.genaiDeleteWorkspace(config: config, workspaceUuid: workspaceUuid, requestOptions: requestOptions)
     }
 
-    /// To list all agents by a Workspace, send a GET request to `/v2/gen-ai/workspaces/{workspace_uuid}/agents`.
-    func genaiListAgentsByWorkspace(
-        workspaceUuid: String,
-        onlyDeployed: Bool? = nil,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiListAgentsByWorkspaceOutput {
-        try await AgentPlatformApiMethods.genaiListAgentsByWorkspace(
-            config: config,
-            workspaceUuid: workspaceUuid,
-            onlyDeployed: onlyDeployed,
-            page: page,
-            perPage: perPage,
-            requestOptions: requestOptions
-        )
+/// To list all agents by a Workspace, send a GET request to `/v2/gen-ai/workspaces/{workspace_uuid}/agents`.
+    public func genaiListAgentsByWorkspace(workspaceUuid: String, onlyDeployed: Bool? = nil, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListAgentsByWorkspaceOutput {
+        return try await AgentPlatformApiMethods.genaiListAgentsByWorkspace(config: config, workspaceUuid: workspaceUuid, onlyDeployed: onlyDeployed, page: page, perPage: perPage, requestOptions: requestOptions)
     }
 
-    /// To move all listed agents a given workspace, send a PUT request to
-    /// `/v2/gen-ai/workspaces/{workspace_uuid}/agents`.
-    func genaiUpdateAgentsWorkspace(
-        workspaceUuid: String,
-        agentUuids: [String]? = nil,
-        workspaceUuid2: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiMoveAgentsToWorkspaceOutput {
-        try await AgentPlatformApiMethods.genaiUpdateAgentsWorkspace(
-            config: config,
-            workspaceUuid: workspaceUuid,
-            agentUuids: agentUuids,
-            workspaceUuid2: workspaceUuid2,
-            requestOptions: requestOptions
-        )
+/// To move all listed agents a given workspace, send a PUT request to `/v2/gen-ai/workspaces/{workspace_uuid}/agents`.
+    public func genaiUpdateAgentsWorkspace(workspaceUuid: String, agentUuids: [String]? = nil, workspaceUuid2: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiMoveAgentsToWorkspaceOutput {
+        return try await AgentPlatformApiMethods.genaiUpdateAgentsWorkspace(config: config, workspaceUuid: workspaceUuid, agentUuids: agentUuids, workspaceUuid2: workspaceUuid2, requestOptions: requestOptions)
     }
 
-    /// To list all evaluation test cases by a workspace, send a GET request to
-    /// `/v2/gen-ai/workspaces/{workspace_uuid}/evaluation_test_cases`.
-    func genaiListEvaluationTestCasesByWorkspace(
-        workspaceUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiListEvaluationTestCasesByWorkspaceOutput {
-        try await AgentPlatformApiMethods.genaiListEvaluationTestCasesByWorkspace(
-            config: config,
-            workspaceUuid: workspaceUuid,
-            requestOptions: requestOptions
-        )
+/// To list all evaluation test cases by a workspace, send a GET request to `/v2/gen-ai/workspaces/{workspace_uuid}/evaluation_test_cases`.
+    public func genaiListEvaluationTestCasesByWorkspace(workspaceUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiListEvaluationTestCasesByWorkspaceOutput {
+        return try await AgentPlatformApiMethods.genaiListEvaluationTestCasesByWorkspace(config: config, workspaceUuid: workspaceUuid, requestOptions: requestOptions)
     }
 }
 
@@ -103,228 +41,86 @@ public class ServerlessInferenceNamespace {
         self.config = config
     }
 
-    /// Creates a model response for the given chat conversation.
-    public func inferenceCreateChatCompletion(
-        options: ServerlessInferenceMethods.InferenceCreateChatCompletionOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ChatCompletionResponse {
-        try await ServerlessInferenceMethods.inferenceCreateChatCompletion(
-            config: config,
-            options: options,
-            requestOptions: requestOptions
-        )
+/// Creates a model response for the given chat conversation.
+    public func inferenceCreateChatCompletion(options: ServerlessInferenceMethods.InferenceCreateChatCompletionOptions, requestOptions: RequestOptions? = nil) async throws -> ChatCompletionResponse {
+        return try await ServerlessInferenceMethods.inferenceCreateChatCompletion(config: config, options: options, requestOptions: requestOptions)
     }
 
-    /// Creates a model response for the given chat conversation.
-    public func inferenceCreateChatCompletionStream(
-        options: ServerlessInferenceMethods.InferenceCreateChatCompletionStreamOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AsyncThrowingStream<ChatCompletionChunk, Swift.Error> {
-        try await ServerlessInferenceMethods.inferenceCreateChatCompletionStream(
-            config: config,
-            options: options,
-            requestOptions: requestOptions
-        )
+/// Creates a model response for the given chat conversation.
+    public func inferenceCreateChatCompletionStream(options: ServerlessInferenceMethods.InferenceCreateChatCompletionStreamOptions, requestOptions: RequestOptions? = nil) async throws -> AsyncThrowingStream<ChatCompletionChunk, Swift.Error> {
+        return try await ServerlessInferenceMethods.inferenceCreateChatCompletionStream(config: config, options: options, requestOptions: requestOptions)
     }
 
-    /// Send a structured list of input messages with text and/or image content, and the model will generate the next
-    /// message in the conversation.
-    public func inferenceCreateMessages(
-        options: ServerlessInferenceMethods.InferenceCreateMessagesOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> MessagesCreateResponse {
-        try await ServerlessInferenceMethods.inferenceCreateMessages(
-            config: config,
-            options: options,
-            requestOptions: requestOptions
-        )
+/// Send a structured list of input messages with text and/or image content, and the model will generate the next message in the conversation.
+    public func inferenceCreateMessages(options: ServerlessInferenceMethods.InferenceCreateMessagesOptions, requestOptions: RequestOptions? = nil) async throws -> MessagesCreateResponse {
+        return try await ServerlessInferenceMethods.inferenceCreateMessages(config: config, options: options, requestOptions: requestOptions)
     }
 
-    /// Send a structured list of input messages with text and/or image content, and the model will generate the next
-    /// message in the conversation.
-    public func inferenceCreateMessagesStream(
-        options: ServerlessInferenceMethods.InferenceCreateMessagesStreamOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AsyncThrowingStream<MessagesStreamEvent, Swift.Error> {
-        try await ServerlessInferenceMethods.inferenceCreateMessagesStream(
-            config: config,
-            options: options,
-            requestOptions: requestOptions
-        )
+/// Send a structured list of input messages with text and/or image content, and the model will generate the next message in the conversation.
+    public func inferenceCreateMessagesStream(options: ServerlessInferenceMethods.InferenceCreateMessagesStreamOptions, requestOptions: RequestOptions? = nil) async throws -> AsyncThrowingStream<MessagesStreamEvent, Swift.Error> {
+        return try await ServerlessInferenceMethods.inferenceCreateMessagesStream(config: config, options: options, requestOptions: requestOptions)
     }
 
-    /// Create vector embeddings for one or more text inputs. OpenAI-compatible request and response. Unknown fields in
-    /// the request body are rejected. There is no streaming response for this endpoint.
-    public func inferenceCreateEmbedding(
-        model: String,
-        input: EmbeddingsRequestInput,
-        user: String? = nil,
-        encodingFormat: EmbeddingsRequestEncodingFormat? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> EmbeddingsResponse {
-        try await ServerlessInferenceMethods.inferenceCreateEmbedding(
-            config: config,
-            model: model,
-            input: input,
-            user: user,
-            encodingFormat: encodingFormat,
-            requestOptions: requestOptions
-        )
+/// Create vector embeddings for one or more text inputs. OpenAI-compatible request and response. Unknown fields in the request body are rejected. There is no streaming response for this endpoint.
+    public func inferenceCreateEmbedding(model: String, input: EmbeddingsRequestInput, user: String? = nil, encodingFormat: EmbeddingsRequestEncodingFormat? = nil, requestOptions: RequestOptions? = nil) async throws -> EmbeddingsResponse {
+        return try await ServerlessInferenceMethods.inferenceCreateEmbedding(config: config, model: model, input: input, user: user, encodingFormat: encodingFormat, requestOptions: requestOptions)
     }
 
-    /// Creates a high-quality image from a text prompt using GPT-IMAGE-1, the latest image generation model with
-    /// automatic prompt optimization and enhanced visual capabilities.
-    public func inferenceCreateImage(
-        options: ServerlessInferenceMethods.InferenceCreateImageOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ImagesResponse {
-        try await ServerlessInferenceMethods.inferenceCreateImage(
-            config: config,
-            options: options,
-            requestOptions: requestOptions
-        )
+/// Creates a high-quality image from a text prompt using GPT-IMAGE-1, the latest image generation model with automatic prompt optimization and enhanced visual capabilities.
+    public func inferenceCreateImage(options: ServerlessInferenceMethods.InferenceCreateImageOptions, requestOptions: RequestOptions? = nil) async throws -> ImagesResponse {
+        return try await ServerlessInferenceMethods.inferenceCreateImage(config: config, options: options, requestOptions: requestOptions)
     }
 
-    /// Creates a high-quality image from a text prompt using GPT-IMAGE-1, the latest image generation model with
-    /// automatic prompt optimization and enhanced visual capabilities.
-    public func inferenceCreateImageStream(
-        options: ServerlessInferenceMethods.InferenceCreateImageStreamOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AsyncThrowingStream<ImageGenPartialImageEvent, Swift.Error> {
-        try await ServerlessInferenceMethods.inferenceCreateImageStream(
-            config: config,
-            options: options,
-            requestOptions: requestOptions
-        )
+/// Creates a high-quality image from a text prompt using GPT-IMAGE-1, the latest image generation model with automatic prompt optimization and enhanced visual capabilities.
+    public func inferenceCreateImageStream(options: ServerlessInferenceMethods.InferenceCreateImageStreamOptions, requestOptions: RequestOptions? = nil) async throws -> AsyncThrowingStream<ImageGenPartialImageEvent, Swift.Error> {
+        return try await ServerlessInferenceMethods.inferenceCreateImageStream(config: config, options: options, requestOptions: requestOptions)
     }
 
-    /// Lists the currently available models, and provides basic information about each one such as the owner and
-    /// availability.
+/// Lists the currently available models, and provides basic information about each one such as the owner and availability.
     public func inferenceListModels(requestOptions: RequestOptions? = nil) async throws -> ListModelsResponse {
-        try await ServerlessInferenceMethods.inferenceListModels(config: config, requestOptions: requestOptions)
+        return try await ServerlessInferenceMethods.inferenceListModels(config: config, requestOptions: requestOptions)
     }
 }
 
-public extension ServerlessInferenceNamespace {
-    /// Evaluates a provided state against one or more typed questions using TypeSafe AI's Jev model. Unlike chat
-    /// completion endpoints, System One returns typed answers, a truth-likelihood score, a choice from a fixed set, or
-    /// a numeric score, each paired with a calibrated probability, instead of free-form text.
-    func inferenceCreateSystemone(
-        state: String,
-        model: String,
-        questions: [String: SystemoneQuestion],
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SystemoneResponse {
-        try await ServerlessInferenceMethods.inferenceCreateSystemone(
-            config: config,
-            state: state,
-            model: model,
-            questions: questions,
-            requestOptions: requestOptions
-        )
+extension ServerlessInferenceNamespace {
+/// Evaluates a provided state against one or more typed questions using TypeSafe AI's Jev model. Unlike chat completion endpoints, System One returns typed answers, a truth-likelihood score, a choice from a fixed set, or a numeric score, each paired with a calibrated probability, instead of free-form text.
+    public func inferenceCreateSystemone(state: String, model: String, questions: [String: SystemoneQuestion], requestOptions: RequestOptions? = nil) async throws -> SystemoneResponse {
+        return try await ServerlessInferenceMethods.inferenceCreateSystemone(config: config, state: state, model: model, questions: questions, requestOptions: requestOptions)
     }
 
-    /// Generate text responses from text prompts. This endpoint supports both streaming and non-streaming responses for
-    /// supported text models.
-    func inferenceCreateResponse(
-        options: ServerlessInferenceMethods.InferenceCreateResponseOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> CreateResponseResponse {
-        try await ServerlessInferenceMethods.inferenceCreateResponse(
-            config: config,
-            options: options,
-            requestOptions: requestOptions
-        )
+/// Generate text responses from text prompts. This endpoint supports both streaming and non-streaming responses for supported text models.
+    public func inferenceCreateResponse(options: ServerlessInferenceMethods.InferenceCreateResponseOptions, requestOptions: RequestOptions? = nil) async throws -> CreateResponseResponse {
+        return try await ServerlessInferenceMethods.inferenceCreateResponse(config: config, options: options, requestOptions: requestOptions)
     }
 
-    /// Generate text responses from text prompts. This endpoint supports both streaming and non-streaming responses for
-    /// supported text models.
-    func inferenceCreateResponseStream(
-        options: ServerlessInferenceMethods.InferenceCreateResponseStreamOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AsyncThrowingStream<CreateResponseStreamResponse, Swift.Error> {
-        try await ServerlessInferenceMethods.inferenceCreateResponseStream(
-            config: config,
-            options: options,
-            requestOptions: requestOptions
-        )
+/// Generate text responses from text prompts. This endpoint supports both streaming and non-streaming responses for supported text models.
+    public func inferenceCreateResponseStream(options: ServerlessInferenceMethods.InferenceCreateResponseStreamOptions, requestOptions: RequestOptions? = nil) async throws -> AsyncThrowingStream<CreateResponseStreamResponse, Swift.Error> {
+        return try await ServerlessInferenceMethods.inferenceCreateResponseStream(config: config, options: options, requestOptions: requestOptions)
     }
 
-    /// Generate Image, Audio, or Text-to-Speech Using fal Models. This endpoint starts an asynchronous job and returns
-    /// a request_id. The job status is QUEUED initially. Use the request_id to poll for the result.
-    func inferenceCreateAsyncInvoke(
-        modelId: String,
-        input: AsyncInvokeRequestInput,
-        tags: SdkOptional<[AsyncInvokeRequestTagsItem]>? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AsyncInvokeResponse {
-        try await ServerlessInferenceMethods.inferenceCreateAsyncInvoke(
-            config: config,
-            modelId: modelId,
-            input: input,
-            tags: tags,
-            requestOptions: requestOptions
-        )
+/// Generate Image, Audio, or Text-to-Speech Using fal Models. This endpoint starts an asynchronous job and returns a request_id. The job status is QUEUED initially. Use the request_id to poll for the result.
+    public func inferenceCreateAsyncInvoke(modelId: String, input: AsyncInvokeRequestInput, tags: SdkOptional<[AsyncInvokeRequestTagsItem]>? = nil, requestOptions: RequestOptions? = nil) async throws -> AsyncInvokeResponse {
+        return try await ServerlessInferenceMethods.inferenceCreateAsyncInvoke(config: config, modelId: modelId, input: input, tags: tags, requestOptions: requestOptions)
     }
 
-    /// Convert text input to speech audio. The response may be raw audio bytes (`audio/mpeg`, `audio/wav`, and similar)
-    /// or a JSON envelope with base64-encoded audio in `data[].b64_json`.
-    func inferenceCreateSpeech(
-        model: String,
-        input: String,
-        voice: String? = nil,
-        responseFormat: String? = nil,
-        instructions: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SpeechResponse {
-        try await ServerlessInferenceMethods.inferenceCreateSpeech(
-            config: config,
-            model: model,
-            input: input,
-            voice: voice,
-            responseFormat: responseFormat,
-            instructions: instructions,
-            requestOptions: requestOptions
-        )
+/// Convert text input to speech audio. The response may be raw audio bytes (`audio/mpeg`, `audio/wav`, and similar) or a JSON envelope with base64-encoded audio in `data[].b64_json`.
+    public func inferenceCreateSpeech(model: String, input: String, voice: String? = nil, responseFormat: String? = nil, instructions: String? = nil, requestOptions: RequestOptions? = nil) async throws -> SpeechResponse {
+        return try await ServerlessInferenceMethods.inferenceCreateSpeech(config: config, model: model, input: input, voice: voice, responseFormat: responseFormat, instructions: instructions, requestOptions: requestOptions)
     }
 
-    /// Start an asynchronous video generation job from a text prompt. Poll `GET /v1/videos/{video_id}` until the job
-    /// reaches a terminal status, then download the MP4 with `GET /v1/videos/{video_id}/content` or from `output.url`
-    /// when present.
-    func inferenceCreateVideo(
-        model: String,
-        prompt: String,
-        size: String? = nil,
-        fps: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VideoGeneration {
-        try await ServerlessInferenceMethods.inferenceCreateVideo(
-            config: config,
-            model: model,
-            prompt: prompt,
-            size: size,
-            fps: fps,
-            requestOptions: requestOptions
-        )
+/// Start an asynchronous video generation job from a text prompt. Poll `GET /v1/videos/{video_id}` until the job reaches a terminal status, then download the MP4 with `GET /v1/videos/{video_id}/content` or from `output.url` when present.
+    public func inferenceCreateVideo(model: String, prompt: String, size: String? = nil, fps: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> VideoGeneration {
+        return try await ServerlessInferenceMethods.inferenceCreateVideo(config: config, model: model, prompt: prompt, size: size, fps: fps, requestOptions: requestOptions)
     }
 
-    /// Returns the current state of a video generation job. Poll until `status` reaches a terminal value such as
-    /// `completed` or `failed`.
-    func inferenceGetVideo(videoId: String, requestOptions: RequestOptions? = nil) async throws -> VideoGeneration {
-        try await ServerlessInferenceMethods.inferenceGetVideo(
-            config: config,
-            videoId: videoId,
-            requestOptions: requestOptions
-        )
+/// Returns the current state of a video generation job. Poll until `status` reaches a terminal value such as `completed` or `failed`.
+    public func inferenceGetVideo(videoId: String, requestOptions: RequestOptions? = nil) async throws -> VideoGeneration {
+        return try await ServerlessInferenceMethods.inferenceGetVideo(config: config, videoId: videoId, requestOptions: requestOptions)
     }
 
-    /// Downloads the generated MP4 for a completed video generation job.
-    func inferenceGetVideoContent(videoId: String, requestOptions: RequestOptions? = nil) async throws -> Data {
-        try await ServerlessInferenceMethods.inferenceGetVideoContent(
-            config: config,
-            videoId: videoId,
-            requestOptions: requestOptions
-        )
+/// Downloads the generated MP4 for a completed video generation job.
+    public func inferenceGetVideoContent(videoId: String, requestOptions: RequestOptions? = nil) async throws -> Data {
+        return try await ServerlessInferenceMethods.inferenceGetVideoContent(config: config, videoId: videoId, requestOptions: requestOptions)
     }
 }
 
@@ -334,28 +130,14 @@ public class AgentInferenceNamespace {
         self.config = config
     }
 
-    /// Creates a model response for the given chat conversation via a customer-provisioned agent endpoint.
-    public func createChatCompletion(
-        options: AgentInferenceMethods.AgentInferenceCreateChatCompletionOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ChatCompletionResponse {
-        try await AgentInferenceMethods.agentInferenceCreateChatCompletion(
-            config: config,
-            options: options,
-            requestOptions: requestOptions
-        )
+/// Creates a model response for the given chat conversation via a customer-provisioned agent endpoint.
+    public func createChatCompletion(options: AgentInferenceMethods.AgentInferenceCreateChatCompletionOptions, requestOptions: RequestOptions? = nil) async throws -> ChatCompletionResponse {
+        return try await AgentInferenceMethods.agentInferenceCreateChatCompletion(config: config, options: options, requestOptions: requestOptions)
     }
 
-    /// Creates a model response for the given chat conversation via a customer-provisioned agent endpoint.
-    public func createChatCompletionStream(
-        options: AgentInferenceMethods.AgentInferenceCreateChatCompletionStreamOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AsyncThrowingStream<ChatCompletionChunk, Swift.Error> {
-        try await AgentInferenceMethods.agentInferenceCreateChatCompletionStream(
-            config: config,
-            options: options,
-            requestOptions: requestOptions
-        )
+/// Creates a model response for the given chat conversation via a customer-provisioned agent endpoint.
+    public func createChatCompletionStream(options: AgentInferenceMethods.AgentInferenceCreateChatCompletionStreamOptions, requestOptions: RequestOptions? = nil) async throws -> AsyncThrowingStream<ChatCompletionChunk, Swift.Error> {
+        return try await AgentInferenceMethods.agentInferenceCreateChatCompletionStream(config: config, options: options, requestOptions: requestOptions)
     }
 }
 
@@ -365,138 +147,45 @@ public class BatchInferenceNamespace {
         self.config = config
     }
 
-    /// Creates a file record and returns a `file_id` plus a short-lived presigned `PUT` URL (typically valid for ~15
-    /// minutes). Upload the raw JSONL bytes to `upload_url` (see `PUT /{upload_path}`) before calling `POST
-    /// /v1/batches`.
-    public func inferenceCreateBatchFile(
-        fileName: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> BatchFileCreateResponse {
-        try await BatchInferenceMethods.inferenceCreateBatchFile(
-            config: config,
-            fileName: fileName,
-            requestOptions: requestOptions
-        )
+/// Creates a file record and returns a `file_id` plus a short-lived presigned `PUT` URL (typically valid for ~15 minutes). Upload the raw JSONL bytes to `upload_url` (see `PUT /{upload_path}`) before calling `POST /v1/batches`.
+    public func inferenceCreateBatchFile(fileName: String, requestOptions: RequestOptions? = nil) async throws -> BatchFileCreateResponse {
+        return try await BatchInferenceMethods.inferenceCreateBatchFile(config: config, fileName: fileName, requestOptions: requestOptions)
     }
 
-    /// Uploads raw JSONL bytes to the presigned URL returned by `POST /v1/batches/files`. Use the returned `upload_url`
-    /// verbatim and send the bytes as `application/octet-stream` or omit `Content-Type` to avoid signature mismatches.
-    /// The upload must complete before `POST /v1/batches` checks the object with a `HEAD` request.
+/// Uploads raw JSONL bytes to the presigned URL returned by `POST /v1/batches/files`. Use the returned `upload_url` verbatim and send the bytes as `application/octet-stream` or omit `Content-Type` to avoid signature mismatches. The upload must complete before `POST /v1/batches` checks the object with a `HEAD` request.
     ///
-    /// Uploads the raw JSONL bytes to the presigned `upload_url` returned by `POST /v1/batches/files`. **The URL is
-    /// dynamic — do not construct it.** Use the `upload_url` value from the previous step verbatim. Its host, path, and
-    /// query parameters are part of the short-lived (~15 minute) signature and change per request; the server and path
-    /// shown here are illustrative. If the URL expires before the upload completes, create a new file intent and retry.
-    /// `POST /v1/batches` performs a `HEAD` check on the uploaded object and will reject the batch if this upload has
-    /// not completed. Send the raw JSONL bytes verbatim. Presigned PUT URLs are signature-sensitive to request headers
-    /// — prefer `application/octet-stream` or omit `Content-Type` entirely. A custom value (for example
-    /// `application/jsonl`) can cause signature mismatches unless the URL was signed for that exact header.
-    public func inferenceUploadBatchFile(
-        body: Data,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await BatchInferenceMethods.inferenceUploadBatchFile(
-            config: config,
-            body: body,
-            requestOptions: requestOptions
-        )
+    /// Uploads the raw JSONL bytes to the presigned `upload_url` returned by `POST /v1/batches/files`. **The URL is dynamic — do not construct it.** Use the `upload_url` value from the previous step verbatim. Its host, path, and query parameters are part of the short-lived (~15 minute) signature and change per request; the server and path shown here are illustrative. If the URL expires before the upload completes, create a new file intent and retry. `POST /v1/batches` performs a `HEAD` check on the uploaded object and will reject the batch if this upload has not completed. Send the raw JSONL bytes verbatim. Presigned PUT URLs are signature-sensitive to request headers — prefer `application/octet-stream` or omit `Content-Type` entirely. A custom value (for example `application/jsonl`) can cause signature mismatches unless the URL was signed for that exact header.
+    public func inferenceUploadBatchFile(body: Data, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await BatchInferenceMethods.inferenceUploadBatchFile(config: config, body: body, requestOptions: requestOptions)
     }
 
-    /// Submits a batch job against a previously uploaded JSONL input file. The upload must have completed before this
-    /// call; otherwise the request is rejected. Supply a unique `request_id` to make the submission idempotent —
-    /// retries with the same value return the existing job. When `provider` is `openai`, the `url` on each JSONL line
-    /// must match `endpoint`.
-    public func inferenceCreateBatch(
-        fileId: String,
-        provider: BatchCreateRequestProvider,
-        completionWindow: BatchCreateRequestCompletionWindow,
-        requestId: String,
-        endpoint: BatchCreateRequestEndpoint? = nil,
-        metadata: SdkOptional<[String: String]>? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Batch {
-        try await BatchInferenceMethods.inferenceCreateBatch(
-            config: config,
-            fileId: fileId,
-            provider: provider,
-            completionWindow: completionWindow,
-            requestId: requestId,
-            endpoint: endpoint,
-            metadata: metadata,
-            requestOptions: requestOptions
-        )
+/// Submits a batch job against a previously uploaded JSONL input file. The upload must have completed before this call; otherwise the request is rejected. Supply a unique `request_id` to make the submission idempotent — retries with the same value return the existing job. When `provider` is `openai`, the `url` on each JSONL line must match `endpoint`.
+    public func inferenceCreateBatch(fileId: String, provider: BatchCreateRequestProvider, completionWindow: BatchCreateRequestCompletionWindow, requestId: String, endpoint: BatchCreateRequestEndpoint? = nil, metadata: SdkOptional<[String: String]>? = nil, requestOptions: RequestOptions? = nil) async throws -> Batch {
+        return try await BatchInferenceMethods.inferenceCreateBatch(config: config, fileId: fileId, provider: provider, completionWindow: completionWindow, requestId: requestId, endpoint: endpoint, metadata: metadata, requestOptions: requestOptions)
     }
 
-    /// Returns a cursor-paginated list of batch jobs, ordered newest first. Use `limit` to control page size and
-    /// `after` to page forward using the `last_id` from the previous response.
-    public func inferenceListBatches(
-        after: String? = nil,
-        limit: Int? = nil,
-        status: InferenceListBatchesParameter? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> BatchListResponse {
-        try await BatchInferenceMethods.inferenceListBatches(
-            config: config,
-            after: after,
-            limit: limit,
-            status: status,
-            requestOptions: requestOptions
-        )
+/// Returns a cursor-paginated list of batch jobs, ordered newest first. Use `limit` to control page size and `after` to page forward using the `last_id` from the previous response.
+    public func inferenceListBatches(after: String? = nil, limit: Int? = nil, status: InferenceListBatchesParameter? = nil, requestOptions: RequestOptions? = nil) async throws -> BatchListResponse {
+        return try await BatchInferenceMethods.inferenceListBatches(config: config, after: after, limit: limit, status: status, requestOptions: requestOptions)
     }
 
-    /// Returns a cursor-paginated list of batch jobs, ordered newest first. Use `limit` to control page size and
-    /// `after` to page forward using the `last_id` from the previous response.
-    public func inferenceListBatchesPaginated(
-        after: String? = nil,
-        limit: Int? = nil,
-        status: InferenceListBatchesParameter? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<Batch, Swift.Error> {
-        BatchInferenceMethods.inferenceListBatchesPaginated(
-            config: config,
-            after: after,
-            limit: limit,
-            status: status,
-            requestOptions: requestOptions
-        )
+/// Returns a cursor-paginated list of batch jobs, ordered newest first. Use `limit` to control page size and `after` to page forward using the `last_id` from the previous response.
+    public func inferenceListBatchesPaginated(after: String? = nil, limit: Int? = nil, status: InferenceListBatchesParameter? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<Batch, Swift.Error> {
+        return BatchInferenceMethods.inferenceListBatchesPaginated(config: config, after: after, limit: limit, status: status, requestOptions: requestOptions)
     }
 
-    /// Returns the current state of a batch job. Poll until `status` reaches a terminal value (`completed`, `failed`,
-    /// `expired`, or `cancelled`).
+/// Returns the current state of a batch job. Poll until `status` reaches a terminal value (`completed`, `failed`, `expired`, or `cancelled`).
     public func inferenceGetBatch(batchId: String, requestOptions: RequestOptions? = nil) async throws -> Batch {
-        try await BatchInferenceMethods.inferenceGetBatch(
-            config: config,
-            batchId: batchId,
-            requestOptions: requestOptions
-        )
+        return try await BatchInferenceMethods.inferenceGetBatch(config: config, batchId: batchId, requestOptions: requestOptions)
     }
 
-    /// Returns short-lived presigned download URLs for the output (and optional error sidecar) of a completed batch
-    /// job. If results are not yet ready, the response sets `result_available: false` or returns `412 Precondition
-    /// Failed`; in both cases, keep polling batch status and retry. Download the artifacts soon after fetching — the
-    /// URLs are short-lived. Result files themselves are retained for up to 30 days after the job completes, after
-    /// which they are deleted.
-    public func inferenceGetBatchResults(
-        batchId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> BatchResultsResponse {
-        try await BatchInferenceMethods.inferenceGetBatchResults(
-            config: config,
-            batchId: batchId,
-            requestOptions: requestOptions
-        )
+/// Returns short-lived presigned download URLs for the output (and optional error sidecar) of a completed batch job. If results are not yet ready, the response sets `result_available: false` or returns `412 Precondition Failed`; in both cases, keep polling batch status and retry. Download the artifacts soon after fetching — the URLs are short-lived. Result files themselves are retained for up to 30 days after the job completes, after which they are deleted.
+    public func inferenceGetBatchResults(batchId: String, requestOptions: RequestOptions? = nil) async throws -> BatchResultsResponse {
+        return try await BatchInferenceMethods.inferenceGetBatchResults(config: config, batchId: batchId, requestOptions: requestOptions)
     }
 
-    /// Requests cancellation of a batch job. The job transitions to `cancelling` and, once in-flight requests drain, to
-    /// `cancelled`. Jobs already in a terminal state (`completed`, `failed`, `expired`, `cancelled`) cannot be
-    /// cancelled and return `409 Conflict`. Cancellation is also rejected with `409 Conflict` while the job has not yet
-    /// been submitted to the upstream provider — there is nothing to cancel until the provider batch id is assigned.
-    /// Partial results produced before cancellation remain available via `GET /v1/batches/{batch_id}/results`.
+/// Requests cancellation of a batch job. The job transitions to `cancelling` and, once in-flight requests drain, to `cancelled`. Jobs already in a terminal state (`completed`, `failed`, `expired`, `cancelled`) cannot be cancelled and return `409 Conflict`. Cancellation is also rejected with `409 Conflict` while the job has not yet been submitted to the upstream provider — there is nothing to cancel until the provider batch id is assigned. Partial results produced before cancellation remain available via `GET /v1/batches/{batch_id}/results`.
     public func inferenceCancelBatch(batchId: String, requestOptions: RequestOptions? = nil) async throws -> Batch {
-        try await BatchInferenceMethods.inferenceCancelBatch(
-            config: config,
-            batchId: batchId,
-            requestOptions: requestOptions
-        )
+        return try await BatchInferenceMethods.inferenceCancelBatch(config: config, batchId: batchId, requestOptions: requestOptions)
     }
 }

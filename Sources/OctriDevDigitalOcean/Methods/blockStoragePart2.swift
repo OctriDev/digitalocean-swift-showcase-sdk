@@ -6,15 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension BlockStorageMethods {
-    /// To list all of the block storage volumes available on your account, send a GET request to `/v2/volumes`. ##
-    /// Filtering Results ### By Region The `region` may be provided as query parameter in order to restrict results to
-    /// volumes available in a specific region. For example: `/v2/volumes?region=nyc1` ### By Name It is also possible
-    /// to list volumes on your account that match a specified name. To do so, send a GET request with the volume's name
-    /// as a query parameter to `/v2/volumes?name=$VOLUME_NAME`. **Note:** You can only create one volume per region
-    /// with the same name. ### By Name and Region It is also possible to retrieve information about a block storage
-    /// volume by name. To do so, send a GET request with the volume's name and the region slug for the region it is
-    /// located in as query parameters to `/v2/volumes?name=$VOLUME_NAME&region=nyc1`.
+extension BlockStorageMethods {
+    /// To list all of the block storage volumes available on your account, send a GET request to `/v2/volumes`. ## Filtering Results ### By Region The `region` may be provided as query parameter in order to restrict results to volumes available in a specific region. For example: `/v2/volumes?region=nyc1` ### By Name It is also possible to list volumes on your account that match a specified name. To do so, send a GET request with the volume's name as a query parameter to `/v2/volumes?name=$VOLUME_NAME`. **Note:** You can only create one volume per region with the same name. ### By Name and Region It is also possible to retrieve information about a block storage volume by name. To do so, send a GET request with the volume's name and the region slug for the region it is located in as query parameters to `/v2/volumes?name=$VOLUME_NAME&region=nyc1`.
     ///
     /// - Parameters:
     /// - name: The block storage volume's name.
@@ -22,69 +15,27 @@ public extension BlockStorageMethods {
     ///   available.
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func volumesList(
-        config: ClientConfig,
-        name: String? = nil,
-        region: RegionSlug? = nil,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Volumes {
-        if let perPage {
+    public static func volumesList(config: ClientConfig, name: String? = nil, region: RegionSlug? = nil, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> Volumes {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/volumes",
-            config: config,
-            query: [
-                SdkQueryParameter("name", value: name),
-                SdkQueryParameter("region", value: region),
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "volumes_list",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+        return try (await sdkRequest("GET", "/v2/volumes", config: config, query: [
+            SdkQueryParameter("name", value: name),
+            SdkQueryParameter("region", value: region),
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "volumes_list", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Creates a block storage volume, optionally from a snapshot. Set `filesystem_type` to format the volume
-    /// automatically, and provide `snapshot_id` when creating from a snapshot. Pre-formatted volumes auto-mount only on
-    /// supported Droplets created on or after April 26, 2018; attaching them to unsupported Droplets is not
-    /// recommended.
+    /// Creates a block storage volume, optionally from a snapshot. Set `filesystem_type` to format the volume automatically, and provide `snapshot_id` when creating from a snapshot. Pre-formatted volumes auto-mount only on supported Droplets created on or after April 26, 2018; attaching them to unsupported Droplets is not recommended.
     ///
-    /// To create a new volume, send a POST request to `/v2/volumes`. Optionally, a `filesystem_type` attribute may be
-    /// provided in order to automatically format the volume's filesystem. Pre-formatted volumes are automatically
-    /// mounted when attached to Ubuntu, Debian, Fedora, Fedora Atomic, and CentOS Droplets created on or after April
-    /// 26, 2018. Attaching pre-formatted volumes to Droplets without support for auto-mounting is not recommended.
-    static func volumesCreate(
-        config: ClientConfig,
-        body: VolumesCreateRequestBody,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Volume {
-        try await (sdkRequest(
-            "POST",
-            "/v2/volumes",
-            config: config,
-            rawBody: sdkEncodeBody(body, contentType: "application/json"),
-            decoder: .json,
-            operationId: "volumes_create",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    /// To create a new volume, send a POST request to `/v2/volumes`. Optionally, a `filesystem_type` attribute may be provided in order to automatically format the volume's filesystem. Pre-formatted volumes are automatically mounted when attached to Ubuntu, Debian, Fedora, Fedora Atomic, and CentOS Droplets created on or after April 26, 2018. Attaching pre-formatted volumes to Droplets without support for auto-mounting is not recommended.
+    public static func volumesCreate(config: ClientConfig, body: VolumesCreateRequestBody, requestOptions: RequestOptions? = nil) async throws -> Volume {
+        return try (await sdkRequest("POST", "/v2/volumes", config: config, rawBody: (try sdkEncodeBody(body, contentType: "application/json")), decoder: .json, operationId: "volumes_create", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

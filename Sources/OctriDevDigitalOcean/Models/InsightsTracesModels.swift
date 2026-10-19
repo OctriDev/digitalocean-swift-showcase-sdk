@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// InsightsTraces domain models
+// InsightsTraces domain models
 public indirect enum TracesFilterValue {
     case stringValue(String)
     case doubleValue(Double)
@@ -14,26 +14,18 @@ public indirect enum TracesFilterValue {
 }
 
 extension TracesFilterValue: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for TracesFilterValue"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for TracesFilterValue")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -51,27 +43,12 @@ extension TracesFilterValue {
 
 extension TracesFilterValue {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) {
-            return .stringValue(value)
-        }
-        if let value = try? container.decode(Double.self) {
-            return .doubleValue(value)
-        }
-        if let value = try? container.decode(Bool.self) {
-            return .boolValue(value)
-        }
-        if let value = try? container
-            .decode([TracesFilterValueVariant3Item].self) {
-            return .tracesFilterValueVariant3ItemList(value)
-        }
-        if let value = try? container
-            .decode(TracesFilterValueVariant4.self) {
-            return .tracesFilterValueVariant4(value)
-        }
-        if let value = try? container
-            .decode(TracesFilterValueVariant5.self) {
-            return .tracesFilterValueVariant5(value)
-        }
+        if let value = try? container.decode(String.self) { return .stringValue(value) }
+        if let value = try? container.decode(Double.self) { return .doubleValue(value) }
+        if let value = try? container.decode(Bool.self) { return .boolValue(value) }
+        if let value = try? container.decode([TracesFilterValueVariant3Item].self) { return .tracesFilterValueVariant3ItemList(value) }
+        if let value = try? container.decode(TracesFilterValueVariant4.self) { return .tracesFilterValueVariant4(value) }
+        if let value = try? container.decode(TracesFilterValueVariant5.self) { return .tracesFilterValueVariant5(value) }
         return nil
     }
 }
@@ -118,20 +95,20 @@ public struct TracesTimeInstant: Codable {
     }
 
     init() {
-        (absolute, relative) = (nil, nil)
+        (self.absolute, self.relative) = (nil, nil)
     }
 }
 
-public extension TracesTimeInstant {
-    init(from decoder: Decoder) throws {
+extension TracesTimeInstant {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        absolute = try container.sdkDecodeIfPresent(.absolute)
-        relative = try container.sdkDecodeIfPresent(.relative)
+        self.absolute = try container.sdkDecodeIfPresent(.absolute)
+        self.relative = try container.sdkDecodeIfPresent(.relative)
     }
 }
 
-public extension TracesTimeInstant {
-    init(absolute: String? = nil, relative: String? = nil) {
+extension TracesTimeInstant {
+    public init(absolute: String? = nil, relative: String? = nil) {
         self.init()
         (self.absolute, self.relative) = (absolute, relative)
     }
@@ -195,66 +172,42 @@ public struct TracesSpanRecord: Codable {
         case attributes
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension TracesSpanRecord {
-    init(from decoder: Decoder) throws {
+extension TracesSpanRecord {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.traceId) else {
-            throw SdkValidationError(
-                field: "traceId",
-                code: "required",
-                message: "Validation failed for 'traceId': value is required"
-            )
+            throw SdkValidationError(field: "traceId", code: "required", message: "Validation failed for 'traceId': value is required")
         }
         guard container.contains(.spanId) else {
-            throw SdkValidationError(
-                field: "spanId",
-                code: "required",
-                message: "Validation failed for 'spanId': value is required"
-            )
+            throw SdkValidationError(field: "spanId", code: "required", message: "Validation failed for 'spanId': value is required")
         }
-        traceId = try container.sdkDecodeRequired(.traceId)
-        spanId = try container.sdkDecodeRequired(.spanId)
-        parentSpanId = try container.sdkDecodeIfPresent(.parentSpanId)
-        startTime = try container.sdkDecodeIfPresent(.startTime)
-        endTime = try container.sdkDecodeIfPresent(.endTime)
-        durationNs = try container.sdkDecodeIfPresent(.durationNs)
-        name = try container.sdkDecodeIfPresent(.name)
-        kind = try container.sdkDecodeIfPresent(.kind)
-        statusCode = try container.sdkDecodeIfPresent(.statusCode)
-        statusMessage = try container.sdkDecodeIfPresent(.statusMessage)
-        serviceName = try container.sdkDecodeIfPresent(.serviceName)
-        resource = try container.sdkDecodeIfPresent(.resource)
-        attributes = try container.sdkDecodeIfPresent(.attributes)
-        if let value = startTime {
+        self.traceId = try container.sdkDecodeRequired(.traceId)
+        self.spanId = try container.sdkDecodeRequired(.spanId)
+        self.parentSpanId = try container.sdkDecodeIfPresent(.parentSpanId)
+        self.startTime = try container.sdkDecodeIfPresent(.startTime)
+        self.endTime = try container.sdkDecodeIfPresent(.endTime)
+        self.durationNs = try container.sdkDecodeIfPresent(.durationNs)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.kind = try container.sdkDecodeIfPresent(.kind)
+        self.statusCode = try container.sdkDecodeIfPresent(.statusCode)
+        self.statusMessage = try container.sdkDecodeIfPresent(.statusMessage)
+        self.serviceName = try container.sdkDecodeIfPresent(.serviceName)
+        self.resource = try container.sdkDecodeIfPresent(.resource)
+        self.attributes = try container.sdkDecodeIfPresent(.attributes)
+        if let value = self.startTime {
             try sdkValidateDateTime("startTime", sdkWireString(value))
         }
-        if let value = endTime {
+        if let value = self.endTime {
             try sdkValidateDateTime("endTime", sdkWireString(value))
         }
     }
 }
 
-public extension TracesSpanRecord {
-    init(
-        traceId: String,
-        spanId: String,
-        parentSpanId: String? = nil,
-        startTime: Date? = nil,
-        endTime: Date? = nil,
-        durationNs: Int? = nil,
-        name: String? = nil,
-        kind: String? = nil,
-        statusCode: String? = nil,
-        statusMessage: String? = nil,
-        serviceName: String? = nil,
-        resource: [String: String]? = nil,
-        attributes: [String: String]? = nil
-    ) throws {
+extension TracesSpanRecord {
+    public init(traceId: String, spanId: String, parentSpanId: String? = nil, startTime: Date? = nil, endTime: Date? = nil, durationNs: Int? = nil, name: String? = nil, kind: String? = nil, statusCode: String? = nil, statusMessage: String? = nil, serviceName: String? = nil, resource: [String: String]? = nil, attributes: [String: String]? = nil) throws {
         (self.traceId, self.spanId) = (traceId, spanId)
         (self.parentSpanId, self.startTime) = (parentSpanId, startTime)
         (self.endTime, self.durationNs) = (endTime, durationNs)
@@ -312,41 +265,34 @@ public struct TracesFilterExpression: Codable {
     }
 
     init() {
-        (type, expressions, field, self.operator, value) = (nil, nil, nil, nil, nil)
-        query = nil
+        (self.type, self.expressions, self.field, self.`operator`, self.value) = (nil, nil, nil, nil, nil)
+        self.query = nil
     }
 }
 
-public extension TracesFilterExpression {
-    init(from decoder: Decoder) throws {
+extension TracesFilterExpression {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        expressions = try container.sdkDecodeIfPresent(.expressions)
-        field = try container.sdkDecodeIfPresent(.field)
-        self.operator = try container.sdkDecodeIfPresent(.operator)
-        value = try container.sdkDecodeIfPresent(.value)
-        query = try container.sdkDecodeIfPresent(.query)
-        if let value = expressions {
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.expressions = try container.sdkDecodeIfPresent(.expressions)
+        self.field = try container.sdkDecodeIfPresent(.field)
+        self.`operator` = try container.sdkDecodeIfPresent(.`operator`)
+        self.value = try container.sdkDecodeIfPresent(.value)
+        self.query = try container.sdkDecodeIfPresent(.query)
+        if let value = self.expressions {
             try validateItems("expressions", value, min: 1, max: 32)
         }
-        if let value = query {
+        if let value = self.query {
             try validateLength("query", value, min: nil, max: 256)
         }
     }
 }
 
-public extension TracesFilterExpression {
-    init(
-        type: TracesFilterExpressionType? = nil,
-        expressions: [TracesFilterExpression]? = nil,
-        field: TracesFieldRef? = nil,
-        operator: TracesFilterExpressionOperator? = nil,
-        value: TracesFilterValue? = nil,
-        query: String? = nil
-    ) throws {
+extension TracesFilterExpression {
+    public init(type: TracesFilterExpressionType? = nil, expressions: [TracesFilterExpression]? = nil, field: TracesFieldRef? = nil, `operator`: TracesFilterExpressionOperator? = nil, value: TracesFilterValue? = nil, query: String? = nil) throws {
         self.init()
         (self.type, self.expressions) = (type, expressions)
-        (self.field, self.operator) = (field, `operator`)
+        (self.field, self.`operator`) = (field, `operator`)
         (self.value, self.query) = (value, query)
         if let value = self.expressions {
             try validateItems("expressions", value, min: 1, max: 32)
@@ -371,38 +317,28 @@ public struct TracesFilterValueVariant5: Codable {
         case value
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension TracesFilterValueVariant5 {
-    init(from decoder: Decoder) throws {
+extension TracesFilterValueVariant5 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.value) else {
-            throw SdkValidationError(
-                field: "value",
-                code: "required",
-                message: "Validation failed for 'value': value is required"
-            )
+            throw SdkValidationError(field: "value", code: "required", message: "Validation failed for 'value': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        value = try container.sdkDecodeRequired(.value)
-        try validateItems("value", value, min: 1, max: 100)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.value = try container.sdkDecodeRequired(.value)
+            try validateItems("value", self.value, min: 1, max: 100)
     }
 }
 
-public extension TracesFilterValueVariant5 {
-    init(type: TracesFilterValueVariant5Type, value: [String]) throws {
+extension TracesFilterValueVariant5 {
+    public init(type: TracesFilterValueVariant5Type, value: [String]) throws {
         (self.type, self.value) = (type, value)
-        try validateItems("value", self.value, min: 1, max: 100)
+            try validateItems("value", self.value, min: 1, max: 100)
     }
 }
 
@@ -419,42 +355,26 @@ public struct TracesPaginationRequest: Codable {
     }
 
     init() {
-        limit = nil
+        self.limit = nil
     }
 }
 
-public extension TracesPaginationRequest {
-    init(from decoder: Decoder) throws {
+extension TracesPaginationRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        limit = try container.sdkDecodeIfPresent(.limit)
-        if let value = limit {
-            try validateRange(
-                "limit",
-                Double(value),
-                min: 0,
-                max: 1000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.limit = try container.sdkDecodeIfPresent(.limit)
+        if let value = self.limit {
+            try validateRange("limit", Double(value), min: 0, max: 1000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
-public extension TracesPaginationRequest {
-    init(limit: Int? = nil) throws {
+extension TracesPaginationRequest {
+    public init(limit: Int? = nil) throws {
         self.init()
         self.limit = limit
         if let value = self.limit {
-            try validateRange(
-                "limit",
-                Double(value),
-                min: 0,
-                max: 1000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("limit", Double(value), min: 0, max: 1000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -471,35 +391,25 @@ public struct TracesSearchResponse: Codable {
         case pagination
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension TracesSearchResponse {
-    init(from decoder: Decoder) throws {
+extension TracesSearchResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.data) else {
-            throw SdkValidationError(
-                field: "data",
-                code: "required",
-                message: "Validation failed for 'data': value is required"
-            )
+            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
         }
         guard container.contains(.pagination) else {
-            throw SdkValidationError(
-                field: "pagination",
-                code: "required",
-                message: "Validation failed for 'pagination': value is required"
-            )
+            throw SdkValidationError(field: "pagination", code: "required", message: "Validation failed for 'pagination': value is required")
         }
-        data = try container.sdkDecodeRequired(.data)
-        pagination = try container.sdkDecodeRequired(.pagination)
+        self.data = try container.sdkDecodeRequired(.data)
+        self.pagination = try container.sdkDecodeRequired(.pagination)
     }
 }
 
-public extension TracesSearchResponse {
-    init(data: [TracesTraceSummary], pagination: TracesPaginationResponse) {
+extension TracesSearchResponse {
+    public init(data: [TracesTraceSummary], pagination: TracesPaginationResponse) {
         (self.data, self.pagination) = (data, pagination)
     }
 }
@@ -521,21 +431,21 @@ public struct TracesTraceResponse: Codable {
     }
 
     init() {
-        (traceId, spans, truncated) = (nil, nil, nil)
+        (self.traceId, self.spans, self.truncated) = (nil, nil, nil)
     }
 }
 
-public extension TracesTraceResponse {
-    init(from decoder: Decoder) throws {
+extension TracesTraceResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        traceId = try container.sdkDecodeIfPresent(.traceId)
-        spans = try container.sdkDecodeIfPresent(.spans)
-        truncated = try container.sdkDecodeIfPresent(.truncated)
+        self.traceId = try container.sdkDecodeIfPresent(.traceId)
+        self.spans = try container.sdkDecodeIfPresent(.spans)
+        self.truncated = try container.sdkDecodeIfPresent(.truncated)
     }
 }
 
-public extension TracesTraceResponse {
-    init(traceId: String? = nil, spans: [TracesSpanRecord]? = nil, truncated: Bool? = nil) {
+extension TracesTraceResponse {
+    public init(traceId: String? = nil, spans: [TracesSpanRecord]? = nil, truncated: Bool? = nil) {
         self.init()
         (self.traceId, self.spans) = (traceId, spans)
         self.truncated = truncated
@@ -581,30 +491,24 @@ public struct TracesTraceSummary: Codable {
         case spanNames
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension TracesTraceSummary {
-    init(from decoder: Decoder) throws {
+extension TracesTraceSummary {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.traceId) else {
-            throw SdkValidationError(
-                field: "traceId",
-                code: "required",
-                message: "Validation failed for 'traceId': value is required"
-            )
+            throw SdkValidationError(field: "traceId", code: "required", message: "Validation failed for 'traceId': value is required")
         }
-        traceId = try container.sdkDecodeRequired(.traceId)
-        started = try container.sdkDecodeIfPresent(.started)
-        serviceName = try container.sdkDecodeIfPresent(.serviceName)
-        durationNs = try container.sdkDecodeIfPresent(.durationNs)
-        spanCount = try container.sdkDecodeIfPresent(.spanCount)
-        errorCount = try container.sdkDecodeIfPresent(.errorCount)
-        status = try container.sdkDecodeIfPresent(.status)
-        spanNames = try container.sdkDecodeIfPresent(.spanNames)
-        if let value = started {
+        self.traceId = try container.sdkDecodeRequired(.traceId)
+        self.started = try container.sdkDecodeIfPresent(.started)
+        self.serviceName = try container.sdkDecodeIfPresent(.serviceName)
+        self.durationNs = try container.sdkDecodeIfPresent(.durationNs)
+        self.spanCount = try container.sdkDecodeIfPresent(.spanCount)
+        self.errorCount = try container.sdkDecodeIfPresent(.errorCount)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.spanNames = try container.sdkDecodeIfPresent(.spanNames)
+        if let value = self.started {
             try sdkValidateDateTime("started", sdkWireString(value))
         }
     }
