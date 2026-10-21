@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiAgent domain models
+// AgentPlatformAPIApiAgent domain models
 /// Agent Chatbot Identifier
 public struct ApiAgentChatbotIdentifier: Codable {
     /// Agent chatbot identifier
@@ -15,19 +15,19 @@ public struct ApiAgentChatbotIdentifier: Codable {
     }
 
     init() {
-        agentChatbotIdentifier = nil
+        self.agentChatbotIdentifier = nil
     }
 }
 
-public extension ApiAgentChatbotIdentifier {
-    init(from decoder: Decoder) throws {
+extension ApiAgentChatbotIdentifier {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agentChatbotIdentifier = try container.sdkDecodeIfPresent(.agentChatbotIdentifier)
+        self.agentChatbotIdentifier = try container.sdkDecodeIfPresent(.agentChatbotIdentifier)
     }
 }
 
-public extension ApiAgentChatbotIdentifier {
-    init(agentChatbotIdentifier: String? = nil) {
+extension ApiAgentChatbotIdentifier {
+    public init(agentChatbotIdentifier: String? = nil) {
         self.init()
         self.agentChatbotIdentifier = agentChatbotIdentifier
     }
@@ -64,38 +64,31 @@ public struct ApiAgentAPIKeyInfo: Codable {
     }
 
     init() {
-        (createdAt, createdBy, deletedAt, name, secretKey) = (nil, nil, nil, nil, nil)
-        uuid = nil
+        (self.createdAt, self.createdBy, self.deletedAt, self.name, self.secretKey) = (nil, nil, nil, nil, nil)
+        self.uuid = nil
     }
 }
 
-public extension ApiAgentAPIKeyInfo {
-    init(from decoder: Decoder) throws {
+extension ApiAgentAPIKeyInfo {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        createdBy = try container.sdkDecodeIfPresent(.createdBy)
-        deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
-        name = try container.sdkDecodeIfPresent(.name)
-        secretKey = try container.sdkDecodeIfPresent(.secretKey)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
-        if let value = createdAt {
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.createdBy = try container.sdkDecodeIfPresent(.createdBy)
+        self.deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.secretKey = try container.sdkDecodeIfPresent(.secretKey)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = deletedAt {
+        if let value = self.deletedAt {
             try sdkValidateDateTime("deleted_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApiAgentAPIKeyInfo {
-    init(
-        createdAt: Date? = nil,
-        createdBy: String? = nil,
-        deletedAt: Date? = nil,
-        name: String? = nil,
-        secretKey: String? = nil,
-        uuid: String? = nil
-    ) throws {
+extension ApiAgentAPIKeyInfo {
+    public init(createdAt: Date? = nil, createdBy: String? = nil, deletedAt: Date? = nil, name: String? = nil, secretKey: String? = nil, uuid: String? = nil) throws {
         self.init()
         (self.createdAt, self.createdBy) = (createdAt, createdBy)
         (self.deletedAt, self.name) = (deletedAt, name)
@@ -120,19 +113,19 @@ public struct ApiAgentAPIKey: Codable {
     }
 
     init() {
-        apiKey = nil
+        self.apiKey = nil
     }
 }
 
-public extension ApiAgentAPIKey {
-    init(from decoder: Decoder) throws {
+extension ApiAgentAPIKey {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apiKey = try container.sdkDecodeIfPresent(.apiKey)
+        self.apiKey = try container.sdkDecodeIfPresent(.apiKey)
     }
 }
 
-public extension ApiAgentAPIKey {
-    init(apiKey: String? = nil) {
+extension ApiAgentAPIKey {
+    public init(apiKey: String? = nil) {
         self.init()
         self.apiKey = apiKey
     }
@@ -196,53 +189,39 @@ public struct ApiAgentGuardrail: Codable {
     }
 
     init() {
-        (agentUuid, createdAt, defaultResponse, description, guardrailUuid) = (nil, nil, nil, nil, nil)
-        (isAttached, isDefault, metadata, name, priority) = (nil, nil, nil, nil, nil)
-        (type, updatedAt, uuid) = (nil, nil, nil)
+        (self.agentUuid, self.createdAt, self.defaultResponse, self.description, self.guardrailUuid) = (nil, nil, nil, nil, nil)
+        (self.isAttached, self.isDefault, self.metadata, self.name, self.priority) = (nil, nil, nil, nil, nil)
+        (self.type, self.updatedAt, self.uuid) = (nil, nil, nil)
     }
 }
 
-public extension ApiAgentGuardrail {
-    init(from decoder: Decoder) throws {
+extension ApiAgentGuardrail {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        defaultResponse = try container.sdkDecodeIfPresent(.defaultResponse)
-        description = try container.sdkDecodeIfPresent(.description)
-        guardrailUuid = try container.sdkDecodeIfPresent(.guardrailUuid)
-        isAttached = try container.sdkDecodeIfPresent(.isAttached)
-        isDefault = try container.sdkDecodeIfPresent(.isDefault)
-        metadata = try container.sdkDecodeIfPresent(.metadata)
-        name = try container.sdkDecodeIfPresent(.name)
-        priority = try container.sdkDecodeIfPresent(.priority)
-        type = try container.sdkDecodeIfPresent(.type)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
-        if let value = createdAt {
+        self.agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.defaultResponse = try container.sdkDecodeIfPresent(.defaultResponse)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.guardrailUuid = try container.sdkDecodeIfPresent(.guardrailUuid)
+        self.isAttached = try container.sdkDecodeIfPresent(.isAttached)
+        self.isDefault = try container.sdkDecodeIfPresent(.isDefault)
+        self.metadata = try container.sdkDecodeIfPresent(.metadata)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.priority = try container.sdkDecodeIfPresent(.priority)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApiAgentGuardrail {
-    init(
-        agentUuid: String? = nil,
-        createdAt: Date? = nil,
-        defaultResponse: String? = nil,
-        description: String? = nil,
-        guardrailUuid: String? = nil,
-        isAttached: Bool? = nil,
-        isDefault: Bool? = nil,
-        metadata: [String: JSONValue]? = nil,
-        name: String? = nil,
-        priority: Int? = nil,
-        type: ApiGuardrailType? = nil,
-        updatedAt: Date? = nil,
-        uuid: String? = nil
-    ) throws {
+extension ApiAgentGuardrail {
+    public init(agentUuid: String? = nil, createdAt: Date? = nil, defaultResponse: String? = nil, description: String? = nil, guardrailUuid: String? = nil, isAttached: Bool? = nil, isDefault: Bool? = nil, metadata: [String: JSONValue]? = nil, name: String? = nil, priority: Int? = nil, type: ApiGuardrailType? = nil, updatedAt: Date? = nil, uuid: String? = nil) throws {
         self.init()
         (self.agentUuid, self.createdAt) = (agentUuid, createdAt)
         (self.defaultResponse, self.description) = (defaultResponse, description)
@@ -313,51 +292,38 @@ public struct ApiAgentFunction: Codable {
     }
 
     init() {
-        (apiKey, createdAt, createdBy, description, faasName) = (nil, nil, nil, nil, nil)
-        (faasNamespace, inputSchema, name, outputSchema, updatedAt) = (nil, nil, nil, nil, nil)
-        (url, uuid) = (nil, nil)
+        (self.apiKey, self.createdAt, self.createdBy, self.description, self.faasName) = (nil, nil, nil, nil, nil)
+        (self.faasNamespace, self.inputSchema, self.name, self.outputSchema, self.updatedAt) = (nil, nil, nil, nil, nil)
+        (self.url, self.uuid) = (nil, nil)
     }
 }
 
-public extension ApiAgentFunction {
-    init(from decoder: Decoder) throws {
+extension ApiAgentFunction {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apiKey = try container.sdkDecodeIfPresent(.apiKey)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        createdBy = try container.sdkDecodeIfPresent(.createdBy)
-        description = try container.sdkDecodeIfPresent(.description)
-        faasName = try container.sdkDecodeIfPresent(.faasName)
-        faasNamespace = try container.sdkDecodeIfPresent(.faasNamespace)
-        inputSchema = try container.sdkDecodeIfPresent(.inputSchema)
-        name = try container.sdkDecodeIfPresent(.name)
-        outputSchema = try container.sdkDecodeIfPresent(.outputSchema)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        url = try container.sdkDecodeIfPresent(.url)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
-        if let value = createdAt {
+        self.apiKey = try container.sdkDecodeIfPresent(.apiKey)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.createdBy = try container.sdkDecodeIfPresent(.createdBy)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.faasName = try container.sdkDecodeIfPresent(.faasName)
+        self.faasNamespace = try container.sdkDecodeIfPresent(.faasNamespace)
+        self.inputSchema = try container.sdkDecodeIfPresent(.inputSchema)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.outputSchema = try container.sdkDecodeIfPresent(.outputSchema)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApiAgentFunction {
-    init(
-        apiKey: String? = nil,
-        createdAt: Date? = nil,
-        createdBy: String? = nil,
-        description: String? = nil,
-        faasName: String? = nil,
-        faasNamespace: String? = nil,
-        inputSchema: [String: JSONValue]? = nil,
-        name: String? = nil,
-        outputSchema: [String: JSONValue]? = nil,
-        updatedAt: Date? = nil,
-        url: String? = nil,
-        uuid: String? = nil
-    ) throws {
+extension ApiAgentFunction {
+    public init(apiKey: String? = nil, createdAt: Date? = nil, createdBy: String? = nil, description: String? = nil, faasName: String? = nil, faasNamespace: String? = nil, inputSchema: [String: JSONValue]? = nil, name: String? = nil, outputSchema: [String: JSONValue]? = nil, updatedAt: Date? = nil, url: String? = nil, uuid: String? = nil) throws {
         self.init()
         (self.apiKey, self.createdAt) = (apiKey, createdAt)
         (self.createdBy, self.description) = (createdBy, description)
@@ -405,41 +371,28 @@ public struct ApiAgentLoggingConfig: Codable {
     }
 
     init() {
-        (galileoProjectId, galileoProjectName, insightsEnabled, insightsEnabledAt, logStreamId) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        logStreamName = nil
+        (self.galileoProjectId, self.galileoProjectName, self.insightsEnabled, self.insightsEnabledAt, self.logStreamId) = (nil, nil, nil, nil, nil)
+        self.logStreamName = nil
     }
 }
 
-public extension ApiAgentLoggingConfig {
-    init(from decoder: Decoder) throws {
+extension ApiAgentLoggingConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        galileoProjectId = try container.sdkDecodeIfPresent(.galileoProjectId)
-        galileoProjectName = try container.sdkDecodeIfPresent(.galileoProjectName)
-        insightsEnabled = try container.sdkDecodeIfPresent(.insightsEnabled)
-        insightsEnabledAt = try container.sdkDecodeIfPresent(.insightsEnabledAt)
-        logStreamId = try container.sdkDecodeIfPresent(.logStreamId)
-        logStreamName = try container.sdkDecodeIfPresent(.logStreamName)
-        if let value = insightsEnabledAt {
+        self.galileoProjectId = try container.sdkDecodeIfPresent(.galileoProjectId)
+        self.galileoProjectName = try container.sdkDecodeIfPresent(.galileoProjectName)
+        self.insightsEnabled = try container.sdkDecodeIfPresent(.insightsEnabled)
+        self.insightsEnabledAt = try container.sdkDecodeIfPresent(.insightsEnabledAt)
+        self.logStreamId = try container.sdkDecodeIfPresent(.logStreamId)
+        self.logStreamName = try container.sdkDecodeIfPresent(.logStreamName)
+        if let value = self.insightsEnabledAt {
             try sdkValidateDateTime("insights_enabled_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApiAgentLoggingConfig {
-    init(
-        galileoProjectId: String? = nil,
-        galileoProjectName: String? = nil,
-        insightsEnabled: Bool? = nil,
-        insightsEnabledAt: Date? = nil,
-        logStreamId: String? = nil,
-        logStreamName: String? = nil
-    ) throws {
+extension ApiAgentLoggingConfig {
+    public init(galileoProjectId: String? = nil, galileoProjectName: String? = nil, insightsEnabled: Bool? = nil, insightsEnabledAt: Date? = nil, logStreamId: String? = nil, logStreamName: String? = nil) throws {
         self.init()
         (self.galileoProjectId, self.galileoProjectName) = (galileoProjectId, galileoProjectName)
         (self.insightsEnabled, self.insightsEnabledAt) = (insightsEnabled, insightsEnabledAt)
@@ -533,38 +486,38 @@ public struct ApiAgentTemplate: Codable {
     }
 
     init() {
-        (createdAt, description, guardrails, instruction, k) = (nil, nil, nil, nil, nil)
-        (knowledgeBases, longDescription, maxTokens, model, name) = (nil, nil, nil, nil, nil)
-        (shortDescription, summary, tags, temperature, templateType) = (nil, nil, nil, nil, nil)
-        (topP, updatedAt, uuid) = (nil, nil, nil)
+        (self.createdAt, self.description, self.guardrails, self.instruction, self.k) = (nil, nil, nil, nil, nil)
+        (self.knowledgeBases, self.longDescription, self.maxTokens, self.model, self.name) = (nil, nil, nil, nil, nil)
+        (self.shortDescription, self.summary, self.tags, self.temperature, self.templateType) = (nil, nil, nil, nil, nil)
+        (self.topP, self.updatedAt, self.uuid) = (nil, nil, nil)
     }
 }
 
-public extension ApiAgentTemplate {
-    init(from decoder: Decoder) throws {
+extension ApiAgentTemplate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        description = try container.sdkDecodeIfPresent(.description)
-        guardrails = try container.sdkDecodeIfPresent(.guardrails)
-        instruction = try container.sdkDecodeIfPresent(.instruction)
-        k = try container.sdkDecodeIfPresent(.k)
-        knowledgeBases = try container.sdkDecodeIfPresent(.knowledgeBases)
-        longDescription = try container.sdkDecodeIfPresent(.longDescription)
-        maxTokens = try container.sdkDecodeIfPresent(.maxTokens)
-        model = try container.sdkDecodeIfPresent(.model)
-        name = try container.sdkDecodeIfPresent(.name)
-        shortDescription = try container.sdkDecodeIfPresent(.shortDescription)
-        summary = try container.sdkDecodeIfPresent(.summary)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        temperature = try container.sdkDecodeIfPresent(.temperature)
-        templateType = try container.sdkDecodeIfPresent(.templateType)
-        topP = try container.sdkDecodeIfPresent(.topP)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
-        if let value = createdAt {
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.guardrails = try container.sdkDecodeIfPresent(.guardrails)
+        self.instruction = try container.sdkDecodeIfPresent(.instruction)
+        self.k = try container.sdkDecodeIfPresent(.k)
+        self.knowledgeBases = try container.sdkDecodeIfPresent(.knowledgeBases)
+        self.longDescription = try container.sdkDecodeIfPresent(.longDescription)
+        self.maxTokens = try container.sdkDecodeIfPresent(.maxTokens)
+        self.model = try container.sdkDecodeIfPresent(.model)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.shortDescription = try container.sdkDecodeIfPresent(.shortDescription)
+        self.summary = try container.sdkDecodeIfPresent(.summary)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.temperature = try container.sdkDecodeIfPresent(.temperature)
+        self.templateType = try container.sdkDecodeIfPresent(.templateType)
+        self.topP = try container.sdkDecodeIfPresent(.topP)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }

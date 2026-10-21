@@ -6,48 +6,26 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ActionGatewayMethods {
-    /// Returns your team's toolbelts, one entry per name describing its latest version, sorted by name. Offset-paged
-    /// with page and `per_page`; pagination reports the total.
+extension ActionGatewayMethods {
+    /// Returns your team's toolbelts, one entry per name describing its latest version, sorted by name. Offset-paged with page and `per_page`; pagination reports the total.
     ///
     /// - Parameters:
     /// - status: active (default), deprecated, or all. Case-insensitive.
     /// - page: 1-based page number. Values below 1 are treated as 1.
     /// - perPage: Page size. Defaults to 20; values above 100 are capped at 100.
-    static func toolbeltsList(
-        config: ClientConfig,
-        status: ToolbeltsListParameter? = nil,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ToolbeltsResponse {
-        if let page {
+    public static func toolbeltsList(config: ClientConfig, status: ToolbeltsListParameter? = nil, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ToolbeltsResponse {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        if let perPage {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 100)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/action-gateway/toolbelts",
-            config: config,
-            query: [
-                SdkQueryParameter("status", value: status),
-                SdkQueryParameter("page", value: page),
-                SdkQueryParameter("per_page", value: perPage),
-            ],
-            decoder: .json,
-            operationId: "toolbelts_list",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", "/v2/action-gateway/toolbelts", config: config, query: [
+            SdkQueryParameter("status", value: status),
+            SdkQueryParameter("page", value: page),
+            SdkQueryParameter("per_page", value: perPage),
+        ], decoder: .json, operationId: "toolbelts_list", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// VectorDatabases domain models
+// VectorDatabases domain models
 /// Typed representation of the `VectordbResizeVectorDBResponse` API schema.
 public struct VectordbResizeVectorDBResponse: Codable {
     /// VectorDB represents a provisioned vector database instance.
@@ -14,19 +14,19 @@ public struct VectordbResizeVectorDBResponse: Codable {
     }
 
     init() {
-        vectorDb = nil
+        self.vectorDb = nil
     }
 }
 
-public extension VectordbResizeVectorDBResponse {
-    init(from decoder: Decoder) throws {
+extension VectordbResizeVectorDBResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        vectorDb = try container.sdkDecodeIfPresent(.vectorDb)
+        self.vectorDb = try container.sdkDecodeIfPresent(.vectorDb)
     }
 }
 
-public extension VectordbResizeVectorDBResponse {
-    init(vectorDb: VectordbVectorDB? = nil) {
+extension VectordbResizeVectorDBResponse {
+    public init(vectorDb: VectordbVectorDB? = nil) {
         self.init()
         self.vectorDb = vectorDb
     }
@@ -47,20 +47,20 @@ public struct VectordbResizeVectorDBRequest: Codable {
     }
 
     init() {
-        (id, size) = (nil, nil)
+        (self.id, self.size) = (nil, nil)
     }
 }
 
-public extension VectordbResizeVectorDBRequest {
-    init(from decoder: Decoder) throws {
+extension VectordbResizeVectorDBRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        size = try container.sdkDecodeIfPresent(.size)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.size = try container.sdkDecodeIfPresent(.size)
     }
 }
 
-public extension VectordbResizeVectorDBRequest {
-    init(id: String? = nil, size: String? = nil) {
+extension VectordbResizeVectorDBRequest {
+    public init(id: String? = nil, size: String? = nil) {
         self.init()
         (self.id, self.size) = (id, size)
     }

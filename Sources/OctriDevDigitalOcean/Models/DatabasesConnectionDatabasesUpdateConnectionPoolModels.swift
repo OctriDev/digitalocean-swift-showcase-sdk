@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DatabasesConnection domain models
+// DatabasesConnection domain models
 /// Typed representation of the `ConnectionPoolUpdate` API schema.
 public struct ConnectionPoolUpdate: Codable {
     /// The PGBouncer transaction mode for the connection pool. The allowed values are session, transaction, and
@@ -32,44 +32,30 @@ public struct ConnectionPoolUpdate: Codable {
         case user
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ConnectionPoolUpdate {
-    init(from decoder: Decoder) throws {
+extension ConnectionPoolUpdate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.mode) else {
-            throw SdkValidationError(
-                field: "mode",
-                code: "required",
-                message: "Validation failed for 'mode': value is required"
-            )
+            throw SdkValidationError(field: "mode", code: "required", message: "Validation failed for 'mode': value is required")
         }
         guard container.contains(.size) else {
-            throw SdkValidationError(
-                field: "size",
-                code: "required",
-                message: "Validation failed for 'size': value is required"
-            )
+            throw SdkValidationError(field: "size", code: "required", message: "Validation failed for 'size': value is required")
         }
         guard container.contains(.db) else {
-            throw SdkValidationError(
-                field: "db",
-                code: "required",
-                message: "Validation failed for 'db': value is required"
-            )
+            throw SdkValidationError(field: "db", code: "required", message: "Validation failed for 'db': value is required")
         }
-        mode = try container.sdkDecodeRequired(.mode)
-        size = try container.sdkDecodeRequired(.size)
-        db = try container.sdkDecodeRequired(.db)
-        user = try container.sdkDecodeIfPresent(.user)
+        self.mode = try container.sdkDecodeRequired(.mode)
+        self.size = try container.sdkDecodeRequired(.size)
+        self.db = try container.sdkDecodeRequired(.db)
+        self.user = try container.sdkDecodeIfPresent(.user)
     }
 }
 
-public extension ConnectionPoolUpdate {
-    init(mode: String, size: Int, db: String, user: String? = nil) {
+extension ConnectionPoolUpdate {
+    public init(mode: String, size: Int, db: String, user: String? = nil) {
         (self.mode, self.size) = (mode, size)
         (self.db, self.user) = (db, user)
     }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiList domain models
+// AgentPlatformAPIApiList domain models
 /// Output for listing scenario sets.
 public struct ApiListScenarioSetsOutput: Codable {
     /// Sort-by values available for this list request.
@@ -32,40 +32,26 @@ public struct ApiListScenarioSetsOutput: Codable {
     }
 
     init() {
-        (availableSortBy, availableSortDirections, availableSourceKinds, availableStatuses, links) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        (meta, scenarioSets) = (nil, nil)
+        (self.availableSortBy, self.availableSortDirections, self.availableSourceKinds, self.availableStatuses, self.links) = (nil, nil, nil, nil, nil)
+        (self.meta, self.scenarioSets) = (nil, nil)
     }
 }
 
-public extension ApiListScenarioSetsOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListScenarioSetsOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
-        availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
-        availableSourceKinds = try container.sdkDecodeIfPresent(.availableSourceKinds)
-        availableStatuses = try container.sdkDecodeIfPresent(.availableStatuses)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
-        scenarioSets = try container.sdkDecodeIfPresent(.scenarioSets)
+        self.availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
+        self.availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
+        self.availableSourceKinds = try container.sdkDecodeIfPresent(.availableSourceKinds)
+        self.availableStatuses = try container.sdkDecodeIfPresent(.availableStatuses)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
+        self.scenarioSets = try container.sdkDecodeIfPresent(.scenarioSets)
     }
 }
 
-public extension ApiListScenarioSetsOutput {
-    init(
-        availableSortBy: [ApiScenarioSetSortField]? = nil,
-        availableSortDirections: [ApiSortDirection]? = nil,
-        availableSourceKinds: [ApiScenarioSetSourceKind]? = nil,
-        availableStatuses: [ApiScenarioSetStatus]? = nil,
-        links: ApiLinks? = nil,
-        meta: ApiMeta? = nil,
-        scenarioSets: [ApiScenarioSet]? = nil
-    ) {
+extension ApiListScenarioSetsOutput {
+    public init(availableSortBy: [ApiScenarioSetSortField]? = nil, availableSortDirections: [ApiSortDirection]? = nil, availableSourceKinds: [ApiScenarioSetSourceKind]? = nil, availableStatuses: [ApiScenarioSetStatus]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil, scenarioSets: [ApiScenarioSet]? = nil) {
         self.init()
         (self.availableSortBy, self.availableSortDirections) = (availableSortBy, availableSortDirections)
         (self.availableSourceKinds, self.availableStatuses) = (availableSourceKinds, availableStatuses)

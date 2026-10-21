@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-/// Canonical nfsActions operation model declarations
+// Canonical nfsActions operation model declarations
 public indirect enum NfsCreateActionRequestBody {
     case nfsActionResize(NfsActionResize)
     case nfsActionSnapshot(NfsActionSnapshot)
@@ -20,6 +20,7 @@ public indirect enum NfsCreateActionRequestBody {
 }
 
 extension NfsCreateActionRequestBody: Codable {
+
     private enum CodingKeys: String, CodingKey {
         case discriminator = "type"
     }
@@ -27,16 +28,12 @@ extension NfsCreateActionRequestBody: Codable {
     public init(from decoder: Decoder) throws {
         let tagged = try decoder.container(keyedBy: CodingKeys.self)
         let discriminator = try tagged.decode(String.self, forKey: .discriminator)
-        if let value = try Self.decodeGroup1(discriminator, from: decoder) {
-            self = value; return
-        }
+        if let value = try Self.decodeGroup1(discriminator, from: decoder) { self = value; return }
         self = try .unknown(tag: discriminator, raw: JSONValue(from: decoder))
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
         if case let .unknown(_, raw) = self {
             var container = encoder.singleValueContainer()
             try container.encode(raw)
@@ -47,15 +44,13 @@ extension NfsCreateActionRequestBody: Codable {
 extension NfsCreateActionRequestBody {
     static func decodeGroup1(_ discriminator: String, from decoder: Decoder) throws -> Self? {
         switch discriminator {
-        case "resize": try .nfsActionResize(NfsActionResize(from: decoder))
-        case "snapshot": try .nfsActionSnapshot(NfsActionSnapshot(from: decoder))
-        case "attach": try .nfsActionAttach(NfsActionAttach(from: decoder))
-        case "detach": try .nfsActionDetach(NfsActionDetach(from: decoder))
-        case "reassign": try .nfsActionReassign(NfsActionReassign(from: decoder))
-        case "switch_performance_tier": try .nfsActionSwitchPerformanceTier(
-                NfsActionSwitchPerformanceTier(from: decoder)
-            )
-        default: nil
+        case "resize": return .nfsActionResize(try NfsActionResize(from: decoder))
+        case "snapshot": return .nfsActionSnapshot(try NfsActionSnapshot(from: decoder))
+        case "attach": return .nfsActionAttach(try NfsActionAttach(from: decoder))
+        case "detach": return .nfsActionDetach(try NfsActionDetach(from: decoder))
+        case "reassign": return .nfsActionReassign(try NfsActionReassign(from: decoder))
+        case "switch_performance_tier": return .nfsActionSwitchPerformanceTier(try NfsActionSwitchPerformanceTier(from: decoder))
+        default: return nil
         }
     }
 }

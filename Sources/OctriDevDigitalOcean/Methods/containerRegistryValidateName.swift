@@ -6,11 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContainerRegistryMethods {
-    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To validate that a
-    /// container registry name is available for use, send a POST request to `/v2/registry/validate-name`. If the name
-    /// is both formatted correctly and available, the response code will be 204 and contain no body. If the name is
-    /// already in use, the response will be a 409 Conflict.
+extension ContainerRegistryMethods {
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To validate that a container registry name is available for use, send a POST request to `/v2/registry/validate-name`. If the name is both formatted correctly and available, the response code will be 204 and contain no body. If the name is already in use, the response will be a 409 Conflict.
     ///
     /// - Parameters:
     /// - name: A globally unique name for the container registry. Must be lowercase
@@ -18,31 +15,12 @@ public extension ContainerRegistryMethods {
     ///   characters.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    static func registryValidateName(
-        config: ClientConfig,
-        name: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
+    public static func registryValidateName(config: ClientConfig, name: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
         try validateLength("name", name, max: 63)
         try sdkValidatePattern("name", name, sdkPattern41dd286f4dc3)
 
         let requestBody = RegistryValidateNameRequestBody(name: name)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/registry/validate-name",
-            config: config,
-            body: requestBody,
-            decoder: .empty,
-            operationId: "registry_validate_name",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "409": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v2/registry/validate-name", config: config, body: requestBody, decoder: .empty, operationId: "registry_validate_name", options: requestOptions, errors: ["401": Error2.self, "409": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

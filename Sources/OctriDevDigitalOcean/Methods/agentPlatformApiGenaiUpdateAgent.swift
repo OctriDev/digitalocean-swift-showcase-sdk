@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
-    struct GenaiUpdateAgentOptions: Codable {
+extension AgentPlatformApiMethods {
+    public struct GenaiUpdateAgentOptions: Codable {
         public var uuid: String
         public var agentLogInsightsEnabled: Bool?
         public var allowedDomains: [String]?
@@ -42,12 +42,9 @@ public extension AgentPlatformApiMethods {
         }
     }
 
-    /// Replaces the configuration of an existing agent. Supply the fields you want to change, such as `name`,
-    /// `instruction`, or `model_uuid`; all listed body fields are optional. The response includes the updated agent
-    /// object.
+    /// Replaces the configuration of an existing agent. Supply the fields you want to change, such as `name`, `instruction`, or `model_uuid`; all listed body fields are optional. The response includes the updated agent object.
     ///
-    /// To update an agent, send a PUT request to `/v2/gen-ai/agents/{uuid}`. The response body is a JSON object
-    /// containing the agent.
+    /// To update an agent, send a PUT request to `/v2/gen-ai/agents/{uuid}`. The response body is a JSON object containing the agent.
     ///
     /// - Parameters:
     /// - uuid: Unique agent id
@@ -105,28 +102,9 @@ public extension AgentPlatformApiMethods {
     /// - webSearchEnabled: Optional. Set to true to let the agent use the built-in
     ///   web_search tool to search the public web for current information, or false
     ///   to disable it.
-    static func genaiUpdateAgent(
-        config: ClientConfig,
-        options: GenaiUpdateAgentOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiUpdateAgentOutput {
+    public static func genaiUpdateAgent(config: ClientConfig, options: GenaiUpdateAgentOptions, requestOptions: RequestOptions? = nil) async throws -> ApiUpdateAgentOutput {
         let requestBody = GenaiUpdateAgentRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(options.uuid))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "genai_update_agent",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(options.uuid))].joined(), config: config, body: requestBody, decoder: .json, operationId: "genai_update_agent", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

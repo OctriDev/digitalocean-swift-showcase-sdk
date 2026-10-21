@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AddOns domain models
+// AddOns domain models
 /// Typed representation of the `AddonsGetAppMetadata` API schema.
 public struct AddonsGetAppMetadata: Codable {
     /// Optional array value serialized in the `metadata` wire field.
@@ -14,19 +14,19 @@ public struct AddonsGetAppMetadata: Codable {
     }
 
     init() {
-        metadata = nil
+        self.metadata = nil
     }
 }
 
-public extension AddonsGetAppMetadata {
-    init(from decoder: Decoder) throws {
+extension AddonsGetAppMetadata {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        metadata = try container.sdkDecodeIfPresent(.metadata)
+        self.metadata = try container.sdkDecodeIfPresent(.metadata)
     }
 }
 
-public extension AddonsGetAppMetadata {
-    init(metadata: [AddonsAppMetadata]? = nil) {
+extension AddonsGetAppMetadata {
+    public init(metadata: [AddonsAppMetadata]? = nil) {
         self.init()
         self.metadata = metadata
     }
@@ -62,67 +62,38 @@ public struct AddonsAppMetadata: Codable {
         case options
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AddonsAppMetadata {
-    init(from decoder: Decoder) throws {
+extension AddonsAppMetadata {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.displayName) else {
-            throw SdkValidationError(
-                field: "display_name",
-                code: "required",
-                message: "Validation failed for 'display_name': value is required"
-            )
+            throw SdkValidationError(field: "display_name", code: "required", message: "Validation failed for 'display_name': value is required")
         }
         guard container.contains(.description) else {
-            throw SdkValidationError(
-                field: "description",
-                code: "required",
-                message: "Validation failed for 'description': value is required"
-            )
+            throw SdkValidationError(field: "description", code: "required", message: "Validation failed for 'description': value is required")
         }
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        name = try container.sdkDecodeRequired(.name)
-        displayName = try container.sdkDecodeRequired(.displayName)
-        description = try container.sdkDecodeRequired(.description)
-        type = try container.sdkDecodeRequired(.type)
-        options = try container.sdkDecodeIfPresent(.options)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.displayName = try container.sdkDecodeRequired(.displayName)
+        self.description = try container.sdkDecodeRequired(.description)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.options = try container.sdkDecodeIfPresent(.options)
     }
 }
 
-public extension AddonsAppMetadata {
-    init(
-        id: Int,
-        name: String,
-        displayName: String,
-        description: String,
-        type: AddonsAppMetadataType,
-        options: [String]? = nil
-    ) {
+extension AddonsAppMetadata {
+    public init(id: Int, name: String, displayName: String, description: String, type: AddonsAppMetadataType, options: [String]? = nil) {
         (self.id, self.name) = (id, name)
         (self.displayName, self.description) = (displayName, description)
         (self.type, self.options) = (type, options)
@@ -133,16 +104,13 @@ public extension AddonsAppMetadata {
 public struct AddonsAppMetadataType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let string = AddonsAppMetadataType(rawValue: "string")
     public static let boolean = AddonsAppMetadataType(rawValue: "boolean")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

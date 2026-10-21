@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiCreate domain models
+// AgentPlatformAPIApiCreate domain models
 /// Typed representation of the `ApiCreateModelAPIKeyInputPublic` API schema.
 public struct ApiCreateModelAPIKeyInputPublic: Codable {
     /// A human friendly name to identify the key
@@ -15,19 +15,19 @@ public struct ApiCreateModelAPIKeyInputPublic: Codable {
     }
 
     init() {
-        name = nil
+        self.name = nil
     }
 }
 
-public extension ApiCreateModelAPIKeyInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiCreateModelAPIKeyInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
+        self.name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-public extension ApiCreateModelAPIKeyInputPublic {
-    init(name: String? = nil) {
+extension ApiCreateModelAPIKeyInputPublic {
+    public init(name: String? = nil) {
         self.init()
         self.name = name
     }

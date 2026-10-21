@@ -3,33 +3,25 @@
 
 import Foundation
 
-/// ReservedIPs domain models
+// ReservedIPs domain models
 public indirect enum ReservedIpCreate {
     case reservedIpCreateVariant0(ReservedIpCreateVariant0)
     case reservedIpCreateVariant1(ReservedIpCreateVariant1)
 }
 
 extension ReservedIpCreate: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for ReservedIpCreate"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ReservedIpCreate")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -47,12 +39,8 @@ extension ReservedIpCreate {
 
 extension ReservedIpCreate {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(ReservedIpCreateVariant0.self) {
-            return .reservedIpCreateVariant0(value)
-        }
-        if let value = try? container.decode(ReservedIpCreateVariant1.self) {
-            return .reservedIpCreateVariant1(value)
-        }
+        if let value = try? container.decode(ReservedIpCreateVariant0.self) { return .reservedIpCreateVariant0(value) }
+        if let value = try? container.decode(ReservedIpCreateVariant1.self) { return .reservedIpCreateVariant1(value) }
         return nil
     }
 }
@@ -73,32 +61,22 @@ public indirect enum ReservedIpDroplet {
 }
 
 extension ReservedIpDroplet: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for ReservedIpDroplet"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ReservedIpDroplet")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension ReservedIpDroplet {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode([String: JSONValue].self) {
-            return .jsonValue(value)
-        }
-        if let value = try? container.decode(Droplet.self) {
-            return .droplet(value)
-        }
+        if let value = try? container.decode([String: JSONValue].self) { return .jsonValue(value) }
+        if let value = try? container.decode(Droplet.self) { return .droplet(value) }
         return nil
     }
 }
@@ -145,68 +123,46 @@ public struct ReservedIpRegion: Codable {
         case sizes
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ReservedIpRegion {
-    init(from decoder: Decoder) throws {
+extension ReservedIpRegion {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.slug) else {
-            throw SdkValidationError(
-                field: "slug",
-                code: "required",
-                message: "Validation failed for 'slug': value is required"
-            )
+            throw SdkValidationError(field: "slug", code: "required", message: "Validation failed for 'slug': value is required")
         }
         guard container.contains(.features) else {
-            throw SdkValidationError(
-                field: "features",
-                code: "required",
-                message: "Validation failed for 'features': value is required"
-            )
+            throw SdkValidationError(field: "features", code: "required", message: "Validation failed for 'features': value is required")
         }
         guard container.contains(.available) else {
-            throw SdkValidationError(
-                field: "available",
-                code: "required",
-                message: "Validation failed for 'available': value is required"
-            )
+            throw SdkValidationError(field: "available", code: "required", message: "Validation failed for 'available': value is required")
         }
         guard container.contains(.sizes) else {
-            throw SdkValidationError(
-                field: "sizes",
-                code: "required",
-                message: "Validation failed for 'sizes': value is required"
-            )
+            throw SdkValidationError(field: "sizes", code: "required", message: "Validation failed for 'sizes': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        slug = try container.sdkDecodeRequired(.slug)
-        features = try container.sdkDecodeRequired(.features)
-        available = try container.sdkDecodeRequired(.available)
-        sizes = try container.sdkDecodeRequired(.sizes)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.slug = try container.sdkDecodeRequired(.slug)
+        self.features = try container.sdkDecodeRequired(.features)
+        self.available = try container.sdkDecodeRequired(.available)
+        self.sizes = try container.sdkDecodeRequired(.sizes)
         additionalProperties = try decoder.sdkAdditionalProperties(besides: CodingKeys.self)
     }
 }
 
-public extension ReservedIpRegion {
-    init(name: String, slug: String, features: [String], available: Bool, sizes: [String]) {
+extension ReservedIpRegion {
+    public init(name: String, slug: String, features: [String], available: Bool, sizes: [String]) {
         (self.name, self.slug) = (name, slug)
         (self.features, self.available) = (features, available)
         self.sizes = sizes
     }
 }
 
-public extension ReservedIpRegion {
-    func encode(to encoder: Encoder) throws {
+extension ReservedIpRegion {
+    public func encode(to encoder: Encoder) throws {
         try encoder.sdkEncodeAdditionalProperties(additionalProperties)
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(name, forKey: .name)
@@ -227,19 +183,19 @@ public struct ReservedIpResponse: Codable {
     }
 
     init() {
-        reservedIp = nil
+        self.reservedIp = nil
     }
 }
 
-public extension ReservedIpResponse {
-    init(from decoder: Decoder) throws {
+extension ReservedIpResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        reservedIp = try container.sdkDecodeIfPresent(.reservedIp)
+        self.reservedIp = try container.sdkDecodeIfPresent(.reservedIp)
     }
 }
 
-public extension ReservedIpResponse {
-    init(reservedIp: ReservedIp? = nil) {
+extension ReservedIpResponse {
+    public init(reservedIp: ReservedIp? = nil) {
         self.init()
         self.reservedIp = reservedIp
     }
@@ -254,27 +210,21 @@ public struct ReservedIpCreateVariant0: Codable {
         case dropletId = "droplet_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ReservedIpCreateVariant0 {
-    init(from decoder: Decoder) throws {
+extension ReservedIpCreateVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.dropletId) else {
-            throw SdkValidationError(
-                field: "droplet_id",
-                code: "required",
-                message: "Validation failed for 'droplet_id': value is required"
-            )
+            throw SdkValidationError(field: "droplet_id", code: "required", message: "Validation failed for 'droplet_id': value is required")
         }
-        dropletId = try container.sdkDecodeRequired(.dropletId)
+        self.dropletId = try container.sdkDecodeRequired(.dropletId)
     }
 }
 
-public extension ReservedIpCreateVariant0 {
-    init(dropletId: Int) {
+extension ReservedIpCreateVariant0 {
+    public init(dropletId: Int) {
         self.dropletId = dropletId
     }
 }
@@ -292,31 +242,25 @@ public struct ReservedIpCreateVariant1: Codable {
         case projectId = "project_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ReservedIpCreateVariant1 {
-    init(from decoder: Decoder) throws {
+extension ReservedIpCreateVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
-        region = try container.sdkDecodeRequired(.region)
-        projectId = try container.sdkDecodeIfPresent(.projectId)
-        if let value = projectId {
+        self.region = try container.sdkDecodeRequired(.region)
+        self.projectId = try container.sdkDecodeIfPresent(.projectId)
+        if let value = self.projectId {
             try sdkValidateUuid("project_id", value)
         }
     }
 }
 
-public extension ReservedIpCreateVariant1 {
-    init(region: String, projectId: String? = nil) throws {
+extension ReservedIpCreateVariant1 {
+    public init(region: String, projectId: String? = nil) throws {
         (self.region, self.projectId) = (region, projectId)
         if let value = self.projectId {
             try sdkValidateUuid("project_id", value)
@@ -332,19 +276,19 @@ public struct ReservedIpListVariant0: Codable {
     }
 
     init() {
-        reservedIps = nil
+        self.reservedIps = nil
     }
 }
 
-public extension ReservedIpListVariant0 {
-    init(from decoder: Decoder) throws {
+extension ReservedIpListVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        reservedIps = try container.sdkDecodeIfPresent(.reservedIps)
+        self.reservedIps = try container.sdkDecodeIfPresent(.reservedIps)
     }
 }
 
-public extension ReservedIpListVariant0 {
-    init(reservedIps: [ReservedIp]? = nil) {
+extension ReservedIpListVariant0 {
+    public init(reservedIps: [ReservedIp]? = nil) {
         self.init()
         self.reservedIps = reservedIps
     }
@@ -363,20 +307,20 @@ public struct ReservedIpCreated: Codable {
     }
 
     init() {
-        (reservedIp, links) = (nil, nil)
+        (self.reservedIp, self.links) = (nil, nil)
     }
 }
 
-public extension ReservedIpCreated {
-    init(from decoder: Decoder) throws {
+extension ReservedIpCreated {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        reservedIp = try container.sdkDecodeIfPresent(.reservedIp)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.reservedIp = try container.sdkDecodeIfPresent(.reservedIp)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension ReservedIpCreated {
-    init(reservedIp: ReservedIp? = nil, links: ReservedIpCreatedLinks? = nil) {
+extension ReservedIpCreated {
+    public init(reservedIp: ReservedIp? = nil, links: ReservedIpCreatedLinks? = nil) {
         self.init()
         (self.reservedIp, self.links) = (reservedIp, links)
     }
@@ -395,20 +339,20 @@ public struct ReservedIpCreatedLinks: Codable {
     }
 
     init() {
-        (droplets, actions) = (nil, nil)
+        (self.droplets, self.actions) = (nil, nil)
     }
 }
 
-public extension ReservedIpCreatedLinks {
-    init(from decoder: Decoder) throws {
+extension ReservedIpCreatedLinks {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        droplets = try container.sdkDecodeIfPresent(.droplets)
-        actions = try container.sdkDecodeIfPresent(.actions)
+        self.droplets = try container.sdkDecodeIfPresent(.droplets)
+        self.actions = try container.sdkDecodeIfPresent(.actions)
     }
 }
 
-public extension ReservedIpCreatedLinks {
-    init(droplets: [ActionLink]? = nil, actions: [ActionLink]? = nil) {
+extension ReservedIpCreatedLinks {
+    public init(droplets: [ActionLink]? = nil, actions: [ActionLink]? = nil) {
         self.init()
         (self.droplets, self.actions) = (droplets, actions)
     }
@@ -442,32 +386,26 @@ public struct ReservedIp: Codable {
     }
 
     init() {
-        (ip, region, droplet, locked, projectId) = (nil, nil, nil, nil, nil)
+        (self.ip, self.region, self.droplet, self.locked, self.projectId) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ReservedIp {
-    init(from decoder: Decoder) throws {
+extension ReservedIp {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        ip = try container.sdkDecodeIfPresent(.ip)
-        region = try container.sdkDecodeIfPresent(.region)
-        droplet = try container.sdkDecodeIfPresent(.droplet)
-        locked = try container.sdkDecodeIfPresent(.locked)
-        projectId = try container.sdkDecodeIfPresent(.projectId)
-        if let value = projectId {
+        self.ip = try container.sdkDecodeIfPresent(.ip)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.droplet = try container.sdkDecodeIfPresent(.droplet)
+        self.locked = try container.sdkDecodeIfPresent(.locked)
+        self.projectId = try container.sdkDecodeIfPresent(.projectId)
+        if let value = self.projectId {
             try sdkValidateUuid("project_id", value)
         }
     }
 }
 
-public extension ReservedIp {
-    init(
-        ip: String? = nil,
-        region: ReservedIpRegion? = nil,
-        droplet: ReservedIpDroplet? = nil,
-        locked: Bool? = nil,
-        projectId: String? = nil
-    ) throws {
+extension ReservedIp {
+    public init(ip: String? = nil, region: ReservedIpRegion? = nil, droplet: ReservedIpDroplet? = nil, locked: Bool? = nil, projectId: String? = nil) throws {
         self.init()
         (self.ip, self.region) = (ip, region)
         (self.droplet, self.locked) = (droplet, locked)
@@ -492,29 +430,23 @@ public struct ReservedIpList: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ReservedIpList {
-    init(from decoder: Decoder) throws {
+extension ReservedIpList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        reservedIps = try container.sdkDecodeIfPresent(.reservedIps)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.reservedIps = try container.sdkDecodeIfPresent(.reservedIps)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension ReservedIpList {
-    init(meta: MetaMeta, reservedIps: [ReservedIp]? = nil, links: PageLinks? = nil) {
+extension ReservedIpList {
+    public init(meta: MetaMeta, reservedIps: [ReservedIp]? = nil, links: PageLinks? = nil) {
         (self.meta, self.reservedIps) = (meta, reservedIps)
         self.links = links
     }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Signals domain models
+// Signals domain models
 /// Consent details for a specific environment.
 public struct AgentConsent: Codable {
     /// The team ID that owns this consent record.
@@ -34,68 +34,43 @@ public struct AgentConsent: Codable {
         case updatedAt = "updated_at"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AgentConsent {
-    init(from decoder: Decoder) throws {
+extension AgentConsent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.teamId) else {
-            throw SdkValidationError(
-                field: "team_id",
-                code: "required",
-                message: "Validation failed for 'team_id': value is required"
-            )
+            throw SdkValidationError(field: "team_id", code: "required", message: "Validation failed for 'team_id': value is required")
         }
         guard container.contains(.source) else {
-            throw SdkValidationError(
-                field: "source",
-                code: "required",
-                message: "Validation failed for 'source': value is required"
-            )
+            throw SdkValidationError(field: "source", code: "required", message: "Validation failed for 'source': value is required")
         }
         guard container.contains(.agentId) else {
-            throw SdkValidationError(
-                field: "agent_id",
-                code: "required",
-                message: "Validation failed for 'agent_id': value is required"
-            )
+            throw SdkValidationError(field: "agent_id", code: "required", message: "Validation failed for 'agent_id': value is required")
         }
         guard container.contains(.enabled) else {
-            throw SdkValidationError(
-                field: "enabled",
-                code: "required",
-                message: "Validation failed for 'enabled': value is required"
-            )
+            throw SdkValidationError(field: "enabled", code: "required", message: "Validation failed for 'enabled': value is required")
         }
-        teamId = try container.sdkDecodeRequired(.teamId)
-        source = try container.sdkDecodeRequired(.source)
-        agentId = try container.sdkDecodeRequired(.agentId)
-        enabled = try container.sdkDecodeRequired(.enabled)
-        id = try container.sdkDecodeIfPresent(.id)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        try sdkValidateUuid("agent_id", agentId)
-        if let value = updatedAt {
+        self.teamId = try container.sdkDecodeRequired(.teamId)
+        self.source = try container.sdkDecodeRequired(.source)
+        self.agentId = try container.sdkDecodeRequired(.agentId)
+        self.enabled = try container.sdkDecodeRequired(.enabled)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+            try sdkValidateUuid("agent_id", self.agentId)
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension AgentConsent {
-    init(
-        teamId: Int,
-        source: AgentConsentSource,
-        agentId: String,
-        enabled: Bool,
-        id: Int? = nil,
-        updatedAt: Date? = nil
-    ) throws {
+extension AgentConsent {
+    public init(teamId: Int, source: AgentConsentSource, agentId: String, enabled: Bool, id: Int? = nil, updatedAt: Date? = nil) throws {
         (self.teamId, self.source) = (teamId, source)
         (self.agentId, self.enabled) = (agentId, enabled)
         (self.id, self.updatedAt) = (id, updatedAt)
-        try sdkValidateUuid("agent_id", self.agentId)
+            try sdkValidateUuid("agent_id", self.agentId)
         if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
@@ -106,15 +81,12 @@ public extension AgentConsent {
 public struct AgentConsentSource: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let agent = AgentConsentSource(rawValue: "agent")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

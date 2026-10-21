@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// VPCNATGateways domain models
+// VPCNATGateways domain models
 /// An optional object specifying the public egress IP address to assign to the VPC NAT gateway. Provide this only
 /// to use a specific address. If omitted, DigitalOcean allocates a public IP address automatically.
 public struct VpcNatGatewayCreateEgresses: Codable {
@@ -15,19 +15,19 @@ public struct VpcNatGatewayCreateEgresses: Codable {
     }
 
     init() {
-        publicGateways = nil
+        self.publicGateways = nil
     }
 }
 
-public extension VpcNatGatewayCreateEgresses {
-    init(from decoder: Decoder) throws {
+extension VpcNatGatewayCreateEgresses {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        publicGateways = try container.sdkDecodeIfPresent(.publicGateways)
+        self.publicGateways = try container.sdkDecodeIfPresent(.publicGateways)
     }
 }
 
-public extension VpcNatGatewayCreateEgresses {
-    init(publicGateways: [VpcNatGatewayCreateEgressesPublicGatewaysItem]? = nil) {
+extension VpcNatGatewayCreateEgresses {
+    public init(publicGateways: [VpcNatGatewayCreateEgressesPublicGatewaysItem]? = nil) {
         self.init()
         self.publicGateways = publicGateways
     }
@@ -54,20 +54,20 @@ public struct VpcNatGatewayCreateEgressesPublicGatewaysItem: Codable {
     }
 
     init() {
-        (ip, ipv4) = (nil, nil)
+        (self.ip, self.ipv4) = (nil, nil)
     }
 }
 
-public extension VpcNatGatewayCreateEgressesPublicGatewaysItem {
-    init(from decoder: Decoder) throws {
+extension VpcNatGatewayCreateEgressesPublicGatewaysItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        ip = try container.sdkDecodeIfPresent(.ip)
-        ipv4 = try container.sdkDecodeIfPresent(.ipv4)
+        self.ip = try container.sdkDecodeIfPresent(.ip)
+        self.ipv4 = try container.sdkDecodeIfPresent(.ipv4)
     }
 }
 
-public extension VpcNatGatewayCreateEgressesPublicGatewaysItem {
-    init(ip: String? = nil, ipv4: String? = nil) {
+extension VpcNatGatewayCreateEgressesPublicGatewaysItem {
+    public init(ip: String? = nil, ipv4: String? = nil) {
         self.init()
         (self.ip, self.ipv4) = (ip, ipv4)
     }
@@ -114,73 +114,41 @@ public struct VpcNatGatewayCreate: Codable {
         case egresses
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VpcNatGatewayCreate {
-    init(from decoder: Decoder) throws {
+extension VpcNatGatewayCreate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
         guard container.contains(.size) else {
-            throw SdkValidationError(
-                field: "size",
-                code: "required",
-                message: "Validation failed for 'size': value is required"
-            )
+            throw SdkValidationError(field: "size", code: "required", message: "Validation failed for 'size': value is required")
         }
         guard container.contains(.vpcs) else {
-            throw SdkValidationError(
-                field: "vpcs",
-                code: "required",
-                message: "Validation failed for 'vpcs': value is required"
-            )
+            throw SdkValidationError(field: "vpcs", code: "required", message: "Validation failed for 'vpcs': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        type = try container.sdkDecodeRequired(.type)
-        region = try container.sdkDecodeRequired(.region)
-        size = try container.sdkDecodeRequired(.size)
-        vpcs = try container.sdkDecodeRequired(.vpcs)
-        udpTimeoutSeconds = try container.sdkDecodeIfPresent(.udpTimeoutSeconds)
-        icmpTimeoutSeconds = try container.sdkDecodeIfPresent(.icmpTimeoutSeconds)
-        tcpTimeoutSeconds = try container.sdkDecodeIfPresent(.tcpTimeoutSeconds)
-        egresses = try container.sdkDecodeIfPresent(.egresses)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.size = try container.sdkDecodeRequired(.size)
+        self.vpcs = try container.sdkDecodeRequired(.vpcs)
+        self.udpTimeoutSeconds = try container.sdkDecodeIfPresent(.udpTimeoutSeconds)
+        self.icmpTimeoutSeconds = try container.sdkDecodeIfPresent(.icmpTimeoutSeconds)
+        self.tcpTimeoutSeconds = try container.sdkDecodeIfPresent(.tcpTimeoutSeconds)
+        self.egresses = try container.sdkDecodeIfPresent(.egresses)
     }
 }
 
-public extension VpcNatGatewayCreate {
-    init(
-        name: String,
-        type: VpcNatGatewayCreateType,
-        region: VpcNatGatewayCreateRegion,
-        size: Int,
-        vpcs: [VpcNatGatewayCreateVpcsItem],
-        udpTimeoutSeconds: Int? = nil,
-        icmpTimeoutSeconds: Int? = nil,
-        tcpTimeoutSeconds: Int? = nil,
-        egresses: VpcNatGatewayCreateEgresses? = nil
-    ) {
+extension VpcNatGatewayCreate {
+    public init(name: String, type: VpcNatGatewayCreateType, region: VpcNatGatewayCreateRegion, size: Int, vpcs: [VpcNatGatewayCreateVpcsItem], udpTimeoutSeconds: Int? = nil, icmpTimeoutSeconds: Int? = nil, tcpTimeoutSeconds: Int? = nil, egresses: VpcNatGatewayCreateEgresses? = nil) {
         (self.name, self.type) = (name, type)
         (self.region, self.size) = (region, size)
         (self.vpcs, self.udpTimeoutSeconds) = (vpcs, udpTimeoutSeconds)
@@ -199,19 +167,19 @@ public struct VpcNatGatewayCreateResponse: Codable {
     }
 
     init() {
-        vpcNatGateway = nil
+        self.vpcNatGateway = nil
     }
 }
 
-public extension VpcNatGatewayCreateResponse {
-    init(from decoder: Decoder) throws {
+extension VpcNatGatewayCreateResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        vpcNatGateway = try container.sdkDecodeIfPresent(.vpcNatGateway)
+        self.vpcNatGateway = try container.sdkDecodeIfPresent(.vpcNatGateway)
     }
 }
 
-public extension VpcNatGatewayCreateResponse {
-    init(vpcNatGateway: VpcNatGatewayCreate? = nil) {
+extension VpcNatGatewayCreateResponse {
+    public init(vpcNatGateway: VpcNatGatewayCreate? = nil) {
         self.init()
         self.vpcNatGateway = vpcNatGateway
     }
@@ -235,36 +203,30 @@ public struct VpcNatGatewayCreateVpcsItem: Codable {
         case defaultGateway = "default_gateway"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VpcNatGatewayCreateVpcsItem {
-    init(from decoder: Decoder) throws {
+extension VpcNatGatewayCreateVpcsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.vpcUuid) else {
-            throw SdkValidationError(
-                field: "vpc_uuid",
-                code: "required",
-                message: "Validation failed for 'vpc_uuid': value is required"
-            )
+            throw SdkValidationError(field: "vpc_uuid", code: "required", message: "Validation failed for 'vpc_uuid': value is required")
         }
-        vpcUuid = try container.sdkDecodeRequired(.vpcUuid)
-        subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
-        defaultGateway = try container.sdkDecodeIfPresent(.defaultGateway)
-        try sdkValidateUuid("vpc_uuid", vpcUuid)
-        if let value = subnetUuid {
+        self.vpcUuid = try container.sdkDecodeRequired(.vpcUuid)
+        self.subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
+        self.defaultGateway = try container.sdkDecodeIfPresent(.defaultGateway)
+            try sdkValidateUuid("vpc_uuid", self.vpcUuid)
+        if let value = self.subnetUuid {
             try sdkValidateUuid("subnet_uuid", value)
         }
     }
 }
 
-public extension VpcNatGatewayCreateVpcsItem {
-    init(vpcUuid: String, subnetUuid: String? = nil, defaultGateway: Bool? = nil) throws {
+extension VpcNatGatewayCreateVpcsItem {
+    public init(vpcUuid: String, subnetUuid: String? = nil, defaultGateway: Bool? = nil) throws {
         (self.vpcUuid, self.subnetUuid) = (vpcUuid, subnetUuid)
         self.defaultGateway = defaultGateway
-        try sdkValidateUuid("vpc_uuid", self.vpcUuid)
+            try sdkValidateUuid("vpc_uuid", self.vpcUuid)
         if let value = self.subnetUuid {
             try sdkValidateUuid("subnet_uuid", value)
         }
@@ -275,10 +237,7 @@ public extension VpcNatGatewayCreateVpcsItem {
 public struct VpcNatGatewayCreateRegion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let nyc1 = VpcNatGatewayCreateRegion(rawValue: "nyc1")
     public static let nyc2 = VpcNatGatewayCreateRegion(rawValue: "nyc2")
     public static let nyc3 = VpcNatGatewayCreateRegion(rawValue: "nyc3")
@@ -297,7 +256,7 @@ public struct VpcNatGatewayCreateRegion: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -310,15 +269,12 @@ public struct VpcNatGatewayCreateRegion: RawRepresentable, Hashable, Codable, Se
 public struct VpcNatGatewayCreateType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let `public` = VpcNatGatewayCreateType(rawValue: "PUBLIC")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

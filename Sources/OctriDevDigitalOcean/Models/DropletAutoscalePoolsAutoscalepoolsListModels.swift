@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DropletAutoscalePools domain models
+// DropletAutoscalePools domain models
 /// Typed representation of the `AllAutoscalePools` API schema.
 public struct AllAutoscalePools: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,29 +18,23 @@ public struct AllAutoscalePools: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllAutoscalePools {
-    init(from decoder: Decoder) throws {
+extension AllAutoscalePools {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        autoscalePools = try container.sdkDecodeIfPresent(.autoscalePools)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.autoscalePools = try container.sdkDecodeIfPresent(.autoscalePools)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllAutoscalePools {
-    init(meta: MetaMeta, autoscalePools: [AutoscalePool]? = nil, links: PageLinks? = nil) {
+extension AllAutoscalePools {
+    public init(meta: MetaMeta, autoscalePools: [AutoscalePool]? = nil, links: PageLinks? = nil) {
         (self.meta, self.autoscalePools) = (meta, autoscalePools)
         self.links = links
     }
@@ -54,19 +48,19 @@ public struct AllAutoscalePoolsVariant0: Codable {
     }
 
     init() {
-        autoscalePools = nil
+        self.autoscalePools = nil
     }
 }
 
-public extension AllAutoscalePoolsVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllAutoscalePoolsVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        autoscalePools = try container.sdkDecodeIfPresent(.autoscalePools)
+        self.autoscalePools = try container.sdkDecodeIfPresent(.autoscalePools)
     }
 }
 
-public extension AllAutoscalePoolsVariant0 {
-    init(autoscalePools: [AutoscalePool]? = nil) {
+extension AllAutoscalePoolsVariant0 {
+    public init(autoscalePools: [AutoscalePool]? = nil) {
         self.init()
         self.autoscalePools = autoscalePools
     }

@@ -17,8 +17,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.functions.deleteNamespace(
-                namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"")
-            )
+            namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -57,9 +57,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.functions.deleteTrigger(
-                namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\""),
-                triggerName: decoded("\"my trigger\"")
-            )
+            namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\""),
+            triggerName: decoded("\"my trigger\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -104,8 +104,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.functions.getNamespace(
-                namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"")
-            )
+            namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -151,9 +151,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.functions.getTrigger(
-                namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\""),
-                triggerName: decoded("\"my trigger\"")
-            )
+            namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\""),
+            triggerName: decoded("\"my trigger\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -240,8 +240,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.functions.listTriggers(
-                namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"")
-            )
+            namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -289,11 +289,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.functions.updateTrigger(
-                namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\""),
-                triggerName: decoded("\"my trigger\""),
-                isEnabled: decoded("true"),
-                scheduledDetails: decoded("{\"cron\":\"* * * * *\",\"body\":{\"name\":\"Welcome to DO!\"}}")
-            )
+            namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\""),
+            triggerName: decoded("\"my trigger\""),
+            isEnabled: decoded("true"),
+            scheduledDetails: decoded("{\"cron\":\"* * * * *\",\"body\":{\"name\":\"Welcome to DO!\"}}")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -340,10 +340,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGatewayDataPlane.gatewayApprovalsUpdate(
-                approvalId: decoded("\"7d3c2b1a-9e8f-4a6b-8c5d-4e3f2a1b0c9d\""),
-                xSessionId: decoded("\"2b3c9f0e-1a4d-4e5f-8a7b-6c5d4e3f2a1b\""),
-                decision: decoded("\"deny\"")
-            )
+            approvalId: decoded("\"7d3c2b1a-9e8f-4a6b-8c5d-4e3f2a1b0c9d\""),
+            xSessionId: decoded("\"2b3c9f0e-1a4d-4e5f-8a7b-6c5d4e3f2a1b\""),
+            decision: decoded("\"deny\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -389,9 +389,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGatewayDataPlane.gatewayCodeRun(
-                xSessionId: decoded("\"2b3c9f0e-1a4d-4e5f-8a7b-6c5d4e3f2a1b\""),
-                code: decoded("\"print(\\\"hello from Action Gateway\\\")\"")
-            )
+            xSessionId: decoded("\"2b3c9f0e-1a4d-4e5f-8a7b-6c5d4e3f2a1b\""),
+            code: decoded("\"print(\\\"hello from Action Gateway\\\")\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -438,10 +438,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGatewayDataPlane.gatewaySessionApprovalsUpdate(
-                sessionId: decoded("\"2b3c9f0e-1a4d-4e5f-8a7b-6c5d4e3f2a1b\""),
-                approvalId: decoded("\"7d3c2b1a-9e8f-4a6b-8c5d-4e3f2a1b0c9d\""),
-                decision: decoded("\"approve\"")
-            )
+            sessionId: decoded("\"2b3c9f0e-1a4d-4e5f-8a7b-6c5d4e3f2a1b\""),
+            approvalId: decoded("\"7d3c2b1a-9e8f-4a6b-8c5d-4e3f2a1b0c9d\""),
+            decision: decoded("\"approve\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -489,11 +489,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGatewayDataPlane.gatewayToolsList(
-                xSessionId: decoded("\"2b3c9f0e-1a4d-4e5f-8a7b-6c5d4e3f2a1b\""),
-                pageSize: decoded("20"),
-                pageToken: decoded(sdkMethodFixture471Value1),
-                ifNoneMatch: decoded("\"\\\"3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c\\\"\"")
-            )
+            xSessionId: decoded("\"2b3c9f0e-1a4d-4e5f-8a7b-6c5d4e3f2a1b\""),
+            pageSize: decoded("20"),
+            pageToken: decoded(sdkMethodFixture471Value1),
+            ifNoneMatch: decoded("\"\\\"3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c\\\"\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -542,12 +542,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGatewayDataPlane.gatewayToolsListSearch(
-                xSessionId: decoded("\"2b3c9f0e-1a4d-4e5f-8a7b-6c5d4e3f2a1b\""),
-                queries: decoded("[{\"use_case\":\"search the public web for current information\"}]"),
-                providers: decoded("null"),
-                tags: decoded("null"),
-                limit: decoded("3")
-            )
+            xSessionId: decoded("\"2b3c9f0e-1a4d-4e5f-8a7b-6c5d4e3f2a1b\""),
+            queries: decoded("[{\"use_case\":\"search the public web for current information\"}]"),
+            providers: decoded("null"),
+            tags: decoded("null"),
+            limit: decoded("3")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)

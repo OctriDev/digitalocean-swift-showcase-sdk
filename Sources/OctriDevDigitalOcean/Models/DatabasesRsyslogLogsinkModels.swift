@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Databases domain models
+// Databases domain models
 /// Typed representation of the `RsyslogLogsink` API schema.
 public struct RsyslogLogsink: Codable {
     /// DNS name or IPv4 address of the rsyslog server
@@ -51,89 +51,45 @@ public struct RsyslogLogsink: Codable {
         case cert
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension RsyslogLogsink {
-    init(from decoder: Decoder) throws {
+extension RsyslogLogsink {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.server) else {
-            throw SdkValidationError(
-                field: "server",
-                code: "required",
-                message: "Validation failed for 'server': value is required"
-            )
+            throw SdkValidationError(field: "server", code: "required", message: "Validation failed for 'server': value is required")
         }
         guard container.contains(.port) else {
-            throw SdkValidationError(
-                field: "port",
-                code: "required",
-                message: "Validation failed for 'port': value is required"
-            )
+            throw SdkValidationError(field: "port", code: "required", message: "Validation failed for 'port': value is required")
         }
         guard container.contains(.tls) else {
-            throw SdkValidationError(
-                field: "tls",
-                code: "required",
-                message: "Validation failed for 'tls': value is required"
-            )
+            throw SdkValidationError(field: "tls", code: "required", message: "Validation failed for 'tls': value is required")
         }
         guard container.contains(.format) else {
-            throw SdkValidationError(
-                field: "format",
-                code: "required",
-                message: "Validation failed for 'format': value is required"
-            )
+            throw SdkValidationError(field: "format", code: "required", message: "Validation failed for 'format': value is required")
         }
-        server = try container.sdkDecodeRequired(.server)
-        port = try container.sdkDecodeRequired(.port)
-        tls = try container.sdkDecodeRequired(.tls)
-        format = try container.sdkDecodeRequired(.format)
-        logline = try container.sdkDecodeIfPresent(.logline)
-        sd = try container.sdkDecodeIfPresent(.sd)
-        ca = try container.sdkDecodeIfPresent(.ca)
-        key = try container.sdkDecodeIfPresent(.key)
-        cert = try container.sdkDecodeIfPresent(.cert)
-        try validateRange(
-            "port",
-            Double(port),
-            min: nil,
-            max: 65535,
-            exclusiveMin: nil,
-            exclusiveMax: nil,
-            multipleOf: nil
-        )
+        self.server = try container.sdkDecodeRequired(.server)
+        self.port = try container.sdkDecodeRequired(.port)
+        self.tls = try container.sdkDecodeRequired(.tls)
+        self.format = try container.sdkDecodeRequired(.format)
+        self.logline = try container.sdkDecodeIfPresent(.logline)
+        self.sd = try container.sdkDecodeIfPresent(.sd)
+        self.ca = try container.sdkDecodeIfPresent(.ca)
+        self.key = try container.sdkDecodeIfPresent(.key)
+        self.cert = try container.sdkDecodeIfPresent(.cert)
+            try validateRange("port", Double(self.port), min: nil, max: 65535, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
     }
 }
 
-public extension RsyslogLogsink {
-    init(
-        server: String,
-        port: Int,
-        tls: Bool,
-        format: RsyslogLogsinkFormat,
-        logline: String? = nil,
-        sd: String? = nil,
-        ca: String? = nil,
-        key: String? = nil,
-        cert: String? = nil
-    ) throws {
+extension RsyslogLogsink {
+    public init(server: String, port: Int, tls: Bool, format: RsyslogLogsinkFormat, logline: String? = nil, sd: String? = nil, ca: String? = nil, key: String? = nil, cert: String? = nil) throws {
         (self.server, self.port) = (server, port)
         (self.tls, self.format) = (tls, format)
         (self.logline, self.sd) = (logline, sd)
         (self.ca, self.key) = (ca, key)
         self.cert = cert
-        try validateRange(
-            "port",
-            Double(self.port),
-            min: nil,
-            max: 65535,
-            exclusiveMin: nil,
-            exclusiveMax: nil,
-            multipleOf: nil
-        )
+            try validateRange("port", Double(self.port), min: nil, max: 65535, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
     }
 }
 
@@ -148,27 +104,21 @@ public struct SqlMode: Codable {
         case sqlMode = "sql_mode"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SqlMode {
-    init(from decoder: Decoder) throws {
+extension SqlMode {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.sqlMode) else {
-            throw SdkValidationError(
-                field: "sql_mode",
-                code: "required",
-                message: "Validation failed for 'sql_mode': value is required"
-            )
+            throw SdkValidationError(field: "sql_mode", code: "required", message: "Validation failed for 'sql_mode': value is required")
         }
-        sqlMode = try container.sdkDecodeRequired(.sqlMode)
+        self.sqlMode = try container.sdkDecodeRequired(.sqlMode)
     }
 }
 
-public extension SqlMode {
-    init(sqlMode: String) {
+extension SqlMode {
+    public init(sqlMode: String) {
         self.sqlMode = sqlMode
     }
 }
@@ -212,104 +162,44 @@ public struct MongoAdvancedConfig: Codable {
     }
 
     init() {
-        (defaultReadConcern, defaultWriteConcern, transactionLifetimeLimitSeconds, slowOpThresholdMs, verbosity) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
+        (self.defaultReadConcern, self.defaultWriteConcern, self.transactionLifetimeLimitSeconds, self.slowOpThresholdMs, self.verbosity) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension MongoAdvancedConfig {
-    init(from decoder: Decoder) throws {
+extension MongoAdvancedConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        defaultReadConcern = try container.sdkDecodeIfPresent(.defaultReadConcern)
-        defaultWriteConcern = try container.sdkDecodeIfPresent(.defaultWriteConcern)
-        transactionLifetimeLimitSeconds = try container.sdkDecodeIfPresent(.transactionLifetimeLimitSeconds)
-        slowOpThresholdMs = try container.sdkDecodeIfPresent(.slowOpThresholdMs)
-        verbosity = try container.sdkDecodeIfPresent(.verbosity)
-        if let value = transactionLifetimeLimitSeconds {
-            try validateRange(
-                "transaction_lifetime_limit_seconds",
-                Double(value),
-                min: 1,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.defaultReadConcern = try container.sdkDecodeIfPresent(.defaultReadConcern)
+        self.defaultWriteConcern = try container.sdkDecodeIfPresent(.defaultWriteConcern)
+        self.transactionLifetimeLimitSeconds = try container.sdkDecodeIfPresent(.transactionLifetimeLimitSeconds)
+        self.slowOpThresholdMs = try container.sdkDecodeIfPresent(.slowOpThresholdMs)
+        self.verbosity = try container.sdkDecodeIfPresent(.verbosity)
+        if let value = self.transactionLifetimeLimitSeconds {
+            try validateRange("transaction_lifetime_limit_seconds", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = slowOpThresholdMs {
-            try validateRange(
-                "slow_op_threshold_ms",
-                Double(value),
-                min: 0,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.slowOpThresholdMs {
+            try validateRange("slow_op_threshold_ms", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = verbosity {
-            try validateRange(
-                "verbosity",
-                Double(value),
-                min: 0,
-                max: 5,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.verbosity {
+            try validateRange("verbosity", Double(value), min: 0, max: 5, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
-public extension MongoAdvancedConfig {
-    init(
-        defaultReadConcern: MongoAdvancedConfigDefaultReadConcern? = nil,
-        defaultWriteConcern: String? = nil,
-        transactionLifetimeLimitSeconds: Int? = nil,
-        slowOpThresholdMs: Int? = nil,
-        verbosity: Int? = nil
-    ) throws {
+extension MongoAdvancedConfig {
+    public init(defaultReadConcern: MongoAdvancedConfigDefaultReadConcern? = nil, defaultWriteConcern: String? = nil, transactionLifetimeLimitSeconds: Int? = nil, slowOpThresholdMs: Int? = nil, verbosity: Int? = nil) throws {
         self.init()
         (self.defaultReadConcern, self.defaultWriteConcern) = (defaultReadConcern, defaultWriteConcern)
         self.transactionLifetimeLimitSeconds = transactionLifetimeLimitSeconds
         (self.slowOpThresholdMs, self.verbosity) = (slowOpThresholdMs, verbosity)
         if let value = self.transactionLifetimeLimitSeconds {
-            try validateRange(
-                "transaction_lifetime_limit_seconds",
-                Double(value),
-                min: 1,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("transaction_lifetime_limit_seconds", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.slowOpThresholdMs {
-            try validateRange(
-                "slow_op_threshold_ms",
-                Double(value),
-                min: 0,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("slow_op_threshold_ms", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.verbosity {
-            try validateRange(
-                "verbosity",
-                Double(value),
-                min: 0,
-                max: 5,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("verbosity", Double(value), min: 0, max: 5, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -340,84 +230,42 @@ public struct ElasticsearchLogsink: Codable {
         case ca
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ElasticsearchLogsink {
-    init(from decoder: Decoder) throws {
+extension ElasticsearchLogsink {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.url) else {
-            throw SdkValidationError(
-                field: "url",
-                code: "required",
-                message: "Validation failed for 'url': value is required"
-            )
+            throw SdkValidationError(field: "url", code: "required", message: "Validation failed for 'url': value is required")
         }
         guard container.contains(.indexPrefix) else {
-            throw SdkValidationError(
-                field: "index_prefix",
-                code: "required",
-                message: "Validation failed for 'index_prefix': value is required"
-            )
+            throw SdkValidationError(field: "index_prefix", code: "required", message: "Validation failed for 'index_prefix': value is required")
         }
-        url = try container.sdkDecodeRequired(.url)
-        indexPrefix = try container.sdkDecodeRequired(.indexPrefix)
-        indexDaysMax = try container.sdkDecodeIfPresent(.indexDaysMax)
-        timeout = try container.sdkDecodeIfPresent(.timeout)
-        ca = try container.sdkDecodeIfPresent(.ca)
-        if let value = indexDaysMax {
-            try validateRange(
-                "index_days_max",
-                Double(value),
-                min: 1,
-                max: 10000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.url = try container.sdkDecodeRequired(.url)
+        self.indexPrefix = try container.sdkDecodeRequired(.indexPrefix)
+        self.indexDaysMax = try container.sdkDecodeIfPresent(.indexDaysMax)
+        self.timeout = try container.sdkDecodeIfPresent(.timeout)
+        self.ca = try container.sdkDecodeIfPresent(.ca)
+        if let value = self.indexDaysMax {
+            try validateRange("index_days_max", Double(value), min: 1, max: 10000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = timeout {
-            try validateRange(
-                "timeout",
-                Double(value),
-                min: 10,
-                max: 120,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.timeout {
+            try validateRange("timeout", Double(value), min: 10, max: 120, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
-public extension ElasticsearchLogsink {
-    init(url: String, indexPrefix: String, indexDaysMax: Int? = nil, timeout: Double? = nil, ca: String? = nil) throws {
+extension ElasticsearchLogsink {
+    public init(url: String, indexPrefix: String, indexDaysMax: Int? = nil, timeout: Double? = nil, ca: String? = nil) throws {
         (self.url, self.indexPrefix) = (url, indexPrefix)
         (self.indexDaysMax, self.timeout) = (indexDaysMax, timeout)
         self.ca = ca
         if let value = self.indexDaysMax {
-            try validateRange(
-                "index_days_max",
-                Double(value),
-                min: 1,
-                max: 10000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("index_days_max", Double(value), min: 1, max: 10000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.timeout {
-            try validateRange(
-                "timeout",
-                Double(value),
-                min: 10,
-                max: 120,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("timeout", Double(value), min: 10, max: 120, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }

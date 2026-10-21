@@ -6,50 +6,24 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension KubernetesMethods {
+extension KubernetesMethods {
     /// To integrate the container registry with Kubernetes clusters, send a POST request to `/v2/kubernetes/registry`.
     ///
     /// - Parameters:
     /// - clusterUuids: An array containing the UUIDs of Kubernetes clusters.
-    static func kubernetesAddRegistry(
-        config: ClientConfig,
-        clusterUuids: [String]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
+    public static func kubernetesAddRegistry(config: ClientConfig, clusterUuids: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
         let requestBody = KubernetesAddRegistryRequestBody(clusterUuids: clusterUuids)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/kubernetes/registry",
-            config: config,
-            body: requestBody,
-            decoder: .empty,
-            operationId: "kubernetes_add_registry",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+        return try (await sdkRequest("POST", "/v2/kubernetes/registry", config: config, body: requestBody, decoder: .empty, operationId: "kubernetes_add_registry", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To remove the container registry from Kubernetes clusters, send a DELETE request to `/v2/kubernetes/registry`.
     ///
     /// - Parameters:
     /// - clusterUuids: An array containing the UUIDs of Kubernetes clusters.
-    static func kubernetesRemoveRegistry(
-        config: ClientConfig,
-        clusterUuids: [String]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
+    public static func kubernetesRemoveRegistry(config: ClientConfig, clusterUuids: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
         let requestBody = KubernetesRemoveRegistryRequestBody(clusterUuids: clusterUuids)
 
-        return try await (sdkRequest(
-            "DELETE",
-            "/v2/kubernetes/registry",
-            config: config,
-            body: requestBody,
-            decoder: .empty,
-            operationId: "kubernetes_remove_registry",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+        return try (await sdkRequest("DELETE", "/v2/kubernetes/registry", config: config, body: requestBody, decoder: .empty, operationId: "kubernetes_remove_registry", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

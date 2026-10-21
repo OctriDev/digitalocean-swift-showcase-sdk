@@ -17,8 +17,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.reservedIps.get(
-                reservedIp: decoded("\"45.55.96.47\"")
-            )
+            reservedIp: decoded("\"45.55.96.47\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -64,9 +64,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.reservedIps.list(
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -112,9 +112,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.reservedIPv6Actions.post(
-                reservedIpv6: decoded("\"2409:40d0:f7:1017:74b4:3a96:105e:4c6e\""),
-                body: decoded("{\"type\":\"unassign\"}")
-            )
+            reservedIpv6: decoded("\"2409:40d0:f7:1017:74b4:3a96:105e:4c6e\""),
+            body: decoded("{\"type\":\"unassign\"}")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -159,8 +159,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.reservedIPv6.create(
-                regionSlug: decoded("\"nyc3\"")
-            )
+            regionSlug: decoded("\"nyc3\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -198,8 +198,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.reservedIPv6.delete(
-                reservedIpv6: decoded("\"2409:40d0:f7:1017:74b4:3a96:105e:4c6e\"")
-            )
+            reservedIpv6: decoded("\"2409:40d0:f7:1017:74b4:3a96:105e:4c6e\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -244,8 +244,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.reservedIPv6.get(
-                reservedIpv6: decoded("\"2409:40d0:f7:1017:74b4:3a96:105e:4c6e\"")
-            )
+            reservedIpv6: decoded("\"2409:40d0:f7:1017:74b4:3a96:105e:4c6e\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -291,9 +291,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.reservedIPv6.list(
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -373,8 +373,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.security.createScanRule(
-                resource: decoded("\"do:droplet:fe3a2fd7-903d-46e6-ada3-3e4f285fb89d\"")
-            )
+            resource: decoded("\"do:droplet:fe3a2fd7-903d-46e6-ada3-3e4f285fb89d\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -420,9 +420,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.security.createSuppression(
-                ruleUuid: decoded("\"rule_uu-1\""),
-                resources: decoded("[\"do:droplet:fe3a2fd7-903d-46e6-ada3-3e4f285fb89d\"]")
-            )
+            ruleUuid: decoded("\"rule_uu-1\""),
+            resources: decoded("[\"do:droplet:fe3a2fd7-903d-46e6-ada3-3e4f285fb89d\"]")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -460,8 +460,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.security.deleteSuppression(
-                suppressionUuid: decoded("\"5b3b2b2d-5c9c-4a61-9e2f-4d8f80f30a12\"")
-            )
+            suppressionUuid: decoded("\"5b3b2b2d-5c9c-4a61-9e2f-4d8f80f30a12\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -509,11 +509,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.security.getLatestScan(
-                perPage: decoded("2"),
-                page: decoded("1"),
-                severity: decoded("\"CRITICAL\""),
-                type: decoded("\"CSPM\"")
-            )
+            perPage: decoded("2"),
+            page: decoded("1"),
+            severity: decoded("\"CRITICAL\""),
+            type: decoded("\"CSPM\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -562,12 +562,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.security.getScan(
-                scanId: decoded("\"497dcba3-ecbf-4587-a2dd-5eb0665e6880\""),
-                severity: decoded("\"CRITICAL\""),
-                perPage: decoded("2"),
-                page: decoded("1"),
-                type: decoded("\"CSPM\"")
-            )
+            scanId: decoded("\"497dcba3-ecbf-4587-a2dd-5eb0665e6880\""),
+            severity: decoded("\"CRITICAL\""),
+            perPage: decoded("2"),
+            page: decoded("1"),
+            type: decoded("\"CSPM\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

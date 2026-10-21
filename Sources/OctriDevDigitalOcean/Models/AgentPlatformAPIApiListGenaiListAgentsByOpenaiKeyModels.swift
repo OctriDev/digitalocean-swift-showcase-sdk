@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiList domain models
+// AgentPlatformAPIApiList domain models
 /// List of Agents that are linked to a specific OpenAI Key
 public struct ApiListAgentsByOpenAIKeyOutput: Codable {
     /// Optional array value serialized in the `agents` wire field.
@@ -20,21 +20,21 @@ public struct ApiListAgentsByOpenAIKeyOutput: Codable {
     }
 
     init() {
-        (agents, links, meta) = (nil, nil, nil)
+        (self.agents, self.links, self.meta) = (nil, nil, nil)
     }
 }
 
-public extension ApiListAgentsByOpenAIKeyOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListAgentsByOpenAIKeyOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agents = try container.sdkDecodeIfPresent(.agents)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
+        self.agents = try container.sdkDecodeIfPresent(.agents)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-public extension ApiListAgentsByOpenAIKeyOutput {
-    init(agents: [ApiAgent]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+extension ApiListAgentsByOpenAIKeyOutput {
+    public init(agents: [ApiAgent]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.agents, self.links) = (agents, links)
         self.meta = meta

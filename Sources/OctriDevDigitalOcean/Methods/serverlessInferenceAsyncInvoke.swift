@@ -6,9 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ServerlessInferenceMethods {
-    /// Generate Image, Audio, or Text-to-Speech Using fal Models. This endpoint starts an asynchronous job and returns
-    /// a request_id. The job status is QUEUED initially. Use the request_id to poll for the result.
+extension ServerlessInferenceMethods {
+    /// Generate Image, Audio, or Text-to-Speech Using fal Models. This endpoint starts an asynchronous job and returns a request_id. The job status is QUEUED initially. Use the request_id to poll for the result.
     ///
     /// - Parameters:
     /// - modelId: The ID of the model to invoke asynchronously.
@@ -23,24 +22,9 @@ public extension ServerlessInferenceMethods {
     ///   you want converted to speech.
     /// - tags: An optional list of key-value tags to attach to the invocation
     ///   request for tracking or categorization.
-    static func inferenceCreateAsyncInvoke(
-        config: ClientConfig,
-        modelId: String,
-        input: AsyncInvokeRequestInput,
-        tags: SdkOptional<[AsyncInvokeRequestTagsItem]>? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AsyncInvokeResponse {
+    public static func inferenceCreateAsyncInvoke(config: ClientConfig, modelId: String, input: AsyncInvokeRequestInput, tags: SdkOptional<[AsyncInvokeRequestTagsItem]>? = nil, requestOptions: RequestOptions? = nil) async throws -> AsyncInvokeResponse {
         let requestBody = InferenceCreateAsyncInvokeRequestBody(modelId: modelId, input: input, tags: tags)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v1/async-invoke",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "inference_create_async_invoke",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+        return try (await sdkRequest("POST", "/v1/async-invoke", config: config, body: requestBody, decoder: .json, operationId: "inference_create_async_invoke", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

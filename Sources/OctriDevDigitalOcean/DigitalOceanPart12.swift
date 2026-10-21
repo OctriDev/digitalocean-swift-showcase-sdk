@@ -9,186 +9,73 @@ public class FirewallsNamespace {
         self.config = config
     }
 
-    /// To list all of the firewalls available on your account, send a GET request to `/v2/firewalls`.
-    public func list(
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ListFirewallsResponse {
-        try await FirewallsMethods.firewallsList(
-            config: config,
-            perPage: perPage,
-            page: page,
-            requestOptions: requestOptions
-        )
+/// To list all of the firewalls available on your account, send a GET request to `/v2/firewalls`.
+    public func list(perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ListFirewallsResponse {
+        return try await FirewallsMethods.firewallsList(config: config, perPage: perPage, page: page, requestOptions: requestOptions)
     }
 
-    /// Creates a firewall with access rules for controlling traffic to and from attached resources. Provide `name` and
-    /// at least one of `inbound_rules` or `outbound_rules` in the request body. A 202 response returns the firewall
-    /// object and its standard attributes.
+/// Creates a firewall with access rules for controlling traffic to and from attached resources. Provide `name` and at least one of `inbound_rules` or `outbound_rules` in the request body. A 202 response returns the firewall object and its standard attributes.
     ///
-    /// To create a new firewall, send a POST request to `/v2/firewalls`. The request must contain at least one inbound
-    /// or outbound access rule.
-    public func create(
-        body: FirewallsCreateRequestBody? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> CreateFirewallResponse {
-        try await FirewallsMethods.firewallsCreate(config: config, body: body, requestOptions: requestOptions)
+    /// To create a new firewall, send a POST request to `/v2/firewalls`. The request must contain at least one inbound or outbound access rule.
+    public func create(body: FirewallsCreateRequestBody? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateFirewallResponse {
+        return try await FirewallsMethods.firewallsCreate(config: config, body: body, requestOptions: requestOptions)
     }
 
-    /// To show information about an existing firewall, send a GET request to `/v2/firewalls/$FIREWALL_ID`.
+/// To show information about an existing firewall, send a GET request to `/v2/firewalls/$FIREWALL_ID`.
     public func get(firewallId: String, requestOptions: RequestOptions? = nil) async throws -> GetFirewallResponse {
-        try await FirewallsMethods.firewallsGet(config: config, firewallId: firewallId, requestOptions: requestOptions)
+        return try await FirewallsMethods.firewallsGet(config: config, firewallId: firewallId, requestOptions: requestOptions)
     }
 
-    /// Replaces the configuration of an existing firewall with the representation you provide. Include `name` and at
-    /// least one of `inbound_rules` or `outbound_rules`; attributes you omit are reset to their default values. You
-    /// also need read access to every resource attached to the firewall, such as the `droplet:read` scope.
+/// Replaces the configuration of an existing firewall with the representation you provide. Include `name` and at least one of `inbound_rules` or `outbound_rules`; attributes you omit are reset to their default values. You also need read access to every resource attached to the firewall, such as the `droplet:read` scope.
     ///
-    /// To update the configuration of an existing firewall, send a PUT request to `/v2/firewalls/$FIREWALL_ID`. The
-    /// request should contain a full representation of the firewall including existing attributes. **Note that any
-    /// attributes that are not provided will be reset to their default values.** You must have read access (e.g.
-    /// `droplet:read`) to all resources attached to the firewall to successfully update the firewall.
-    public func update(
-        firewallId: String,
-        body: FirewallsUpdateRequestBody? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> PutFirewallResponse {
-        try await FirewallsMethods.firewallsUpdate(
-            config: config,
-            firewallId: firewallId,
-            body: body,
-            requestOptions: requestOptions
-        )
+    /// To update the configuration of an existing firewall, send a PUT request to `/v2/firewalls/$FIREWALL_ID`. The request should contain a full representation of the firewall including existing attributes. **Note that any attributes that are not provided will be reset to their default values.** You must have read access (e.g. `droplet:read`) to all resources attached to the firewall to successfully update the firewall.
+    public func update(firewallId: String, body: FirewallsUpdateRequestBody? = nil, requestOptions: RequestOptions? = nil) async throws -> PutFirewallResponse {
+        return try await FirewallsMethods.firewallsUpdate(config: config, firewallId: firewallId, body: body, requestOptions: requestOptions)
     }
 
-    /// To delete a firewall send a DELETE request to `/v2/firewalls/$FIREWALL_ID`. No response body will be sent back,
-    /// but the response code will indicate success. Specifically, the response code will be a 204, which means that the
-    /// action was successful with no returned body data.
+/// To delete a firewall send a DELETE request to `/v2/firewalls/$FIREWALL_ID`. No response body will be sent back, but the response code will indicate success. Specifically, the response code will be a 204, which means that the action was successful with no returned body data.
     public func delete(firewallId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        try await FirewallsMethods.firewallsDelete(
-            config: config,
-            firewallId: firewallId,
-            requestOptions: requestOptions
-        )
+        return try await FirewallsMethods.firewallsDelete(config: config, firewallId: firewallId, requestOptions: requestOptions)
     }
 
-    /// To assign a Droplet to a firewall, send a POST request to `/v2/firewalls/$FIREWALL_ID/droplets`. In the body of
-    /// the request, there should be a `droplet_ids` attribute containing a list of Droplet IDs. No response body will
-    /// be sent back, but the response code will indicate success. Specifically, the response code will be a 204, which
-    /// means that the action was successful with no returned body data.
-    public func assignDroplets(
-        firewallId: String,
-        dropletIds: [Int],
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await FirewallsMethods.firewallsAssignDroplets(
-            config: config,
-            firewallId: firewallId,
-            dropletIds: dropletIds,
-            requestOptions: requestOptions
-        )
+/// To assign a Droplet to a firewall, send a POST request to `/v2/firewalls/$FIREWALL_ID/droplets`. In the body of the request, there should be a `droplet_ids` attribute containing a list of Droplet IDs. No response body will be sent back, but the response code will indicate success. Specifically, the response code will be a 204, which means that the action was successful with no returned body data.
+    public func assignDroplets(firewallId: String, dropletIds: [Int], requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await FirewallsMethods.firewallsAssignDroplets(config: config, firewallId: firewallId, dropletIds: dropletIds, requestOptions: requestOptions)
     }
 
-    /// To remove a Droplet from a firewall, send a DELETE request to `/v2/firewalls/$FIREWALL_ID/droplets`. In the body
-    /// of the request, there should be a `droplet_ids` attribute containing a list of Droplet IDs. No response body
-    /// will be sent back, but the response code will indicate success. Specifically, the response code will be a 204,
-    /// which means that the action was successful with no returned body data.
-    public func deleteDroplets(
-        firewallId: String,
-        dropletIds: [Int],
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await FirewallsMethods.firewallsDeleteDroplets(
-            config: config,
-            firewallId: firewallId,
-            dropletIds: dropletIds,
-            requestOptions: requestOptions
-        )
+/// To remove a Droplet from a firewall, send a DELETE request to `/v2/firewalls/$FIREWALL_ID/droplets`. In the body of the request, there should be a `droplet_ids` attribute containing a list of Droplet IDs. No response body will be sent back, but the response code will indicate success. Specifically, the response code will be a 204, which means that the action was successful with no returned body data.
+    public func deleteDroplets(firewallId: String, dropletIds: [Int], requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await FirewallsMethods.firewallsDeleteDroplets(config: config, firewallId: firewallId, dropletIds: dropletIds, requestOptions: requestOptions)
     }
 
-    /// Adds tags representing groups of Droplets to a firewall. Supply `tags` as an array of existing tag names, and
-    /// ensure the caller has the required tag scopes.
+/// Adds tags representing groups of Droplets to a firewall. Supply `tags` as an array of existing tag names, and ensure the caller has the required tag scopes.
     ///
-    /// To assign a tag representing a group of Droplets to a firewall, send a POST request to
-    /// `/v2/firewalls/$FIREWALL_ID/tags`. In the body of the request, there should be a `tags` attribute containing a
-    /// list of tag names. No response body will be sent back, but the response code will indicate success.
-    /// Specifically, the response code will be a 204, which means that the action was successful with no returned body
-    /// data.
-    public func addTags(
-        firewallId: String,
-        tags: ExistingTagsArray,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await FirewallsMethods.firewallsAddTags(
-            config: config,
-            firewallId: firewallId,
-            tags: tags,
-            requestOptions: requestOptions
-        )
+    /// To assign a tag representing a group of Droplets to a firewall, send a POST request to `/v2/firewalls/$FIREWALL_ID/tags`. In the body of the request, there should be a `tags` attribute containing a list of tag names. No response body will be sent back, but the response code will indicate success. Specifically, the response code will be a 204, which means that the action was successful with no returned body data.
+    public func addTags(firewallId: String, tags: ExistingTagsArray, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await FirewallsMethods.firewallsAddTags(config: config, firewallId: firewallId, tags: tags, requestOptions: requestOptions)
     }
 }
 
-public extension FirewallsNamespace {
-    /// Removes tags representing groups of Droplets from a firewall. Supply `tags` as an array of existing tag names to
-    /// remove from the firewall.
+extension FirewallsNamespace {
+/// Removes tags representing groups of Droplets from a firewall. Supply `tags` as an array of existing tag names to remove from the firewall.
     ///
-    /// To remove a tag representing a group of Droplets from a firewall, send a DELETE request to
-    /// `/v2/firewalls/$FIREWALL_ID/tags`. In the body of the request, there should be a `tags` attribute containing a
-    /// list of tag names. No response body will be sent back, but the response code will indicate success.
-    /// Specifically, the response code will be a 204, which means that the action was successful with no returned body
-    /// data.
-    func deleteTags(
-        firewallId: String,
-        tags: ExistingTagsArray,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await FirewallsMethods.firewallsDeleteTags(
-            config: config,
-            firewallId: firewallId,
-            tags: tags,
-            requestOptions: requestOptions
-        )
+    /// To remove a tag representing a group of Droplets from a firewall, send a DELETE request to `/v2/firewalls/$FIREWALL_ID/tags`. In the body of the request, there should be a `tags` attribute containing a list of tag names. No response body will be sent back, but the response code will indicate success. Specifically, the response code will be a 204, which means that the action was successful with no returned body data.
+    public func deleteTags(firewallId: String, tags: ExistingTagsArray, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await FirewallsMethods.firewallsDeleteTags(config: config, firewallId: firewallId, tags: tags, requestOptions: requestOptions)
     }
 
-    /// Adds inbound or outbound access rules to a firewall. Provide at least one of `inbound_rules` or
-    /// `outbound_rules`; you can include both arrays in the same request.
+/// Adds inbound or outbound access rules to a firewall. Provide at least one of `inbound_rules` or `outbound_rules`; you can include both arrays in the same request.
     ///
-    /// To add additional access rules to a firewall, send a POST request to `/v2/firewalls/$FIREWALL_ID/rules`. The
-    /// body of the request may include an inbound_rules and/or outbound_rules attribute containing an array of rules to
-    /// be added. No response body will be sent back, but the response code will indicate success. Specifically, the
-    /// response code will be a 204, which means that the action was successful with no returned body data.
-    func addRules(
-        firewallId: String,
-        body: FirewallsAddRulesRequestBody? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await FirewallsMethods.firewallsAddRules(
-            config: config,
-            firewallId: firewallId,
-            body: body,
-            requestOptions: requestOptions
-        )
+    /// To add additional access rules to a firewall, send a POST request to `/v2/firewalls/$FIREWALL_ID/rules`. The body of the request may include an inbound_rules and/or outbound_rules attribute containing an array of rules to be added. No response body will be sent back, but the response code will indicate success. Specifically, the response code will be a 204, which means that the action was successful with no returned body data.
+    public func addRules(firewallId: String, body: FirewallsAddRulesRequestBody? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await FirewallsMethods.firewallsAddRules(config: config, firewallId: firewallId, body: body, requestOptions: requestOptions)
     }
 
-    /// Removes inbound or outbound access rules from a firewall. Provide at least one of `inbound_rules` or
-    /// `outbound_rules`; you can include both arrays in the same request.
+/// Removes inbound or outbound access rules from a firewall. Provide at least one of `inbound_rules` or `outbound_rules`; you can include both arrays in the same request.
     ///
-    /// To remove access rules from a firewall, send a DELETE request to `/v2/firewalls/$FIREWALL_ID/rules`. The body of
-    /// the request may include an `inbound_rules` and/or `outbound_rules` attribute containing an array of rules to be
-    /// removed. No response body will be sent back, but the response code will indicate success. Specifically, the
-    /// response code will be a 204, which means that the action was successful with no returned body data.
-    func deleteRules(
-        firewallId: String,
-        body: FirewallsDeleteRulesRequestBody? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await FirewallsMethods.firewallsDeleteRules(
-            config: config,
-            firewallId: firewallId,
-            body: body,
-            requestOptions: requestOptions
-        )
+    /// To remove access rules from a firewall, send a DELETE request to `/v2/firewalls/$FIREWALL_ID/rules`. The body of the request may include an `inbound_rules` and/or `outbound_rules` attribute containing an array of rules to be removed. No response body will be sent back, but the response code will indicate success. Specifically, the response code will be a 204, which means that the action was successful with no returned body data.
+    public func deleteRules(firewallId: String, body: FirewallsDeleteRulesRequestBody? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await FirewallsMethods.firewallsDeleteRules(config: config, firewallId: firewallId, body: body, requestOptions: requestOptions)
     }
 }
 
@@ -198,54 +85,26 @@ public class FloatingIpsNamespace {
         self.config = config
     }
 
-    /// To list all of the floating IPs available on your account, send a GET request to `/v2/floating_ips`.
-    public func list(
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> FloatingIpList {
-        try await FloatingIpsMethods.floatingIpsList(
-            config: config,
-            perPage: perPage,
-            page: page,
-            requestOptions: requestOptions
-        )
+/// To list all of the floating IPs available on your account, send a GET request to `/v2/floating_ips`.
+    public func list(perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> FloatingIpList {
+        return try await FloatingIpsMethods.floatingIpsList(config: config, perPage: perPage, page: page, requestOptions: requestOptions)
     }
 
-    /// Creates a floating IP assigned to a Droplet or reserved to a region. Supply `droplet_id` to assign it to a
-    /// Droplet, or supply `region` to reserve it; `project_id` can associate a region-reserved floating IP with a
-    /// project. A 202 response returns the floating IP object and, when assigning it to a Droplet, links to the Droplet
-    /// and assignment action.
+/// Creates a floating IP assigned to a Droplet or reserved to a region. Supply `droplet_id` to assign it to a Droplet, or supply `region` to reserve it; `project_id` can associate a region-reserved floating IP with a project. A 202 response returns the floating IP object and, when assigning it to a Droplet, links to the Droplet and assignment action.
     ///
-    /// On creation, a floating IP must be either assigned to a Droplet or reserved to a region. * To create a new
-    /// floating IP assigned to a Droplet, send a POST request to `/v2/floating_ips` with the `droplet_id` attribute. *
-    /// To create a new floating IP reserved to a region, send a POST request to `/v2/floating_ips` with the `region`
-    /// attribute.
-    public func create(
-        body: FloatingIpCreate,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> FloatingIpCreated {
-        try await FloatingIpsMethods.floatingIpsCreate(config: config, body: body, requestOptions: requestOptions)
+    /// On creation, a floating IP must be either assigned to a Droplet or reserved to a region. * To create a new floating IP assigned to a Droplet, send a POST request to `/v2/floating_ips` with the `droplet_id` attribute. * To create a new floating IP reserved to a region, send a POST request to `/v2/floating_ips` with the `region` attribute.
+    public func create(body: FloatingIpCreate, requestOptions: RequestOptions? = nil) async throws -> FloatingIpCreated {
+        return try await FloatingIpsMethods.floatingIpsCreate(config: config, body: body, requestOptions: requestOptions)
     }
 
-    /// To show information about a floating IP, send a GET request to `/v2/floating_ips/$FLOATING_IP_ADDR`.
+/// To show information about a floating IP, send a GET request to `/v2/floating_ips/$FLOATING_IP_ADDR`.
     public func get(floatingIp: String, requestOptions: RequestOptions? = nil) async throws -> FloatingIpResponse {
-        try await FloatingIpsMethods.floatingIpsGet(
-            config: config,
-            floatingIp: floatingIp,
-            requestOptions: requestOptions
-        )
+        return try await FloatingIpsMethods.floatingIpsGet(config: config, floatingIp: floatingIp, requestOptions: requestOptions)
     }
 
-    /// To delete a floating IP and remove it from your account, send a DELETE request to
-    /// `/v2/floating_ips/$FLOATING_IP_ADDR`. A successful request will receive a 204 status code with no body in
-    /// response. This indicates that the request was processed successfully.
+/// To delete a floating IP and remove it from your account, send a DELETE request to `/v2/floating_ips/$FLOATING_IP_ADDR`. A successful request will receive a 204 status code with no body in response. This indicates that the request was processed successfully.
     public func delete(floatingIp: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        try await FloatingIpsMethods.floatingIpsDelete(
-            config: config,
-            floatingIp: floatingIp,
-            requestOptions: requestOptions
-        )
+        return try await FloatingIpsMethods.floatingIpsDelete(config: config, floatingIp: floatingIp, requestOptions: requestOptions)
     }
 }
 
@@ -255,50 +114,21 @@ public class FloatingIpActionsNamespace {
         self.config = config
     }
 
-    /// To retrieve all actions that have been executed on a floating IP, send a GET request to
-    /// `/v2/floating_ips/$FLOATING_IP/actions`.
+/// To retrieve all actions that have been executed on a floating IP, send a GET request to `/v2/floating_ips/$FLOATING_IP/actions`.
     public func list(floatingIp: String, requestOptions: RequestOptions? = nil) async throws -> FloatingIpActions {
-        try await FloatingIpActionsMethods.floatingIpsActionList(
-            config: config,
-            floatingIp: floatingIp,
-            requestOptions: requestOptions
-        )
+        return try await FloatingIpActionsMethods.floatingIpsActionList(config: config, floatingIp: floatingIp, requestOptions: requestOptions)
     }
 
-    /// Triggers an assignment or unassignment action on a floating IP. Set `type` to `assign` or `unassign`; include
-    /// `droplet_id` when assigning the floating IP to a Droplet. The response contains the action object for tracking
-    /// the operation.
+/// Triggers an assignment or unassignment action on a floating IP. Set `type` to `assign` or `unassign`; include `droplet_id` when assigning the floating IP to a Droplet. The response contains the action object for tracking the operation.
     ///
-    /// To initiate an action on a floating IP send a POST request to `/v2/floating_ips/$FLOATING_IP/actions`. In the
-    /// JSON body to the request, set the `type` attribute to on of the supported action types: | Action | Details
-    /// |------------|-------- | `assign` | Assigns a floating IP to a Droplet | `unassign` | Unassign a floating IP
-    /// from a Droplet
-    public func post(
-        floatingIp: String,
-        body: FloatingIPsActionPostRequestBody? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> FloatingIpAction {
-        try await FloatingIpActionsMethods.floatingIpsActionPost(
-            config: config,
-            floatingIp: floatingIp,
-            body: body,
-            requestOptions: requestOptions
-        )
+    /// To initiate an action on a floating IP send a POST request to `/v2/floating_ips/$FLOATING_IP/actions`. In the JSON body to the request, set the `type` attribute to on of the supported action types: | Action | Details |------------|-------- | `assign` | Assigns a floating IP to a Droplet | `unassign` | Unassign a floating IP from a Droplet
+    public func post(floatingIp: String, body: FloatingIPsActionPostRequestBody? = nil, requestOptions: RequestOptions? = nil) async throws -> FloatingIpAction {
+        return try await FloatingIpActionsMethods.floatingIpsActionPost(config: config, floatingIp: floatingIp, body: body, requestOptions: requestOptions)
     }
 
-    /// To retrieve the status of a floating IP action, send a GET request to
-    /// `/v2/floating_ips/$FLOATING_IP/actions/$ACTION_ID`.
-    public func get(
-        floatingIp: String,
-        actionId: Int,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> FloatingIpAction {
-        try await FloatingIpActionsMethods.floatingIpsActionGet(
-            config: config,
-            floatingIp: floatingIp,
-            actionId: actionId,
-            requestOptions: requestOptions
-        )
+/// To retrieve the status of a floating IP action, send a GET request to `/v2/floating_ips/$FLOATING_IP/actions/$ACTION_ID`.
+    public func get(floatingIp: String, actionId: Int, requestOptions: RequestOptions? = nil) async throws -> FloatingIpAction {
+        return try await FloatingIpActionsMethods.floatingIpsActionGet(config: config, floatingIp: floatingIp, actionId: actionId, requestOptions: requestOptions)
     }
 }
 
@@ -308,200 +138,70 @@ public class FunctionsNamespace {
         self.config = config
     }
 
-    /// Returns a list of namespaces associated with the current user. To get all namespaces, send a GET request to
-    /// `/v2/functions/namespaces`.
+/// Returns a list of namespaces associated with the current user. To get all namespaces, send a GET request to `/v2/functions/namespaces`.
     public func listNamespaces(requestOptions: RequestOptions? = nil) async throws -> ListNamespaces {
-        try await FunctionsMethods.functionsListNamespaces(config: config, requestOptions: requestOptions)
+        return try await FunctionsMethods.functionsListNamespaces(config: config, requestOptions: requestOptions)
     }
 
-    /// Creates a new serverless functions namespace in the desired region and associates it with the provided label. A
-    /// namespace is a collection of functions and their associated packages, triggers, and project specifications. To
-    /// create a namespace, send a POST request to `/v2/functions/namespaces` with the `region` and `label` properties.
-    public func createNamespace(
-        region: String,
-        label: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> NamespaceCreated {
-        try await FunctionsMethods.functionsCreateNamespace(
-            config: config,
-            region: region,
-            label: label,
-            requestOptions: requestOptions
-        )
+/// Creates a new serverless functions namespace in the desired region and associates it with the provided label. A namespace is a collection of functions and their associated packages, triggers, and project specifications. To create a namespace, send a POST request to `/v2/functions/namespaces` with the `region` and `label` properties.
+    public func createNamespace(region: String, label: String, requestOptions: RequestOptions? = nil) async throws -> NamespaceCreated {
+        return try await FunctionsMethods.functionsCreateNamespace(config: config, region: region, label: label, requestOptions: requestOptions)
     }
 
-    /// Gets the namespace details for the given namespace UUID. To get namespace details, send a GET request to
-    /// `/v2/functions/namespaces/$NAMESPACE_ID` with no parameters.
-    public func getNamespace(
-        namespaceId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> NamespaceCreated {
-        try await FunctionsMethods.functionsGetNamespace(
-            config: config,
-            namespaceId: namespaceId,
-            requestOptions: requestOptions
-        )
+/// Gets the namespace details for the given namespace UUID. To get namespace details, send a GET request to `/v2/functions/namespaces/$NAMESPACE_ID` with no parameters.
+    public func getNamespace(namespaceId: String, requestOptions: RequestOptions? = nil) async throws -> NamespaceCreated {
+        return try await FunctionsMethods.functionsGetNamespace(config: config, namespaceId: namespaceId, requestOptions: requestOptions)
     }
 
-    /// Deletes the given namespace. When a namespace is deleted all assets, in the namespace are deleted, this includes
-    /// packages, functions and triggers. Deleting a namespace is a destructive operation and assets in the namespace
-    /// are not recoverable after deletion. Some metadata is retained, such as activations, or soft deleted for
-    /// reporting purposes. To delete namespace, send a DELETE request to `/v2/functions/namespaces/$NAMESPACE_ID`. A
-    /// successful deletion returns a 204 response.
-    public func deleteNamespace(
-        namespaceId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await FunctionsMethods.functionsDeleteNamespace(
-            config: config,
-            namespaceId: namespaceId,
-            requestOptions: requestOptions
-        )
+/// Deletes the given namespace. When a namespace is deleted all assets, in the namespace are deleted, this includes packages, functions and triggers. Deleting a namespace is a destructive operation and assets in the namespace are not recoverable after deletion. Some metadata is retained, such as activations, or soft deleted for reporting purposes. To delete namespace, send a DELETE request to `/v2/functions/namespaces/$NAMESPACE_ID`. A successful deletion returns a 204 response.
+    public func deleteNamespace(namespaceId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await FunctionsMethods.functionsDeleteNamespace(config: config, namespaceId: namespaceId, requestOptions: requestOptions)
     }
 
-    /// Returns a list of triggers associated with the current user and namespace. To get all triggers, send a GET
-    /// request to `/v2/functions/namespaces/$NAMESPACE_ID/triggers`.
+/// Returns a list of triggers associated with the current user and namespace. To get all triggers, send a GET request to `/v2/functions/namespaces/$NAMESPACE_ID/triggers`.
     public func listTriggers(namespaceId: String, requestOptions: RequestOptions? = nil) async throws -> ListTriggers {
-        try await FunctionsMethods.functionsListTriggers(
-            config: config,
-            namespaceId: namespaceId,
-            requestOptions: requestOptions
-        )
+        return try await FunctionsMethods.functionsListTriggers(config: config, namespaceId: namespaceId, requestOptions: requestOptions)
     }
 
-    /// Creates a new trigger for a given function in a namespace. To create a trigger, send a POST request to
-    /// `/v2/functions/namespaces/$NAMESPACE_ID/triggers` with the `name`, `function`, `type`, `is_enabled` and
-    /// `scheduled_details` properties.
-    public func createTrigger(
-        namespaceId: String,
-        name: String,
-        function: String,
-        type: String,
-        isEnabled: Bool,
-        scheduledDetails: ScheduledDetails,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> TriggerResponse {
-        try await FunctionsMethods.functionsCreateTrigger(
-            config: config,
-            namespaceId: namespaceId,
-            name: name,
-            function: function,
-            type: type,
-            isEnabled: isEnabled,
-            scheduledDetails: scheduledDetails,
-            requestOptions: requestOptions
-        )
+/// Creates a new trigger for a given function in a namespace. To create a trigger, send a POST request to `/v2/functions/namespaces/$NAMESPACE_ID/triggers` with the `name`, `function`, `type`, `is_enabled` and `scheduled_details` properties.
+    public func createTrigger(namespaceId: String, name: String, function: String, type: String, isEnabled: Bool, scheduledDetails: ScheduledDetails, requestOptions: RequestOptions? = nil) async throws -> TriggerResponse {
+        return try await FunctionsMethods.functionsCreateTrigger(config: config, namespaceId: namespaceId, name: name, function: function, type: type, isEnabled: isEnabled, scheduledDetails: scheduledDetails, requestOptions: requestOptions)
     }
 
-    /// Gets the trigger details. To get the trigger details, send a GET request to
-    /// `/v2/functions/namespaces/$NAMESPACE_ID/triggers/$TRIGGER_NAME`.
-    public func getTrigger(
-        namespaceId: String,
-        triggerName: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> TriggerResponse {
-        try await FunctionsMethods.functionsGetTrigger(
-            config: config,
-            namespaceId: namespaceId,
-            triggerName: triggerName,
-            requestOptions: requestOptions
-        )
+/// Gets the trigger details. To get the trigger details, send a GET request to `/v2/functions/namespaces/$NAMESPACE_ID/triggers/$TRIGGER_NAME`.
+    public func getTrigger(namespaceId: String, triggerName: String, requestOptions: RequestOptions? = nil) async throws -> TriggerResponse {
+        return try await FunctionsMethods.functionsGetTrigger(config: config, namespaceId: namespaceId, triggerName: triggerName, requestOptions: requestOptions)
     }
 
-    /// Updates the details of the given trigger. To update a trigger, send a PUT request to
-    /// `/v2/functions/namespaces/$NAMESPACE_ID/triggers/$TRIGGER_NAME` with new values for the `is_enabled ` or
-    /// `scheduled_details` properties.
-    public func updateTrigger(
-        namespaceId: String,
-        triggerName: String,
-        isEnabled: Bool? = nil,
-        scheduledDetails: ScheduledDetails? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> TriggerResponse {
-        try await FunctionsMethods.functionsUpdateTrigger(
-            config: config,
-            namespaceId: namespaceId,
-            triggerName: triggerName,
-            isEnabled: isEnabled,
-            scheduledDetails: scheduledDetails,
-            requestOptions: requestOptions
-        )
+/// Updates the details of the given trigger. To update a trigger, send a PUT request to `/v2/functions/namespaces/$NAMESPACE_ID/triggers/$TRIGGER_NAME` with new values for the `is_enabled ` or `scheduled_details` properties.
+    public func updateTrigger(namespaceId: String, triggerName: String, isEnabled: Bool? = nil, scheduledDetails: ScheduledDetails? = nil, requestOptions: RequestOptions? = nil) async throws -> TriggerResponse {
+        return try await FunctionsMethods.functionsUpdateTrigger(config: config, namespaceId: namespaceId, triggerName: triggerName, isEnabled: isEnabled, scheduledDetails: scheduledDetails, requestOptions: requestOptions)
     }
 }
 
-public extension FunctionsNamespace {
-    /// Deletes the given trigger. To delete trigger, send a DELETE request to
-    /// `/v2/functions/namespaces/$NAMESPACE_ID/triggers/$TRIGGER_NAME`. A successful deletion returns a 204 response.
-    func deleteTrigger(
-        namespaceId: String,
-        triggerName: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await FunctionsMethods.functionsDeleteTrigger(
-            config: config,
-            namespaceId: namespaceId,
-            triggerName: triggerName,
-            requestOptions: requestOptions
-        )
+extension FunctionsNamespace {
+/// Deletes the given trigger. To delete trigger, send a DELETE request to `/v2/functions/namespaces/$NAMESPACE_ID/triggers/$TRIGGER_NAME`. A successful deletion returns a 204 response.
+    public func deleteTrigger(namespaceId: String, triggerName: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await FunctionsMethods.functionsDeleteTrigger(config: config, namespaceId: namespaceId, triggerName: triggerName, requestOptions: requestOptions)
     }
 
-    /// Lists all access keys for a serverless functions namespace. To list access keys, send a GET request to
-    /// `/v2/functions/namespaces/{namespace_id}/keys`.
-    func accessKeyList(namespaceId: String, requestOptions: RequestOptions? = nil) async throws -> AccessKeyList {
-        try await FunctionsMethods.functionsAccessKeyList(
-            config: config,
-            namespaceId: namespaceId,
-            requestOptions: requestOptions
-        )
+/// Lists all access keys for a serverless functions namespace. To list access keys, send a GET request to `/v2/functions/namespaces/{namespace_id}/keys`.
+    public func accessKeyList(namespaceId: String, requestOptions: RequestOptions? = nil) async throws -> AccessKeyList {
+        return try await FunctionsMethods.functionsAccessKeyList(config: config, namespaceId: namespaceId, requestOptions: requestOptions)
     }
 
-    /// Creates a new access key for a serverless functions namespace. The access key can be used to authenticate
-    /// requests to the namespace's functions. The secret key is only returned once upon creation. To create an access
-    /// key, send a POST request to `/v2/functions/namespaces/{namespace_id}/keys`.
-    func accessKeyCreate(
-        namespaceId: String,
-        name: String,
-        expiresIn: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AccessKeyCreate {
-        try await FunctionsMethods.functionsAccessKeyCreate(
-            config: config,
-            namespaceId: namespaceId,
-            name: name,
-            expiresIn: expiresIn,
-            requestOptions: requestOptions
-        )
+/// Creates a new access key for a serverless functions namespace. The access key can be used to authenticate requests to the namespace's functions. The secret key is only returned once upon creation. To create an access key, send a POST request to `/v2/functions/namespaces/{namespace_id}/keys`.
+    public func accessKeyCreate(namespaceId: String, name: String, expiresIn: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AccessKeyCreate {
+        return try await FunctionsMethods.functionsAccessKeyCreate(config: config, namespaceId: namespaceId, name: name, expiresIn: expiresIn, requestOptions: requestOptions)
     }
 
-    /// Updates the name of an access key for a serverless functions namespace. To update an access key, send a PUT
-    /// request to `/v2/functions/namespaces/{namespace_id}/keys/{key_id}`.
-    func accessKeyUpdate(
-        namespaceId: String,
-        keyId: String,
-        name: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AccessKeyUpdate {
-        try await FunctionsMethods.functionsAccessKeyUpdate(
-            config: config,
-            namespaceId: namespaceId,
-            keyId: keyId,
-            name: name,
-            requestOptions: requestOptions
-        )
+/// Updates the name of an access key for a serverless functions namespace. To update an access key, send a PUT request to `/v2/functions/namespaces/{namespace_id}/keys/{key_id}`.
+    public func accessKeyUpdate(namespaceId: String, keyId: String, name: String, requestOptions: RequestOptions? = nil) async throws -> AccessKeyUpdate {
+        return try await FunctionsMethods.functionsAccessKeyUpdate(config: config, namespaceId: namespaceId, keyId: keyId, name: name, requestOptions: requestOptions)
     }
 
-    /// Deletes an access key for a serverless functions namespace. To delete an access key, send a DELETE request to
-    /// `/v2/functions/namespaces/{namespace_id}/keys/{key_id}`.
-    func accessKeyDelete(
-        namespaceId: String,
-        keyId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> [String: JSONValue] {
-        try await FunctionsMethods.functionsAccessKeyDelete(
-            config: config,
-            namespaceId: namespaceId,
-            keyId: keyId,
-            requestOptions: requestOptions
-        )
+/// Deletes an access key for a serverless functions namespace. To delete an access key, send a DELETE request to `/v2/functions/namespaces/{namespace_id}/keys/{key_id}`.
+    public func accessKeyDelete(namespaceId: String, keyId: String, requestOptions: RequestOptions? = nil) async throws -> [String: JSONValue] {
+        return try await FunctionsMethods.functionsAccessKeyDelete(config: config, namespaceId: namespaceId, keyId: keyId, requestOptions: requestOptions)
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Functions domain models
+// Functions domain models
 /// Typed representation of the `CreateNamespace` API schema.
 public struct CreateNamespace: Codable {
     /// The datacenter region in which to create the namespace.
@@ -18,35 +18,25 @@ public struct CreateNamespace: Codable {
         case label
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateNamespace {
-    init(from decoder: Decoder) throws {
+extension CreateNamespace {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
         guard container.contains(.label) else {
-            throw SdkValidationError(
-                field: "label",
-                code: "required",
-                message: "Validation failed for 'label': value is required"
-            )
+            throw SdkValidationError(field: "label", code: "required", message: "Validation failed for 'label': value is required")
         }
-        region = try container.sdkDecodeRequired(.region)
-        label = try container.sdkDecodeRequired(.label)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.label = try container.sdkDecodeRequired(.label)
     }
 }
 
-public extension CreateNamespace {
-    init(region: String, label: String) {
+extension CreateNamespace {
+    public init(region: String, label: String) {
         (self.region, self.label) = (region, label)
     }
 }

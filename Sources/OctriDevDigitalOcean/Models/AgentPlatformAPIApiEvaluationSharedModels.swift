@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiEvaluation domain models
+// AgentPlatformAPIApiEvaluation domain models
 /// Typed representation of the `ApiEvaluationRun` API schema.
 public struct ApiEvaluationRun: Codable {
     /// Whether agent is deleted
@@ -101,90 +101,54 @@ public struct ApiEvaluationRun: Codable {
     }
 
     init() {
-        (agentDeleted, agentDeploymentName, agentName, agentUuid, agentVersionHash) = (nil, nil, nil, nil, nil)
-        (agentWorkspaceUuid, createdByUserEmail, createdByUserId, errorDescription, evaluationRunUuid) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        (evaluationTestCaseWorkspaceUuid, finishedAt, passStatus, queuedAt, runLevelMetricResults) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        (runName, starMetricResult, startedAt, status, testCaseDescription) = (nil, nil, nil, nil, nil)
-        (testCaseName, testCaseUuid, testCaseVersion) = (nil, nil, nil)
+        (self.agentDeleted, self.agentDeploymentName, self.agentName, self.agentUuid, self.agentVersionHash) = (nil, nil, nil, nil, nil)
+        (self.agentWorkspaceUuid, self.createdByUserEmail, self.createdByUserId, self.errorDescription, self.evaluationRunUuid) = (nil, nil, nil, nil, nil)
+        (self.evaluationTestCaseWorkspaceUuid, self.finishedAt, self.passStatus, self.queuedAt, self.runLevelMetricResults) = (nil, nil, nil, nil, nil)
+        (self.runName, self.starMetricResult, self.startedAt, self.status, self.testCaseDescription) = (nil, nil, nil, nil, nil)
+        (self.testCaseName, self.testCaseUuid, self.testCaseVersion) = (nil, nil, nil)
     }
 }
 
-public extension ApiEvaluationRun {
-    init(from decoder: Decoder) throws {
+extension ApiEvaluationRun {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agentDeleted = try container.sdkDecodeIfPresent(.agentDeleted)
-        agentDeploymentName = try container.sdkDecodeIfPresent(.agentDeploymentName)
-        agentName = try container.sdkDecodeIfPresent(.agentName)
-        agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
-        agentVersionHash = try container.sdkDecodeIfPresent(.agentVersionHash)
-        agentWorkspaceUuid = try container.sdkDecodeIfPresent(.agentWorkspaceUuid)
-        createdByUserEmail = try container.sdkDecodeIfPresent(.createdByUserEmail)
-        createdByUserId = try container.sdkDecodeIfPresent(.createdByUserId)
-        errorDescription = try container.sdkDecodeIfPresent(.errorDescription)
-        evaluationRunUuid = try container.sdkDecodeIfPresent(.evaluationRunUuid)
-        evaluationTestCaseWorkspaceUuid = try container.sdkDecodeIfPresent(.evaluationTestCaseWorkspaceUuid)
-        finishedAt = try container.sdkDecodeIfPresent(.finishedAt)
-        passStatus = try container.sdkDecodeIfPresent(.passStatus)
-        queuedAt = try container.sdkDecodeIfPresent(.queuedAt)
-        runLevelMetricResults = try container.sdkDecodeIfPresent(.runLevelMetricResults)
-        runName = try container.sdkDecodeIfPresent(.runName)
-        starMetricResult = try container.sdkDecodeIfPresent(.starMetricResult)
-        startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        status = try container.sdkDecodeIfPresent(.status)
-        testCaseDescription = try container.sdkDecodeIfPresent(.testCaseDescription)
-        testCaseName = try container.sdkDecodeIfPresent(.testCaseName)
-        testCaseUuid = try container.sdkDecodeIfPresent(.testCaseUuid)
-        testCaseVersion = try container.sdkDecodeIfPresent(.testCaseVersion)
-        if let value = finishedAt {
+        self.agentDeleted = try container.sdkDecodeIfPresent(.agentDeleted)
+        self.agentDeploymentName = try container.sdkDecodeIfPresent(.agentDeploymentName)
+        self.agentName = try container.sdkDecodeIfPresent(.agentName)
+        self.agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
+        self.agentVersionHash = try container.sdkDecodeIfPresent(.agentVersionHash)
+        self.agentWorkspaceUuid = try container.sdkDecodeIfPresent(.agentWorkspaceUuid)
+        self.createdByUserEmail = try container.sdkDecodeIfPresent(.createdByUserEmail)
+        self.createdByUserId = try container.sdkDecodeIfPresent(.createdByUserId)
+        self.errorDescription = try container.sdkDecodeIfPresent(.errorDescription)
+        self.evaluationRunUuid = try container.sdkDecodeIfPresent(.evaluationRunUuid)
+        self.evaluationTestCaseWorkspaceUuid = try container.sdkDecodeIfPresent(.evaluationTestCaseWorkspaceUuid)
+        self.finishedAt = try container.sdkDecodeIfPresent(.finishedAt)
+        self.passStatus = try container.sdkDecodeIfPresent(.passStatus)
+        self.queuedAt = try container.sdkDecodeIfPresent(.queuedAt)
+        self.runLevelMetricResults = try container.sdkDecodeIfPresent(.runLevelMetricResults)
+        self.runName = try container.sdkDecodeIfPresent(.runName)
+        self.starMetricResult = try container.sdkDecodeIfPresent(.starMetricResult)
+        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.testCaseDescription = try container.sdkDecodeIfPresent(.testCaseDescription)
+        self.testCaseName = try container.sdkDecodeIfPresent(.testCaseName)
+        self.testCaseUuid = try container.sdkDecodeIfPresent(.testCaseUuid)
+        self.testCaseVersion = try container.sdkDecodeIfPresent(.testCaseVersion)
+        if let value = self.finishedAt {
             try sdkValidateDateTime("finished_at", sdkWireString(value))
         }
-        if let value = queuedAt {
+        if let value = self.queuedAt {
             try sdkValidateDateTime("queued_at", sdkWireString(value))
         }
-        if let value = startedAt {
+        if let value = self.startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApiEvaluationRun {
-    init(
-        agentDeleted: Bool? = nil,
-        agentDeploymentName: String? = nil,
-        agentName: String? = nil,
-        agentUuid: String? = nil,
-        agentVersionHash: String? = nil,
-        agentWorkspaceUuid: String? = nil,
-        createdByUserEmail: String? = nil,
-        createdByUserId: String? = nil,
-        errorDescription: String? = nil,
-        evaluationRunUuid: String? = nil,
-        evaluationTestCaseWorkspaceUuid: String? = nil,
-        finishedAt: Date? = nil,
-        passStatus: Bool? = nil,
-        queuedAt: Date? = nil,
-        runLevelMetricResults: [ApiEvaluationMetricResult]? = nil,
-        runName: String? = nil,
-        starMetricResult: ApiEvaluationMetricResult? = nil,
-        startedAt: Date? = nil,
-        status: ApiEvaluationRunStatus? = nil,
-        testCaseDescription: String? = nil,
-        testCaseName: String? = nil,
-        testCaseUuid: String? = nil,
-        testCaseVersion: Int? = nil
-    ) throws {
+extension ApiEvaluationRun {
+    public init(agentDeleted: Bool? = nil, agentDeploymentName: String? = nil, agentName: String? = nil, agentUuid: String? = nil, agentVersionHash: String? = nil, agentWorkspaceUuid: String? = nil, createdByUserEmail: String? = nil, createdByUserId: String? = nil, errorDescription: String? = nil, evaluationRunUuid: String? = nil, evaluationTestCaseWorkspaceUuid: String? = nil, finishedAt: Date? = nil, passStatus: Bool? = nil, queuedAt: Date? = nil, runLevelMetricResults: [ApiEvaluationMetricResult]? = nil, runName: String? = nil, starMetricResult: ApiEvaluationMetricResult? = nil, startedAt: Date? = nil, status: ApiEvaluationRunStatus? = nil, testCaseDescription: String? = nil, testCaseName: String? = nil, testCaseUuid: String? = nil, testCaseVersion: Int? = nil) throws {
         self.init()
         (self.agentDeleted, self.agentDeploymentName) = (agentDeleted, agentDeploymentName)
         (self.agentName, self.agentUuid) = (agentName, agentUuid)
@@ -279,51 +243,35 @@ public struct ApiEvaluationMetric: Codable {
     }
 
     init() {
-        (associatedPresets, category, customEvalConfig, description, evaluationScope) = (nil, nil, nil, nil, nil)
-        (inverted, isMetricGoal, metricName, metricRank, metricType) = (nil, nil, nil, nil, nil)
-        (metricUuid, metricValueType, rangeMax, rangeMin, source) = (nil, nil, nil, nil, nil)
+        (self.associatedPresets, self.category, self.customEvalConfig, self.description, self.evaluationScope) = (nil, nil, nil, nil, nil)
+        (self.inverted, self.isMetricGoal, self.metricName, self.metricRank, self.metricType) = (nil, nil, nil, nil, nil)
+        (self.metricUuid, self.metricValueType, self.rangeMax, self.rangeMin, self.source) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ApiEvaluationMetric {
-    init(from decoder: Decoder) throws {
+extension ApiEvaluationMetric {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        associatedPresets = try container.sdkDecodeIfPresent(.associatedPresets)
-        category = try container.sdkDecodeIfPresent(.category)
-        customEvalConfig = try container.sdkDecodeIfPresent(.customEvalConfig)
-        description = try container.sdkDecodeIfPresent(.description)
-        evaluationScope = try container.sdkDecodeIfPresent(.evaluationScope)
-        inverted = try container.sdkDecodeIfPresent(.inverted)
-        isMetricGoal = try container.sdkDecodeIfPresent(.isMetricGoal)
-        metricName = try container.sdkDecodeIfPresent(.metricName)
-        metricRank = try container.sdkDecodeIfPresent(.metricRank)
-        metricType = try container.sdkDecodeIfPresent(.metricType)
-        metricUuid = try container.sdkDecodeIfPresent(.metricUuid)
-        metricValueType = try container.sdkDecodeIfPresent(.metricValueType)
-        rangeMax = try container.sdkDecodeIfPresent(.rangeMax)
-        rangeMin = try container.sdkDecodeIfPresent(.rangeMin)
-        source = try container.sdkDecodeIfPresent(.source)
+        self.associatedPresets = try container.sdkDecodeIfPresent(.associatedPresets)
+        self.category = try container.sdkDecodeIfPresent(.category)
+        self.customEvalConfig = try container.sdkDecodeIfPresent(.customEvalConfig)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.evaluationScope = try container.sdkDecodeIfPresent(.evaluationScope)
+        self.inverted = try container.sdkDecodeIfPresent(.inverted)
+        self.isMetricGoal = try container.sdkDecodeIfPresent(.isMetricGoal)
+        self.metricName = try container.sdkDecodeIfPresent(.metricName)
+        self.metricRank = try container.sdkDecodeIfPresent(.metricRank)
+        self.metricType = try container.sdkDecodeIfPresent(.metricType)
+        self.metricUuid = try container.sdkDecodeIfPresent(.metricUuid)
+        self.metricValueType = try container.sdkDecodeIfPresent(.metricValueType)
+        self.rangeMax = try container.sdkDecodeIfPresent(.rangeMax)
+        self.rangeMin = try container.sdkDecodeIfPresent(.rangeMin)
+        self.source = try container.sdkDecodeIfPresent(.source)
     }
 }
 
-public extension ApiEvaluationMetric {
-    init(
-        associatedPresets: [ApiAssociatedModelEvaluationPreset]? = nil,
-        category: ApiEvaluationMetricCategory? = nil,
-        customEvalConfig: ApiCustomEvaluationMetricConfig? = nil,
-        description: String? = nil,
-        evaluationScope: ApiEvaluationScope? = nil,
-        inverted: Bool? = nil,
-        isMetricGoal: Bool? = nil,
-        metricName: String? = nil,
-        metricRank: Int? = nil,
-        metricType: ApiEvaluationMetricType? = nil,
-        metricUuid: String? = nil,
-        metricValueType: ApiEvaluationMetricValueType? = nil,
-        rangeMax: Double? = nil,
-        rangeMin: Double? = nil,
-        source: ApiEvaluationMetricSource? = nil
-    ) {
+extension ApiEvaluationMetric {
+    public init(associatedPresets: [ApiAssociatedModelEvaluationPreset]? = nil, category: ApiEvaluationMetricCategory? = nil, customEvalConfig: ApiCustomEvaluationMetricConfig? = nil, description: String? = nil, evaluationScope: ApiEvaluationScope? = nil, inverted: Bool? = nil, isMetricGoal: Bool? = nil, metricName: String? = nil, metricRank: Int? = nil, metricType: ApiEvaluationMetricType? = nil, metricUuid: String? = nil, metricValueType: ApiEvaluationMetricValueType? = nil, rangeMax: Double? = nil, rangeMin: Double? = nil, source: ApiEvaluationMetricSource? = nil) {
         self.init()
         (self.associatedPresets, self.category) = (associatedPresets, category)
         (self.customEvalConfig, self.description) = (customEvalConfig, description)
@@ -370,39 +318,30 @@ public struct ApiEvaluationTraceSpan: Codable {
     }
 
     init() {
-        (createdAt, input, name, output, retrieverChunks) = (nil, nil, nil, nil, nil)
-        (spanLevelMetricResults, spans, type) = (nil, nil, nil)
+        (self.createdAt, self.input, self.name, self.output, self.retrieverChunks) = (nil, nil, nil, nil, nil)
+        (self.spanLevelMetricResults, self.spans, self.type) = (nil, nil, nil)
     }
 }
 
-public extension ApiEvaluationTraceSpan {
-    init(from decoder: Decoder) throws {
+extension ApiEvaluationTraceSpan {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        input = try container.sdkDecodeIfPresent(.input)
-        name = try container.sdkDecodeIfPresent(.name)
-        output = try container.sdkDecodeIfPresent(.output)
-        retrieverChunks = try container.sdkDecodeIfPresent(.retrieverChunks)
-        spanLevelMetricResults = try container.sdkDecodeIfPresent(.spanLevelMetricResults)
-        spans = try container.sdkDecodeIfPresent(.spans)
-        type = try container.sdkDecodeIfPresent(.type)
-        if let value = createdAt {
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.input = try container.sdkDecodeIfPresent(.input)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.output = try container.sdkDecodeIfPresent(.output)
+        self.retrieverChunks = try container.sdkDecodeIfPresent(.retrieverChunks)
+        self.spanLevelMetricResults = try container.sdkDecodeIfPresent(.spanLevelMetricResults)
+        self.spans = try container.sdkDecodeIfPresent(.spans)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApiEvaluationTraceSpan {
-    init(
-        createdAt: Date? = nil,
-        input: [String: JSONValue]? = nil,
-        name: String? = nil,
-        output: [String: JSONValue]? = nil,
-        retrieverChunks: [ApiPromptChunk]? = nil,
-        spanLevelMetricResults: [ApiEvaluationMetricResult]? = nil,
-        spans: [ApiTraceSpan]? = nil,
-        type: ApiTraceSpanType? = nil
-    ) throws {
+extension ApiEvaluationTraceSpan {
+    public init(createdAt: Date? = nil, input: [String: JSONValue]? = nil, name: String? = nil, output: [String: JSONValue]? = nil, retrieverChunks: [ApiPromptChunk]? = nil, spanLevelMetricResults: [ApiEvaluationMetricResult]? = nil, spans: [ApiTraceSpan]? = nil, type: ApiTraceSpanType? = nil) throws {
         self.init()
         (self.createdAt, self.input) = (createdAt, input)
         (self.name, self.output) = (name, output)
@@ -490,41 +429,41 @@ public struct ApiEvaluationTestCase: Codable {
     }
 
     init() {
-        (archivedAt, createdAt, createdByUserEmail, createdByUserId, dataset) = (nil, nil, nil, nil, nil)
-        (datasetName, datasetUuid, description, latestVersionNumberOfRuns, metrics) = (nil, nil, nil, nil, nil)
-        (name, starMetric, testCaseUuid, totalRuns, updatedAt) = (nil, nil, nil, nil, nil)
-        (updatedByUserEmail, updatedByUserId, version) = (nil, nil, nil)
+        (self.archivedAt, self.createdAt, self.createdByUserEmail, self.createdByUserId, self.dataset) = (nil, nil, nil, nil, nil)
+        (self.datasetName, self.datasetUuid, self.description, self.latestVersionNumberOfRuns, self.metrics) = (nil, nil, nil, nil, nil)
+        (self.name, self.starMetric, self.testCaseUuid, self.totalRuns, self.updatedAt) = (nil, nil, nil, nil, nil)
+        (self.updatedByUserEmail, self.updatedByUserId, self.version) = (nil, nil, nil)
     }
 }
 
-public extension ApiEvaluationTestCase {
-    init(from decoder: Decoder) throws {
+extension ApiEvaluationTestCase {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        archivedAt = try container.sdkDecodeIfPresent(.archivedAt)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        createdByUserEmail = try container.sdkDecodeIfPresent(.createdByUserEmail)
-        createdByUserId = try container.sdkDecodeIfPresent(.createdByUserId)
-        dataset = try container.sdkDecodeIfPresent(.dataset)
-        datasetName = try container.sdkDecodeIfPresent(.datasetName)
-        datasetUuid = try container.sdkDecodeIfPresent(.datasetUuid)
-        description = try container.sdkDecodeIfPresent(.description)
-        latestVersionNumberOfRuns = try container.sdkDecodeIfPresent(.latestVersionNumberOfRuns)
-        metrics = try container.sdkDecodeIfPresent(.metrics)
-        name = try container.sdkDecodeIfPresent(.name)
-        starMetric = try container.sdkDecodeIfPresent(.starMetric)
-        testCaseUuid = try container.sdkDecodeIfPresent(.testCaseUuid)
-        totalRuns = try container.sdkDecodeIfPresent(.totalRuns)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        updatedByUserEmail = try container.sdkDecodeIfPresent(.updatedByUserEmail)
-        updatedByUserId = try container.sdkDecodeIfPresent(.updatedByUserId)
-        version = try container.sdkDecodeIfPresent(.version)
-        if let value = archivedAt {
+        self.archivedAt = try container.sdkDecodeIfPresent(.archivedAt)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.createdByUserEmail = try container.sdkDecodeIfPresent(.createdByUserEmail)
+        self.createdByUserId = try container.sdkDecodeIfPresent(.createdByUserId)
+        self.dataset = try container.sdkDecodeIfPresent(.dataset)
+        self.datasetName = try container.sdkDecodeIfPresent(.datasetName)
+        self.datasetUuid = try container.sdkDecodeIfPresent(.datasetUuid)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.latestVersionNumberOfRuns = try container.sdkDecodeIfPresent(.latestVersionNumberOfRuns)
+        self.metrics = try container.sdkDecodeIfPresent(.metrics)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.starMetric = try container.sdkDecodeIfPresent(.starMetric)
+        self.testCaseUuid = try container.sdkDecodeIfPresent(.testCaseUuid)
+        self.totalRuns = try container.sdkDecodeIfPresent(.totalRuns)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.updatedByUserEmail = try container.sdkDecodeIfPresent(.updatedByUserEmail)
+        self.updatedByUserId = try container.sdkDecodeIfPresent(.updatedByUserId)
+        self.version = try container.sdkDecodeIfPresent(.version)
+        if let value = self.archivedAt {
             try sdkValidateDateTime("archived_at", sdkWireString(value))
         }
-        if let value = createdAt {
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }

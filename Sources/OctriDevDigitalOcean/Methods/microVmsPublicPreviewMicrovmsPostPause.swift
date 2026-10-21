@@ -6,110 +6,40 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension MicroVmsPublicPreviewMethods {
-    /// To pause a MicroVM, send a POST request to `/v2/microvms/{microvm_id}/pause`. Pausing suspends the MicroVM's
-    /// processes and preserves its memory, files, and processes. A paused MicroVM incurs storage charges only. The
-    /// request returns when the change completes. Pausing a MicroVM that is already paused succeeds. The request
-    /// returns HTTP 400 when the MicroVM is `creating`, `terminated`, or `failed`.
+extension MicroVmsPublicPreviewMethods {
+    /// To pause a MicroVM, send a POST request to `/v2/microvms/{microvm_id}/pause`. Pausing suspends the MicroVM's processes and preserves its memory, files, and processes. A paused MicroVM incurs storage charges only. The request returns when the change completes. Pausing a MicroVM that is already paused succeeds. The request returns HTTP 400 when the MicroVM is `creating`, `terminated`, or `failed`.
     ///
     /// - Parameters:
     /// - microvmId: The unique ID of the MicroVM.
-    static func microvmsPostPause(
-        config: ClientConfig,
-        microvmId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> MicrovmResponse {
+    public static func microvmsPostPause(config: ClientConfig, microvmId: String, requestOptions: RequestOptions? = nil) async throws -> MicrovmResponse {
         try sdkValidateUuid("microvm_id", microvmId)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/microvms/", sdkEncodePathSegment(sdkWireString(microvmId)), "/pause"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "microvms_post_pause",
-            options: requestOptions,
-            errors: [
-                "400": MicrovmError.self,
-                "401": Error2.self,
-                "404": MicrovmError.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/microvms/", sdkEncodePathSegment(sdkWireString(microvmId)), "/pause"].joined(), config: config, decoder: .json, operationId: "microvms_post_pause", options: requestOptions, errors: ["400": MicrovmError.self, "401": Error2.self, "404": MicrovmError.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To resume a paused MicroVM, send a POST request to `/v2/microvms/{microvm_id}/resume`. The request returns when
-    /// the change completes. Resuming a MicroVM that is already running succeeds. The request returns HTTP 400 when the
-    /// MicroVM is `creating`, `terminated`, or `failed`.
+    /// To resume a paused MicroVM, send a POST request to `/v2/microvms/{microvm_id}/resume`. The request returns when the change completes. Resuming a MicroVM that is already running succeeds. The request returns HTTP 400 when the MicroVM is `creating`, `terminated`, or `failed`.
     ///
     /// - Parameters:
     /// - microvmId: The unique ID of the MicroVM.
-    static func microvmsPostResume(
-        config: ClientConfig,
-        microvmId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> MicrovmResponse {
+    public static func microvmsPostResume(config: ClientConfig, microvmId: String, requestOptions: RequestOptions? = nil) async throws -> MicrovmResponse {
         try sdkValidateUuid("microvm_id", microvmId)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/microvms/", sdkEncodePathSegment(sdkWireString(microvmId)), "/resume"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "microvms_post_resume",
-            options: requestOptions,
-            errors: [
-                "400": MicrovmError.self,
-                "401": Error2.self,
-                "404": MicrovmError.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/microvms/", sdkEncodePathSegment(sdkWireString(microvmId)), "/resume"].joined(), config: config, decoder: .json, operationId: "microvms_post_resume", options: requestOptions, errors: ["400": MicrovmError.self, "401": Error2.self, "404": MicrovmError.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To run a command in a MicroVM's workload container, send a POST request to `/v2/microvms/{microvm_id}/exec`.
-    /// `argv` runs directly, not through a shell, with standard input closed. If the MicroVM is paused and auto-resume
-    /// is on, the request resumes it and waits until it is running. A command has 60 seconds to finish. Your team can
-    /// run 32 commands at once and 60 commands per minute. Rejected requests count toward the per-minute limit.
+    /// To run a command in a MicroVM's workload container, send a POST request to `/v2/microvms/{microvm_id}/exec`. `argv` runs directly, not through a shell, with standard input closed. If the MicroVM is paused and auto-resume is on, the request resumes it and waits until it is running. A command has 60 seconds to finish. Your team can run 32 commands at once and 60 commands per minute. Rejected requests count toward the per-minute limit.
     ///
     /// - Parameters:
     /// - microvmId: The unique ID of the MicroVM.
     /// - argv: The command and its arguments.
     /// - cwd: The working directory to run the command in.
-    static func microvmsRunCommand(
-        config: ClientConfig,
-        microvmId: String,
-        argv: [String],
-        cwd: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExecResponse {
+    public static func microvmsRunCommand(config: ClientConfig, microvmId: String, argv: [String], cwd: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ExecResponse {
         try sdkValidateUuid("microvm_id", microvmId)
 
         try validateItems("argv", argv, min: 1)
 
         let requestBody = MicrovmsRunCommandRequestBody(argv: argv, cwd: cwd)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/microvms/", sdkEncodePathSegment(sdkWireString(microvmId)), "/exec"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "microvms_run_command",
-            options: requestOptions,
-            errors: [
-                "400": MicrovmError.self,
-                "401": Error2.self,
-                "403": MicrovmError.self,
-                "404": MicrovmError.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "502": MicrovmError.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/microvms/", sdkEncodePathSegment(sdkWireString(microvmId)), "/exec"].joined(), config: config, body: requestBody, decoder: .json, operationId: "microvms_run_command", options: requestOptions, errors: ["400": MicrovmError.self, "401": Error2.self, "403": MicrovmError.self, "404": MicrovmError.self, "429": Error2.self, "500": Error2.self, "502": MicrovmError.self, "default": Error2.self])).data
     }
 }

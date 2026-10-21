@@ -6,57 +6,23 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContainerRegistryMethods {
-    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** A subscription is
-    /// automatically created when you configure your container registry. To get information about your subscription,
-    /// send a GET request to `/v2/registry/subscription`.
+extension ContainerRegistryMethods {
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** A subscription is automatically created when you configure your container registry. To get information about your subscription, send a GET request to `/v2/registry/subscription`.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    static func registryGetSubscription(
-        config: ClientConfig,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SubscriptionResponse {
-        try await (sdkRequest(
-            "GET",
-            "/v2/registry/subscription",
-            config: config,
-            decoder: .json,
-            operationId: "registry_get_subscription",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    public static func registryGetSubscription(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> SubscriptionResponse {
+        return try (await sdkRequest("GET", "/v2/registry/subscription", config: config, decoder: .json, operationId: "registry_get_subscription", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** After creating your
-    /// registry, you can switch to a different subscription tier to better suit your needs. To do this, send a POST
-    /// request to `/v2/registry/subscription`.
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** After creating your registry, you can switch to a different subscription tier to better suit your needs. To do this, send a POST request to `/v2/registry/subscription`.
     ///
     /// - Parameters:
     /// - tierSlug: The slug of the subscription tier to sign up for.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    static func registryUpdateSubscription(
-        config: ClientConfig,
-        tierSlug: RegistryUpdateSubscriptionRequestBodyTierSlug? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SubscriptionResponse {
+    public static func registryUpdateSubscription(config: ClientConfig, tierSlug: RegistryUpdateSubscriptionRequestBodyTierSlug? = nil, requestOptions: RequestOptions? = nil) async throws -> SubscriptionResponse {
         let requestBody = RegistryUpdateSubscriptionRequestBody(tierSlug: tierSlug)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/registry/subscription",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "registry_update_subscription",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "412": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v2/registry/subscription", config: config, body: requestBody, decoder: .json, operationId: "registry_update_subscription", options: requestOptions, errors: ["401": Error2.self, "412": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

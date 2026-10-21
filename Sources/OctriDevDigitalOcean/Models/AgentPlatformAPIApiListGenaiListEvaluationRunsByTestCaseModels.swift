@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiList domain models
+// AgentPlatformAPIApiList domain models
 /// Typed representation of the `ApiListEvaluationRunsByTestCaseOutput` API schema.
 public struct ApiListEvaluationRunsByTestCaseOutput: Codable {
     /// List of evaluation runs.
@@ -14,19 +14,19 @@ public struct ApiListEvaluationRunsByTestCaseOutput: Codable {
     }
 
     init() {
-        evaluationRuns = nil
+        self.evaluationRuns = nil
     }
 }
 
-public extension ApiListEvaluationRunsByTestCaseOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListEvaluationRunsByTestCaseOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        evaluationRuns = try container.sdkDecodeIfPresent(.evaluationRuns)
+        self.evaluationRuns = try container.sdkDecodeIfPresent(.evaluationRuns)
     }
 }
 
-public extension ApiListEvaluationRunsByTestCaseOutput {
-    init(evaluationRuns: [ApiEvaluationRun]? = nil) {
+extension ApiListEvaluationRunsByTestCaseOutput {
+    public init(evaluationRuns: [ApiEvaluationRun]? = nil) {
         self.init()
         self.evaluationRuns = evaluationRuns
     }

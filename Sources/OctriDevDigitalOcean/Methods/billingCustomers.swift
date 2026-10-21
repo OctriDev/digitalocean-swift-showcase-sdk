@@ -6,91 +6,24 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension BillingMethods {
+extension BillingMethods {
     /// To retrieve the balances on a customer's account, send a GET request to `/v2/customers/my/balance`.
-    static func balanceGet(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> Balance {
-        try await (sdkRequest(
-            "GET",
-            "/v2/customers/my/balance",
-            config: config,
-            decoder: .json,
-            operationId: "balance_get",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func balanceGet(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> Balance {
+        return try (await sdkRequest("GET", "/v2/customers/my/balance", config: config, decoder: .json, operationId: "balance_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To retrieve the prepayment configuration and current prepayment status for a customer's account, send a GET
-    /// request to `/v2/customers/my/prepayment_config`.
-    static func prepaymentConfigGet(
-        config: ClientConfig,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> PrepaymentConfigResponse {
-        try await (sdkRequest(
-            "GET",
-            "/v2/customers/my/prepayment_config",
-            config: config,
-            decoder: .json,
-            operationId: "prepaymentConfig_get",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    /// To retrieve the prepayment configuration and current prepayment status for a customer's account, send a GET request to `/v2/customers/my/prepayment_config`.
+    public static func prepaymentConfigGet(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> PrepaymentConfigResponse {
+        return try (await sdkRequest("GET", "/v2/customers/my/prepayment_config", config: config, decoder: .json, operationId: "prepaymentConfig_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To retrieve the prepayment gate status and balances for a customer's account, send a GET request to
-    /// `/v2/customers/my/prepayment_status`.
-    static func prepaymentStatusGet(
-        config: ClientConfig,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> PrepaymentStatusResponse {
-        try await (sdkRequest(
-            "GET",
-            "/v2/customers/my/prepayment_status",
-            config: config,
-            decoder: .json,
-            operationId: "prepaymentStatus_get",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    /// To retrieve the prepayment gate status and balances for a customer's account, send a GET request to `/v2/customers/my/prepayment_status`.
+    public static func prepaymentStatusGet(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> PrepaymentStatusResponse {
+        return try (await sdkRequest("GET", "/v2/customers/my/prepayment_status", config: config, decoder: .json, operationId: "prepaymentStatus_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To retrieve a list of all billing history entries, send a GET request to `/v2/customers/my/billing_history`.
-    static func billingHistoryList(
-        config: ClientConfig,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> BillingHistoryResponse {
-        try await (sdkRequest(
-            "GET",
-            "/v2/customers/my/billing_history",
-            config: config,
-            decoder: .json,
-            operationId: "billingHistory_list",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func billingHistoryList(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> BillingHistoryResponse {
+        return try (await sdkRequest("GET", "/v2/customers/my/billing_history", config: config, decoder: .json, operationId: "billingHistory_list", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

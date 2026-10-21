@@ -3,28 +3,9 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiEvaluation domain models
-public extension ApiEvaluationTestCase {
-    init(
-        archivedAt: Date? = nil,
-        createdAt: Date? = nil,
-        createdByUserEmail: String? = nil,
-        createdByUserId: String? = nil,
-        dataset: ApiEvaluationDataset? = nil,
-        datasetName: String? = nil,
-        datasetUuid: String? = nil,
-        description: String? = nil,
-        latestVersionNumberOfRuns: Int? = nil,
-        metrics: [ApiEvaluationMetric]? = nil,
-        name: String? = nil,
-        starMetric: ApiStarMetric? = nil,
-        testCaseUuid: String? = nil,
-        totalRuns: Int? = nil,
-        updatedAt: Date? = nil,
-        updatedByUserEmail: String? = nil,
-        updatedByUserId: String? = nil,
-        version: Int? = nil
-    ) throws {
+// AgentPlatformAPIApiEvaluation domain models
+extension ApiEvaluationTestCase {
+    public init(archivedAt: Date? = nil, createdAt: Date? = nil, createdByUserEmail: String? = nil, createdByUserId: String? = nil, dataset: ApiEvaluationDataset? = nil, datasetName: String? = nil, datasetUuid: String? = nil, description: String? = nil, latestVersionNumberOfRuns: Int? = nil, metrics: [ApiEvaluationMetric]? = nil, name: String? = nil, starMetric: ApiStarMetric? = nil, testCaseUuid: String? = nil, totalRuns: Int? = nil, updatedAt: Date? = nil, updatedByUserEmail: String? = nil, updatedByUserId: String? = nil, version: Int? = nil) throws {
         self.init()
         (self.archivedAt, self.createdAt) = (archivedAt, createdAt)
         (self.createdByUserEmail, self.createdByUserId) = (createdByUserEmail, createdByUserId)
@@ -86,36 +67,27 @@ public struct ApiEvaluationMetricResult: Codable {
     }
 
     init() {
-        (errorDescription, metricName, metricUuid, metricValueType, numberValue) = (nil, nil, nil, nil, nil)
-        (reasoning, status, stringValue) = (nil, nil, nil)
+        (self.errorDescription, self.metricName, self.metricUuid, self.metricValueType, self.numberValue) = (nil, nil, nil, nil, nil)
+        (self.reasoning, self.status, self.stringValue) = (nil, nil, nil)
     }
 }
 
-public extension ApiEvaluationMetricResult {
-    init(from decoder: Decoder) throws {
+extension ApiEvaluationMetricResult {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        errorDescription = try container.sdkDecodeIfPresent(.errorDescription)
-        metricName = try container.sdkDecodeIfPresent(.metricName)
-        metricUuid = try container.sdkDecodeIfPresent(.metricUuid)
-        metricValueType = try container.sdkDecodeIfPresent(.metricValueType)
-        numberValue = try container.sdkDecodeIfPresent(.numberValue)
-        reasoning = try container.sdkDecodeIfPresent(.reasoning)
-        status = try container.sdkDecodeIfPresent(.status)
-        stringValue = try container.sdkDecodeIfPresent(.stringValue)
+        self.errorDescription = try container.sdkDecodeIfPresent(.errorDescription)
+        self.metricName = try container.sdkDecodeIfPresent(.metricName)
+        self.metricUuid = try container.sdkDecodeIfPresent(.metricUuid)
+        self.metricValueType = try container.sdkDecodeIfPresent(.metricValueType)
+        self.numberValue = try container.sdkDecodeIfPresent(.numberValue)
+        self.reasoning = try container.sdkDecodeIfPresent(.reasoning)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.stringValue = try container.sdkDecodeIfPresent(.stringValue)
     }
 }
 
-public extension ApiEvaluationMetricResult {
-    init(
-        errorDescription: String? = nil,
-        metricName: String? = nil,
-        metricUuid: String? = nil,
-        metricValueType: ApiEvaluationMetricValueType? = nil,
-        numberValue: Double? = nil,
-        reasoning: String? = nil,
-        status: ApiEvaluationMetricResultStatus? = nil,
-        stringValue: String? = nil
-    ) {
+extension ApiEvaluationMetricResult {
+    public init(errorDescription: String? = nil, metricName: String? = nil, metricUuid: String? = nil, metricValueType: ApiEvaluationMetricValueType? = nil, numberValue: Double? = nil, reasoning: String? = nil, status: ApiEvaluationMetricResultStatus? = nil, stringValue: String? = nil) {
         self.init()
         (self.errorDescription, self.metricName) = (errorDescription, metricName)
         (self.metricUuid, self.metricValueType) = (metricUuid, metricValueType)
@@ -164,39 +136,30 @@ public struct ApiEvaluationDataset: Codable {
     }
 
     init() {
-        (createdAt, datasetName, datasetParadigm, datasetType, datasetUuid) = (nil, nil, nil, nil, nil)
-        (fileSize, hasGroundTruth, rowCount) = (nil, nil, nil)
+        (self.createdAt, self.datasetName, self.datasetParadigm, self.datasetType, self.datasetUuid) = (nil, nil, nil, nil, nil)
+        (self.fileSize, self.hasGroundTruth, self.rowCount) = (nil, nil, nil)
     }
 }
 
-public extension ApiEvaluationDataset {
-    init(from decoder: Decoder) throws {
+extension ApiEvaluationDataset {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        datasetName = try container.sdkDecodeIfPresent(.datasetName)
-        datasetParadigm = try container.sdkDecodeIfPresent(.datasetParadigm)
-        datasetType = try container.sdkDecodeIfPresent(.datasetType)
-        datasetUuid = try container.sdkDecodeIfPresent(.datasetUuid)
-        fileSize = try container.sdkDecodeIfPresent(.fileSize)
-        hasGroundTruth = try container.sdkDecodeIfPresent(.hasGroundTruth)
-        rowCount = try container.sdkDecodeIfPresent(.rowCount)
-        if let value = createdAt {
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.datasetName = try container.sdkDecodeIfPresent(.datasetName)
+        self.datasetParadigm = try container.sdkDecodeIfPresent(.datasetParadigm)
+        self.datasetType = try container.sdkDecodeIfPresent(.datasetType)
+        self.datasetUuid = try container.sdkDecodeIfPresent(.datasetUuid)
+        self.fileSize = try container.sdkDecodeIfPresent(.fileSize)
+        self.hasGroundTruth = try container.sdkDecodeIfPresent(.hasGroundTruth)
+        self.rowCount = try container.sdkDecodeIfPresent(.rowCount)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApiEvaluationDataset {
-    init(
-        createdAt: Date? = nil,
-        datasetName: String? = nil,
-        datasetParadigm: ApiEvaluationDatasetParadigm? = nil,
-        datasetType: ApiEvaluationDatasetType? = nil,
-        datasetUuid: String? = nil,
-        fileSize: String? = nil,
-        hasGroundTruth: Bool? = nil,
-        rowCount: Int? = nil
-    ) throws {
+extension ApiEvaluationDataset {
+    public init(createdAt: Date? = nil, datasetName: String? = nil, datasetParadigm: ApiEvaluationDatasetParadigm? = nil, datasetType: ApiEvaluationDatasetType? = nil, datasetUuid: String? = nil, fileSize: String? = nil, hasGroundTruth: Bool? = nil, rowCount: Int? = nil) throws {
         self.init()
         (self.createdAt, self.datasetName) = (createdAt, datasetName)
         (self.datasetParadigm, self.datasetType) = (datasetParadigm, datasetType)
@@ -212,26 +175,20 @@ public extension ApiEvaluationDataset {
 public struct ApiEvaluationRunStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let evaluationRunStatusUnspecified =
-        ApiEvaluationRunStatus(rawValue: "EVALUATION_RUN_STATUS_UNSPECIFIED")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let evaluationRunStatusUnspecified = ApiEvaluationRunStatus(rawValue: "EVALUATION_RUN_STATUS_UNSPECIFIED")
     public static let evaluationRunQueued = ApiEvaluationRunStatus(rawValue: "EVALUATION_RUN_QUEUED")
     public static let evaluationRunRunningDataset = ApiEvaluationRunStatus(rawValue: "EVALUATION_RUN_RUNNING_DATASET")
-    public static let evaluationRunEvaluatingResults =
-        ApiEvaluationRunStatus(rawValue: "EVALUATION_RUN_EVALUATING_RESULTS")
+    public static let evaluationRunEvaluatingResults = ApiEvaluationRunStatus(rawValue: "EVALUATION_RUN_EVALUATING_RESULTS")
     public static let evaluationRunCancelling = ApiEvaluationRunStatus(rawValue: "EVALUATION_RUN_CANCELLING")
     public static let evaluationRunCancelled = ApiEvaluationRunStatus(rawValue: "EVALUATION_RUN_CANCELLED")
     public static let evaluationRunSuccessful = ApiEvaluationRunStatus(rawValue: "EVALUATION_RUN_SUCCESSFUL")
-    public static let evaluationRunPartiallySuccessful =
-        ApiEvaluationRunStatus(rawValue: "EVALUATION_RUN_PARTIALLY_SUCCESSFUL")
+    public static let evaluationRunPartiallySuccessful = ApiEvaluationRunStatus(rawValue: "EVALUATION_RUN_PARTIALLY_SUCCESSFUL")
     public static let evaluationRunFailed = ApiEvaluationRunStatus(rawValue: "EVALUATION_RUN_FAILED")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -244,25 +201,18 @@ public struct ApiEvaluationRunStatus: RawRepresentable, Hashable, Codable, Senda
 public struct ApiEvaluationMetricCategory: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let metricCategoryUnspecified = ApiEvaluationMetricCategory(rawValue: "METRIC_CATEGORY_UNSPECIFIED")
     public static let metricCategoryCorrectness = ApiEvaluationMetricCategory(rawValue: "METRIC_CATEGORY_CORRECTNESS")
-    public static let metricCategoryUserOutcomes =
-        ApiEvaluationMetricCategory(rawValue: "METRIC_CATEGORY_USER_OUTCOMES")
-    public static let metricCategorySafetyAndSecurity =
-        ApiEvaluationMetricCategory(rawValue: "METRIC_CATEGORY_SAFETY_AND_SECURITY")
-    public static let metricCategoryContextQuality =
-        ApiEvaluationMetricCategory(rawValue: "METRIC_CATEGORY_CONTEXT_QUALITY")
+    public static let metricCategoryUserOutcomes = ApiEvaluationMetricCategory(rawValue: "METRIC_CATEGORY_USER_OUTCOMES")
+    public static let metricCategorySafetyAndSecurity = ApiEvaluationMetricCategory(rawValue: "METRIC_CATEGORY_SAFETY_AND_SECURITY")
+    public static let metricCategoryContextQuality = ApiEvaluationMetricCategory(rawValue: "METRIC_CATEGORY_CONTEXT_QUALITY")
     public static let metricCategoryModelFit = ApiEvaluationMetricCategory(rawValue: "METRIC_CATEGORY_MODEL_FIT")
-    public static let metricCategoryConversational =
-        ApiEvaluationMetricCategory(rawValue: "METRIC_CATEGORY_CONVERSATIONAL")
+    public static let metricCategoryConversational = ApiEvaluationMetricCategory(rawValue: "METRIC_CATEGORY_CONVERSATIONAL")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -275,20 +225,14 @@ public struct ApiEvaluationMetricCategory: RawRepresentable, Hashable, Codable, 
 public struct ApiEvaluationMetricSource: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let evaluationMetricSourceUnspecified =
-        ApiEvaluationMetricSource(rawValue: "EVALUATION_METRIC_SOURCE_UNSPECIFIED")
-    public static let evaluationMetricSourceBuiltin =
-        ApiEvaluationMetricSource(rawValue: "EVALUATION_METRIC_SOURCE_BUILTIN")
-    public static let evaluationMetricSourceCustom =
-        ApiEvaluationMetricSource(rawValue: "EVALUATION_METRIC_SOURCE_CUSTOM")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let evaluationMetricSourceUnspecified = ApiEvaluationMetricSource(rawValue: "EVALUATION_METRIC_SOURCE_UNSPECIFIED")
+    public static let evaluationMetricSourceBuiltin = ApiEvaluationMetricSource(rawValue: "EVALUATION_METRIC_SOURCE_BUILTIN")
+    public static let evaluationMetricSourceCustom = ApiEvaluationMetricSource(rawValue: "EVALUATION_METRIC_SOURCE_CUSTOM")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -301,17 +245,13 @@ public struct ApiEvaluationMetricSource: RawRepresentable, Hashable, Codable, Se
 public struct ApiEvaluationDatasetType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let evaluationDatasetTypeUnknown =
-        ApiEvaluationDatasetType(rawValue: "EVALUATION_DATASET_TYPE_UNKNOWN")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let evaluationDatasetTypeUnknown = ApiEvaluationDatasetType(rawValue: "EVALUATION_DATASET_TYPE_UNKNOWN")
     public static let evaluationDatasetTypeModel = ApiEvaluationDatasetType(rawValue: "EVALUATION_DATASET_TYPE_MODEL")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -325,17 +265,14 @@ public struct ApiEvaluationDatasetType: RawRepresentable, Hashable, Codable, Sen
 public struct ApiEvaluationScope: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let evaluationScopeUnspecified = ApiEvaluationScope(rawValue: "EVALUATION_SCOPE_UNSPECIFIED")
     public static let evaluationScopeAgent = ApiEvaluationScope(rawValue: "EVALUATION_SCOPE_AGENT")
     public static let evaluationScopeModel = ApiEvaluationScope(rawValue: "EVALUATION_SCOPE_MODEL")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -348,19 +285,15 @@ public struct ApiEvaluationScope: RawRepresentable, Hashable, Codable, Sendable,
 public struct ApiEvaluationMetricValueType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let metricValueTypeUnspecified =
-        ApiEvaluationMetricValueType(rawValue: "METRIC_VALUE_TYPE_UNSPECIFIED")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let metricValueTypeUnspecified = ApiEvaluationMetricValueType(rawValue: "METRIC_VALUE_TYPE_UNSPECIFIED")
     public static let metricValueTypeNumber = ApiEvaluationMetricValueType(rawValue: "METRIC_VALUE_TYPE_NUMBER")
     public static let metricValueTypeString = ApiEvaluationMetricValueType(rawValue: "METRIC_VALUE_TYPE_STRING")
     public static let metricValueTypePercentage = ApiEvaluationMetricValueType(rawValue: "METRIC_VALUE_TYPE_PERCENTAGE")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -373,10 +306,7 @@ public struct ApiEvaluationMetricValueType: RawRepresentable, Hashable, Codable,
 public struct ApiEvaluationMetricType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let metricTypeUnspecified = ApiEvaluationMetricType(rawValue: "METRIC_TYPE_UNSPECIFIED")
     public static let metricTypeGeneralQuality = ApiEvaluationMetricType(rawValue: "METRIC_TYPE_GENERAL_QUALITY")
     public static let metricTypeRagAndTool = ApiEvaluationMetricType(rawValue: "METRIC_TYPE_RAG_AND_TOOL")
@@ -385,7 +315,7 @@ public struct ApiEvaluationMetricType: RawRepresentable, Hashable, Codable, Send
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -399,22 +329,15 @@ public struct ApiEvaluationMetricType: RawRepresentable, Hashable, Codable, Send
 public struct ApiEvaluationDatasetParadigm: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let evaluationDatasetParadigmSingleTurn =
-        ApiEvaluationDatasetParadigm(rawValue: "EVALUATION_DATASET_PARADIGM_SINGLE_TURN")
-    public static let evaluationDatasetParadigmMultiTurn =
-        ApiEvaluationDatasetParadigm(rawValue: "EVALUATION_DATASET_PARADIGM_MULTI_TURN")
-    public static let evaluationDatasetParadigmCoding =
-        ApiEvaluationDatasetParadigm(rawValue: "EVALUATION_DATASET_PARADIGM_CODING")
-    public static let evaluationDatasetParadigmNPlus1 =
-        ApiEvaluationDatasetParadigm(rawValue: "EVALUATION_DATASET_PARADIGM_N_PLUS_1")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let evaluationDatasetParadigmSingleTurn = ApiEvaluationDatasetParadigm(rawValue: "EVALUATION_DATASET_PARADIGM_SINGLE_TURN")
+    public static let evaluationDatasetParadigmMultiTurn = ApiEvaluationDatasetParadigm(rawValue: "EVALUATION_DATASET_PARADIGM_MULTI_TURN")
+    public static let evaluationDatasetParadigmCoding = ApiEvaluationDatasetParadigm(rawValue: "EVALUATION_DATASET_PARADIGM_CODING")
+    public static let evaluationDatasetParadigmNPlus1 = ApiEvaluationDatasetParadigm(rawValue: "EVALUATION_DATASET_PARADIGM_N_PLUS_1")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -427,22 +350,15 @@ public struct ApiEvaluationDatasetParadigm: RawRepresentable, Hashable, Codable,
 public struct ApiEvaluationMetricResultStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let evaluationMetricResultStatusUnspecified =
-        ApiEvaluationMetricResultStatus(rawValue: "EVALUATION_METRIC_RESULT_STATUS_UNSPECIFIED")
-    public static let evaluationMetricResultStatusCompleted =
-        ApiEvaluationMetricResultStatus(rawValue: "EVALUATION_METRIC_RESULT_STATUS_COMPLETED")
-    public static let evaluationMetricResultStatusFailed =
-        ApiEvaluationMetricResultStatus(rawValue: "EVALUATION_METRIC_RESULT_STATUS_FAILED")
-    public static let evaluationMetricResultStatusSkipped =
-        ApiEvaluationMetricResultStatus(rawValue: "EVALUATION_METRIC_RESULT_STATUS_SKIPPED")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let evaluationMetricResultStatusUnspecified = ApiEvaluationMetricResultStatus(rawValue: "EVALUATION_METRIC_RESULT_STATUS_UNSPECIFIED")
+    public static let evaluationMetricResultStatusCompleted = ApiEvaluationMetricResultStatus(rawValue: "EVALUATION_METRIC_RESULT_STATUS_COMPLETED")
+    public static let evaluationMetricResultStatusFailed = ApiEvaluationMetricResultStatus(rawValue: "EVALUATION_METRIC_RESULT_STATUS_FAILED")
+    public static let evaluationMetricResultStatusSkipped = ApiEvaluationMetricResultStatus(rawValue: "EVALUATION_METRIC_RESULT_STATUS_SKIPPED")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// VectorDatabases domain models
+// VectorDatabases domain models
 /// VectorDBEndpoints contains the connection endpoints for a vector database instance.
 public struct VectordbVectorDBEndpoints: Codable {
     /// Endpoint for gRPC connections (e.g. "my-db-tor1-a1b2c3d4-grpc.weaviate.ondigitalocean.com:443").
@@ -19,20 +19,20 @@ public struct VectordbVectorDBEndpoints: Codable {
     }
 
     init() {
-        (grpc, http) = (nil, nil)
+        (self.grpc, self.http) = (nil, nil)
     }
 }
 
-public extension VectordbVectorDBEndpoints {
-    init(from decoder: Decoder) throws {
+extension VectordbVectorDBEndpoints {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        grpc = try container.sdkDecodeIfPresent(.grpc)
-        http = try container.sdkDecodeIfPresent(.http)
+        self.grpc = try container.sdkDecodeIfPresent(.grpc)
+        self.http = try container.sdkDecodeIfPresent(.http)
     }
 }
 
-public extension VectordbVectorDBEndpoints {
-    init(grpc: String? = nil, http: String? = nil) {
+extension VectordbVectorDBEndpoints {
+    public init(grpc: String? = nil, http: String? = nil) {
         self.init()
         (self.grpc, self.http) = (grpc, http)
     }
@@ -102,55 +102,40 @@ public struct VectordbVectorDB: Codable {
     }
 
     init() {
-        (config, createdAt, endpoints, forkedFromId, id) = (nil, nil, nil, nil, nil)
-        (lastRestoreId, name, ownerUuid, projectId, region) = (nil, nil, nil, nil, nil)
-        (size, status, tags, updatedAt) = (nil, nil, nil, nil)
+        (self.config, self.createdAt, self.endpoints, self.forkedFromId, self.id) = (nil, nil, nil, nil, nil)
+        (self.lastRestoreId, self.name, self.ownerUuid, self.projectId, self.region) = (nil, nil, nil, nil, nil)
+        (self.size, self.status, self.tags, self.updatedAt) = (nil, nil, nil, nil)
     }
 }
 
-public extension VectordbVectorDB {
-    init(from decoder: Decoder) throws {
+extension VectordbVectorDB {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        config = try container.sdkDecodeIfPresent(.config)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        endpoints = try container.sdkDecodeIfPresent(.endpoints)
-        forkedFromId = try container.sdkDecodeIfPresent(.forkedFromId)
-        id = try container.sdkDecodeIfPresent(.id)
-        lastRestoreId = try container.sdkDecodeIfPresent(.lastRestoreId)
-        name = try container.sdkDecodeIfPresent(.name)
-        ownerUuid = try container.sdkDecodeIfPresent(.ownerUuid)
-        projectId = try container.sdkDecodeIfPresent(.projectId)
-        region = try container.sdkDecodeIfPresent(.region)
-        size = try container.sdkDecodeIfPresent(.size)
-        status = try container.sdkDecodeIfPresent(.status)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = createdAt {
+        self.config = try container.sdkDecodeIfPresent(.config)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.endpoints = try container.sdkDecodeIfPresent(.endpoints)
+        self.forkedFromId = try container.sdkDecodeIfPresent(.forkedFromId)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.lastRestoreId = try container.sdkDecodeIfPresent(.lastRestoreId)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.ownerUuid = try container.sdkDecodeIfPresent(.ownerUuid)
+        self.projectId = try container.sdkDecodeIfPresent(.projectId)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.size = try container.sdkDecodeIfPresent(.size)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension VectordbVectorDB {
-    init(
-        config: VectordbVectorDBConfig? = nil,
-        createdAt: Date? = nil,
-        endpoints: VectordbVectorDBEndpoints? = nil,
-        forkedFromId: String? = nil,
-        id: String? = nil,
-        lastRestoreId: String? = nil,
-        name: String? = nil,
-        ownerUuid: String? = nil,
-        projectId: String? = nil,
-        region: String? = nil,
-        size: String? = nil,
-        status: String? = nil,
-        tags: [String]? = nil,
-        updatedAt: Date? = nil
-    ) throws {
+extension VectordbVectorDB {
+    public init(config: VectordbVectorDBConfig? = nil, createdAt: Date? = nil, endpoints: VectordbVectorDBEndpoints? = nil, forkedFromId: String? = nil, id: String? = nil, lastRestoreId: String? = nil, name: String? = nil, ownerUuid: String? = nil, projectId: String? = nil, region: String? = nil, size: String? = nil, status: String? = nil, tags: [String]? = nil, updatedAt: Date? = nil) throws {
         self.init()
         (self.config, self.createdAt) = (config, createdAt)
         (self.endpoints, self.forkedFromId) = (endpoints, forkedFromId)
@@ -187,21 +172,21 @@ public struct VectordbVectorDBConfig: Codable {
     }
 
     init() {
-        (defaultQuantization, enableAutoSchema, weaviateVersion) = (nil, nil, nil)
+        (self.defaultQuantization, self.enableAutoSchema, self.weaviateVersion) = (nil, nil, nil)
     }
 }
 
-public extension VectordbVectorDBConfig {
-    init(from decoder: Decoder) throws {
+extension VectordbVectorDBConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        defaultQuantization = try container.sdkDecodeIfPresent(.defaultQuantization)
-        enableAutoSchema = try container.sdkDecodeIfPresent(.enableAutoSchema)
-        weaviateVersion = try container.sdkDecodeIfPresent(.weaviateVersion)
+        self.defaultQuantization = try container.sdkDecodeIfPresent(.defaultQuantization)
+        self.enableAutoSchema = try container.sdkDecodeIfPresent(.enableAutoSchema)
+        self.weaviateVersion = try container.sdkDecodeIfPresent(.weaviateVersion)
     }
 }
 
-public extension VectordbVectorDBConfig {
-    init(defaultQuantization: String? = nil, enableAutoSchema: Bool? = nil, weaviateVersion: String? = nil) {
+extension VectordbVectorDBConfig {
+    public init(defaultQuantization: String? = nil, enableAutoSchema: Bool? = nil, weaviateVersion: String? = nil) {
         self.init()
         (self.defaultQuantization, self.enableAutoSchema) = (defaultQuantization, enableAutoSchema)
         self.weaviateVersion = weaviateVersion

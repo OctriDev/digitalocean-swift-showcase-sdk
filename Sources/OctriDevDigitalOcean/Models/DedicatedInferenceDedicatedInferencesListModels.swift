@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DedicatedInference domain models
+// DedicatedInference domain models
 /// Typed representation of the `AllDedicatedInferences` API schema.
 public struct AllDedicatedInferences: Codable {
     /// Array of Dedicated Inference instances.
@@ -19,47 +19,29 @@ public struct AllDedicatedInferences: Codable {
         case meta
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllDedicatedInferences {
-    init(from decoder: Decoder) throws {
+extension AllDedicatedInferences {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.dedicatedInferences) else {
-            throw SdkValidationError(
-                field: "dedicated_inferences",
-                code: "required",
-                message: "Validation failed for 'dedicated_inferences': value is required"
-            )
+            throw SdkValidationError(field: "dedicated_inferences", code: "required", message: "Validation failed for 'dedicated_inferences': value is required")
         }
         guard container.contains(.links) else {
-            throw SdkValidationError(
-                field: "links",
-                code: "required",
-                message: "Validation failed for 'links': value is required"
-            )
+            throw SdkValidationError(field: "links", code: "required", message: "Validation failed for 'links': value is required")
         }
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        dedicatedInferences = try container.sdkDecodeRequired(.dedicatedInferences)
-        links = try container.sdkDecodeRequired(.links)
-        meta = try container.sdkDecodeRequired(.meta)
+        self.dedicatedInferences = try container.sdkDecodeRequired(.dedicatedInferences)
+        self.links = try container.sdkDecodeRequired(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
     }
 }
 
-public extension AllDedicatedInferences {
-    init(
-        dedicatedInferences: [DedicatedInference],
-        links: AllDedicatedInferencesLinks,
-        meta: AllDedicatedInferencesMeta
-    ) {
+extension AllDedicatedInferences {
+    public init(dedicatedInferences: [DedicatedInference], links: AllDedicatedInferencesLinks, meta: AllDedicatedInferencesMeta) {
         (self.dedicatedInferences, self.links) = (dedicatedInferences, links)
         self.meta = meta
     }
@@ -75,19 +57,19 @@ public struct AllDedicatedInferencesLinks: Codable {
     }
 
     init() {
-        pages = nil
+        self.pages = nil
     }
 }
 
-public extension AllDedicatedInferencesLinks {
-    init(from decoder: Decoder) throws {
+extension AllDedicatedInferencesLinks {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        pages = try container.sdkDecodeIfPresent(.pages)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-public extension AllDedicatedInferencesLinks {
-    init(pages: [String: String]? = nil) {
+extension AllDedicatedInferencesLinks {
+    public init(pages: [String: String]? = nil) {
         self.init()
         self.pages = pages
     }
@@ -103,27 +85,21 @@ public struct AllDedicatedInferencesMeta: Codable {
         case total
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllDedicatedInferencesMeta {
-    init(from decoder: Decoder) throws {
+extension AllDedicatedInferencesMeta {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.total) else {
-            throw SdkValidationError(
-                field: "total",
-                code: "required",
-                message: "Validation failed for 'total': value is required"
-            )
+            throw SdkValidationError(field: "total", code: "required", message: "Validation failed for 'total': value is required")
         }
-        total = try container.sdkDecodeRequired(.total)
+        self.total = try container.sdkDecodeRequired(.total)
     }
 }
 
-public extension AllDedicatedInferencesMeta {
-    init(total: Int) {
+extension AllDedicatedInferencesMeta {
+    public init(total: Int) {
         self.total = total
     }
 }

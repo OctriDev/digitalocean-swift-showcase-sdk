@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Signals domain models
+// Signals domain models
 /// Typed representation of the `ListDeletionsResponse` API schema.
 public struct ListDeletionsResponse: Codable {
     /// Optional array value serialized in the `edges` wire field.
@@ -17,20 +17,20 @@ public struct ListDeletionsResponse: Codable {
     }
 
     init() {
-        (edges, pageInfo) = (nil, nil)
+        (self.edges, self.pageInfo) = (nil, nil)
     }
 }
 
-public extension ListDeletionsResponse {
-    init(from decoder: Decoder) throws {
+extension ListDeletionsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        edges = try container.sdkDecodeIfPresent(.edges)
-        pageInfo = try container.sdkDecodeIfPresent(.pageInfo)
+        self.edges = try container.sdkDecodeIfPresent(.edges)
+        self.pageInfo = try container.sdkDecodeIfPresent(.pageInfo)
     }
 }
 
-public extension ListDeletionsResponse {
-    init(edges: [ListDeletionsResponseEdgesItem]? = nil, pageInfo: ListDeletionsResponsePageInfo? = nil) {
+extension ListDeletionsResponse {
+    public init(edges: [ListDeletionsResponseEdgesItem]? = nil, pageInfo: ListDeletionsResponsePageInfo? = nil) {
         self.init()
         (self.edges, self.pageInfo) = (edges, pageInfo)
     }
@@ -50,20 +50,20 @@ public struct ListDeletionsResponsePageInfo: Codable {
     }
 
     init() {
-        (hasNextPage, endCursor) = (nil, nil)
+        (self.hasNextPage, self.endCursor) = (nil, nil)
     }
 }
 
-public extension ListDeletionsResponsePageInfo {
-    init(from decoder: Decoder) throws {
+extension ListDeletionsResponsePageInfo {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        hasNextPage = try container.sdkDecodeIfPresent(.hasNextPage)
-        endCursor = try container.sdkDecodeIfPresent(.endCursor)
+        self.hasNextPage = try container.sdkDecodeIfPresent(.hasNextPage)
+        self.endCursor = try container.sdkDecodeIfPresent(.endCursor)
     }
 }
 
-public extension ListDeletionsResponsePageInfo {
-    init(hasNextPage: Bool? = nil, endCursor: String? = nil) {
+extension ListDeletionsResponsePageInfo {
+    public init(hasNextPage: Bool? = nil, endCursor: String? = nil) {
         self.init()
         (self.hasNextPage, self.endCursor) = (hasNextPage, endCursor)
     }
@@ -85,20 +85,20 @@ public struct ListDeletionsResponseEdgesItem: Codable {
     }
 
     init() {
-        (cursor, node) = (nil, nil)
+        (self.cursor, self.node) = (nil, nil)
     }
 }
 
-public extension ListDeletionsResponseEdgesItem {
-    init(from decoder: Decoder) throws {
+extension ListDeletionsResponseEdgesItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        cursor = try container.sdkDecodeIfPresent(.cursor)
-        node = try container.sdkDecodeIfPresent(.node)
+        self.cursor = try container.sdkDecodeIfPresent(.cursor)
+        self.node = try container.sdkDecodeIfPresent(.node)
     }
 }
 
-public extension ListDeletionsResponseEdgesItem {
-    init(cursor: String? = nil, node: DeletionJob? = nil) {
+extension ListDeletionsResponseEdgesItem {
+    public init(cursor: String? = nil, node: DeletionJob? = nil) {
         self.init()
         (self.cursor, self.node) = (cursor, node)
     }

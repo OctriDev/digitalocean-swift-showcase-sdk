@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiUpdate domain models
+// AgentPlatformAPIApiUpdate domain models
 /// Typed representation of the `ApiUpdateAgentAPIKeyOutput` API schema.
 public struct ApiUpdateAgentAPIKeyOutput: Codable {
     /// Agent API Key Info
@@ -14,19 +14,19 @@ public struct ApiUpdateAgentAPIKeyOutput: Codable {
     }
 
     init() {
-        apiKeyInfo = nil
+        self.apiKeyInfo = nil
     }
 }
 
-public extension ApiUpdateAgentAPIKeyOutput {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateAgentAPIKeyOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-public extension ApiUpdateAgentAPIKeyOutput {
-    init(apiKeyInfo: ApiAgentAPIKeyInfo? = nil) {
+extension ApiUpdateAgentAPIKeyOutput {
+    public init(apiKeyInfo: ApiAgentAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }
@@ -51,21 +51,21 @@ public struct ApiUpdateAgentAPIKeyInputPublic: Codable {
     }
 
     init() {
-        (agentUuid, apiKeyUuid, name) = (nil, nil, nil)
+        (self.agentUuid, self.apiKeyUuid, self.name) = (nil, nil, nil)
     }
 }
 
-public extension ApiUpdateAgentAPIKeyInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateAgentAPIKeyInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
-        apiKeyUuid = try container.sdkDecodeIfPresent(.apiKeyUuid)
-        name = try container.sdkDecodeIfPresent(.name)
+        self.agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
+        self.apiKeyUuid = try container.sdkDecodeIfPresent(.apiKeyUuid)
+        self.name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-public extension ApiUpdateAgentAPIKeyInputPublic {
-    init(agentUuid: String? = nil, apiKeyUuid: String? = nil, name: String? = nil) {
+extension ApiUpdateAgentAPIKeyInputPublic {
+    public init(agentUuid: String? = nil, apiKeyUuid: String? = nil, name: String? = nil) {
         self.init()
         (self.agentUuid, self.apiKeyUuid) = (agentUuid, apiKeyUuid)
         self.name = name

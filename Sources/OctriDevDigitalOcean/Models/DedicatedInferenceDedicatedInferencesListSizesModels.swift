@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DedicatedInference domain models
+// DedicatedInference domain models
 /// Available Dedicated Inference sizes and pricing.
 public struct DedicatedInferenceSizesResponse: Codable {
     /// Regions where Dedicated Inference is available.
@@ -18,20 +18,20 @@ public struct DedicatedInferenceSizesResponse: Codable {
     }
 
     init() {
-        (enabledRegions, sizes) = (nil, nil)
+        (self.enabledRegions, self.sizes) = (nil, nil)
     }
 }
 
-public extension DedicatedInferenceSizesResponse {
-    init(from decoder: Decoder) throws {
+extension DedicatedInferenceSizesResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        enabledRegions = try container.sdkDecodeIfPresent(.enabledRegions)
-        sizes = try container.sdkDecodeIfPresent(.sizes)
+        self.enabledRegions = try container.sdkDecodeIfPresent(.enabledRegions)
+        self.sizes = try container.sdkDecodeIfPresent(.sizes)
     }
 }
 
-public extension DedicatedInferenceSizesResponse {
-    init(enabledRegions: [String]? = nil, sizes: [DedicatedInferenceSize]? = nil) {
+extension DedicatedInferenceSizesResponse {
+    public init(enabledRegions: [String]? = nil, sizes: [DedicatedInferenceSize]? = nil) {
         self.init()
         (self.enabledRegions, self.sizes) = (enabledRegions, sizes)
     }
@@ -60,22 +60,22 @@ public struct DedicatedInferenceSize: Codable {
     }
 
     init() {
-        (gpuSlug, pricePerHour, region, currency) = (nil, nil, nil, nil)
+        (self.gpuSlug, self.pricePerHour, self.region, self.currency) = (nil, nil, nil, nil)
     }
 }
 
-public extension DedicatedInferenceSize {
-    init(from decoder: Decoder) throws {
+extension DedicatedInferenceSize {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        gpuSlug = try container.sdkDecodeIfPresent(.gpuSlug)
-        pricePerHour = try container.sdkDecodeIfPresent(.pricePerHour)
-        region = try container.sdkDecodeIfPresent(.region)
-        currency = try container.sdkDecodeIfPresent(.currency)
+        self.gpuSlug = try container.sdkDecodeIfPresent(.gpuSlug)
+        self.pricePerHour = try container.sdkDecodeIfPresent(.pricePerHour)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.currency = try container.sdkDecodeIfPresent(.currency)
     }
 }
 
-public extension DedicatedInferenceSize {
-    init(gpuSlug: String? = nil, pricePerHour: String? = nil, region: String? = nil, currency: String? = nil) {
+extension DedicatedInferenceSize {
+    public init(gpuSlug: String? = nil, pricePerHour: String? = nil, region: String? = nil, currency: String? = nil) {
         self.init()
         (self.gpuSlug, self.pricePerHour) = (gpuSlug, pricePerHour)
         (self.region, self.currency) = (region, currency)

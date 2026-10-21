@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// ActionGateway domain models
+// ActionGateway domain models
 public typealias EmptyResponse = [String: JSONValue]
 
 /// Describes one page of an offset-paged list.
@@ -25,21 +25,21 @@ public struct Pagination: Codable {
     }
 
     init() {
-        (page, perPage, total) = (nil, nil, nil)
+        (self.page, self.perPage, self.total) = (nil, nil, nil)
     }
 }
 
-public extension Pagination {
-    init(from decoder: Decoder) throws {
+extension Pagination {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        page = try container.sdkDecodeIfPresent(.page)
-        perPage = try container.sdkDecodeIfPresent(.perPage)
-        total = try container.sdkDecodeIfPresent(.total)
+        self.page = try container.sdkDecodeIfPresent(.page)
+        self.perPage = try container.sdkDecodeIfPresent(.perPage)
+        self.total = try container.sdkDecodeIfPresent(.total)
     }
 }
 
-public extension Pagination {
-    init(page: Int? = nil, perPage: Int? = nil, total: Int? = nil) {
+extension Pagination {
+    public init(page: Int? = nil, perPage: Int? = nil, total: Int? = nil) {
         self.init()
         (self.page, self.perPage) = (page, perPage)
         self.total = total

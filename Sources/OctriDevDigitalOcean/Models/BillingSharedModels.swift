@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Billing domain models
+// Billing domain models
 /// Typed representation of the `PrepaymentStatus` API schema.
 public struct PrepaymentStatus: Codable {
     /// Current prepayment balance. Decimal dollars, e.g. `"25.00"`.
@@ -31,29 +31,23 @@ public struct PrepaymentStatus: Codable {
     }
 
     init() {
-        (balance, isAutoPrepayEnabled, blocked, eligible, monthToDateBalance) = (nil, nil, nil, nil, nil)
+        (self.balance, self.isAutoPrepayEnabled, self.blocked, self.eligible, self.monthToDateBalance) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension PrepaymentStatus {
-    init(from decoder: Decoder) throws {
+extension PrepaymentStatus {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        balance = try container.sdkDecodeIfPresent(.balance)
-        isAutoPrepayEnabled = try container.sdkDecodeIfPresent(.isAutoPrepayEnabled)
-        blocked = try container.sdkDecodeIfPresent(.blocked)
-        eligible = try container.sdkDecodeIfPresent(.eligible)
-        monthToDateBalance = try container.sdkDecodeIfPresent(.monthToDateBalance)
+        self.balance = try container.sdkDecodeIfPresent(.balance)
+        self.isAutoPrepayEnabled = try container.sdkDecodeIfPresent(.isAutoPrepayEnabled)
+        self.blocked = try container.sdkDecodeIfPresent(.blocked)
+        self.eligible = try container.sdkDecodeIfPresent(.eligible)
+        self.monthToDateBalance = try container.sdkDecodeIfPresent(.monthToDateBalance)
     }
 }
 
-public extension PrepaymentStatus {
-    init(
-        balance: String? = nil,
-        isAutoPrepayEnabled: Bool? = nil,
-        blocked: Bool? = nil,
-        eligible: Bool? = nil,
-        monthToDateBalance: String? = nil
-    ) {
+extension PrepaymentStatus {
+    public init(balance: String? = nil, isAutoPrepayEnabled: Bool? = nil, blocked: Bool? = nil, eligible: Bool? = nil, monthToDateBalance: String? = nil) {
         self.init()
         (self.balance, self.isAutoPrepayEnabled) = (balance, isAutoPrepayEnabled)
         (self.blocked, self.eligible) = (blocked, eligible)

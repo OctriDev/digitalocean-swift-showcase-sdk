@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiList domain models
+// AgentPlatformAPIApiList domain models
 /// List of knowledge bases
 public struct ApiListKnowledgeBasesOutput: Codable {
     /// The knowledge bases
@@ -20,21 +20,21 @@ public struct ApiListKnowledgeBasesOutput: Codable {
     }
 
     init() {
-        (knowledgeBases, links, meta) = (nil, nil, nil)
+        (self.knowledgeBases, self.links, self.meta) = (nil, nil, nil)
     }
 }
 
-public extension ApiListKnowledgeBasesOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListKnowledgeBasesOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        knowledgeBases = try container.sdkDecodeIfPresent(.knowledgeBases)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
+        self.knowledgeBases = try container.sdkDecodeIfPresent(.knowledgeBases)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-public extension ApiListKnowledgeBasesOutput {
-    init(knowledgeBases: [ApiKnowledgeBase]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+extension ApiListKnowledgeBasesOutput {
+    public init(knowledgeBases: [ApiKnowledgeBase]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.knowledgeBases, self.links) = (knowledgeBases, links)
         self.meta = meta

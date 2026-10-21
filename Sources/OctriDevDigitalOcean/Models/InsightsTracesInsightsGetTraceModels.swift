@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// InsightsTraces domain models
+// InsightsTraces domain models
 /// A single span belonging to a trace.
 public struct TracesSpanRecord: Codable {
     /// The trace this span belongs to.
@@ -62,66 +62,42 @@ public struct TracesSpanRecord: Codable {
         case attributes
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension TracesSpanRecord {
-    init(from decoder: Decoder) throws {
+extension TracesSpanRecord {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.traceId) else {
-            throw SdkValidationError(
-                field: "traceId",
-                code: "required",
-                message: "Validation failed for 'traceId': value is required"
-            )
+            throw SdkValidationError(field: "traceId", code: "required", message: "Validation failed for 'traceId': value is required")
         }
         guard container.contains(.spanId) else {
-            throw SdkValidationError(
-                field: "spanId",
-                code: "required",
-                message: "Validation failed for 'spanId': value is required"
-            )
+            throw SdkValidationError(field: "spanId", code: "required", message: "Validation failed for 'spanId': value is required")
         }
-        traceId = try container.sdkDecodeRequired(.traceId)
-        spanId = try container.sdkDecodeRequired(.spanId)
-        parentSpanId = try container.sdkDecodeIfPresent(.parentSpanId)
-        startTime = try container.sdkDecodeIfPresent(.startTime)
-        endTime = try container.sdkDecodeIfPresent(.endTime)
-        durationNs = try container.sdkDecodeIfPresent(.durationNs)
-        name = try container.sdkDecodeIfPresent(.name)
-        kind = try container.sdkDecodeIfPresent(.kind)
-        statusCode = try container.sdkDecodeIfPresent(.statusCode)
-        statusMessage = try container.sdkDecodeIfPresent(.statusMessage)
-        serviceName = try container.sdkDecodeIfPresent(.serviceName)
-        resource = try container.sdkDecodeIfPresent(.resource)
-        attributes = try container.sdkDecodeIfPresent(.attributes)
-        if let value = startTime {
+        self.traceId = try container.sdkDecodeRequired(.traceId)
+        self.spanId = try container.sdkDecodeRequired(.spanId)
+        self.parentSpanId = try container.sdkDecodeIfPresent(.parentSpanId)
+        self.startTime = try container.sdkDecodeIfPresent(.startTime)
+        self.endTime = try container.sdkDecodeIfPresent(.endTime)
+        self.durationNs = try container.sdkDecodeIfPresent(.durationNs)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.kind = try container.sdkDecodeIfPresent(.kind)
+        self.statusCode = try container.sdkDecodeIfPresent(.statusCode)
+        self.statusMessage = try container.sdkDecodeIfPresent(.statusMessage)
+        self.serviceName = try container.sdkDecodeIfPresent(.serviceName)
+        self.resource = try container.sdkDecodeIfPresent(.resource)
+        self.attributes = try container.sdkDecodeIfPresent(.attributes)
+        if let value = self.startTime {
             try sdkValidateDateTime("startTime", sdkWireString(value))
         }
-        if let value = endTime {
+        if let value = self.endTime {
             try sdkValidateDateTime("endTime", sdkWireString(value))
         }
     }
 }
 
-public extension TracesSpanRecord {
-    init(
-        traceId: String,
-        spanId: String,
-        parentSpanId: String? = nil,
-        startTime: Date? = nil,
-        endTime: Date? = nil,
-        durationNs: Int? = nil,
-        name: String? = nil,
-        kind: String? = nil,
-        statusCode: String? = nil,
-        statusMessage: String? = nil,
-        serviceName: String? = nil,
-        resource: [String: String]? = nil,
-        attributes: [String: String]? = nil
-    ) throws {
+extension TracesSpanRecord {
+    public init(traceId: String, spanId: String, parentSpanId: String? = nil, startTime: Date? = nil, endTime: Date? = nil, durationNs: Int? = nil, name: String? = nil, kind: String? = nil, statusCode: String? = nil, statusMessage: String? = nil, serviceName: String? = nil, resource: [String: String]? = nil, attributes: [String: String]? = nil) throws {
         (self.traceId, self.spanId) = (traceId, spanId)
         (self.parentSpanId, self.startTime) = (parentSpanId, startTime)
         (self.endTime, self.durationNs) = (endTime, durationNs)
@@ -155,21 +131,21 @@ public struct TracesTraceResponse: Codable {
     }
 
     init() {
-        (traceId, spans, truncated) = (nil, nil, nil)
+        (self.traceId, self.spans, self.truncated) = (nil, nil, nil)
     }
 }
 
-public extension TracesTraceResponse {
-    init(from decoder: Decoder) throws {
+extension TracesTraceResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        traceId = try container.sdkDecodeIfPresent(.traceId)
-        spans = try container.sdkDecodeIfPresent(.spans)
-        truncated = try container.sdkDecodeIfPresent(.truncated)
+        self.traceId = try container.sdkDecodeIfPresent(.traceId)
+        self.spans = try container.sdkDecodeIfPresent(.spans)
+        self.truncated = try container.sdkDecodeIfPresent(.truncated)
     }
 }
 
-public extension TracesTraceResponse {
-    init(traceId: String? = nil, spans: [TracesSpanRecord]? = nil, truncated: Bool? = nil) {
+extension TracesTraceResponse {
+    public init(traceId: String? = nil, spans: [TracesSpanRecord]? = nil, truncated: Bool? = nil) {
         self.init()
         (self.traceId, self.spans) = (traceId, spans)
         self.truncated = truncated

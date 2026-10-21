@@ -6,13 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ActionGatewayDataPlaneMethods {
-    /// Approves or denies a tool call that is waiting for approval. A tool result returns `_meta.status` set to
-    /// `requires_approval` when the session policy sets `ask` for the call, and its `_meta.decide` gives this request's
-    /// path. Send the decision with the session owner's token. Approval is a separate control request, not a tool, so
-    /// an agent cannot approve its own calls. After approving, repeat the original call with the same arguments before
-    /// `expires_at`. An approval applies only to that session, tool version, and set of arguments, and is used once. To
-    /// ask again after a denial or expiry, repeat the tool call.
+extension ActionGatewayDataPlaneMethods {
+    /// Approves or denies a tool call that is waiting for approval. A tool result returns `_meta.status` set to `requires_approval` when the session policy sets `ask` for the call, and its `_meta.decide` gives this request's path. Send the decision with the session owner's token. Approval is a separate control request, not a tool, so an agent cannot approve its own calls. After approving, repeat the original call with the same arguments before `expires_at`. An approval applies only to that session, tool version, and set of arguments, and is used once. To ask again after a denial or expiry, repeat the tool call.
     ///
     /// - Parameters:
     /// - sessionId: The session UUID: the value at the end of the session's
@@ -21,43 +16,13 @@ public extension ActionGatewayDataPlaneMethods {
     /// - approvalId: The `approval_id` from a tool result whose `_meta.status` is
     ///   `requires_approval`.
     /// - decision: Whether to let the pending call run.
-    static func gatewaySessionApprovalsUpdate(
-        config: ClientConfig,
-        sessionId: String,
-        approvalId: String,
-        decision: ApprovalDecisionDecision,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApprovalDecisionResponse {
+    public static func gatewaySessionApprovalsUpdate(config: ClientConfig, sessionId: String, approvalId: String, decision: ApprovalDecisionDecision, requestOptions: RequestOptions? = nil) async throws -> ApprovalDecisionResponse {
         try sdkValidateUuid("session_id", sessionId)
 
         try sdkValidateUuid("approval_id", approvalId)
 
         let requestBody = GatewaySessionApprovalsUpdateRequestBody(decision: decision)
 
-        return try await (sdkRequest(
-            "POST",
-            [
-                "/approvals/session/",
-                sdkEncodePathSegment(sdkWireString(sessionId)),
-                "/",
-                sdkEncodePathSegment(sdkWireString(approvalId)),
-            ].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "gatewaySessionApprovals_update",
-            options: requestOptions,
-            errors: [
-                "400": ToolResultError.self,
-                "401": Error2.self,
-                "403": Forbidden.self,
-                "404": ToolResultError.self,
-                "409": ToolResultError.self,
-                "412": ToolResultError.self,
-                "429": ToolResultError.self,
-                "500": ToolResultError.self,
-                "503": ToolResultError.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/approvals/session/", sdkEncodePathSegment(sdkWireString(sessionId)), "/", sdkEncodePathSegment(sdkWireString(approvalId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "gatewaySessionApprovals_update", options: requestOptions, errors: ["400": ToolResultError.self, "401": Error2.self, "403": Forbidden.self, "404": ToolResultError.self, "409": ToolResultError.self, "412": ToolResultError.self, "429": ToolResultError.self, "500": ToolResultError.self, "503": ToolResultError.self])).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiCreate domain models
+// AgentPlatformAPIApiCreate domain models
 /// CreateAnthropicAPIKeyInputPublic is used to create a new Anthropic API key for a specific agent.
 public struct ApiCreateAnthropicAPIKeyInputPublic: Codable {
     /// Anthropic API key
@@ -19,20 +19,20 @@ public struct ApiCreateAnthropicAPIKeyInputPublic: Codable {
     }
 
     init() {
-        (apiKey, name) = (nil, nil)
+        (self.apiKey, self.name) = (nil, nil)
     }
 }
 
-public extension ApiCreateAnthropicAPIKeyInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiCreateAnthropicAPIKeyInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apiKey = try container.sdkDecodeIfPresent(.apiKey)
-        name = try container.sdkDecodeIfPresent(.name)
+        self.apiKey = try container.sdkDecodeIfPresent(.apiKey)
+        self.name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-public extension ApiCreateAnthropicAPIKeyInputPublic {
-    init(apiKey: String? = nil, name: String? = nil) {
+extension ApiCreateAnthropicAPIKeyInputPublic {
+    public init(apiKey: String? = nil, name: String? = nil) {
         self.init()
         (self.apiKey, self.name) = (apiKey, name)
     }
@@ -48,19 +48,19 @@ public struct ApiCreateAnthropicAPIKeyOutput: Codable {
     }
 
     init() {
-        apiKeyInfo = nil
+        self.apiKeyInfo = nil
     }
 }
 
-public extension ApiCreateAnthropicAPIKeyOutput {
-    init(from decoder: Decoder) throws {
+extension ApiCreateAnthropicAPIKeyOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-public extension ApiCreateAnthropicAPIKeyOutput {
-    init(apiKeyInfo: ApiAnthropicAPIKeyInfo? = nil) {
+extension ApiCreateAnthropicAPIKeyOutput {
+    public init(apiKeyInfo: ApiAnthropicAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }

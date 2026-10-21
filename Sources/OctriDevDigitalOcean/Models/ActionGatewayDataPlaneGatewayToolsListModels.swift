@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// ActionGatewayDataPlane domain models
+// ActionGatewayDataPlane domain models
 /// Typed representation of the `ListSessionToolsResponse` API schema.
 public struct ListSessionToolsResponse: Codable {
     /// The catalog version.
@@ -23,21 +23,21 @@ public struct ListSessionToolsResponse: Codable {
     }
 
     init() {
-        (version, tools, nextPageToken) = (nil, nil, nil)
+        (self.version, self.tools, self.nextPageToken) = (nil, nil, nil)
     }
 }
 
-public extension ListSessionToolsResponse {
-    init(from decoder: Decoder) throws {
+extension ListSessionToolsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        version = try container.sdkDecodeIfPresent(.version)
-        tools = try container.sdkDecodeIfPresent(.tools)
-        nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
+        self.version = try container.sdkDecodeIfPresent(.version)
+        self.tools = try container.sdkDecodeIfPresent(.tools)
+        self.nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
     }
 }
 
-public extension ListSessionToolsResponse {
-    init(version: String? = nil, tools: [SessionTool]? = nil, nextPageToken: NextPageToken? = nil) {
+extension ListSessionToolsResponse {
+    public init(version: String? = nil, tools: [SessionTool]? = nil, nextPageToken: NextPageToken? = nil) {
         self.init()
         (self.version, self.tools) = (version, tools)
         self.nextPageToken = nextPageToken
@@ -92,40 +92,29 @@ public struct SessionTool: Codable {
     }
 
     init() {
-        (name, title, description, inputSchema, outputSchema) = (nil, nil, nil, nil, nil)
-        (annotations, meta, version, parallelizable, streamingSafe) = (nil, nil, nil, nil, nil)
+        (self.name, self.title, self.description, self.inputSchema, self.outputSchema) = (nil, nil, nil, nil, nil)
+        (self.annotations, self.meta, self.version, self.parallelizable, self.streamingSafe) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension SessionTool {
-    init(from decoder: Decoder) throws {
+extension SessionTool {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        title = try container.sdkDecodeIfPresent(.title)
-        description = try container.sdkDecodeIfPresent(.description)
-        inputSchema = try container.sdkDecodeIfPresent(.inputSchema)
-        outputSchema = try container.sdkDecodeIfPresent(.outputSchema)
-        annotations = try container.sdkDecodeIfPresent(.annotations)
-        meta = try container.sdkDecodeIfPresent(.meta)
-        version = try container.sdkDecodeIfPresent(.version)
-        parallelizable = try container.sdkDecodeIfPresent(.parallelizable)
-        streamingSafe = try container.sdkDecodeIfPresent(.streamingSafe)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.title = try container.sdkDecodeIfPresent(.title)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.inputSchema = try container.sdkDecodeIfPresent(.inputSchema)
+        self.outputSchema = try container.sdkDecodeIfPresent(.outputSchema)
+        self.annotations = try container.sdkDecodeIfPresent(.annotations)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
+        self.version = try container.sdkDecodeIfPresent(.version)
+        self.parallelizable = try container.sdkDecodeIfPresent(.parallelizable)
+        self.streamingSafe = try container.sdkDecodeIfPresent(.streamingSafe)
     }
 }
 
-public extension SessionTool {
-    init(
-        name: String? = nil,
-        title: String? = nil,
-        description: String? = nil,
-        inputSchema: [String: JSONValue]? = nil,
-        outputSchema: [String: JSONValue]? = nil,
-        annotations: ToolAnnotations? = nil,
-        meta: [String: JSONValue]? = nil,
-        version: String? = nil,
-        parallelizable: Bool? = nil,
-        streamingSafe: Bool? = nil
-    ) {
+extension SessionTool {
+    public init(name: String? = nil, title: String? = nil, description: String? = nil, inputSchema: [String: JSONValue]? = nil, outputSchema: [String: JSONValue]? = nil, annotations: ToolAnnotations? = nil, meta: [String: JSONValue]? = nil, version: String? = nil, parallelizable: Bool? = nil, streamingSafe: Bool? = nil) {
         self.init()
         (self.name, self.title) = (name, title)
         (self.description, self.inputSchema) = (description, inputSchema)

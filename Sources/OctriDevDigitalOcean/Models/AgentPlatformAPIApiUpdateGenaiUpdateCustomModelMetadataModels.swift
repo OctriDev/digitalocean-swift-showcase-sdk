@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiUpdate domain models
+// AgentPlatformAPIApiUpdate domain models
 /// Response containing the updated custom model (public)
 public struct ApiUpdateCustomModelMetadataOutputPublic: Codable {
     /// Custom model - user-imported model from HuggingFace, Spaces, etc.
@@ -14,19 +14,19 @@ public struct ApiUpdateCustomModelMetadataOutputPublic: Codable {
     }
 
     init() {
-        model = nil
+        self.model = nil
     }
 }
 
-public extension ApiUpdateCustomModelMetadataOutputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateCustomModelMetadataOutputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        model = try container.sdkDecodeIfPresent(.model)
+        self.model = try container.sdkDecodeIfPresent(.model)
     }
 }
 
-public extension ApiUpdateCustomModelMetadataOutputPublic {
-    init(model: ApiCustomModel? = nil) {
+extension ApiUpdateCustomModelMetadataOutputPublic {
+    public init(model: ApiCustomModel? = nil) {
         self.init()
         self.model = model
     }
@@ -72,36 +72,27 @@ public struct ApiUpdateCustomModelMetadataInputPublic: Codable {
     }
 
     init() {
-        (description, inputModalities, license, name, outputModalities) = (nil, nil, nil, nil, nil)
-        (parameters, tags, uuid) = (nil, nil, nil)
+        (self.description, self.inputModalities, self.license, self.name, self.outputModalities) = (nil, nil, nil, nil, nil)
+        (self.parameters, self.tags, self.uuid) = (nil, nil, nil)
     }
 }
 
-public extension ApiUpdateCustomModelMetadataInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateCustomModelMetadataInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        description = try container.sdkDecodeIfPresent(.description)
-        inputModalities = try container.sdkDecodeIfPresent(.inputModalities)
-        license = try container.sdkDecodeIfPresent(.license)
-        name = try container.sdkDecodeIfPresent(.name)
-        outputModalities = try container.sdkDecodeIfPresent(.outputModalities)
-        parameters = try container.sdkDecodeIfPresent(.parameters)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.inputModalities = try container.sdkDecodeIfPresent(.inputModalities)
+        self.license = try container.sdkDecodeIfPresent(.license)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.outputModalities = try container.sdkDecodeIfPresent(.outputModalities)
+        self.parameters = try container.sdkDecodeIfPresent(.parameters)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
     }
 }
 
-public extension ApiUpdateCustomModelMetadataInputPublic {
-    init(
-        description: String? = nil,
-        inputModalities: [String]? = nil,
-        license: String? = nil,
-        name: String? = nil,
-        outputModalities: [String]? = nil,
-        parameters: String? = nil,
-        tags: CustomModelTags? = nil,
-        uuid: String? = nil
-    ) {
+extension ApiUpdateCustomModelMetadataInputPublic {
+    public init(description: String? = nil, inputModalities: [String]? = nil, license: String? = nil, name: String? = nil, outputModalities: [String]? = nil, parameters: String? = nil, tags: CustomModelTags? = nil, uuid: String? = nil) {
         self.init()
         (self.description, self.inputModalities) = (description, inputModalities)
         (self.license, self.name) = (license, name)

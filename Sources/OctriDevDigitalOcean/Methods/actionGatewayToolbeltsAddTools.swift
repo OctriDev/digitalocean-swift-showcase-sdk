@@ -6,87 +6,38 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ActionGatewayMethods {
-    /// Adds the listed tools and returns the toolbelt. When membership changes, this creates a new version that keeps
-    /// the display name and description. Tools already in the toolbelt are left as they are, so a request that adds
-    /// nothing new returns the current version unchanged. Returns 400 when a tool is not an active catalog tool, when a
-    /// pin differs from the tool's current released version or from the version the toolbelt already holds, or when the
-    /// toolbelt would exceed 500 tools. Returns 404 for an unknown or deleted toolbelt.
+extension ActionGatewayMethods {
+    /// Adds the listed tools and returns the toolbelt. When membership changes, this creates a new version that keeps the display name and description. Tools already in the toolbelt are left as they are, so a request that adds nothing new returns the current version unchanged. Returns 400 when a tool is not an active catalog tool, when a pin differs from the tool's current released version or from the version the toolbelt already holds, or when the toolbelt would exceed 500 tools. Returns 404 for an unknown or deleted toolbelt.
     ///
     /// - Parameters:
     /// - name: Toolbelt name, from the path.
     /// - tools: Tool slugs (`<provider>_<name>`) to add or remove, each optionally
     ///   pinned as `<tool_slug>@<version>`. At least one is required. When adding, a
     ///   pin must equal the tool's current released version.
-    static func toolbeltsAddTools(
-        config: ClientConfig,
-        name: String,
-        tools: [String],
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ToolbeltUpdateResponse {
+    public static func toolbeltsAddTools(config: ClientConfig, name: String, tools: [String], requestOptions: RequestOptions? = nil) async throws -> ToolbeltUpdateResponse {
         try sdkValidatePattern("name", name, sdkPattern96f04f9d57bc)
 
         try validateItems("tools", tools, min: 1, max: 500)
 
         let requestBody = ToolbeltsAddToolsRequestBody(tools: tools)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/action-gateway/toolbelts/", sdkEncodePathSegment(sdkWireString(name)), "/tools/add"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "toolbelts_add_tools",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/action-gateway/toolbelts/", sdkEncodePathSegment(sdkWireString(name)), "/tools/add"].joined(), config: config, body: requestBody, decoder: .json, operationId: "toolbelts_add_tools", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Removes the listed tools and returns the toolbelt. When membership changes, this creates a new version that
-    /// keeps the display name and description. Tools that are not members are ignored, and removing every tool is
-    /// allowed; deleting the toolbelt itself is a separate DELETE. Returns 400 when a pin differs from the version the
-    /// toolbelt holds, and 404 for an unknown or deleted toolbelt.
+    /// Removes the listed tools and returns the toolbelt. When membership changes, this creates a new version that keeps the display name and description. Tools that are not members are ignored, and removing every tool is allowed; deleting the toolbelt itself is a separate DELETE. Returns 400 when a pin differs from the version the toolbelt holds, and 404 for an unknown or deleted toolbelt.
     ///
     /// - Parameters:
     /// - name: Toolbelt name, from the path.
     /// - tools: Tool slugs (`<provider>_<name>`) to add or remove, each optionally
     ///   pinned as `<tool_slug>@<version>`. At least one is required. When adding, a
     ///   pin must equal the tool's current released version.
-    static func toolbeltsDeleteTools(
-        config: ClientConfig,
-        name: String,
-        tools: [String],
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ToolbeltUpdateResponse {
+    public static func toolbeltsDeleteTools(config: ClientConfig, name: String, tools: [String], requestOptions: RequestOptions? = nil) async throws -> ToolbeltUpdateResponse {
         try sdkValidatePattern("name", name, sdkPattern96f04f9d57bc)
 
         try validateItems("tools", tools, min: 1, max: 500)
 
         let requestBody = ToolbeltsDeleteToolsRequestBody(tools: tools)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/action-gateway/toolbelts/", sdkEncodePathSegment(sdkWireString(name)), "/tools/remove"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "toolbelts_delete_tools",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/action-gateway/toolbelts/", sdkEncodePathSegment(sdkWireString(name)), "/tools/remove"].joined(), config: config, body: requestBody, decoder: .json, operationId: "toolbelts_delete_tools", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

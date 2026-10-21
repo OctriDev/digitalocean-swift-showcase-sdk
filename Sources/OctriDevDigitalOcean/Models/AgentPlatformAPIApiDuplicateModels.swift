@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiDuplicate domain models
+// AgentPlatformAPIApiDuplicate domain models
 /// Public parameters for duplicating a scenario set.
 public struct ApiDuplicateScenarioSetInputPublic: Codable {
     /// UUID of the scenario set to duplicate.
@@ -15,19 +15,19 @@ public struct ApiDuplicateScenarioSetInputPublic: Codable {
     }
 
     init() {
-        scenarioSetUuid = nil
+        self.scenarioSetUuid = nil
     }
 }
 
-public extension ApiDuplicateScenarioSetInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiDuplicateScenarioSetInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        scenarioSetUuid = try container.sdkDecodeIfPresent(.scenarioSetUuid)
+        self.scenarioSetUuid = try container.sdkDecodeIfPresent(.scenarioSetUuid)
     }
 }
 
-public extension ApiDuplicateScenarioSetInputPublic {
-    init(scenarioSetUuid: String? = nil) {
+extension ApiDuplicateScenarioSetInputPublic {
+    public init(scenarioSetUuid: String? = nil) {
         self.init()
         self.scenarioSetUuid = scenarioSetUuid
     }
@@ -43,19 +43,19 @@ public struct ApiDuplicateScenarioSetOutput: Codable {
     }
 
     init() {
-        scenarioSet = nil
+        self.scenarioSet = nil
     }
 }
 
-public extension ApiDuplicateScenarioSetOutput {
-    init(from decoder: Decoder) throws {
+extension ApiDuplicateScenarioSetOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        scenarioSet = try container.sdkDecodeIfPresent(.scenarioSet)
+        self.scenarioSet = try container.sdkDecodeIfPresent(.scenarioSet)
     }
 }
 
-public extension ApiDuplicateScenarioSetOutput {
-    init(scenarioSet: ApiScenarioSet? = nil) {
+extension ApiDuplicateScenarioSetOutput {
+    public init(scenarioSet: ApiScenarioSet? = nil) {
         self.init()
         self.scenarioSet = scenarioSet
     }

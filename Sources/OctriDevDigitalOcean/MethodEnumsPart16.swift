@@ -14,10 +14,10 @@ struct InsightsUpdateNotificationChannelRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(email, forKey: SdkCodingKey("email"))
-        try keyedContainer.encodeIfPresent(slack, forKey: SdkCodingKey("slack"))
-        try keyedContainer.encodeIfPresent(webhook, forKey: SdkCodingKey("webhook"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.email, forKey: SdkCodingKey("email"))
+        try keyedContainer.encodeIfPresent(self.slack, forKey: SdkCodingKey("slack"))
+        try keyedContainer.encodeIfPresent(self.webhook, forKey: SdkCodingKey("webhook"))
     }
 }
 
@@ -28,9 +28,9 @@ struct InsightsPostPromQueryRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(query, forKey: SdkCodingKey("query"))
-        try keyedContainer.encodeIfPresent(time, forKey: SdkCodingKey("time"))
-        try keyedContainer.encodeIfPresent(timeout, forKey: SdkCodingKey("timeout"))
+        try keyedContainer.encode(self.query, forKey: SdkCodingKey("query"))
+        try keyedContainer.encodeIfPresent(self.time, forKey: SdkCodingKey("time"))
+        try keyedContainer.encodeIfPresent(self.timeout, forKey: SdkCodingKey("timeout"))
     }
 }
 
@@ -43,11 +43,11 @@ struct InsightsPostPromQueryRangeRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(query, forKey: SdkCodingKey("query"))
-        try keyedContainer.encode(start, forKey: SdkCodingKey("start"))
-        try keyedContainer.encode(end, forKey: SdkCodingKey("end"))
-        try keyedContainer.encode(step, forKey: SdkCodingKey("step"))
-        try keyedContainer.encodeIfPresent(timeout, forKey: SdkCodingKey("timeout"))
+        try keyedContainer.encode(self.query, forKey: SdkCodingKey("query"))
+        try keyedContainer.encode(self.start, forKey: SdkCodingKey("start"))
+        try keyedContainer.encode(self.end, forKey: SdkCodingKey("end"))
+        try keyedContainer.encode(self.step, forKey: SdkCodingKey("step"))
+        try keyedContainer.encodeIfPresent(self.timeout, forKey: SdkCodingKey("timeout"))
     }
 }
 
@@ -58,9 +58,9 @@ struct InsightsPostPromLabelsRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(start, forKey: SdkCodingKey("start"))
-        try keyedContainer.encodeIfPresent(end, forKey: SdkCodingKey("end"))
-        try keyedContainer.encodeIfPresent(match, forKey: SdkCodingKey("match[]"))
+        try keyedContainer.encodeIfPresent(self.start, forKey: SdkCodingKey("start"))
+        try keyedContainer.encodeIfPresent(self.end, forKey: SdkCodingKey("end"))
+        try keyedContainer.encodeIfPresent(self.match, forKey: SdkCodingKey("match[]"))
     }
 }
 
@@ -71,9 +71,9 @@ struct InsightsPostPromSeriesRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(match, forKey: SdkCodingKey("match[]"))
-        try keyedContainer.encodeIfPresent(start, forKey: SdkCodingKey("start"))
-        try keyedContainer.encodeIfPresent(end, forKey: SdkCodingKey("end"))
+        try keyedContainer.encode(self.match, forKey: SdkCodingKey("match[]"))
+        try keyedContainer.encodeIfPresent(self.start, forKey: SdkCodingKey("start"))
+        try keyedContainer.encodeIfPresent(self.end, forKey: SdkCodingKey("end"))
     }
 }
 
@@ -85,10 +85,10 @@ struct InsightsPostLogsSearchRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(timeRange, forKey: SdkCodingKey("time_range"))
-        try keyedContainer.encodeIfPresent(filter, forKey: SdkCodingKey("filter"))
-        try keyedContainer.encodeIfPresent(orderBy, forKey: SdkCodingKey("order_by"))
-        try keyedContainer.encodeIfPresent(pagination, forKey: SdkCodingKey("pagination"))
+        try keyedContainer.encode(self.timeRange, forKey: SdkCodingKey("time_range"))
+        try keyedContainer.encodeIfPresent(self.filter, forKey: SdkCodingKey("filter"))
+        try keyedContainer.encodeIfPresent(self.orderBy, forKey: SdkCodingKey("order_by"))
+        try keyedContainer.encodeIfPresent(self.pagination, forKey: SdkCodingKey("pagination"))
     }
 }
 
@@ -100,10 +100,10 @@ struct InsightsPostTracesSearchRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(timeRange, forKey: SdkCodingKey("timeRange"))
-        try keyedContainer.encodeIfPresent(filter, forKey: SdkCodingKey("filter"))
-        try keyedContainer.encodeIfPresent(orderBy, forKey: SdkCodingKey("orderBy"))
-        try keyedContainer.encodeIfPresent(pagination, forKey: SdkCodingKey("pagination"))
+        try keyedContainer.encode(self.timeRange, forKey: SdkCodingKey("timeRange"))
+        try keyedContainer.encodeIfPresent(self.filter, forKey: SdkCodingKey("filter"))
+        try keyedContainer.encodeIfPresent(self.orderBy, forKey: SdkCodingKey("orderBy"))
+        try keyedContainer.encodeIfPresent(self.pagination, forKey: SdkCodingKey("pagination"))
     }
 }
 
@@ -115,10 +115,10 @@ struct InsightsPostSpansSearchRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(timeRange, forKey: SdkCodingKey("timeRange"))
-        try keyedContainer.encodeIfPresent(filter, forKey: SdkCodingKey("filter"))
-        try keyedContainer.encodeIfPresent(orderBy, forKey: SdkCodingKey("orderBy"))
-        try keyedContainer.encodeIfPresent(pagination, forKey: SdkCodingKey("pagination"))
+        try keyedContainer.encode(self.timeRange, forKey: SdkCodingKey("timeRange"))
+        try keyedContainer.encodeIfPresent(self.filter, forKey: SdkCodingKey("filter"))
+        try keyedContainer.encodeIfPresent(self.orderBy, forKey: SdkCodingKey("orderBy"))
+        try keyedContainer.encodeIfPresent(self.pagination, forKey: SdkCodingKey("pagination"))
     }
 }
 
@@ -127,7 +127,7 @@ struct SignalsUpdateTeamConsentRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(enabled, forKey: SdkCodingKey("enabled"))
+        try keyedContainer.encode(self.enabled, forKey: SdkCodingKey("enabled"))
     }
 }
 
@@ -136,7 +136,7 @@ struct SignalsUpdateConsentRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(enabled, forKey: SdkCodingKey("enabled"))
+        try keyedContainer.encode(self.enabled, forKey: SdkCodingKey("enabled"))
     }
 }
 
@@ -150,12 +150,12 @@ struct SignalsCreateExportRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(type, forKey: SdkCodingKey("type"))
-        try keyedContainer.encodeIfPresent(agentId, forKey: SdkCodingKey("agent_id"))
-        try keyedContainer.encodeIfPresent(signalType, forKey: SdkCodingKey("signal_type"))
-        try keyedContainer.encodeIfPresent(sessionIds, forKey: SdkCodingKey("session_ids"))
-        try keyedContainer.encodeIfPresent(startTime, forKey: SdkCodingKey("start_time"))
-        try keyedContainer.encodeIfPresent(endTime, forKey: SdkCodingKey("end_time"))
+        try keyedContainer.encodeIfPresent(self.type, forKey: SdkCodingKey("type"))
+        try keyedContainer.encodeIfPresent(self.agentId, forKey: SdkCodingKey("agent_id"))
+        try keyedContainer.encodeIfPresent(self.signalType, forKey: SdkCodingKey("signal_type"))
+        try keyedContainer.encodeIfPresent(self.sessionIds, forKey: SdkCodingKey("session_ids"))
+        try keyedContainer.encodeIfPresent(self.startTime, forKey: SdkCodingKey("start_time"))
+        try keyedContainer.encodeIfPresent(self.endTime, forKey: SdkCodingKey("end_time"))
     }
 }
 
@@ -166,8 +166,8 @@ struct SignalsCreateDeletionRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(type, forKey: SdkCodingKey("type"))
-        try keyedContainer.encode(teamId, forKey: SdkCodingKey("team_id"))
-        try keyedContainer.encodeIfPresent(agentId, forKey: SdkCodingKey("agent_id"))
+        try keyedContainer.encode(self.type, forKey: SdkCodingKey("type"))
+        try keyedContainer.encode(self.teamId, forKey: SdkCodingKey("team_id"))
+        try keyedContainer.encodeIfPresent(self.agentId, forKey: SdkCodingKey("agent_id"))
     }
 }

@@ -3,22 +3,9 @@
 
 import Foundation
 
-/// KubernetesKubernetes domain models
-public extension KubernetesNodePool {
-    init(
-        size: String,
-        name: String,
-        count: Int,
-        id: String? = nil,
-        tags: [String]? = nil,
-        labels: [String: JSONValue]? = nil,
-        taints: [KubernetesNodePoolTaint]? = nil,
-        autoScale: Bool? = nil,
-        minNodes: Int? = nil,
-        maxNodes: Int? = nil,
-        nodes: [Node]? = nil,
-        gpuPartitionMode: KubernetesNodePoolGpuPartitionGpuPartitionMode? = nil
-    ) throws {
+// KubernetesKubernetes domain models
+extension KubernetesNodePool {
+    public init(size: String, name: String, count: Int, id: String? = nil, tags: [String]? = nil, labels: [String: JSONValue]? = nil, taints: [KubernetesNodePoolTaint]? = nil, autoScale: Bool? = nil, minNodes: Int? = nil, maxNodes: Int? = nil, nodes: [Node]? = nil, gpuPartitionMode: KubernetesNodePoolGpuPartitionGpuPartitionMode? = nil) throws {
         (self.size, self.name) = (size, name)
         (self.count, self.id) = (count, id)
         (self.tags, self.labels) = (tags, labels)
@@ -51,21 +38,21 @@ public struct KubernetesVersion: Codable {
     }
 
     init() {
-        (slug, kubernetesVersion, supportedFeatures) = (nil, nil, nil)
+        (self.slug, self.kubernetesVersion, self.supportedFeatures) = (nil, nil, nil)
     }
 }
 
-public extension KubernetesVersion {
-    init(from decoder: Decoder) throws {
+extension KubernetesVersion {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        slug = try container.sdkDecodeIfPresent(.slug)
-        kubernetesVersion = try container.sdkDecodeIfPresent(.kubernetesVersion)
-        supportedFeatures = try container.sdkDecodeIfPresent(.supportedFeatures)
+        self.slug = try container.sdkDecodeIfPresent(.slug)
+        self.kubernetesVersion = try container.sdkDecodeIfPresent(.kubernetesVersion)
+        self.supportedFeatures = try container.sdkDecodeIfPresent(.supportedFeatures)
     }
 }
 
-public extension KubernetesVersion {
-    init(slug: String? = nil, kubernetesVersion: String? = nil, supportedFeatures: [String]? = nil) {
+extension KubernetesVersion {
+    public init(slug: String? = nil, kubernetesVersion: String? = nil, supportedFeatures: [String]? = nil) {
         self.init()
         (self.slug, self.kubernetesVersion) = (slug, kubernetesVersion)
         self.supportedFeatures = supportedFeatures
@@ -74,22 +61,16 @@ public extension KubernetesVersion {
 
 /// The AMD GPU partition mode for this node pool. Only applicable to AMD GPU sizes that support partitioning.
 /// Immutable after the node pool is created. When omitted, the GPUs in the pool are left unpartitioned.
-public struct KubernetesNodePoolGpuPartitionGpuPartitionMode: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct KubernetesNodePoolGpuPartitionGpuPartitionMode: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let amdPartitionModeSpxNps1 =
-        KubernetesNodePoolGpuPartitionGpuPartitionMode(rawValue: "AMD_PARTITION_MODE_SPX_NPS1")
-    public static let amdPartitionModeDpxNps2 =
-        KubernetesNodePoolGpuPartitionGpuPartitionMode(rawValue: "AMD_PARTITION_MODE_DPX_NPS2")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let amdPartitionModeSpxNps1 = KubernetesNodePoolGpuPartitionGpuPartitionMode(rawValue: "AMD_PARTITION_MODE_SPX_NPS1")
+    public static let amdPartitionModeDpxNps2 = KubernetesNodePoolGpuPartitionGpuPartitionMode(rawValue: "AMD_PARTITION_MODE_DPX_NPS2")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -103,17 +84,14 @@ public struct KubernetesNodePoolGpuPartitionGpuPartitionMode: RawRepresentable, 
 public struct KubernetesNodePoolTaintEffect: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let noSchedule = KubernetesNodePoolTaintEffect(rawValue: "NoSchedule")
     public static let preferNoSchedule = KubernetesNodePoolTaintEffect(rawValue: "PreferNoSchedule")
     public static let noExecute = KubernetesNodePoolTaintEffect(rawValue: "NoExecute")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

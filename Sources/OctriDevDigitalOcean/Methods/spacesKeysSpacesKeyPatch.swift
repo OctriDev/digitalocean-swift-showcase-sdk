@@ -6,39 +6,16 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension SpacesKeysMethods {
-    /// To update Spaces Access Key, send a PUT or PATCH request to `/v2/spaces/keys/$ACCESS_KEY`. At the moment, you
-    /// cannot convert a fullaccess key to a scoped key or vice versa. You can only update the name of the key.
+extension SpacesKeysMethods {
+    /// To update Spaces Access Key, send a PUT or PATCH request to `/v2/spaces/keys/$ACCESS_KEY`. At the moment, you cannot convert a fullaccess key to a scoped key or vice versa. You can only update the name of the key.
     ///
     /// - Parameters:
     /// - accessKey: The access key's ID.
     /// - name: The access key's name.
     /// - grants: The list of permissions for the access key.
-    static func spacesKeyPatch(
-        config: ClientConfig,
-        accessKey: String,
-        name: String? = nil,
-        grants: [Grant]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> KeyUpdate {
+    public static func spacesKeyPatch(config: ClientConfig, accessKey: String, name: String? = nil, grants: [Grant]? = nil, requestOptions: RequestOptions? = nil) async throws -> KeyUpdate {
         let requestBody = SpacesKeyPatchRequestBody(name: name, grants: grants)
 
-        return try await (sdkRequest(
-            "PATCH",
-            ["/v2/spaces/keys/", sdkEncodePathSegment(sdkWireString(accessKey))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "spacesKey_patch",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PATCH", ["/v2/spaces/keys/", sdkEncodePathSegment(sdkWireString(accessKey))].joined(), config: config, body: requestBody, decoder: .json, operationId: "spacesKey_patch", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

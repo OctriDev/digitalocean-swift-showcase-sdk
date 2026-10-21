@@ -6,39 +6,18 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DatabasesMethods {
-    /// To retrieve the configured eviction policy for an existing Caching or Valkey cluster, send a GET request to
-    /// `/v2/databases/$DATABASE_ID/eviction_policy`. The response will be a JSON object with an `eviction_policy` key.
-    /// This will be set to a string representing the eviction policy.
+extension DatabasesMethods {
+    /// To retrieve the configured eviction policy for an existing Caching or Valkey cluster, send a GET request to `/v2/databases/$DATABASE_ID/eviction_policy`. The response will be a JSON object with an `eviction_policy` key. This will be set to a string representing the eviction policy.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    static func databasesGetEvictionPolicy(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> EvictionPolicyResponse {
+    public static func databasesGetEvictionPolicy(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> EvictionPolicyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/eviction_policy"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "databases_get_evictionPolicy",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/eviction_policy"].joined(), config: config, decoder: .json, operationId: "databases_get_evictionPolicy", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To configure an eviction policy for an existing Caching or Valkey cluster, send a PUT request to
-    /// `/v2/databases/$DATABASE_ID/eviction_policy` specifying the desired policy.
+    /// To configure an eviction policy for an existing Caching or Valkey cluster, send a PUT request to `/v2/databases/$DATABASE_ID/eviction_policy` specifying the desired policy.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
@@ -50,31 +29,11 @@ public extension DatabasesMethods {
     ///   first. - `volatile_random`: Evict keys with expiration only in a random
     ///   order. - `volatile_ttl`: Evict keys with expiration only, shortest
     ///   time-to-live (TTL) first.
-    static func databasesUpdateEvictionPolicy(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        evictionPolicy: EvictionPolicyModel,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
+    public static func databasesUpdateEvictionPolicy(config: ClientConfig, databaseClusterUuid: String, evictionPolicy: EvictionPolicyModel, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
         let requestBody = DatabasesUpdateEvictionPolicyRequestBody(evictionPolicy: evictionPolicy)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/eviction_policy"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .empty,
-            operationId: "databases_update_evictionPolicy",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/eviction_policy"].joined(), config: config, body: requestBody, decoder: .empty, operationId: "databases_update_evictionPolicy", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

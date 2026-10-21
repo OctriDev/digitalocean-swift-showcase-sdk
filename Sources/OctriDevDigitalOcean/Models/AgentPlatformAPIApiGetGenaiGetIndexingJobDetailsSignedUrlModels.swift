@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiGet domain models
+// AgentPlatformAPIApiGet domain models
 /// Typed representation of the `ApiGetIndexingJobDetailsSignedURLOutput` API schema.
 public struct ApiGetIndexingJobDetailsSignedURLOutput: Codable {
     /// The signed url for downloading the indexing job details
@@ -15,19 +15,19 @@ public struct ApiGetIndexingJobDetailsSignedURLOutput: Codable {
     }
 
     init() {
-        signedUrl = nil
+        self.signedUrl = nil
     }
 }
 
-public extension ApiGetIndexingJobDetailsSignedURLOutput {
-    init(from decoder: Decoder) throws {
+extension ApiGetIndexingJobDetailsSignedURLOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        signedUrl = try container.sdkDecodeIfPresent(.signedUrl)
+        self.signedUrl = try container.sdkDecodeIfPresent(.signedUrl)
     }
 }
 
-public extension ApiGetIndexingJobDetailsSignedURLOutput {
-    init(signedUrl: String? = nil) {
+extension ApiGetIndexingJobDetailsSignedURLOutput {
+    public init(signedUrl: String? = nil) {
         self.init()
         self.signedUrl = signedUrl
     }

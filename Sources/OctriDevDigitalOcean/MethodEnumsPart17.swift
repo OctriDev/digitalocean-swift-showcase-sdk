@@ -38,71 +38,65 @@ struct KubernetesCreateClusterRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(region, forKey: SdkCodingKey("region"))
-        try keyedContainer.encode(version, forKey: SdkCodingKey("version"))
-        try keyedContainer.encode(nodePools, forKey: SdkCodingKey("node_pools"))
-        try keyedContainer.encodeIfPresent(clusterSubnet, forKey: SdkCodingKey("cluster_subnet"))
-        try keyedContainer.encodeIfPresent(serviceSubnet, forKey: SdkCodingKey("service_subnet"))
-        try keyedContainer.encodeIfPresent(vpcUuid, forKey: SdkCodingKey("vpc_uuid"))
-        try keyedContainer.encodeIfPresent(workerSubnetUuid, forKey: SdkCodingKey("worker_subnet_uuid"))
-        try keyedContainer.encodeIfPresent(tags, forKey: SdkCodingKey("tags"))
-        try keyedContainer.encodeIfPresent(maintenancePolicy, forKey: SdkCodingKey("maintenance_policy"))
-        try keyedContainer.encodeIfPresent(autoUpgrade, forKey: SdkCodingKey("auto_upgrade"))
-        try keyedContainer.encodeIfPresent(isolatedWorkers, forKey: SdkCodingKey("isolated_workers"))
-        try keyedContainer.encodeIfPresent(gpuOperatorReady, forKey: SdkCodingKey("gpu_operator_ready"))
-        try keyedContainer.encodeIfPresent(surgeUpgrade, forKey: SdkCodingKey("surge_upgrade"))
-        try keyedContainer.encodeIfPresent(ha, forKey: SdkCodingKey("ha"))
-        try keyedContainer.encodeIfPresent(controlPlaneFirewall, forKey: SdkCodingKey("control_plane_firewall"))
-        try keyedContainer.encodeIfPresent(
-            clusterAutoscalerConfiguration,
-            forKey: SdkCodingKey("cluster_autoscaler_configuration")
-        )
-        try keyedContainer.encodeIfPresent(sso, forKey: SdkCodingKey("sso"))
-        try keyedContainer.encodeIfPresent(routingAgent, forKey: SdkCodingKey("routing_agent"))
-        try keyedContainer.encodeIfPresent(p2pOciRegistryPlugin, forKey: SdkCodingKey("p2p_oci_registry_plugin"))
-        try keyedContainer.encodeIfPresent(nfsCsiPlugin, forKey: SdkCodingKey("nfs_csi_plugin"))
-        try keyedContainer.encodeIfPresent(amdGpuDevicePlugin, forKey: SdkCodingKey("amd_gpu_device_plugin"))
-        try keyedContainer.encodeIfPresent(
-            amdGpuDeviceMetricsExporterPlugin,
-            forKey: SdkCodingKey("amd_gpu_device_metrics_exporter_plugin")
-        )
-        try keyedContainer.encodeIfPresent(nvidiaGpuDevicePlugin, forKey: SdkCodingKey("nvidia_gpu_device_plugin"))
-        try keyedContainer.encodeIfPresent(nvidiaGpuDraDriver, forKey: SdkCodingKey("nvidia_gpu_dra_driver"))
-        try keyedContainer.encodeIfPresent(amdGpuDraDriver, forKey: SdkCodingKey("amd_gpu_dra_driver"))
-        try keyedContainer.encodeIfPresent(rdmaSharedDevPlugin, forKey: SdkCodingKey("rdma_shared_dev_plugin"))
-        try keyedContainer.encodeIfPresent(corednsAutoscaler, forKey: SdkCodingKey("coredns_autoscaler"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.region, forKey: SdkCodingKey("region"))
+        try keyedContainer.encode(self.version, forKey: SdkCodingKey("version"))
+        try keyedContainer.encode(self.nodePools, forKey: SdkCodingKey("node_pools"))
+        try keyedContainer.encodeIfPresent(self.clusterSubnet, forKey: SdkCodingKey("cluster_subnet"))
+        try keyedContainer.encodeIfPresent(self.serviceSubnet, forKey: SdkCodingKey("service_subnet"))
+        try keyedContainer.encodeIfPresent(self.vpcUuid, forKey: SdkCodingKey("vpc_uuid"))
+        try keyedContainer.encodeIfPresent(self.workerSubnetUuid, forKey: SdkCodingKey("worker_subnet_uuid"))
+        try keyedContainer.encodeIfPresent(self.tags, forKey: SdkCodingKey("tags"))
+        try keyedContainer.encodeIfPresent(self.maintenancePolicy, forKey: SdkCodingKey("maintenance_policy"))
+        try keyedContainer.encodeIfPresent(self.autoUpgrade, forKey: SdkCodingKey("auto_upgrade"))
+        try keyedContainer.encodeIfPresent(self.isolatedWorkers, forKey: SdkCodingKey("isolated_workers"))
+        try keyedContainer.encodeIfPresent(self.gpuOperatorReady, forKey: SdkCodingKey("gpu_operator_ready"))
+        try keyedContainer.encodeIfPresent(self.surgeUpgrade, forKey: SdkCodingKey("surge_upgrade"))
+        try keyedContainer.encodeIfPresent(self.ha, forKey: SdkCodingKey("ha"))
+        try keyedContainer.encodeIfPresent(self.controlPlaneFirewall, forKey: SdkCodingKey("control_plane_firewall"))
+        try keyedContainer.encodeIfPresent(self.clusterAutoscalerConfiguration, forKey: SdkCodingKey("cluster_autoscaler_configuration"))
+        try keyedContainer.encodeIfPresent(self.sso, forKey: SdkCodingKey("sso"))
+        try keyedContainer.encodeIfPresent(self.routingAgent, forKey: SdkCodingKey("routing_agent"))
+        try keyedContainer.encodeIfPresent(self.p2pOciRegistryPlugin, forKey: SdkCodingKey("p2p_oci_registry_plugin"))
+        try keyedContainer.encodeIfPresent(self.nfsCsiPlugin, forKey: SdkCodingKey("nfs_csi_plugin"))
+        try keyedContainer.encodeIfPresent(self.amdGpuDevicePlugin, forKey: SdkCodingKey("amd_gpu_device_plugin"))
+        try keyedContainer.encodeIfPresent(self.amdGpuDeviceMetricsExporterPlugin, forKey: SdkCodingKey("amd_gpu_device_metrics_exporter_plugin"))
+        try keyedContainer.encodeIfPresent(self.nvidiaGpuDevicePlugin, forKey: SdkCodingKey("nvidia_gpu_device_plugin"))
+        try keyedContainer.encodeIfPresent(self.nvidiaGpuDraDriver, forKey: SdkCodingKey("nvidia_gpu_dra_driver"))
+        try keyedContainer.encodeIfPresent(self.amdGpuDraDriver, forKey: SdkCodingKey("amd_gpu_dra_driver"))
+        try keyedContainer.encodeIfPresent(self.rdmaSharedDevPlugin, forKey: SdkCodingKey("rdma_shared_dev_plugin"))
+        try keyedContainer.encodeIfPresent(self.corednsAutoscaler, forKey: SdkCodingKey("coredns_autoscaler"))
     }
 
     init(options: KubernetesMethods.KubernetesCreateClusterOptions) {
-        name = options.name
-        region = options.region
-        version = options.version
-        nodePools = options.nodePools
-        clusterSubnet = options.clusterSubnet
-        serviceSubnet = options.serviceSubnet
-        vpcUuid = options.vpcUuid
-        workerSubnetUuid = options.workerSubnetUuid
-        tags = options.tags
-        maintenancePolicy = options.maintenancePolicy
-        autoUpgrade = options.autoUpgrade
-        isolatedWorkers = options.isolatedWorkers
-        gpuOperatorReady = options.gpuOperatorReady
-        surgeUpgrade = options.surgeUpgrade
-        ha = options.ha
-        controlPlaneFirewall = options.controlPlaneFirewall
-        clusterAutoscalerConfiguration = options.clusterAutoscalerConfiguration
-        sso = options.sso
-        routingAgent = options.routingAgent
-        p2pOciRegistryPlugin = options.p2pOciRegistryPlugin
-        nfsCsiPlugin = options.nfsCsiPlugin
-        amdGpuDevicePlugin = options.amdGpuDevicePlugin
-        amdGpuDeviceMetricsExporterPlugin = options.amdGpuDeviceMetricsExporterPlugin
-        nvidiaGpuDevicePlugin = options.nvidiaGpuDevicePlugin
-        nvidiaGpuDraDriver = options.nvidiaGpuDraDriver
-        amdGpuDraDriver = options.amdGpuDraDriver
-        rdmaSharedDevPlugin = options.rdmaSharedDevPlugin
-        corednsAutoscaler = options.corednsAutoscaler
+        self.name = options.name
+        self.region = options.region
+        self.version = options.version
+        self.nodePools = options.nodePools
+        self.clusterSubnet = options.clusterSubnet
+        self.serviceSubnet = options.serviceSubnet
+        self.vpcUuid = options.vpcUuid
+        self.workerSubnetUuid = options.workerSubnetUuid
+        self.tags = options.tags
+        self.maintenancePolicy = options.maintenancePolicy
+        self.autoUpgrade = options.autoUpgrade
+        self.isolatedWorkers = options.isolatedWorkers
+        self.gpuOperatorReady = options.gpuOperatorReady
+        self.surgeUpgrade = options.surgeUpgrade
+        self.ha = options.ha
+        self.controlPlaneFirewall = options.controlPlaneFirewall
+        self.clusterAutoscalerConfiguration = options.clusterAutoscalerConfiguration
+        self.sso = options.sso
+        self.routingAgent = options.routingAgent
+        self.p2pOciRegistryPlugin = options.p2pOciRegistryPlugin
+        self.nfsCsiPlugin = options.nfsCsiPlugin
+        self.amdGpuDevicePlugin = options.amdGpuDevicePlugin
+        self.amdGpuDeviceMetricsExporterPlugin = options.amdGpuDeviceMetricsExporterPlugin
+        self.nvidiaGpuDevicePlugin = options.nvidiaGpuDevicePlugin
+        self.nvidiaGpuDraDriver = options.nvidiaGpuDraDriver
+        self.amdGpuDraDriver = options.amdGpuDraDriver
+        self.rdmaSharedDevPlugin = options.rdmaSharedDevPlugin
+        self.corednsAutoscaler = options.corednsAutoscaler
     }
 }
 
@@ -130,55 +124,49 @@ struct KubernetesUpdateClusterRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(tags, forKey: SdkCodingKey("tags"))
-        try keyedContainer.encodeIfPresent(maintenancePolicy, forKey: SdkCodingKey("maintenance_policy"))
-        try keyedContainer.encodeIfPresent(autoUpgrade, forKey: SdkCodingKey("auto_upgrade"))
-        try keyedContainer.encodeIfPresent(surgeUpgrade, forKey: SdkCodingKey("surge_upgrade"))
-        try keyedContainer.encodeIfPresent(ha, forKey: SdkCodingKey("ha"))
-        try keyedContainer.encodeIfPresent(gpuOperatorReady, forKey: SdkCodingKey("gpu_operator_ready"))
-        try keyedContainer.encodeIfPresent(controlPlaneFirewall, forKey: SdkCodingKey("control_plane_firewall"))
-        try keyedContainer.encodeIfPresent(
-            clusterAutoscalerConfiguration,
-            forKey: SdkCodingKey("cluster_autoscaler_configuration")
-        )
-        try keyedContainer.encodeIfPresent(sso, forKey: SdkCodingKey("sso"))
-        try keyedContainer.encodeIfPresent(routingAgent, forKey: SdkCodingKey("routing_agent"))
-        try keyedContainer.encodeIfPresent(p2pOciRegistryPlugin, forKey: SdkCodingKey("p2p_oci_registry_plugin"))
-        try keyedContainer.encodeIfPresent(nfsCsiPlugin, forKey: SdkCodingKey("nfs_csi_plugin"))
-        try keyedContainer.encodeIfPresent(amdGpuDevicePlugin, forKey: SdkCodingKey("amd_gpu_device_plugin"))
-        try keyedContainer.encodeIfPresent(
-            amdGpuDeviceMetricsExporterPlugin,
-            forKey: SdkCodingKey("amd_gpu_device_metrics_exporter_plugin")
-        )
-        try keyedContainer.encodeIfPresent(nvidiaGpuDevicePlugin, forKey: SdkCodingKey("nvidia_gpu_device_plugin"))
-        try keyedContainer.encodeIfPresent(nvidiaGpuDraDriver, forKey: SdkCodingKey("nvidia_gpu_dra_driver"))
-        try keyedContainer.encodeIfPresent(amdGpuDraDriver, forKey: SdkCodingKey("amd_gpu_dra_driver"))
-        try keyedContainer.encodeIfPresent(rdmaSharedDevPlugin, forKey: SdkCodingKey("rdma_shared_dev_plugin"))
-        try keyedContainer.encodeIfPresent(corednsAutoscaler, forKey: SdkCodingKey("coredns_autoscaler"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.tags, forKey: SdkCodingKey("tags"))
+        try keyedContainer.encodeIfPresent(self.maintenancePolicy, forKey: SdkCodingKey("maintenance_policy"))
+        try keyedContainer.encodeIfPresent(self.autoUpgrade, forKey: SdkCodingKey("auto_upgrade"))
+        try keyedContainer.encodeIfPresent(self.surgeUpgrade, forKey: SdkCodingKey("surge_upgrade"))
+        try keyedContainer.encodeIfPresent(self.ha, forKey: SdkCodingKey("ha"))
+        try keyedContainer.encodeIfPresent(self.gpuOperatorReady, forKey: SdkCodingKey("gpu_operator_ready"))
+        try keyedContainer.encodeIfPresent(self.controlPlaneFirewall, forKey: SdkCodingKey("control_plane_firewall"))
+        try keyedContainer.encodeIfPresent(self.clusterAutoscalerConfiguration, forKey: SdkCodingKey("cluster_autoscaler_configuration"))
+        try keyedContainer.encodeIfPresent(self.sso, forKey: SdkCodingKey("sso"))
+        try keyedContainer.encodeIfPresent(self.routingAgent, forKey: SdkCodingKey("routing_agent"))
+        try keyedContainer.encodeIfPresent(self.p2pOciRegistryPlugin, forKey: SdkCodingKey("p2p_oci_registry_plugin"))
+        try keyedContainer.encodeIfPresent(self.nfsCsiPlugin, forKey: SdkCodingKey("nfs_csi_plugin"))
+        try keyedContainer.encodeIfPresent(self.amdGpuDevicePlugin, forKey: SdkCodingKey("amd_gpu_device_plugin"))
+        try keyedContainer.encodeIfPresent(self.amdGpuDeviceMetricsExporterPlugin, forKey: SdkCodingKey("amd_gpu_device_metrics_exporter_plugin"))
+        try keyedContainer.encodeIfPresent(self.nvidiaGpuDevicePlugin, forKey: SdkCodingKey("nvidia_gpu_device_plugin"))
+        try keyedContainer.encodeIfPresent(self.nvidiaGpuDraDriver, forKey: SdkCodingKey("nvidia_gpu_dra_driver"))
+        try keyedContainer.encodeIfPresent(self.amdGpuDraDriver, forKey: SdkCodingKey("amd_gpu_dra_driver"))
+        try keyedContainer.encodeIfPresent(self.rdmaSharedDevPlugin, forKey: SdkCodingKey("rdma_shared_dev_plugin"))
+        try keyedContainer.encodeIfPresent(self.corednsAutoscaler, forKey: SdkCodingKey("coredns_autoscaler"))
     }
 
     init(options: KubernetesMethods.KubernetesUpdateClusterOptions) {
-        name = options.name
-        tags = options.tags
-        maintenancePolicy = options.maintenancePolicy
-        autoUpgrade = options.autoUpgrade
-        surgeUpgrade = options.surgeUpgrade
-        ha = options.ha
-        gpuOperatorReady = options.gpuOperatorReady
-        controlPlaneFirewall = options.controlPlaneFirewall
-        clusterAutoscalerConfiguration = options.clusterAutoscalerConfiguration
-        sso = options.sso
-        routingAgent = options.routingAgent
-        p2pOciRegistryPlugin = options.p2pOciRegistryPlugin
-        nfsCsiPlugin = options.nfsCsiPlugin
-        amdGpuDevicePlugin = options.amdGpuDevicePlugin
-        amdGpuDeviceMetricsExporterPlugin = options.amdGpuDeviceMetricsExporterPlugin
-        nvidiaGpuDevicePlugin = options.nvidiaGpuDevicePlugin
-        nvidiaGpuDraDriver = options.nvidiaGpuDraDriver
-        amdGpuDraDriver = options.amdGpuDraDriver
-        rdmaSharedDevPlugin = options.rdmaSharedDevPlugin
-        corednsAutoscaler = options.corednsAutoscaler
+        self.name = options.name
+        self.tags = options.tags
+        self.maintenancePolicy = options.maintenancePolicy
+        self.autoUpgrade = options.autoUpgrade
+        self.surgeUpgrade = options.surgeUpgrade
+        self.ha = options.ha
+        self.gpuOperatorReady = options.gpuOperatorReady
+        self.controlPlaneFirewall = options.controlPlaneFirewall
+        self.clusterAutoscalerConfiguration = options.clusterAutoscalerConfiguration
+        self.sso = options.sso
+        self.routingAgent = options.routingAgent
+        self.p2pOciRegistryPlugin = options.p2pOciRegistryPlugin
+        self.nfsCsiPlugin = options.nfsCsiPlugin
+        self.amdGpuDevicePlugin = options.amdGpuDevicePlugin
+        self.amdGpuDeviceMetricsExporterPlugin = options.amdGpuDeviceMetricsExporterPlugin
+        self.nvidiaGpuDevicePlugin = options.nvidiaGpuDevicePlugin
+        self.nvidiaGpuDraDriver = options.nvidiaGpuDraDriver
+        self.amdGpuDraDriver = options.amdGpuDraDriver
+        self.rdmaSharedDevPlugin = options.rdmaSharedDevPlugin
+        self.corednsAutoscaler = options.corednsAutoscaler
     }
 }
 
@@ -189,9 +177,9 @@ struct KubernetesDestroyAssociatedResourcesSelectiveRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(loadBalancers, forKey: SdkCodingKey("load_balancers"))
-        try keyedContainer.encodeIfPresent(volumes, forKey: SdkCodingKey("volumes"))
-        try keyedContainer.encodeIfPresent(volumeSnapshots, forKey: SdkCodingKey("volume_snapshots"))
+        try keyedContainer.encodeIfPresent(self.loadBalancers, forKey: SdkCodingKey("load_balancers"))
+        try keyedContainer.encodeIfPresent(self.volumes, forKey: SdkCodingKey("volumes"))
+        try keyedContainer.encodeIfPresent(self.volumeSnapshots, forKey: SdkCodingKey("volume_snapshots"))
     }
 }
 
@@ -200,6 +188,6 @@ struct KubernetesUpgradeClusterRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(version, forKey: SdkCodingKey("version"))
+        try keyedContainer.encodeIfPresent(self.version, forKey: SdkCodingKey("version"))
     }
 }

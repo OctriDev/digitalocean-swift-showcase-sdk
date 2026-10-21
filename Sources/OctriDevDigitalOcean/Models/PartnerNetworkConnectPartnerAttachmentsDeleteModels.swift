@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// PartnerNetworkConnect domain models
+// PartnerNetworkConnect domain models
 public struct SinglePartnerAttachmentDeletingVariant0: Codable {
     public var partnerAttachment: PartnerAttachment?
 
@@ -12,19 +12,19 @@ public struct SinglePartnerAttachmentDeletingVariant0: Codable {
     }
 
     init() {
-        partnerAttachment = nil
+        self.partnerAttachment = nil
     }
 }
 
-public extension SinglePartnerAttachmentDeletingVariant0 {
-    init(from decoder: Decoder) throws {
+extension SinglePartnerAttachmentDeletingVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        partnerAttachment = try container.sdkDecodeIfPresent(.partnerAttachment)
+        self.partnerAttachment = try container.sdkDecodeIfPresent(.partnerAttachment)
     }
 }
 
-public extension SinglePartnerAttachmentDeletingVariant0 {
-    init(partnerAttachment: PartnerAttachment? = nil) {
+extension SinglePartnerAttachmentDeletingVariant0 {
+    public init(partnerAttachment: PartnerAttachment? = nil) {
         self.init()
         self.partnerAttachment = partnerAttachment
     }
@@ -39,19 +39,19 @@ public struct SinglePartnerAttachmentDeleting: Codable {
     }
 
     init() {
-        partnerAttachment = nil
+        self.partnerAttachment = nil
     }
 }
 
-public extension SinglePartnerAttachmentDeleting {
-    init(from decoder: Decoder) throws {
+extension SinglePartnerAttachmentDeleting {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        partnerAttachment = try container.sdkDecodeIfPresent(.partnerAttachment)
+        self.partnerAttachment = try container.sdkDecodeIfPresent(.partnerAttachment)
     }
 }
 
-public extension SinglePartnerAttachmentDeleting {
-    init(partnerAttachment: PartnerAttachment? = nil) {
+extension SinglePartnerAttachmentDeleting {
+    public init(partnerAttachment: PartnerAttachment? = nil) {
         self.init()
         self.partnerAttachment = partnerAttachment
     }

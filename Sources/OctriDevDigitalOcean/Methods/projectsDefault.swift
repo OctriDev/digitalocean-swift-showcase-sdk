@@ -6,31 +6,13 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ProjectsMethods {
+extension ProjectsMethods {
     /// To get your default project, send a GET request to `/v2/projects/default`.
-    static func projectsGetDefault(
-        config: ClientConfig,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DefaultProject {
-        try await (sdkRequest(
-            "GET",
-            "/v2/projects/default",
-            config: config,
-            decoder: .json,
-            operationId: "projects_get_default",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func projectsGetDefault(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> DefaultProject {
+        return try (await sdkRequest("GET", "/v2/projects/default", config: config, decoder: .json, operationId: "projects_get_default", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To update you default project, send a PUT request to `/v2/projects/default`. All of the following attributes
-    /// must be sent.
+    /// To update you default project, send a PUT request to `/v2/projects/default`. All of the following attributes must be sent.
     ///
     /// - Parameters:
     /// - name: The human-readable name for the project. The maximum length is 175
@@ -47,44 +29,15 @@ public extension ProjectsMethods {
     /// - environment: The environment of the project's resources.
     /// - isDefault: If true, all resources will be added to this project if no
     ///   project is specified.
-    static func projectsUpdateDefault(
-        config: ClientConfig,
-        name: String,
-        description: String,
-        purpose: String,
-        environment: ProjectsUpdateDefaultRequestBodyEnvironment,
-        isDefault: Bool,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExistingProject {
+    public static func projectsUpdateDefault(config: ClientConfig, name: String, description: String, purpose: String, environment: ProjectsUpdateDefaultRequestBodyEnvironment, isDefault: Bool, requestOptions: RequestOptions? = nil) async throws -> ExistingProject {
         try validateLength("name", name, max: 175)
 
         try validateLength("description", description, max: 255)
 
         try validateLength("purpose", purpose, max: 255)
 
-        let requestBody = ProjectsUpdateDefaultRequestBody(
-            name: name,
-            description: description,
-            purpose: purpose,
-            environment: environment,
-            isDefault: isDefault
-        )
+        let requestBody = ProjectsUpdateDefaultRequestBody(name: name, description: description, purpose: purpose, environment: environment, isDefault: isDefault)
 
-        return try await (sdkRequest(
-            "PUT",
-            "/v2/projects/default",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "projects_update_default",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", "/v2/projects/default", config: config, body: requestBody, decoder: .json, operationId: "projects_update_default", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

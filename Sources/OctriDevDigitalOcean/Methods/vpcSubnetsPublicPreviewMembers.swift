@@ -6,11 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension VpcSubnetsPublicPreviewMethods {
-    /// To list all resources that are members of a VPC subnet, send a GET request to
-    /// `/v2/vpcs/$VPC_UUID/subnets/$SUBNET_UUID/members`. To list only members of a specific type, include the
-    /// `resource_type` query parameter. Only resources that you are authorized to view are returned. For example,
-    /// viewing Droplets requires the `droplet:read` scope.
+extension VpcSubnetsPublicPreviewMethods {
+    /// To list all resources that are members of a VPC subnet, send a GET request to `/v2/vpcs/$VPC_UUID/subnets/$SUBNET_UUID/members`. To list only members of a specific type, include the `resource_type` query parameter. Only resources that you are authorized to view are returned. For example, viewing Droplets requires the `droplet:read` scope.
     ///
     /// - Parameters:
     /// - vpcUuid: The unique identifier of the VPC to which the subnet belongs.
@@ -18,52 +15,23 @@ public extension VpcSubnetsPublicPreviewMethods {
     /// - resourceType: Used to filter VPC subnet members by resource type.
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func vpcSubnetsListMembers(
-        config: ClientConfig,
-        vpcUuid: String,
-        subnetUuid: String,
-        resourceType: VpcSubnetsListMembersParameter? = nil,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VpcSubnetMembers {
+    public static func vpcSubnetsListMembers(config: ClientConfig, vpcUuid: String, subnetUuid: String, resourceType: VpcSubnetsListMembersParameter? = nil, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> VpcSubnetMembers {
         try sdkValidateUuid("vpc_uuid", vpcUuid)
 
         try sdkValidateUuid("subnet_uuid", subnetUuid)
 
-        if let perPage {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            [
-                "/v2/vpcs/",
-                sdkEncodePathSegment(sdkWireString(vpcUuid)),
-                "/subnets/",
-                sdkEncodePathSegment(sdkWireString(subnetUuid)),
-                "/members",
-            ].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("resource_type", value: resourceType),
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "vpcSubnets_list_members",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcUuid)), "/subnets/", sdkEncodePathSegment(sdkWireString(subnetUuid)), "/members"].joined(), config: config, query: [
+            SdkQueryParameter("resource_type", value: resourceType),
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "vpcSubnets_list_members", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

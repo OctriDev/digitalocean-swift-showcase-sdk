@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Functions domain models
+// Functions domain models
 /// Typed representation of the `CreateTrigger` API schema.
 public struct CreateTrigger: Codable {
     /// The trigger's unique name within the namespace.
@@ -29,59 +29,37 @@ public struct CreateTrigger: Codable {
         case scheduledDetails = "scheduled_details"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateTrigger {
-    init(from decoder: Decoder) throws {
+extension CreateTrigger {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.function) else {
-            throw SdkValidationError(
-                field: "function",
-                code: "required",
-                message: "Validation failed for 'function': value is required"
-            )
+            throw SdkValidationError(field: "function", code: "required", message: "Validation failed for 'function': value is required")
         }
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.isEnabled) else {
-            throw SdkValidationError(
-                field: "is_enabled",
-                code: "required",
-                message: "Validation failed for 'is_enabled': value is required"
-            )
+            throw SdkValidationError(field: "is_enabled", code: "required", message: "Validation failed for 'is_enabled': value is required")
         }
         guard container.contains(.scheduledDetails) else {
-            throw SdkValidationError(
-                field: "scheduled_details",
-                code: "required",
-                message: "Validation failed for 'scheduled_details': value is required"
-            )
+            throw SdkValidationError(field: "scheduled_details", code: "required", message: "Validation failed for 'scheduled_details': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        function = try container.sdkDecodeRequired(.function)
-        type = try container.sdkDecodeRequired(.type)
-        isEnabled = try container.sdkDecodeRequired(.isEnabled)
-        scheduledDetails = try container.sdkDecodeRequired(.scheduledDetails)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.function = try container.sdkDecodeRequired(.function)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.isEnabled = try container.sdkDecodeRequired(.isEnabled)
+        self.scheduledDetails = try container.sdkDecodeRequired(.scheduledDetails)
     }
 }
 
-public extension CreateTrigger {
-    init(name: String, function: String, type: String, isEnabled: Bool, scheduledDetails: ScheduledDetails) {
+extension CreateTrigger {
+    public init(name: String, function: String, type: String, isEnabled: Bool, scheduledDetails: ScheduledDetails) {
         (self.name, self.function) = (name, function)
         (self.type, self.isEnabled) = (type, isEnabled)
         self.scheduledDetails = scheduledDetails

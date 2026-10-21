@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DropletActions domain models
+// DropletActions domain models
 /// Typed representation of the `DropletActionsResponse` API schema.
 public struct DropletActionsResponse: Codable {
     /// Optional array value serialized in the `actions` wire field.
@@ -14,19 +14,19 @@ public struct DropletActionsResponse: Codable {
     }
 
     init() {
-        actions = nil
+        self.actions = nil
     }
 }
 
-public extension DropletActionsResponse {
-    init(from decoder: Decoder) throws {
+extension DropletActionsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        actions = try container.sdkDecodeIfPresent(.actions)
+        self.actions = try container.sdkDecodeIfPresent(.actions)
     }
 }
 
-public extension DropletActionsResponse {
-    init(actions: [Action]? = nil) {
+extension DropletActionsResponse {
+    public init(actions: [Action]? = nil) {
         self.init()
         self.actions = actions
     }

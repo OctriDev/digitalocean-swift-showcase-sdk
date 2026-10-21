@@ -17,9 +17,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.listClusters(
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -64,8 +64,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.listNodePools(
-                clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\"")
-            )
+            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -147,10 +147,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.recycleNodePool(
-                clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
-                nodePoolId: decoded("\"cdda885e-7663-40c8-bc74-3a036c66545d\""),
-                nodes: decoded("[\"d8db5e1a-6103-43b5-a7b3-8a948210a9fc\"]")
-            )
+            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
+            nodePoolId: decoded("\"cdda885e-7663-40c8-bc74-3a036c66545d\""),
+            nodes: decoded("[\"d8db5e1a-6103-43b5-a7b3-8a948210a9fc\"]")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -189,9 +189,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.removeRegistries(
-                clusterUuids: decoded(sdkMethodFixture1038Value1),
-                registries: decoded("[\"registry-a\",\"registry-b\"]")
-            )
+            clusterUuids: decoded(sdkMethodFixture1038Value1),
+            registries: decoded("[\"registry-a\",\"registry-b\"]")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -229,8 +229,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.removeRegistry(
-                clusterUuids: decoded(sdkMethodFixture1040Value1)
-            )
+            clusterUuids: decoded(sdkMethodFixture1040Value1)
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -279,12 +279,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.runClusterLint(
-                clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
-                includeGroups: decoded("[\"basic\",\"doks\",\"security\"]"),
-                includeChecks: decoded("[\"bare-pods\",\"resource-requirements\"]"),
-                excludeGroups: decoded("[\"workload-health\"]"),
-                excludeChecks: decoded("[\"default-namespace\"]")
-            )
+            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
+            includeGroups: decoded("[\"basic\",\"doks\",\"security\"]"),
+            includeChecks: decoded("[\"bare-pods\",\"resource-requirements\"]"),
+            excludeGroups: decoded("[\"workload-health\"]"),
+            excludeChecks: decoded("[\"default-namespace\"]")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -305,10 +305,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try KubernetesMethods.KubernetesUpdateClusterOptions(
-            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
-            name: decoded("\"prod-cluster-01\"")
-        )
+        var options = try KubernetesMethods.KubernetesUpdateClusterOptions(clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""), name: decoded("\"prod-cluster-01\""))
         options.tags = try decoded(sdkMethodFixture1043Value1)
         options.maintenancePolicy = try decoded("{\"start_time\":\"12:00\",\"day\":\"any\"}")
         options.autoUpgrade = try decoded("true")
@@ -346,10 +343,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try KubernetesMethods.KubernetesUpdateClusterOptions(
-            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
-            name: decoded("\"prod-cluster-01\"")
-        )
+        var options = try KubernetesMethods.KubernetesUpdateClusterOptions(clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""), name: decoded("\"prod-cluster-01\""))
         options.tags = try decoded(sdkMethodFixture1044Value1)
         options.maintenancePolicy = try decoded("{\"start_time\":\"12:00\",\"day\":\"any\"}")
         options.autoUpgrade = try decoded("true")
@@ -375,8 +369,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.updateCluster(
-                options: options
-            )
+            options: options
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -397,12 +391,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try KubernetesMethods.KubernetesUpdateNodePoolOptions(
-            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
-            nodePoolId: decoded("\"cdda885e-7663-40c8-bc74-3a036c66545d\""),
-            name: decoded("\"frontend-pool\""),
-            count: decoded("3")
-        )
+        var options = try KubernetesMethods.KubernetesUpdateNodePoolOptions(clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""), nodePoolId: decoded("\"cdda885e-7663-40c8-bc74-3a036c66545d\""), name: decoded("\"frontend-pool\""), count: decoded("3"))
         options.tags = try decoded(sdkMethodFixture1045Value1)
         options.labels = try decoded("null")
         options.taints = try decoded("[{\"key\":\"priority\",\"value\":\"high\",\"effect\":\"NoSchedule\"}]")
@@ -427,12 +416,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try KubernetesMethods.KubernetesUpdateNodePoolOptions(
-            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
-            nodePoolId: decoded("\"cdda885e-7663-40c8-bc74-3a036c66545d\""),
-            name: decoded("\"frontend-pool\""),
-            count: decoded("3")
-        )
+        var options = try KubernetesMethods.KubernetesUpdateNodePoolOptions(clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""), nodePoolId: decoded("\"cdda885e-7663-40c8-bc74-3a036c66545d\""), name: decoded("\"frontend-pool\""), count: decoded("3"))
         options.tags = try decoded(sdkMethodFixture1046Value1)
         options.labels = try decoded("null")
         options.taints = try decoded("[{\"key\":\"priority\",\"value\":\"high\",\"effect\":\"NoSchedule\"}]")
@@ -445,8 +429,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.updateNodePool(
-                options: options
-            )
+            options: options
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -485,9 +469,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.upgradeCluster(
-                clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
-                version: decoded("\"1.16.13-do.0\"")
-            )
+            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
+            version: decoded("\"1.16.13-do.0\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -533,9 +517,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.droplets.listAllBackupPolicies(
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

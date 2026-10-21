@@ -6,74 +6,27 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DatabasesMethods {
-    /// To retrieve the DigitalOcean-specific settings for a database cluster, send a GET request to
-    /// `/v2/databases/$DATABASE_ID/do_settings`. The response will include the current `service_cnames` configuration.
+extension DatabasesMethods {
+    /// To retrieve the DigitalOcean-specific settings for a database cluster, send a GET request to `/v2/databases/$DATABASE_ID/do_settings`. The response will include the current `service_cnames` configuration.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    static func databasesGetDoSettings(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DoSettingsResponse {
+    public static func databasesGetDoSettings(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> DoSettingsResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/do_settings"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "databases_get_do_settings",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/do_settings"].joined(), config: config, decoder: .json, operationId: "databases_get_do_settings", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To update the DigitalOcean-specific settings for a database cluster, send a PUT request to
-    /// `/v2/databases/$DATABASE_ID/do_settings`. Currently, the only supported setting is `service_cnames`, which
-    /// allows you to specify custom DNS names (CNAMEs) to be included in the TLS certificate Subject Alternative Names
-    /// (SANs) for the database cluster nodes. This enables TLS verification when connecting via a custom hostname.
-    /// After updating, the database nodes will be replaced to apply the new certificate. This process is performed as a
-    /// rolling replacement and does not cause downtime. To clear all custom CNAMEs, send an empty array or omit the
-    /// field.
+    /// To update the DigitalOcean-specific settings for a database cluster, send a PUT request to `/v2/databases/$DATABASE_ID/do_settings`. Currently, the only supported setting is `service_cnames`, which allows you to specify custom DNS names (CNAMEs) to be included in the TLS certificate Subject Alternative Names (SANs) for the database cluster nodes. This enables TLS verification when connecting via a custom hostname. After updating, the database nodes will be replaced to apply the new certificate. This process is performed as a rolling replacement and does not cause downtime. To clear all custom CNAMEs, send an empty array or omit the field.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - doSettings: DigitalOcean-specific settings for the database cluster.
-    static func databasesUpdateDoSettings(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        doSettings: DoSettings,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
+    public static func databasesUpdateDoSettings(config: ClientConfig, databaseClusterUuid: String, doSettings: DoSettings, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
         let requestBody = DatabasesUpdateDoSettingsRequestBody(doSettings: doSettings)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/do_settings"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .empty,
-            operationId: "databases_update_do_settings",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "404": Error2.self,
-                "422": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/do_settings"].joined(), config: config, body: requestBody, decoder: .empty, operationId: "databases_update_do_settings", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "422": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

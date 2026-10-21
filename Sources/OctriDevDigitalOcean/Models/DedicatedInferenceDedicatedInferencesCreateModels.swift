@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DedicatedInference domain models
+// DedicatedInference domain models
 /// Typed representation of the `DedicatedInferenceProvisioning` API schema.
 public struct DedicatedInferenceProvisioning: Codable {
     /// A Dedicated Inference instance.
@@ -17,20 +17,20 @@ public struct DedicatedInferenceProvisioning: Codable {
     }
 
     init() {
-        (dedicatedInference, token) = (nil, nil)
+        (self.dedicatedInference, self.token) = (nil, nil)
     }
 }
 
-public extension DedicatedInferenceProvisioning {
-    init(from decoder: Decoder) throws {
+extension DedicatedInferenceProvisioning {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        dedicatedInference = try container.sdkDecodeIfPresent(.dedicatedInference)
-        token = try container.sdkDecodeIfPresent(.token)
+        self.dedicatedInference = try container.sdkDecodeIfPresent(.dedicatedInference)
+        self.token = try container.sdkDecodeIfPresent(.token)
     }
 }
 
-public extension DedicatedInferenceProvisioning {
-    init(dedicatedInference: DedicatedInference? = nil, token: DedicatedInferenceAccessToken? = nil) {
+extension DedicatedInferenceProvisioning {
+    public init(dedicatedInference: DedicatedInference? = nil, token: DedicatedInferenceAccessToken? = nil) {
         self.init()
         (self.dedicatedInference, self.token) = (dedicatedInference, token)
     }
@@ -49,28 +49,22 @@ public struct DedicatedInferenceCreateRequestRequest: Codable {
         case accessTokens = "access_tokens"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DedicatedInferenceCreateRequestRequest {
-    init(from decoder: Decoder) throws {
+extension DedicatedInferenceCreateRequestRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.spec) else {
-            throw SdkValidationError(
-                field: "spec",
-                code: "required",
-                message: "Validation failed for 'spec': value is required"
-            )
+            throw SdkValidationError(field: "spec", code: "required", message: "Validation failed for 'spec': value is required")
         }
-        spec = try container.sdkDecodeRequired(.spec)
-        accessTokens = try container.sdkDecodeIfPresent(.accessTokens)
+        self.spec = try container.sdkDecodeRequired(.spec)
+        self.accessTokens = try container.sdkDecodeIfPresent(.accessTokens)
     }
 }
 
-public extension DedicatedInferenceCreateRequestRequest {
-    init(spec: DedicatedInferenceSpecRequest, accessTokens: [String: String]? = nil) {
+extension DedicatedInferenceCreateRequestRequest {
+    public init(spec: DedicatedInferenceSpecRequest, accessTokens: [String: String]? = nil) {
         (self.spec, self.accessTokens) = (spec, accessTokens)
     }
 }

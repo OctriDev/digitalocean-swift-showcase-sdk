@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApi domain models
+// AgentPlatformAPIApi domain models
 /// Per-metric aggregated pass/fail statistics across all prompts.
 public struct ApiMetricResultSummary: Codable {
     /// Row-level (not attempt-level) aggregation across epochs for this metric, mirroring EpochResultSummary but
@@ -62,45 +62,32 @@ public struct ApiMetricResultSummary: Codable {
     }
 
     init() {
-        (avgAtKPercent, consAtKPercent, description, failCount, failPercent) = (nil, nil, nil, nil, nil)
-        (metricName, metricUuid, passAtKPercent, passCount, passPercent) = (nil, nil, nil, nil, nil)
-        (skipPercent, skippedCount) = (nil, nil)
+        (self.avgAtKPercent, self.consAtKPercent, self.description, self.failCount, self.failPercent) = (nil, nil, nil, nil, nil)
+        (self.metricName, self.metricUuid, self.passAtKPercent, self.passCount, self.passPercent) = (nil, nil, nil, nil, nil)
+        (self.skipPercent, self.skippedCount) = (nil, nil)
     }
 }
 
-public extension ApiMetricResultSummary {
-    init(from decoder: Decoder) throws {
+extension ApiMetricResultSummary {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        avgAtKPercent = try container.sdkDecodeIfPresent(.avgAtKPercent)
-        consAtKPercent = try container.sdkDecodeIfPresent(.consAtKPercent)
-        description = try container.sdkDecodeIfPresent(.description)
-        failCount = try container.sdkDecodeIfPresent(.failCount)
-        failPercent = try container.sdkDecodeIfPresent(.failPercent)
-        metricName = try container.sdkDecodeIfPresent(.metricName)
-        metricUuid = try container.sdkDecodeIfPresent(.metricUuid)
-        passAtKPercent = try container.sdkDecodeIfPresent(.passAtKPercent)
-        passCount = try container.sdkDecodeIfPresent(.passCount)
-        passPercent = try container.sdkDecodeIfPresent(.passPercent)
-        skipPercent = try container.sdkDecodeIfPresent(.skipPercent)
-        skippedCount = try container.sdkDecodeIfPresent(.skippedCount)
+        self.avgAtKPercent = try container.sdkDecodeIfPresent(.avgAtKPercent)
+        self.consAtKPercent = try container.sdkDecodeIfPresent(.consAtKPercent)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.failCount = try container.sdkDecodeIfPresent(.failCount)
+        self.failPercent = try container.sdkDecodeIfPresent(.failPercent)
+        self.metricName = try container.sdkDecodeIfPresent(.metricName)
+        self.metricUuid = try container.sdkDecodeIfPresent(.metricUuid)
+        self.passAtKPercent = try container.sdkDecodeIfPresent(.passAtKPercent)
+        self.passCount = try container.sdkDecodeIfPresent(.passCount)
+        self.passPercent = try container.sdkDecodeIfPresent(.passPercent)
+        self.skipPercent = try container.sdkDecodeIfPresent(.skipPercent)
+        self.skippedCount = try container.sdkDecodeIfPresent(.skippedCount)
     }
 }
 
-public extension ApiMetricResultSummary {
-    init(
-        avgAtKPercent: Double? = nil,
-        consAtKPercent: Double? = nil,
-        description: String? = nil,
-        failCount: Int? = nil,
-        failPercent: Double? = nil,
-        metricName: String? = nil,
-        metricUuid: String? = nil,
-        passAtKPercent: Double? = nil,
-        passCount: Int? = nil,
-        passPercent: Double? = nil,
-        skipPercent: Double? = nil,
-        skippedCount: Int? = nil
-    ) {
+extension ApiMetricResultSummary {
+    public init(avgAtKPercent: Double? = nil, consAtKPercent: Double? = nil, description: String? = nil, failCount: Int? = nil, failPercent: Double? = nil, metricName: String? = nil, metricUuid: String? = nil, passAtKPercent: Double? = nil, passCount: Int? = nil, passPercent: Double? = nil, skipPercent: Double? = nil, skippedCount: Int? = nil) {
         self.init()
         (self.avgAtKPercent, self.consAtKPercent) = (avgAtKPercent, consAtKPercent)
         (self.description, self.failCount) = (description, failCount)
@@ -156,36 +143,27 @@ public struct ApiEpochResultSummary: Codable {
     }
 
     init() {
-        (avgAtKPercent, consAtKPercent, epochs, passAtKPercent, perEpoch) = (nil, nil, nil, nil, nil)
-        (rowsExcluded, rowsScored, scoreStddevPercent) = (nil, nil, nil)
+        (self.avgAtKPercent, self.consAtKPercent, self.epochs, self.passAtKPercent, self.perEpoch) = (nil, nil, nil, nil, nil)
+        (self.rowsExcluded, self.rowsScored, self.scoreStddevPercent) = (nil, nil, nil)
     }
 }
 
-public extension ApiEpochResultSummary {
-    init(from decoder: Decoder) throws {
+extension ApiEpochResultSummary {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        avgAtKPercent = try container.sdkDecodeIfPresent(.avgAtKPercent)
-        consAtKPercent = try container.sdkDecodeIfPresent(.consAtKPercent)
-        epochs = try container.sdkDecodeIfPresent(.epochs)
-        passAtKPercent = try container.sdkDecodeIfPresent(.passAtKPercent)
-        perEpoch = try container.sdkDecodeIfPresent(.perEpoch)
-        rowsExcluded = try container.sdkDecodeIfPresent(.rowsExcluded)
-        rowsScored = try container.sdkDecodeIfPresent(.rowsScored)
-        scoreStddevPercent = try container.sdkDecodeIfPresent(.scoreStddevPercent)
+        self.avgAtKPercent = try container.sdkDecodeIfPresent(.avgAtKPercent)
+        self.consAtKPercent = try container.sdkDecodeIfPresent(.consAtKPercent)
+        self.epochs = try container.sdkDecodeIfPresent(.epochs)
+        self.passAtKPercent = try container.sdkDecodeIfPresent(.passAtKPercent)
+        self.perEpoch = try container.sdkDecodeIfPresent(.perEpoch)
+        self.rowsExcluded = try container.sdkDecodeIfPresent(.rowsExcluded)
+        self.rowsScored = try container.sdkDecodeIfPresent(.rowsScored)
+        self.scoreStddevPercent = try container.sdkDecodeIfPresent(.scoreStddevPercent)
     }
 }
 
-public extension ApiEpochResultSummary {
-    init(
-        avgAtKPercent: Double? = nil,
-        consAtKPercent: Double? = nil,
-        epochs: Int? = nil,
-        passAtKPercent: Double? = nil,
-        perEpoch: [ApiPerEpochResultSummary]? = nil,
-        rowsExcluded: Int? = nil,
-        rowsScored: Int? = nil,
-        scoreStddevPercent: Double? = nil
-    ) {
+extension ApiEpochResultSummary {
+    public init(avgAtKPercent: Double? = nil, consAtKPercent: Double? = nil, epochs: Int? = nil, passAtKPercent: Double? = nil, perEpoch: [ApiPerEpochResultSummary]? = nil, rowsExcluded: Int? = nil, rowsScored: Int? = nil, scoreStddevPercent: Double? = nil) {
         self.init()
         (self.avgAtKPercent, self.consAtKPercent) = (avgAtKPercent, consAtKPercent)
         (self.epochs, self.passAtKPercent) = (epochs, passAtKPercent)
@@ -225,32 +203,25 @@ public struct ApiLatencyMetrics: Codable {
     }
 
     init() {
-        (avgE2eLatencyMs, maxE2eLatencyMs, minE2eLatencyMs, p50LatencyMs, p90LatencyMs) = (nil, nil, nil, nil, nil)
-        p95LatencyMs = nil
+        (self.avgE2eLatencyMs, self.maxE2eLatencyMs, self.minE2eLatencyMs, self.p50LatencyMs, self.p90LatencyMs) = (nil, nil, nil, nil, nil)
+        self.p95LatencyMs = nil
     }
 }
 
-public extension ApiLatencyMetrics {
-    init(from decoder: Decoder) throws {
+extension ApiLatencyMetrics {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        avgE2eLatencyMs = try container.sdkDecodeIfPresent(.avgE2eLatencyMs)
-        maxE2eLatencyMs = try container.sdkDecodeIfPresent(.maxE2eLatencyMs)
-        minE2eLatencyMs = try container.sdkDecodeIfPresent(.minE2eLatencyMs)
-        p50LatencyMs = try container.sdkDecodeIfPresent(.p50LatencyMs)
-        p90LatencyMs = try container.sdkDecodeIfPresent(.p90LatencyMs)
-        p95LatencyMs = try container.sdkDecodeIfPresent(.p95LatencyMs)
+        self.avgE2eLatencyMs = try container.sdkDecodeIfPresent(.avgE2eLatencyMs)
+        self.maxE2eLatencyMs = try container.sdkDecodeIfPresent(.maxE2eLatencyMs)
+        self.minE2eLatencyMs = try container.sdkDecodeIfPresent(.minE2eLatencyMs)
+        self.p50LatencyMs = try container.sdkDecodeIfPresent(.p50LatencyMs)
+        self.p90LatencyMs = try container.sdkDecodeIfPresent(.p90LatencyMs)
+        self.p95LatencyMs = try container.sdkDecodeIfPresent(.p95LatencyMs)
     }
 }
 
-public extension ApiLatencyMetrics {
-    init(
-        avgE2eLatencyMs: Double? = nil,
-        maxE2eLatencyMs: Double? = nil,
-        minE2eLatencyMs: Double? = nil,
-        p50LatencyMs: Double? = nil,
-        p90LatencyMs: Double? = nil,
-        p95LatencyMs: Double? = nil
-    ) {
+extension ApiLatencyMetrics {
+    public init(avgE2eLatencyMs: Double? = nil, maxE2eLatencyMs: Double? = nil, minE2eLatencyMs: Double? = nil, p50LatencyMs: Double? = nil, p90LatencyMs: Double? = nil, p95LatencyMs: Double? = nil) {
         self.init()
         (self.avgE2eLatencyMs, self.maxE2eLatencyMs) = (avgE2eLatencyMs, maxE2eLatencyMs)
         (self.minE2eLatencyMs, self.p50LatencyMs) = (minE2eLatencyMs, p50LatencyMs)
@@ -271,20 +242,20 @@ public struct ApiPerformanceMetrics: Codable {
     }
 
     init() {
-        (candidateLatency, tokenUsage) = (nil, nil)
+        (self.candidateLatency, self.tokenUsage) = (nil, nil)
     }
 }
 
-public extension ApiPerformanceMetrics {
-    init(from decoder: Decoder) throws {
+extension ApiPerformanceMetrics {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        candidateLatency = try container.sdkDecodeIfPresent(.candidateLatency)
-        tokenUsage = try container.sdkDecodeIfPresent(.tokenUsage)
+        self.candidateLatency = try container.sdkDecodeIfPresent(.candidateLatency)
+        self.tokenUsage = try container.sdkDecodeIfPresent(.tokenUsage)
     }
 }
 
-public extension ApiPerformanceMetrics {
-    init(candidateLatency: ApiLatencyMetrics? = nil, tokenUsage: ApiTokenUsage? = nil) {
+extension ApiPerformanceMetrics {
+    public init(candidateLatency: ApiLatencyMetrics? = nil, tokenUsage: ApiTokenUsage? = nil) {
         self.init()
         (self.candidateLatency, self.tokenUsage) = (candidateLatency, tokenUsage)
     }

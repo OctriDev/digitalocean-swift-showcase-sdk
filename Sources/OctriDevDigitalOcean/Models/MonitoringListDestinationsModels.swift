@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Monitoring domain models
+// Monitoring domain models
 /// Typed representation of the `MonitoringListDestinations` API schema.
 public struct MonitoringListDestinations: Codable {
     /// Optional array value serialized in the `destinations` wire field.
@@ -14,19 +14,19 @@ public struct MonitoringListDestinations: Codable {
     }
 
     init() {
-        destinations = nil
+        self.destinations = nil
     }
 }
 
-public extension MonitoringListDestinations {
-    init(from decoder: Decoder) throws {
+extension MonitoringListDestinations {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        destinations = try container.sdkDecodeIfPresent(.destinations)
+        self.destinations = try container.sdkDecodeIfPresent(.destinations)
     }
 }
 
-public extension MonitoringListDestinations {
-    init(destinations: [DestinationOmitCredentials]? = nil) {
+extension MonitoringListDestinations {
+    public init(destinations: [DestinationOmitCredentials]? = nil) {
         self.init()
         self.destinations = destinations
     }

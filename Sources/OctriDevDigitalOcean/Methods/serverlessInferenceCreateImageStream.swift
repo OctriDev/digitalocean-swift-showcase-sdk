@@ -6,20 +6,20 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ServerlessInferenceMethods {
-    struct InferenceCreateImageStreamOptions {
+extension ServerlessInferenceMethods {
+    public struct InferenceCreateImageStreamOptions {
         public var prompt: String
         public var model: String
         public var n: Int
         public var stream: Bool?
-        public var moderation: SdkOptional<String>?
-        public var background: SdkOptional<String>?
-        public var outputFormat: SdkOptional<String>?
-        public var outputCompression: SdkOptional<Int>?
-        public var quality: SdkOptional<String>?
-        public var size: CreateImageRequestSize?
-        public var partialImages: SdkOptional<Int>?
-        public var user: SdkOptional<String>?
+        public var moderation: SdkOptional<String>? = nil
+        public var background: SdkOptional<String>? = nil
+        public var outputFormat: SdkOptional<String>? = nil
+        public var outputCompression: SdkOptional<Int>? = nil
+        public var quality: SdkOptional<String>? = nil
+        public var size: CreateImageRequestSize? = nil
+        public var partialImages: SdkOptional<Int>? = nil
+        public var user: SdkOptional<String>? = nil
 
         public init(prompt: String, model: String, n: Int, stream: Bool?) {
             self.prompt = prompt
@@ -29,8 +29,7 @@ public extension ServerlessInferenceMethods {
         }
     }
 
-    /// Creates a high-quality image from a text prompt using GPT-IMAGE-1, the latest image generation model with
-    /// automatic prompt optimization and enhanced visual capabilities.
+    /// Creates a high-quality image from a text prompt using GPT-IMAGE-1, the latest image generation model with automatic prompt optimization and enhanced visual capabilities.
     ///
     /// - Parameters:
     /// - prompt: A text description of the desired image(s). Supports up to 32,000
@@ -59,12 +58,9 @@ public extension ServerlessInferenceMethods {
     ///   than 0 to receive progressive updates of the image as it is being generated.
     /// - user: A unique identifier representing your end-user, which can help
     ///   DigitalOcean to monitor and detect abuse.
-    static func inferenceCreateImageStream(
-        config: ClientConfig,
-        options: InferenceCreateImageStreamOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AsyncThrowingStream<ImageGenPartialImageEvent, Swift.Error> {
+    public static func inferenceCreateImageStream(config: ClientConfig, options: InferenceCreateImageStreamOptions, requestOptions: RequestOptions? = nil) async throws -> AsyncThrowingStream<ImageGenPartialImageEvent, Swift.Error> {
         let requestBody = InferenceCreateImageStreamStreamRequestBody(options: options)
+
 
         let upstream = try await sdkStream(
             "POST",
@@ -86,11 +82,8 @@ public extension ServerlessInferenceMethods {
                             continuation.finish()
                             return
                         }
-                        let payload = try sdkDecodeBody(Data(event.data.utf8)) { try sdkJsonDecoder().decode(
-                            ImageGenPartialImageEvent.self,
-                            from: Data(event.data.utf8)
-                        ) }
-
+                        let payload = try sdkDecodeBody(Data(event.data.utf8)) { try sdkJsonDecoder().decode(ImageGenPartialImageEvent.self, from: Data(event.data.utf8)) }
+                        
                         continuation.yield(payload)
                     }
                     continuation.finish()

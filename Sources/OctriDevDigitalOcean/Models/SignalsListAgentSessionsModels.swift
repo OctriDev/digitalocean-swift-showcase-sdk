@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Signals domain models
+// Signals domain models
 /// A session represents a conversation monitored by Signals, such as a Harness Runtime environment session or a
 /// Serverless Inference chat completion.
 public struct Session2: Codable {
@@ -31,45 +31,33 @@ public struct Session2: Codable {
         case signalCount = "signal_count"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Session2 {
-    init(from decoder: Decoder) throws {
+extension Session2 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.sessionId) else {
-            throw SdkValidationError(
-                field: "session_id",
-                code: "required",
-                message: "Validation failed for 'session_id': value is required"
-            )
+            throw SdkValidationError(field: "session_id", code: "required", message: "Validation failed for 'session_id': value is required")
         }
-        sessionId = try container.sdkDecodeRequired(.sessionId)
-        totalTurns = try container.sdkDecodeIfPresent(.totalTurns)
-        startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        durationSeconds = try container.sdkDecodeIfPresent(.durationSeconds)
-        signalCount = try container.sdkDecodeIfPresent(.signalCount)
-        try sdkValidateUuid("session_id", sessionId)
-        if let value = startedAt {
+        self.sessionId = try container.sdkDecodeRequired(.sessionId)
+        self.totalTurns = try container.sdkDecodeIfPresent(.totalTurns)
+        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        self.durationSeconds = try container.sdkDecodeIfPresent(.durationSeconds)
+        self.signalCount = try container.sdkDecodeIfPresent(.signalCount)
+            try sdkValidateUuid("session_id", self.sessionId)
+        if let value = self.startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
     }
 }
 
-public extension Session2 {
-    init(
-        sessionId: String,
-        totalTurns: Int? = nil,
-        startedAt: Date? = nil,
-        durationSeconds: Double? = nil,
-        signalCount: Int? = nil
-    ) throws {
+extension Session2 {
+    public init(sessionId: String, totalTurns: Int? = nil, startedAt: Date? = nil, durationSeconds: Double? = nil, signalCount: Int? = nil) throws {
         (self.sessionId, self.totalTurns) = (sessionId, totalTurns)
         (self.startedAt, self.durationSeconds) = (startedAt, durationSeconds)
         self.signalCount = signalCount
-        try sdkValidateUuid("session_id", self.sessionId)
+            try sdkValidateUuid("session_id", self.sessionId)
         if let value = self.startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
@@ -91,20 +79,20 @@ public struct ListSessionsResponseResponseEdgesItem: Codable {
     }
 
     init() {
-        (cursor, node) = (nil, nil)
+        (self.cursor, self.node) = (nil, nil)
     }
 }
 
-public extension ListSessionsResponseResponseEdgesItem {
-    init(from decoder: Decoder) throws {
+extension ListSessionsResponseResponseEdgesItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        cursor = try container.sdkDecodeIfPresent(.cursor)
-        node = try container.sdkDecodeIfPresent(.node)
+        self.cursor = try container.sdkDecodeIfPresent(.cursor)
+        self.node = try container.sdkDecodeIfPresent(.node)
     }
 }
 
-public extension ListSessionsResponseResponseEdgesItem {
-    init(cursor: String? = nil, node: Session2? = nil) {
+extension ListSessionsResponseResponseEdgesItem {
+    public init(cursor: String? = nil, node: Session2? = nil) {
         self.init()
         (self.cursor, self.node) = (cursor, node)
     }
@@ -123,20 +111,20 @@ public struct ListSessionsResponseResponse: Codable {
     }
 
     init() {
-        (edges, pageInfo) = (nil, nil)
+        (self.edges, self.pageInfo) = (nil, nil)
     }
 }
 
-public extension ListSessionsResponseResponse {
-    init(from decoder: Decoder) throws {
+extension ListSessionsResponseResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        edges = try container.sdkDecodeIfPresent(.edges)
-        pageInfo = try container.sdkDecodeIfPresent(.pageInfo)
+        self.edges = try container.sdkDecodeIfPresent(.edges)
+        self.pageInfo = try container.sdkDecodeIfPresent(.pageInfo)
     }
 }
 
-public extension ListSessionsResponseResponse {
-    init(edges: [ListSessionsResponseResponseEdgesItem]? = nil, pageInfo: ListSessionsResponseResponsePageInfo? = nil) {
+extension ListSessionsResponseResponse {
+    public init(edges: [ListSessionsResponseResponseEdgesItem]? = nil, pageInfo: ListSessionsResponseResponsePageInfo? = nil) {
         self.init()
         (self.edges, self.pageInfo) = (edges, pageInfo)
     }
@@ -152,19 +140,19 @@ public struct ListSessionsResponseResponsePageInfo: Codable {
     }
 
     init() {
-        hasNextPage = nil
+        self.hasNextPage = nil
     }
 }
 
-public extension ListSessionsResponseResponsePageInfo {
-    init(from decoder: Decoder) throws {
+extension ListSessionsResponseResponsePageInfo {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        hasNextPage = try container.sdkDecodeIfPresent(.hasNextPage)
+        self.hasNextPage = try container.sdkDecodeIfPresent(.hasNextPage)
     }
 }
 
-public extension ListSessionsResponseResponsePageInfo {
-    init(hasNextPage: Bool? = nil) {
+extension ListSessionsResponseResponsePageInfo {
+    public init(hasNextPage: Bool? = nil) {
         self.init()
         self.hasNextPage = hasNextPage
     }

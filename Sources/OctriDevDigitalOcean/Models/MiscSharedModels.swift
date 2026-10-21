@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Misc domain models
+// Misc domain models
 /// Typed representation of the `AppPropose` API schema.
 public struct AppPropose: Codable {
     /// The desired configuration of an application.
@@ -18,28 +18,22 @@ public struct AppPropose: Codable {
         case appId = "app_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AppPropose {
-    init(from decoder: Decoder) throws {
+extension AppPropose {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.spec) else {
-            throw SdkValidationError(
-                field: "spec",
-                code: "required",
-                message: "Validation failed for 'spec': value is required"
-            )
+            throw SdkValidationError(field: "spec", code: "required", message: "Validation failed for 'spec': value is required")
         }
-        spec = try container.sdkDecodeRequired(.spec)
-        appId = try container.sdkDecodeIfPresent(.appId)
+        self.spec = try container.sdkDecodeRequired(.spec)
+        self.appId = try container.sdkDecodeIfPresent(.appId)
     }
 }
 
-public extension AppPropose {
-    init(spec: AppSpec, appId: String? = nil) {
+extension AppPropose {
+    public init(spec: AppSpec, appId: String? = nil) {
         (self.spec, self.appId) = (spec, appId)
     }
 }
@@ -101,63 +95,37 @@ public struct VolumesExt4: Codable {
         case filesystemLabel = "filesystem_label"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VolumesExt4 {
-    init(from decoder: Decoder) throws {
+extension VolumesExt4 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.sizeGigabytes) else {
-            throw SdkValidationError(
-                field: "size_gigabytes",
-                code: "required",
-                message: "Validation failed for 'size_gigabytes': value is required"
-            )
+            throw SdkValidationError(field: "size_gigabytes", code: "required", message: "Validation failed for 'size_gigabytes': value is required")
         }
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        sizeGigabytes = try container.sdkDecodeRequired(.sizeGigabytes)
-        region = try container.sdkDecodeRequired(.region)
-        id = try container.sdkDecodeIfPresent(.id)
-        dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
-        description = try container.sdkDecodeIfPresent(.description)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        snapshotId = try container.sdkDecodeIfPresent(.snapshotId)
-        filesystemType = try container.sdkDecodeIfPresent(.filesystemType)
-        filesystemLabel = try container.sdkDecodeIfPresent(.filesystemLabel)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.sizeGigabytes = try container.sdkDecodeRequired(.sizeGigabytes)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.snapshotId = try container.sdkDecodeIfPresent(.snapshotId)
+        self.filesystemType = try container.sdkDecodeIfPresent(.filesystemType)
+        self.filesystemLabel = try container.sdkDecodeIfPresent(.filesystemLabel)
     }
 }
 
-public extension VolumesExt4 {
-    init(
-        name: String,
-        sizeGigabytes: Int,
-        region: RegionSlug,
-        id: String? = nil,
-        dropletIds: [Int]? = nil,
-        description: String? = nil,
-        createdAt: String? = nil,
-        tags: TagsArray? = nil,
-        snapshotId: String? = nil,
-        filesystemType: String? = nil,
-        filesystemLabel: VolumeWriteFileSystemLabel? = nil
-    ) {
+extension VolumesExt4 {
+    public init(name: String, sizeGigabytes: Int, region: RegionSlug, id: String? = nil, dropletIds: [Int]? = nil, description: String? = nil, createdAt: String? = nil, tags: TagsArray? = nil, snapshotId: String? = nil, filesystemType: String? = nil, filesystemLabel: VolumeWriteFileSystemLabel? = nil) {
         (self.name, self.sizeGigabytes) = (name, sizeGigabytes)
         (self.region, self.id) = (region, id)
         (self.dropletIds, self.description) = (dropletIds, description)
@@ -211,47 +179,30 @@ public struct DomainRecordA: Codable {
         case tag
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DomainRecordA {
-    init(from decoder: Decoder) throws {
+extension DomainRecordA {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        data = try container.sdkDecodeIfPresent(.data)
-        priority = try container.sdkDecodeIfPresent(.priority)
-        port = try container.sdkDecodeIfPresent(.port)
-        ttl = try container.sdkDecodeIfPresent(.ttl)
-        weight = try container.sdkDecodeIfPresent(.weight)
-        flags = try container.sdkDecodeIfPresent(.flags)
-        tag = try container.sdkDecodeIfPresent(.tag)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.data = try container.sdkDecodeIfPresent(.data)
+        self.priority = try container.sdkDecodeIfPresent(.priority)
+        self.port = try container.sdkDecodeIfPresent(.port)
+        self.ttl = try container.sdkDecodeIfPresent(.ttl)
+        self.weight = try container.sdkDecodeIfPresent(.weight)
+        self.flags = try container.sdkDecodeIfPresent(.flags)
+        self.tag = try container.sdkDecodeIfPresent(.tag)
     }
 }
 
-public extension DomainRecordA {
-    init(
-        type: String,
-        id: Int? = nil,
-        name: String? = nil,
-        data: String? = nil,
-        priority: Int? = nil,
-        port: Int? = nil,
-        ttl: Int? = nil,
-        weight: Int? = nil,
-        flags: Int? = nil,
-        tag: String? = nil
-    ) {
+extension DomainRecordA {
+    public init(type: String, id: Int? = nil, name: String? = nil, data: String? = nil, priority: Int? = nil, port: Int? = nil, ttl: Int? = nil, weight: Int? = nil, flags: Int? = nil, tag: String? = nil) {
         (self.type, self.id) = (type, id)
         (self.name, self.data) = (name, data)
         (self.priority, self.port) = (priority, port)
@@ -290,60 +241,35 @@ public struct AddonsResourceNew: Codable {
         case fleetUuid = "fleet_uuid"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AddonsResourceNew {
-    init(from decoder: Decoder) throws {
+extension AddonsResourceNew {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.appSlug) else {
-            throw SdkValidationError(
-                field: "app_slug",
-                code: "required",
-                message: "Validation failed for 'app_slug': value is required"
-            )
+            throw SdkValidationError(field: "app_slug", code: "required", message: "Validation failed for 'app_slug': value is required")
         }
         guard container.contains(.planSlug) else {
-            throw SdkValidationError(
-                field: "plan_slug",
-                code: "required",
-                message: "Validation failed for 'plan_slug': value is required"
-            )
+            throw SdkValidationError(field: "plan_slug", code: "required", message: "Validation failed for 'plan_slug': value is required")
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.metadata) else {
-            throw SdkValidationError(
-                field: "metadata",
-                code: "required",
-                message: "Validation failed for 'metadata': value is required"
-            )
+            throw SdkValidationError(field: "metadata", code: "required", message: "Validation failed for 'metadata': value is required")
         }
-        appSlug = try container.sdkDecodeRequired(.appSlug)
-        planSlug = try container.sdkDecodeRequired(.planSlug)
-        name = try container.sdkDecodeRequired(.name)
-        metadata = try container.sdkDecodeRequired(.metadata)
-        linkedDropletId = try container.sdkDecodeIfPresent(.linkedDropletId)
-        fleetUuid = try container.sdkDecodeIfPresent(.fleetUuid)
+        self.appSlug = try container.sdkDecodeRequired(.appSlug)
+        self.planSlug = try container.sdkDecodeRequired(.planSlug)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.metadata = try container.sdkDecodeRequired(.metadata)
+        self.linkedDropletId = try container.sdkDecodeIfPresent(.linkedDropletId)
+        self.fleetUuid = try container.sdkDecodeIfPresent(.fleetUuid)
     }
 }
 
-public extension AddonsResourceNew {
-    init(
-        appSlug: String,
-        planSlug: String,
-        name: String,
-        metadata: [AddonsResourceMetadata],
-        linkedDropletId: Int? = nil,
-        fleetUuid: String? = nil
-    ) {
+extension AddonsResourceNew {
+    public init(appSlug: String, planSlug: String, name: String, metadata: [AddonsResourceMetadata], linkedDropletId: Int? = nil, fleetUuid: String? = nil) {
         (self.appSlug, self.planSlug) = (appSlug, planSlug)
         (self.name, self.metadata) = (name, metadata)
         (self.linkedDropletId, self.fleetUuid) = (linkedDropletId, fleetUuid)
@@ -361,28 +287,22 @@ public struct VolumesExt4Variant3: Codable {
         case filesystemLabel = "filesystem_label"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VolumesExt4Variant3 {
-    init(from decoder: Decoder) throws {
+extension VolumesExt4Variant3 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
-        region = try container.sdkDecodeRequired(.region)
-        filesystemLabel = try container.sdkDecodeIfPresent(.filesystemLabel)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.filesystemLabel = try container.sdkDecodeIfPresent(.filesystemLabel)
     }
 }
 
-public extension VolumesExt4Variant3 {
-    init(region: RegionSlug, filesystemLabel: VolumeWriteFileSystemLabel? = nil) {
+extension VolumesExt4Variant3 {
+    public init(region: RegionSlug, filesystemLabel: VolumeWriteFileSystemLabel? = nil) {
         (self.region, self.filesystemLabel) = (region, filesystemLabel)
     }
 }
@@ -398,27 +318,21 @@ public struct SlackNotificationConfig: Codable {
         case channel
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SlackNotificationConfig {
-    init(from decoder: Decoder) throws {
+extension SlackNotificationConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.channel) else {
-            throw SdkValidationError(
-                field: "channel",
-                code: "required",
-                message: "Validation failed for 'channel': value is required"
-            )
+            throw SdkValidationError(field: "channel", code: "required", message: "Validation failed for 'channel': value is required")
         }
-        channel = try container.sdkDecodeRequired(.channel)
+        self.channel = try container.sdkDecodeRequired(.channel)
     }
 }
 
-public extension SlackNotificationConfig {
-    init(channel: String) {
+extension SlackNotificationConfig {
+    public init(channel: String) {
         self.channel = channel
     }
 }
@@ -442,24 +356,24 @@ public struct PartnerAttachmentServiceKey: Codable {
     }
 
     init() {
-        (value, createdAt, state) = (nil, nil, nil)
+        (self.value, self.createdAt, self.state) = (nil, nil, nil)
     }
 }
 
-public extension PartnerAttachmentServiceKey {
-    init(from decoder: Decoder) throws {
+extension PartnerAttachmentServiceKey {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        value = try container.sdkDecodeIfPresent(.value)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        state = try container.sdkDecodeIfPresent(.state)
-        if let value = createdAt {
+        self.value = try container.sdkDecodeIfPresent(.value)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.state = try container.sdkDecodeIfPresent(.state)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-public extension PartnerAttachmentServiceKey {
-    init(value: String? = nil, createdAt: Date? = nil, state: String? = nil) throws {
+extension PartnerAttachmentServiceKey {
+    public init(value: String? = nil, createdAt: Date? = nil, state: String? = nil) throws {
         self.init()
         (self.value, self.createdAt) = (value, createdAt)
         self.state = state
@@ -495,35 +409,24 @@ public struct NotificationChannelRequest: Codable {
         case webhook
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NotificationChannelRequest {
-    init(from decoder: Decoder) throws {
+extension NotificationChannelRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        email = try container.sdkDecodeIfPresent(.email)
-        slack = try container.sdkDecodeIfPresent(.slack)
-        webhook = try container.sdkDecodeIfPresent(.webhook)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.email = try container.sdkDecodeIfPresent(.email)
+        self.slack = try container.sdkDecodeIfPresent(.slack)
+        self.webhook = try container.sdkDecodeIfPresent(.webhook)
     }
 }
 
-public extension NotificationChannelRequest {
-    init(
-        name: String,
-        email: EmailNotificationConfig? = nil,
-        slack: SlackNotificationConfig? = nil,
-        webhook: WebhookNotificationConfig? = nil
-    ) {
+extension NotificationChannelRequest {
+    public init(name: String, email: EmailNotificationConfig? = nil, slack: SlackNotificationConfig? = nil, webhook: WebhookNotificationConfig? = nil) {
         (self.name, self.email) = (name, email)
         (self.slack, self.webhook) = (slack, webhook)
     }
@@ -545,20 +448,20 @@ public struct SubscriptionTierExtended: Codable {
     }
 
     init() {
-        (eligible, eligibilityReasons) = (nil, nil)
+        (self.eligible, self.eligibilityReasons) = (nil, nil)
     }
 }
 
-public extension SubscriptionTierExtended {
-    init(from decoder: Decoder) throws {
+extension SubscriptionTierExtended {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        eligible = try container.sdkDecodeIfPresent(.eligible)
-        eligibilityReasons = try container.sdkDecodeIfPresent(.eligibilityReasons)
+        self.eligible = try container.sdkDecodeIfPresent(.eligible)
+        self.eligibilityReasons = try container.sdkDecodeIfPresent(.eligibilityReasons)
     }
 }
 
-public extension SubscriptionTierExtended {
-    init(eligible: Bool? = nil, eligibilityReasons: [SubscriptionTierExtendedEligibilityReasonsItem]? = nil) {
+extension SubscriptionTierExtended {
+    public init(eligible: Bool? = nil, eligibilityReasons: [SubscriptionTierExtendedEligibilityReasonsItem]? = nil) {
         self.init()
         (self.eligible, self.eligibilityReasons) = (eligible, eligibilityReasons)
     }
@@ -585,37 +488,27 @@ public struct FirewallRuleBase: Codable {
         case action
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension FirewallRuleBase {
-    init(from decoder: Decoder) throws {
+extension FirewallRuleBase {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.protocol) else {
-            throw SdkValidationError(
-                field: "protocol",
-                code: "required",
-                message: "Validation failed for 'protocol': value is required"
-            )
+        guard container.contains(.`protocol`) else {
+            throw SdkValidationError(field: "protocol", code: "required", message: "Validation failed for 'protocol': value is required")
         }
         guard container.contains(.ports) else {
-            throw SdkValidationError(
-                field: "ports",
-                code: "required",
-                message: "Validation failed for 'ports': value is required"
-            )
+            throw SdkValidationError(field: "ports", code: "required", message: "Validation failed for 'ports': value is required")
         }
-        self.protocol = try container.sdkDecodeRequired(.protocol)
-        ports = try container.sdkDecodeRequired(.ports)
-        action = try container.sdkDecodeIfPresent(.action)
+        self.`protocol` = try container.sdkDecodeRequired(.`protocol`)
+        self.ports = try container.sdkDecodeRequired(.ports)
+        self.action = try container.sdkDecodeIfPresent(.action)
     }
 }
 
-public extension FirewallRuleBase {
-    init(protocol: FirewallRuleBaseProtocol, ports: String, action: FirewallRuleBaseAction? = nil) {
-        (self.protocol, self.ports) = (`protocol`, ports)
+extension FirewallRuleBase {
+    public init(`protocol`: FirewallRuleBaseProtocol, ports: String, action: FirewallRuleBaseAction? = nil) {
+        (self.`protocol`, self.ports) = (`protocol`, ports)
         self.action = action
     }
 }

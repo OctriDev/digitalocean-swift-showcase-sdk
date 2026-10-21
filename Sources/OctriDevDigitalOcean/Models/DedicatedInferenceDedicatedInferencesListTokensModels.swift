@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DedicatedInference domain models
+// DedicatedInference domain models
 public struct TokensListVariant0: Codable {
     public var tokens: [DedicatedInferenceAccessToken]?
 
@@ -12,19 +12,19 @@ public struct TokensListVariant0: Codable {
     }
 
     init() {
-        tokens = nil
+        self.tokens = nil
     }
 }
 
-public extension TokensListVariant0 {
-    init(from decoder: Decoder) throws {
+extension TokensListVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        tokens = try container.sdkDecodeIfPresent(.tokens)
+        self.tokens = try container.sdkDecodeIfPresent(.tokens)
     }
 }
 
-public extension TokensListVariant0 {
-    init(tokens: [DedicatedInferenceAccessToken]? = nil) {
+extension TokensListVariant0 {
+    public init(tokens: [DedicatedInferenceAccessToken]? = nil) {
         self.init()
         self.tokens = tokens
     }
@@ -44,29 +44,23 @@ public struct TokensList: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension TokensList {
-    init(from decoder: Decoder) throws {
+extension TokensList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        tokens = try container.sdkDecodeIfPresent(.tokens)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.tokens = try container.sdkDecodeIfPresent(.tokens)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension TokensList {
-    init(meta: MetaMeta, tokens: [DedicatedInferenceAccessToken]? = nil, links: PageLinks? = nil) {
+extension TokensList {
+    public init(meta: MetaMeta, tokens: [DedicatedInferenceAccessToken]? = nil, links: PageLinks? = nil) {
         (self.meta, self.tokens) = (meta, tokens)
         self.links = links
     }

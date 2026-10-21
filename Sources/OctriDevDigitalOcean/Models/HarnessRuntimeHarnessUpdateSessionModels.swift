@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HarnessRuntime domain models
+// HarnessRuntime domain models
 /// PATCH body for /v2/agents/sessions/{session_id}: an allowlisted subset of session-scoped settings (never
 /// environment-spec / config mutation). At least one property below must be present; {} is 400. Unknown top-level
 /// keys are rejected with 400. New patchable fields will be added here as optional properties over time.
@@ -18,19 +18,19 @@ public struct PatchSessionRequest: Codable {
     }
 
     init() {
-        resumeOnTopoff = nil
+        self.resumeOnTopoff = nil
     }
 }
 
-public extension PatchSessionRequest {
-    init(from decoder: Decoder) throws {
+extension PatchSessionRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        resumeOnTopoff = try container.sdkDecodeIfPresent(.resumeOnTopoff)
+        self.resumeOnTopoff = try container.sdkDecodeIfPresent(.resumeOnTopoff)
     }
 }
 
-public extension PatchSessionRequest {
-    init(resumeOnTopoff: Bool? = nil) {
+extension PatchSessionRequest {
+    public init(resumeOnTopoff: Bool? = nil) {
         self.init()
         self.resumeOnTopoff = resumeOnTopoff
     }

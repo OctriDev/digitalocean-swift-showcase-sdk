@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiCreate domain models
+// AgentPlatformAPIApiCreate domain models
 /// Parameters for Workspace Creation
 public struct ApiCreateWorkspaceInputPublic: Codable {
     /// Ids of the agents(s) to attach to the workspace
@@ -23,21 +23,21 @@ public struct ApiCreateWorkspaceInputPublic: Codable {
     }
 
     init() {
-        (agentUuids, description, name) = (nil, nil, nil)
+        (self.agentUuids, self.description, self.name) = (nil, nil, nil)
     }
 }
 
-public extension ApiCreateWorkspaceInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiCreateWorkspaceInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agentUuids = try container.sdkDecodeIfPresent(.agentUuids)
-        description = try container.sdkDecodeIfPresent(.description)
-        name = try container.sdkDecodeIfPresent(.name)
+        self.agentUuids = try container.sdkDecodeIfPresent(.agentUuids)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-public extension ApiCreateWorkspaceInputPublic {
-    init(agentUuids: [String]? = nil, description: String? = nil, name: String? = nil) {
+extension ApiCreateWorkspaceInputPublic {
+    public init(agentUuids: [String]? = nil, description: String? = nil, name: String? = nil) {
         self.init()
         (self.agentUuids, self.description) = (agentUuids, description)
         self.name = name
@@ -54,19 +54,19 @@ public struct ApiCreateWorkspaceOutput: Codable {
     }
 
     init() {
-        workspace = nil
+        self.workspace = nil
     }
 }
 
-public extension ApiCreateWorkspaceOutput {
-    init(from decoder: Decoder) throws {
+extension ApiCreateWorkspaceOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        workspace = try container.sdkDecodeIfPresent(.workspace)
+        self.workspace = try container.sdkDecodeIfPresent(.workspace)
     }
 }
 
-public extension ApiCreateWorkspaceOutput {
-    init(workspace: ApiWorkspace? = nil) {
+extension ApiCreateWorkspaceOutput {
+    public init(workspace: ApiWorkspace? = nil) {
         self.init()
         self.workspace = workspace
     }

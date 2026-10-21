@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
-    struct GenaiUpdateCustomModelMetadataOptions: Codable {
+extension AgentPlatformApiMethods {
+    public struct GenaiUpdateCustomModelMetadataOptions: Codable {
         public var uuid: String
         public var description: String?
         public var inputModalities: [String]?
@@ -23,9 +23,7 @@ public extension AgentPlatformApiMethods {
         }
     }
 
-    /// Updates metadata for a custom model identified by its UUID. Supply any metadata fields you want to change;
-    /// non-empty `input_modalities` and `output_modalities` lists replace the existing lists and are supported only for
-    /// Spaces-imported models. A 200 response returns the updated custom model.
+    /// Updates metadata for a custom model identified by its UUID. Supply any metadata fields you want to change; non-empty `input_modalities` and `output_modalities` lists replace the existing lists and are supported only for Spaces-imported models. A 200 response returns the updated custom model.
     ///
     /// To update custom model metadata, send a PATCH request to `/v2/gen-ai/custom_models/{uuid}/metadata`.
     ///
@@ -43,28 +41,9 @@ public extension AgentPlatformApiMethods {
     ///   `parameters` wire field.
     /// - tags: User-defined tags for organizing models
     /// - uuid2: UUID of the custom model to update
-    static func genaiUpdateCustomModelMetadata(
-        config: ClientConfig,
-        options: GenaiUpdateCustomModelMetadataOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiUpdateCustomModelMetadataOutputPublic {
+    public static func genaiUpdateCustomModelMetadata(config: ClientConfig, options: GenaiUpdateCustomModelMetadataOptions, requestOptions: RequestOptions? = nil) async throws -> ApiUpdateCustomModelMetadataOutputPublic {
         let requestBody = GenaiUpdateCustomModelMetadataRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "PATCH",
-            ["/v2/gen-ai/custom_models/", sdkEncodePathSegment(sdkWireString(options.uuid)), "/metadata"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "genai_update_custom_model_metadata",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PATCH", ["/v2/gen-ai/custom_models/", sdkEncodePathSegment(sdkWireString(options.uuid)), "/metadata"].joined(), config: config, body: requestBody, decoder: .json, operationId: "genai_update_custom_model_metadata", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

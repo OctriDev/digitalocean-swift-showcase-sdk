@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApi domain models
+// AgentPlatformAPIApi domain models
 /// Code examples for using the model
 public struct ApiCodeSnippets: Codable {
     /// Optional `string` value serialized in the `curl` wire field.
@@ -27,22 +27,22 @@ public struct ApiCodeSnippets: Codable {
     }
 
     init() {
-        (curl, javascript, python, sdk) = (nil, nil, nil, nil)
+        (self.curl, self.javascript, self.python, self.sdk) = (nil, nil, nil, nil)
     }
 }
 
-public extension ApiCodeSnippets {
-    init(from decoder: Decoder) throws {
+extension ApiCodeSnippets {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        curl = try container.sdkDecodeIfPresent(.curl)
-        javascript = try container.sdkDecodeIfPresent(.javascript)
-        python = try container.sdkDecodeIfPresent(.python)
-        sdk = try container.sdkDecodeIfPresent(.sdk)
+        self.curl = try container.sdkDecodeIfPresent(.curl)
+        self.javascript = try container.sdkDecodeIfPresent(.javascript)
+        self.python = try container.sdkDecodeIfPresent(.python)
+        self.sdk = try container.sdkDecodeIfPresent(.sdk)
     }
 }
 
-public extension ApiCodeSnippets {
-    init(curl: String? = nil, javascript: String? = nil, python: String? = nil, sdk: String? = nil) {
+extension ApiCodeSnippets {
+    public init(curl: String? = nil, javascript: String? = nil, python: String? = nil, sdk: String? = nil) {
         self.init()
         (self.curl, self.javascript) = (curl, javascript)
         (self.python, self.sdk) = (python, sdk)

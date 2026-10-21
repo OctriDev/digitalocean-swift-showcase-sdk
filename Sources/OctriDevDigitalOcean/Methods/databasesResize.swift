@@ -6,11 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DatabasesMethods {
-    /// To resize a database cluster, send a PUT request to `/v2/databases/$DATABASE_ID/resize`. The body of the request
-    /// must specify both the size and num_nodes attributes. A successful request will receive a 202 Accepted status
-    /// code with no body in response. Querying the database cluster will show that its status attribute will now be set
-    /// to resizing. This will transition back to online when the resize operation has completed.
+extension DatabasesMethods {
+    /// To resize a database cluster, send a PUT request to `/v2/databases/$DATABASE_ID/resize`. The body of the request must specify both the size and num_nodes attributes. A successful request will receive a 202 Accepted status code with no body in response. Querying the database cluster will show that its status attribute will now be set to resizing. This will transition back to online when the resize operation has completed.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
@@ -22,37 +19,11 @@ public extension DatabasesMethods {
     /// - storageSizeMib: Additional storage added to the cluster, in MiB. If null,
     ///   no additional storage is added to the cluster, beyond what is provided as a
     ///   base amount from the 'size' and any previously added additional storage.
-    static func databasesUpdateClusterSize(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        size: String,
-        numNodes: Int,
-        storageSizeMib: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
+    public static func databasesUpdateClusterSize(config: ClientConfig, databaseClusterUuid: String, size: String, numNodes: Int, storageSizeMib: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        let requestBody = DatabasesUpdateClusterSizeRequestBody(
-            size: size,
-            numNodes: numNodes,
-            storageSizeMib: storageSizeMib
-        )
+        let requestBody = DatabasesUpdateClusterSizeRequestBody(size: size, numNodes: numNodes, storageSizeMib: storageSizeMib)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/resize"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .empty,
-            operationId: "databases_update_clusterSize",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/resize"].joined(), config: config, body: requestBody, decoder: .empty, operationId: "databases_update_clusterSize", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

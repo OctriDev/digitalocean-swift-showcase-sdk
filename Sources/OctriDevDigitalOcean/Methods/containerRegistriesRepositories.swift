@@ -6,49 +6,18 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContainerRegistriesMethods {
-    /// To delete a container repository including all of its tags, send a DELETE request to
-    /// `/v2/registries/$REGISTRY_NAME/repositories/$REPOSITORY_NAME`. A successful request will receive a 204 status
-    /// code with no body in response. This indicates that the request was processed successfully.
+extension ContainerRegistriesMethods {
+    /// To delete a container repository including all of its tags, send a DELETE request to `/v2/registries/$REGISTRY_NAME/repositories/$REPOSITORY_NAME`. A successful request will receive a 204 status code with no body in response. This indicates that the request was processed successfully.
     ///
     /// - Parameters:
     /// - registryName: The name of a container registry.
     /// - repositoryName: The name of a container registry repository. If the name
     ///   contains `/` characters, they must be URL-encoded, e.g. `%2F`.
-    static func registriesDeleteRepository(
-        config: ClientConfig,
-        registryName: String,
-        repositoryName: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await (sdkRequest(
-            "DELETE",
-            [
-                "/v2/registries/",
-                sdkEncodePathSegment(sdkWireString(registryName)),
-                "/repositories/",
-                sdkEncodePathSegment(sdkWireString(repositoryName)),
-            ].joined(),
-            config: config,
-            decoder: .empty,
-            operationId: "registries_delete_repository",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func registriesDeleteRepository(config: ClientConfig, registryName: String, repositoryName: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try (await sdkRequest("DELETE", ["/v2/registries/", sdkEncodePathSegment(sdkWireString(registryName)), "/repositories/", sdkEncodePathSegment(sdkWireString(repositoryName))].joined(), config: config, decoder: .empty, operationId: "registries_delete_repository", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To list all tags in one of your container registry's repository, send a GET request to
-    /// `/v2/registries/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/tags`. Note that if your repository name contains
-    /// `/` characters, it must be URL-encoded in the request URL. For example, to list tags for
-    /// `registry.digitalocean.com/example/my/repo`, the path would be
-    /// `/v2/registry/example/repositories/my%2Frepo/tags`. It is similar to GET
-    /// `/v2/registry/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/tags`.
+    /// To list all tags in one of your container registry's repository, send a GET request to `/v2/registries/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/tags`. Note that if your repository name contains `/` characters, it must be URL-encoded in the request URL. For example, to list tags for `registry.digitalocean.com/example/my/repo`, the path would be `/v2/registry/example/repositories/my%2Frepo/tags`. It is similar to GET `/v2/registry/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/tags`.
     ///
     /// - Parameters:
     /// - registryName: The name of a container registry.
@@ -56,46 +25,18 @@ public extension ContainerRegistriesMethods {
     ///   contains `/` characters, they must be URL-encoded, e.g. `%2F`.
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func registriesListRepositoryTags(
-        config: ClientConfig,
-        registryName: String,
-        repositoryName: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> RepositoryTags {
-        if let perPage {
+    public static func registriesListRepositoryTags(config: ClientConfig, registryName: String, repositoryName: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> RepositoryTags {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            [
-                "/v2/registries/",
-                sdkEncodePathSegment(sdkWireString(registryName)),
-                "/repositories/",
-                sdkEncodePathSegment(sdkWireString(repositoryName)),
-                "/tags",
-            ].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "registries_list_repositoryTags",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/registries/", sdkEncodePathSegment(sdkWireString(registryName)), "/repositories/", sdkEncodePathSegment(sdkWireString(repositoryName)), "/tags"].joined(), config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "registries_list_repositoryTags", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

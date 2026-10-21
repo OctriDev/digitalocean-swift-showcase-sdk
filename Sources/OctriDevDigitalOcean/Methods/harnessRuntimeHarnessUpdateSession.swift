@@ -6,12 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension HarnessRuntimeMethods {
-    /// Partial update of session-scoped settings (not the agent manifest / config). The body must include at least one
-    /// recognized patchable property; an empty object {} is 400. Only properties listed on PatchSessionRequest are
-    /// accepted — any other top-level JSON key is rejected with 400. Omitted properties are left unchanged. Today the
-    /// only patchable field is resume_on_topoff; more session settings may be added over time. Terminal sessions
-    /// (DESTROYED, FAILED) cannot be patched.
+extension HarnessRuntimeMethods {
+    /// Partial update of session-scoped settings (not the agent manifest / config). The body must include at least one recognized patchable property; an empty object {} is 400. Only properties listed on PatchSessionRequest are accepted — any other top-level JSON key is rejected with 400. Omitted properties are left unchanged. Today the only patchable field is resume_on_topoff; more session settings may be added over time. Terminal sessions (DESTROYED, FAILED) cannot be patched.
     ///
     /// - Parameters:
     /// - sessionId: The session UUID.
@@ -19,33 +15,9 @@ public extension HarnessRuntimeMethods {
     ///   automatic resumption when the team's prepayment balance is restored after a
     ///   low-balance pause. Session-scoped consent, not config-scoped. Omitted
     ///   properties are not modified.
-    static func harnessUpdateSession(
-        config: ClientConfig,
-        sessionId: String,
-        resumeOnTopoff: Bool? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> GetSessionResponse {
+    public static func harnessUpdateSession(config: ClientConfig, sessionId: String, resumeOnTopoff: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> GetSessionResponse {
         let requestBody = HarnessUpdateSessionRequestBody(resumeOnTopoff: resumeOnTopoff)
 
-        return try await (sdkRequest(
-            "PATCH",
-            ["/v2/agents/sessions/", sdkEncodePathSegment(sdkWireString(sessionId))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "harness_update_session",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "403": Error2.self,
-                "404": Error2.self,
-                "409": Error2.self,
-                "423": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PATCH", ["/v2/agents/sessions/", sdkEncodePathSegment(sdkWireString(sessionId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "harness_update_session", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "403": Error2.self, "404": Error2.self, "409": Error2.self, "423": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

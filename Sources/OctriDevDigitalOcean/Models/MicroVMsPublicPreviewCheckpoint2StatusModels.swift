@@ -3,15 +3,12 @@
 
 import Foundation
 
-/// MicroVMsPublicPreview domain models
+// MicroVMsPublicPreview domain models
 /// The checkpoint's status. You can create MicroVMs from the checkpoint when it is `CHECKPOINT_AVAILABLE`.
 public struct Checkpoint2Status: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let checkpointCreating = Checkpoint2Status(rawValue: "CHECKPOINT_CREATING")
     public static let checkpointAvailable = Checkpoint2Status(rawValue: "CHECKPOINT_AVAILABLE")
     public static let checkpointFailed = Checkpoint2Status(rawValue: "CHECKPOINT_FAILED")
@@ -20,7 +17,7 @@ public struct Checkpoint2Status: RawRepresentable, Hashable, Codable, Sendable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -33,16 +30,13 @@ public struct Checkpoint2Status: RawRepresentable, Hashable, Codable, Sendable, 
 public struct MicrovmUrlStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pending = MicrovmUrlStatus(rawValue: "PENDING")
     public static let active = MicrovmUrlStatus(rawValue: "ACTIVE")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

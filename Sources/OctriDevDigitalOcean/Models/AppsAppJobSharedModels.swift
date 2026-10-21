@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AppsAppJob domain models
+// AppsAppJob domain models
 /// Optional object value serialized in the `trigger` wire field.
 public struct AppJobInvocationTrigger: Codable {
     /// The type of trigger that initiated the job invocation.
@@ -24,25 +24,21 @@ public struct AppJobInvocationTrigger: Codable {
     }
 
     init() {
-        (type, scheduled, manual) = (nil, nil, nil)
+        (self.type, self.scheduled, self.manual) = (nil, nil, nil)
     }
 }
 
-public extension AppJobInvocationTrigger {
-    init(from decoder: Decoder) throws {
+extension AppJobInvocationTrigger {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        scheduled = try container.sdkDecodeIfPresent(.scheduled)
-        manual = try container.sdkDecodeIfPresent(.manual)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.scheduled = try container.sdkDecodeIfPresent(.scheduled)
+        self.manual = try container.sdkDecodeIfPresent(.manual)
     }
 }
 
-public extension AppJobInvocationTrigger {
-    init(
-        type: AppJobInvocationTriggerType? = nil,
-        scheduled: AppJobInvocationTriggerScheduled? = nil,
-        manual: AppJobInvocationTriggerManual? = nil
-    ) {
+extension AppJobInvocationTrigger {
+    public init(type: AppJobInvocationTriggerType? = nil, scheduled: AppJobInvocationTriggerScheduled? = nil, manual: AppJobInvocationTriggerManual? = nil) {
         self.init()
         (self.type, self.scheduled) = (type, scheduled)
         self.manual = manual
@@ -59,19 +55,19 @@ public struct AppJobInvocationTriggerManual: Codable {
     }
 
     init() {
-        user = nil
+        self.user = nil
     }
 }
 
-public extension AppJobInvocationTriggerManual {
-    init(from decoder: Decoder) throws {
+extension AppJobInvocationTriggerManual {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        user = try container.sdkDecodeIfPresent(.user)
+        self.user = try container.sdkDecodeIfPresent(.user)
     }
 }
 
-public extension AppJobInvocationTriggerManual {
-    init(user: AppJobInvocationTriggerManualUser? = nil) {
+extension AppJobInvocationTriggerManual {
+    public init(user: AppJobInvocationTriggerManualUser? = nil) {
         self.init()
         self.user = user
     }
@@ -96,24 +92,24 @@ public struct AppJobInvocationTriggerManualUser: Codable {
     }
 
     init() {
-        (uuid, email, fullName) = (nil, nil, nil)
+        (self.uuid, self.email, self.fullName) = (nil, nil, nil)
     }
 }
 
-public extension AppJobInvocationTriggerManualUser {
-    init(from decoder: Decoder) throws {
+extension AppJobInvocationTriggerManualUser {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
-        email = try container.sdkDecodeIfPresent(.email)
-        fullName = try container.sdkDecodeIfPresent(.fullName)
-        if let value = email {
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        self.email = try container.sdkDecodeIfPresent(.email)
+        self.fullName = try container.sdkDecodeIfPresent(.fullName)
+        if let value = self.email {
             try sdkValidateEmail("email", value)
         }
     }
 }
 
-public extension AppJobInvocationTriggerManualUser {
-    init(uuid: String? = nil, email: String? = nil, fullName: String? = nil) throws {
+extension AppJobInvocationTriggerManualUser {
+    public init(uuid: String? = nil, email: String? = nil, fullName: String? = nil) throws {
         self.init()
         (self.uuid, self.email) = (uuid, email)
         self.fullName = fullName
@@ -195,74 +191,42 @@ public struct AppJobSpec: Codable {
         case termination
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AppJobSpec {
-    init(from decoder: Decoder) throws {
+extension AppJobSpec {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        git = try container.sdkDecodeIfPresent(.git)
-        github = try container.sdkDecodeIfPresent(.github)
-        gitlab = try container.sdkDecodeIfPresent(.gitlab)
-        bitbucket = try container.sdkDecodeIfPresent(.bitbucket)
-        image = try container.sdkDecodeIfPresent(.image)
-        dockerfilePath = try container.sdkDecodeIfPresent(.dockerfilePath)
-        buildCommand = try container.sdkDecodeIfPresent(.buildCommand)
-        runCommand = try container.sdkDecodeIfPresent(.runCommand)
-        sourceDir = try container.sdkDecodeIfPresent(.sourceDir)
-        envs = try container.sdkDecodeIfPresent(.envs)
-        environmentSlug = try container.sdkDecodeIfPresent(.environmentSlug)
-        logDestinations = try container.sdkDecodeIfPresent(.logDestinations)
-        instanceCount = try container.sdkDecodeIfPresent(.instanceCount)
-        instanceSizeSlug = try container.sdkDecodeIfPresent(.instanceSizeSlug)
-        kind = try container.sdkDecodeIfPresent(.kind)
-        termination = try container.sdkDecodeIfPresent(.termination)
-        try validateLength("name", name, min: 2, max: 32)
-        try sdkValidatePattern("name", name, sdkPattern3c600f7d20be)
-        if let value = instanceCount {
-            try validateRange(
-                "instance_count",
-                Double(value),
-                min: 1,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.name = try container.sdkDecodeRequired(.name)
+        self.git = try container.sdkDecodeIfPresent(.git)
+        self.github = try container.sdkDecodeIfPresent(.github)
+        self.gitlab = try container.sdkDecodeIfPresent(.gitlab)
+        self.bitbucket = try container.sdkDecodeIfPresent(.bitbucket)
+        self.image = try container.sdkDecodeIfPresent(.image)
+        self.dockerfilePath = try container.sdkDecodeIfPresent(.dockerfilePath)
+        self.buildCommand = try container.sdkDecodeIfPresent(.buildCommand)
+        self.runCommand = try container.sdkDecodeIfPresent(.runCommand)
+        self.sourceDir = try container.sdkDecodeIfPresent(.sourceDir)
+        self.envs = try container.sdkDecodeIfPresent(.envs)
+        self.environmentSlug = try container.sdkDecodeIfPresent(.environmentSlug)
+        self.logDestinations = try container.sdkDecodeIfPresent(.logDestinations)
+        self.instanceCount = try container.sdkDecodeIfPresent(.instanceCount)
+        self.instanceSizeSlug = try container.sdkDecodeIfPresent(.instanceSizeSlug)
+        self.kind = try container.sdkDecodeIfPresent(.kind)
+        self.termination = try container.sdkDecodeIfPresent(.termination)
+            try validateLength("name", self.name, min: 2, max: 32)
+            try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
+        if let value = self.instanceCount {
+            try validateRange("instance_count", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
-public extension AppJobSpec {
-    init(
-        name: String,
-        git: AppsGitSourceSpec? = nil,
-        github: AppsGithubSourceSpec? = nil,
-        gitlab: AppsGitlabSourceSpec? = nil,
-        bitbucket: AppsBitbucketSourceSpec? = nil,
-        image: AppsImageSourceSpec? = nil,
-        dockerfilePath: String? = nil,
-        buildCommand: String? = nil,
-        runCommand: String? = nil,
-        sourceDir: String? = nil,
-        envs: [AppVariableDefinition]? = nil,
-        environmentSlug: String? = nil,
-        logDestinations: [AppLogDestinationDefinition]? = nil,
-        instanceCount: Int? = nil,
-        instanceSizeSlug: AppComponentInstanceBaseInstanceSizeSlug? = nil,
-        kind: AppJobSpecVariant2Kind? = nil,
-        termination: AppJobSpecTermination? = nil
-    ) throws {
+extension AppJobSpec {
+    public init(name: String, git: AppsGitSourceSpec? = nil, github: AppsGithubSourceSpec? = nil, gitlab: AppsGitlabSourceSpec? = nil, bitbucket: AppsBitbucketSourceSpec? = nil, image: AppsImageSourceSpec? = nil, dockerfilePath: String? = nil, buildCommand: String? = nil, runCommand: String? = nil, sourceDir: String? = nil, envs: [AppVariableDefinition]? = nil, environmentSlug: String? = nil, logDestinations: [AppLogDestinationDefinition]? = nil, instanceCount: Int? = nil, instanceSizeSlug: AppComponentInstanceBaseInstanceSizeSlug? = nil, kind: AppJobSpecVariant2Kind? = nil, termination: AppJobSpecTermination? = nil) throws {
         (self.name, self.git) = (name, git)
         (self.github, self.gitlab) = (github, gitlab)
         (self.bitbucket, self.image) = (bitbucket, image)
@@ -272,18 +236,10 @@ public extension AppJobSpec {
         (self.logDestinations, self.instanceCount) = (logDestinations, instanceCount)
         (self.instanceSizeSlug, self.kind) = (instanceSizeSlug, kind)
         self.termination = termination
-        try validateLength("name", self.name, min: 2, max: 32)
-        try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
+            try validateLength("name", self.name, min: 2, max: 32)
+            try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
         if let value = self.instanceCount {
-            try validateRange(
-                "instance_count",
-                Double(value),
-                min: 1,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("instance_count", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -298,19 +254,19 @@ public struct AppJobInvocationTriggerScheduled: Codable {
     }
 
     init() {
-        schedule = nil
+        self.schedule = nil
     }
 }
 
-public extension AppJobInvocationTriggerScheduled {
-    init(from decoder: Decoder) throws {
+extension AppJobInvocationTriggerScheduled {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        schedule = try container.sdkDecodeIfPresent(.schedule)
+        self.schedule = try container.sdkDecodeIfPresent(.schedule)
     }
 }
 
-public extension AppJobInvocationTriggerScheduled {
-    init(schedule: AppJobInvocationTriggerScheduledSchedule? = nil) {
+extension AppJobInvocationTriggerScheduled {
+    public init(schedule: AppJobInvocationTriggerScheduledSchedule? = nil) {
         self.init()
         self.schedule = schedule
     }
@@ -354,45 +310,36 @@ public struct AppJobInvocation: Codable {
     }
 
     init() {
-        (id, jobName, deploymentId, phase, trigger) = (nil, nil, nil, nil, nil)
-        (createdAt, startedAt, completedAt) = (nil, nil, nil)
+        (self.id, self.jobName, self.deploymentId, self.phase, self.trigger) = (nil, nil, nil, nil, nil)
+        (self.createdAt, self.startedAt, self.completedAt) = (nil, nil, nil)
     }
 }
 
-public extension AppJobInvocation {
-    init(from decoder: Decoder) throws {
+extension AppJobInvocation {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        jobName = try container.sdkDecodeIfPresent(.jobName)
-        deploymentId = try container.sdkDecodeIfPresent(.deploymentId)
-        phase = try container.sdkDecodeIfPresent(.phase)
-        trigger = try container.sdkDecodeIfPresent(.trigger)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        if let value = createdAt {
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.jobName = try container.sdkDecodeIfPresent(.jobName)
+        self.deploymentId = try container.sdkDecodeIfPresent(.deploymentId)
+        self.phase = try container.sdkDecodeIfPresent(.phase)
+        self.trigger = try container.sdkDecodeIfPresent(.trigger)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = startedAt {
+        if let value = self.startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
-        if let value = completedAt {
+        if let value = self.completedAt {
             try sdkValidateDateTime("completed_at", sdkWireString(value))
         }
     }
 }
 
-public extension AppJobInvocation {
-    init(
-        id: String? = nil,
-        jobName: String? = nil,
-        deploymentId: String? = nil,
-        phase: AppJobInvocationPhase? = nil,
-        trigger: AppJobInvocationTrigger? = nil,
-        createdAt: Date? = nil,
-        startedAt: Date? = nil,
-        completedAt: Date? = nil
-    ) throws {
+extension AppJobInvocation {
+    public init(id: String? = nil, jobName: String? = nil, deploymentId: String? = nil, phase: AppJobInvocationPhase? = nil, trigger: AppJobInvocationTrigger? = nil, createdAt: Date? = nil, startedAt: Date? = nil, completedAt: Date? = nil) throws {
         self.init()
         (self.id, self.jobName) = (id, jobName)
         (self.deploymentId, self.phase) = (deploymentId, phase)
@@ -422,42 +369,26 @@ public struct AppJobSpecTermination: Codable {
     }
 
     init() {
-        gracePeriodSeconds = nil
+        self.gracePeriodSeconds = nil
     }
 }
 
-public extension AppJobSpecTermination {
-    init(from decoder: Decoder) throws {
+extension AppJobSpecTermination {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        gracePeriodSeconds = try container.sdkDecodeIfPresent(.gracePeriodSeconds)
-        if let value = gracePeriodSeconds {
-            try validateRange(
-                "grace_period_seconds",
-                Double(value),
-                min: 1,
-                max: 600,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.gracePeriodSeconds = try container.sdkDecodeIfPresent(.gracePeriodSeconds)
+        if let value = self.gracePeriodSeconds {
+            try validateRange("grace_period_seconds", Double(value), min: 1, max: 600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
-public extension AppJobSpecTermination {
-    init(gracePeriodSeconds: Int? = nil) throws {
+extension AppJobSpecTermination {
+    public init(gracePeriodSeconds: Int? = nil) throws {
         self.init()
         self.gracePeriodSeconds = gracePeriodSeconds
         if let value = self.gracePeriodSeconds {
-            try validateRange(
-                "grace_period_seconds",
-                Double(value),
-                min: 1,
-                max: 600,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("grace_period_seconds", Double(value), min: 1, max: 600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -477,20 +408,20 @@ public struct AppJobInvocationTriggerScheduledSchedule: Codable {
     }
 
     init() {
-        (cron, timeZone) = (nil, nil)
+        (self.cron, self.timeZone) = (nil, nil)
     }
 }
 
-public extension AppJobInvocationTriggerScheduledSchedule {
-    init(from decoder: Decoder) throws {
+extension AppJobInvocationTriggerScheduledSchedule {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        cron = try container.sdkDecodeIfPresent(.cron)
-        timeZone = try container.sdkDecodeIfPresent(.timeZone)
+        self.cron = try container.sdkDecodeIfPresent(.cron)
+        self.timeZone = try container.sdkDecodeIfPresent(.timeZone)
     }
 }
 
-public extension AppJobInvocationTriggerScheduledSchedule {
-    init(cron: String? = nil, timeZone: String? = nil) {
+extension AppJobInvocationTriggerScheduledSchedule {
+    public init(cron: String? = nil, timeZone: String? = nil) {
         self.init()
         (self.cron, self.timeZone) = (cron, timeZone)
     }
@@ -512,20 +443,20 @@ public struct AppJobSpecVariant2: Codable {
     }
 
     init() {
-        (kind, termination) = (nil, nil)
+        (self.kind, self.termination) = (nil, nil)
     }
 }
 
-public extension AppJobSpecVariant2 {
-    init(from decoder: Decoder) throws {
+extension AppJobSpecVariant2 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        kind = try container.sdkDecodeIfPresent(.kind)
-        termination = try container.sdkDecodeIfPresent(.termination)
+        self.kind = try container.sdkDecodeIfPresent(.kind)
+        self.termination = try container.sdkDecodeIfPresent(.termination)
     }
 }
 
-public extension AppJobSpecVariant2 {
-    init(kind: AppJobSpecVariant2Kind? = nil, termination: AppJobSpecTermination? = nil) {
+extension AppJobSpecVariant2 {
+    public init(kind: AppJobSpecVariant2Kind? = nil, termination: AppJobSpecTermination? = nil) {
         self.init()
         (self.kind, self.termination) = (kind, termination)
     }
@@ -535,17 +466,14 @@ public extension AppJobSpecVariant2 {
 public struct AppJobInvocationTriggerType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let manual = AppJobInvocationTriggerType(rawValue: "MANUAL")
     public static let schedule = AppJobInvocationTriggerType(rawValue: "SCHEDULE")
     public static let unknown = AppJobInvocationTriggerType(rawValue: "UNKNOWN")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -560,10 +488,7 @@ public struct AppJobInvocationTriggerType: RawRepresentable, Hashable, Codable, 
 public struct AppJobSpecVariant2Kind: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let unspecified = AppJobSpecVariant2Kind(rawValue: "UNSPECIFIED")
     public static let preDeploy = AppJobSpecVariant2Kind(rawValue: "PRE_DEPLOY")
     public static let postDeploy = AppJobSpecVariant2Kind(rawValue: "POST_DEPLOY")
@@ -571,7 +496,7 @@ public struct AppJobSpecVariant2Kind: RawRepresentable, Hashable, Codable, Senda
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -584,10 +509,7 @@ public struct AppJobSpecVariant2Kind: RawRepresentable, Hashable, Codable, Senda
 public struct AppJobInvocationPhase: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let unknown = AppJobInvocationPhase(rawValue: "UNKNOWN")
     public static let pending = AppJobInvocationPhase(rawValue: "PENDING")
     public static let running = AppJobInvocationPhase(rawValue: "RUNNING")
@@ -598,7 +520,7 @@ public struct AppJobInvocationPhase: RawRepresentable, Hashable, Codable, Sendab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

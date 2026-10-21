@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiList domain models
+// AgentPlatformAPIApiList domain models
 /// Typed representation of the `ApiListModelEvaluationRunsOutput` API schema.
 public struct ApiListModelEvaluationRunsOutput: Codable {
     /// Full set of candidate model source types the FE can offer in the candidate-type filter UI.
@@ -27,29 +27,23 @@ public struct ApiListModelEvaluationRunsOutput: Codable {
     }
 
     init() {
-        (availableCandidateTypes, availableStatuses, links, meta, runs) = (nil, nil, nil, nil, nil)
+        (self.availableCandidateTypes, self.availableStatuses, self.links, self.meta, self.runs) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ApiListModelEvaluationRunsOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListModelEvaluationRunsOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        availableCandidateTypes = try container.sdkDecodeIfPresent(.availableCandidateTypes)
-        availableStatuses = try container.sdkDecodeIfPresent(.availableStatuses)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
-        runs = try container.sdkDecodeIfPresent(.runs)
+        self.availableCandidateTypes = try container.sdkDecodeIfPresent(.availableCandidateTypes)
+        self.availableStatuses = try container.sdkDecodeIfPresent(.availableStatuses)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
+        self.runs = try container.sdkDecodeIfPresent(.runs)
     }
 }
 
-public extension ApiListModelEvaluationRunsOutput {
-    init(
-        availableCandidateTypes: [ApiCandidateModelSource]? = nil,
-        availableStatuses: [ApiModelEvaluationRunStatus]? = nil,
-        links: ApiLinks? = nil,
-        meta: ApiMeta? = nil,
-        runs: [ApiModelEvaluationRunSummary]? = nil
-    ) {
+extension ApiListModelEvaluationRunsOutput {
+    public init(availableCandidateTypes: [ApiCandidateModelSource]? = nil, availableStatuses: [ApiModelEvaluationRunStatus]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil, runs: [ApiModelEvaluationRunSummary]? = nil) {
         self.init()
         self.availableCandidateTypes = availableCandidateTypes
         (self.availableStatuses, self.links) = (availableStatuses, links)

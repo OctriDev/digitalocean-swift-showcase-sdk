@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Functions domain models
+// Functions domain models
 public struct ListTriggersVariant0: Codable {
     public var triggers: [TriggerInfo]?
 
@@ -12,19 +12,19 @@ public struct ListTriggersVariant0: Codable {
     }
 
     init() {
-        triggers = nil
+        self.triggers = nil
     }
 }
 
-public extension ListTriggersVariant0 {
-    init(from decoder: Decoder) throws {
+extension ListTriggersVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        triggers = try container.sdkDecodeIfPresent(.triggers)
+        self.triggers = try container.sdkDecodeIfPresent(.triggers)
     }
 }
 
-public extension ListTriggersVariant0 {
-    init(triggers: [TriggerInfo]? = nil) {
+extension ListTriggersVariant0 {
+    public init(triggers: [TriggerInfo]? = nil) {
         self.init()
         self.triggers = triggers
     }
@@ -39,19 +39,19 @@ public struct ListTriggers: Codable {
     }
 
     init() {
-        triggers = nil
+        self.triggers = nil
     }
 }
 
-public extension ListTriggers {
-    init(from decoder: Decoder) throws {
+extension ListTriggers {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        triggers = try container.sdkDecodeIfPresent(.triggers)
+        self.triggers = try container.sdkDecodeIfPresent(.triggers)
     }
 }
 
-public extension ListTriggers {
-    init(triggers: [TriggerInfo]? = nil) {
+extension ListTriggers {
+    public init(triggers: [TriggerInfo]? = nil) {
         self.init()
         self.triggers = triggers
     }

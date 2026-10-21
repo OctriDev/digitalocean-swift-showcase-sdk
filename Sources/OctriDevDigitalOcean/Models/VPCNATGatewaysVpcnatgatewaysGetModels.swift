@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// VPCNATGateways domain models
+// VPCNATGateways domain models
 /// Typed representation of the `VpcNatGateway` API schema.
 public struct VpcNatGateway: Codable {
     /// Optional object value serialized in the `vpc_nat_gateway` wire field.
@@ -14,19 +14,19 @@ public struct VpcNatGateway: Codable {
     }
 
     init() {
-        vpcNatGateway = nil
+        self.vpcNatGateway = nil
     }
 }
 
-public extension VpcNatGateway {
-    init(from decoder: Decoder) throws {
+extension VpcNatGateway {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        vpcNatGateway = try container.sdkDecodeIfPresent(.vpcNatGateway)
+        self.vpcNatGateway = try container.sdkDecodeIfPresent(.vpcNatGateway)
     }
 }
 
-public extension VpcNatGateway {
-    init(vpcNatGateway: VpcNatGatewayGet? = nil) {
+extension VpcNatGateway {
+    public init(vpcNatGateway: VpcNatGatewayGet? = nil) {
         self.init()
         self.vpcNatGateway = vpcNatGateway
     }

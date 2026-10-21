@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Shared domain models
+// Shared domain models
 public typealias ExistingTagsArray = [String]
 
 public typealias NextPageToken = String
@@ -25,19 +25,19 @@ public struct UpdateRegistry: Codable {
     }
 
     init() {
-        cancel = nil
+        self.cancel = nil
     }
 }
 
-public extension UpdateRegistry {
-    init(from decoder: Decoder) throws {
+extension UpdateRegistry {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        cancel = try container.sdkDecodeIfPresent(.cancel)
+        self.cancel = try container.sdkDecodeIfPresent(.cancel)
     }
 }
 
-public extension UpdateRegistry {
-    init(cancel: Bool? = nil) {
+extension UpdateRegistry {
+    public init(cancel: Bool? = nil) {
         self.init()
         self.cancel = cancel
     }
@@ -61,29 +61,23 @@ public struct FunctionObject: Codable {
         case parameters
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension FunctionObject {
-    init(from decoder: Decoder) throws {
+extension FunctionObject {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        parameters = try container.sdkDecodeIfPresent(.parameters)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.parameters = try container.sdkDecodeIfPresent(.parameters)
     }
 }
 
-public extension FunctionObject {
-    init(name: String, description: String? = nil, parameters: [String: JSONValue]? = nil) {
+extension FunctionObject {
+    public init(name: String, description: String? = nil, parameters: [String: JSONValue]? = nil) {
         (self.name, self.description) = (name, description)
         self.parameters = parameters
     }
@@ -101,35 +95,25 @@ public struct CompletionUsageCacheCreation: Codable {
         case ephemeral1hInputTokens = "ephemeral_1h_input_tokens"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CompletionUsageCacheCreation {
-    init(from decoder: Decoder) throws {
+extension CompletionUsageCacheCreation {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.ephemeral5mInputTokens) else {
-            throw SdkValidationError(
-                field: "ephemeral_5m_input_tokens",
-                code: "required",
-                message: "Validation failed for 'ephemeral_5m_input_tokens': value is required"
-            )
+            throw SdkValidationError(field: "ephemeral_5m_input_tokens", code: "required", message: "Validation failed for 'ephemeral_5m_input_tokens': value is required")
         }
         guard container.contains(.ephemeral1hInputTokens) else {
-            throw SdkValidationError(
-                field: "ephemeral_1h_input_tokens",
-                code: "required",
-                message: "Validation failed for 'ephemeral_1h_input_tokens': value is required"
-            )
+            throw SdkValidationError(field: "ephemeral_1h_input_tokens", code: "required", message: "Validation failed for 'ephemeral_1h_input_tokens': value is required")
         }
-        ephemeral5mInputTokens = try container.sdkDecodeRequired(.ephemeral5mInputTokens)
-        ephemeral1hInputTokens = try container.sdkDecodeRequired(.ephemeral1hInputTokens)
+        self.ephemeral5mInputTokens = try container.sdkDecodeRequired(.ephemeral5mInputTokens)
+        self.ephemeral1hInputTokens = try container.sdkDecodeRequired(.ephemeral1hInputTokens)
     }
 }
 
-public extension CompletionUsageCacheCreation {
-    init(ephemeral5mInputTokens: Int, ephemeral1hInputTokens: Int) {
+extension CompletionUsageCacheCreation {
+    public init(ephemeral5mInputTokens: Int, ephemeral1hInputTokens: Int) {
         self.ephemeral5mInputTokens = ephemeral5mInputTokens
         self.ephemeral1hInputTokens = ephemeral1hInputTokens
     }
@@ -146,19 +130,19 @@ public struct DockerCredentialsAuthsRegistryDigitaloceanCom: Codable {
     }
 
     init() {
-        auth = nil
+        self.auth = nil
     }
 }
 
-public extension DockerCredentialsAuthsRegistryDigitaloceanCom {
-    init(from decoder: Decoder) throws {
+extension DockerCredentialsAuthsRegistryDigitaloceanCom {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        auth = try container.sdkDecodeIfPresent(.auth)
+        self.auth = try container.sdkDecodeIfPresent(.auth)
     }
 }
 
-public extension DockerCredentialsAuthsRegistryDigitaloceanCom {
-    init(auth: String? = nil) {
+extension DockerCredentialsAuthsRegistryDigitaloceanCom {
+    public init(auth: String? = nil) {
         self.init()
         self.auth = auth
     }
@@ -174,19 +158,19 @@ public struct DockerCredentialsAuths: Codable {
     }
 
     init() {
-        registryDigitaloceanCom = nil
+        self.registryDigitaloceanCom = nil
     }
 }
 
-public extension DockerCredentialsAuths {
-    init(from decoder: Decoder) throws {
+extension DockerCredentialsAuths {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        registryDigitaloceanCom = try container.sdkDecodeIfPresent(.registryDigitaloceanCom)
+        self.registryDigitaloceanCom = try container.sdkDecodeIfPresent(.registryDigitaloceanCom)
     }
 }
 
-public extension DockerCredentialsAuths {
-    init(registryDigitaloceanCom: DockerCredentialsAuthsRegistryDigitaloceanCom? = nil) {
+extension DockerCredentialsAuths {
+    public init(registryDigitaloceanCom: DockerCredentialsAuthsRegistryDigitaloceanCom? = nil) {
         self.init()
         self.registryDigitaloceanCom = registryDigitaloceanCom
     }
@@ -202,19 +186,19 @@ public struct PagesPagination: Codable {
     }
 
     init() {
-        links = nil
+        self.links = nil
     }
 }
 
-public extension PagesPagination {
-    init(from decoder: Decoder) throws {
+extension PagesPagination {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension PagesPagination {
-    init(links: PageLinks? = nil) {
+extension PagesPagination {
+    public init(links: PageLinks? = nil) {
         self.init()
         self.links = links
     }
@@ -235,20 +219,20 @@ public struct DiskInfo: Codable {
     }
 
     init() {
-        (type, size) = (nil, nil)
+        (self.type, self.size) = (nil, nil)
     }
 }
 
-public extension DiskInfo {
-    init(from decoder: Decoder) throws {
+extension DiskInfo {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        size = try container.sdkDecodeIfPresent(.size)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.size = try container.sdkDecodeIfPresent(.size)
     }
 }
 
-public extension DiskInfo {
-    init(type: DiskInfoType? = nil, size: DiskInfoSize? = nil) {
+extension DiskInfo {
+    public init(type: DiskInfoType? = nil, size: DiskInfoSize? = nil) {
         self.init()
         (self.type, self.size) = (type, size)
     }
@@ -309,68 +293,37 @@ public struct Size: Codable {
         case gpuInfo = "gpu_info"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Size {
-    init(from decoder: Decoder) throws {
+extension Size {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        slug = try container.sdkDecodeRequired(.slug)
-        memory = try container.sdkDecodeRequired(.memory)
-        vcpus = try container.sdkDecodeRequired(.vcpus)
-        disk = try container.sdkDecodeRequired(.disk)
-        transfer = try container.sdkDecodeRequired(.transfer)
-        priceMonthly = try container.sdkDecodeRequired(.priceMonthly)
-        priceHourly = try container.sdkDecodeRequired(.priceHourly)
-        regions = try container.sdkDecodeRequired(.regions)
-        available = try container.sdkDecodeRequired(.available)
-        description = try container.sdkDecodeRequired(.description)
-        diskInfo = try container.sdkDecodeIfPresent(.diskInfo)
-        gpuInfo = try container.sdkDecodeIfPresent(.gpuInfo)
-        try validateRange(
-            "memory",
-            Double(memory),
-            min: 8,
-            max: nil,
-            exclusiveMin: nil,
-            exclusiveMax: nil,
-            multipleOf: 8
-        )
+        self.slug = try container.sdkDecodeRequired(.slug)
+        self.memory = try container.sdkDecodeRequired(.memory)
+        self.vcpus = try container.sdkDecodeRequired(.vcpus)
+        self.disk = try container.sdkDecodeRequired(.disk)
+        self.transfer = try container.sdkDecodeRequired(.transfer)
+        self.priceMonthly = try container.sdkDecodeRequired(.priceMonthly)
+        self.priceHourly = try container.sdkDecodeRequired(.priceHourly)
+        self.regions = try container.sdkDecodeRequired(.regions)
+        self.available = try container.sdkDecodeRequired(.available)
+        self.description = try container.sdkDecodeRequired(.description)
+        self.diskInfo = try container.sdkDecodeIfPresent(.diskInfo)
+        self.gpuInfo = try container.sdkDecodeIfPresent(.gpuInfo)
+            try validateRange("memory", Double(self.memory), min: 8, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: 8)
     }
 }
 
-public extension Size {
-    init(
-        slug: String,
-        memory: Int,
-        vcpus: Int,
-        disk: Int,
-        transfer: Double,
-        priceMonthly: Double,
-        priceHourly: Double,
-        regions: [String],
-        available: Bool,
-        description: String,
-        diskInfo: [DiskInfo]? = nil,
-        gpuInfo: GpuInfo? = nil
-    ) throws {
+extension Size {
+    public init(slug: String, memory: Int, vcpus: Int, disk: Int, transfer: Double, priceMonthly: Double, priceHourly: Double, regions: [String], available: Bool, description: String, diskInfo: [DiskInfo]? = nil, gpuInfo: GpuInfo? = nil) throws {
         (self.slug, self.memory) = (slug, memory)
         (self.vcpus, self.disk) = (vcpus, disk)
         (self.transfer, self.priceMonthly) = (transfer, priceMonthly)
         (self.priceHourly, self.regions) = (priceHourly, regions)
         (self.available, self.description) = (available, description)
         (self.diskInfo, self.gpuInfo) = (diskInfo, gpuInfo)
-        try validateRange(
-            "memory",
-            Double(self.memory),
-            min: 8,
-            max: nil,
-            exclusiveMin: nil,
-            exclusiveMax: nil,
-            multipleOf: 8
-        )
+            try validateRange("memory", Double(self.memory), min: 8, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: 8)
     }
 }
 
@@ -389,20 +342,20 @@ public struct BackwardLinks: Codable {
     }
 
     init() {
-        (first, prev) = (nil, nil)
+        (self.first, self.prev) = (nil, nil)
     }
 }
 
-public extension BackwardLinks {
-    init(from decoder: Decoder) throws {
+extension BackwardLinks {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        first = try container.sdkDecodeIfPresent(.first)
-        prev = try container.sdkDecodeIfPresent(.prev)
+        self.first = try container.sdkDecodeIfPresent(.first)
+        self.prev = try container.sdkDecodeIfPresent(.prev)
     }
 }
 
-public extension BackwardLinks {
-    init(first: String? = nil, prev: String? = nil) {
+extension BackwardLinks {
+    public init(first: String? = nil, prev: String? = nil) {
         self.init()
         (self.first, self.prev) = (first, prev)
     }
@@ -423,20 +376,20 @@ public struct DiskInfoSize: Codable {
     }
 
     init() {
-        (amount, unit) = (nil, nil)
+        (self.amount, self.unit) = (nil, nil)
     }
 }
 
-public extension DiskInfoSize {
-    init(from decoder: Decoder) throws {
+extension DiskInfoSize {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        amount = try container.sdkDecodeIfPresent(.amount)
-        unit = try container.sdkDecodeIfPresent(.unit)
+        self.amount = try container.sdkDecodeIfPresent(.amount)
+        self.unit = try container.sdkDecodeIfPresent(.unit)
     }
 }
 
-public extension DiskInfoSize {
-    init(amount: Int? = nil, unit: String? = nil) {
+extension DiskInfoSize {
+    public init(amount: Int? = nil, unit: String? = nil) {
         self.init()
         (self.amount, self.unit) = (amount, unit)
     }
@@ -449,23 +402,18 @@ public indirect enum PageLinksPages {
 }
 
 extension PageLinksPages: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for PageLinksPages")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -483,15 +431,9 @@ extension PageLinksPages {
 
 extension PageLinksPages {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(ForwardLinks.self) {
-            return .forwardLinks(value)
-        }
-        if let value = try? container.decode(BackwardLinks.self) {
-            return .backwardLinks(value)
-        }
-        if let value = try? container.decode(JSONValue.self) {
-            return .jsonValue(value)
-        }
+        if let value = try? container.decode(ForwardLinks.self) { return .forwardLinks(value) }
+        if let value = try? container.decode(BackwardLinks.self) { return .backwardLinks(value) }
+        if let value = try? container.decode(JSONValue.self) { return .jsonValue(value) }
         return nil
     }
 }
@@ -517,19 +459,19 @@ public struct DockerCredentials: Codable {
     }
 
     init() {
-        auths = nil
+        self.auths = nil
     }
 }
 
-public extension DockerCredentials {
-    init(from decoder: Decoder) throws {
+extension DockerCredentials {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        auths = try container.sdkDecodeIfPresent(.auths)
+        self.auths = try container.sdkDecodeIfPresent(.auths)
     }
 }
 
-public extension DockerCredentials {
-    init(auths: DockerCredentialsAuths? = nil) {
+extension DockerCredentials {
+    public init(auths: DockerCredentialsAuths? = nil) {
         self.init()
         self.auths = auths
     }
@@ -550,20 +492,20 @@ public struct GpuInfoVram: Codable {
     }
 
     init() {
-        (amount, unit) = (nil, nil)
+        (self.amount, self.unit) = (nil, nil)
     }
 }
 
-public extension GpuInfoVram {
-    init(from decoder: Decoder) throws {
+extension GpuInfoVram {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        amount = try container.sdkDecodeIfPresent(.amount)
-        unit = try container.sdkDecodeIfPresent(.unit)
+        self.amount = try container.sdkDecodeIfPresent(.amount)
+        self.unit = try container.sdkDecodeIfPresent(.unit)
     }
 }
 
-public extension GpuInfoVram {
-    init(amount: Int? = nil, unit: String? = nil) {
+extension GpuInfoVram {
+    public init(amount: Int? = nil, unit: String? = nil) {
         self.init()
         (self.amount, self.unit) = (amount, unit)
     }
@@ -596,17 +538,17 @@ public struct ToolAnnotations: Codable {
     }
 
     init() {
-        (title, readOnlyHint, idempotentHint, openWorldHint, destructiveHint) = (nil, nil, nil, nil, nil)
+        (self.title, self.readOnlyHint, self.idempotentHint, self.openWorldHint, self.destructiveHint) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ToolAnnotations {
-    init(from decoder: Decoder) throws {
+extension ToolAnnotations {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        title = try container.sdkDecodeIfPresent(.title)
-        readOnlyHint = try container.sdkDecodeIfPresent(.readOnlyHint)
-        idempotentHint = try container.sdkDecodeIfPresent(.idempotentHint)
-        openWorldHint = try container.sdkDecodeIfPresent(.openWorldHint)
-        destructiveHint = try container.sdkDecodeIfPresent(.destructiveHint)
+        self.title = try container.sdkDecodeIfPresent(.title)
+        self.readOnlyHint = try container.sdkDecodeIfPresent(.readOnlyHint)
+        self.idempotentHint = try container.sdkDecodeIfPresent(.idempotentHint)
+        self.openWorldHint = try container.sdkDecodeIfPresent(.openWorldHint)
+        self.destructiveHint = try container.sdkDecodeIfPresent(.destructiveHint)
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiUpdate domain models
+// AgentPlatformAPIApiUpdate domain models
 /// UpdateAnthropicAPIKeyOutput is used to return the updated Anthropic API key.
 public struct ApiUpdateAnthropicAPIKeyOutput: Codable {
     /// Anthropic API Key Info
@@ -14,19 +14,19 @@ public struct ApiUpdateAnthropicAPIKeyOutput: Codable {
     }
 
     init() {
-        apiKeyInfo = nil
+        self.apiKeyInfo = nil
     }
 }
 
-public extension ApiUpdateAnthropicAPIKeyOutput {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateAnthropicAPIKeyOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-public extension ApiUpdateAnthropicAPIKeyOutput {
-    init(apiKeyInfo: ApiAnthropicAPIKeyInfo? = nil) {
+extension ApiUpdateAnthropicAPIKeyOutput {
+    public init(apiKeyInfo: ApiAnthropicAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }
@@ -51,21 +51,21 @@ public struct ApiUpdateAnthropicAPIKeyInputPublic: Codable {
     }
 
     init() {
-        (apiKey, apiKeyUuid, name) = (nil, nil, nil)
+        (self.apiKey, self.apiKeyUuid, self.name) = (nil, nil, nil)
     }
 }
 
-public extension ApiUpdateAnthropicAPIKeyInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateAnthropicAPIKeyInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apiKey = try container.sdkDecodeIfPresent(.apiKey)
-        apiKeyUuid = try container.sdkDecodeIfPresent(.apiKeyUuid)
-        name = try container.sdkDecodeIfPresent(.name)
+        self.apiKey = try container.sdkDecodeIfPresent(.apiKey)
+        self.apiKeyUuid = try container.sdkDecodeIfPresent(.apiKeyUuid)
+        self.name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-public extension ApiUpdateAnthropicAPIKeyInputPublic {
-    init(apiKey: String? = nil, apiKeyUuid: String? = nil, name: String? = nil) {
+extension ApiUpdateAnthropicAPIKeyInputPublic {
+    public init(apiKey: String? = nil, apiKeyUuid: String? = nil, name: String? = nil) {
         self.init()
         (self.apiKey, self.apiKeyUuid) = (apiKey, apiKeyUuid)
         self.name = name

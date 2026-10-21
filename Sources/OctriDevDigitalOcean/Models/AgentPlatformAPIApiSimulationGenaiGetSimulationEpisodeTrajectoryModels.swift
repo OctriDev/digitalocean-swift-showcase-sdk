@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiSimulation domain models
+// AgentPlatformAPIApiSimulation domain models
 /// Token usage for a single assistant message in the trajectory JSON.
 public struct ApiSimulationTrajectoryMessageTokens: Codable {
     /// Optional `int64`-formatted value serialized in the `input` wire field.
@@ -19,20 +19,20 @@ public struct ApiSimulationTrajectoryMessageTokens: Codable {
     }
 
     init() {
-        (input, output) = (nil, nil)
+        (self.input, self.output) = (nil, nil)
     }
 }
 
-public extension ApiSimulationTrajectoryMessageTokens {
-    init(from decoder: Decoder) throws {
+extension ApiSimulationTrajectoryMessageTokens {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        input = try container.sdkDecodeIfPresent(.input)
-        output = try container.sdkDecodeIfPresent(.output)
+        self.input = try container.sdkDecodeIfPresent(.input)
+        self.output = try container.sdkDecodeIfPresent(.output)
     }
 }
 
-public extension ApiSimulationTrajectoryMessageTokens {
-    init(input: Int? = nil, output: Int? = nil) {
+extension ApiSimulationTrajectoryMessageTokens {
+    public init(input: Int? = nil, output: Int? = nil) {
         self.init()
         (self.input, self.output) = (input, output)
     }
@@ -67,32 +67,25 @@ public struct ApiSimulationTrajectoryToolCall: Codable {
     }
 
     init() {
-        (description, inputParameters, name, ok, output) = (nil, nil, nil, nil, nil)
-        toolCallId = nil
+        (self.description, self.inputParameters, self.name, self.ok, self.output) = (nil, nil, nil, nil, nil)
+        self.toolCallId = nil
     }
 }
 
-public extension ApiSimulationTrajectoryToolCall {
-    init(from decoder: Decoder) throws {
+extension ApiSimulationTrajectoryToolCall {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        description = try container.sdkDecodeIfPresent(.description)
-        inputParameters = try container.sdkDecodeIfPresent(.inputParameters)
-        name = try container.sdkDecodeIfPresent(.name)
-        ok = try container.sdkDecodeIfPresent(.ok)
-        output = try container.sdkDecodeIfPresent(.output)
-        toolCallId = try container.sdkDecodeIfPresent(.toolCallId)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.inputParameters = try container.sdkDecodeIfPresent(.inputParameters)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.ok = try container.sdkDecodeIfPresent(.ok)
+        self.output = try container.sdkDecodeIfPresent(.output)
+        self.toolCallId = try container.sdkDecodeIfPresent(.toolCallId)
     }
 }
 
-public extension ApiSimulationTrajectoryToolCall {
-    init(
-        description: String? = nil,
-        inputParameters: [String: JSONValue]? = nil,
-        name: String? = nil,
-        ok: Bool? = nil,
-        output: [String: JSONValue]? = nil,
-        toolCallId: String? = nil
-    ) {
+extension ApiSimulationTrajectoryToolCall {
+    public init(description: String? = nil, inputParameters: [String: JSONValue]? = nil, name: String? = nil, ok: Bool? = nil, output: [String: JSONValue]? = nil, toolCallId: String? = nil) {
         self.init()
         (self.description, self.inputParameters) = (description, inputParameters)
         (self.name, self.ok) = (name, ok)
@@ -119,21 +112,21 @@ public struct ApiSimulationTrajectoryJudgeCriterion: Codable {
     }
 
     init() {
-        (criterion, passed, reasoning) = (nil, nil, nil)
+        (self.criterion, self.passed, self.reasoning) = (nil, nil, nil)
     }
 }
 
-public extension ApiSimulationTrajectoryJudgeCriterion {
-    init(from decoder: Decoder) throws {
+extension ApiSimulationTrajectoryJudgeCriterion {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        criterion = try container.sdkDecodeIfPresent(.criterion)
-        passed = try container.sdkDecodeIfPresent(.passed)
-        reasoning = try container.sdkDecodeIfPresent(.reasoning)
+        self.criterion = try container.sdkDecodeIfPresent(.criterion)
+        self.passed = try container.sdkDecodeIfPresent(.passed)
+        self.reasoning = try container.sdkDecodeIfPresent(.reasoning)
     }
 }
 
-public extension ApiSimulationTrajectoryJudgeCriterion {
-    init(criterion: String? = nil, passed: Bool? = nil, reasoning: String? = nil) {
+extension ApiSimulationTrajectoryJudgeCriterion {
+    public init(criterion: String? = nil, passed: Bool? = nil, reasoning: String? = nil) {
         self.init()
         (self.criterion, self.passed) = (criterion, passed)
         self.reasoning = reasoning
@@ -224,58 +217,39 @@ public struct ApiSimulationTrajectory: Codable {
     }
 
     init() {
-        (agentId, completedAt, durationSec, evaluationMetrics, failureReason) = (nil, nil, nil, nil, nil)
-        (episodeIndex, episodeUuid, judge, maxTurns, messages) = (nil, nil, nil, nil, nil)
-        (runUuid, scenarioUuid, sessionId, startedAt, status) = (nil, nil, nil, nil, nil)
-        (tokenUsage, turnCount, verdict) = (nil, nil, nil)
+        (self.agentId, self.completedAt, self.durationSec, self.evaluationMetrics, self.failureReason) = (nil, nil, nil, nil, nil)
+        (self.episodeIndex, self.episodeUuid, self.judge, self.maxTurns, self.messages) = (nil, nil, nil, nil, nil)
+        (self.runUuid, self.scenarioUuid, self.sessionId, self.startedAt, self.status) = (nil, nil, nil, nil, nil)
+        (self.tokenUsage, self.turnCount, self.verdict) = (nil, nil, nil)
     }
 }
 
-public extension ApiSimulationTrajectory {
-    init(from decoder: Decoder) throws {
+extension ApiSimulationTrajectory {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agentId = try container.sdkDecodeIfPresent(.agentId)
-        completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        durationSec = try container.sdkDecodeIfPresent(.durationSec)
-        evaluationMetrics = try container.sdkDecodeIfPresent(.evaluationMetrics)
-        failureReason = try container.sdkDecodeIfPresent(.failureReason)
-        episodeIndex = try container.sdkDecodeIfPresent(.episodeIndex)
-        episodeUuid = try container.sdkDecodeIfPresent(.episodeUuid)
-        judge = try container.sdkDecodeIfPresent(.judge)
-        maxTurns = try container.sdkDecodeIfPresent(.maxTurns)
-        messages = try container.sdkDecodeIfPresent(.messages)
-        runUuid = try container.sdkDecodeIfPresent(.runUuid)
-        scenarioUuid = try container.sdkDecodeIfPresent(.scenarioUuid)
-        sessionId = try container.sdkDecodeIfPresent(.sessionId)
-        startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        status = try container.sdkDecodeIfPresent(.status)
-        tokenUsage = try container.sdkDecodeIfPresent(.tokenUsage)
-        turnCount = try container.sdkDecodeIfPresent(.turnCount)
-        verdict = try container.sdkDecodeIfPresent(.verdict)
+        self.agentId = try container.sdkDecodeIfPresent(.agentId)
+        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        self.durationSec = try container.sdkDecodeIfPresent(.durationSec)
+        self.evaluationMetrics = try container.sdkDecodeIfPresent(.evaluationMetrics)
+        self.failureReason = try container.sdkDecodeIfPresent(.failureReason)
+        self.episodeIndex = try container.sdkDecodeIfPresent(.episodeIndex)
+        self.episodeUuid = try container.sdkDecodeIfPresent(.episodeUuid)
+        self.judge = try container.sdkDecodeIfPresent(.judge)
+        self.maxTurns = try container.sdkDecodeIfPresent(.maxTurns)
+        self.messages = try container.sdkDecodeIfPresent(.messages)
+        self.runUuid = try container.sdkDecodeIfPresent(.runUuid)
+        self.scenarioUuid = try container.sdkDecodeIfPresent(.scenarioUuid)
+        self.sessionId = try container.sdkDecodeIfPresent(.sessionId)
+        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.tokenUsage = try container.sdkDecodeIfPresent(.tokenUsage)
+        self.turnCount = try container.sdkDecodeIfPresent(.turnCount)
+        self.verdict = try container.sdkDecodeIfPresent(.verdict)
     }
 }
 
-public extension ApiSimulationTrajectory {
-    init(
-        agentId: String? = nil,
-        completedAt: String? = nil,
-        durationSec: String? = nil,
-        evaluationMetrics: [ApiEvaluationMetricResult]? = nil,
-        failureReason: String? = nil,
-        episodeIndex: Int? = nil,
-        episodeUuid: String? = nil,
-        judge: ApiSimulationTrajectoryJudgeResult? = nil,
-        maxTurns: Int? = nil,
-        messages: [ApiSimulationTrajectoryMessage]? = nil,
-        runUuid: String? = nil,
-        scenarioUuid: String? = nil,
-        sessionId: String? = nil,
-        startedAt: String? = nil,
-        status: ApiSimulationTrajectoryStatus? = nil,
-        tokenUsage: ApiSimulationTokenUsage? = nil,
-        turnCount: Int? = nil,
-        verdict: ApiSimulationEpisodeVerdict? = nil
-    ) {
+extension ApiSimulationTrajectory {
+    public init(agentId: String? = nil, completedAt: String? = nil, durationSec: String? = nil, evaluationMetrics: [ApiEvaluationMetricResult]? = nil, failureReason: String? = nil, episodeIndex: Int? = nil, episodeUuid: String? = nil, judge: ApiSimulationTrajectoryJudgeResult? = nil, maxTurns: Int? = nil, messages: [ApiSimulationTrajectoryMessage]? = nil, runUuid: String? = nil, scenarioUuid: String? = nil, sessionId: String? = nil, startedAt: String? = nil, status: ApiSimulationTrajectoryStatus? = nil, tokenUsage: ApiSimulationTokenUsage? = nil, turnCount: Int? = nil, verdict: ApiSimulationEpisodeVerdict? = nil) {
         self.init()
         (self.agentId, self.completedAt) = (agentId, completedAt)
         (self.durationSec, self.evaluationMetrics) = (durationSec, evaluationMetrics)
@@ -310,25 +284,21 @@ public struct ApiSimulationTrajectoryJudgeResult: Codable {
     }
 
     init() {
-        (criteriaPassFail, reasoning, verdict) = (nil, nil, nil)
+        (self.criteriaPassFail, self.reasoning, self.verdict) = (nil, nil, nil)
     }
 }
 
-public extension ApiSimulationTrajectoryJudgeResult {
-    init(from decoder: Decoder) throws {
+extension ApiSimulationTrajectoryJudgeResult {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        criteriaPassFail = try container.sdkDecodeIfPresent(.criteriaPassFail)
-        reasoning = try container.sdkDecodeIfPresent(.reasoning)
-        verdict = try container.sdkDecodeIfPresent(.verdict)
+        self.criteriaPassFail = try container.sdkDecodeIfPresent(.criteriaPassFail)
+        self.reasoning = try container.sdkDecodeIfPresent(.reasoning)
+        self.verdict = try container.sdkDecodeIfPresent(.verdict)
     }
 }
 
-public extension ApiSimulationTrajectoryJudgeResult {
-    init(
-        criteriaPassFail: [ApiSimulationTrajectoryJudgeCriterion]? = nil,
-        reasoning: String? = nil,
-        verdict: ApiSimulationEpisodeVerdict? = nil
-    ) {
+extension ApiSimulationTrajectoryJudgeResult {
+    public init(criteriaPassFail: [ApiSimulationTrajectoryJudgeCriterion]? = nil, reasoning: String? = nil, verdict: ApiSimulationEpisodeVerdict? = nil) {
         self.init()
         (self.criteriaPassFail, self.reasoning) = (criteriaPassFail, reasoning)
         self.verdict = verdict
@@ -368,34 +338,26 @@ public struct ApiSimulationTrajectoryMessage: Codable {
     }
 
     init() {
-        (completedAt, content, role, startedAt, tokens) = (nil, nil, nil, nil, nil)
-        (toolCalls, turnIndex) = (nil, nil)
+        (self.completedAt, self.content, self.role, self.startedAt, self.tokens) = (nil, nil, nil, nil, nil)
+        (self.toolCalls, self.turnIndex) = (nil, nil)
     }
 }
 
-public extension ApiSimulationTrajectoryMessage {
-    init(from decoder: Decoder) throws {
+extension ApiSimulationTrajectoryMessage {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        content = try container.sdkDecodeIfPresent(.content)
-        role = try container.sdkDecodeIfPresent(.role)
-        startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        tokens = try container.sdkDecodeIfPresent(.tokens)
-        toolCalls = try container.sdkDecodeIfPresent(.toolCalls)
-        turnIndex = try container.sdkDecodeIfPresent(.turnIndex)
+        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        self.content = try container.sdkDecodeIfPresent(.content)
+        self.role = try container.sdkDecodeIfPresent(.role)
+        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        self.tokens = try container.sdkDecodeIfPresent(.tokens)
+        self.toolCalls = try container.sdkDecodeIfPresent(.toolCalls)
+        self.turnIndex = try container.sdkDecodeIfPresent(.turnIndex)
     }
 }
 
-public extension ApiSimulationTrajectoryMessage {
-    init(
-        completedAt: String? = nil,
-        content: String? = nil,
-        role: String? = nil,
-        startedAt: String? = nil,
-        tokens: ApiSimulationTrajectoryMessageTokens? = nil,
-        toolCalls: [ApiSimulationTrajectoryToolCall]? = nil,
-        turnIndex: Int? = nil
-    ) {
+extension ApiSimulationTrajectoryMessage {
+    public init(completedAt: String? = nil, content: String? = nil, role: String? = nil, startedAt: String? = nil, tokens: ApiSimulationTrajectoryMessageTokens? = nil, toolCalls: [ApiSimulationTrajectoryToolCall]? = nil, turnIndex: Int? = nil) {
         self.init()
         (self.completedAt, self.content) = (completedAt, content)
         (self.role, self.startedAt) = (role, startedAt)
@@ -412,24 +374,16 @@ public extension ApiSimulationTrajectoryMessage {
 public struct ApiSimulationTrajectoryStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let simulationTrajectoryStatusUnspecified =
-        ApiSimulationTrajectoryStatus(rawValue: "SIMULATION_TRAJECTORY_STATUS_UNSPECIFIED")
-    public static let simulationTrajectoryStatusRunning =
-        ApiSimulationTrajectoryStatus(rawValue: "SIMULATION_TRAJECTORY_STATUS_RUNNING")
-    public static let simulationTrajectoryStatusCompleted =
-        ApiSimulationTrajectoryStatus(rawValue: "SIMULATION_TRAJECTORY_STATUS_COMPLETED")
-    public static let simulationTrajectoryStatusFailed =
-        ApiSimulationTrajectoryStatus(rawValue: "SIMULATION_TRAJECTORY_STATUS_FAILED")
-    public static let simulationTrajectoryStatusCancelled =
-        ApiSimulationTrajectoryStatus(rawValue: "SIMULATION_TRAJECTORY_STATUS_CANCELLED")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let simulationTrajectoryStatusUnspecified = ApiSimulationTrajectoryStatus(rawValue: "SIMULATION_TRAJECTORY_STATUS_UNSPECIFIED")
+    public static let simulationTrajectoryStatusRunning = ApiSimulationTrajectoryStatus(rawValue: "SIMULATION_TRAJECTORY_STATUS_RUNNING")
+    public static let simulationTrajectoryStatusCompleted = ApiSimulationTrajectoryStatus(rawValue: "SIMULATION_TRAJECTORY_STATUS_COMPLETED")
+    public static let simulationTrajectoryStatusFailed = ApiSimulationTrajectoryStatus(rawValue: "SIMULATION_TRAJECTORY_STATUS_FAILED")
+    public static let simulationTrajectoryStatusCancelled = ApiSimulationTrajectoryStatus(rawValue: "SIMULATION_TRAJECTORY_STATUS_CANCELLED")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// NFS domain models
+// NFS domain models
 /// Typed representation of the `NfsRequest` API schema.
 public struct NfsRequest: Codable {
     /// The human-readable name of the share.
@@ -30,52 +30,34 @@ public struct NfsRequest: Codable {
         case performanceTier = "performance_tier"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NfsRequest {
-    init(from decoder: Decoder) throws {
+extension NfsRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.sizeGib) else {
-            throw SdkValidationError(
-                field: "size_gib",
-                code: "required",
-                message: "Validation failed for 'size_gib': value is required"
-            )
+            throw SdkValidationError(field: "size_gib", code: "required", message: "Validation failed for 'size_gib': value is required")
         }
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
         guard container.contains(.vpcIds) else {
-            throw SdkValidationError(
-                field: "vpc_ids",
-                code: "required",
-                message: "Validation failed for 'vpc_ids': value is required"
-            )
+            throw SdkValidationError(field: "vpc_ids", code: "required", message: "Validation failed for 'vpc_ids': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        sizeGib = try container.sdkDecodeRequired(.sizeGib)
-        region = try container.sdkDecodeRequired(.region)
-        vpcIds = try container.sdkDecodeRequired(.vpcIds)
-        performanceTier = try container.sdkDecodeIfPresent(.performanceTier)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.sizeGib = try container.sdkDecodeRequired(.sizeGib)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.vpcIds = try container.sdkDecodeRequired(.vpcIds)
+        self.performanceTier = try container.sdkDecodeIfPresent(.performanceTier)
     }
 }
 
-public extension NfsRequest {
-    init(name: String, sizeGib: Int, region: String, vpcIds: [String], performanceTier: String? = nil) {
+extension NfsRequest {
+    public init(name: String, sizeGib: Int, region: String, vpcIds: [String], performanceTier: String? = nil) {
         (self.name, self.sizeGib) = (name, sizeGib)
         (self.region, self.vpcIds) = (region, vpcIds)
         self.performanceTier = performanceTier
@@ -92,19 +74,19 @@ public struct NfsCreateResponse: Codable {
     }
 
     init() {
-        share = nil
+        self.share = nil
     }
 }
 
-public extension NfsCreateResponse {
-    init(from decoder: Decoder) throws {
+extension NfsCreateResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        share = try container.sdkDecodeIfPresent(.share)
+        self.share = try container.sdkDecodeIfPresent(.share)
     }
 }
 
-public extension NfsCreateResponse {
-    init(share: NfsResponse? = nil) {
+extension NfsCreateResponse {
+    public init(share: NfsResponse? = nil) {
         self.init()
         self.share = share
     }

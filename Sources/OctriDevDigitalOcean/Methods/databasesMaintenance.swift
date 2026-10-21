@@ -6,42 +6,19 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DatabasesMethods {
-    /// To configure the window when automatic maintenance should be performed for a database cluster, send a PUT
-    /// request to `/v2/databases/$DATABASE_ID/maintenance`. A successful request will receive a 204 No Content status
-    /// code with no body in response.
+extension DatabasesMethods {
+    /// To configure the window when automatic maintenance should be performed for a database cluster, send a PUT request to `/v2/databases/$DATABASE_ID/maintenance`. A successful request will receive a 204 No Content status code with no body in response.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - day: The day of the week on which to apply maintenance updates.
     /// - hour: The hour in UTC at which maintenance updates will be applied in 24
     ///   hour format.
-    static func databasesUpdateMaintenanceWindow(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        day: String,
-        hour: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
+    public static func databasesUpdateMaintenanceWindow(config: ClientConfig, databaseClusterUuid: String, day: String, hour: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
         let requestBody = DatabasesUpdateMaintenanceWindowRequestBody(day: day, hour: hour)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/maintenance"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .empty,
-            operationId: "databases_update_maintenanceWindow",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/maintenance"].joined(), config: config, body: requestBody, decoder: .empty, operationId: "databases_update_maintenanceWindow", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

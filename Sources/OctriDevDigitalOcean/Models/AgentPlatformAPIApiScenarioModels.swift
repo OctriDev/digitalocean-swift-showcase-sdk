@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiScenario domain models
+// AgentPlatformAPIApiScenario domain models
 /// A platform-curated, ready-to-run scenario set that any team can pick from.
 public struct ApiScenarioLibraryEntry: Codable {
     /// Optional grouping for catalog browsing (e.g. "Billing", "Onboarding"). Empty when uncategorized.
@@ -49,44 +49,34 @@ public struct ApiScenarioLibraryEntry: Codable {
     }
 
     init() {
-        (category, createdAt, description, goalDescription, libraryScenarioUuid) = (nil, nil, nil, nil, nil)
-        (name, scenarioCount, status, updatedAt) = (nil, nil, nil, nil)
+        (self.category, self.createdAt, self.description, self.goalDescription, self.libraryScenarioUuid) = (nil, nil, nil, nil, nil)
+        (self.name, self.scenarioCount, self.status, self.updatedAt) = (nil, nil, nil, nil)
     }
 }
 
-public extension ApiScenarioLibraryEntry {
-    init(from decoder: Decoder) throws {
+extension ApiScenarioLibraryEntry {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        category = try container.sdkDecodeIfPresent(.category)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        description = try container.sdkDecodeIfPresent(.description)
-        goalDescription = try container.sdkDecodeIfPresent(.goalDescription)
-        libraryScenarioUuid = try container.sdkDecodeIfPresent(.libraryScenarioUuid)
-        name = try container.sdkDecodeIfPresent(.name)
-        scenarioCount = try container.sdkDecodeIfPresent(.scenarioCount)
-        status = try container.sdkDecodeIfPresent(.status)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = createdAt {
+        self.category = try container.sdkDecodeIfPresent(.category)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.goalDescription = try container.sdkDecodeIfPresent(.goalDescription)
+        self.libraryScenarioUuid = try container.sdkDecodeIfPresent(.libraryScenarioUuid)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.scenarioCount = try container.sdkDecodeIfPresent(.scenarioCount)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApiScenarioLibraryEntry {
-    init(
-        category: String? = nil,
-        createdAt: Date? = nil,
-        description: String? = nil,
-        goalDescription: String? = nil,
-        libraryScenarioUuid: String? = nil,
-        name: String? = nil,
-        scenarioCount: Int? = nil,
-        status: ApiScenarioLibraryEntryStatus? = nil,
-        updatedAt: Date? = nil
-    ) throws {
+extension ApiScenarioLibraryEntry {
+    public init(category: String? = nil, createdAt: Date? = nil, description: String? = nil, goalDescription: String? = nil, libraryScenarioUuid: String? = nil, name: String? = nil, scenarioCount: Int? = nil, status: ApiScenarioLibraryEntryStatus? = nil, updatedAt: Date? = nil) throws {
         self.init()
         (self.category, self.createdAt) = (category, createdAt)
         (self.description, self.goalDescription) = (description, goalDescription)
@@ -138,34 +128,26 @@ public struct ApiScenario: Codable {
     }
 
     init() {
-        (description, explorationBudget, maxTurns, name, scenarioUuid) = (nil, nil, nil, nil, nil)
-        (stoppingCriteria, userPersona) = (nil, nil)
+        (self.description, self.explorationBudget, self.maxTurns, self.name, self.scenarioUuid) = (nil, nil, nil, nil, nil)
+        (self.stoppingCriteria, self.userPersona) = (nil, nil)
     }
 }
 
-public extension ApiScenario {
-    init(from decoder: Decoder) throws {
+extension ApiScenario {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        description = try container.sdkDecodeIfPresent(.description)
-        explorationBudget = try container.sdkDecodeIfPresent(.explorationBudget)
-        maxTurns = try container.sdkDecodeIfPresent(.maxTurns)
-        name = try container.sdkDecodeIfPresent(.name)
-        scenarioUuid = try container.sdkDecodeIfPresent(.scenarioUuid)
-        stoppingCriteria = try container.sdkDecodeIfPresent(.stoppingCriteria)
-        userPersona = try container.sdkDecodeIfPresent(.userPersona)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.explorationBudget = try container.sdkDecodeIfPresent(.explorationBudget)
+        self.maxTurns = try container.sdkDecodeIfPresent(.maxTurns)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.scenarioUuid = try container.sdkDecodeIfPresent(.scenarioUuid)
+        self.stoppingCriteria = try container.sdkDecodeIfPresent(.stoppingCriteria)
+        self.userPersona = try container.sdkDecodeIfPresent(.userPersona)
     }
 }
 
-public extension ApiScenario {
-    init(
-        description: String? = nil,
-        explorationBudget: Int? = nil,
-        maxTurns: Int? = nil,
-        name: String? = nil,
-        scenarioUuid: String? = nil,
-        stoppingCriteria: [String]? = nil,
-        userPersona: String? = nil
-    ) {
+extension ApiScenario {
+    public init(description: String? = nil, explorationBudget: Int? = nil, maxTurns: Int? = nil, name: String? = nil, scenarioUuid: String? = nil, stoppingCriteria: [String]? = nil, userPersona: String? = nil) {
         self.init()
         (self.description, self.explorationBudget) = (description, explorationBudget)
         (self.maxTurns, self.name) = (maxTurns, name)
@@ -262,67 +244,48 @@ public struct ApiScenarioSet: Codable {
     }
 
     init() {
-        (bucketName, bucketRegion, createdAt, deletedAt, description) = (nil, nil, nil, nil, nil)
-        (failureReason, generatorModelUuid, libraryScenarioUuid, name, scenarioCount) = (nil, nil, nil, nil, nil)
-        (scenarioSetUuid, sourceExportId, sourceGoalDescription, sourceKind, spacesKey) = (nil, nil, nil, nil, nil)
-        (status, updatedAt, workflowUuid) = (nil, nil, nil)
+        (self.bucketName, self.bucketRegion, self.createdAt, self.deletedAt, self.description) = (nil, nil, nil, nil, nil)
+        (self.failureReason, self.generatorModelUuid, self.libraryScenarioUuid, self.name, self.scenarioCount) = (nil, nil, nil, nil, nil)
+        (self.scenarioSetUuid, self.sourceExportId, self.sourceGoalDescription, self.sourceKind, self.spacesKey) = (nil, nil, nil, nil, nil)
+        (self.status, self.updatedAt, self.workflowUuid) = (nil, nil, nil)
     }
 }
 
-public extension ApiScenarioSet {
-    init(from decoder: Decoder) throws {
+extension ApiScenarioSet {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        bucketName = try container.sdkDecodeIfPresent(.bucketName)
-        bucketRegion = try container.sdkDecodeIfPresent(.bucketRegion)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
-        description = try container.sdkDecodeIfPresent(.description)
-        failureReason = try container.sdkDecodeIfPresent(.failureReason)
-        generatorModelUuid = try container.sdkDecodeIfPresent(.generatorModelUuid)
-        libraryScenarioUuid = try container.sdkDecodeIfPresent(.libraryScenarioUuid)
-        name = try container.sdkDecodeIfPresent(.name)
-        scenarioCount = try container.sdkDecodeIfPresent(.scenarioCount)
-        scenarioSetUuid = try container.sdkDecodeIfPresent(.scenarioSetUuid)
-        sourceExportId = try container.sdkDecodeIfPresent(.sourceExportId)
-        sourceGoalDescription = try container.sdkDecodeIfPresent(.sourceGoalDescription)
-        sourceKind = try container.sdkDecodeIfPresent(.sourceKind)
-        spacesKey = try container.sdkDecodeIfPresent(.spacesKey)
-        status = try container.sdkDecodeIfPresent(.status)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        workflowUuid = try container.sdkDecodeIfPresent(.workflowUuid)
-        if let value = createdAt {
+        self.bucketName = try container.sdkDecodeIfPresent(.bucketName)
+        self.bucketRegion = try container.sdkDecodeIfPresent(.bucketRegion)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.failureReason = try container.sdkDecodeIfPresent(.failureReason)
+        self.generatorModelUuid = try container.sdkDecodeIfPresent(.generatorModelUuid)
+        self.libraryScenarioUuid = try container.sdkDecodeIfPresent(.libraryScenarioUuid)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.scenarioCount = try container.sdkDecodeIfPresent(.scenarioCount)
+        self.scenarioSetUuid = try container.sdkDecodeIfPresent(.scenarioSetUuid)
+        self.sourceExportId = try container.sdkDecodeIfPresent(.sourceExportId)
+        self.sourceGoalDescription = try container.sdkDecodeIfPresent(.sourceGoalDescription)
+        self.sourceKind = try container.sdkDecodeIfPresent(.sourceKind)
+        self.spacesKey = try container.sdkDecodeIfPresent(.spacesKey)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.workflowUuid = try container.sdkDecodeIfPresent(.workflowUuid)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = deletedAt {
+        if let value = self.deletedAt {
             try sdkValidateDateTime("deleted_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApiScenarioSet {
-    init(
-        bucketName: String? = nil,
-        bucketRegion: String? = nil,
-        createdAt: Date? = nil,
-        deletedAt: Date? = nil,
-        description: String? = nil,
-        failureReason: String? = nil,
-        generatorModelUuid: String? = nil,
-        libraryScenarioUuid: String? = nil,
-        name: String? = nil,
-        scenarioCount: Int? = nil,
-        scenarioSetUuid: String? = nil,
-        sourceExportId: String? = nil,
-        sourceGoalDescription: String? = nil,
-        sourceKind: ApiScenarioSetSourceKind? = nil,
-        spacesKey: String? = nil,
-        status: ApiScenarioSetStatus? = nil,
-        updatedAt: Date? = nil,
-        workflowUuid: String? = nil
-    ) throws {
+extension ApiScenarioSet {
+    public init(bucketName: String? = nil, bucketRegion: String? = nil, createdAt: Date? = nil, deletedAt: Date? = nil, description: String? = nil, failureReason: String? = nil, generatorModelUuid: String? = nil, libraryScenarioUuid: String? = nil, name: String? = nil, scenarioCount: Int? = nil, scenarioSetUuid: String? = nil, sourceExportId: String? = nil, sourceGoalDescription: String? = nil, sourceKind: ApiScenarioSetSourceKind? = nil, spacesKey: String? = nil, status: ApiScenarioSetStatus? = nil, updatedAt: Date? = nil, workflowUuid: String? = nil) throws {
         self.init()
         (self.bucketName, self.bucketRegion) = (bucketName, bucketRegion)
         (self.createdAt, self.deletedAt) = (createdAt, deletedAt)
@@ -352,24 +315,16 @@ public extension ApiScenarioSet {
 public struct ApiScenarioSetSourceKind: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let scenarioSetSourceKindUnspecified =
-        ApiScenarioSetSourceKind(rawValue: "SCENARIO_SET_SOURCE_KIND_UNSPECIFIED")
-    public static let scenarioSetSourceKindUserUpload =
-        ApiScenarioSetSourceKind(rawValue: "SCENARIO_SET_SOURCE_KIND_USER_UPLOAD")
-    public static let scenarioSetSourceKindGoalGenerated =
-        ApiScenarioSetSourceKind(rawValue: "SCENARIO_SET_SOURCE_KIND_GOAL_GENERATED")
-    public static let scenarioSetSourceKindLibrary =
-        ApiScenarioSetSourceKind(rawValue: "SCENARIO_SET_SOURCE_KIND_LIBRARY")
-    public static let scenarioSetSourceKindSignalGenerated =
-        ApiScenarioSetSourceKind(rawValue: "SCENARIO_SET_SOURCE_KIND_SIGNAL_GENERATED")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let scenarioSetSourceKindUnspecified = ApiScenarioSetSourceKind(rawValue: "SCENARIO_SET_SOURCE_KIND_UNSPECIFIED")
+    public static let scenarioSetSourceKindUserUpload = ApiScenarioSetSourceKind(rawValue: "SCENARIO_SET_SOURCE_KIND_USER_UPLOAD")
+    public static let scenarioSetSourceKindGoalGenerated = ApiScenarioSetSourceKind(rawValue: "SCENARIO_SET_SOURCE_KIND_GOAL_GENERATED")
+    public static let scenarioSetSourceKindLibrary = ApiScenarioSetSourceKind(rawValue: "SCENARIO_SET_SOURCE_KIND_LIBRARY")
+    public static let scenarioSetSourceKindSignalGenerated = ApiScenarioSetSourceKind(rawValue: "SCENARIO_SET_SOURCE_KIND_SIGNAL_GENERATED")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -384,20 +339,14 @@ public struct ApiScenarioSetSourceKind: RawRepresentable, Hashable, Codable, Sen
 public struct ApiScenarioLibrarySortField: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let scenarioLibrarySortFieldUnspecified =
-        ApiScenarioLibrarySortField(rawValue: "SCENARIO_LIBRARY_SORT_FIELD_UNSPECIFIED")
-    public static let scenarioLibrarySortFieldName =
-        ApiScenarioLibrarySortField(rawValue: "SCENARIO_LIBRARY_SORT_FIELD_NAME")
-    public static let scenarioLibrarySortFieldCreatedAt =
-        ApiScenarioLibrarySortField(rawValue: "SCENARIO_LIBRARY_SORT_FIELD_CREATED_AT")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let scenarioLibrarySortFieldUnspecified = ApiScenarioLibrarySortField(rawValue: "SCENARIO_LIBRARY_SORT_FIELD_UNSPECIFIED")
+    public static let scenarioLibrarySortFieldName = ApiScenarioLibrarySortField(rawValue: "SCENARIO_LIBRARY_SORT_FIELD_NAME")
+    public static let scenarioLibrarySortFieldCreatedAt = ApiScenarioLibrarySortField(rawValue: "SCENARIO_LIBRARY_SORT_FIELD_CREATED_AT")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -414,10 +363,7 @@ public struct ApiScenarioLibrarySortField: RawRepresentable, Hashable, Codable, 
 public struct ApiScenarioSetStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let scenarioSetStatusUnspecified = ApiScenarioSetStatus(rawValue: "SCENARIO_SET_STATUS_UNSPECIFIED")
     public static let scenarioSetStatusGenerating = ApiScenarioSetStatus(rawValue: "SCENARIO_SET_STATUS_GENERATING")
     public static let scenarioSetStatusReady = ApiScenarioSetStatus(rawValue: "SCENARIO_SET_STATUS_READY")
@@ -426,7 +372,7 @@ public struct ApiScenarioSetStatus: RawRepresentable, Hashable, Codable, Sendabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -441,10 +387,7 @@ public struct ApiScenarioSetStatus: RawRepresentable, Hashable, Codable, Sendabl
 public struct ApiScenarioSortField: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let scenarioSortFieldUnspecified = ApiScenarioSortField(rawValue: "SCENARIO_SORT_FIELD_UNSPECIFIED")
     public static let scenarioSortFieldFileOrder = ApiScenarioSortField(rawValue: "SCENARIO_SORT_FIELD_FILE_ORDER")
     public static let scenarioSortFieldName = ApiScenarioSortField(rawValue: "SCENARIO_SORT_FIELD_NAME")
@@ -452,7 +395,7 @@ public struct ApiScenarioSortField: RawRepresentable, Hashable, Codable, Sendabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -469,24 +412,17 @@ public struct ApiScenarioSortField: RawRepresentable, Hashable, Codable, Sendabl
 public struct ApiScenarioSetSortField: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let scenarioSetSortFieldUnspecified =
-        ApiScenarioSetSortField(rawValue: "SCENARIO_SET_SORT_FIELD_UNSPECIFIED")
-    public static let scenarioSetSortFieldCreatedAt =
-        ApiScenarioSetSortField(rawValue: "SCENARIO_SET_SORT_FIELD_CREATED_AT")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let scenarioSetSortFieldUnspecified = ApiScenarioSetSortField(rawValue: "SCENARIO_SET_SORT_FIELD_UNSPECIFIED")
+    public static let scenarioSetSortFieldCreatedAt = ApiScenarioSetSortField(rawValue: "SCENARIO_SET_SORT_FIELD_CREATED_AT")
     public static let scenarioSetSortFieldName = ApiScenarioSetSortField(rawValue: "SCENARIO_SET_SORT_FIELD_NAME")
     public static let scenarioSetSortFieldStatus = ApiScenarioSetSortField(rawValue: "SCENARIO_SET_SORT_FIELD_STATUS")
-    public static let scenarioSetSortFieldScenarioCount =
-        ApiScenarioSetSortField(rawValue: "SCENARIO_SET_SORT_FIELD_SCENARIO_COUNT")
-    public static let scenarioSetSortFieldUpdatedAt =
-        ApiScenarioSetSortField(rawValue: "SCENARIO_SET_SORT_FIELD_UPDATED_AT")
+    public static let scenarioSetSortFieldScenarioCount = ApiScenarioSetSortField(rawValue: "SCENARIO_SET_SORT_FIELD_SCENARIO_COUNT")
+    public static let scenarioSetSortFieldUpdatedAt = ApiScenarioSetSortField(rawValue: "SCENARIO_SET_SORT_FIELD_UPDATED_AT")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -501,20 +437,14 @@ public struct ApiScenarioSetSortField: RawRepresentable, Hashable, Codable, Send
 public struct ApiScenarioLibraryEntryStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let scenarioLibraryEntryStatusUnspecified =
-        ApiScenarioLibraryEntryStatus(rawValue: "SCENARIO_LIBRARY_ENTRY_STATUS_UNSPECIFIED")
-    public static let scenarioLibraryEntryStatusActive =
-        ApiScenarioLibraryEntryStatus(rawValue: "SCENARIO_LIBRARY_ENTRY_STATUS_ACTIVE")
-    public static let scenarioLibraryEntryStatusArchived =
-        ApiScenarioLibraryEntryStatus(rawValue: "SCENARIO_LIBRARY_ENTRY_STATUS_ARCHIVED")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let scenarioLibraryEntryStatusUnspecified = ApiScenarioLibraryEntryStatus(rawValue: "SCENARIO_LIBRARY_ENTRY_STATUS_UNSPECIFIED")
+    public static let scenarioLibraryEntryStatusActive = ApiScenarioLibraryEntryStatus(rawValue: "SCENARIO_LIBRARY_ENTRY_STATUS_ACTIVE")
+    public static let scenarioLibraryEntryStatusArchived = ApiScenarioLibraryEntryStatus(rawValue: "SCENARIO_LIBRARY_ENTRY_STATUS_ARCHIVED")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

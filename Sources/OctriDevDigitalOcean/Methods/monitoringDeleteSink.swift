@@ -6,30 +6,12 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension MonitoringMethods {
+extension MonitoringMethods {
     /// To delete a sink, send a DELETE request to `/v2/monitoring/sinks/${sink_uuid}`.
     ///
     /// - Parameters:
     /// - sinkUuid: A unique identifier for a sink.
-    static func monitoringDeleteSink(
-        config: ClientConfig,
-        sinkUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await (sdkRequest(
-            "DELETE",
-            ["/v2/monitoring/sinks/", sdkEncodePathSegment(sdkWireString(sinkUuid))].joined(),
-            config: config,
-            decoder: .empty,
-            operationId: "monitoring_delete_sink",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func monitoringDeleteSink(config: ClientConfig, sinkUuid: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try (await sdkRequest("DELETE", ["/v2/monitoring/sinks/", sdkEncodePathSegment(sdkWireString(sinkUuid))].joined(), config: config, decoder: .empty, operationId: "monitoring_delete_sink", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

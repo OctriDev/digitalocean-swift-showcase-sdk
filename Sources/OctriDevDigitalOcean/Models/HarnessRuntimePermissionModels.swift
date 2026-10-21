@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HarnessRuntimePermission domain models
+// HarnessRuntimePermission domain models
 /// Network boundary. Narrows (subtract-only) spec.sandbox.egress; link-local/internal addresses stay blocked by the
 /// broader egress policy.
 public struct PermissionNetwork: Codable {
@@ -20,22 +20,22 @@ public struct PermissionNetwork: Codable {
     }
 
     init() {
-        (self.default, allow) = (nil, nil)
+        (self.`default`, self.allow) = (nil, nil)
     }
 }
 
-public extension PermissionNetwork {
-    init(from decoder: Decoder) throws {
+extension PermissionNetwork {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.default = try container.sdkDecodeIfPresent(.default)
-        allow = try container.sdkDecodeIfPresent(.allow)
+        self.`default` = try container.sdkDecodeIfPresent(.`default`)
+        self.allow = try container.sdkDecodeIfPresent(.allow)
     }
 }
 
-public extension PermissionNetwork {
-    init(default: PermissionNetworkDefault? = nil, allow: [String]? = nil) {
+extension PermissionNetwork {
+    public init(`default`: PermissionNetworkDefault? = nil, allow: [String]? = nil) {
         self.init()
-        (self.default, self.allow) = (`default`, allow)
+        (self.`default`, self.allow) = (`default`, allow)
     }
 }
 
@@ -54,20 +54,20 @@ public struct PermissionFilesystem: Codable {
     }
 
     init() {
-        (mode, allowWrite) = (nil, nil)
+        (self.mode, self.allowWrite) = (nil, nil)
     }
 }
 
-public extension PermissionFilesystem {
-    init(from decoder: Decoder) throws {
+extension PermissionFilesystem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        mode = try container.sdkDecodeIfPresent(.mode)
-        allowWrite = try container.sdkDecodeIfPresent(.allowWrite)
+        self.mode = try container.sdkDecodeIfPresent(.mode)
+        self.allowWrite = try container.sdkDecodeIfPresent(.allowWrite)
     }
 }
 
-public extension PermissionFilesystem {
-    init(mode: PermissionFilesystemMode? = nil, allowWrite: [String]? = nil) {
+extension PermissionFilesystem {
+    public init(mode: PermissionFilesystemMode? = nil, allowWrite: [String]? = nil) {
         self.init()
         (self.mode, self.allowWrite) = (mode, allowWrite)
     }
@@ -97,42 +97,27 @@ public struct PermissionRule: Codable {
         case enforcement
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension PermissionRule {
-    init(from decoder: Decoder) throws {
+extension PermissionRule {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.tool) else {
-            throw SdkValidationError(
-                field: "tool",
-                code: "required",
-                message: "Validation failed for 'tool': value is required"
-            )
+            throw SdkValidationError(field: "tool", code: "required", message: "Validation failed for 'tool': value is required")
         }
         guard container.contains(.action) else {
-            throw SdkValidationError(
-                field: "action",
-                code: "required",
-                message: "Validation failed for 'action': value is required"
-            )
+            throw SdkValidationError(field: "action", code: "required", message: "Validation failed for 'action': value is required")
         }
-        tool = try container.sdkDecodeRequired(.tool)
-        action = try container.sdkDecodeRequired(.action)
-        match = try container.sdkDecodeIfPresent(.match)
-        enforcement = try container.sdkDecodeIfPresent(.enforcement)
+        self.tool = try container.sdkDecodeRequired(.tool)
+        self.action = try container.sdkDecodeRequired(.action)
+        self.match = try container.sdkDecodeIfPresent(.match)
+        self.enforcement = try container.sdkDecodeIfPresent(.enforcement)
     }
 }
 
-public extension PermissionRule {
-    init(
-        tool: String,
-        action: PermissionRuleAction,
-        match: [String: String]? = nil,
-        enforcement: PermissionRuleEnforcement? = nil
-    ) {
+extension PermissionRule {
+    public init(tool: String, action: PermissionRuleAction, match: [String: String]? = nil, enforcement: PermissionRuleEnforcement? = nil) {
         (self.tool, self.action) = (tool, action)
         (self.match, self.enforcement) = (match, enforcement)
     }
@@ -142,16 +127,13 @@ public extension PermissionRule {
 public struct PermissionNetworkDefault: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let allow = PermissionNetworkDefault(rawValue: "allow")
     public static let deny = PermissionNetworkDefault(rawValue: "deny")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -166,16 +148,13 @@ public struct PermissionNetworkDefault: RawRepresentable, Hashable, Codable, Sen
 public struct PermissionRuleEnforcement: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let strict = PermissionRuleEnforcement(rawValue: "strict")
     public static let bestEffort = PermissionRuleEnforcement(rawValue: "best-effort")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -188,16 +167,13 @@ public struct PermissionRuleEnforcement: RawRepresentable, Hashable, Codable, Se
 public struct PermissionFilesystemMode: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let readOnly = PermissionFilesystemMode(rawValue: "read-only")
     public static let workspaceWrite = PermissionFilesystemMode(rawValue: "workspace-write")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -210,17 +186,14 @@ public struct PermissionFilesystemMode: RawRepresentable, Hashable, Codable, Sen
 public struct PermissionRuleAction: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let allow = PermissionRuleAction(rawValue: "allow")
     public static let ask = PermissionRuleAction(rawValue: "ask")
     public static let deny = PermissionRuleAction(rawValue: "deny")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

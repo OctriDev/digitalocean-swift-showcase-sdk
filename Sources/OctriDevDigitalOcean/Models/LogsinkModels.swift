@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Logsink domain models
+// Logsink domain models
 /// Typed representation of the `LogsinkVerbose` API schema.
 public struct LogsinkVerbose: Codable {
     /// A unique identifier for Logsink
@@ -27,27 +27,22 @@ public struct LogsinkVerbose: Codable {
     }
 
     init() {
-        (sinkId, sinkName, sinkType, config) = (nil, nil, nil, nil)
+        (self.sinkId, self.sinkName, self.sinkType, self.config) = (nil, nil, nil, nil)
     }
 }
 
-public extension LogsinkVerbose {
-    init(from decoder: Decoder) throws {
+extension LogsinkVerbose {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        sinkId = try container.sdkDecodeIfPresent(.sinkId)
-        sinkName = try container.sdkDecodeIfPresent(.sinkName)
-        sinkType = try container.sdkDecodeIfPresent(.sinkType)
-        config = try container.sdkDecodeIfPresent(.config)
+        self.sinkId = try container.sdkDecodeIfPresent(.sinkId)
+        self.sinkName = try container.sdkDecodeIfPresent(.sinkName)
+        self.sinkType = try container.sdkDecodeIfPresent(.sinkType)
+        self.config = try container.sdkDecodeIfPresent(.config)
     }
 }
 
-public extension LogsinkVerbose {
-    init(
-        sinkId: String? = nil,
-        sinkName: String? = nil,
-        sinkType: LogsinkBaseVerboseSinkType? = nil,
-        config: LogsinkVerboseVariant1Config? = nil
-    ) {
+extension LogsinkVerbose {
+    public init(sinkId: String? = nil, sinkName: String? = nil, sinkType: LogsinkBaseVerboseSinkType? = nil, config: LogsinkVerboseVariant1Config? = nil) {
         self.init()
         (self.sinkId, self.sinkName) = (sinkId, sinkName)
         (self.sinkType, self.config) = (sinkType, config)
@@ -74,21 +69,21 @@ public struct LogsinkCreate: Codable {
     }
 
     init() {
-        (sinkName, sinkType, config) = (nil, nil, nil)
+        (self.sinkName, self.sinkType, self.config) = (nil, nil, nil)
     }
 }
 
-public extension LogsinkCreate {
-    init(from decoder: Decoder) throws {
+extension LogsinkCreate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        sinkName = try container.sdkDecodeIfPresent(.sinkName)
-        sinkType = try container.sdkDecodeIfPresent(.sinkType)
-        config = try container.sdkDecodeIfPresent(.config)
+        self.sinkName = try container.sdkDecodeIfPresent(.sinkName)
+        self.sinkType = try container.sdkDecodeIfPresent(.sinkType)
+        self.config = try container.sdkDecodeIfPresent(.config)
     }
 }
 
-public extension LogsinkCreate {
-    init(sinkName: String? = nil, sinkType: LogsinkBaseSinkType? = nil, config: LogsinkCreateVariant1Config? = nil) {
+extension LogsinkCreate {
+    public init(sinkName: String? = nil, sinkType: LogsinkBaseSinkType? = nil, config: LogsinkCreateVariant1Config? = nil) {
         self.init()
         (self.sinkName, self.sinkType) = (sinkName, sinkType)
         self.config = config
@@ -103,19 +98,19 @@ public struct LogsinkCreateVariant1: Codable {
     }
 
     init() {
-        config = nil
+        self.config = nil
     }
 }
 
-public extension LogsinkCreateVariant1 {
-    init(from decoder: Decoder) throws {
+extension LogsinkCreateVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        config = try container.sdkDecodeIfPresent(.config)
+        self.config = try container.sdkDecodeIfPresent(.config)
     }
 }
 
-public extension LogsinkCreateVariant1 {
-    init(config: LogsinkCreateVariant1Config? = nil) {
+extension LogsinkCreateVariant1 {
+    public init(config: LogsinkCreateVariant1Config? = nil) {
         self.init()
         self.config = config
     }
@@ -131,19 +126,19 @@ public struct LogsinkVerboseVariant1: Codable {
     }
 
     init() {
-        config = nil
+        self.config = nil
     }
 }
 
-public extension LogsinkVerboseVariant1 {
-    init(from decoder: Decoder) throws {
+extension LogsinkVerboseVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        config = try container.sdkDecodeIfPresent(.config)
+        self.config = try container.sdkDecodeIfPresent(.config)
     }
 }
 
-public extension LogsinkVerboseVariant1 {
-    init(config: LogsinkVerboseVariant1Config? = nil) {
+extension LogsinkVerboseVariant1 {
+    public init(config: LogsinkVerboseVariant1Config? = nil) {
         self.init()
         self.config = config
     }
@@ -157,26 +152,18 @@ public indirect enum LogsinkCreateVariant1Config {
 }
 
 extension LogsinkCreateVariant1Config: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for LogsinkCreateVariant1Config"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for LogsinkCreateVariant1Config")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -200,18 +187,10 @@ extension LogsinkCreateVariant1Config {
 
 extension LogsinkCreateVariant1Config {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(RsyslogLogsink.self) {
-            return .rsyslogLogsink(value)
-        }
-        if let value = try? container.decode(ElasticsearchLogsink.self) {
-            return .elasticsearchLogsink(value)
-        }
-        if let value = try? container.decode(OpensearchLogsink.self) {
-            return .opensearchLogsink(value)
-        }
-        if let value = try? container.decode(DatadogLogsink.self) {
-            return .datadogLogsink(value)
-        }
+        if let value = try? container.decode(RsyslogLogsink.self) { return .rsyslogLogsink(value) }
+        if let value = try? container.decode(ElasticsearchLogsink.self) { return .elasticsearchLogsink(value) }
+        if let value = try? container.decode(OpensearchLogsink.self) { return .opensearchLogsink(value) }
+        if let value = try? container.decode(DatadogLogsink.self) { return .datadogLogsink(value) }
         return nil
     }
 }
@@ -236,26 +215,18 @@ public indirect enum LogsinkVerboseVariant1Config {
 }
 
 extension LogsinkVerboseVariant1Config: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for LogsinkVerboseVariant1Config"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for LogsinkVerboseVariant1Config")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -279,18 +250,10 @@ extension LogsinkVerboseVariant1Config {
 
 extension LogsinkVerboseVariant1Config {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(RsyslogLogsink.self) {
-            return .rsyslogLogsink(value)
-        }
-        if let value = try? container.decode(ElasticsearchLogsink.self) {
-            return .elasticsearchLogsink(value)
-        }
-        if let value = try? container.decode(OpensearchLogsink.self) {
-            return .opensearchLogsink(value)
-        }
-        if let value = try? container.decode(DatadogLogsink.self) {
-            return .datadogLogsink(value)
-        }
+        if let value = try? container.decode(RsyslogLogsink.self) { return .rsyslogLogsink(value) }
+        if let value = try? container.decode(ElasticsearchLogsink.self) { return .elasticsearchLogsink(value) }
+        if let value = try? container.decode(OpensearchLogsink.self) { return .opensearchLogsink(value) }
+        if let value = try? container.decode(DatadogLogsink.self) { return .datadogLogsink(value) }
         return nil
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Droplets domain models
+// Droplets domain models
 /// An objects containing information about a resources scheduled for deletion.
 public struct AssociatedResourceStatus: Codable {
     /// An object containing information about a resource scheduled for deletion.
@@ -25,30 +25,25 @@ public struct AssociatedResourceStatus: Codable {
     }
 
     init() {
-        (droplet, resources, completedAt, failures) = (nil, nil, nil, nil)
+        (self.droplet, self.resources, self.completedAt, self.failures) = (nil, nil, nil, nil)
     }
 }
 
-public extension AssociatedResourceStatus {
-    init(from decoder: Decoder) throws {
+extension AssociatedResourceStatus {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        droplet = try container.sdkDecodeIfPresent(.droplet)
-        resources = try container.sdkDecodeIfPresent(.resources)
-        completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        failures = try container.sdkDecodeIfPresent(.failures)
-        if let value = completedAt {
+        self.droplet = try container.sdkDecodeIfPresent(.droplet)
+        self.resources = try container.sdkDecodeIfPresent(.resources)
+        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        self.failures = try container.sdkDecodeIfPresent(.failures)
+        if let value = self.completedAt {
             try sdkValidateDateTime("completed_at", sdkWireString(value))
         }
     }
 }
 
-public extension AssociatedResourceStatus {
-    init(
-        droplet: DestroyedAssociatedResource? = nil,
-        resources: AssociatedResourceStatusResources? = nil,
-        completedAt: Date? = nil,
-        failures: Int? = nil
-    ) throws {
+extension AssociatedResourceStatus {
+    public init(droplet: DestroyedAssociatedResource? = nil, resources: AssociatedResourceStatusResources? = nil, completedAt: Date? = nil, failures: Int? = nil) throws {
         self.init()
         (self.droplet, self.resources) = (droplet, resources)
         (self.completedAt, self.failures) = (completedAt, failures)
@@ -80,29 +75,23 @@ public struct AssociatedResourceStatusResources: Codable {
     }
 
     init() {
-        (reservedIps, floatingIps, snapshots, volumes, volumeSnapshots) = (nil, nil, nil, nil, nil)
+        (self.reservedIps, self.floatingIps, self.snapshots, self.volumes, self.volumeSnapshots) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension AssociatedResourceStatusResources {
-    init(from decoder: Decoder) throws {
+extension AssociatedResourceStatusResources {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        reservedIps = try container.sdkDecodeIfPresent(.reservedIps)
-        floatingIps = try container.sdkDecodeIfPresent(.floatingIps)
-        snapshots = try container.sdkDecodeIfPresent(.snapshots)
-        volumes = try container.sdkDecodeIfPresent(.volumes)
-        volumeSnapshots = try container.sdkDecodeIfPresent(.volumeSnapshots)
+        self.reservedIps = try container.sdkDecodeIfPresent(.reservedIps)
+        self.floatingIps = try container.sdkDecodeIfPresent(.floatingIps)
+        self.snapshots = try container.sdkDecodeIfPresent(.snapshots)
+        self.volumes = try container.sdkDecodeIfPresent(.volumes)
+        self.volumeSnapshots = try container.sdkDecodeIfPresent(.volumeSnapshots)
     }
 }
 
-public extension AssociatedResourceStatusResources {
-    init(
-        reservedIps: [DestroyedAssociatedResource]? = nil,
-        floatingIps: [DestroyedAssociatedResource]? = nil,
-        snapshots: [DestroyedAssociatedResource]? = nil,
-        volumes: [DestroyedAssociatedResource]? = nil,
-        volumeSnapshots: [DestroyedAssociatedResource]? = nil
-    ) {
+extension AssociatedResourceStatusResources {
+    public init(reservedIps: [DestroyedAssociatedResource]? = nil, floatingIps: [DestroyedAssociatedResource]? = nil, snapshots: [DestroyedAssociatedResource]? = nil, volumes: [DestroyedAssociatedResource]? = nil, volumeSnapshots: [DestroyedAssociatedResource]? = nil) {
         self.init()
         (self.reservedIps, self.floatingIps) = (reservedIps, floatingIps)
         (self.snapshots, self.volumes) = (snapshots, volumes)
@@ -134,25 +123,25 @@ public struct DestroyedAssociatedResource: Codable {
     }
 
     init() {
-        (id, name, destroyedAt, errorMessage) = (nil, nil, nil, nil)
+        (self.id, self.name, self.destroyedAt, self.errorMessage) = (nil, nil, nil, nil)
     }
 }
 
-public extension DestroyedAssociatedResource {
-    init(from decoder: Decoder) throws {
+extension DestroyedAssociatedResource {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        destroyedAt = try container.sdkDecodeIfPresent(.destroyedAt)
-        errorMessage = try container.sdkDecodeIfPresent(.errorMessage)
-        if let value = destroyedAt {
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.destroyedAt = try container.sdkDecodeIfPresent(.destroyedAt)
+        self.errorMessage = try container.sdkDecodeIfPresent(.errorMessage)
+        if let value = self.destroyedAt {
             try sdkValidateDateTime("destroyed_at", sdkWireString(value))
         }
     }
 }
 
-public extension DestroyedAssociatedResource {
-    init(id: String? = nil, name: String? = nil, destroyedAt: Date? = nil, errorMessage: String? = nil) throws {
+extension DestroyedAssociatedResource {
+    public init(id: String? = nil, name: String? = nil, destroyedAt: Date? = nil, errorMessage: String? = nil) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.destroyedAt, self.errorMessage) = (destroyedAt, errorMessage)

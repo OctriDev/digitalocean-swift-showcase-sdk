@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiStart domain models
+// AgentPlatformAPIApiStart domain models
 /// StartKnowledgeBaseIndexingJobInputPublic description
 public struct ApiStartKnowledgeBaseIndexingJobInputPublic: Codable {
     /// List of data source ids to index, if none are provided, all data sources will be indexed
@@ -19,20 +19,20 @@ public struct ApiStartKnowledgeBaseIndexingJobInputPublic: Codable {
     }
 
     init() {
-        (dataSourceUuids, knowledgeBaseUuid) = (nil, nil)
+        (self.dataSourceUuids, self.knowledgeBaseUuid) = (nil, nil)
     }
 }
 
-public extension ApiStartKnowledgeBaseIndexingJobInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiStartKnowledgeBaseIndexingJobInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        dataSourceUuids = try container.sdkDecodeIfPresent(.dataSourceUuids)
-        knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
+        self.dataSourceUuids = try container.sdkDecodeIfPresent(.dataSourceUuids)
+        self.knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
     }
 }
 
-public extension ApiStartKnowledgeBaseIndexingJobInputPublic {
-    init(dataSourceUuids: [String]? = nil, knowledgeBaseUuid: String? = nil) {
+extension ApiStartKnowledgeBaseIndexingJobInputPublic {
+    public init(dataSourceUuids: [String]? = nil, knowledgeBaseUuid: String? = nil) {
         self.init()
         (self.dataSourceUuids, self.knowledgeBaseUuid) = (dataSourceUuids, knowledgeBaseUuid)
     }
@@ -48,19 +48,19 @@ public struct ApiStartKnowledgeBaseIndexingJobOutput: Codable {
     }
 
     init() {
-        job = nil
+        self.job = nil
     }
 }
 
-public extension ApiStartKnowledgeBaseIndexingJobOutput {
-    init(from decoder: Decoder) throws {
+extension ApiStartKnowledgeBaseIndexingJobOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        job = try container.sdkDecodeIfPresent(.job)
+        self.job = try container.sdkDecodeIfPresent(.job)
     }
 }
 
-public extension ApiStartKnowledgeBaseIndexingJobOutput {
-    init(job: ApiIndexingJob? = nil) {
+extension ApiStartKnowledgeBaseIndexingJobOutput {
+    public init(job: ApiIndexingJob? = nil) {
         self.init()
         self.job = job
     }

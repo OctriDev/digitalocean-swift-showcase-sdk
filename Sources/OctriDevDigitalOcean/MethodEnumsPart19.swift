@@ -29,27 +29,27 @@ struct MonitoringCreateAlertPolicyRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(alerts, forKey: SdkCodingKey("alerts"))
-        try keyedContainer.encode(compare, forKey: SdkCodingKey("compare"))
-        try keyedContainer.encode(description, forKey: SdkCodingKey("description"))
-        try keyedContainer.encode(enabled, forKey: SdkCodingKey("enabled"))
-        try keyedContainer.encode(entities, forKey: SdkCodingKey("entities"))
-        try keyedContainer.encode(tags, forKey: SdkCodingKey("tags"))
-        try keyedContainer.encode(type, forKey: SdkCodingKey("type"))
-        try keyedContainer.encode(value, forKey: SdkCodingKey("value"))
-        try keyedContainer.encode(window, forKey: SdkCodingKey("window"))
+        try keyedContainer.encode(self.alerts, forKey: SdkCodingKey("alerts"))
+        try keyedContainer.encode(self.compare, forKey: SdkCodingKey("compare"))
+        try keyedContainer.encode(self.description, forKey: SdkCodingKey("description"))
+        try keyedContainer.encode(self.enabled, forKey: SdkCodingKey("enabled"))
+        try keyedContainer.encode(self.entities, forKey: SdkCodingKey("entities"))
+        try keyedContainer.encode(self.tags, forKey: SdkCodingKey("tags"))
+        try keyedContainer.encode(self.type, forKey: SdkCodingKey("type"))
+        try keyedContainer.encode(self.value, forKey: SdkCodingKey("value"))
+        try keyedContainer.encode(self.window, forKey: SdkCodingKey("window"))
     }
 
     init(options: MonitoringMethods.MonitoringCreateAlertPolicyOptions) {
-        alerts = options.alerts
-        compare = options.compare
-        description = options.description
-        enabled = options.enabled
-        entities = options.entities
-        tags = options.tags
-        type = options.type
-        value = options.value
-        window = options.window
+        self.alerts = options.alerts
+        self.compare = options.compare
+        self.description = options.description
+        self.enabled = options.enabled
+        self.entities = options.entities
+        self.tags = options.tags
+        self.type = options.type
+        self.value = options.value
+        self.window = options.window
     }
 }
 
@@ -62,15 +62,7 @@ public struct MonitoringUpdateAlertPolicyOptionsRequired1: Codable {
     public let entities: [String]
     public let tags: [String]
 
-    public init(
-        alertUuid: String,
-        alerts: Alerts,
-        compare: AlertPolicyRequestCompare,
-        description: String,
-        enabled: Bool,
-        entities: [String],
-        tags: [String]
-    ) {
+    public init(alertUuid: String, alerts: Alerts, compare: AlertPolicyRequestCompare, description: String, enabled: Bool, entities: [String], tags: [String]) {
         self.alertUuid = alertUuid
         self.alerts = alerts
         self.compare = compare
@@ -106,27 +98,27 @@ struct MonitoringUpdateAlertPolicyRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(alerts, forKey: SdkCodingKey("alerts"))
-        try keyedContainer.encode(compare, forKey: SdkCodingKey("compare"))
-        try keyedContainer.encode(description, forKey: SdkCodingKey("description"))
-        try keyedContainer.encode(enabled, forKey: SdkCodingKey("enabled"))
-        try keyedContainer.encode(entities, forKey: SdkCodingKey("entities"))
-        try keyedContainer.encode(tags, forKey: SdkCodingKey("tags"))
-        try keyedContainer.encode(type, forKey: SdkCodingKey("type"))
-        try keyedContainer.encode(value, forKey: SdkCodingKey("value"))
-        try keyedContainer.encode(window, forKey: SdkCodingKey("window"))
+        try keyedContainer.encode(self.alerts, forKey: SdkCodingKey("alerts"))
+        try keyedContainer.encode(self.compare, forKey: SdkCodingKey("compare"))
+        try keyedContainer.encode(self.description, forKey: SdkCodingKey("description"))
+        try keyedContainer.encode(self.enabled, forKey: SdkCodingKey("enabled"))
+        try keyedContainer.encode(self.entities, forKey: SdkCodingKey("entities"))
+        try keyedContainer.encode(self.tags, forKey: SdkCodingKey("tags"))
+        try keyedContainer.encode(self.type, forKey: SdkCodingKey("type"))
+        try keyedContainer.encode(self.value, forKey: SdkCodingKey("value"))
+        try keyedContainer.encode(self.window, forKey: SdkCodingKey("window"))
     }
 
     init(options: MonitoringMethods.MonitoringUpdateAlertPolicyOptions) {
-        alerts = options.alerts
-        compare = options.compare
-        description = options.description
-        enabled = options.enabled
-        entities = options.entities
-        tags = options.tags
-        type = options.type
-        value = options.value
-        window = options.window
+        self.alerts = options.alerts
+        self.compare = options.compare
+        self.description = options.description
+        self.enabled = options.enabled
+        self.entities = options.entities
+        self.tags = options.tags
+        self.type = options.type
+        self.value = options.value
+        self.window = options.window
     }
 }
 
@@ -137,9 +129,9 @@ struct MonitoringCreateDestinationRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(type, forKey: SdkCodingKey("type"))
-        try keyedContainer.encode(config2, forKey: SdkCodingKey("config"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.type, forKey: SdkCodingKey("type"))
+        try keyedContainer.encode(self.config2, forKey: SdkCodingKey("config"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
     }
 }
 
@@ -150,9 +142,9 @@ struct MonitoringUpdateDestinationRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(type, forKey: SdkCodingKey("type"))
-        try keyedContainer.encode(config2, forKey: SdkCodingKey("config"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.type, forKey: SdkCodingKey("type"))
+        try keyedContainer.encode(self.config2, forKey: SdkCodingKey("config"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
     }
 }
 
@@ -162,8 +154,8 @@ struct MonitoringCreateSinkRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(destinationUuid, forKey: SdkCodingKey("destination_uuid"))
-        try keyedContainer.encodeIfPresent(resources, forKey: SdkCodingKey("resources"))
+        try keyedContainer.encodeIfPresent(self.destinationUuid, forKey: SdkCodingKey("destination_uuid"))
+        try keyedContainer.encodeIfPresent(self.resources, forKey: SdkCodingKey("resources"))
     }
 }
 
@@ -176,11 +168,11 @@ struct NfsCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(sizeGib, forKey: SdkCodingKey("size_gib"))
-        try keyedContainer.encode(region, forKey: SdkCodingKey("region"))
-        try keyedContainer.encode(vpcIds, forKey: SdkCodingKey("vpc_ids"))
-        try keyedContainer.encodeIfPresent(performanceTier, forKey: SdkCodingKey("performance_tier"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.sizeGib, forKey: SdkCodingKey("size_gib"))
+        try keyedContainer.encode(self.region, forKey: SdkCodingKey("region"))
+        try keyedContainer.encode(self.vpcIds, forKey: SdkCodingKey("vpc_ids"))
+        try keyedContainer.encodeIfPresent(self.performanceTier, forKey: SdkCodingKey("performance_tier"))
     }
 }
 
@@ -192,10 +184,10 @@ struct NfsCreateAccessPointRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(path, forKey: SdkCodingKey("path"))
-        try keyedContainer.encode(accessPolicy, forKey: SdkCodingKey("access_policy"))
-        try keyedContainer.encode(vpcId, forKey: SdkCodingKey("vpc_id"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.path, forKey: SdkCodingKey("path"))
+        try keyedContainer.encode(self.accessPolicy, forKey: SdkCodingKey("access_policy"))
+        try keyedContainer.encode(self.vpcId, forKey: SdkCodingKey("vpc_id"))
     }
 }
 
@@ -205,7 +197,7 @@ struct OrganizationsCreateTeamRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(invitations, forKey: SdkCodingKey("invitations"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.invitations, forKey: SdkCodingKey("invitations"))
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiUpdate domain models
+// AgentPlatformAPIApiUpdate domain models
 /// Public parameters for updating a scenario set.
 public struct ApiUpdateScenarioSetInputPublic: Codable {
     /// Optional new name. When set, must be non-empty and at most 255 characters.
@@ -22,21 +22,21 @@ public struct ApiUpdateScenarioSetInputPublic: Codable {
     }
 
     init() {
-        (name, scenarioSetUuid, scenarios) = (nil, nil, nil)
+        (self.name, self.scenarioSetUuid, self.scenarios) = (nil, nil, nil)
     }
 }
 
-public extension ApiUpdateScenarioSetInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateScenarioSetInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        scenarioSetUuid = try container.sdkDecodeIfPresent(.scenarioSetUuid)
-        scenarios = try container.sdkDecodeIfPresent(.scenarios)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.scenarioSetUuid = try container.sdkDecodeIfPresent(.scenarioSetUuid)
+        self.scenarios = try container.sdkDecodeIfPresent(.scenarios)
     }
 }
 
-public extension ApiUpdateScenarioSetInputPublic {
-    init(name: String? = nil, scenarioSetUuid: String? = nil, scenarios: [ApiScenario]? = nil) {
+extension ApiUpdateScenarioSetInputPublic {
+    public init(name: String? = nil, scenarioSetUuid: String? = nil, scenarios: [ApiScenario]? = nil) {
         self.init()
         (self.name, self.scenarioSetUuid) = (name, scenarioSetUuid)
         self.scenarios = scenarios
@@ -53,19 +53,19 @@ public struct ApiUpdateScenarioSetOutput: Codable {
     }
 
     init() {
-        scenarioSet = nil
+        self.scenarioSet = nil
     }
 }
 
-public extension ApiUpdateScenarioSetOutput {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateScenarioSetOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        scenarioSet = try container.sdkDecodeIfPresent(.scenarioSet)
+        self.scenarioSet = try container.sdkDecodeIfPresent(.scenarioSet)
     }
 }
 
-public extension ApiUpdateScenarioSetOutput {
-    init(scenarioSet: ApiScenarioSet? = nil) {
+extension ApiUpdateScenarioSetOutput {
+    public init(scenarioSet: ApiScenarioSet? = nil) {
         self.init()
         self.scenarioSet = scenarioSet
     }

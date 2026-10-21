@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AppsAppsDeployment domain models
+// AppsAppsDeployment domain models
 /// Typed representation of the `AppsDeployment` API schema.
 public struct AppsDeployment: Codable {
     /// Optional `string` value serialized in the `cause` wire field.
@@ -64,60 +64,44 @@ public struct AppsDeployment: Codable {
     }
 
     init() {
-        (cause, clonedFrom, createdAt, id, jobs) = (nil, nil, nil, nil, nil)
-        (functions, phase, phaseLastUpdatedAt, progress, services) = (nil, nil, nil, nil, nil)
-        (spec, staticSites, tierSlug, updatedAt, workers) = (nil, nil, nil, nil, nil)
+        (self.cause, self.clonedFrom, self.createdAt, self.id, self.jobs) = (nil, nil, nil, nil, nil)
+        (self.functions, self.phase, self.phaseLastUpdatedAt, self.progress, self.services) = (nil, nil, nil, nil, nil)
+        (self.spec, self.staticSites, self.tierSlug, self.updatedAt, self.workers) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension AppsDeployment {
-    init(from decoder: Decoder) throws {
+extension AppsDeployment {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        cause = try container.sdkDecodeIfPresent(.cause)
-        clonedFrom = try container.sdkDecodeIfPresent(.clonedFrom)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        id = try container.sdkDecodeIfPresent(.id)
-        jobs = try container.sdkDecodeIfPresent(.jobs)
-        functions = try container.sdkDecodeIfPresent(.functions)
-        phase = try container.sdkDecodeIfPresent(.phase)
-        phaseLastUpdatedAt = try container.sdkDecodeIfPresent(.phaseLastUpdatedAt)
-        progress = try container.sdkDecodeIfPresent(.progress)
-        services = try container.sdkDecodeIfPresent(.services)
-        spec = try container.sdkDecodeIfPresent(.spec)
-        staticSites = try container.sdkDecodeIfPresent(.staticSites)
-        tierSlug = try container.sdkDecodeIfPresent(.tierSlug)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        workers = try container.sdkDecodeIfPresent(.workers)
-        if let value = createdAt {
+        self.cause = try container.sdkDecodeIfPresent(.cause)
+        self.clonedFrom = try container.sdkDecodeIfPresent(.clonedFrom)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.jobs = try container.sdkDecodeIfPresent(.jobs)
+        self.functions = try container.sdkDecodeIfPresent(.functions)
+        self.phase = try container.sdkDecodeIfPresent(.phase)
+        self.phaseLastUpdatedAt = try container.sdkDecodeIfPresent(.phaseLastUpdatedAt)
+        self.progress = try container.sdkDecodeIfPresent(.progress)
+        self.services = try container.sdkDecodeIfPresent(.services)
+        self.spec = try container.sdkDecodeIfPresent(.spec)
+        self.staticSites = try container.sdkDecodeIfPresent(.staticSites)
+        self.tierSlug = try container.sdkDecodeIfPresent(.tierSlug)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.workers = try container.sdkDecodeIfPresent(.workers)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = phaseLastUpdatedAt {
+        if let value = self.phaseLastUpdatedAt {
             try sdkValidateDateTime("phase_last_updated_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension AppsDeployment {
-    init(
-        cause: String? = nil,
-        clonedFrom: String? = nil,
-        createdAt: Date? = nil,
-        id: String? = nil,
-        jobs: [AppsDeploymentJob]? = nil,
-        functions: [AppsDeploymentFunctions]? = nil,
-        phase: AppsDeploymentPhase? = nil,
-        phaseLastUpdatedAt: Date? = nil,
-        progress: AppsDeploymentProgress? = nil,
-        services: [AppsDeploymentService]? = nil,
-        spec: AppSpec? = nil,
-        staticSites: [AppsDeploymentStaticSite]? = nil,
-        tierSlug: String? = nil,
-        updatedAt: Date? = nil,
-        workers: [AppsDeploymentWorker]? = nil
-    ) throws {
+extension AppsDeployment {
+    public init(cause: String? = nil, clonedFrom: String? = nil, createdAt: Date? = nil, id: String? = nil, jobs: [AppsDeploymentJob]? = nil, functions: [AppsDeploymentFunctions]? = nil, phase: AppsDeploymentPhase? = nil, phaseLastUpdatedAt: Date? = nil, progress: AppsDeploymentProgress? = nil, services: [AppsDeploymentService]? = nil, spec: AppSpec? = nil, staticSites: [AppsDeploymentStaticSite]? = nil, tierSlug: String? = nil, updatedAt: Date? = nil, workers: [AppsDeploymentWorker]? = nil) throws {
         self.init()
         (self.cause, self.clonedFrom) = (cause, clonedFrom)
         (self.createdAt, self.id) = (createdAt, id)
@@ -154,20 +138,20 @@ public struct AppsDeploymentStaticSite: Codable {
     }
 
     init() {
-        (name, sourceCommitHash) = (nil, nil)
+        (self.name, self.sourceCommitHash) = (nil, nil)
     }
 }
 
-public extension AppsDeploymentStaticSite {
-    init(from decoder: Decoder) throws {
+extension AppsDeploymentStaticSite {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        sourceCommitHash = try container.sdkDecodeIfPresent(.sourceCommitHash)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.sourceCommitHash = try container.sdkDecodeIfPresent(.sourceCommitHash)
     }
 }
 
-public extension AppsDeploymentStaticSite {
-    init(name: String? = nil, sourceCommitHash: String? = nil) {
+extension AppsDeploymentStaticSite {
+    public init(name: String? = nil, sourceCommitHash: String? = nil) {
         self.init()
         (self.name, self.sourceCommitHash) = (name, sourceCommitHash)
     }
@@ -211,42 +195,33 @@ public struct AppsDeploymentProgressStep: Codable {
     }
 
     init() {
-        (componentName, endedAt, messageBase, name, reason) = (nil, nil, nil, nil, nil)
-        (startedAt, status, steps) = (nil, nil, nil)
+        (self.componentName, self.endedAt, self.messageBase, self.name, self.reason) = (nil, nil, nil, nil, nil)
+        (self.startedAt, self.status, self.steps) = (nil, nil, nil)
     }
 }
 
-public extension AppsDeploymentProgressStep {
-    init(from decoder: Decoder) throws {
+extension AppsDeploymentProgressStep {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        componentName = try container.sdkDecodeIfPresent(.componentName)
-        endedAt = try container.sdkDecodeIfPresent(.endedAt)
-        messageBase = try container.sdkDecodeIfPresent(.messageBase)
-        name = try container.sdkDecodeIfPresent(.name)
-        reason = try container.sdkDecodeIfPresent(.reason)
-        startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        status = try container.sdkDecodeIfPresent(.status)
-        steps = try container.sdkDecodeIfPresent(.steps)
-        if let value = endedAt {
+        self.componentName = try container.sdkDecodeIfPresent(.componentName)
+        self.endedAt = try container.sdkDecodeIfPresent(.endedAt)
+        self.messageBase = try container.sdkDecodeIfPresent(.messageBase)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.reason = try container.sdkDecodeIfPresent(.reason)
+        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.steps = try container.sdkDecodeIfPresent(.steps)
+        if let value = self.endedAt {
             try sdkValidateDateTime("ended_at", sdkWireString(value))
         }
-        if let value = startedAt {
+        if let value = self.startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
     }
 }
 
-public extension AppsDeploymentProgressStep {
-    init(
-        componentName: String? = nil,
-        endedAt: Date? = nil,
-        messageBase: String? = nil,
-        name: String? = nil,
-        reason: AppsDeploymentProgressStepReason? = nil,
-        startedAt: Date? = nil,
-        status: AppsDeploymentProgressStepStatus? = nil,
-        steps: [[String: JSONValue]]? = nil
-    ) throws {
+extension AppsDeploymentProgressStep {
+    public init(componentName: String? = nil, endedAt: Date? = nil, messageBase: String? = nil, name: String? = nil, reason: AppsDeploymentProgressStepReason? = nil, startedAt: Date? = nil, status: AppsDeploymentProgressStepStatus? = nil, steps: [[String: JSONValue]]? = nil) throws {
         self.init()
         (self.componentName, self.endedAt) = (componentName, endedAt)
         (self.messageBase, self.name) = (messageBase, name)
@@ -280,21 +255,21 @@ public struct AppsDeploymentFunctions: Codable {
     }
 
     init() {
-        (name, sourceCommitHash, namespace) = (nil, nil, nil)
+        (self.name, self.sourceCommitHash, self.namespace) = (nil, nil, nil)
     }
 }
 
-public extension AppsDeploymentFunctions {
-    init(from decoder: Decoder) throws {
+extension AppsDeploymentFunctions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        sourceCommitHash = try container.sdkDecodeIfPresent(.sourceCommitHash)
-        namespace = try container.sdkDecodeIfPresent(.namespace)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.sourceCommitHash = try container.sdkDecodeIfPresent(.sourceCommitHash)
+        self.namespace = try container.sdkDecodeIfPresent(.namespace)
     }
 }
 
-public extension AppsDeploymentFunctions {
-    init(name: String? = nil, sourceCommitHash: String? = nil, namespace: String? = nil) {
+extension AppsDeploymentFunctions {
+    public init(name: String? = nil, sourceCommitHash: String? = nil, namespace: String? = nil) {
         self.init()
         (self.name, self.sourceCommitHash) = (name, sourceCommitHash)
         self.namespace = namespace
@@ -316,20 +291,20 @@ public struct AppsDeploymentService: Codable {
     }
 
     init() {
-        (name, sourceCommitHash) = (nil, nil)
+        (self.name, self.sourceCommitHash) = (nil, nil)
     }
 }
 
-public extension AppsDeploymentService {
-    init(from decoder: Decoder) throws {
+extension AppsDeploymentService {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        sourceCommitHash = try container.sdkDecodeIfPresent(.sourceCommitHash)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.sourceCommitHash = try container.sdkDecodeIfPresent(.sourceCommitHash)
     }
 }
 
-public extension AppsDeploymentService {
-    init(name: String? = nil, sourceCommitHash: String? = nil) {
+extension AppsDeploymentService {
+    public init(name: String? = nil, sourceCommitHash: String? = nil) {
         self.init()
         (self.name, self.sourceCommitHash) = (name, sourceCommitHash)
     }
@@ -368,34 +343,26 @@ public struct AppsDeploymentProgress: Codable {
     }
 
     init() {
-        (errorSteps, pendingSteps, runningSteps, steps, successSteps) = (nil, nil, nil, nil, nil)
-        (summarySteps, totalSteps) = (nil, nil)
+        (self.errorSteps, self.pendingSteps, self.runningSteps, self.steps, self.successSteps) = (nil, nil, nil, nil, nil)
+        (self.summarySteps, self.totalSteps) = (nil, nil)
     }
 }
 
-public extension AppsDeploymentProgress {
-    init(from decoder: Decoder) throws {
+extension AppsDeploymentProgress {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        errorSteps = try container.sdkDecodeIfPresent(.errorSteps)
-        pendingSteps = try container.sdkDecodeIfPresent(.pendingSteps)
-        runningSteps = try container.sdkDecodeIfPresent(.runningSteps)
-        steps = try container.sdkDecodeIfPresent(.steps)
-        successSteps = try container.sdkDecodeIfPresent(.successSteps)
-        summarySteps = try container.sdkDecodeIfPresent(.summarySteps)
-        totalSteps = try container.sdkDecodeIfPresent(.totalSteps)
+        self.errorSteps = try container.sdkDecodeIfPresent(.errorSteps)
+        self.pendingSteps = try container.sdkDecodeIfPresent(.pendingSteps)
+        self.runningSteps = try container.sdkDecodeIfPresent(.runningSteps)
+        self.steps = try container.sdkDecodeIfPresent(.steps)
+        self.successSteps = try container.sdkDecodeIfPresent(.successSteps)
+        self.summarySteps = try container.sdkDecodeIfPresent(.summarySteps)
+        self.totalSteps = try container.sdkDecodeIfPresent(.totalSteps)
     }
 }
 
-public extension AppsDeploymentProgress {
-    init(
-        errorSteps: Int? = nil,
-        pendingSteps: Int? = nil,
-        runningSteps: Int? = nil,
-        steps: [AppsDeploymentProgressStep]? = nil,
-        successSteps: Int? = nil,
-        summarySteps: [AppsDeploymentProgressStep]? = nil,
-        totalSteps: Int? = nil
-    ) {
+extension AppsDeploymentProgress {
+    public init(errorSteps: Int? = nil, pendingSteps: Int? = nil, runningSteps: Int? = nil, steps: [AppsDeploymentProgressStep]? = nil, successSteps: Int? = nil, summarySteps: [AppsDeploymentProgressStep]? = nil, totalSteps: Int? = nil) {
         self.init()
         (self.errorSteps, self.pendingSteps) = (errorSteps, pendingSteps)
         (self.runningSteps, self.steps) = (runningSteps, steps)
@@ -419,20 +386,20 @@ public struct AppsDeploymentWorker: Codable {
     }
 
     init() {
-        (name, sourceCommitHash) = (nil, nil)
+        (self.name, self.sourceCommitHash) = (nil, nil)
     }
 }
 
-public extension AppsDeploymentWorker {
-    init(from decoder: Decoder) throws {
+extension AppsDeploymentWorker {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        sourceCommitHash = try container.sdkDecodeIfPresent(.sourceCommitHash)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.sourceCommitHash = try container.sdkDecodeIfPresent(.sourceCommitHash)
     }
 }
 
-public extension AppsDeploymentWorker {
-    init(name: String? = nil, sourceCommitHash: String? = nil) {
+extension AppsDeploymentWorker {
+    public init(name: String? = nil, sourceCommitHash: String? = nil) {
         self.init()
         (self.name, self.sourceCommitHash) = (name, sourceCommitHash)
     }
@@ -453,20 +420,20 @@ public struct AppsDeploymentProgressStepReason: Codable {
     }
 
     init() {
-        (code, message) = (nil, nil)
+        (self.code, self.message) = (nil, nil)
     }
 }
 
-public extension AppsDeploymentProgressStepReason {
-    init(from decoder: Decoder) throws {
+extension AppsDeploymentProgressStepReason {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        code = try container.sdkDecodeIfPresent(.code)
-        message = try container.sdkDecodeIfPresent(.message)
+        self.code = try container.sdkDecodeIfPresent(.code)
+        self.message = try container.sdkDecodeIfPresent(.message)
     }
 }
 
-public extension AppsDeploymentProgressStepReason {
-    init(code: String? = nil, message: String? = nil) {
+extension AppsDeploymentProgressStepReason {
+    public init(code: String? = nil, message: String? = nil) {
         self.init()
         (self.code, self.message) = (code, message)
     }
@@ -482,19 +449,19 @@ public struct AppsDeploymentResponse: Codable {
     }
 
     init() {
-        deployment = nil
+        self.deployment = nil
     }
 }
 
-public extension AppsDeploymentResponse {
-    init(from decoder: Decoder) throws {
+extension AppsDeploymentResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        deployment = try container.sdkDecodeIfPresent(.deployment)
+        self.deployment = try container.sdkDecodeIfPresent(.deployment)
     }
 }
 
-public extension AppsDeploymentResponse {
-    init(deployment: AppsDeployment? = nil) {
+extension AppsDeploymentResponse {
+    public init(deployment: AppsDeployment? = nil) {
         self.init()
         self.deployment = deployment
     }
@@ -515,20 +482,20 @@ public struct AppsDeploymentJob: Codable {
     }
 
     init() {
-        (name, sourceCommitHash) = (nil, nil)
+        (self.name, self.sourceCommitHash) = (nil, nil)
     }
 }
 
-public extension AppsDeploymentJob {
-    init(from decoder: Decoder) throws {
+extension AppsDeploymentJob {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        sourceCommitHash = try container.sdkDecodeIfPresent(.sourceCommitHash)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.sourceCommitHash = try container.sdkDecodeIfPresent(.sourceCommitHash)
     }
 }
 
-public extension AppsDeploymentJob {
-    init(name: String? = nil, sourceCommitHash: String? = nil) {
+extension AppsDeploymentJob {
+    public init(name: String? = nil, sourceCommitHash: String? = nil) {
         self.init()
         (self.name, self.sourceCommitHash) = (name, sourceCommitHash)
     }
@@ -538,10 +505,7 @@ public extension AppsDeploymentJob {
 public struct AppsDeploymentPhase: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let unknown = AppsDeploymentPhase(rawValue: "UNKNOWN")
     public static let pendingBuild = AppsDeploymentPhase(rawValue: "PENDING_BUILD")
     public static let building = AppsDeploymentPhase(rawValue: "BUILDING")
@@ -554,7 +518,7 @@ public struct AppsDeploymentPhase: RawRepresentable, Hashable, Codable, Sendable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -567,10 +531,7 @@ public struct AppsDeploymentPhase: RawRepresentable, Hashable, Codable, Sendable
 public struct AppsDeploymentProgressStepStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let unknown = AppsDeploymentProgressStepStatus(rawValue: "UNKNOWN")
     public static let pending = AppsDeploymentProgressStepStatus(rawValue: "PENDING")
     public static let running = AppsDeploymentProgressStepStatus(rawValue: "RUNNING")
@@ -579,7 +540,7 @@ public struct AppsDeploymentProgressStepStatus: RawRepresentable, Hashable, Coda
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

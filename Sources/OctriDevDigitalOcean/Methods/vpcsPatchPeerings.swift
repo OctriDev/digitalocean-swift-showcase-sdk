@@ -6,22 +6,15 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension VpcsMethods {
-    /// To update the name of a VPC peering in a particular VPC, send a PATCH request to
-    /// `/v2/vpcs/$VPC_ID/peerings/$VPC_PEERING_ID` with the new `name` in the request body.
+extension VpcsMethods {
+    /// To update the name of a VPC peering in a particular VPC, send a PATCH request to `/v2/vpcs/$VPC_ID/peerings/$VPC_PEERING_ID` with the new `name` in the request body.
     ///
     /// - Parameters:
     /// - vpcId: A unique identifier for a VPC.
     /// - vpcPeeringId: A unique identifier for a VPC peering.
     /// - name: The name of the VPC peering. Must be unique within the team and may
     ///   only contain alphanumeric characters and dashes.
-    static func vpcsPatchPeerings(
-        config: ClientConfig,
-        vpcId: String,
-        vpcPeeringId: String,
-        name: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VpcPeeringResponse {
+    public static func vpcsPatchPeerings(config: ClientConfig, vpcId: String, vpcPeeringId: String, name: String, requestOptions: RequestOptions? = nil) async throws -> VpcPeeringResponse {
         try sdkValidateUuid("vpc_id", vpcId)
 
         try sdkValidateUuid("vpc_peering_id", vpcPeeringId)
@@ -30,26 +23,6 @@ public extension VpcsMethods {
 
         let requestBody = VpcsPatchPeeringsRequestBody(name: name)
 
-        return try await (sdkRequest(
-            "PATCH",
-            [
-                "/v2/vpcs/",
-                sdkEncodePathSegment(sdkWireString(vpcId)),
-                "/peerings/",
-                sdkEncodePathSegment(sdkWireString(vpcPeeringId)),
-            ].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "vpcs_patch_peerings",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PATCH", ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcId)), "/peerings/", sdkEncodePathSegment(sdkWireString(vpcPeeringId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "vpcs_patch_peerings", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

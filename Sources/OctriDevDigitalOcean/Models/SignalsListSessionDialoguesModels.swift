@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Signals domain models
+// Signals domain models
 /// Optional object value serialized in the `page_info` wire field.
 public struct ListDialoguesResponsePageInfo: Codable {
     /// Whether there are more results after this page.
@@ -14,19 +14,19 @@ public struct ListDialoguesResponsePageInfo: Codable {
     }
 
     init() {
-        hasNextPage = nil
+        self.hasNextPage = nil
     }
 }
 
-public extension ListDialoguesResponsePageInfo {
-    init(from decoder: Decoder) throws {
+extension ListDialoguesResponsePageInfo {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        hasNextPage = try container.sdkDecodeIfPresent(.hasNextPage)
+        self.hasNextPage = try container.sdkDecodeIfPresent(.hasNextPage)
     }
 }
 
-public extension ListDialoguesResponsePageInfo {
-    init(hasNextPage: Bool? = nil) {
+extension ListDialoguesResponsePageInfo {
+    public init(hasNextPage: Bool? = nil) {
         self.init()
         self.hasNextPage = hasNextPage
     }
@@ -58,37 +58,25 @@ public struct SessionDialogue: Codable {
         case signals
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SessionDialogue {
-    init(from decoder: Decoder) throws {
+extension SessionDialogue {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        sequence = try container.sdkDecodeIfPresent(.sequence)
-        runStatus = try container.sdkDecodeIfPresent(.runStatus)
-        userMessage = try container.sdkDecodeIfPresent(.userMessage)
-        signals = try container.sdkDecodeIfPresent(.signals)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.sequence = try container.sdkDecodeIfPresent(.sequence)
+        self.runStatus = try container.sdkDecodeIfPresent(.runStatus)
+        self.userMessage = try container.sdkDecodeIfPresent(.userMessage)
+        self.signals = try container.sdkDecodeIfPresent(.signals)
     }
 }
 
-public extension SessionDialogue {
-    init(
-        id: String,
-        sequence: Int? = nil,
-        runStatus: String? = nil,
-        userMessage: String? = nil,
-        signals: [String]? = nil
-    ) {
+extension SessionDialogue {
+    public init(id: String, sequence: Int? = nil, runStatus: String? = nil, userMessage: String? = nil, signals: [String]? = nil) {
         (self.id, self.sequence) = (id, sequence)
         (self.runStatus, self.userMessage) = (runStatus, userMessage)
         self.signals = signals
@@ -109,20 +97,20 @@ public struct ListDialoguesResponseEdgesItem: Codable {
     }
 
     init() {
-        (cursor, node) = (nil, nil)
+        (self.cursor, self.node) = (nil, nil)
     }
 }
 
-public extension ListDialoguesResponseEdgesItem {
-    init(from decoder: Decoder) throws {
+extension ListDialoguesResponseEdgesItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        cursor = try container.sdkDecodeIfPresent(.cursor)
-        node = try container.sdkDecodeIfPresent(.node)
+        self.cursor = try container.sdkDecodeIfPresent(.cursor)
+        self.node = try container.sdkDecodeIfPresent(.node)
     }
 }
 
-public extension ListDialoguesResponseEdgesItem {
-    init(cursor: String? = nil, node: SessionDialogue? = nil) {
+extension ListDialoguesResponseEdgesItem {
+    public init(cursor: String? = nil, node: SessionDialogue? = nil) {
         self.init()
         (self.cursor, self.node) = (cursor, node)
     }
@@ -141,20 +129,20 @@ public struct ListDialoguesResponse: Codable {
     }
 
     init() {
-        (edges, pageInfo) = (nil, nil)
+        (self.edges, self.pageInfo) = (nil, nil)
     }
 }
 
-public extension ListDialoguesResponse {
-    init(from decoder: Decoder) throws {
+extension ListDialoguesResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        edges = try container.sdkDecodeIfPresent(.edges)
-        pageInfo = try container.sdkDecodeIfPresent(.pageInfo)
+        self.edges = try container.sdkDecodeIfPresent(.edges)
+        self.pageInfo = try container.sdkDecodeIfPresent(.pageInfo)
     }
 }
 
-public extension ListDialoguesResponse {
-    init(edges: [ListDialoguesResponseEdgesItem]? = nil, pageInfo: ListDialoguesResponsePageInfo? = nil) {
+extension ListDialoguesResponse {
+    public init(edges: [ListDialoguesResponseEdgesItem]? = nil, pageInfo: ListDialoguesResponsePageInfo? = nil) {
         self.init()
         (self.edges, self.pageInfo) = (edges, pageInfo)
     }

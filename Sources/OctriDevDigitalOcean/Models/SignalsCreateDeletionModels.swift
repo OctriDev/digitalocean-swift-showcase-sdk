@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Signals domain models
+// Signals domain models
 /// Request body to create a new signals data deletion job.
 public struct CreateDeletionRequest: Codable {
     /// The scope of the deletion. `agent` deletes Signals conversations for one Harness Runtime environment and
@@ -25,39 +25,29 @@ public struct CreateDeletionRequest: Codable {
         case agentId = "agent_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateDeletionRequest {
-    init(from decoder: Decoder) throws {
+extension CreateDeletionRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.teamId) else {
-            throw SdkValidationError(
-                field: "team_id",
-                code: "required",
-                message: "Validation failed for 'team_id': value is required"
-            )
+            throw SdkValidationError(field: "team_id", code: "required", message: "Validation failed for 'team_id': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        teamId = try container.sdkDecodeRequired(.teamId)
-        agentId = try container.sdkDecodeIfPresent(.agentId)
-        if let value = agentId {
+        self.type = try container.sdkDecodeRequired(.type)
+        self.teamId = try container.sdkDecodeRequired(.teamId)
+        self.agentId = try container.sdkDecodeIfPresent(.agentId)
+        if let value = self.agentId {
             try sdkValidateUuid("agent_id", value)
         }
     }
 }
 
-public extension CreateDeletionRequest {
-    init(type: CreateDeletionRequestType, teamId: Int, agentId: String? = nil) throws {
+extension CreateDeletionRequest {
+    public init(type: CreateDeletionRequestType, teamId: Int, agentId: String? = nil) throws {
         (self.type, self.teamId) = (type, teamId)
         self.agentId = agentId
         if let value = self.agentId {
@@ -72,16 +62,13 @@ public extension CreateDeletionRequest {
 public struct CreateDeletionRequestType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let agent = CreateDeletionRequestType(rawValue: "agent")
     public static let inference = CreateDeletionRequestType(rawValue: "inference")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
-    struct GenaiCreateSimulationRunOptions: Codable {
+extension AgentPlatformApiMethods {
+    public struct GenaiCreateSimulationRunOptions: Codable {
         public var agentConfig: ApiCandidateAgentConfig?
         public var evaluationConfig: ApiSimulationEvaluationConfig?
         public var explorationBudget: Int?
@@ -21,9 +21,7 @@ public extension AgentPlatformApiMethods {
         public init() {}
     }
 
-    /// To create a simulation run, send a POST request to `/v2/gen-ai/simulation_runs`. The scenario set must be ready.
-    /// Judge and user simulator models are optional and use platform defaults when omitted. The run is returned in the
-    /// pending state.
+    /// To create a simulation run, send a POST request to `/v2/gen-ai/simulation_runs`. The scenario set must be ready. Judge and user simulator models are optional and use platform defaults when omitted. The run is returned in the pending state.
     ///
     /// - Parameters:
     /// - agentConfig: Configuration of the candidate agent under test for a
@@ -46,28 +44,9 @@ public extension AgentPlatformApiMethods {
     ///   temperature and max_tokens.
     /// - userSimulatorModelUuid: Optional model override for the user simulator.
     ///   Platform default when unset.
-    static func genaiCreateSimulationRun(
-        config: ClientConfig,
-        options: GenaiCreateSimulationRunOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiCreateSimulationRunOutput {
+    public static func genaiCreateSimulationRun(config: ClientConfig, options: GenaiCreateSimulationRunOptions, requestOptions: RequestOptions? = nil) async throws -> ApiCreateSimulationRunOutput {
         let requestBody = GenaiCreateSimulationRunRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/gen-ai/simulation_runs",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "genai_create_simulation_run",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v2/gen-ai/simulation_runs", config: config, body: requestBody, decoder: .json, operationId: "genai_create_simulation_run", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

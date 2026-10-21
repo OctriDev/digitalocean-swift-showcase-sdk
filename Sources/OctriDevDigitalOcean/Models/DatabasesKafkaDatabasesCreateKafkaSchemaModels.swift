@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DatabasesKafka domain models
+// DatabasesKafka domain models
 /// Typed representation of the `KafkaSchema` API schema.
 public struct KafkaSchema: Codable {
     /// The id for schema.
@@ -27,51 +27,33 @@ public struct KafkaSchema: Codable {
         case schema
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension KafkaSchema {
-    init(from decoder: Decoder) throws {
+extension KafkaSchema {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.schemaId) else {
-            throw SdkValidationError(
-                field: "schema_id",
-                code: "required",
-                message: "Validation failed for 'schema_id': value is required"
-            )
+            throw SdkValidationError(field: "schema_id", code: "required", message: "Validation failed for 'schema_id': value is required")
         }
         guard container.contains(.subjectName) else {
-            throw SdkValidationError(
-                field: "subject_name",
-                code: "required",
-                message: "Validation failed for 'subject_name': value is required"
-            )
+            throw SdkValidationError(field: "subject_name", code: "required", message: "Validation failed for 'subject_name': value is required")
         }
         guard container.contains(.schemaType) else {
-            throw SdkValidationError(
-                field: "schema_type",
-                code: "required",
-                message: "Validation failed for 'schema_type': value is required"
-            )
+            throw SdkValidationError(field: "schema_type", code: "required", message: "Validation failed for 'schema_type': value is required")
         }
         guard container.contains(.schema) else {
-            throw SdkValidationError(
-                field: "schema",
-                code: "required",
-                message: "Validation failed for 'schema': value is required"
-            )
+            throw SdkValidationError(field: "schema", code: "required", message: "Validation failed for 'schema': value is required")
         }
-        schemaId = try container.sdkDecodeRequired(.schemaId)
-        subjectName = try container.sdkDecodeRequired(.subjectName)
-        schemaType = try container.sdkDecodeRequired(.schemaType)
-        schema = try container.sdkDecodeRequired(.schema)
+        self.schemaId = try container.sdkDecodeRequired(.schemaId)
+        self.subjectName = try container.sdkDecodeRequired(.subjectName)
+        self.schemaType = try container.sdkDecodeRequired(.schemaType)
+        self.schema = try container.sdkDecodeRequired(.schema)
     }
 }
 
-public extension KafkaSchema {
-    init(schemaId: Int, subjectName: String, schemaType: KafkaSchemaSchemaType, schema: String) {
+extension KafkaSchema {
+    public init(schemaId: Int, subjectName: String, schemaType: KafkaSchemaSchemaType, schema: String) {
         (self.schemaId, self.subjectName) = (schemaId, subjectName)
         (self.schemaType, self.schema) = (schemaType, schema)
     }
@@ -81,17 +63,14 @@ public extension KafkaSchema {
 public struct KafkaSchemaSchemaType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let avro = KafkaSchemaSchemaType(rawValue: "AVRO")
     public static let json = KafkaSchemaSchemaType(rawValue: "JSON")
     public static let protobuf = KafkaSchemaSchemaType(rawValue: "PROTOBUF")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

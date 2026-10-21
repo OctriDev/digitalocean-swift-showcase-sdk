@@ -6,77 +6,29 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AppsMethods {
-    /// Creates a deployment for a specific app by pulling the latest changes from its repository and scheduling a new
-    /// deployment. Set `force_build` to build the app from source even when an existing cached build can be reused. The
-    /// response includes the deployment record and its current phase.
+extension AppsMethods {
+    /// Creates a deployment for a specific app by pulling the latest changes from its repository and scheduling a new deployment. Set `force_build` to build the app from source even when an existing cached build can be reused. The response includes the deployment record and its current phase.
     ///
-    /// Creating an app deployment will pull the latest changes from your repository and schedule a new deployment for
-    /// your app.
+    /// Creating an app deployment will pull the latest changes from your repository and schedule a new deployment for your app.
     ///
     /// - Parameters:
     /// - appId: The app ID
     /// - forceBuild: Optional `boolean` value serialized in the `force_build` wire
     ///   field.
-    static func appsCreateDeployment(
-        config: ClientConfig,
-        appId: String,
-        forceBuild: Bool? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppsDeploymentResponse {
+    public static func appsCreateDeployment(config: ClientConfig, appId: String, forceBuild: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsDeploymentResponse {
         let requestBody = AppsCreateDeploymentRequestBody(forceBuild: forceBuild)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/deployments"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "apps_create_deployment",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/deployments"].joined(), config: config, body: requestBody, decoder: .json, operationId: "apps_create_deployment", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Retrieves details for a specific deployment of an app. Use both identifiers to select the deployment, and
-    /// inspect its phase and progress to check its current state.
+    /// Retrieves details for a specific deployment of an app. Use both identifiers to select the deployment, and inspect its phase and progress to check its current state.
     ///
     /// Retrieve information about an app deployment.
     ///
     /// - Parameters:
     /// - appId: The app ID
     /// - deploymentId: The deployment ID
-    static func appsGetDeployment(
-        config: ClientConfig,
-        appId: String,
-        deploymentId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppsDeploymentResponse {
-        try await (sdkRequest(
-            "GET",
-            [
-                "/v2/apps/",
-                sdkEncodePathSegment(sdkWireString(appId)),
-                "/deployments/",
-                sdkEncodePathSegment(sdkWireString(deploymentId)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "apps_get_deployment",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func appsGetDeployment(config: ClientConfig, appId: String, deploymentId: String, requestOptions: RequestOptions? = nil) async throws -> AppsDeploymentResponse {
+        return try (await sdkRequest("GET", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/deployments/", sdkEncodePathSegment(sdkWireString(deploymentId))].joined(), config: config, decoder: .json, operationId: "apps_get_deployment", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

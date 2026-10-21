@@ -6,9 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension InsightsMethods {
-    /// To evaluate a PromQL expression at a single point in time, send a GET request to
-    /// `/v2/insights/query/{region}/prom/api/v1/query`.
+extension InsightsMethods {
+    /// To evaluate a PromQL expression at a single point in time, send a GET request to `/v2/insights/query/{region}/prom/api/v1/query`.
     ///
     /// - Parameters:
     /// - region: The datacenter region slug for the query.
@@ -18,78 +17,24 @@ public extension InsightsMethods {
     /// - time: Evaluation timestamp for an instant query. Accepts a RFC3339 string
     ///   or a UNIX timestamp. Defaults to now when omitted.
     /// - timeout: Optional evaluation timeout as a Prometheus duration string.
-    static func insightsGetPromQuery(
-        config: ClientConfig,
-        region: String,
-        query: String,
-        time: String? = nil,
-        timeout: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> PromQueryResponse {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/insights/query/", sdkEncodePathSegment(sdkWireString(region)), "/prom/api/v1/query"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("query", value: query),
-                SdkQueryParameter("time", value: time),
-                SdkQueryParameter("timeout", value: timeout),
-            ],
-            decoder: .json,
-            operationId: "insights_get_promQuery",
-            options: requestOptions,
-            errors: [
-                "400": PromError.self,
-                "401": Error2.self,
-                "403": Error2.self,
-                "404": Error2.self,
-                "422": PromError.self,
-                "429": Error2.self,
-                "500": PromError.self,
-                "503": PromError.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func insightsGetPromQuery(config: ClientConfig, region: String, query: String, time: String? = nil, timeout: String? = nil, requestOptions: RequestOptions? = nil) async throws -> PromQueryResponse {
+        return try (await sdkRequest("GET", ["/v2/insights/query/", sdkEncodePathSegment(sdkWireString(region)), "/prom/api/v1/query"].joined(), config: config, query: [
+            SdkQueryParameter("query", value: query),
+            SdkQueryParameter("time", value: time),
+            SdkQueryParameter("timeout", value: timeout),
+        ], decoder: .json, operationId: "insights_get_promQuery", options: requestOptions, errors: ["400": PromError.self, "401": Error2.self, "403": Error2.self, "404": Error2.self, "422": PromError.self, "429": Error2.self, "500": PromError.self, "503": PromError.self, "default": Error2.self])).data
     }
 
-    /// To evaluate a PromQL expression at a single point in time, send a POST request to
-    /// `/v2/insights/query/{region}/prom/api/v1/query` with `application/x-www-form-urlencoded` parameters.
+    /// To evaluate a PromQL expression at a single point in time, send a POST request to `/v2/insights/query/{region}/prom/api/v1/query` with `application/x-www-form-urlencoded` parameters.
     ///
     /// - Parameters:
     /// - region: The datacenter region slug for the query.
     /// - query: A PromQL expression to evaluate.
     /// - time: Evaluation timestamp. RFC3339 or UNIX timestamp.
     /// - timeout: Optional evaluation timeout duration.
-    static func insightsPostPromQuery(
-        config: ClientConfig,
-        region: String,
-        query: String,
-        time: String? = nil,
-        timeout: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> PromQueryResponse {
+    public static func insightsPostPromQuery(config: ClientConfig, region: String, query: String, time: String? = nil, timeout: String? = nil, requestOptions: RequestOptions? = nil) async throws -> PromQueryResponse {
         let requestBody = InsightsPostPromQueryRequestBody(query: query, time: time, timeout: timeout)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/insights/query/", sdkEncodePathSegment(sdkWireString(region)), "/prom/api/v1/query"].joined(),
-            config: config,
-            body: requestBody,
-            contentType: "application/x-www-form-urlencoded",
-            decoder: .json,
-            operationId: "insights_post_promQuery",
-            options: requestOptions,
-            errors: [
-                "400": PromError.self,
-                "401": Error2.self,
-                "403": Error2.self,
-                "404": Error2.self,
-                "422": PromError.self,
-                "429": Error2.self,
-                "500": PromError.self,
-                "503": PromError.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/insights/query/", sdkEncodePathSegment(sdkWireString(region)), "/prom/api/v1/query"].joined(), config: config, body: requestBody, contentType: "application/x-www-form-urlencoded", decoder: .json, operationId: "insights_post_promQuery", options: requestOptions, errors: ["400": PromError.self, "401": Error2.self, "403": Error2.self, "404": Error2.self, "422": PromError.self, "429": Error2.self, "500": PromError.self, "503": PromError.self, "default": Error2.self])).data
     }
 }

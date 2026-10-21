@@ -6,11 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
-    /// To update a scenario set in place, send a PUT request to `/v2/gen-ai/scenario_sets/{scenario_set_uuid}`. Provide
-    /// a new `name` and/or replacement `scenarios`. At least one is required. Replacing contents keeps the same
-    /// scenario set UUID, remints scenario UUIDs, and is rejected unless the set is ready and no simulation run
-    /// references it. There is no file-upload path on update.
+extension AgentPlatformApiMethods {
+    /// To update a scenario set in place, send a PUT request to `/v2/gen-ai/scenario_sets/{scenario_set_uuid}`. Provide a new `name` and/or replacement `scenarios`. At least one is required. Replacing contents keeps the same scenario set UUID, remints scenario UUIDs, and is rejected unless the set is ready and no simulation run references it. There is no file-upload path on update.
     ///
     /// - Parameters:
     /// - scenarioSetUuid: UUID of the scenario set to update. Returned by
@@ -20,64 +17,19 @@ public extension AgentPlatformApiMethods {
     /// - scenarioSetUuid2: UUID of the scenario set to update.
     /// - scenarios: Optional inline scenarios to replace the set contents. At least
     ///   one of name or scenarios is required.
-    static func genaiUpdateScenarioSet(
-        config: ClientConfig,
-        scenarioSetUuid: String,
-        name: String? = nil,
-        scenarioSetUuid2: String? = nil,
-        scenarios: [ApiScenario]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiUpdateScenarioSetOutput {
-        let requestBody = GenaiUpdateScenarioSetRequestBody(
-            name: name,
-            scenarioSetUuid2: scenarioSetUuid2,
-            scenarios: scenarios
-        )
+    public static func genaiUpdateScenarioSet(config: ClientConfig, scenarioSetUuid: String, name: String? = nil, scenarioSetUuid2: String? = nil, scenarios: [ApiScenario]? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiUpdateScenarioSetOutput {
+        let requestBody = GenaiUpdateScenarioSetRequestBody(name: name, scenarioSetUuid2: scenarioSetUuid2, scenarios: scenarios)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/gen-ai/scenario_sets/", sdkEncodePathSegment(sdkWireString(scenarioSetUuid))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "genai_update_scenario_set",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/gen-ai/scenario_sets/", sdkEncodePathSegment(sdkWireString(scenarioSetUuid))].joined(), config: config, body: requestBody, decoder: .json, operationId: "genai_update_scenario_set", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To delete a scenario set, send a DELETE request to `/v2/gen-ai/scenario_sets/{scenario_set_uuid}`. A scenario
-    /// set that is referenced by a simulation run cannot be deleted.
+    /// To delete a scenario set, send a DELETE request to `/v2/gen-ai/scenario_sets/{scenario_set_uuid}`. A scenario set that is referenced by a simulation run cannot be deleted.
     ///
     /// - Parameters:
     /// - scenarioSetUuid: UUID of the scenario set to delete. Returned by
     ///   `CreateScenarioSet` and listed via `ListScenarioSets`. A set still
     ///   referenced by a simulation run cannot be deleted.
-    static func genaiDeleteScenarioSet(
-        config: ClientConfig,
-        scenarioSetUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiDeleteScenarioSetOutput {
-        try await (sdkRequest(
-            "DELETE",
-            ["/v2/gen-ai/scenario_sets/", sdkEncodePathSegment(sdkWireString(scenarioSetUuid))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "genai_delete_scenario_set",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func genaiDeleteScenarioSet(config: ClientConfig, scenarioSetUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiDeleteScenarioSetOutput {
+        return try (await sdkRequest("DELETE", ["/v2/gen-ai/scenario_sets/", sdkEncodePathSegment(sdkWireString(scenarioSetUuid))].joined(), config: config, decoder: .json, operationId: "genai_delete_scenario_set", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

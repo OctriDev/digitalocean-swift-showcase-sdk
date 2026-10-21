@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// ActionGatewayConnection domain models
+// ActionGatewayConnection domain models
 /// Route through a VPC.
 public struct ConnectionCreateNetworkVpc: Codable {
     /// UUID of a VPC owned by your team.
@@ -18,23 +18,23 @@ public struct ConnectionCreateNetworkVpc: Codable {
     }
 
     init() {
-        (vpcUuid, destinations) = (nil, nil)
+        (self.vpcUuid, self.destinations) = (nil, nil)
     }
 }
 
-public extension ConnectionCreateNetworkVpc {
-    init(from decoder: Decoder) throws {
+extension ConnectionCreateNetworkVpc {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        destinations = try container.sdkDecodeIfPresent(.destinations)
-        if let value = vpcUuid {
+        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        self.destinations = try container.sdkDecodeIfPresent(.destinations)
+        if let value = self.vpcUuid {
             try sdkValidateUuid("vpc_uuid", value)
         }
     }
 }
 
-public extension ConnectionCreateNetworkVpc {
-    init(vpcUuid: String? = nil, destinations: [ConnectionCreateNetworkVpcDestinationsItem]? = nil) throws {
+extension ConnectionCreateNetworkVpc {
+    public init(vpcUuid: String? = nil, destinations: [ConnectionCreateNetworkVpcDestinationsItem]? = nil) throws {
         self.init()
         (self.vpcUuid, self.destinations) = (vpcUuid, destinations)
         if let value = self.vpcUuid {
@@ -62,21 +62,21 @@ public struct ConnectionCreateNetworkVpcDestinationsItem: Codable {
     }
 
     init() {
-        (host, port, allowedIpCidrs) = (nil, nil, nil)
+        (self.host, self.port, self.allowedIpCidrs) = (nil, nil, nil)
     }
 }
 
-public extension ConnectionCreateNetworkVpcDestinationsItem {
-    init(from decoder: Decoder) throws {
+extension ConnectionCreateNetworkVpcDestinationsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        host = try container.sdkDecodeIfPresent(.host)
-        port = try container.sdkDecodeIfPresent(.port)
-        allowedIpCidrs = try container.sdkDecodeIfPresent(.allowedIpCidrs)
+        self.host = try container.sdkDecodeIfPresent(.host)
+        self.port = try container.sdkDecodeIfPresent(.port)
+        self.allowedIpCidrs = try container.sdkDecodeIfPresent(.allowedIpCidrs)
     }
 }
 
-public extension ConnectionCreateNetworkVpcDestinationsItem {
-    init(host: String? = nil, port: Int? = nil, allowedIpCidrs: [String]? = nil) {
+extension ConnectionCreateNetworkVpcDestinationsItem {
+    public init(host: String? = nil, port: Int? = nil, allowedIpCidrs: [String]? = nil) {
         self.init()
         (self.host, self.port) = (host, port)
         self.allowedIpCidrs = allowedIpCidrs
@@ -114,51 +114,34 @@ public struct ConnectionCreate: Codable {
         case network
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ConnectionCreate {
-    init(from decoder: Decoder) throws {
+extension ConnectionCreate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.provider) else {
-            throw SdkValidationError(
-                field: "provider",
-                code: "required",
-                message: "Validation failed for 'provider': value is required"
-            )
+            throw SdkValidationError(field: "provider", code: "required", message: "Validation failed for 'provider': value is required")
         }
         guard container.contains(.userId) else {
-            throw SdkValidationError(
-                field: "user_id",
-                code: "required",
-                message: "Validation failed for 'user_id': value is required"
-            )
+            throw SdkValidationError(field: "user_id", code: "required", message: "Validation failed for 'user_id': value is required")
         }
-        provider = try container.sdkDecodeRequired(.provider)
-        userId = try container.sdkDecodeRequired(.userId)
-        scopes = try container.sdkDecodeIfPresent(.scopes)
-        connectionParameters = try container.sdkDecodeIfPresent(.connectionParameters)
-        credential = try container.sdkDecodeIfPresent(.credential)
-        network = try container.sdkDecodeIfPresent(.network)
-        try sdkValidatePattern("user_id", userId, sdkPatternd665a9126795)
+        self.provider = try container.sdkDecodeRequired(.provider)
+        self.userId = try container.sdkDecodeRequired(.userId)
+        self.scopes = try container.sdkDecodeIfPresent(.scopes)
+        self.connectionParameters = try container.sdkDecodeIfPresent(.connectionParameters)
+        self.credential = try container.sdkDecodeIfPresent(.credential)
+        self.network = try container.sdkDecodeIfPresent(.network)
+            try sdkValidatePattern("user_id", self.userId, sdkPatternd665a9126795)
     }
 }
 
-public extension ConnectionCreate {
-    init(
-        provider: String,
-        userId: String,
-        scopes: [String]? = nil,
-        connectionParameters: [String: JSONValue]? = nil,
-        credential: ConnectionCreateCredential? = nil,
-        network: ConnectionCreateNetwork? = nil
-    ) throws {
+extension ConnectionCreate {
+    public init(provider: String, userId: String, scopes: [String]? = nil, connectionParameters: [String: JSONValue]? = nil, credential: ConnectionCreateCredential? = nil, network: ConnectionCreateNetwork? = nil) throws {
         (self.provider, self.userId) = (provider, userId)
         (self.scopes, self.connectionParameters) = (scopes, connectionParameters)
         (self.credential, self.network) = (credential, network)
-        try sdkValidatePattern("user_id", self.userId, sdkPatternd665a9126795)
+            try sdkValidatePattern("user_id", self.userId, sdkPatternd665a9126795)
     }
 }
 
@@ -173,19 +156,19 @@ public struct ConnectionCreateNetwork: Codable {
     }
 
     init() {
-        vpc = nil
+        self.vpc = nil
     }
 }
 
-public extension ConnectionCreateNetwork {
-    init(from decoder: Decoder) throws {
+extension ConnectionCreateNetwork {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        vpc = try container.sdkDecodeIfPresent(.vpc)
+        self.vpc = try container.sdkDecodeIfPresent(.vpc)
     }
 }
 
-public extension ConnectionCreateNetwork {
-    init(vpc: ConnectionCreateNetworkVpc? = nil) {
+extension ConnectionCreateNetwork {
+    public init(vpc: ConnectionCreateNetworkVpc? = nil) {
         self.init()
         self.vpc = vpc
     }
@@ -204,23 +187,20 @@ public struct ConnectionCreateCredential: Codable {
     }
 
     init() {
-        (digitaloceanOauth, teamCredential) = (nil, nil)
+        (self.digitaloceanOauth, self.teamCredential) = (nil, nil)
     }
 }
 
-public extension ConnectionCreateCredential {
-    init(from decoder: Decoder) throws {
+extension ConnectionCreateCredential {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        digitaloceanOauth = try container.sdkDecodeIfPresent(.digitaloceanOauth)
-        teamCredential = try container.sdkDecodeIfPresent(.teamCredential)
+        self.digitaloceanOauth = try container.sdkDecodeIfPresent(.digitaloceanOauth)
+        self.teamCredential = try container.sdkDecodeIfPresent(.teamCredential)
     }
 }
 
-public extension ConnectionCreateCredential {
-    init(
-        digitaloceanOauth: [String: JSONValue]? = nil,
-        teamCredential: ConnectionCreateCredentialTeamCredential? = nil
-    ) {
+extension ConnectionCreateCredential {
+    public init(digitaloceanOauth: [String: JSONValue]? = nil, teamCredential: ConnectionCreateCredentialTeamCredential? = nil) {
         self.init()
         (self.digitaloceanOauth, self.teamCredential) = (digitaloceanOauth, teamCredential)
     }
@@ -239,20 +219,20 @@ public struct ConnectionResponse: Codable {
     }
 
     init() {
-        (connection, authorization) = (nil, nil)
+        (self.connection, self.authorization) = (nil, nil)
     }
 }
 
-public extension ConnectionResponse {
-    init(from decoder: Decoder) throws {
+extension ConnectionResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        connection = try container.sdkDecodeIfPresent(.connection)
-        authorization = try container.sdkDecodeIfPresent(.authorization)
+        self.connection = try container.sdkDecodeIfPresent(.connection)
+        self.authorization = try container.sdkDecodeIfPresent(.authorization)
     }
 }
 
-public extension ConnectionResponse {
-    init(connection: Connection? = nil, authorization: ConnectionAuthorization? = nil) {
+extension ConnectionResponse {
+    public init(connection: Connection? = nil, authorization: ConnectionAuthorization? = nil) {
         self.init()
         (self.connection, self.authorization) = (connection, authorization)
     }
@@ -269,19 +249,19 @@ public struct ConnectionCreateCredentialTeamCredential: Codable {
     }
 
     init() {
-        credentialId = nil
+        self.credentialId = nil
     }
 }
 
-public extension ConnectionCreateCredentialTeamCredential {
-    init(from decoder: Decoder) throws {
+extension ConnectionCreateCredentialTeamCredential {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        credentialId = try container.sdkDecodeIfPresent(.credentialId)
+        self.credentialId = try container.sdkDecodeIfPresent(.credentialId)
     }
 }
 
-public extension ConnectionCreateCredentialTeamCredential {
-    init(credentialId: String? = nil) {
+extension ConnectionCreateCredentialTeamCredential {
+    public init(credentialId: String? = nil) {
         self.init()
         self.credentialId = credentialId
     }

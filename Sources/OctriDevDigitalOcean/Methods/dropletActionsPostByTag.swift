@@ -6,77 +6,31 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DropletActionsMethods {
-    /// Triggers a supported action on Droplets that match a tag. Set the action `type` in the request body; bulk
-    /// actions support power, shutdown, IPv6, backup, and snapshot operations, with IPv6 enablement requiring the
-    /// Droplet to be powered off. A 201 response includes an action object for each affected Droplet.
+extension DropletActionsMethods {
+    /// Triggers a supported action on Droplets that match a tag. Set the action `type` in the request body; bulk actions support power, shutdown, IPv6, backup, and snapshot operations, with IPv6 enablement requiring the Droplet to be powered off. A 201 response includes an action object for each affected Droplet.
     ///
-    /// Some actions can be performed in bulk on tagged Droplets. The actions can be initiated by sending a POST to
-    /// `/v2/droplets/actions?tag_name=$TAG_NAME` with the action arguments. Only a sub-set of action types are
-    /// supported: - `power_cycle` - `power_on` - `power_off` - `shutdown` - `enable_ipv6` (**Warning:** The Droplet
-    /// must be powered off before enabling IPv6 on an existing Droplet.) - `enable_backups` - `disable_backups` -
-    /// `snapshot` (also requires `image:create` permission)
+    /// Some actions can be performed in bulk on tagged Droplets. The actions can be initiated by sending a POST to `/v2/droplets/actions?tag_name=$TAG_NAME` with the action arguments. Only a sub-set of action types are supported: - `power_cycle` - `power_on` - `power_off` - `shutdown` - `enable_ipv6` (**Warning:** The Droplet must be powered off before enabling IPv6 on an existing Droplet.) - `enable_backups` - `disable_backups` - `snapshot` (also requires `image:create` permission)
     ///
     /// - Parameters:
     /// - tagName: Used to filter Droplets by a specific tag. Can not be combined
     ///   with `name` or `type`. Requires `tag:read` scope.
-    static func dropletActionsPostByTag(
-        config: ClientConfig,
-        tagName: String? = nil,
-        body: DropletActionsPostByTagRequestBody? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DropletActionsResponse {
-        try await (sdkRequest(
-            "POST",
-            "/v2/droplets/actions",
-            config: config,
-            query: [
-                SdkQueryParameter("tag_name", value: tagName),
-            ],
-            rawBody: (body.map { try sdkEncodeBody($0, contentType: "application/json") }),
-            decoder: .json,
-            operationId: "dropletActions_post_byTag",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    public static func dropletActionsPostByTag(config: ClientConfig, tagName: String? = nil, body: DropletActionsPostByTagRequestBody? = nil, requestOptions: RequestOptions? = nil) async throws -> DropletActionsResponse {
+        return try (await sdkRequest("POST", "/v2/droplets/actions", config: config, query: [
+            SdkQueryParameter("tag_name", value: tagName),
+        ], rawBody: (try body.map { try sdkEncodeBody($0, contentType: "application/json") }), decoder: .json, operationId: "dropletActions_post_byTag", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To retrieve a Droplet action, send a GET request to `/v2/droplets/$DROPLET_ID/actions/$ACTION_ID`. The response
-    /// will be a JSON object with a key called `action`. The value will be a Droplet action object.
+    /// To retrieve a Droplet action, send a GET request to `/v2/droplets/$DROPLET_ID/actions/$ACTION_ID`. The response will be a JSON object with a key called `action`. The value will be a Droplet action object.
     ///
     /// - Parameters:
     /// - dropletId: A unique identifier for a Droplet instance.
     /// - actionId: A unique numeric ID that can be used to identify and reference
     ///   an action.
-    static func dropletActionsGet(
-        config: ClientConfig,
-        dropletId: Int,
-        actionId: Int,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ActionResponse {
+    public static func dropletActionsGet(config: ClientConfig, dropletId: Int, actionId: Int, requestOptions: RequestOptions? = nil) async throws -> ActionResponse {
         try validateRange("droplet_id", Double(dropletId), min: 1)
 
         try validateRange("action_id", Double(actionId), min: 1)
 
-        return try await (sdkRequest(
-            "GET",
-            [
-                "/v2/droplets/",
-                sdkEncodePathSegment(sdkWireString(dropletId)),
-                "/actions/",
-                sdkEncodePathSegment(sdkWireString(actionId)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "dropletActions_get",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/droplets/", sdkEncodePathSegment(sdkWireString(dropletId)), "/actions/", sdkEncodePathSegment(sdkWireString(actionId))].joined(), config: config, decoder: .json, operationId: "dropletActions_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

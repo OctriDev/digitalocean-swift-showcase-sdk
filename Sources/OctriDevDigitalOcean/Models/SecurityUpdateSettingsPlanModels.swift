@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Security domain models
+// Security domain models
 /// Typed representation of the `TierCoverage` API schema.
 public struct TierCoverage: Codable {
     /// Optional object value serialized in the `tier_coverage` wire field.
@@ -14,19 +14,19 @@ public struct TierCoverage: Codable {
     }
 
     init() {
-        tierCoverage = nil
+        self.tierCoverage = nil
     }
 }
 
-public extension TierCoverage {
-    init(from decoder: Decoder) throws {
+extension TierCoverage {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        tierCoverage = try container.sdkDecodeIfPresent(.tierCoverage)
+        self.tierCoverage = try container.sdkDecodeIfPresent(.tierCoverage)
     }
 }
 
-public extension TierCoverage {
-    init(tierCoverage: [String: TierCoverageTierCoverageValue]? = nil) {
+extension TierCoverage {
+    public init(tierCoverage: [String: TierCoverageTierCoverageValue]? = nil) {
         self.init()
         self.tierCoverage = tierCoverage
     }
@@ -44,20 +44,20 @@ public struct TierCoverageTierCoverageValue: Codable {
     }
 
     init() {
-        (resources, tags) = (nil, nil)
+        (self.resources, self.tags) = (nil, nil)
     }
 }
 
-public extension TierCoverageTierCoverageValue {
-    init(from decoder: Decoder) throws {
+extension TierCoverageTierCoverageValue {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        resources = try container.sdkDecodeIfPresent(.resources)
-        tags = try container.sdkDecodeIfPresent(.tags)
+        self.resources = try container.sdkDecodeIfPresent(.resources)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-public extension TierCoverageTierCoverageValue {
-    init(resources: [String]? = nil, tags: [String]? = nil) {
+extension TierCoverageTierCoverageValue {
+    public init(resources: [String]? = nil, tags: [String]? = nil) {
         self.init()
         (self.resources, self.tags) = (resources, tags)
     }

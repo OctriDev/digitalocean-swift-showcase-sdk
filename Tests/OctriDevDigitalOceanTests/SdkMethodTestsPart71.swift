@@ -36,9 +36,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.uptime.updateCheck(
-                checkId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-                body: decoded(sdkMethodFixture1600Value1)
-            )
+            checkId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+            body: decoded(sdkMethodFixture1600Value1)
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -83,8 +83,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.usersGet(
-                userId: decoded("\"alice\"")
-            )
+            userId: decoded("\"alice\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -133,12 +133,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.usersList(
-                userId: decoded("\"al\""),
-                sort: decoded("\"session_count\""),
-                sortDirection: decoded("\"desc\""),
-                page: decoded("1"),
-                perPage: decoded("20")
-            )
+            userId: decoded("\"al\""),
+            sort: decoded("\"session_count\""),
+            sortDirection: decoded("\"desc\""),
+            page: decoded("1"),
+            perPage: decoded("20")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -187,12 +187,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vectorDatabases.create(
-                name: decoded("\"example name\""),
-                projectId: decoded("\"123e4567-e89b-12d3-a456-426614174000\""),
-                region: decoded("\"tor1\""),
-                size: decoded("\"example string\""),
-                tags: decoded("[\"example string\"]")
-            )
+            name: decoded("\"example name\""),
+            projectId: decoded("\"123e4567-e89b-12d3-a456-426614174000\""),
+            region: decoded("\"tor1\""),
+            size: decoded("\"example string\""),
+            tags: decoded("[\"example string\"]")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -230,8 +230,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vectorDatabases.delete(
-                id: decoded("\"\\\"example string\\\"\"")
-            )
+            id: decoded("\"\\\"example string\\\"\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -276,8 +276,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vectorDatabases.get(
-                id: decoded("\"\\\"example string\\\"\"")
-            )
+            id: decoded("\"\\\"example string\\\"\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -322,8 +322,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vectorDatabases.getCredentials(
-                id: decoded("\"\\\"example string\\\"\"")
-            )
+            id: decoded("\"\\\"example string\\\"\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -358,8 +358,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testVectorDatabasesGetRestoreStatusVectorDatabasesGetRestoreStatus401ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testVectorDatabasesGetRestoreStatusVectorDatabasesGetRestoreStatus401ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -370,9 +369,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vectorDatabases.getRestoreStatus(
-                id: decoded("\"\\\"example string\\\"\""),
-                backupId: decoded("\"\\\"example string\\\"\"")
-            )
+            id: decoded("\"\\\"example string\\\"\""),
+            backupId: decoded("\"\\\"example string\\\"\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -418,9 +417,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vectorDatabases.list(
-                page: decoded("1"),
-                perPage: decoded("1")
-            )
+            page: decoded("1"),
+            perPage: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -465,8 +464,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vectorDatabases.listBackups(
-                id: decoded("\"\\\"example string\\\"\"")
-            )
+            id: decoded("\"\\\"example string\\\"\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -513,10 +512,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vectorDatabases.postResize(
-                id: decoded("\"\\\"example string\\\"\""),
-                id2: decoded("\"example string\""),
-                size: decoded("\"example string\"")
-            )
+            id: decoded("\"\\\"example string\\\"\""),
+            id2: decoded("\"example string\""),
+            size: decoded("\"example string\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -532,8 +531,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testVectorDatabasesPostRestoreBackupVectorDatabasesPostRestoreBackupReachesMockAndDecodesResponse(
-    ) async throws {
+    func testVectorDatabasesPostRestoreBackupVectorDatabasesPostRestoreBackupReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }

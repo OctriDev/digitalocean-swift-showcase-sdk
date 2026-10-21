@@ -6,7 +6,7 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
+extension AgentPlatformApiMethods {
     /// To list evaluation datasets, send a GET request to `/v2/gen-ai/evaluation_datasets`.
     ///
     /// - Parameters:
@@ -15,38 +15,15 @@ public extension AgentPlatformApiMethods {
     ///   shape).
     /// - hasGroundTruth: Filter by whether the dataset includes ground-truth
     ///   values.
-    static func genaiListEvaluationDatasets(
-        config: ClientConfig,
-        datasetType: GenaiListEvaluationDatasetsParameter? = nil,
-        datasetParadigm: ApiEvaluationDatasetParadigm? = nil,
-        hasGroundTruth: Bool? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiListEvaluationDatasetsOutput {
-        try await (sdkRequest(
-            "GET",
-            "/v2/gen-ai/evaluation_datasets",
-            config: config,
-            query: [
-                SdkQueryParameter("dataset_type", value: datasetType),
-                SdkQueryParameter("dataset_paradigm", value: datasetParadigm),
-                SdkQueryParameter("has_ground_truth", value: hasGroundTruth),
-            ],
-            decoder: .json,
-            operationId: "genai_list_evaluation_datasets",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func genaiListEvaluationDatasets(config: ClientConfig, datasetType: GenaiListEvaluationDatasetsParameter? = nil, datasetParadigm: ApiEvaluationDatasetParadigm? = nil, hasGroundTruth: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListEvaluationDatasetsOutput {
+        return try (await sdkRequest("GET", "/v2/gen-ai/evaluation_datasets", config: config, query: [
+            SdkQueryParameter("dataset_type", value: datasetType),
+            SdkQueryParameter("dataset_paradigm", value: datasetParadigm),
+            SdkQueryParameter("has_ground_truth", value: hasGroundTruth),
+        ], decoder: .json, operationId: "genai_list_evaluation_datasets", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Creates an evaluation dataset for agent evaluation. Set `dataset_paradigm` to describe the dataset row format
-    /// and `dataset_type` to identify its type; both fields have defaults when omitted. Include `file_upload_dataset`
-    /// to associate an uploaded file with the dataset.
+    /// Creates an evaluation dataset for agent evaluation. Set `dataset_paradigm` to describe the dataset row format and `dataset_type` to identify its type; both fields have defaults when omitted. Include `file_upload_dataset` to associate an uploaded file with the dataset.
     ///
     /// To create an evaluation dataset, send a POST request to `/v2/gen-ai/evaluation_datasets`.
     ///
@@ -58,36 +35,9 @@ public extension AgentPlatformApiMethods {
     ///   wire field.
     /// - fileUploadDataset: File to upload as data source for knowledge base.
     /// - name: The name of the agent evaluation dataset.
-    static func genaiCreateEvaluationDataset(
-        config: ClientConfig,
-        datasetParadigm: ApiEvaluationDatasetParadigm? = nil,
-        datasetType: ApiEvaluationDatasetType? = nil,
-        fileUploadDataset: ApiFileUploadDataSource? = nil,
-        name: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiCreateEvaluationDatasetOutput {
-        let requestBody = GenaiCreateEvaluationDatasetRequestBody(
-            datasetParadigm: datasetParadigm,
-            datasetType: datasetType,
-            fileUploadDataset: fileUploadDataset,
-            name: name
-        )
+    public static func genaiCreateEvaluationDataset(config: ClientConfig, datasetParadigm: ApiEvaluationDatasetParadigm? = nil, datasetType: ApiEvaluationDatasetType? = nil, fileUploadDataset: ApiFileUploadDataSource? = nil, name: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiCreateEvaluationDatasetOutput {
+        let requestBody = GenaiCreateEvaluationDatasetRequestBody(datasetParadigm: datasetParadigm, datasetType: datasetType, fileUploadDataset: fileUploadDataset, name: name)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/gen-ai/evaluation_datasets",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "genai_create_evaluation_dataset",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v2/gen-ai/evaluation_datasets", config: config, body: requestBody, decoder: .json, operationId: "genai_create_evaluation_dataset", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

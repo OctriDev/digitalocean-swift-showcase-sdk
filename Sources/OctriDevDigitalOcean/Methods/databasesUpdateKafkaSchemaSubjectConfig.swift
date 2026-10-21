@@ -6,46 +6,18 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DatabasesMethods {
-    /// To update the Schema Registry configuration for a Subject of a Kafka cluster, send a PUT request to
-    /// `/v2/databases/$DATABASE_ID/schema-registry/config/$SUBJECT_NAME`. The response is a JSON object with a
-    /// `compatibility_level` key, which is set to an object containing any database configuration parameters.
+extension DatabasesMethods {
+    /// To update the Schema Registry configuration for a Subject of a Kafka cluster, send a PUT request to `/v2/databases/$DATABASE_ID/schema-registry/config/$SUBJECT_NAME`. The response is a JSON object with a `compatibility_level` key, which is set to an object containing any database configuration parameters.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - subjectName: The name of the Kafka schema subject.
     /// - compatibilityLevel: The compatibility level of the schema registry.
-    static func databasesUpdateKafkaSchemaSubjectConfig(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        subjectName: String,
-        compatibilityLevel: DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLevel,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DatabaseSchemaRegistrySubjectConfig {
+    public static func databasesUpdateKafkaSchemaSubjectConfig(config: ClientConfig, databaseClusterUuid: String, subjectName: String, compatibilityLevel: DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLevel, requestOptions: RequestOptions? = nil) async throws -> DatabaseSchemaRegistrySubjectConfig {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
         let requestBody = DatabasesUpdateKafkaSchemaSubjectConfigRequestBody(compatibilityLevel: compatibilityLevel)
 
-        return try await (sdkRequest(
-            "PUT",
-            [
-                "/v2/databases/",
-                sdkEncodePathSegment(sdkWireString(databaseClusterUuid)),
-                "/schema-registry/config/",
-                sdkEncodePathSegment(sdkWireString(subjectName)),
-            ].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "databases_update_kafka_schema_subject_config",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/schema-registry/config/", sdkEncodePathSegment(sdkWireString(subjectName))].joined(), config: config, body: requestBody, decoder: .json, operationId: "databases_update_kafka_schema_subject_config", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

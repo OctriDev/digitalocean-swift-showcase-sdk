@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Databases domain models
+// Databases domain models
 /// Typed representation of the `Logsinks` API schema.
 public struct Logsinks: Codable {
     /// Optional array value serialized in the `sinks` wire field.
@@ -14,19 +14,19 @@ public struct Logsinks: Codable {
     }
 
     init() {
-        sinks = nil
+        self.sinks = nil
     }
 }
 
-public extension Logsinks {
-    init(from decoder: Decoder) throws {
+extension Logsinks {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        sinks = try container.sdkDecodeIfPresent(.sinks)
+        self.sinks = try container.sdkDecodeIfPresent(.sinks)
     }
 }
 
-public extension Logsinks {
-    init(sinks: [LogsinkSchema]? = nil) {
+extension Logsinks {
+    public init(sinks: [LogsinkSchema]? = nil) {
         self.init()
         self.sinks = sinks
     }

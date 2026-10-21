@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Billing domain models
+// Billing domain models
 /// Typed representation of the `PrepaymentConfig` API schema.
 public struct PrepaymentConfig: Codable {
     /// Maximum spend allowed before the prepayment gate blocks usage. Decimal dollars, e.g. `"100.00"`.
@@ -35,38 +35,31 @@ public struct PrepaymentConfig: Codable {
     }
 
     init() {
-        (spendLimit, isAutoPrepayEnabled, prepayAmount, prepayThreshold, createdAt) = (nil, nil, nil, nil, nil)
-        updatedAt = nil
+        (self.spendLimit, self.isAutoPrepayEnabled, self.prepayAmount, self.prepayThreshold, self.createdAt) = (nil, nil, nil, nil, nil)
+        self.updatedAt = nil
     }
 }
 
-public extension PrepaymentConfig {
-    init(from decoder: Decoder) throws {
+extension PrepaymentConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        spendLimit = try container.sdkDecodeIfPresent(.spendLimit)
-        isAutoPrepayEnabled = try container.sdkDecodeIfPresent(.isAutoPrepayEnabled)
-        prepayAmount = try container.sdkDecodeIfPresent(.prepayAmount)
-        prepayThreshold = try container.sdkDecodeIfPresent(.prepayThreshold)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = createdAt {
+        self.spendLimit = try container.sdkDecodeIfPresent(.spendLimit)
+        self.isAutoPrepayEnabled = try container.sdkDecodeIfPresent(.isAutoPrepayEnabled)
+        self.prepayAmount = try container.sdkDecodeIfPresent(.prepayAmount)
+        self.prepayThreshold = try container.sdkDecodeIfPresent(.prepayThreshold)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension PrepaymentConfig {
-    init(
-        spendLimit: String? = nil,
-        isAutoPrepayEnabled: Bool? = nil,
-        prepayAmount: String? = nil,
-        prepayThreshold: String? = nil,
-        createdAt: Date? = nil,
-        updatedAt: Date? = nil
-    ) throws {
+extension PrepaymentConfig {
+    public init(spendLimit: String? = nil, isAutoPrepayEnabled: Bool? = nil, prepayAmount: String? = nil, prepayThreshold: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) throws {
         self.init()
         (self.spendLimit, self.isAutoPrepayEnabled) = (spendLimit, isAutoPrepayEnabled)
         (self.prepayAmount, self.prepayThreshold) = (prepayAmount, prepayThreshold)
@@ -93,20 +86,20 @@ public struct PrepaymentConfigResponse: Codable {
     }
 
     init() {
-        (config, status) = (nil, nil)
+        (self.config, self.status) = (nil, nil)
     }
 }
 
-public extension PrepaymentConfigResponse {
-    init(from decoder: Decoder) throws {
+extension PrepaymentConfigResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        config = try container.sdkDecodeIfPresent(.config)
-        status = try container.sdkDecodeIfPresent(.status)
+        self.config = try container.sdkDecodeIfPresent(.config)
+        self.status = try container.sdkDecodeIfPresent(.status)
     }
 }
 
-public extension PrepaymentConfigResponse {
-    init(config: PrepaymentConfig? = nil, status: PrepaymentStatus? = nil) {
+extension PrepaymentConfigResponse {
+    public init(config: PrepaymentConfig? = nil, status: PrepaymentStatus? = nil) {
         self.init()
         (self.config, self.status) = (config, status)
     }

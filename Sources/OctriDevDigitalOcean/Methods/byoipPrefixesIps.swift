@@ -6,50 +6,27 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ByoipPrefixesMethods {
-    /// To list resources associated with BYOIP prefixes, send a GET request to
-    /// `/v2/byoip_prefixes/{byoip_prefix_uuid}/ips`. A successful response will return a list of resources associated
-    /// with the specified BYOIP prefix.
+extension ByoipPrefixesMethods {
+    /// To list resources associated with BYOIP prefixes, send a GET request to `/v2/byoip_prefixes/{byoip_prefix_uuid}/ips`. A successful response will return a list of resources associated with the specified BYOIP prefix.
     ///
     /// - Parameters:
     /// - byoipPrefixUuid: The unique identifier for the BYOIP Prefix.
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func byoipPrefixesListResources(
-        config: ClientConfig,
-        byoipPrefixUuid: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ByoipPrefixListResources {
+    public static func byoipPrefixesListResources(config: ClientConfig, byoipPrefixUuid: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ByoipPrefixListResources {
         try sdkValidateUuid("byoip_prefix_uuid", byoipPrefixUuid)
 
-        if let perPage {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/byoip_prefixes/", sdkEncodePathSegment(sdkWireString(byoipPrefixUuid)), "/ips"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "byoipPrefixes_list_resources",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/byoip_prefixes/", sdkEncodePathSegment(sdkWireString(byoipPrefixUuid)), "/ips"].joined(), config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "byoipPrefixes_list_resources", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

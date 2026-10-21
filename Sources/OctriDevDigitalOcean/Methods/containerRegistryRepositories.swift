@@ -6,10 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContainerRegistryMethods {
-    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** This endpoint has been
-    /// deprecated in favor of the _List All Container Registry Repositories [V2]_ endpoint. To list all repositories in
-    /// your container registry, send a GET request to `/v2/registry/$REGISTRY_NAME/repositories`.
+extension ContainerRegistryMethods {
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** This endpoint has been deprecated in favor of the _List All Container Registry Repositories [V2]_ endpoint. To list all repositories in your container registry, send a GET request to `/v2/registry/$REGISTRY_NAME/repositories`.
     ///
     /// - Parameters:
     /// - registryName: The name of a container registry.
@@ -17,39 +15,18 @@ public extension ContainerRegistryMethods {
     /// - page: Which 'page' of paginated results to return.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    static func registryListRepositories(
-        config: ClientConfig,
-        registryName: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AllRepositories {
-        if let perPage {
+    public static func registryListRepositories(config: ClientConfig, registryName: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AllRepositories {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/registry/", sdkEncodePathSegment(sdkWireString(registryName)), "/repositories"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "registry_list_repositories",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/registry/", sdkEncodePathSegment(sdkWireString(registryName)), "/repositories"].joined(), config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "registry_list_repositories", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

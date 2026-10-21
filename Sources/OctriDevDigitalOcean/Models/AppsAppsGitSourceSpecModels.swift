@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AppsApps domain models
+// AppsApps domain models
 /// Typed representation of the `AppsGitSourceSpec` API schema.
 public struct AppsGitSourceSpec: Codable {
     /// The name of the branch to use
@@ -19,20 +19,20 @@ public struct AppsGitSourceSpec: Codable {
     }
 
     init() {
-        (branch, repoCloneUrl) = (nil, nil)
+        (self.branch, self.repoCloneUrl) = (nil, nil)
     }
 }
 
-public extension AppsGitSourceSpec {
-    init(from decoder: Decoder) throws {
+extension AppsGitSourceSpec {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        branch = try container.sdkDecodeIfPresent(.branch)
-        repoCloneUrl = try container.sdkDecodeIfPresent(.repoCloneUrl)
+        self.branch = try container.sdkDecodeIfPresent(.branch)
+        self.repoCloneUrl = try container.sdkDecodeIfPresent(.repoCloneUrl)
     }
 }
 
-public extension AppsGitSourceSpec {
-    init(branch: String? = nil, repoCloneUrl: String? = nil) {
+extension AppsGitSourceSpec {
+    public init(branch: String? = nil, repoCloneUrl: String? = nil) {
         self.init()
         (self.branch, self.repoCloneUrl) = (branch, repoCloneUrl)
     }
@@ -43,17 +43,14 @@ public extension AppsGitSourceSpec {
 public struct AppsImageSourceSpecRegistryType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let dockerHub = AppsImageSourceSpecRegistryType(rawValue: "DOCKER_HUB")
     public static let docr = AppsImageSourceSpecRegistryType(rawValue: "DOCR")
     public static let ghcr = AppsImageSourceSpecRegistryType(rawValue: "GHCR")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

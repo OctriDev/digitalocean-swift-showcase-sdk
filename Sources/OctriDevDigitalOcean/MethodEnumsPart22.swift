@@ -11,7 +11,7 @@ struct VpcsPatchPeeringsRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
     }
 }
 
@@ -21,8 +21,8 @@ struct VpcSubnetRoutesCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(destinationCidr, forKey: SdkCodingKey("destination_cidr"))
-        try keyedContainer.encode(targetUrns, forKey: SdkCodingKey("target_urns"))
+        try keyedContainer.encode(self.destinationCidr, forKey: SdkCodingKey("destination_cidr"))
+        try keyedContainer.encode(self.targetUrns, forKey: SdkCodingKey("target_urns"))
     }
 }
 
@@ -31,7 +31,7 @@ struct VpcSubnetRoutesUpdateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(targetUrns, forKey: SdkCodingKey("target_urns"))
+        try keyedContainer.encode(self.targetUrns, forKey: SdkCodingKey("target_urns"))
     }
 }
 
@@ -41,8 +41,8 @@ struct VpcSubnetsCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(ipRange, forKey: SdkCodingKey("ip_range"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.ipRange, forKey: SdkCodingKey("ip_range"))
     }
 }
 
@@ -51,7 +51,7 @@ struct VpcSubnetsUpdateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
     }
 }
 
@@ -60,7 +60,7 @@ struct VpcPeeringsPatchRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
     }
 }
 
@@ -77,27 +77,27 @@ struct VpcnatgatewaysCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(type, forKey: SdkCodingKey("type"))
-        try keyedContainer.encode(region, forKey: SdkCodingKey("region"))
-        try keyedContainer.encode(size, forKey: SdkCodingKey("size"))
-        try keyedContainer.encode(vpcs, forKey: SdkCodingKey("vpcs"))
-        try keyedContainer.encodeIfPresent(udpTimeoutSeconds, forKey: SdkCodingKey("udp_timeout_seconds"))
-        try keyedContainer.encodeIfPresent(icmpTimeoutSeconds, forKey: SdkCodingKey("icmp_timeout_seconds"))
-        try keyedContainer.encodeIfPresent(tcpTimeoutSeconds, forKey: SdkCodingKey("tcp_timeout_seconds"))
-        try keyedContainer.encodeIfPresent(egresses, forKey: SdkCodingKey("egresses"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.type, forKey: SdkCodingKey("type"))
+        try keyedContainer.encode(self.region, forKey: SdkCodingKey("region"))
+        try keyedContainer.encode(self.size, forKey: SdkCodingKey("size"))
+        try keyedContainer.encode(self.vpcs, forKey: SdkCodingKey("vpcs"))
+        try keyedContainer.encodeIfPresent(self.udpTimeoutSeconds, forKey: SdkCodingKey("udp_timeout_seconds"))
+        try keyedContainer.encodeIfPresent(self.icmpTimeoutSeconds, forKey: SdkCodingKey("icmp_timeout_seconds"))
+        try keyedContainer.encodeIfPresent(self.tcpTimeoutSeconds, forKey: SdkCodingKey("tcp_timeout_seconds"))
+        try keyedContainer.encodeIfPresent(self.egresses, forKey: SdkCodingKey("egresses"))
     }
 
     init(options: VpcNatGatewaysMethods.VpcnatgatewaysCreateOptions) {
-        name = options.name
-        type = options.type
-        region = options.region
-        size = options.size
-        vpcs = options.vpcs
-        udpTimeoutSeconds = options.udpTimeoutSeconds
-        icmpTimeoutSeconds = options.icmpTimeoutSeconds
-        tcpTimeoutSeconds = options.tcpTimeoutSeconds
-        egresses = options.egresses
+        self.name = options.name
+        self.type = options.type
+        self.region = options.region
+        self.size = options.size
+        self.vpcs = options.vpcs
+        self.udpTimeoutSeconds = options.udpTimeoutSeconds
+        self.icmpTimeoutSeconds = options.icmpTimeoutSeconds
+        self.tcpTimeoutSeconds = options.tcpTimeoutSeconds
+        self.egresses = options.egresses
     }
 }
 
@@ -111,12 +111,12 @@ struct VpcnatgatewaysUpdateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(size, forKey: SdkCodingKey("size"))
-        try keyedContainer.encodeIfPresent(vpcs, forKey: SdkCodingKey("vpcs"))
-        try keyedContainer.encodeIfPresent(udpTimeoutSeconds, forKey: SdkCodingKey("udp_timeout_seconds"))
-        try keyedContainer.encodeIfPresent(icmpTimeoutSeconds, forKey: SdkCodingKey("icmp_timeout_seconds"))
-        try keyedContainer.encodeIfPresent(tcpTimeoutSeconds, forKey: SdkCodingKey("tcp_timeout_seconds"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.size, forKey: SdkCodingKey("size"))
+        try keyedContainer.encodeIfPresent(self.vpcs, forKey: SdkCodingKey("vpcs"))
+        try keyedContainer.encodeIfPresent(self.udpTimeoutSeconds, forKey: SdkCodingKey("udp_timeout_seconds"))
+        try keyedContainer.encodeIfPresent(self.icmpTimeoutSeconds, forKey: SdkCodingKey("icmp_timeout_seconds"))
+        try keyedContainer.encodeIfPresent(self.tcpTimeoutSeconds, forKey: SdkCodingKey("tcp_timeout_seconds"))
     }
 }
 
@@ -129,11 +129,11 @@ struct UptimeCreateCheckRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(type, forKey: SdkCodingKey("type"))
-        try keyedContainer.encode(target, forKey: SdkCodingKey("target"))
-        try keyedContainer.encode(regions, forKey: SdkCodingKey("regions"))
-        try keyedContainer.encode(enabled, forKey: SdkCodingKey("enabled"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.type, forKey: SdkCodingKey("type"))
+        try keyedContainer.encode(self.target, forKey: SdkCodingKey("target"))
+        try keyedContainer.encode(self.regions, forKey: SdkCodingKey("regions"))
+        try keyedContainer.encode(self.enabled, forKey: SdkCodingKey("enabled"))
     }
 }
 
@@ -147,12 +147,12 @@ struct UptimeCreateAlertRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(type, forKey: SdkCodingKey("type"))
-        try keyedContainer.encode(notifications, forKey: SdkCodingKey("notifications"))
-        try keyedContainer.encode(period, forKey: SdkCodingKey("period"))
-        try keyedContainer.encodeIfPresent(threshold, forKey: SdkCodingKey("threshold"))
-        try keyedContainer.encodeIfPresent(comparison, forKey: SdkCodingKey("comparison"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.type, forKey: SdkCodingKey("type"))
+        try keyedContainer.encode(self.notifications, forKey: SdkCodingKey("notifications"))
+        try keyedContainer.encode(self.period, forKey: SdkCodingKey("period"))
+        try keyedContainer.encodeIfPresent(self.threshold, forKey: SdkCodingKey("threshold"))
+        try keyedContainer.encodeIfPresent(self.comparison, forKey: SdkCodingKey("comparison"))
     }
 }
 
@@ -166,20 +166,20 @@ struct UptimeUpdateAlertRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(type, forKey: SdkCodingKey("type"))
-        try keyedContainer.encode(notifications, forKey: SdkCodingKey("notifications"))
-        try keyedContainer.encode(period, forKey: SdkCodingKey("period"))
-        try keyedContainer.encodeIfPresent(threshold, forKey: SdkCodingKey("threshold"))
-        try keyedContainer.encodeIfPresent(comparison, forKey: SdkCodingKey("comparison"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.type, forKey: SdkCodingKey("type"))
+        try keyedContainer.encode(self.notifications, forKey: SdkCodingKey("notifications"))
+        try keyedContainer.encode(self.period, forKey: SdkCodingKey("period"))
+        try keyedContainer.encodeIfPresent(self.threshold, forKey: SdkCodingKey("threshold"))
+        try keyedContainer.encodeIfPresent(self.comparison, forKey: SdkCodingKey("comparison"))
     }
 
     init(options: UptimeMethods.UptimeUpdateAlertOptions) {
-        name = options.name
-        type = options.type
-        notifications = options.notifications
-        period = options.period
-        threshold = options.threshold
-        comparison = options.comparison
+        self.name = options.name
+        self.type = options.type
+        self.notifications = options.notifications
+        self.period = options.period
+        self.threshold = options.threshold
+        self.comparison = options.comparison
     }
 }

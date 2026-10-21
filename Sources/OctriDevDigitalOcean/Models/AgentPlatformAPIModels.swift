@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPI domain models
+// AgentPlatformAPI domain models
 /// Description for a specific Region
 public struct GenaiapiRegion: Codable {
     /// Url for inference server
@@ -31,29 +31,23 @@ public struct GenaiapiRegion: Codable {
     }
 
     init() {
-        (inferenceUrl, region, servesBatch, servesInference, streamInferenceUrl) = (nil, nil, nil, nil, nil)
+        (self.inferenceUrl, self.region, self.servesBatch, self.servesInference, self.streamInferenceUrl) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension GenaiapiRegion {
-    init(from decoder: Decoder) throws {
+extension GenaiapiRegion {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        inferenceUrl = try container.sdkDecodeIfPresent(.inferenceUrl)
-        region = try container.sdkDecodeIfPresent(.region)
-        servesBatch = try container.sdkDecodeIfPresent(.servesBatch)
-        servesInference = try container.sdkDecodeIfPresent(.servesInference)
-        streamInferenceUrl = try container.sdkDecodeIfPresent(.streamInferenceUrl)
+        self.inferenceUrl = try container.sdkDecodeIfPresent(.inferenceUrl)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.servesBatch = try container.sdkDecodeIfPresent(.servesBatch)
+        self.servesInference = try container.sdkDecodeIfPresent(.servesInference)
+        self.streamInferenceUrl = try container.sdkDecodeIfPresent(.streamInferenceUrl)
     }
 }
 
-public extension GenaiapiRegion {
-    init(
-        inferenceUrl: String? = nil,
-        region: String? = nil,
-        servesBatch: Bool? = nil,
-        servesInference: Bool? = nil,
-        streamInferenceUrl: String? = nil
-    ) {
+extension GenaiapiRegion {
+    public init(inferenceUrl: String? = nil, region: String? = nil, servesBatch: Bool? = nil, servesInference: Bool? = nil, streamInferenceUrl: String? = nil) {
         self.init()
         (self.inferenceUrl, self.region) = (inferenceUrl, region)
         (self.servesBatch, self.servesInference) = (servesBatch, servesInference)
@@ -65,10 +59,7 @@ public extension GenaiapiRegion {
 public struct DbaasClusterStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let creating = DbaasClusterStatus(rawValue: "CREATING")
     public static let online = DbaasClusterStatus(rawValue: "ONLINE")
     public static let poweroff = DbaasClusterStatus(rawValue: "POWEROFF")
@@ -85,7 +76,7 @@ public struct DbaasClusterStatus: RawRepresentable, Hashable, Codable, Sendable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -98,10 +89,7 @@ public struct DbaasClusterStatus: RawRepresentable, Hashable, Codable, Sendable,
 public struct SourceRefAccessType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let accessTypeUnspecified = SourceRefAccessType(rawValue: "ACCESS_TYPE_UNSPECIFIED")
     public static let accessTypePublic = SourceRefAccessType(rawValue: "ACCESS_TYPE_PUBLIC")
     public static let accessTypePrivate = SourceRefAccessType(rawValue: "ACCESS_TYPE_PRIVATE")
@@ -109,7 +97,7 @@ public struct SourceRefAccessType: RawRepresentable, Hashable, Codable, Sendable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

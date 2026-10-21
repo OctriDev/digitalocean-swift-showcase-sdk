@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// VectorDatabases domain models
+// VectorDatabases domain models
 /// Typed representation of the `VectordbGetVectorDBAdminCredentialsResponse` API schema.
 public struct VectordbGetVectorDBAdminCredentialsResponse: Codable {
     /// API token for that user.
@@ -19,20 +19,20 @@ public struct VectordbGetVectorDBAdminCredentialsResponse: Codable {
     }
 
     init() {
-        (apiToken, userId) = (nil, nil)
+        (self.apiToken, self.userId) = (nil, nil)
     }
 }
 
-public extension VectordbGetVectorDBAdminCredentialsResponse {
-    init(from decoder: Decoder) throws {
+extension VectordbGetVectorDBAdminCredentialsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apiToken = try container.sdkDecodeIfPresent(.apiToken)
-        userId = try container.sdkDecodeIfPresent(.userId)
+        self.apiToken = try container.sdkDecodeIfPresent(.apiToken)
+        self.userId = try container.sdkDecodeIfPresent(.userId)
     }
 }
 
-public extension VectordbGetVectorDBAdminCredentialsResponse {
-    init(apiToken: String? = nil, userId: String? = nil) {
+extension VectordbGetVectorDBAdminCredentialsResponse {
+    public init(apiToken: String? = nil, userId: String? = nil) {
         self.init()
         (self.apiToken, self.userId) = (apiToken, userId)
     }

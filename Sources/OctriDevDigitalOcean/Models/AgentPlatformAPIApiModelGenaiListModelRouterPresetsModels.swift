@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiModel domain models
+// AgentPlatformAPIApiModel domain models
 /// Model router preset used to prefill new router configurations.
 public struct ApiModelRouterPreset: Codable {
     /// Optional object value serialized in the `config` wire field.
@@ -30,29 +30,23 @@ public struct ApiModelRouterPreset: Codable {
     }
 
     init() {
-        (config, displayName, longDescription, shortDescription, slug) = (nil, nil, nil, nil, nil)
+        (self.config, self.displayName, self.longDescription, self.shortDescription, self.slug) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ApiModelRouterPreset {
-    init(from decoder: Decoder) throws {
+extension ApiModelRouterPreset {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        config = try container.sdkDecodeIfPresent(.config)
-        displayName = try container.sdkDecodeIfPresent(.displayName)
-        longDescription = try container.sdkDecodeIfPresent(.longDescription)
-        shortDescription = try container.sdkDecodeIfPresent(.shortDescription)
-        slug = try container.sdkDecodeIfPresent(.slug)
+        self.config = try container.sdkDecodeIfPresent(.config)
+        self.displayName = try container.sdkDecodeIfPresent(.displayName)
+        self.longDescription = try container.sdkDecodeIfPresent(.longDescription)
+        self.shortDescription = try container.sdkDecodeIfPresent(.shortDescription)
+        self.slug = try container.sdkDecodeIfPresent(.slug)
     }
 }
 
-public extension ApiModelRouterPreset {
-    init(
-        config: ApiModelRouterConfig? = nil,
-        displayName: String? = nil,
-        longDescription: String? = nil,
-        shortDescription: String? = nil,
-        slug: String? = nil
-    ) {
+extension ApiModelRouterPreset {
+    public init(config: ApiModelRouterConfig? = nil, displayName: String? = nil, longDescription: String? = nil, shortDescription: String? = nil, slug: String? = nil) {
         self.init()
         (self.config, self.displayName) = (config, displayName)
         (self.longDescription, self.shortDescription) = (longDescription, shortDescription)

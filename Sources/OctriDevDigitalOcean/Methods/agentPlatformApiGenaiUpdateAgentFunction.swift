@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
-    struct GenaiUpdateAgentFunctionOptions: Codable {
+extension AgentPlatformApiMethods {
+    public struct GenaiUpdateAgentFunctionOptions: Codable {
         public var agentUuid: String
         public var functionUuid: String
         public var agentUuid2: String?
@@ -41,33 +41,9 @@ public extension AgentPlatformApiMethods {
     ///   call it
     /// - outputSchema: Describe the output schema for the function so the agent
     ///   handle its response
-    static func genaiUpdateAgentFunction(
-        config: ClientConfig,
-        options: GenaiUpdateAgentFunctionOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiUpdateAgentFunctionOutput {
+    public static func genaiUpdateAgentFunction(config: ClientConfig, options: GenaiUpdateAgentFunctionOptions, requestOptions: RequestOptions? = nil) async throws -> ApiUpdateAgentFunctionOutput {
         let requestBody = GenaiUpdateAgentFunctionRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "PUT",
-            [
-                "/v2/gen-ai/agents/",
-                sdkEncodePathSegment(sdkWireString(options.agentUuid)),
-                "/functions/",
-                sdkEncodePathSegment(sdkWireString(options.functionUuid)),
-            ].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "genai_update_agent_function",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(options.agentUuid)), "/functions/", sdkEncodePathSegment(sdkWireString(options.functionUuid))].joined(), config: config, body: requestBody, decoder: .json, operationId: "genai_update_agent_function", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

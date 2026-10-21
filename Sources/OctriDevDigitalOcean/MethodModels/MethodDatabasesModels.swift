@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-/// Canonical databases operation model declarations
+// Canonical databases operation model declarations
 public struct DatabasesCreateReplicaRequestBodyPrivateConnection: Codable {
     /// A connection string in the format accepted by the `psql` command. This is provided as a convenience and
     /// should be able to be constructed by the other attributes.
@@ -43,34 +43,26 @@ public struct DatabasesCreateReplicaRequestBodyPrivateConnection: Codable {
     }
 
     init() {
-        (uri, database, host, port, user) = (nil, nil, nil, nil, nil)
-        (password, ssl) = (nil, nil)
+        (self.uri, self.database, self.host, self.port, self.user) = (nil, nil, nil, nil, nil)
+        (self.password, self.ssl) = (nil, nil)
     }
 }
 
-public extension DatabasesCreateReplicaRequestBodyPrivateConnection {
-    init(from decoder: Decoder) throws {
+extension DatabasesCreateReplicaRequestBodyPrivateConnection {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        uri = try container.sdkDecodeIfPresent(.uri)
-        database = try container.sdkDecodeIfPresent(.database)
-        host = try container.sdkDecodeIfPresent(.host)
-        port = try container.sdkDecodeIfPresent(.port)
-        user = try container.sdkDecodeIfPresent(.user)
-        password = try container.sdkDecodeIfPresent(.password)
-        ssl = try container.sdkDecodeIfPresent(.ssl)
+        self.uri = try container.sdkDecodeIfPresent(.uri)
+        self.database = try container.sdkDecodeIfPresent(.database)
+        self.host = try container.sdkDecodeIfPresent(.host)
+        self.port = try container.sdkDecodeIfPresent(.port)
+        self.user = try container.sdkDecodeIfPresent(.user)
+        self.password = try container.sdkDecodeIfPresent(.password)
+        self.ssl = try container.sdkDecodeIfPresent(.ssl)
     }
 }
 
-public extension DatabasesCreateReplicaRequestBodyPrivateConnection {
-    init(
-        uri: String? = nil,
-        database: String? = nil,
-        host: String? = nil,
-        port: Int? = nil,
-        user: String? = nil,
-        password: String? = nil,
-        ssl: Bool? = nil
-    ) {
+extension DatabasesCreateReplicaRequestBodyPrivateConnection {
+    public init(uri: String? = nil, database: String? = nil, host: String? = nil, port: Int? = nil, user: String? = nil, password: String? = nil, ssl: Bool? = nil) {
         self.init()
         (self.uri, self.database) = (uri, database)
         (self.host, self.port) = (host, port)
@@ -91,19 +83,19 @@ public struct DatabasesAddUserRequestBodyVariant1: Codable {
     }
 
     init() {
-        readonly = nil
+        self.readonly = nil
     }
 }
 
-public extension DatabasesAddUserRequestBodyVariant1 {
-    init(from decoder: Decoder) throws {
+extension DatabasesAddUserRequestBodyVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        readonly = try container.sdkDecodeIfPresent(.readonly)
+        self.readonly = try container.sdkDecodeIfPresent(.readonly)
     }
 }
 
-public extension DatabasesAddUserRequestBodyVariant1 {
-    init(readonly: Bool? = nil) {
+extension DatabasesAddUserRequestBodyVariant1 {
+    public init(readonly: Bool? = nil) {
         self.init()
         self.readonly = readonly
     }
@@ -126,21 +118,21 @@ public struct DatabasesUpdateKafkaTopicRequestBody: Codable {
     }
 
     init() {
-        (replicationFactor, partitionCount, config) = (nil, nil, nil)
+        (self.replicationFactor, self.partitionCount, self.config) = (nil, nil, nil)
     }
 }
 
-public extension DatabasesUpdateKafkaTopicRequestBody {
-    init(from decoder: Decoder) throws {
+extension DatabasesUpdateKafkaTopicRequestBody {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        replicationFactor = try container.sdkDecodeIfPresent(.replicationFactor)
-        partitionCount = try container.sdkDecodeIfPresent(.partitionCount)
-        config = try container.sdkDecodeIfPresent(.config)
+        self.replicationFactor = try container.sdkDecodeIfPresent(.replicationFactor)
+        self.partitionCount = try container.sdkDecodeIfPresent(.partitionCount)
+        self.config = try container.sdkDecodeIfPresent(.config)
     }
 }
 
-public extension DatabasesUpdateKafkaTopicRequestBody {
-    init(replicationFactor: Int? = nil, partitionCount: Int? = nil, config: KafkaTopicConfig? = nil) {
+extension DatabasesUpdateKafkaTopicRequestBody {
+    public init(replicationFactor: Int? = nil, partitionCount: Int? = nil, config: KafkaTopicConfig? = nil) {
         self.init()
         (self.replicationFactor, self.partitionCount) = (replicationFactor, partitionCount)
         self.config = config
@@ -155,19 +147,19 @@ public struct DatabasesCreateClusterRequestBodyVariant1: Codable {
     }
 
     init() {
-        backupRestore = nil
+        self.backupRestore = nil
     }
 }
 
-public extension DatabasesCreateClusterRequestBodyVariant1 {
-    init(from decoder: Decoder) throws {
+extension DatabasesCreateClusterRequestBodyVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        backupRestore = try container.sdkDecodeIfPresent(.backupRestore)
+        self.backupRestore = try container.sdkDecodeIfPresent(.backupRestore)
     }
 }
 
-public extension DatabasesCreateClusterRequestBodyVariant1 {
-    init(backupRestore: DatabaseBackup? = nil) {
+extension DatabasesCreateClusterRequestBodyVariant1 {
+    public init(backupRestore: DatabaseBackup? = nil) {
         self.init()
         self.backupRestore = backupRestore
     }
@@ -194,30 +186,24 @@ public struct DatabasesAddUserRequestBody: Codable {
         case readonly
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DatabasesAddUserRequestBody {
-    init(from decoder: Decoder) throws {
+extension DatabasesAddUserRequestBody {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        mysqlSettings = try container.sdkDecodeIfPresent(.mysqlSettings)
-        settings = try container.sdkDecodeIfPresent(.settings)
-        readonly = try container.sdkDecodeIfPresent(.readonly)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.mysqlSettings = try container.sdkDecodeIfPresent(.mysqlSettings)
+        self.settings = try container.sdkDecodeIfPresent(.settings)
+        self.readonly = try container.sdkDecodeIfPresent(.readonly)
     }
 }
 
-public extension DatabasesAddUserRequestBody {
-    init(name: String, mysqlSettings: MysqlSettings? = nil, settings: UserSettings? = nil, readonly: Bool? = nil) {
+extension DatabasesAddUserRequestBody {
+    public init(name: String, mysqlSettings: MysqlSettings? = nil, settings: UserSettings? = nil, readonly: Bool? = nil) {
         (self.name, self.mysqlSettings) = (name, mysqlSettings)
         (self.settings, self.readonly) = (settings, readonly)
     }
@@ -232,32 +218,32 @@ public struct DatabasesUpdateClusterMetricsCredentialsRequestBody: Codable {
     }
 
     init() {
-        credentials = nil
+        self.credentials = nil
     }
 }
 
-public extension DatabasesUpdateClusterMetricsCredentialsRequestBody {
-    init(from decoder: Decoder) throws {
+extension DatabasesUpdateClusterMetricsCredentialsRequestBody {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        credentials = try container.sdkDecodeIfPresent(.credentials)
+        self.credentials = try container.sdkDecodeIfPresent(.credentials)
     }
 }
 
-public extension DatabasesUpdateClusterMetricsCredentialsRequestBody {
-    init(credentials: DatabasesBasicAuthCredentials? = nil) {
+extension DatabasesUpdateClusterMetricsCredentialsRequestBody {
+    public init(credentials: DatabasesBasicAuthCredentials? = nil) {
         self.init()
         self.credentials = credentials
     }
 }
 
 public struct DatabasesCreateReplicaRequestBodyConnection: Codable {
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DatabasesCreateReplicaRequestBodyConnection {
-    init() {}
+extension DatabasesCreateReplicaRequestBodyConnection {
+    public init() {
+    }
 }
 
 public struct DatabasesUpdateUserRequestBodyVariant0: Codable {
@@ -271,19 +257,19 @@ public struct DatabasesUpdateUserRequestBodyVariant0: Codable {
     }
 
     init() {
-        settings = nil
+        self.settings = nil
     }
 }
 
-public extension DatabasesUpdateUserRequestBodyVariant0 {
-    init(from decoder: Decoder) throws {
+extension DatabasesUpdateUserRequestBodyVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        settings = try container.sdkDecodeIfPresent(.settings)
+        self.settings = try container.sdkDecodeIfPresent(.settings)
     }
 }
 
-public extension DatabasesUpdateUserRequestBodyVariant0 {
-    init(settings: UserSettingsUpdate? = nil) {
+extension DatabasesUpdateUserRequestBodyVariant0 {
+    public init(settings: UserSettingsUpdate? = nil) {
         self.init()
         self.settings = settings
     }
@@ -299,27 +285,21 @@ public struct DatabasesUpdateUserRequestBody: Codable {
         case settings
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DatabasesUpdateUserRequestBody {
-    init(from decoder: Decoder) throws {
+extension DatabasesUpdateUserRequestBody {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.settings) else {
-            throw SdkValidationError(
-                field: "settings",
-                code: "required",
-                message: "Validation failed for 'settings': value is required"
-            )
+            throw SdkValidationError(field: "settings", code: "required", message: "Validation failed for 'settings': value is required")
         }
-        settings = try container.sdkDecodeRequired(.settings)
+        self.settings = try container.sdkDecodeRequired(.settings)
     }
 }
 
-public extension DatabasesUpdateUserRequestBody {
-    init(settings: UserSettingsUpdate) {
+extension DatabasesUpdateUserRequestBody {
+    public init(settings: UserSettingsUpdate) {
         self.settings = settings
     }
 }
@@ -409,103 +389,59 @@ public struct DatabasesCreateClusterRequestBody: Codable {
         case backupRestore = "backup_restore"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DatabasesCreateClusterRequestBody {
-    init(from decoder: Decoder) throws {
+extension DatabasesCreateClusterRequestBody {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.engine) else {
-            throw SdkValidationError(
-                field: "engine",
-                code: "required",
-                message: "Validation failed for 'engine': value is required"
-            )
+            throw SdkValidationError(field: "engine", code: "required", message: "Validation failed for 'engine': value is required")
         }
         guard container.contains(.numNodes) else {
-            throw SdkValidationError(
-                field: "num_nodes",
-                code: "required",
-                message: "Validation failed for 'num_nodes': value is required"
-            )
+            throw SdkValidationError(field: "num_nodes", code: "required", message: "Validation failed for 'num_nodes': value is required")
         }
         guard container.contains(.size) else {
-            throw SdkValidationError(
-                field: "size",
-                code: "required",
-                message: "Validation failed for 'size': value is required"
-            )
+            throw SdkValidationError(field: "size", code: "required", message: "Validation failed for 'size': value is required")
         }
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        engine = try container.sdkDecodeRequired(.engine)
-        numNodes = try container.sdkDecodeRequired(.numNodes)
-        size = try container.sdkDecodeRequired(.size)
-        region = try container.sdkDecodeRequired(.region)
-        version = try container.sdkDecodeIfPresent(.version)
-        privateNetworkUuid = try container.sdkDecodeIfPresent(.privateNetworkUuid)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        uiConnection = try container.sdkDecodeIfPresent(.uiConnection)
-        schemaRegistryConnection = try container.sdkDecodeIfPresent(.schemaRegistryConnection)
-        connection = try container.sdkDecodeIfPresent(.connection)
-        privateConnection = try container.sdkDecodeIfPresent(.privateConnection)
-        standbyConnection = try container.sdkDecodeIfPresent(.standbyConnection)
-        standbyPrivateConnection = try container.sdkDecodeIfPresent(.standbyPrivateConnection)
-        maintenanceWindow = try container.sdkDecodeIfPresent(.maintenanceWindow)
-        projectId = try container.sdkDecodeIfPresent(.projectId)
-        rules = try container.sdkDecodeIfPresent(.rules)
-        storageSizeMib = try container.sdkDecodeIfPresent(.storageSizeMib)
-        autoscale = try container.sdkDecodeIfPresent(.autoscale)
-        doSettings = try container.sdkDecodeIfPresent(.doSettings)
-        backupRestore = try container.sdkDecodeIfPresent(.backupRestore)
-        if let value = privateNetworkUuid {
+        self.name = try container.sdkDecodeRequired(.name)
+        self.engine = try container.sdkDecodeRequired(.engine)
+        self.numNodes = try container.sdkDecodeRequired(.numNodes)
+        self.size = try container.sdkDecodeRequired(.size)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.version = try container.sdkDecodeIfPresent(.version)
+        self.privateNetworkUuid = try container.sdkDecodeIfPresent(.privateNetworkUuid)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.uiConnection = try container.sdkDecodeIfPresent(.uiConnection)
+        self.schemaRegistryConnection = try container.sdkDecodeIfPresent(.schemaRegistryConnection)
+        self.connection = try container.sdkDecodeIfPresent(.connection)
+        self.privateConnection = try container.sdkDecodeIfPresent(.privateConnection)
+        self.standbyConnection = try container.sdkDecodeIfPresent(.standbyConnection)
+        self.standbyPrivateConnection = try container.sdkDecodeIfPresent(.standbyPrivateConnection)
+        self.maintenanceWindow = try container.sdkDecodeIfPresent(.maintenanceWindow)
+        self.projectId = try container.sdkDecodeIfPresent(.projectId)
+        self.rules = try container.sdkDecodeIfPresent(.rules)
+        self.storageSizeMib = try container.sdkDecodeIfPresent(.storageSizeMib)
+        self.autoscale = try container.sdkDecodeIfPresent(.autoscale)
+        self.doSettings = try container.sdkDecodeIfPresent(.doSettings)
+        self.backupRestore = try container.sdkDecodeIfPresent(.backupRestore)
+        if let value = self.privateNetworkUuid {
             try sdkValidatePattern("private_network_uuid", value, sdkPattern6ef5a9518225)
         }
-        if let value = projectId {
+        if let value = self.projectId {
             try sdkValidateUuid("project_id", value)
         }
     }
 }
 
-public extension DatabasesCreateClusterRequestBody {
-    init(
-        name: String,
-        engine: DatabaseClusterRequestEngine,
-        numNodes: Int,
-        size: String,
-        region: String,
-        version: String? = nil,
-        privateNetworkUuid: String? = nil,
-        tags: [String]? = nil,
-        uiConnection: DatabaseClusterRequestUiConnection? = nil,
-        schemaRegistryConnection: DatabaseClusterRequestSchemaRegistryConnection? = nil,
-        connection: DatabaseClusterRequestConnection? = nil,
-        privateConnection: DatabaseClusterRequestPrivateConnection? = nil,
-        standbyConnection: DatabaseClusterRequestStandbyConnection? = nil,
-        standbyPrivateConnection: DatabaseClusterRequestStandbyPrivateConnection? = nil,
-        maintenanceWindow: DatabaseClusterRequestMaintenanceWindow? = nil,
-        projectId: String? = nil,
-        rules: [FirewallRuleRequest]? = nil,
-        storageSizeMib: Int? = nil,
-        autoscale: DatabaseAutoscaleParams? = nil,
-        doSettings: DoSettings? = nil,
-        backupRestore: DatabaseBackup? = nil
-    ) throws {
+extension DatabasesCreateClusterRequestBody {
+    public init(name: String, engine: DatabaseClusterRequestEngine, numNodes: Int, size: String, region: String, version: String? = nil, privateNetworkUuid: String? = nil, tags: [String]? = nil, uiConnection: DatabaseClusterRequestUiConnection? = nil, schemaRegistryConnection: DatabaseClusterRequestSchemaRegistryConnection? = nil, connection: DatabaseClusterRequestConnection? = nil, privateConnection: DatabaseClusterRequestPrivateConnection? = nil, standbyConnection: DatabaseClusterRequestStandbyConnection? = nil, standbyPrivateConnection: DatabaseClusterRequestStandbyPrivateConnection? = nil, maintenanceWindow: DatabaseClusterRequestMaintenanceWindow? = nil, projectId: String? = nil, rules: [FirewallRuleRequest]? = nil, storageSizeMib: Int? = nil, autoscale: DatabaseAutoscaleParams? = nil, doSettings: DoSettings? = nil, backupRestore: DatabaseBackup? = nil) throws {
         (self.name, self.engine) = (name, engine)
         (self.numNodes, self.size) = (numNodes, size)
         (self.region, self.version) = (region, version)
@@ -535,26 +471,18 @@ public indirect enum DatabasesCreateLogsinkRequestBodyConfig {
 }
 
 extension DatabasesCreateLogsinkRequestBodyConfig: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for DatabasesCreateLogsinkRequestBodyConfig"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for DatabasesCreateLogsinkRequestBodyConfig")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -578,18 +506,10 @@ extension DatabasesCreateLogsinkRequestBodyConfig {
 
 extension DatabasesCreateLogsinkRequestBodyConfig {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(RsyslogLogsink.self) {
-            return .rsyslogLogsink(value)
-        }
-        if let value = try? container.decode(ElasticsearchLogsink.self) {
-            return .elasticsearchLogsink(value)
-        }
-        if let value = try? container.decode(OpensearchLogsink.self) {
-            return .opensearchLogsink(value)
-        }
-        if let value = try? container.decode(DatadogLogsink.self) {
-            return .datadogLogsink(value)
-        }
+        if let value = try? container.decode(RsyslogLogsink.self) { return .rsyslogLogsink(value) }
+        if let value = try? container.decode(ElasticsearchLogsink.self) { return .elasticsearchLogsink(value) }
+        if let value = try? container.decode(OpensearchLogsink.self) { return .opensearchLogsink(value) }
+        if let value = try? container.decode(DatadogLogsink.self) { return .datadogLogsink(value) }
         return nil
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiUpdate domain models
+// AgentPlatformAPIApiUpdate domain models
 /// Typed representation of the `ApiUpdateModelAPIKeyInputPublic` API schema.
 public struct ApiUpdateModelAPIKeyInputPublic: Codable {
     /// API key ID
@@ -19,20 +19,20 @@ public struct ApiUpdateModelAPIKeyInputPublic: Codable {
     }
 
     init() {
-        (apiKeyUuid, name) = (nil, nil)
+        (self.apiKeyUuid, self.name) = (nil, nil)
     }
 }
 
-public extension ApiUpdateModelAPIKeyInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateModelAPIKeyInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apiKeyUuid = try container.sdkDecodeIfPresent(.apiKeyUuid)
-        name = try container.sdkDecodeIfPresent(.name)
+        self.apiKeyUuid = try container.sdkDecodeIfPresent(.apiKeyUuid)
+        self.name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-public extension ApiUpdateModelAPIKeyInputPublic {
-    init(apiKeyUuid: String? = nil, name: String? = nil) {
+extension ApiUpdateModelAPIKeyInputPublic {
+    public init(apiKeyUuid: String? = nil, name: String? = nil) {
         self.init()
         (self.apiKeyUuid, self.name) = (apiKeyUuid, name)
     }
@@ -48,19 +48,19 @@ public struct ApiUpdateModelAPIKeyOutput: Codable {
     }
 
     init() {
-        apiKeyInfo = nil
+        self.apiKeyInfo = nil
     }
 }
 
-public extension ApiUpdateModelAPIKeyOutput {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateModelAPIKeyOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-public extension ApiUpdateModelAPIKeyOutput {
-    init(apiKeyInfo: ApiModelAPIKeyInfo? = nil) {
+extension ApiUpdateModelAPIKeyOutput {
+    public init(apiKeyInfo: ApiModelAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }

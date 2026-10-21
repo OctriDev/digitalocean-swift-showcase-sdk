@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DatabasesDatabase domain models
+// DatabasesDatabase domain models
 /// Optional API value serialized in the `maintenance_window` wire field.
 public struct DatabaseClusterReadMaintenanceWindow: Codable {
     /// The day of the week on which to apply maintenance updates.
@@ -26,37 +26,27 @@ public struct DatabaseClusterReadMaintenanceWindow: Codable {
         case description
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DatabaseClusterReadMaintenanceWindow {
-    init(from decoder: Decoder) throws {
+extension DatabaseClusterReadMaintenanceWindow {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.day) else {
-            throw SdkValidationError(
-                field: "day",
-                code: "required",
-                message: "Validation failed for 'day': value is required"
-            )
+            throw SdkValidationError(field: "day", code: "required", message: "Validation failed for 'day': value is required")
         }
         guard container.contains(.hour) else {
-            throw SdkValidationError(
-                field: "hour",
-                code: "required",
-                message: "Validation failed for 'hour': value is required"
-            )
+            throw SdkValidationError(field: "hour", code: "required", message: "Validation failed for 'hour': value is required")
         }
-        day = try container.sdkDecodeRequired(.day)
-        hour = try container.sdkDecodeRequired(.hour)
-        pending = try container.sdkDecodeIfPresent(.pending)
-        description = try container.sdkDecodeIfPresent(.description)
+        self.day = try container.sdkDecodeRequired(.day)
+        self.hour = try container.sdkDecodeRequired(.hour)
+        self.pending = try container.sdkDecodeIfPresent(.pending)
+        self.description = try container.sdkDecodeIfPresent(.description)
     }
 }
 
-public extension DatabaseClusterReadMaintenanceWindow {
-    init(day: String, hour: String, pending: Bool? = nil, description: [String]? = nil) {
+extension DatabaseClusterReadMaintenanceWindow {
+    public init(day: String, hour: String, pending: Bool? = nil, description: [String]? = nil) {
         (self.day, self.hour) = (day, hour)
         (self.pending, self.description) = (pending, description)
     }
@@ -72,19 +62,19 @@ public struct DatabaseMetricsCredentials: Codable {
     }
 
     init() {
-        credentials = nil
+        self.credentials = nil
     }
 }
 
-public extension DatabaseMetricsCredentials {
-    init(from decoder: Decoder) throws {
+extension DatabaseMetricsCredentials {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        credentials = try container.sdkDecodeIfPresent(.credentials)
+        self.credentials = try container.sdkDecodeIfPresent(.credentials)
     }
 }
 
-public extension DatabaseMetricsCredentials {
-    init(credentials: DatabasesBasicAuthCredentials? = nil) {
+extension DatabaseMetricsCredentials {
+    public init(credentials: DatabasesBasicAuthCredentials? = nil) {
         self.init()
         self.credentials = credentials
     }
@@ -104,35 +94,25 @@ public struct DatabaseMaintenanceWindowRequest: Codable {
         case hour
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DatabaseMaintenanceWindowRequest {
-    init(from decoder: Decoder) throws {
+extension DatabaseMaintenanceWindowRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.day) else {
-            throw SdkValidationError(
-                field: "day",
-                code: "required",
-                message: "Validation failed for 'day': value is required"
-            )
+            throw SdkValidationError(field: "day", code: "required", message: "Validation failed for 'day': value is required")
         }
         guard container.contains(.hour) else {
-            throw SdkValidationError(
-                field: "hour",
-                code: "required",
-                message: "Validation failed for 'hour': value is required"
-            )
+            throw SdkValidationError(field: "hour", code: "required", message: "Validation failed for 'hour': value is required")
         }
-        day = try container.sdkDecodeRequired(.day)
-        hour = try container.sdkDecodeRequired(.hour)
+        self.day = try container.sdkDecodeRequired(.day)
+        self.hour = try container.sdkDecodeRequired(.hour)
     }
 }
 
-public extension DatabaseMaintenanceWindowRequest {
-    init(day: String, hour: String) {
+extension DatabaseMaintenanceWindowRequest {
+    public init(day: String, hour: String) {
         (self.day, self.hour) = (day, hour)
     }
 }
@@ -146,27 +126,21 @@ public struct DatabaseSchemaRegistryConfig: Codable {
         case compatibilityLevel = "compatibility_level"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DatabaseSchemaRegistryConfig {
-    init(from decoder: Decoder) throws {
+extension DatabaseSchemaRegistryConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.compatibilityLevel) else {
-            throw SdkValidationError(
-                field: "compatibility_level",
-                code: "required",
-                message: "Validation failed for 'compatibility_level': value is required"
-            )
+            throw SdkValidationError(field: "compatibility_level", code: "required", message: "Validation failed for 'compatibility_level': value is required")
         }
-        compatibilityLevel = try container.sdkDecodeRequired(.compatibilityLevel)
+        self.compatibilityLevel = try container.sdkDecodeRequired(.compatibilityLevel)
     }
 }
 
-public extension DatabaseSchemaRegistryConfig {
-    init(compatibilityLevel: DatabaseSchemaRegistryConfigCompatibilityLevel) {
+extension DatabaseSchemaRegistryConfig {
+    public init(compatibilityLevel: DatabaseSchemaRegistryConfigCompatibilityLevel) {
         self.compatibilityLevel = compatibilityLevel
     }
 }
@@ -207,34 +181,26 @@ public struct DatabaseClusterReadPrivateConnection: Codable {
     }
 
     init() {
-        (uri, database, host, port, user) = (nil, nil, nil, nil, nil)
-        (password, ssl) = (nil, nil)
+        (self.uri, self.database, self.host, self.port, self.user) = (nil, nil, nil, nil, nil)
+        (self.password, self.ssl) = (nil, nil)
     }
 }
 
-public extension DatabaseClusterReadPrivateConnection {
-    init(from decoder: Decoder) throws {
+extension DatabaseClusterReadPrivateConnection {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        uri = try container.sdkDecodeIfPresent(.uri)
-        database = try container.sdkDecodeIfPresent(.database)
-        host = try container.sdkDecodeIfPresent(.host)
-        port = try container.sdkDecodeIfPresent(.port)
-        user = try container.sdkDecodeIfPresent(.user)
-        password = try container.sdkDecodeIfPresent(.password)
-        ssl = try container.sdkDecodeIfPresent(.ssl)
+        self.uri = try container.sdkDecodeIfPresent(.uri)
+        self.database = try container.sdkDecodeIfPresent(.database)
+        self.host = try container.sdkDecodeIfPresent(.host)
+        self.port = try container.sdkDecodeIfPresent(.port)
+        self.user = try container.sdkDecodeIfPresent(.user)
+        self.password = try container.sdkDecodeIfPresent(.password)
+        self.ssl = try container.sdkDecodeIfPresent(.ssl)
     }
 }
 
-public extension DatabaseClusterReadPrivateConnection {
-    init(
-        uri: String? = nil,
-        database: String? = nil,
-        host: String? = nil,
-        port: Int? = nil,
-        user: String? = nil,
-        password: String? = nil,
-        ssl: Bool? = nil
-    ) {
+extension DatabaseClusterReadPrivateConnection {
+    public init(uri: String? = nil, database: String? = nil, host: String? = nil, port: Int? = nil, user: String? = nil, password: String? = nil, ssl: Bool? = nil) {
         self.init()
         (self.uri, self.database) = (uri, database)
         (self.host, self.port) = (host, port)
@@ -258,20 +224,20 @@ public struct DatabaseServiceEndpoint: Codable {
     }
 
     init() {
-        (host, port) = (nil, nil)
+        (self.host, self.port) = (nil, nil)
     }
 }
 
-public extension DatabaseServiceEndpoint {
-    init(from decoder: Decoder) throws {
+extension DatabaseServiceEndpoint {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        host = try container.sdkDecodeIfPresent(.host)
-        port = try container.sdkDecodeIfPresent(.port)
+        self.host = try container.sdkDecodeIfPresent(.host)
+        self.port = try container.sdkDecodeIfPresent(.port)
     }
 }
 
-public extension DatabaseServiceEndpoint {
-    init(host: String? = nil, port: Int? = nil) {
+extension DatabaseServiceEndpoint {
+    public init(host: String? = nil, port: Int? = nil) {
         self.init()
         (self.host, self.port) = (host, port)
     }
@@ -313,34 +279,26 @@ public struct DatabaseReplicaReadPrivateConnection: Codable {
     }
 
     init() {
-        (uri, database, host, port, user) = (nil, nil, nil, nil, nil)
-        (password, ssl) = (nil, nil)
+        (self.uri, self.database, self.host, self.port, self.user) = (nil, nil, nil, nil, nil)
+        (self.password, self.ssl) = (nil, nil)
     }
 }
 
-public extension DatabaseReplicaReadPrivateConnection {
-    init(from decoder: Decoder) throws {
+extension DatabaseReplicaReadPrivateConnection {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        uri = try container.sdkDecodeIfPresent(.uri)
-        database = try container.sdkDecodeIfPresent(.database)
-        host = try container.sdkDecodeIfPresent(.host)
-        port = try container.sdkDecodeIfPresent(.port)
-        user = try container.sdkDecodeIfPresent(.user)
-        password = try container.sdkDecodeIfPresent(.password)
-        ssl = try container.sdkDecodeIfPresent(.ssl)
+        self.uri = try container.sdkDecodeIfPresent(.uri)
+        self.database = try container.sdkDecodeIfPresent(.database)
+        self.host = try container.sdkDecodeIfPresent(.host)
+        self.port = try container.sdkDecodeIfPresent(.port)
+        self.user = try container.sdkDecodeIfPresent(.user)
+        self.password = try container.sdkDecodeIfPresent(.password)
+        self.ssl = try container.sdkDecodeIfPresent(.ssl)
     }
 }
 
-public extension DatabaseReplicaReadPrivateConnection {
-    init(
-        uri: String? = nil,
-        database: String? = nil,
-        host: String? = nil,
-        port: Int? = nil,
-        user: String? = nil,
-        password: String? = nil,
-        ssl: Bool? = nil
-    ) {
+extension DatabaseReplicaReadPrivateConnection {
+    public init(uri: String? = nil, database: String? = nil, host: String? = nil, port: Int? = nil, user: String? = nil, password: String? = nil, ssl: Bool? = nil) {
         self.init()
         (self.uri, self.database) = (uri, database)
         (self.host, self.port) = (host, port)
@@ -385,34 +343,26 @@ public struct DatabaseConnection: Codable {
     }
 
     init() {
-        (uri, database, host, port, user) = (nil, nil, nil, nil, nil)
-        (password, ssl) = (nil, nil)
+        (self.uri, self.database, self.host, self.port, self.user) = (nil, nil, nil, nil, nil)
+        (self.password, self.ssl) = (nil, nil)
     }
 }
 
-public extension DatabaseConnection {
-    init(from decoder: Decoder) throws {
+extension DatabaseConnection {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        uri = try container.sdkDecodeIfPresent(.uri)
-        database = try container.sdkDecodeIfPresent(.database)
-        host = try container.sdkDecodeIfPresent(.host)
-        port = try container.sdkDecodeIfPresent(.port)
-        user = try container.sdkDecodeIfPresent(.user)
-        password = try container.sdkDecodeIfPresent(.password)
-        ssl = try container.sdkDecodeIfPresent(.ssl)
+        self.uri = try container.sdkDecodeIfPresent(.uri)
+        self.database = try container.sdkDecodeIfPresent(.database)
+        self.host = try container.sdkDecodeIfPresent(.host)
+        self.port = try container.sdkDecodeIfPresent(.port)
+        self.user = try container.sdkDecodeIfPresent(.user)
+        self.password = try container.sdkDecodeIfPresent(.password)
+        self.ssl = try container.sdkDecodeIfPresent(.ssl)
     }
 }
 
-public extension DatabaseConnection {
-    init(
-        uri: String? = nil,
-        database: String? = nil,
-        host: String? = nil,
-        port: Int? = nil,
-        user: String? = nil,
-        password: String? = nil,
-        ssl: Bool? = nil
-    ) {
+extension DatabaseConnection {
+    public init(uri: String? = nil, database: String? = nil, host: String? = nil, port: Int? = nil, user: String? = nil, password: String? = nil, ssl: Bool? = nil) {
         self.init()
         (self.uri, self.database) = (uri, database)
         (self.host, self.port) = (host, port)
@@ -428,10 +378,7 @@ public extension DatabaseConnection {
 public struct DatabaseClusterReadEngine: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pg = DatabaseClusterReadEngine(rawValue: "pg")
     public static let mysql = DatabaseClusterReadEngine(rawValue: "mysql")
     public static let redis = DatabaseClusterReadEngine(rawValue: "redis")
@@ -444,7 +391,7 @@ public struct DatabaseClusterReadEngine: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -454,28 +401,21 @@ public struct DatabaseClusterReadEngine: RawRepresentable, Hashable, Codable, Se
 }
 
 /// The compatibility level of the schema registry.
-public struct DatabaseSchemaRegistrySubjectConfigCompatibilityLevel: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct DatabaseSchemaRegistrySubjectConfigCompatibilityLevel: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let none = DatabaseSchemaRegistrySubjectConfigCompatibilityLevel(rawValue: "NONE")
     public static let backward = DatabaseSchemaRegistrySubjectConfigCompatibilityLevel(rawValue: "BACKWARD")
-    public static let backwardTransitive =
-        DatabaseSchemaRegistrySubjectConfigCompatibilityLevel(rawValue: "BACKWARD_TRANSITIVE")
+    public static let backwardTransitive = DatabaseSchemaRegistrySubjectConfigCompatibilityLevel(rawValue: "BACKWARD_TRANSITIVE")
     public static let forward = DatabaseSchemaRegistrySubjectConfigCompatibilityLevel(rawValue: "FORWARD")
-    public static let forwardTransitive =
-        DatabaseSchemaRegistrySubjectConfigCompatibilityLevel(rawValue: "FORWARD_TRANSITIVE")
+    public static let forwardTransitive = DatabaseSchemaRegistrySubjectConfigCompatibilityLevel(rawValue: "FORWARD_TRANSITIVE")
     public static let full = DatabaseSchemaRegistrySubjectConfigCompatibilityLevel(rawValue: "FULL")
-    public static let fullTransitive =
-        DatabaseSchemaRegistrySubjectConfigCompatibilityLevel(rawValue: "FULL_TRANSITIVE")
+    public static let fullTransitive = DatabaseSchemaRegistrySubjectConfigCompatibilityLevel(rawValue: "FULL_TRANSITIVE")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -485,18 +425,13 @@ public struct DatabaseSchemaRegistrySubjectConfigCompatibilityLevel: RawRepresen
 }
 
 /// The compatibility level of the schema registry.
-public struct DatabaseSchemaRegistryConfigCompatibilityLevel: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct DatabaseSchemaRegistryConfigCompatibilityLevel: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let none = DatabaseSchemaRegistryConfigCompatibilityLevel(rawValue: "NONE")
     public static let backward = DatabaseSchemaRegistryConfigCompatibilityLevel(rawValue: "BACKWARD")
-    public static let backwardTransitive =
-        DatabaseSchemaRegistryConfigCompatibilityLevel(rawValue: "BACKWARD_TRANSITIVE")
+    public static let backwardTransitive = DatabaseSchemaRegistryConfigCompatibilityLevel(rawValue: "BACKWARD_TRANSITIVE")
     public static let forward = DatabaseSchemaRegistryConfigCompatibilityLevel(rawValue: "FORWARD")
     public static let forwardTransitive = DatabaseSchemaRegistryConfigCompatibilityLevel(rawValue: "FORWARD_TRANSITIVE")
     public static let full = DatabaseSchemaRegistryConfigCompatibilityLevel(rawValue: "FULL")
@@ -504,7 +439,7 @@ public struct DatabaseSchemaRegistryConfigCompatibilityLevel: RawRepresentable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -517,16 +452,13 @@ public struct DatabaseSchemaRegistryConfigCompatibilityLevel: RawRepresentable, 
 public struct DatabaseUserRole: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let primary = DatabaseUserRole(rawValue: "primary")
     public static let normal = DatabaseUserRole(rawValue: "normal")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -539,10 +471,7 @@ public struct DatabaseUserRole: RawRepresentable, Hashable, Codable, Sendable, S
 public struct DatabaseClusterReadStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let creating = DatabaseClusterReadStatus(rawValue: "creating")
     public static let online = DatabaseClusterReadStatus(rawValue: "online")
     public static let resizing = DatabaseClusterReadStatus(rawValue: "resizing")
@@ -551,7 +480,7 @@ public struct DatabaseClusterReadStatus: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -564,10 +493,7 @@ public struct DatabaseClusterReadStatus: RawRepresentable, Hashable, Codable, Se
 public struct DatabaseReplicaReadStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let creating = DatabaseReplicaReadStatus(rawValue: "creating")
     public static let online = DatabaseReplicaReadStatus(rawValue: "online")
     public static let resizing = DatabaseReplicaReadStatus(rawValue: "resizing")
@@ -576,7 +502,7 @@ public struct DatabaseReplicaReadStatus: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

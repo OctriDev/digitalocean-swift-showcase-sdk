@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Certificates domain models
+// Certificates domain models
 /// Typed representation of the `ExistingCertificate` API schema.
 public struct ExistingCertificate: Codable {
     /// Optional object value serialized in the `certificate` wire field.
@@ -14,19 +14,19 @@ public struct ExistingCertificate: Codable {
     }
 
     init() {
-        certificate = nil
+        self.certificate = nil
     }
 }
 
-public extension ExistingCertificate {
-    init(from decoder: Decoder) throws {
+extension ExistingCertificate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        certificate = try container.sdkDecodeIfPresent(.certificate)
+        self.certificate = try container.sdkDecodeIfPresent(.certificate)
     }
 }
 
-public extension ExistingCertificate {
-    init(certificate: Certificate? = nil) {
+extension ExistingCertificate {
+    public init(certificate: Certificate? = nil) {
         self.init()
         self.certificate = certificate
     }

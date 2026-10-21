@@ -3,22 +3,19 @@
 
 import Foundation
 
-/// InsightsAlert domain models
+// InsightsAlert domain models
 /// Current alert rule status. Allowed values: - `ALERT_RULE_STATUS_ACTIVE` = active -
 /// `ALERT_RULE_STATUS_PAUSED` = paused
 public struct AlertRuleStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let alertRuleStatusActive = AlertRuleStatus(rawValue: "ALERT_RULE_STATUS_ACTIVE")
     public static let alertRuleStatusPaused = AlertRuleStatus(rawValue: "ALERT_RULE_STATUS_PAUSED")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -31,16 +28,13 @@ public struct AlertRuleStatus: RawRepresentable, Hashable, Codable, Sendable, Sd
 public struct AlertInstanceSeverity: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let warning = AlertInstanceSeverity(rawValue: "warning")
     public static let critical = AlertInstanceSeverity(rawValue: "critical")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

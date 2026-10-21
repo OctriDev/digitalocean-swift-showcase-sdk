@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HarnessRuntime domain models
+// HarnessRuntime domain models
 /// The hosted-agents Session shape (subset), returned verbatim from an internal ListSessions(status=PAUSED). Enum
 /// spellings match the sessions API.
 public struct ReusableSession: Codable {
@@ -42,38 +42,31 @@ public struct ReusableSession: Codable {
     }
 
     init() {
-        (sessionId, name, agentKind, status, createdAt) = (nil, nil, nil, nil, nil)
-        lastEventAt = nil
+        (self.sessionId, self.name, self.agentKind, self.status, self.createdAt) = (nil, nil, nil, nil, nil)
+        self.lastEventAt = nil
     }
 }
 
-public extension ReusableSession {
-    init(from decoder: Decoder) throws {
+extension ReusableSession {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        sessionId = try container.sdkDecodeIfPresent(.sessionId)
-        name = try container.sdkDecodeIfPresent(.name)
-        agentKind = try container.sdkDecodeIfPresent(.agentKind)
-        status = try container.sdkDecodeIfPresent(.status)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        lastEventAt = try container.sdkDecodeIfPresent(.lastEventAt)
-        if let value = createdAt {
+        self.sessionId = try container.sdkDecodeIfPresent(.sessionId)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.agentKind = try container.sdkDecodeIfPresent(.agentKind)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.lastEventAt = try container.sdkDecodeIfPresent(.lastEventAt)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = lastEventAt {
+        if let value = self.lastEventAt {
             try sdkValidateDateTime("last_event_at", sdkWireString(value))
         }
     }
 }
 
-public extension ReusableSession {
-    init(
-        sessionId: String? = nil,
-        name: String? = nil,
-        agentKind: AgentKind? = nil,
-        status: SessionStatus? = nil,
-        createdAt: Date? = nil,
-        lastEventAt: Date? = nil
-    ) throws {
+extension ReusableSession {
+    public init(sessionId: String? = nil, name: String? = nil, agentKind: AgentKind? = nil, status: SessionStatus? = nil, createdAt: Date? = nil, lastEventAt: Date? = nil) throws {
         self.init()
         (self.sessionId, self.name) = (sessionId, name)
         (self.agentKind, self.status) = (agentKind, status)

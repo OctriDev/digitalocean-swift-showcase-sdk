@@ -17,10 +17,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.listAlertRules(
-                page: decoded("1"),
-                perPage: decoded("2"),
-                resourceUrn: decoded("\"do:droplet:12345\"")
-            )
+            page: decoded("1"),
+            perPage: decoded("2"),
+            resourceUrn: decoded("\"do:droplet:12345\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -36,8 +36,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testInsightsListNotificationChannelsInsightsListNotificationChannelsReachesMockAndDecodesResponse(
-    ) async throws {
+    func testInsightsListNotificationChannelsInsightsListNotificationChannelsReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -56,8 +55,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testInsightsListNotificationChannelsInsightsListNotificationChannels401ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testInsightsListNotificationChannelsInsightsListNotificationChannels401ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -68,9 +66,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.listNotificationChannels(
-                page: decoded("1"),
-                perPage: decoded("2")
-            )
+            page: decoded("1"),
+            perPage: decoded("2")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -119,12 +117,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.postLogsSearch(
-                region: decoded("\"nyc3\""),
-                timeRange: decoded(sdkMethodFixture966Value1),
-                filter: decoded(sdkMethodFixture966Value2),
-                orderBy: decoded(sdkMethodFixture966Value3),
-                pagination: decoded("{\"limit\":100,\"cursor\":\"eyJ0cyI6MTc1NjY4NDgwMDAwMDAwMDAwfQ\"}")
-            )
+            region: decoded("\"nyc3\""),
+            timeRange: decoded(sdkMethodFixture966Value1),
+            filter: decoded(sdkMethodFixture966Value2),
+            orderBy: decoded(sdkMethodFixture966Value3),
+            pagination: decoded("{\"limit\":100,\"cursor\":\"eyJ0cyI6MTc1NjY4NDgwMDAwMDAwMDAwfQ\"}")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -172,11 +170,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.postPromLabels(
-                region: decoded("\"nyc3\""),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\""),
-                match: decoded("[\"match[]\"]")
-            )
+            region: decoded("\"nyc3\""),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\""),
+            match: decoded("[\"match[]\"]")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -224,11 +222,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.postPromQuery(
-                region: decoded("\"nyc3\""),
-                query: decoded("\"do.droplets.cpu_time\""),
-                time: decoded("\"1620683817\""),
-                timeout: decoded("\"30s\"")
-            )
+            region: decoded("\"nyc3\""),
+            query: decoded("\"do.droplets.cpu_time\""),
+            time: decoded("\"1620683817\""),
+            timeout: decoded("\"30s\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -278,13 +276,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.postPromQueryRange(
-                region: decoded("\"nyc3\""),
-                query: decoded("\"do.droplets.cpu_time\""),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\""),
-                step: decoded("\"15s\""),
-                timeout: decoded("\"30s\"")
-            )
+            region: decoded("\"nyc3\""),
+            query: decoded("\"do.droplets.cpu_time\""),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\""),
+            step: decoded("\"15s\""),
+            timeout: decoded("\"30s\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -332,11 +330,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.postPromSeries(
-                region: decoded("\"nyc3\""),
-                match: decoded("[\"match[]\"]"),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\"")
-            )
+            region: decoded("\"nyc3\""),
+            match: decoded("[\"match[]\"]"),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -385,12 +383,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.postSpansSearch(
-                region: decoded("\"nyc3\""),
-                timeRange: decoded(sdkMethodFixture976Value1),
-                filter: decoded(sdkMethodFixture976Value2),
-                orderBy: decoded(sdkMethodFixture976Value3),
-                pagination: decoded("{\"limit\":100}")
-            )
+            region: decoded("\"nyc3\""),
+            timeRange: decoded(sdkMethodFixture976Value1),
+            filter: decoded(sdkMethodFixture976Value2),
+            orderBy: decoded(sdkMethodFixture976Value3),
+            pagination: decoded("{\"limit\":100}")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -439,12 +437,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.postTracesSearch(
-                region: decoded("\"nyc3\""),
-                timeRange: decoded("{\"from\":{\"relative\":\"15m\"},\"to\":{\"relative\":\"now\"}}"),
-                filter: decoded("null"),
-                orderBy: decoded("null"),
-                pagination: decoded("{\"limit\":50}")
-            )
+            region: decoded("\"nyc3\""),
+            timeRange: decoded("{\"from\":{\"relative\":\"15m\"},\"to\":{\"relative\":\"now\"}}"),
+            filter: decoded("null"),
+            orderBy: decoded("null"),
+            pagination: decoded("{\"limit\":50}")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -491,10 +489,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.updateAlertRule(
-                id: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\""),
-                spec: decoded(sdkMethodFixture980Value1),
-                status: decoded("\"ALERT_RULE_STATUS_PAUSED\"")
-            )
+            id: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\""),
+            spec: decoded(sdkMethodFixture980Value1),
+            status: decoded("\"ALERT_RULE_STATUS_PAUSED\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -510,8 +508,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testInsightsUpdateNotificationChannelInsightsUpdateNotificationChannelReachesMockAndDecodesResponse(
-    ) async throws {
+    func testInsightsUpdateNotificationChannelInsightsUpdateNotificationChannelReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -533,8 +530,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testInsightsUpdateNotificationChannelInsightsUpdateNotificationChannel400ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testInsightsUpdateNotificationChannelInsightsUpdateNotificationChannel400ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/400") else {
             return
         }
@@ -545,12 +541,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.updateNotificationChannel(
-                id: decoded("\"550e8400-e29b-41d4-a716-446655440000\""),
-                name: decoded("\"Platform alerts (updated)\""),
-                email: decoded("null"),
-                slack: decoded("{\"channel\":\"#platform-alerts-prod\"}"),
-                webhook: decoded("null")
-            )
+            id: decoded("\"550e8400-e29b-41d4-a716-446655440000\""),
+            name: decoded("\"Platform alerts (updated)\""),
+            email: decoded("null"),
+            slack: decoded("{\"channel\":\"#platform-alerts-prod\"}"),
+            webhook: decoded("null")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)

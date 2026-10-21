@@ -6,96 +6,37 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension MonitoringMethods {
-    /// To create a new sink, send a POST request to `/v2/monitoring/sinks`. Forwards logs from the resources identified
-    /// in `resources` to the specified pre-existing destination.
+extension MonitoringMethods {
+    /// To create a new sink, send a POST request to `/v2/monitoring/sinks`. Forwards logs from the resources identified in `resources` to the specified pre-existing destination.
     ///
     /// - Parameters:
     /// - destinationUuid: A unique identifier for an already-existing destination.
     /// - resources: List of resources identified by their URNs.
-    static func monitoringCreateSink(
-        config: ClientConfig,
-        destinationUuid: String? = nil,
-        resources: [SinkResource]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
+    public static func monitoringCreateSink(config: ClientConfig, destinationUuid: String? = nil, resources: [SinkResource]? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
         let requestBody = MonitoringCreateSinkRequestBody(destinationUuid: destinationUuid, resources: resources)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/monitoring/sinks",
-            config: config,
-            body: requestBody,
-            decoder: .empty,
-            operationId: "monitoring_create_sink",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v2/monitoring/sinks", config: config, body: requestBody, decoder: .empty, operationId: "monitoring_create_sink", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To list all sinks, send a GET request to `/v2/monitoring/sinks`.
     ///
     /// - Parameters:
     /// - resourceId: A unique URN for a resource.
-    static func monitoringListSinks(
-        config: ClientConfig,
-        resourceId: Urn? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ListSinks {
-        if let resourceId {
+    public static func monitoringListSinks(config: ClientConfig, resourceId: Urn? = nil, requestOptions: RequestOptions? = nil) async throws -> ListSinks {
+        if let resourceId = resourceId {
             try sdkValidatePattern("resource_id", resourceId, sdkPattern9296ac5c6d12)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/monitoring/sinks",
-            config: config,
-            query: [
-                SdkQueryParameter("resource_id", value: resourceId),
-            ],
-            decoder: .json,
-            operationId: "monitoring_list_sinks",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", "/v2/monitoring/sinks", config: config, query: [
+            SdkQueryParameter("resource_id", value: resourceId),
+        ], decoder: .json, operationId: "monitoring_list_sinks", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To get the details of a sink (resources and destination), send a GET request to
-    /// `/v2/monitoring/sinks/${sink_uuid}`.
+    /// To get the details of a sink (resources and destination), send a GET request to `/v2/monitoring/sinks/${sink_uuid}`.
     ///
     /// - Parameters:
     /// - sinkUuid: A unique identifier for a sink.
-    static func monitoringGetSink(
-        config: ClientConfig,
-        sinkUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Sinks {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/monitoring/sinks/", sdkEncodePathSegment(sdkWireString(sinkUuid))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "monitoring_get_sink",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func monitoringGetSink(config: ClientConfig, sinkUuid: String, requestOptions: RequestOptions? = nil) async throws -> Sinks {
+        return try (await sdkRequest("GET", ["/v2/monitoring/sinks/", sdkEncodePathSegment(sdkWireString(sinkUuid))].joined(), config: config, decoder: .json, operationId: "monitoring_get_sink", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

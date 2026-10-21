@@ -6,50 +6,27 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DropletsMethods {
-    /// To retrieve a list of all firewalls available to a Droplet, send a GET request to
-    /// `/v2/droplets/$DROPLET_ID/firewalls` The response will be a JSON object that has a key called `firewalls`. This
-    /// will be set to an array of `firewall` objects, each of which contain the standard `firewall` attributes.
+extension DropletsMethods {
+    /// To retrieve a list of all firewalls available to a Droplet, send a GET request to `/v2/droplets/$DROPLET_ID/firewalls` The response will be a JSON object that has a key called `firewalls`. This will be set to an array of `firewall` objects, each of which contain the standard `firewall` attributes.
     ///
     /// - Parameters:
     /// - dropletId: A unique identifier for a Droplet instance.
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func dropletsListFirewalls(
-        config: ClientConfig,
-        dropletId: Int,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AllFirewalls {
+    public static func dropletsListFirewalls(config: ClientConfig, dropletId: Int, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AllFirewalls {
         try validateRange("droplet_id", Double(dropletId), min: 1)
 
-        if let perPage {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/droplets/", sdkEncodePathSegment(sdkWireString(dropletId)), "/firewalls"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "droplets_list_firewalls",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/droplets/", sdkEncodePathSegment(sdkWireString(dropletId)), "/firewalls"].joined(), config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "droplets_list_firewalls", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

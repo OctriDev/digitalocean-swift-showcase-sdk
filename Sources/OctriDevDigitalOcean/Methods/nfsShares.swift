@@ -6,11 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension NfsMethods {
-    /// To create a new access point on an NFS share, send a POST request to `/v2/nfs/shares/{share_id}/access_points`.
-    /// A successful request will return the newly created access point and an action object. The parent share must be
-    /// in `ACTIVE` or `INACTIVE` status. Validation failures and precondition errors (such as an ineligible share
-    /// state) return `400 Bad Request`. Duplicate name or path conflicts return `409 Conflict`.
+extension NfsMethods {
+    /// To create a new access point on an NFS share, send a POST request to `/v2/nfs/shares/{share_id}/access_points`. A successful request will return the newly created access point and an action object. The parent share must be in `ACTIVE` or `INACTIVE` status. Validation failures and precondition errors (such as an ineligible share state) return `400 Bad Request`. Duplicate name or path conflicts return `409 Conflict`.
     ///
     /// - Parameters:
     /// - shareId: The unique identifier of the NFS share.
@@ -29,41 +26,11 @@ public extension NfsMethods {
     ///   gateway is provisioned (or reused) in this VPC, and the access point becomes
     ///   mountable from this VPC regardless of whether the parent share is currently
     ///   attached to it.
-    static func nfsCreateAccessPoint(
-        config: ClientConfig,
-        shareId: String,
-        name: String,
-        path: String,
-        accessPolicy: AccessPolicy,
-        vpcId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AccessPointActionResponse {
+    public static func nfsCreateAccessPoint(config: ClientConfig, shareId: String, name: String, path: String, accessPolicy: AccessPolicy, vpcId: String, requestOptions: RequestOptions? = nil) async throws -> AccessPointActionResponse {
         try sdkValidateUuid("share_id", shareId)
 
-        let requestBody = NfsCreateAccessPointRequestBody(
-            name: name,
-            path: path,
-            accessPolicy: accessPolicy,
-            vpcId: vpcId
-        )
+        let requestBody = NfsCreateAccessPointRequestBody(name: name, path: path, accessPolicy: accessPolicy, vpcId: vpcId)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/nfs/shares/", sdkEncodePathSegment(sdkWireString(shareId)), "/access_points"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "nfs_create_access_point",
-            options: requestOptions,
-            errors: [
-                "400": NfsApiError.self,
-                "401": Error2.self,
-                "404": Error2.self,
-                "409": NfsApiError.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/nfs/shares/", sdkEncodePathSegment(sdkWireString(shareId)), "/access_points"].joined(), config: config, body: requestBody, decoder: .json, operationId: "nfs_create_access_point", options: requestOptions, errors: ["400": NfsApiError.self, "401": Error2.self, "404": Error2.self, "409": NfsApiError.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

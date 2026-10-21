@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// InsightsInsights domain models
+// InsightsInsights domain models
 /// Typed representation of the `InsightsListAlertRulesResponse` API schema.
 public struct InsightsListAlertRulesResponse: Codable {
     /// Required array value serialized in the `alert_rules` wire field.
@@ -19,36 +19,26 @@ public struct InsightsListAlertRulesResponse: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InsightsListAlertRulesResponse {
-    init(from decoder: Decoder) throws {
+extension InsightsListAlertRulesResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.alertRules) else {
-            throw SdkValidationError(
-                field: "alert_rules",
-                code: "required",
-                message: "Validation failed for 'alert_rules': value is required"
-            )
+            throw SdkValidationError(field: "alert_rules", code: "required", message: "Validation failed for 'alert_rules': value is required")
         }
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        alertRules = try container.sdkDecodeRequired(.alertRules)
-        meta = try container.sdkDecodeRequired(.meta)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.alertRules = try container.sdkDecodeRequired(.alertRules)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension InsightsListAlertRulesResponse {
-    init(alertRules: [AlertRule], meta: MetaMeta, links: PageLinks? = nil) {
+extension InsightsListAlertRulesResponse {
+    public init(alertRules: [AlertRule], meta: MetaMeta, links: PageLinks? = nil) {
         (self.alertRules, self.meta) = (alertRules, meta)
         self.links = links
     }
@@ -69,36 +59,26 @@ public struct InsightsListNotificationChannelsResponse: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InsightsListNotificationChannelsResponse {
-    init(from decoder: Decoder) throws {
+extension InsightsListNotificationChannelsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.notificationChannels) else {
-            throw SdkValidationError(
-                field: "notification_channels",
-                code: "required",
-                message: "Validation failed for 'notification_channels': value is required"
-            )
+            throw SdkValidationError(field: "notification_channels", code: "required", message: "Validation failed for 'notification_channels': value is required")
         }
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        notificationChannels = try container.sdkDecodeRequired(.notificationChannels)
-        meta = try container.sdkDecodeRequired(.meta)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.notificationChannels = try container.sdkDecodeRequired(.notificationChannels)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension InsightsListNotificationChannelsResponse {
-    init(notificationChannels: [NotificationChannel], meta: MetaMeta, links: PageLinks? = nil) {
+extension InsightsListNotificationChannelsResponse {
+    public init(notificationChannels: [NotificationChannel], meta: MetaMeta, links: PageLinks? = nil) {
         (self.notificationChannels, self.meta) = (notificationChannels, meta)
         self.links = links
     }

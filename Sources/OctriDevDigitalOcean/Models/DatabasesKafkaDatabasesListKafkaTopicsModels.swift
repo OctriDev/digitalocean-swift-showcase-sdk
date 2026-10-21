@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DatabasesKafka domain models
+// DatabasesKafka domain models
 /// Typed representation of the `KafkaTopic` API schema.
 public struct KafkaTopic: Codable {
     /// The name of the Kafka topic.
@@ -27,27 +27,22 @@ public struct KafkaTopic: Codable {
     }
 
     init() {
-        (name, replicationFactor, partitionCount, state) = (nil, nil, nil, nil)
+        (self.name, self.replicationFactor, self.partitionCount, self.state) = (nil, nil, nil, nil)
     }
 }
 
-public extension KafkaTopic {
-    init(from decoder: Decoder) throws {
+extension KafkaTopic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        replicationFactor = try container.sdkDecodeIfPresent(.replicationFactor)
-        partitionCount = try container.sdkDecodeIfPresent(.partitionCount)
-        state = try container.sdkDecodeIfPresent(.state)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.replicationFactor = try container.sdkDecodeIfPresent(.replicationFactor)
+        self.partitionCount = try container.sdkDecodeIfPresent(.partitionCount)
+        self.state = try container.sdkDecodeIfPresent(.state)
     }
 }
 
-public extension KafkaTopic {
-    init(
-        name: String? = nil,
-        replicationFactor: Int? = nil,
-        partitionCount: Int? = nil,
-        state: KafkaTopicVariant1State? = nil
-    ) {
+extension KafkaTopic {
+    public init(name: String? = nil, replicationFactor: Int? = nil, partitionCount: Int? = nil, state: KafkaTopicVariant1State? = nil) {
         self.init()
         (self.name, self.replicationFactor) = (name, replicationFactor)
         (self.partitionCount, self.state) = (partitionCount, state)
@@ -65,19 +60,19 @@ public struct KafkaTopicVariant1: Codable {
     }
 
     init() {
-        state = nil
+        self.state = nil
     }
 }
 
-public extension KafkaTopicVariant1 {
-    init(from decoder: Decoder) throws {
+extension KafkaTopicVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        state = try container.sdkDecodeIfPresent(.state)
+        self.state = try container.sdkDecodeIfPresent(.state)
     }
 }
 
-public extension KafkaTopicVariant1 {
-    init(state: KafkaTopicVariant1State? = nil) {
+extension KafkaTopicVariant1 {
+    public init(state: KafkaTopicVariant1State? = nil) {
         self.init()
         self.state = state
     }
@@ -102,21 +97,21 @@ public struct KafkaTopicBase: Codable {
     }
 
     init() {
-        (name, replicationFactor, partitionCount) = (nil, nil, nil)
+        (self.name, self.replicationFactor, self.partitionCount) = (nil, nil, nil)
     }
 }
 
-public extension KafkaTopicBase {
-    init(from decoder: Decoder) throws {
+extension KafkaTopicBase {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        replicationFactor = try container.sdkDecodeIfPresent(.replicationFactor)
-        partitionCount = try container.sdkDecodeIfPresent(.partitionCount)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.replicationFactor = try container.sdkDecodeIfPresent(.replicationFactor)
+        self.partitionCount = try container.sdkDecodeIfPresent(.partitionCount)
     }
 }
 
-public extension KafkaTopicBase {
-    init(name: String? = nil, replicationFactor: Int? = nil, partitionCount: Int? = nil) {
+extension KafkaTopicBase {
+    public init(name: String? = nil, replicationFactor: Int? = nil, partitionCount: Int? = nil) {
         self.init()
         (self.name, self.replicationFactor) = (name, replicationFactor)
         self.partitionCount = partitionCount
@@ -133,19 +128,19 @@ public struct KafkaTopics: Codable {
     }
 
     init() {
-        topics = nil
+        self.topics = nil
     }
 }
 
-public extension KafkaTopics {
-    init(from decoder: Decoder) throws {
+extension KafkaTopics {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        topics = try container.sdkDecodeIfPresent(.topics)
+        self.topics = try container.sdkDecodeIfPresent(.topics)
     }
 }
 
-public extension KafkaTopics {
-    init(topics: [KafkaTopic]? = nil) {
+extension KafkaTopics {
+    public init(topics: [KafkaTopic]? = nil) {
         self.init()
         self.topics = topics
     }
@@ -155,10 +150,7 @@ public extension KafkaTopics {
 public struct KafkaTopicVariant1State: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let active = KafkaTopicVariant1State(rawValue: "active")
     public static let configuring = KafkaTopicVariant1State(rawValue: "configuring")
     public static let deleting = KafkaTopicVariant1State(rawValue: "deleting")
@@ -166,7 +158,7 @@ public struct KafkaTopicVariant1State: RawRepresentable, Hashable, Codable, Send
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

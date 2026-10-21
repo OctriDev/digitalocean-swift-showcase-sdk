@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// KubernetesAll domain models
+// KubernetesAll domain models
 /// Typed representation of the `AllClusters` API schema.
 public struct AllClusters: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,29 +18,23 @@ public struct AllClusters: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllClusters {
-    init(from decoder: Decoder) throws {
+extension AllClusters {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        kubernetesClusters = try container.sdkDecodeIfPresent(.kubernetesClusters)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.kubernetesClusters = try container.sdkDecodeIfPresent(.kubernetesClusters)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllClusters {
-    init(meta: MetaMeta, kubernetesClusters: [ClusterRead]? = nil, links: PageLinks? = nil) {
+extension AllClusters {
+    public init(meta: MetaMeta, kubernetesClusters: [ClusterRead]? = nil, links: PageLinks? = nil) {
         (self.meta, self.kubernetesClusters) = (meta, kubernetesClusters)
         self.links = links
     }
@@ -54,19 +48,19 @@ public struct AllClustersVariant0: Codable {
     }
 
     init() {
-        kubernetesClusters = nil
+        self.kubernetesClusters = nil
     }
 }
 
-public extension AllClustersVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllClustersVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        kubernetesClusters = try container.sdkDecodeIfPresent(.kubernetesClusters)
+        self.kubernetesClusters = try container.sdkDecodeIfPresent(.kubernetesClusters)
     }
 }
 
-public extension AllClustersVariant0 {
-    init(kubernetesClusters: [ClusterRead]? = nil) {
+extension AllClustersVariant0 {
+    public init(kubernetesClusters: [ClusterRead]? = nil) {
         self.init()
         self.kubernetesClusters = kubernetesClusters
     }
@@ -82,19 +76,19 @@ public struct AllNodePools: Codable {
     }
 
     init() {
-        nodePools = nil
+        self.nodePools = nil
     }
 }
 
-public extension AllNodePools {
-    init(from decoder: Decoder) throws {
+extension AllNodePools {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        nodePools = try container.sdkDecodeIfPresent(.nodePools)
+        self.nodePools = try container.sdkDecodeIfPresent(.nodePools)
     }
 }
 
-public extension AllNodePools {
-    init(nodePools: [KubernetesNodePool]? = nil) {
+extension AllNodePools {
+    public init(nodePools: [KubernetesNodePool]? = nil) {
         self.init()
         self.nodePools = nodePools
     }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DatabasesOpensearch domain models
+// DatabasesOpensearch domain models
 /// Typed representation of the `OpensearchIndexBase` API schema.
 public struct OpensearchIndexBase: Codable {
     /// The name of the opensearch index.
@@ -31,32 +31,26 @@ public struct OpensearchIndexBase: Codable {
     }
 
     init() {
-        (indexName, numberOfShards, numberOfReplicas, size, createdTime) = (nil, nil, nil, nil, nil)
+        (self.indexName, self.numberOfShards, self.numberOfReplicas, self.size, self.createdTime) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension OpensearchIndexBase {
-    init(from decoder: Decoder) throws {
+extension OpensearchIndexBase {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        indexName = try container.sdkDecodeIfPresent(.indexName)
-        numberOfShards = try container.sdkDecodeIfPresent(.numberOfShards)
-        numberOfReplicas = try container.sdkDecodeIfPresent(.numberOfReplicas)
-        size = try container.sdkDecodeIfPresent(.size)
-        createdTime = try container.sdkDecodeIfPresent(.createdTime)
-        if let value = createdTime {
+        self.indexName = try container.sdkDecodeIfPresent(.indexName)
+        self.numberOfShards = try container.sdkDecodeIfPresent(.numberOfShards)
+        self.numberOfReplicas = try container.sdkDecodeIfPresent(.numberOfReplicas)
+        self.size = try container.sdkDecodeIfPresent(.size)
+        self.createdTime = try container.sdkDecodeIfPresent(.createdTime)
+        if let value = self.createdTime {
             try sdkValidateDateTime("created_time", sdkWireString(value))
         }
     }
 }
 
-public extension OpensearchIndexBase {
-    init(
-        indexName: String? = nil,
-        numberOfShards: Int? = nil,
-        numberOfReplicas: Int? = nil,
-        size: Int? = nil,
-        createdTime: Date? = nil
-    ) throws {
+extension OpensearchIndexBase {
+    public init(indexName: String? = nil, numberOfShards: Int? = nil, numberOfReplicas: Int? = nil, size: Int? = nil, createdTime: Date? = nil) throws {
         self.init()
         (self.indexName, self.numberOfShards) = (indexName, numberOfShards)
         (self.numberOfReplicas, self.size) = (numberOfReplicas, size)
@@ -82,20 +76,20 @@ public struct OpensearchIndexVariant1: Codable {
     }
 
     init() {
-        (status, health) = (nil, nil)
+        (self.status, self.health) = (nil, nil)
     }
 }
 
-public extension OpensearchIndexVariant1 {
-    init(from decoder: Decoder) throws {
+extension OpensearchIndexVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        status = try container.sdkDecodeIfPresent(.status)
-        health = try container.sdkDecodeIfPresent(.health)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.health = try container.sdkDecodeIfPresent(.health)
     }
 }
 
-public extension OpensearchIndexVariant1 {
-    init(status: OpensearchIndexVariant1Status? = nil, health: OpensearchIndexVariant1Health? = nil) {
+extension OpensearchIndexVariant1 {
+    public init(status: OpensearchIndexVariant1Status? = nil, health: OpensearchIndexVariant1Health? = nil) {
         self.init()
         (self.status, self.health) = (status, health)
     }
@@ -136,37 +130,29 @@ public struct OpensearchIndex: Codable {
     }
 
     init() {
-        (indexName, numberOfShards, numberOfReplicas, size, createdTime) = (nil, nil, nil, nil, nil)
-        (status, health) = (nil, nil)
+        (self.indexName, self.numberOfShards, self.numberOfReplicas, self.size, self.createdTime) = (nil, nil, nil, nil, nil)
+        (self.status, self.health) = (nil, nil)
     }
 }
 
-public extension OpensearchIndex {
-    init(from decoder: Decoder) throws {
+extension OpensearchIndex {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        indexName = try container.sdkDecodeIfPresent(.indexName)
-        numberOfShards = try container.sdkDecodeIfPresent(.numberOfShards)
-        numberOfReplicas = try container.sdkDecodeIfPresent(.numberOfReplicas)
-        size = try container.sdkDecodeIfPresent(.size)
-        createdTime = try container.sdkDecodeIfPresent(.createdTime)
-        status = try container.sdkDecodeIfPresent(.status)
-        health = try container.sdkDecodeIfPresent(.health)
-        if let value = createdTime {
+        self.indexName = try container.sdkDecodeIfPresent(.indexName)
+        self.numberOfShards = try container.sdkDecodeIfPresent(.numberOfShards)
+        self.numberOfReplicas = try container.sdkDecodeIfPresent(.numberOfReplicas)
+        self.size = try container.sdkDecodeIfPresent(.size)
+        self.createdTime = try container.sdkDecodeIfPresent(.createdTime)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.health = try container.sdkDecodeIfPresent(.health)
+        if let value = self.createdTime {
             try sdkValidateDateTime("created_time", sdkWireString(value))
         }
     }
 }
 
-public extension OpensearchIndex {
-    init(
-        indexName: String? = nil,
-        numberOfShards: Int? = nil,
-        numberOfReplicas: Int? = nil,
-        size: Int? = nil,
-        createdTime: Date? = nil,
-        status: OpensearchIndexVariant1Status? = nil,
-        health: OpensearchIndexVariant1Health? = nil
-    ) throws {
+extension OpensearchIndex {
+    public init(indexName: String? = nil, numberOfShards: Int? = nil, numberOfReplicas: Int? = nil, size: Int? = nil, createdTime: Date? = nil, status: OpensearchIndexVariant1Status? = nil, health: OpensearchIndexVariant1Health? = nil) throws {
         self.init()
         (self.indexName, self.numberOfShards) = (indexName, numberOfShards)
         (self.numberOfReplicas, self.size) = (numberOfReplicas, size)
@@ -188,19 +174,19 @@ public struct OpensearchIndexes: Codable {
     }
 
     init() {
-        indexes = nil
+        self.indexes = nil
     }
 }
 
-public extension OpensearchIndexes {
-    init(from decoder: Decoder) throws {
+extension OpensearchIndexes {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        indexes = try container.sdkDecodeIfPresent(.indexes)
+        self.indexes = try container.sdkDecodeIfPresent(.indexes)
     }
 }
 
-public extension OpensearchIndexes {
-    init(indexes: [OpensearchIndex]? = nil) {
+extension OpensearchIndexes {
+    public init(indexes: [OpensearchIndex]? = nil) {
         self.init()
         self.indexes = indexes
     }
@@ -210,10 +196,7 @@ public extension OpensearchIndexes {
 public struct OpensearchIndexVariant1Health: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let unknown = OpensearchIndexVariant1Health(rawValue: "unknown")
     public static let green = OpensearchIndexVariant1Health(rawValue: "green")
     public static let yellow = OpensearchIndexVariant1Health(rawValue: "yellow")
@@ -222,7 +205,7 @@ public struct OpensearchIndexVariant1Health: RawRepresentable, Hashable, Codable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -235,10 +218,7 @@ public struct OpensearchIndexVariant1Health: RawRepresentable, Hashable, Codable
 public struct OpensearchIndexVariant1Status: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let unknown = OpensearchIndexVariant1Status(rawValue: "unknown")
     public static let open = OpensearchIndexVariant1Status(rawValue: "open")
     public static let close = OpensearchIndexVariant1Status(rawValue: "close")
@@ -246,7 +226,7 @@ public struct OpensearchIndexVariant1Status: RawRepresentable, Hashable, Codable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

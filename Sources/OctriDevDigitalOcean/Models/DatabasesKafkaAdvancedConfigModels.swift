@@ -3,381 +3,117 @@
 
 import Foundation
 
-/// DatabasesKafka domain models
+// DatabasesKafka domain models
 extension KafkaAdvancedConfig {
     func sdkValidateConstraintsPart1() throws {
-        if let value = groupInitialRebalanceDelayMs {
-            try validateRange(
-                "group_initial_rebalance_delay_ms",
-                Double(value),
-                min: 0,
-                max: 300_000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.groupInitialRebalanceDelayMs {
+            try validateRange("group_initial_rebalance_delay_ms", Double(value), min: 0, max: 300000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = groupMinSessionTimeoutMs {
-            try validateRange(
-                "group_min_session_timeout_ms",
-                Double(value),
-                min: 0,
-                max: 60000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.groupMinSessionTimeoutMs {
+            try validateRange("group_min_session_timeout_ms", Double(value), min: 0, max: 60000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = groupMaxSessionTimeoutMs {
-            try validateRange(
-                "group_max_session_timeout_ms",
-                Double(value),
-                min: 0,
-                max: 1_800_000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.groupMaxSessionTimeoutMs {
+            try validateRange("group_max_session_timeout_ms", Double(value), min: 0, max: 1800000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = connectionsMaxIdleMs {
-            try validateRange(
-                "connections_max_idle_ms",
-                Double(value),
-                min: 1000,
-                max: 3_600_000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.connectionsMaxIdleMs {
+            try validateRange("connections_max_idle_ms", Double(value), min: 1000, max: 3600000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = maxIncrementalFetchSessionCacheSlots {
-            try validateRange(
-                "max_incremental_fetch_session_cache_slots",
-                Double(value),
-                min: 1000,
-                max: 10000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.maxIncrementalFetchSessionCacheSlots {
+            try validateRange("max_incremental_fetch_session_cache_slots", Double(value), min: 1000, max: 10000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = messageMaxBytes {
-            try validateRange(
-                "message_max_bytes",
-                Double(value),
-                min: 0,
-                max: 100_001_200,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.messageMaxBytes {
+            try validateRange("message_max_bytes", Double(value), min: 0, max: 100001200, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = offsetsRetentionMinutes {
-            try validateRange(
-                "offsets_retention_minutes",
-                Double(value),
-                min: 1,
-                max: 2_147_483_647,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.offsetsRetentionMinutes {
+            try validateRange("offsets_retention_minutes", Double(value), min: 1, max: 2147483647, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = logCleanerDeleteRetentionMs {
-            try validateRange(
-                "log_cleaner_delete_retention_ms",
-                Double(value),
-                min: 0,
-                max: 315_569_260_000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.logCleanerDeleteRetentionMs {
+            try validateRange("log_cleaner_delete_retention_ms", Double(value), min: 0, max: 315569260000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = logCleanerMinCleanableRatio {
-            try validateRange(
-                "log_cleaner_min_cleanable_ratio",
-                Double(value),
-                min: 0.2,
-                max: 0.9,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.logCleanerMinCleanableRatio {
+            try validateRange("log_cleaner_min_cleanable_ratio", Double(value), min: 0.2, max: 0.9, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = logCleanerMaxCompactionLagMs {
-            try validateRange(
-                "log_cleaner_max_compaction_lag_ms",
-                Double(value),
-                min: 30000,
-                max: 9_223_372_036_854_775_808,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.logCleanerMaxCompactionLagMs {
+            try validateRange("log_cleaner_max_compaction_lag_ms", Double(value), min: 30000, max: 9223372036854775808, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = logCleanerMinCompactionLagMs {
-            try validateRange(
-                "log_cleaner_min_compaction_lag_ms",
-                Double(value),
-                min: 0,
-                max: 9_223_372_036_854_775_808,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.logCleanerMinCompactionLagMs {
+            try validateRange("log_cleaner_min_compaction_lag_ms", Double(value), min: 0, max: 9223372036854775808, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = logFlushIntervalMessages {
-            try validateRange(
-                "log_flush_interval_messages",
-                Double(value),
-                min: 1,
-                max: 9_223_372_036_854_775_808,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.logFlushIntervalMessages {
+            try validateRange("log_flush_interval_messages", Double(value), min: 1, max: 9223372036854775808, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
 extension KafkaAdvancedConfig {
     func sdkValidateConstraintsPart2() throws {
-        if let value = logFlushIntervalMs {
-            try validateRange(
-                "log_flush_interval_ms",
-                Double(value),
-                min: 0,
-                max: 9_223_372_036_854_775_808,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.logFlushIntervalMs {
+            try validateRange("log_flush_interval_ms", Double(value), min: 0, max: 9223372036854775808, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = logIndexIntervalBytes {
-            try validateRange(
-                "log_index_interval_bytes",
-                Double(value),
-                min: 0,
-                max: 104_857_600,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.logIndexIntervalBytes {
+            try validateRange("log_index_interval_bytes", Double(value), min: 0, max: 104857600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = logIndexSizeMaxBytes {
-            try validateRange(
-                "log_index_size_max_bytes",
-                Double(value),
-                min: 1_048_576,
-                max: 104_857_600,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.logIndexSizeMaxBytes {
+            try validateRange("log_index_size_max_bytes", Double(value), min: 1048576, max: 104857600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = logMessageTimestampDifferenceMaxMs {
-            try validateRange(
-                "log_message_timestamp_difference_max_ms",
-                Double(value),
-                min: 0,
-                max: 9_223_372_036_854_775_808,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.logMessageTimestampDifferenceMaxMs {
+            try validateRange("log_message_timestamp_difference_max_ms", Double(value), min: 0, max: 9223372036854775808, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = logRetentionBytes {
-            try validateRange(
-                "log_retention_bytes",
-                Double(value),
-                min: -1,
-                max: 9_223_372_036_854_775_808,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.logRetentionBytes {
+            try validateRange("log_retention_bytes", Double(value), min: -1, max: 9223372036854775808, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = logRetentionHours {
-            try validateRange(
-                "log_retention_hours",
-                Double(value),
-                min: -1,
-                max: 2_147_483_647,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.logRetentionHours {
+            try validateRange("log_retention_hours", Double(value), min: -1, max: 2147483647, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = logRetentionMs {
-            try validateRange(
-                "log_retention_ms",
-                Double(value),
-                min: -1,
-                max: 9_223_372_036_854_775_808,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.logRetentionMs {
+            try validateRange("log_retention_ms", Double(value), min: -1, max: 9223372036854775808, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = logRollJitterMs {
-            try validateRange(
-                "log_roll_jitter_ms",
-                Double(value),
-                min: 0,
-                max: 9_223_372_036_854_775_808,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.logRollJitterMs {
+            try validateRange("log_roll_jitter_ms", Double(value), min: 0, max: 9223372036854775808, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = logRollMs {
-            try validateRange(
-                "log_roll_ms",
-                Double(value),
-                min: 1,
-                max: 9_223_372_036_854_775_808,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.logRollMs {
+            try validateRange("log_roll_ms", Double(value), min: 1, max: 9223372036854775808, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = logSegmentBytes {
-            try validateRange(
-                "log_segment_bytes",
-                Double(value),
-                min: 10_485_760,
-                max: 1_073_741_824,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.logSegmentBytes {
+            try validateRange("log_segment_bytes", Double(value), min: 10485760, max: 1073741824, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = logSegmentDeleteDelayMs {
-            try validateRange(
-                "log_segment_delete_delay_ms",
-                Double(value),
-                min: 0,
-                max: 3_600_000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.logSegmentDeleteDelayMs {
+            try validateRange("log_segment_delete_delay_ms", Double(value), min: 0, max: 3600000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = minInsyncReplicas {
-            try validateRange(
-                "min_insync_replicas",
-                Double(value),
-                min: 1,
-                max: 7,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.minInsyncReplicas {
+            try validateRange("min_insync_replicas", Double(value), min: 1, max: 7, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
 extension KafkaAdvancedConfig {
     func sdkValidateConstraintsPart3() throws {
-        if let value = numPartitions {
-            try validateRange(
-                "num_partitions",
-                Double(value),
-                min: 1,
-                max: 1000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.numPartitions {
+            try validateRange("num_partitions", Double(value), min: 1, max: 1000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = defaultReplicationFactor {
-            try validateRange(
-                "default_replication_factor",
-                Double(value),
-                min: 1,
-                max: 10,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.defaultReplicationFactor {
+            try validateRange("default_replication_factor", Double(value), min: 1, max: 10, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = replicaFetchMaxBytes {
-            try validateRange(
-                "replica_fetch_max_bytes",
-                Double(value),
-                min: 1_048_576,
-                max: 104_857_600,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.replicaFetchMaxBytes {
+            try validateRange("replica_fetch_max_bytes", Double(value), min: 1048576, max: 104857600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = replicaFetchResponseMaxBytes {
-            try validateRange(
-                "replica_fetch_response_max_bytes",
-                Double(value),
-                min: 10_485_760,
-                max: 1_048_576_000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.replicaFetchResponseMaxBytes {
+            try validateRange("replica_fetch_response_max_bytes", Double(value), min: 10485760, max: 1048576000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = maxConnectionsPerIp {
-            try validateRange(
-                "max_connections_per_ip",
-                Double(value),
-                min: 256,
-                max: 2_147_483_647,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.maxConnectionsPerIp {
+            try validateRange("max_connections_per_ip", Double(value), min: 256, max: 2147483647, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = producerPurgatoryPurgeIntervalRequests {
-            try validateRange(
-                "producer_purgatory_purge_interval_requests",
-                Double(value),
-                min: 10,
-                max: 10000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.producerPurgatoryPurgeIntervalRequests {
+            try validateRange("producer_purgatory_purge_interval_requests", Double(value), min: 10, max: 10000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = socketRequestMaxBytes {
-            try validateRange(
-                "socket_request_max_bytes",
-                Double(value),
-                min: 10_485_760,
-                max: 209_715_200,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.socketRequestMaxBytes {
+            try validateRange("socket_request_max_bytes", Double(value), min: 10485760, max: 209715200, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = transactionStateLogSegmentBytes {
-            try validateRange(
-                "transaction_state_log_segment_bytes",
-                Double(value),
-                min: 1_048_576,
-                max: 2_147_483_647,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.transactionStateLogSegmentBytes {
+            try validateRange("transaction_state_log_segment_bytes", Double(value), min: 1048576, max: 2147483647, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = transactionRemoveExpiredTransactionCleanupIntervalMs {
-            try validateRange(
-                "transaction_remove_expired_transaction_cleanup_interval_ms",
-                Double(value),
-                min: 600_000,
-                max: 3_600_000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.transactionRemoveExpiredTransactionCleanupIntervalMs {
+            try validateRange("transaction_remove_expired_transaction_cleanup_interval_ms", Double(value), min: 600000, max: 3600000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -396,20 +132,20 @@ public struct KafkaTopicPartitionConsumerGroupsItem: Codable {
     }
 
     init() {
-        (groupName, offset) = (nil, nil)
+        (self.groupName, self.offset) = (nil, nil)
     }
 }
 
-public extension KafkaTopicPartitionConsumerGroupsItem {
-    init(from decoder: Decoder) throws {
+extension KafkaTopicPartitionConsumerGroupsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        groupName = try container.sdkDecodeIfPresent(.groupName)
-        offset = try container.sdkDecodeIfPresent(.offset)
+        self.groupName = try container.sdkDecodeIfPresent(.groupName)
+        self.offset = try container.sdkDecodeIfPresent(.offset)
     }
 }
 
-public extension KafkaTopicPartitionConsumerGroupsItem {
-    init(groupName: String? = nil, offset: Int? = nil) {
+extension KafkaTopicPartitionConsumerGroupsItem {
+    public init(groupName: String? = nil, offset: Int? = nil) {
         self.init()
         (self.groupName, self.offset) = (groupName, offset)
     }
@@ -440,29 +176,23 @@ public struct KafkaTopicPartition: Codable {
     }
 
     init() {
-        (size, id, inSyncReplicas, earliestOffset, consumerGroups) = (nil, nil, nil, nil, nil)
+        (self.size, self.id, self.inSyncReplicas, self.earliestOffset, self.consumerGroups) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension KafkaTopicPartition {
-    init(from decoder: Decoder) throws {
+extension KafkaTopicPartition {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        size = try container.sdkDecodeIfPresent(.size)
-        id = try container.sdkDecodeIfPresent(.id)
-        inSyncReplicas = try container.sdkDecodeIfPresent(.inSyncReplicas)
-        earliestOffset = try container.sdkDecodeIfPresent(.earliestOffset)
-        consumerGroups = try container.sdkDecodeIfPresent(.consumerGroups)
+        self.size = try container.sdkDecodeIfPresent(.size)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.inSyncReplicas = try container.sdkDecodeIfPresent(.inSyncReplicas)
+        self.earliestOffset = try container.sdkDecodeIfPresent(.earliestOffset)
+        self.consumerGroups = try container.sdkDecodeIfPresent(.consumerGroups)
     }
 }
 
-public extension KafkaTopicPartition {
-    init(
-        size: Int? = nil,
-        id: Int? = nil,
-        inSyncReplicas: Int? = nil,
-        earliestOffset: Int? = nil,
-        consumerGroups: [KafkaTopicPartitionConsumerGroupsItem]? = nil
-    ) {
+extension KafkaTopicPartition {
+    public init(size: Int? = nil, id: Int? = nil, inSyncReplicas: Int? = nil, earliestOffset: Int? = nil, consumerGroups: [KafkaTopicPartitionConsumerGroupsItem]? = nil) {
         self.init()
         (self.size, self.id) = (size, id)
         (self.inSyncReplicas, self.earliestOffset) = (inSyncReplicas, earliestOffset)

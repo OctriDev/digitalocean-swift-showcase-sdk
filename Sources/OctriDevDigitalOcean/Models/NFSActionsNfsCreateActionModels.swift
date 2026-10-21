@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// NFSActions domain models
+// NFSActions domain models
 /// Typed representation of the `NfsActionSwitchPerformanceTier` API schema.
 public struct NfsActionSwitchPerformanceTier: Codable {
     /// The type of action to initiate for the NFS share (such as resize or snapshot).
@@ -20,37 +20,27 @@ public struct NfsActionSwitchPerformanceTier: Codable {
         case params
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NfsActionSwitchPerformanceTier {
-    init(from decoder: Decoder) throws {
+extension NfsActionSwitchPerformanceTier {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        region = try container.sdkDecodeIfPresent(.region)
-        params = try container.sdkDecodeIfPresent(.params)
-        try sdkValidateRawEnum("type", type, NfsActionType.allCases.map(\.rawValue))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.params = try container.sdkDecodeIfPresent(.params)
+            try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
     }
 }
 
-public extension NfsActionSwitchPerformanceTier {
-    init(
-        type: NfsActionType,
-        region: String? = nil,
-        params: NfsActionSwitchPerformanceTierVariant1Params? = nil
-    ) throws {
+extension NfsActionSwitchPerformanceTier {
+    public init(type: NfsActionType, region: String? = nil, params: NfsActionSwitchPerformanceTierVariant1Params? = nil) throws {
         (self.type, self.region) = (type, region)
         self.params = params
-        try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
+            try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
     }
 }
 
@@ -70,33 +60,27 @@ public struct NfsActionReassign: Codable {
         case params
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NfsActionReassign {
-    init(from decoder: Decoder) throws {
+extension NfsActionReassign {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        region = try container.sdkDecodeIfPresent(.region)
-        params = try container.sdkDecodeIfPresent(.params)
-        try sdkValidateRawEnum("type", type, NfsActionType.allCases.map(\.rawValue))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.params = try container.sdkDecodeIfPresent(.params)
+            try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
     }
 }
 
-public extension NfsActionReassign {
-    init(type: NfsActionType, region: String? = nil, params: NfsActionReassignVariant1Params? = nil) throws {
+extension NfsActionReassign {
+    public init(type: NfsActionType, region: String? = nil, params: NfsActionReassignVariant1Params? = nil) throws {
         (self.type, self.region) = (type, region)
         self.params = params
-        try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
+            try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
     }
 }
 
@@ -109,27 +93,21 @@ public struct NfsActionSwitchPerformanceTierVariant1Params: Codable {
         case performanceTier = "performance_tier"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NfsActionSwitchPerformanceTierVariant1Params {
-    init(from decoder: Decoder) throws {
+extension NfsActionSwitchPerformanceTierVariant1Params {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.performanceTier) else {
-            throw SdkValidationError(
-                field: "performance_tier",
-                code: "required",
-                message: "Validation failed for 'performance_tier': value is required"
-            )
+            throw SdkValidationError(field: "performance_tier", code: "required", message: "Validation failed for 'performance_tier': value is required")
         }
-        performanceTier = try container.sdkDecodeRequired(.performanceTier)
+        self.performanceTier = try container.sdkDecodeRequired(.performanceTier)
     }
 }
 
-public extension NfsActionSwitchPerformanceTierVariant1Params {
-    init(performanceTier: String) {
+extension NfsActionSwitchPerformanceTierVariant1Params {
+    public init(performanceTier: String) {
         self.performanceTier = performanceTier
     }
 }
@@ -143,27 +121,21 @@ public struct NfsActionSnapshotVariant1Params: Codable {
         case name
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NfsActionSnapshotVariant1Params {
-    init(from decoder: Decoder) throws {
+extension NfsActionSnapshotVariant1Params {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
+        self.name = try container.sdkDecodeRequired(.name)
     }
 }
 
-public extension NfsActionSnapshotVariant1Params {
-    init(name: String) {
+extension NfsActionSnapshotVariant1Params {
+    public init(name: String) {
         self.name = name
     }
 }
@@ -176,19 +148,19 @@ public struct NfsActionDetachVariant1: Codable {
     }
 
     init() {
-        params = nil
+        self.params = nil
     }
 }
 
-public extension NfsActionDetachVariant1 {
-    init(from decoder: Decoder) throws {
+extension NfsActionDetachVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        params = try container.sdkDecodeIfPresent(.params)
+        self.params = try container.sdkDecodeIfPresent(.params)
     }
 }
 
-public extension NfsActionDetachVariant1 {
-    init(params: NfsActionDetachVariant1Params? = nil) {
+extension NfsActionDetachVariant1 {
+    public init(params: NfsActionDetachVariant1Params? = nil) {
         self.init()
         self.params = params
     }
@@ -210,33 +182,27 @@ public struct NfsActionDetach: Codable {
         case params
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NfsActionDetach {
-    init(from decoder: Decoder) throws {
+extension NfsActionDetach {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        region = try container.sdkDecodeIfPresent(.region)
-        params = try container.sdkDecodeIfPresent(.params)
-        try sdkValidateRawEnum("type", type, NfsActionType.allCases.map(\.rawValue))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.params = try container.sdkDecodeIfPresent(.params)
+            try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
     }
 }
 
-public extension NfsActionDetach {
-    init(type: NfsActionType, region: String? = nil, params: NfsActionDetachVariant1Params? = nil) throws {
+extension NfsActionDetach {
+    public init(type: NfsActionType, region: String? = nil, params: NfsActionDetachVariant1Params? = nil) throws {
         (self.type, self.region) = (type, region)
         self.params = params
-        try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
+            try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
     }
 }
 
@@ -248,19 +214,19 @@ public struct NfsActionSnapshotVariant1: Codable {
     }
 
     init() {
-        params = nil
+        self.params = nil
     }
 }
 
-public extension NfsActionSnapshotVariant1 {
-    init(from decoder: Decoder) throws {
+extension NfsActionSnapshotVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        params = try container.sdkDecodeIfPresent(.params)
+        self.params = try container.sdkDecodeIfPresent(.params)
     }
 }
 
-public extension NfsActionSnapshotVariant1 {
-    init(params: NfsActionSnapshotVariant1Params? = nil) {
+extension NfsActionSnapshotVariant1 {
+    public init(params: NfsActionSnapshotVariant1Params? = nil) {
         self.init()
         self.params = params
     }
@@ -274,19 +240,19 @@ public struct NfsActionSwitchPerformanceTierVariant1: Codable {
     }
 
     init() {
-        params = nil
+        self.params = nil
     }
 }
 
-public extension NfsActionSwitchPerformanceTierVariant1 {
-    init(from decoder: Decoder) throws {
+extension NfsActionSwitchPerformanceTierVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        params = try container.sdkDecodeIfPresent(.params)
+        self.params = try container.sdkDecodeIfPresent(.params)
     }
 }
 
-public extension NfsActionSwitchPerformanceTierVariant1 {
-    init(params: NfsActionSwitchPerformanceTierVariant1Params? = nil) {
+extension NfsActionSwitchPerformanceTierVariant1 {
+    public init(params: NfsActionSwitchPerformanceTierVariant1Params? = nil) {
         self.init()
         self.params = params
     }
@@ -306,31 +272,25 @@ public struct NfsAction: Codable {
         case region
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NfsAction {
-    init(from decoder: Decoder) throws {
+extension NfsAction {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        region = try container.sdkDecodeIfPresent(.region)
-        try sdkValidateRawEnum("type", type, NfsActionType.allCases.map(\.rawValue))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.region = try container.sdkDecodeIfPresent(.region)
+            try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
     }
 }
 
-public extension NfsAction {
-    init(type: NfsActionType, region: String? = nil) throws {
+extension NfsAction {
+    public init(type: NfsActionType, region: String? = nil) throws {
         (self.type, self.region) = (type, region)
-        try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
+            try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
     }
 }
 
@@ -350,33 +310,27 @@ public struct NfsActionSnapshot: Codable {
         case params
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NfsActionSnapshot {
-    init(from decoder: Decoder) throws {
+extension NfsActionSnapshot {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        region = try container.sdkDecodeIfPresent(.region)
-        params = try container.sdkDecodeIfPresent(.params)
-        try sdkValidateRawEnum("type", type, NfsActionType.allCases.map(\.rawValue))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.params = try container.sdkDecodeIfPresent(.params)
+            try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
     }
 }
 
-public extension NfsActionSnapshot {
-    init(type: NfsActionType, region: String? = nil, params: NfsActionSnapshotVariant1Params? = nil) throws {
+extension NfsActionSnapshot {
+    public init(type: NfsActionType, region: String? = nil, params: NfsActionSnapshotVariant1Params? = nil) throws {
         (self.type, self.region) = (type, region)
         self.params = params
-        try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
+            try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
     }
 }
 
@@ -396,33 +350,27 @@ public struct NfsActionAttach: Codable {
         case params
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NfsActionAttach {
-    init(from decoder: Decoder) throws {
+extension NfsActionAttach {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        region = try container.sdkDecodeIfPresent(.region)
-        params = try container.sdkDecodeIfPresent(.params)
-        try sdkValidateRawEnum("type", type, NfsActionType.allCases.map(\.rawValue))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.params = try container.sdkDecodeIfPresent(.params)
+            try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
     }
 }
 
-public extension NfsActionAttach {
-    init(type: NfsActionType, region: String? = nil, params: NfsActionAttachVariant1Params? = nil) throws {
+extension NfsActionAttach {
+    public init(type: NfsActionType, region: String? = nil, params: NfsActionAttachVariant1Params? = nil) throws {
         (self.type, self.region) = (type, region)
         self.params = params
-        try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
+            try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
     }
 }
 
@@ -434,19 +382,19 @@ public struct NfsActionReassignVariant1: Codable {
     }
 
     init() {
-        params = nil
+        self.params = nil
     }
 }
 
-public extension NfsActionReassignVariant1 {
-    init(from decoder: Decoder) throws {
+extension NfsActionReassignVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        params = try container.sdkDecodeIfPresent(.params)
+        self.params = try container.sdkDecodeIfPresent(.params)
     }
 }
 
-public extension NfsActionReassignVariant1 {
-    init(params: NfsActionReassignVariant1Params? = nil) {
+extension NfsActionReassignVariant1 {
+    public init(params: NfsActionReassignVariant1Params? = nil) {
         self.init()
         self.params = params
     }
@@ -461,27 +409,21 @@ public struct NfsActionResizeVariant1Params: Codable {
         case sizeGib = "size_gib"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NfsActionResizeVariant1Params {
-    init(from decoder: Decoder) throws {
+extension NfsActionResizeVariant1Params {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.sizeGib) else {
-            throw SdkValidationError(
-                field: "size_gib",
-                code: "required",
-                message: "Validation failed for 'size_gib': value is required"
-            )
+            throw SdkValidationError(field: "size_gib", code: "required", message: "Validation failed for 'size_gib': value is required")
         }
-        sizeGib = try container.sdkDecodeRequired(.sizeGib)
+        self.sizeGib = try container.sdkDecodeRequired(.sizeGib)
     }
 }
 
-public extension NfsActionResizeVariant1Params {
-    init(sizeGib: Int) {
+extension NfsActionResizeVariant1Params {
+    public init(sizeGib: Int) {
         self.sizeGib = sizeGib
     }
 }
@@ -502,33 +444,27 @@ public struct NfsActionResize: Codable {
         case params
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NfsActionResize {
-    init(from decoder: Decoder) throws {
+extension NfsActionResize {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        region = try container.sdkDecodeIfPresent(.region)
-        params = try container.sdkDecodeIfPresent(.params)
-        try sdkValidateRawEnum("type", type, NfsActionType.allCases.map(\.rawValue))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.params = try container.sdkDecodeIfPresent(.params)
+            try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
     }
 }
 
-public extension NfsActionResize {
-    init(type: NfsActionType, region: String? = nil, params: NfsActionResizeVariant1Params? = nil) throws {
+extension NfsActionResize {
+    public init(type: NfsActionType, region: String? = nil, params: NfsActionResizeVariant1Params? = nil) throws {
         (self.type, self.region) = (type, region)
         self.params = params
-        try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
+            try sdkValidateRawEnum("type", self.type, NfsActionType.allCases.map(\.rawValue))
     }
 }
 
@@ -541,27 +477,21 @@ public struct NfsActionDetachVariant1Params: Codable {
         case vpcId = "vpc_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NfsActionDetachVariant1Params {
-    init(from decoder: Decoder) throws {
+extension NfsActionDetachVariant1Params {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.vpcId) else {
-            throw SdkValidationError(
-                field: "vpc_id",
-                code: "required",
-                message: "Validation failed for 'vpc_id': value is required"
-            )
+            throw SdkValidationError(field: "vpc_id", code: "required", message: "Validation failed for 'vpc_id': value is required")
         }
-        vpcId = try container.sdkDecodeRequired(.vpcId)
+        self.vpcId = try container.sdkDecodeRequired(.vpcId)
     }
 }
 
-public extension NfsActionDetachVariant1Params {
-    init(vpcId: String) {
+extension NfsActionDetachVariant1Params {
+    public init(vpcId: String) {
         self.vpcId = vpcId
     }
 }
@@ -579,35 +509,25 @@ public struct NfsActionReassignVariant1Params: Codable {
         case newVpcId = "new_vpc_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NfsActionReassignVariant1Params {
-    init(from decoder: Decoder) throws {
+extension NfsActionReassignVariant1Params {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.oldVpcId) else {
-            throw SdkValidationError(
-                field: "old_vpc_id",
-                code: "required",
-                message: "Validation failed for 'old_vpc_id': value is required"
-            )
+            throw SdkValidationError(field: "old_vpc_id", code: "required", message: "Validation failed for 'old_vpc_id': value is required")
         }
         guard container.contains(.newVpcId) else {
-            throw SdkValidationError(
-                field: "new_vpc_id",
-                code: "required",
-                message: "Validation failed for 'new_vpc_id': value is required"
-            )
+            throw SdkValidationError(field: "new_vpc_id", code: "required", message: "Validation failed for 'new_vpc_id': value is required")
         }
-        oldVpcId = try container.sdkDecodeRequired(.oldVpcId)
-        newVpcId = try container.sdkDecodeRequired(.newVpcId)
+        self.oldVpcId = try container.sdkDecodeRequired(.oldVpcId)
+        self.newVpcId = try container.sdkDecodeRequired(.newVpcId)
     }
 }
 
-public extension NfsActionReassignVariant1Params {
-    init(oldVpcId: String, newVpcId: String) {
+extension NfsActionReassignVariant1Params {
+    public init(oldVpcId: String, newVpcId: String) {
         (self.oldVpcId, self.newVpcId) = (oldVpcId, newVpcId)
     }
 }
@@ -621,27 +541,21 @@ public struct NfsActionAttachVariant1Params: Codable {
         case vpcId = "vpc_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NfsActionAttachVariant1Params {
-    init(from decoder: Decoder) throws {
+extension NfsActionAttachVariant1Params {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.vpcId) else {
-            throw SdkValidationError(
-                field: "vpc_id",
-                code: "required",
-                message: "Validation failed for 'vpc_id': value is required"
-            )
+            throw SdkValidationError(field: "vpc_id", code: "required", message: "Validation failed for 'vpc_id': value is required")
         }
-        vpcId = try container.sdkDecodeRequired(.vpcId)
+        self.vpcId = try container.sdkDecodeRequired(.vpcId)
     }
 }
 
-public extension NfsActionAttachVariant1Params {
-    init(vpcId: String) {
+extension NfsActionAttachVariant1Params {
+    public init(vpcId: String) {
         self.vpcId = vpcId
     }
 }

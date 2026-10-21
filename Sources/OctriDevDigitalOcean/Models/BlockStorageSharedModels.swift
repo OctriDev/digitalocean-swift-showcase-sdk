@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// BlockStorage domain models
+// BlockStorage domain models
 public typealias TagsArrayRead = [String]
 
 /// Typed representation of the `Volume` API schema.
@@ -16,19 +16,19 @@ public struct Volume: Codable {
     }
 
     init() {
-        volume = nil
+        self.volume = nil
     }
 }
 
-public extension Volume {
-    init(from decoder: Decoder) throws {
+extension Volume {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        volume = try container.sdkDecodeIfPresent(.volume)
+        self.volume = try container.sdkDecodeIfPresent(.volume)
     }
 }
 
-public extension Volume {
-    init(volume: VolumeFull? = nil) {
+extension Volume {
+    public init(volume: VolumeFull? = nil) {
         self.init()
         self.volume = volume
     }
@@ -57,21 +57,21 @@ public struct VolumeFullVariant1: Codable {
     }
 
     init() {
-        (region, filesystemType, filesystemLabel) = (nil, nil, nil)
+        (self.region, self.filesystemType, self.filesystemLabel) = (nil, nil, nil)
     }
 }
 
-public extension VolumeFullVariant1 {
-    init(from decoder: Decoder) throws {
+extension VolumeFullVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        region = try container.sdkDecodeIfPresent(.region)
-        filesystemType = try container.sdkDecodeIfPresent(.filesystemType)
-        filesystemLabel = try container.sdkDecodeIfPresent(.filesystemLabel)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.filesystemType = try container.sdkDecodeIfPresent(.filesystemType)
+        self.filesystemLabel = try container.sdkDecodeIfPresent(.filesystemLabel)
     }
 }
 
-public extension VolumeFullVariant1 {
-    init(region: Region? = nil, filesystemType: String? = nil, filesystemLabel: String? = nil) {
+extension VolumeFullVariant1 {
+    public init(region: Region? = nil, filesystemType: String? = nil, filesystemLabel: String? = nil) {
         self.init()
         (self.region, self.filesystemType) = (region, filesystemType)
         self.filesystemLabel = filesystemLabel
@@ -117,34 +117,26 @@ public struct VolumeBaseRead: Codable {
     }
 
     init() {
-        (id, dropletIds, name, description, sizeGigabytes) = (nil, nil, nil, nil, nil)
-        (createdAt, tags) = (nil, nil)
+        (self.id, self.dropletIds, self.name, self.description, self.sizeGigabytes) = (nil, nil, nil, nil, nil)
+        (self.createdAt, self.tags) = (nil, nil)
     }
 }
 
-public extension VolumeBaseRead {
-    init(from decoder: Decoder) throws {
+extension VolumeBaseRead {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        sizeGigabytes = try container.sdkDecodeIfPresent(.sizeGigabytes)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        tags = try container.sdkDecodeIfPresent(.tags)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.sizeGigabytes = try container.sdkDecodeIfPresent(.sizeGigabytes)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-public extension VolumeBaseRead {
-    init(
-        id: String? = nil,
-        dropletIds: [Int]? = nil,
-        name: String? = nil,
-        description: String? = nil,
-        sizeGigabytes: Int? = nil,
-        createdAt: String? = nil,
-        tags: TagsArrayRead? = nil
-    ) {
+extension VolumeBaseRead {
+    public init(id: String? = nil, dropletIds: [Int]? = nil, name: String? = nil, description: String? = nil, sizeGigabytes: Int? = nil, createdAt: String? = nil, tags: TagsArrayRead? = nil) {
         self.init()
         (self.id, self.dropletIds) = (id, dropletIds)
         (self.name, self.description) = (name, description)
@@ -163,19 +155,19 @@ public struct VolumeSnapshot: Codable {
     }
 
     init() {
-        snapshot = nil
+        self.snapshot = nil
     }
 }
 
-public extension VolumeSnapshot {
-    init(from decoder: Decoder) throws {
+extension VolumeSnapshot {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        snapshot = try container.sdkDecodeIfPresent(.snapshot)
+        self.snapshot = try container.sdkDecodeIfPresent(.snapshot)
     }
 }
 
-public extension VolumeSnapshot {
-    init(snapshot: Snapshots? = nil) {
+extension VolumeSnapshot {
+    public init(snapshot: Snapshots? = nil) {
         self.init()
         self.snapshot = snapshot
     }
@@ -236,40 +228,29 @@ public struct VolumeFull: Codable {
     }
 
     init() {
-        (id, dropletIds, name, description, sizeGigabytes) = (nil, nil, nil, nil, nil)
-        (createdAt, tags, region, filesystemType, filesystemLabel) = (nil, nil, nil, nil, nil)
+        (self.id, self.dropletIds, self.name, self.description, self.sizeGigabytes) = (nil, nil, nil, nil, nil)
+        (self.createdAt, self.tags, self.region, self.filesystemType, self.filesystemLabel) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension VolumeFull {
-    init(from decoder: Decoder) throws {
+extension VolumeFull {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        sizeGigabytes = try container.sdkDecodeIfPresent(.sizeGigabytes)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        region = try container.sdkDecodeIfPresent(.region)
-        filesystemType = try container.sdkDecodeIfPresent(.filesystemType)
-        filesystemLabel = try container.sdkDecodeIfPresent(.filesystemLabel)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.sizeGigabytes = try container.sdkDecodeIfPresent(.sizeGigabytes)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.filesystemType = try container.sdkDecodeIfPresent(.filesystemType)
+        self.filesystemLabel = try container.sdkDecodeIfPresent(.filesystemLabel)
     }
 }
 
-public extension VolumeFull {
-    init(
-        id: String? = nil,
-        dropletIds: [Int]? = nil,
-        name: String? = nil,
-        description: String? = nil,
-        sizeGigabytes: Int? = nil,
-        createdAt: String? = nil,
-        tags: TagsArrayRead? = nil,
-        region: Region? = nil,
-        filesystemType: String? = nil,
-        filesystemLabel: String? = nil
-    ) {
+extension VolumeFull {
+    public init(id: String? = nil, dropletIds: [Int]? = nil, name: String? = nil, description: String? = nil, sizeGigabytes: Int? = nil, createdAt: String? = nil, tags: TagsArrayRead? = nil, region: Region? = nil, filesystemType: String? = nil, filesystemLabel: String? = nil) {
         self.init()
         (self.id, self.dropletIds) = (id, dropletIds)
         (self.name, self.description) = (name, description)

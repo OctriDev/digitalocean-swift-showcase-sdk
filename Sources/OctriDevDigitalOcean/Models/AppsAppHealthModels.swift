@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AppsAppHealth domain models
+// AppsAppHealth domain models
 /// Typed representation of the `AppHealthResponse` API schema.
 public struct AppHealthResponse: Codable {
     /// Optional object value serialized in the `app_health` wire field.
@@ -14,19 +14,19 @@ public struct AppHealthResponse: Codable {
     }
 
     init() {
-        appHealth = nil
+        self.appHealth = nil
     }
 }
 
-public extension AppHealthResponse {
-    init(from decoder: Decoder) throws {
+extension AppHealthResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        appHealth = try container.sdkDecodeIfPresent(.appHealth)
+        self.appHealth = try container.sdkDecodeIfPresent(.appHealth)
     }
 }
 
-public extension AppHealthResponse {
-    init(appHealth: AppHealth? = nil) {
+extension AppHealthResponse {
+    public init(appHealth: AppHealth? = nil) {
         self.init()
         self.appHealth = appHealth
     }
@@ -45,20 +45,20 @@ public struct AppHealth: Codable {
     }
 
     init() {
-        (components, functionsComponents) = (nil, nil)
+        (self.components, self.functionsComponents) = (nil, nil)
     }
 }
 
-public extension AppHealth {
-    init(from decoder: Decoder) throws {
+extension AppHealth {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        components = try container.sdkDecodeIfPresent(.components)
-        functionsComponents = try container.sdkDecodeIfPresent(.functionsComponents)
+        self.components = try container.sdkDecodeIfPresent(.components)
+        self.functionsComponents = try container.sdkDecodeIfPresent(.functionsComponents)
     }
 }
 
-public extension AppHealth {
-    init(components: [AppComponentHealth]? = nil, functionsComponents: [AppFunctionsComponentHealth]? = nil) {
+extension AppHealth {
+    public init(components: [AppComponentHealth]? = nil, functionsComponents: [AppFunctionsComponentHealth]? = nil) {
         self.init()
         (self.components, self.functionsComponents) = (components, functionsComponents)
     }
@@ -100,170 +100,66 @@ public struct AppHealthCheckSpec: Codable {
     }
 
     init() {
-        (failureThreshold, port, httpPath, initialDelaySeconds, periodSeconds) = (nil, nil, nil, nil, nil)
-        (successThreshold, timeoutSeconds) = (nil, nil)
+        (self.failureThreshold, self.port, self.httpPath, self.initialDelaySeconds, self.periodSeconds) = (nil, nil, nil, nil, nil)
+        (self.successThreshold, self.timeoutSeconds) = (nil, nil)
     }
 }
 
-public extension AppHealthCheckSpec {
-    init(from decoder: Decoder) throws {
+extension AppHealthCheckSpec {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        failureThreshold = try container.sdkDecodeIfPresent(.failureThreshold)
-        port = try container.sdkDecodeIfPresent(.port)
-        httpPath = try container.sdkDecodeIfPresent(.httpPath)
-        initialDelaySeconds = try container.sdkDecodeIfPresent(.initialDelaySeconds)
-        periodSeconds = try container.sdkDecodeIfPresent(.periodSeconds)
-        successThreshold = try container.sdkDecodeIfPresent(.successThreshold)
-        timeoutSeconds = try container.sdkDecodeIfPresent(.timeoutSeconds)
-        if let value = failureThreshold {
-            try validateRange(
-                "failure_threshold",
-                Double(value),
-                min: 1,
-                max: 50,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.failureThreshold = try container.sdkDecodeIfPresent(.failureThreshold)
+        self.port = try container.sdkDecodeIfPresent(.port)
+        self.httpPath = try container.sdkDecodeIfPresent(.httpPath)
+        self.initialDelaySeconds = try container.sdkDecodeIfPresent(.initialDelaySeconds)
+        self.periodSeconds = try container.sdkDecodeIfPresent(.periodSeconds)
+        self.successThreshold = try container.sdkDecodeIfPresent(.successThreshold)
+        self.timeoutSeconds = try container.sdkDecodeIfPresent(.timeoutSeconds)
+        if let value = self.failureThreshold {
+            try validateRange("failure_threshold", Double(value), min: 1, max: 50, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = port {
-            try validateRange(
-                "port",
-                Double(value),
-                min: 1,
-                max: 65535,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.port {
+            try validateRange("port", Double(value), min: 1, max: 65535, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = initialDelaySeconds {
-            try validateRange(
-                "initial_delay_seconds",
-                Double(value),
-                min: 0,
-                max: 3600,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.initialDelaySeconds {
+            try validateRange("initial_delay_seconds", Double(value), min: 0, max: 3600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = periodSeconds {
-            try validateRange(
-                "period_seconds",
-                Double(value),
-                min: 1,
-                max: 300,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.periodSeconds {
+            try validateRange("period_seconds", Double(value), min: 1, max: 300, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = successThreshold {
-            try validateRange(
-                "success_threshold",
-                Double(value),
-                min: 1,
-                max: 1,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.successThreshold {
+            try validateRange("success_threshold", Double(value), min: 1, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = timeoutSeconds {
-            try validateRange(
-                "timeout_seconds",
-                Double(value),
-                min: 1,
-                max: 120,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.timeoutSeconds {
+            try validateRange("timeout_seconds", Double(value), min: 1, max: 120, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
-public extension AppHealthCheckSpec {
-    init(
-        failureThreshold: Int? = nil,
-        port: Int? = nil,
-        httpPath: String? = nil,
-        initialDelaySeconds: Int? = nil,
-        periodSeconds: Int? = nil,
-        successThreshold: Int? = nil,
-        timeoutSeconds: Int? = nil
-    ) throws {
+extension AppHealthCheckSpec {
+    public init(failureThreshold: Int? = nil, port: Int? = nil, httpPath: String? = nil, initialDelaySeconds: Int? = nil, periodSeconds: Int? = nil, successThreshold: Int? = nil, timeoutSeconds: Int? = nil) throws {
         self.init()
         (self.failureThreshold, self.port) = (failureThreshold, port)
         (self.httpPath, self.initialDelaySeconds) = (httpPath, initialDelaySeconds)
         (self.periodSeconds, self.successThreshold) = (periodSeconds, successThreshold)
         self.timeoutSeconds = timeoutSeconds
         if let value = self.failureThreshold {
-            try validateRange(
-                "failure_threshold",
-                Double(value),
-                min: 1,
-                max: 50,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("failure_threshold", Double(value), min: 1, max: 50, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.port {
-            try validateRange(
-                "port",
-                Double(value),
-                min: 1,
-                max: 65535,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("port", Double(value), min: 1, max: 65535, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.initialDelaySeconds {
-            try validateRange(
-                "initial_delay_seconds",
-                Double(value),
-                min: 0,
-                max: 3600,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("initial_delay_seconds", Double(value), min: 0, max: 3600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.periodSeconds {
-            try validateRange(
-                "period_seconds",
-                Double(value),
-                min: 1,
-                max: 300,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("period_seconds", Double(value), min: 1, max: 300, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.successThreshold {
-            try validateRange(
-                "success_threshold",
-                Double(value),
-                min: 1,
-                max: 1,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("success_threshold", Double(value), min: 1, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.timeoutSeconds {
-            try validateRange(
-                "timeout_seconds",
-                Double(value),
-                min: 1,
-                max: 120,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("timeout_seconds", Double(value), min: 1, max: 120, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }

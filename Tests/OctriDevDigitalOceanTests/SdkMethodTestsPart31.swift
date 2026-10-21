@@ -6,8 +6,7 @@ import Foundation
 import XCTest
 
 extension SdkMethodTests {
-    func testGenaiListScenarioLibraryScenariosGenaiListScenarioLibraryScenariosReachesMockAndDecodesResponse(
-    ) async throws {
+    func testGenaiListScenarioLibraryScenariosGenaiListScenarioLibraryScenariosReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -30,8 +29,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testGenaiListScenarioLibraryScenariosGenaiListScenarioLibraryScenarios401ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testGenaiListScenarioLibraryScenariosGenaiListScenarioLibraryScenarios401ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -42,13 +40,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListScenarioLibraryScenarios(
-                libraryScenarioUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
-                page: decoded("1"),
-                perPage: decoded("1"),
-                search: decoded("\"example string\""),
-                sortBy: decoded("\"SCENARIO_SORT_FIELD_UNSPECIFIED\""),
-                sortDirection: decoded("\"SORT_DIRECTION_UNSPECIFIED\"")
-            )
+            libraryScenarioUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
+            page: decoded("1"),
+            perPage: decoded("1"),
+            search: decoded("\"example string\""),
+            sortBy: decoded("\"SCENARIO_SORT_FIELD_UNSPECIFIED\""),
+            sortDirection: decoded("\"SORT_DIRECTION_UNSPECIFIED\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -98,13 +96,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListScenarios(
-                scenarioSetUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
-                page: decoded("1"),
-                perPage: decoded("1"),
-                search: decoded("\"example string\""),
-                sortBy: decoded("\"SCENARIO_SORT_FIELD_UNSPECIFIED\""),
-                sortDirection: decoded("\"SORT_DIRECTION_UNSPECIFIED\"")
-            )
+            scenarioSetUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
+            page: decoded("1"),
+            perPage: decoded("1"),
+            search: decoded("\"example string\""),
+            sortBy: decoded("\"SCENARIO_SORT_FIELD_UNSPECIFIED\""),
+            sortDirection: decoded("\"SORT_DIRECTION_UNSPECIFIED\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -155,14 +153,14 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListScenarioSets(
-                page: decoded("1"),
-                perPage: decoded("1"),
-                statuses: decoded("[\"SCENARIO_SET_STATUS_READY\"]"),
-                sourceKinds: decoded("[\"SCENARIO_SET_SOURCE_KIND_USER_UPLOAD\"]"),
-                search: decoded("\"example string\""),
-                sortBy: decoded("\"SCENARIO_SET_SORT_FIELD_UNSPECIFIED\""),
-                sortDirection: decoded("\"SORT_DIRECTION_UNSPECIFIED\"")
-            )
+            page: decoded("1"),
+            perPage: decoded("1"),
+            statuses: decoded("[\"SCENARIO_SET_STATUS_READY\"]"),
+            sourceKinds: decoded("[\"SCENARIO_SET_SOURCE_KIND_USER_UPLOAD\"]"),
+            search: decoded("\"example string\""),
+            sortBy: decoded("\"SCENARIO_SET_SORT_FIELD_UNSPECIFIED\""),
+            sortDirection: decoded("\"SORT_DIRECTION_UNSPECIFIED\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -183,8 +181,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try AgentPlatformApiMethods
-            .GenaiListSimulationEpisodesOptions(runUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""))
+        var options = try AgentPlatformApiMethods.GenaiListSimulationEpisodesOptions(runUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""))
         options.scenarioUuid = try decoded("\"123e4567-e89b-12d3-a456-426614174000\"")
         options.page = try decoded("1")
         options.perPage = try decoded("1")
@@ -211,8 +208,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try AgentPlatformApiMethods
-            .GenaiListSimulationEpisodesOptions(runUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""))
+        var options = try AgentPlatformApiMethods.GenaiListSimulationEpisodesOptions(runUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""))
         options.scenarioUuid = try decoded("\"123e4567-e89b-12d3-a456-426614174000\"")
         options.page = try decoded("1")
         options.perPage = try decoded("1")
@@ -227,8 +223,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListSimulationEpisodes(
-                options: options
-            )
+            options: options
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -279,14 +275,14 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListSimulationRuns(
-                scenarioSetUuid: decoded("\"123e4567-e89b-12d3-a456-426614174000\""),
-                page: decoded("1"),
-                perPage: decoded("1"),
-                statuses: decoded("[\"SIMULATION_RUN_STATUS_RUNNING\"]"),
-                search: decoded("\"example string\""),
-                sortBy: decoded("\"SIMULATION_RUN_SORT_FIELD_UNSPECIFIED\""),
-                sortDirection: decoded("\"SORT_DIRECTION_UNSPECIFIED\"")
-            )
+            scenarioSetUuid: decoded("\"123e4567-e89b-12d3-a456-426614174000\""),
+            page: decoded("1"),
+            perPage: decoded("1"),
+            statuses: decoded("[\"SIMULATION_RUN_STATUS_RUNNING\"]"),
+            search: decoded("\"example string\""),
+            sortBy: decoded("\"SIMULATION_RUN_SORT_FIELD_UNSPECIFIED\""),
+            sortDirection: decoded("\"SORT_DIRECTION_UNSPECIFIED\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -374,9 +370,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiPatchCancelSimulationRun(
-                runUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
-                runUuid2: decoded("\"123e4567-e89b-12d3-a456-426614174000\"")
-            )
+            runUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
+            runUuid2: decoded("\"123e4567-e89b-12d3-a456-426614174000\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -422,9 +418,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiRegenerateAgentApiKey(
-                agentUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
-                apiKeyUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
-            )
+            agentUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
+            apiKeyUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -469,8 +465,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiRegenerateModelApiKey(
-                apiKeyUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
-            )
+            apiKeyUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -517,10 +513,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiRollbackToAgentVersion(
-                uuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
-                uuid2: decoded("\"\\\"12345678-1234-1234-1234-123456789012\\\"\""),
-                versionHash: decoded("\"c3658d8b5c05494cd03ce042926ef08157889ed54b1b74b5ee0b3d66dcee4b73\"")
-            )
+            uuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
+            uuid2: decoded("\"\\\"12345678-1234-1234-1234-123456789012\\\"\""),
+            versionHash: decoded("\"c3658d8b5c05494cd03ce042926ef08157889ed54b1b74b5ee0b3d66dcee4b73\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

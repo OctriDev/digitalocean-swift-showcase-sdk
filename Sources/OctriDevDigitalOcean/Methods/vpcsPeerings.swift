@@ -6,49 +6,28 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension VpcsMethods {
+extension VpcsMethods {
     /// To list all of a VPC's peerings, send a GET request to `/v2/vpcs/$VPC_ID/peerings`.
     ///
     /// - Parameters:
     /// - vpcId: A unique identifier for a VPC.
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func vpcsListPeerings(
-        config: ClientConfig,
-        vpcId: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VpcPeerings {
+    public static func vpcsListPeerings(config: ClientConfig, vpcId: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> VpcPeerings {
         try sdkValidateUuid("vpc_id", vpcId)
 
-        if let perPage {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcId)), "/peerings"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "vpcs_list_peerings",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcId)), "/peerings"].joined(), config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "vpcs_list_peerings", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To create a new VPC peering for a given VPC, send a POST request to `/v2/vpcs/$VPC_ID/peerings`.
@@ -58,13 +37,7 @@ public extension VpcsMethods {
     /// - name: The name of the VPC peering. Must be unique and may only contain
     ///   alphanumeric characters, dashes, and periods.
     /// - vpcId2: The ID of the VPC to peer with.
-    static func vpcsCreatePeerings(
-        config: ClientConfig,
-        vpcId: String,
-        name: String,
-        vpcId2: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VpcPeeringResponse {
+    public static func vpcsCreatePeerings(config: ClientConfig, vpcId: String, name: String, vpcId2: String, requestOptions: RequestOptions? = nil) async throws -> VpcPeeringResponse {
         try sdkValidateUuid("vpc_id", vpcId)
 
         try sdkValidatePattern("name", name, sdkPatternef0a913b6e4d)
@@ -73,21 +46,6 @@ public extension VpcsMethods {
 
         let requestBody = VpcsCreatePeeringsRequestBody(name: name, vpcId2: vpcId2)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcId)), "/peerings"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "vpcs_create_peerings",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcId)), "/peerings"].joined(), config: config, body: requestBody, decoder: .json, operationId: "vpcs_create_peerings", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

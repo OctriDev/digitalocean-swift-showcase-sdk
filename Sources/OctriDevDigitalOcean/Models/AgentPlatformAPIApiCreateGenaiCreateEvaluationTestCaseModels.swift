@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiCreate domain models
+// AgentPlatformAPIApiCreate domain models
 /// Typed representation of the `ApiCreateEvaluationTestCaseOutput` API schema.
 public struct ApiCreateEvaluationTestCaseOutput: Codable {
     /// Test‑case UUID.
@@ -15,19 +15,19 @@ public struct ApiCreateEvaluationTestCaseOutput: Codable {
     }
 
     init() {
-        testCaseUuid = nil
+        self.testCaseUuid = nil
     }
 }
 
-public extension ApiCreateEvaluationTestCaseOutput {
-    init(from decoder: Decoder) throws {
+extension ApiCreateEvaluationTestCaseOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        testCaseUuid = try container.sdkDecodeIfPresent(.testCaseUuid)
+        self.testCaseUuid = try container.sdkDecodeIfPresent(.testCaseUuid)
     }
 }
 
-public extension ApiCreateEvaluationTestCaseOutput {
-    init(testCaseUuid: String? = nil) {
+extension ApiCreateEvaluationTestCaseOutput {
+    public init(testCaseUuid: String? = nil) {
         self.init()
         self.testCaseUuid = testCaseUuid
     }
@@ -67,34 +67,26 @@ public struct ApiCreateEvaluationTestCaseInputPublic: Codable {
     }
 
     init() {
-        (agentWorkspaceName, datasetUuid, description, metrics, name) = (nil, nil, nil, nil, nil)
-        (starMetric, workspaceUuid) = (nil, nil)
+        (self.agentWorkspaceName, self.datasetUuid, self.description, self.metrics, self.name) = (nil, nil, nil, nil, nil)
+        (self.starMetric, self.workspaceUuid) = (nil, nil)
     }
 }
 
-public extension ApiCreateEvaluationTestCaseInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiCreateEvaluationTestCaseInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agentWorkspaceName = try container.sdkDecodeIfPresent(.agentWorkspaceName)
-        datasetUuid = try container.sdkDecodeIfPresent(.datasetUuid)
-        description = try container.sdkDecodeIfPresent(.description)
-        metrics = try container.sdkDecodeIfPresent(.metrics)
-        name = try container.sdkDecodeIfPresent(.name)
-        starMetric = try container.sdkDecodeIfPresent(.starMetric)
-        workspaceUuid = try container.sdkDecodeIfPresent(.workspaceUuid)
+        self.agentWorkspaceName = try container.sdkDecodeIfPresent(.agentWorkspaceName)
+        self.datasetUuid = try container.sdkDecodeIfPresent(.datasetUuid)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.metrics = try container.sdkDecodeIfPresent(.metrics)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.starMetric = try container.sdkDecodeIfPresent(.starMetric)
+        self.workspaceUuid = try container.sdkDecodeIfPresent(.workspaceUuid)
     }
 }
 
-public extension ApiCreateEvaluationTestCaseInputPublic {
-    init(
-        agentWorkspaceName: String? = nil,
-        datasetUuid: String? = nil,
-        description: String? = nil,
-        metrics: [String]? = nil,
-        name: String? = nil,
-        starMetric: ApiStarMetric? = nil,
-        workspaceUuid: String? = nil
-    ) {
+extension ApiCreateEvaluationTestCaseInputPublic {
+    public init(agentWorkspaceName: String? = nil, datasetUuid: String? = nil, description: String? = nil, metrics: [String]? = nil, name: String? = nil, starMetric: ApiStarMetric? = nil, workspaceUuid: String? = nil) {
         self.init()
         (self.agentWorkspaceName, self.datasetUuid) = (agentWorkspaceName, datasetUuid)
         (self.description, self.metrics) = (description, metrics)

@@ -35,8 +35,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.droplets.get(
-                dropletId: decoded("3164444")
-            )
+            dropletId: decoded("3164444")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -81,8 +81,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.droplets.getBackupPolicy(
-                dropletId: decoded("3164444")
-            )
+            dropletId: decoded("3164444")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -98,8 +98,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testDropletsGetDestroyAssociatedResourcesStatusDropletsGetDestroyX2ef4127f09ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testDropletsGetDestroyAssociatedResourcesStatusDropletsGetDestroyX2ef4127f09ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -117,8 +116,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testDropletsGetDestroyAssociatedResourcesStatusDropletsGetDestroyX5937f3c5eeReachesMockAndDecodesResponse(
-    ) async throws {
+    func testDropletsGetDestroyAssociatedResourcesStatusDropletsGetDestroyX5937f3c5eeReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -129,8 +127,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.droplets.getDestroyAssociatedResourcesStatus(
-                dropletId: decoded("3164444")
-            )
+            dropletId: decoded("3164444")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -179,12 +177,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.droplets.list(
-                perPage: decoded("2"),
-                page: decoded("1"),
-                tagName: decoded("\"env:prod\""),
-                name: decoded("\"web-01\""),
-                type: decoded("\"droplets\"")
-            )
+            perPage: decoded("2"),
+            page: decoded("1"),
+            tagName: decoded("\"env:prod\""),
+            name: decoded("\"web-01\""),
+            type: decoded("\"droplets\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -218,8 +216,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testDropletsListAssociatedResourcesDropletsListAssociatedResources401ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testDropletsListAssociatedResourcesDropletsListAssociatedResources401ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -230,8 +227,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.droplets.listAssociatedResources(
-                dropletId: decoded("3164444")
-            )
+            dropletId: decoded("3164444")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -278,10 +275,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.droplets.listBackups(
-                dropletId: decoded("3164444"),
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            dropletId: decoded("3164444"),
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -328,10 +325,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.droplets.listFirewalls(
-                dropletId: decoded("3164444"),
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            dropletId: decoded("3164444"),
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -378,10 +375,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.droplets.listKernels(
-                dropletId: decoded("3164444"),
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            dropletId: decoded("3164444"),
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -426,8 +423,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.droplets.listNeighbors(
-                dropletId: decoded("3164444")
-            )
+            dropletId: decoded("3164444")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -516,10 +513,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.droplets.listSnapshots(
-                dropletId: decoded("3164444"),
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            dropletId: decoded("3164444"),
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -535,8 +532,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testDropletsListSupportedBackupPoliciesDropletsListSupportedBackupPoliciesReachesMockAndDecodesResponse(
-    ) async throws {
+    func testDropletsListSupportedBackupPoliciesDropletsListSupportedBackupPoliciesReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }

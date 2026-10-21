@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Billing domain models
+// Billing domain models
 /// Typed representation of the `MetaOptionalTotal` API schema.
 public struct MetaOptionalTotal: Codable {
     /// Information about the response itself.
@@ -13,27 +13,21 @@ public struct MetaOptionalTotal: Codable {
         case meta
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension MetaOptionalTotal {
-    init(from decoder: Decoder) throws {
+extension MetaOptionalTotal {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
+        self.meta = try container.sdkDecodeRequired(.meta)
     }
 }
 
-public extension MetaOptionalTotal {
-    init(meta: MetaProperties) {
+extension MetaOptionalTotal {
+    public init(meta: MetaProperties) {
         self.meta = meta
     }
 }
@@ -69,35 +63,28 @@ public struct BillingHistory: Codable {
     }
 
     init() {
-        (description, amount, invoiceId, invoiceUuid, date) = (nil, nil, nil, nil, nil)
-        type = nil
+        (self.description, self.amount, self.invoiceId, self.invoiceUuid, self.date) = (nil, nil, nil, nil, nil)
+        self.type = nil
     }
 }
 
-public extension BillingHistory {
-    init(from decoder: Decoder) throws {
+extension BillingHistory {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        description = try container.sdkDecodeIfPresent(.description)
-        amount = try container.sdkDecodeIfPresent(.amount)
-        invoiceId = try container.sdkDecodeIfPresent(.invoiceId)
-        invoiceUuid = try container.sdkDecodeIfPresent(.invoiceUuid)
-        date = try container.sdkDecodeIfPresent(.date)
-        type = try container.sdkDecodeIfPresent(.type)
-        if let value = date {
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.amount = try container.sdkDecodeIfPresent(.amount)
+        self.invoiceId = try container.sdkDecodeIfPresent(.invoiceId)
+        self.invoiceUuid = try container.sdkDecodeIfPresent(.invoiceUuid)
+        self.date = try container.sdkDecodeIfPresent(.date)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        if let value = self.date {
             try sdkValidateDateTime("date", sdkWireString(value))
         }
     }
 }
 
-public extension BillingHistory {
-    init(
-        description: String? = nil,
-        amount: String? = nil,
-        invoiceId: String? = nil,
-        invoiceUuid: String? = nil,
-        date: Date? = nil,
-        type: BillingHistoryType? = nil
-    ) throws {
+extension BillingHistory {
+    public init(description: String? = nil, amount: String? = nil, invoiceId: String? = nil, invoiceUuid: String? = nil, date: Date? = nil, type: BillingHistoryType? = nil) throws {
         self.init()
         (self.description, self.amount) = (description, amount)
         (self.invoiceId, self.invoiceUuid) = (invoiceId, invoiceUuid)
@@ -122,29 +109,23 @@ public struct BillingHistoryResponse: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension BillingHistoryResponse {
-    init(from decoder: Decoder) throws {
+extension BillingHistoryResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        billingHistory = try container.sdkDecodeIfPresent(.billingHistory)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.billingHistory = try container.sdkDecodeIfPresent(.billingHistory)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension BillingHistoryResponse {
-    init(meta: MetaProperties, billingHistory: [BillingHistory]? = nil, links: PageLinks? = nil) {
+extension BillingHistoryResponse {
+    public init(meta: MetaProperties, billingHistory: [BillingHistory]? = nil, links: PageLinks? = nil) {
         (self.meta, self.billingHistory) = (meta, billingHistory)
         self.links = links
     }
@@ -158,19 +139,19 @@ public struct BillingHistoryResponseVariant0: Codable {
     }
 
     init() {
-        billingHistory = nil
+        self.billingHistory = nil
     }
 }
 
-public extension BillingHistoryResponseVariant0 {
-    init(from decoder: Decoder) throws {
+extension BillingHistoryResponseVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        billingHistory = try container.sdkDecodeIfPresent(.billingHistory)
+        self.billingHistory = try container.sdkDecodeIfPresent(.billingHistory)
     }
 }
 
-public extension BillingHistoryResponseVariant0 {
-    init(billingHistory: [BillingHistory]? = nil) {
+extension BillingHistoryResponseVariant0 {
+    public init(billingHistory: [BillingHistory]? = nil) {
         self.init()
         self.billingHistory = billingHistory
     }
@@ -180,10 +161,7 @@ public extension BillingHistoryResponseVariant0 {
 public struct BillingHistoryType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let achFailure = BillingHistoryType(rawValue: "ACHFailure")
     public static let adjustment = BillingHistoryType(rawValue: "Adjustment")
     public static let attemptFailed = BillingHistoryType(rawValue: "AttemptFailed")
@@ -197,7 +175,7 @@ public struct BillingHistoryType: RawRepresentable, Hashable, Codable, Sendable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

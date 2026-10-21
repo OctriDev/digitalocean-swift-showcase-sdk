@@ -6,7 +6,7 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
+extension AgentPlatformApiMethods {
     /// To list simulation runs, send a GET request to `/v2/gen-ai/simulation_runs`.
     ///
     /// - Parameters:
@@ -34,40 +34,15 @@ public extension AgentPlatformApiMethods {
     ///   lifecycle order (pending → running → terminal). -
     ///   SIMULATION_RUN_SORT_FIELD_UPDATED_AT: Sort by last update date.
     /// - sortDirection: Sort direction. Defaults to descending when unspecified.
-    static func genaiListSimulationRuns(
-        config: ClientConfig,
-        scenarioSetUuid: String? = nil,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        statuses: [GenaiListSimulationRunsParameterItem]? = nil,
-        search: String? = nil,
-        sortBy: GenaiListSimulationRunsParameter? = nil,
-        sortDirection: GenaiListSimulationRunsParameterX72e27cd6? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiListSimulationRunsOutput {
-        try await (sdkRequest(
-            "GET",
-            "/v2/gen-ai/simulation_runs",
-            config: config,
-            query: [
-                SdkQueryParameter("scenario_set_uuid", value: scenarioSetUuid),
-                SdkQueryParameter("page", value: page),
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("statuses", values: statuses, style: "form", explode: true),
-                SdkQueryParameter("search", value: search),
-                SdkQueryParameter("sort_by", value: sortBy),
-                SdkQueryParameter("sort_direction", value: sortDirection),
-            ],
-            decoder: .json,
-            operationId: "genai_list_simulation_runs",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func genaiListSimulationRuns(config: ClientConfig, scenarioSetUuid: String? = nil, page: Int? = nil, perPage: Int? = nil, statuses: [GenaiListSimulationRunsParameterItem]? = nil, search: String? = nil, sortBy: GenaiListSimulationRunsParameter? = nil, sortDirection: GenaiListSimulationRunsParameterX72e27cd6? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListSimulationRunsOutput {
+        return try (await sdkRequest("GET", "/v2/gen-ai/simulation_runs", config: config, query: [
+            SdkQueryParameter("scenario_set_uuid", value: scenarioSetUuid),
+            SdkQueryParameter("page", value: page),
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("statuses", values: statuses, style: "form", explode: true),
+            SdkQueryParameter("search", value: search),
+            SdkQueryParameter("sort_by", value: sortBy),
+            SdkQueryParameter("sort_direction", value: sortDirection),
+        ], decoder: .json, operationId: "genai_list_simulation_runs", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

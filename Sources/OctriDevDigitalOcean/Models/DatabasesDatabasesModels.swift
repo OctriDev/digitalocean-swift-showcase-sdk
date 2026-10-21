@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DatabasesDatabases domain models
+// DatabasesDatabases domain models
 /// Typed representation of the `DatabasesBasicAuthCredentials` API schema.
 public struct DatabasesBasicAuthCredentials: Codable {
     /// basic authentication username for metrics HTTP endpoint
@@ -19,20 +19,20 @@ public struct DatabasesBasicAuthCredentials: Codable {
     }
 
     init() {
-        (basicAuthUsername, basicAuthPassword) = (nil, nil)
+        (self.basicAuthUsername, self.basicAuthPassword) = (nil, nil)
     }
 }
 
-public extension DatabasesBasicAuthCredentials {
-    init(from decoder: Decoder) throws {
+extension DatabasesBasicAuthCredentials {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        basicAuthUsername = try container.sdkDecodeIfPresent(.basicAuthUsername)
-        basicAuthPassword = try container.sdkDecodeIfPresent(.basicAuthPassword)
+        self.basicAuthUsername = try container.sdkDecodeIfPresent(.basicAuthUsername)
+        self.basicAuthPassword = try container.sdkDecodeIfPresent(.basicAuthPassword)
     }
 }
 
-public extension DatabasesBasicAuthCredentials {
-    init(basicAuthUsername: String? = nil, basicAuthPassword: String? = nil) {
+extension DatabasesBasicAuthCredentials {
+    public init(basicAuthUsername: String? = nil, basicAuthPassword: String? = nil) {
         self.init()
         (self.basicAuthUsername, self.basicAuthPassword) = (basicAuthUsername, basicAuthPassword)
     }
@@ -48,19 +48,19 @@ public struct Databases: Codable {
     }
 
     init() {
-        dbs = nil
+        self.dbs = nil
     }
 }
 
-public extension Databases {
-    init(from decoder: Decoder) throws {
+extension Databases {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        dbs = try container.sdkDecodeIfPresent(.dbs)
+        self.dbs = try container.sdkDecodeIfPresent(.dbs)
     }
 }
 
-public extension Databases {
-    init(dbs: [Database]? = nil) {
+extension Databases {
+    public init(dbs: [Database]? = nil) {
         self.init()
         self.dbs = dbs
     }

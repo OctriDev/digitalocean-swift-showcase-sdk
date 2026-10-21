@@ -9,176 +9,63 @@ public class VectorDatabasesNamespace {
         self.config = config
     }
 
-    /// Lists vector databases provisioned on your account. Use `page` and `per_page` to paginate the results. The
-    /// response includes the `vector_dbs` array and the overall count in `total`.
+/// Lists vector databases provisioned on your account. Use `page` and `per_page` to paginate the results. The response includes the `vector_dbs` array and the overall count in `total`.
     ///
-    /// To list all of the vector databases on your account, send a GET request to `/v2/vector-databases`. Use the
-    /// `page` and `per_page` query parameters to paginate the results. The response body contains a `vector_dbs` array
-    /// of vector database objects and a `total` field with the overall count.
-    public func list(
-        page: Int? = nil,
-        perPage: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VectordbListVectorDBsResponse {
-        try await VectorDatabasesMethods.vectorDatabasesList(
-            config: config,
-            page: page,
-            perPage: perPage,
-            requestOptions: requestOptions
-        )
+    /// To list all of the vector databases on your account, send a GET request to `/v2/vector-databases`. Use the `page` and `per_page` query parameters to paginate the results. The response body contains a `vector_dbs` array of vector database objects and a `total` field with the overall count.
+    public func list(page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> VectordbListVectorDBsResponse {
+        return try await VectorDatabasesMethods.vectorDatabasesList(config: config, page: page, perPage: perPage, requestOptions: requestOptions)
     }
 
-    /// To create a vector database, send a POST request to `/v2/vector-databases`. The response body contains a JSON
-    /// object with a `vector_db` key holding the newly created database. Its initial `status` is `creating` and changes
-    /// to `active` once the database is ready to receive traffic.
-    public func create(
-        name: String? = nil,
-        projectId: String? = nil,
-        region: String? = nil,
-        size: String? = nil,
-        tags: [String]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VectordbCreateVectorDBResponse {
-        try await VectorDatabasesMethods.vectorDatabasesCreate(
-            config: config,
-            name: name,
-            projectId: projectId,
-            region: region,
-            size: size,
-            tags: tags,
-            requestOptions: requestOptions
-        )
+/// To create a vector database, send a POST request to `/v2/vector-databases`. The response body contains a JSON object with a `vector_db` key holding the newly created database. Its initial `status` is `creating` and changes to `active` once the database is ready to receive traffic.
+    public func create(name: String? = nil, projectId: String? = nil, region: String? = nil, size: String? = nil, tags: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> VectordbCreateVectorDBResponse {
+        return try await VectorDatabasesMethods.vectorDatabasesCreate(config: config, name: name, projectId: projectId, region: region, size: size, tags: tags, requestOptions: requestOptions)
     }
 
-    /// To show information about an existing vector database, send a GET request to `/v2/vector-databases/{id}`. The
-    /// response body contains a JSON object with a `vector_db` key holding the standard vector database attributes,
-    /// including an embedded `endpoints` object with the connection information needed to access the database.
+/// To show information about an existing vector database, send a GET request to `/v2/vector-databases/{id}`. The response body contains a JSON object with a `vector_db` key holding the standard vector database attributes, including an embedded `endpoints` object with the connection information needed to access the database.
     public func get(id: String, requestOptions: RequestOptions? = nil) async throws -> VectordbGetVectorDBResponse {
-        try await VectorDatabasesMethods.vectorDatabasesGet(config: config, id: id, requestOptions: requestOptions)
+        return try await VectorDatabasesMethods.vectorDatabasesGet(config: config, id: id, requestOptions: requestOptions)
     }
 
-    /// To update an existing vector database, send a PUT request to `/v2/vector-databases/{id}`. The response body
-    /// contains a JSON object with a `vector_db` key holding the updated vector database.
-    public func update(
-        id: String,
-        config: VectordbVectorDBConfig? = nil,
-        id2: String? = nil,
-        projectId: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VectordbUpdateVectorDBResponse {
-        try await VectorDatabasesMethods.vectorDatabasesUpdate(
-            config: self.config,
-            id: id,
-            config2: config,
-            id2: id2,
-            projectId: projectId,
-            requestOptions: requestOptions
-        )
+/// To update an existing vector database, send a PUT request to `/v2/vector-databases/{id}`. The response body contains a JSON object with a `vector_db` key holding the updated vector database.
+    public func update(id: String, config: VectordbVectorDBConfig? = nil, id2: String? = nil, projectId: String? = nil, requestOptions: RequestOptions? = nil) async throws -> VectordbUpdateVectorDBResponse {
+        return try await VectorDatabasesMethods.vectorDatabasesUpdate(config: self.config, id: id, config2: config, id2: id2, projectId: projectId, requestOptions: requestOptions)
     }
 
-    /// To delete a vector database, send a DELETE request to `/v2/vector-databases/{id}`. Deleting a vector database is
-    /// irreversible and destroys the underlying instance along with its data.
+/// To delete a vector database, send a DELETE request to `/v2/vector-databases/{id}`. Deleting a vector database is irreversible and destroys the underlying instance along with its data.
     public func delete(id: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        try await VectorDatabasesMethods.vectorDatabasesDelete(config: config, id: id, requestOptions: requestOptions)
+        return try await VectorDatabasesMethods.vectorDatabasesDelete(config: config, id: id, requestOptions: requestOptions)
     }
 
-    /// To list the available backups for a vector database, send a GET request to `/v2/vector-databases/{id}/backups`.
-    /// Only backups with a status of `SUCCESS` are returned.
-    public func listBackups(
-        id: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VectordbListBackupsResponse {
-        try await VectorDatabasesMethods.vectorDatabasesListBackups(
-            config: config,
-            id: id,
-            requestOptions: requestOptions
-        )
+/// To list the available backups for a vector database, send a GET request to `/v2/vector-databases/{id}/backups`. Only backups with a status of `SUCCESS` are returned.
+    public func listBackups(id: String, requestOptions: RequestOptions? = nil) async throws -> VectordbListBackupsResponse {
+        return try await VectorDatabasesMethods.vectorDatabasesListBackups(config: config, id: id, requestOptions: requestOptions)
     }
 
-    /// To check the status of a restore operation, send a GET request to
-    /// `/v2/vector-databases/{id}/backups/{backup_id}/restore`. The response body contains the current status of the
-    /// restore.
-    public func getRestoreStatus(
-        id: String,
-        backupId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VectordbGetRestoreStatusResponse {
-        try await VectorDatabasesMethods.vectorDatabasesGetRestoreStatus(
-            config: config,
-            id: id,
-            backupId: backupId,
-            requestOptions: requestOptions
-        )
+/// To check the status of a restore operation, send a GET request to `/v2/vector-databases/{id}/backups/{backup_id}/restore`. The response body contains the current status of the restore.
+    public func getRestoreStatus(id: String, backupId: String, requestOptions: RequestOptions? = nil) async throws -> VectordbGetRestoreStatusResponse {
+        return try await VectorDatabasesMethods.vectorDatabasesGetRestoreStatus(config: config, id: id, backupId: backupId, requestOptions: requestOptions)
     }
 
-    /// To restore a vector database from a backup, send a POST request to
-    /// `/v2/vector-databases/{id}/backups/{backup_id}/restore`. The restore runs asynchronously; use the restore-status
-    /// endpoint to monitor its progress.
-    public func postRestoreBackup(
-        id: String,
-        backupId: String,
-        backupId2: String? = nil,
-        id2: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VectordbRestoreBackupResponse {
-        try await VectorDatabasesMethods.vectorDatabasesPostRestoreBackup(
-            config: config,
-            id: id,
-            backupId: backupId,
-            backupId2: backupId2,
-            id2: id2,
-            requestOptions: requestOptions
-        )
+/// To restore a vector database from a backup, send a POST request to `/v2/vector-databases/{id}/backups/{backup_id}/restore`. The restore runs asynchronously; use the restore-status endpoint to monitor its progress.
+    public func postRestoreBackup(id: String, backupId: String, backupId2: String? = nil, id2: String? = nil, requestOptions: RequestOptions? = nil) async throws -> VectordbRestoreBackupResponse {
+        return try await VectorDatabasesMethods.vectorDatabasesPostRestoreBackup(config: config, id: id, backupId: backupId, backupId2: backupId2, id2: id2, requestOptions: requestOptions)
     }
 }
 
-public extension VectorDatabasesNamespace {
-    /// To retrieve the admin credentials for a vector database, send a GET request to
-    /// `/v2/vector-databases/{id}/credentials`. The response body contains the `user_id` and `api_token` for the admin
-    /// user provisioned on the cluster.
-    func getCredentials(
-        id: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VectordbGetVectorDBAdminCredentialsResponse {
-        try await VectorDatabasesMethods.vectorDatabasesGetCredentials(
-            config: config,
-            id: id,
-            requestOptions: requestOptions
-        )
+extension VectorDatabasesNamespace {
+/// To retrieve the admin credentials for a vector database, send a GET request to `/v2/vector-databases/{id}/credentials`. The response body contains the `user_id` and `api_token` for the admin user provisioned on the cluster.
+    public func getCredentials(id: String, requestOptions: RequestOptions? = nil) async throws -> VectordbGetVectorDBAdminCredentialsResponse {
+        return try await VectorDatabasesMethods.vectorDatabasesGetCredentials(config: config, id: id, requestOptions: requestOptions)
     }
 
-    /// To resize a vector database, send a POST request to `/v2/vector-databases/{id}/resize`. This changes the
-    /// database's resource tier. The response body contains a JSON object with the updated vector database.
-    func postResize(
-        id: String,
-        id2: String? = nil,
-        size: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VectordbResizeVectorDBResponse {
-        try await VectorDatabasesMethods.vectorDatabasesPostResize(
-            config: config,
-            id: id,
-            id2: id2,
-            size: size,
-            requestOptions: requestOptions
-        )
+/// To resize a vector database, send a POST request to `/v2/vector-databases/{id}/resize`. This changes the database's resource tier. The response body contains a JSON object with the updated vector database.
+    public func postResize(id: String, id2: String? = nil, size: String? = nil, requestOptions: RequestOptions? = nil) async throws -> VectordbResizeVectorDBResponse {
+        return try await VectorDatabasesMethods.vectorDatabasesPostResize(config: config, id: id, id2: id2, size: size, requestOptions: requestOptions)
     }
 
-    /// To update the tags on a vector database, send a PUT request to `/v2/vector-databases/{id}/tags`. The supplied
-    /// set of tags replaces the database's existing tags.
-    func updateTags(
-        id: String,
-        id2: String? = nil,
-        tags: [String]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VectordbUpdateVectorDBTagsResponse {
-        try await VectorDatabasesMethods.vectorDatabasesUpdateTags(
-            config: config,
-            id: id,
-            id2: id2,
-            tags: tags,
-            requestOptions: requestOptions
-        )
+/// To update the tags on a vector database, send a PUT request to `/v2/vector-databases/{id}/tags`. The supplied set of tags replaces the database's existing tags.
+    public func updateTags(id: String, id2: String? = nil, tags: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> VectordbUpdateVectorDBTagsResponse {
+        return try await VectorDatabasesMethods.vectorDatabasesUpdateTags(config: config, id: id, id2: id2, tags: tags, requestOptions: requestOptions)
     }
 }
 
@@ -188,141 +75,53 @@ public class BlockStorageNamespace {
         self.config = config
     }
 
-    /// To list all of the block storage volumes available on your account, send a GET request to `/v2/volumes`. ##
-    /// Filtering Results ### By Region The `region` may be provided as query parameter in order to restrict results to
-    /// volumes available in a specific region. For example: `/v2/volumes?region=nyc1` ### By Name It is also possible
-    /// to list volumes on your account that match a specified name. To do so, send a GET request with the volume's name
-    /// as a query parameter to `/v2/volumes?name=$VOLUME_NAME`. **Note:** You can only create one volume per region
-    /// with the same name. ### By Name and Region It is also possible to retrieve information about a block storage
-    /// volume by name. To do so, send a GET request with the volume's name and the region slug for the region it is
-    /// located in as query parameters to `/v2/volumes?name=$VOLUME_NAME&region=nyc1`.
-    public func volumesList(
-        name: String? = nil,
-        region: RegionSlug? = nil,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Volumes {
-        try await BlockStorageMethods.volumesList(
-            config: config,
-            name: name,
-            region: region,
-            perPage: perPage,
-            page: page,
-            requestOptions: requestOptions
-        )
+/// To list all of the block storage volumes available on your account, send a GET request to `/v2/volumes`. ## Filtering Results ### By Region The `region` may be provided as query parameter in order to restrict results to volumes available in a specific region. For example: `/v2/volumes?region=nyc1` ### By Name It is also possible to list volumes on your account that match a specified name. To do so, send a GET request with the volume's name as a query parameter to `/v2/volumes?name=$VOLUME_NAME`. **Note:** You can only create one volume per region with the same name. ### By Name and Region It is also possible to retrieve information about a block storage volume by name. To do so, send a GET request with the volume's name and the region slug for the region it is located in as query parameters to `/v2/volumes?name=$VOLUME_NAME&region=nyc1`.
+    public func volumesList(name: String? = nil, region: RegionSlug? = nil, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> Volumes {
+        return try await BlockStorageMethods.volumesList(config: config, name: name, region: region, perPage: perPage, page: page, requestOptions: requestOptions)
     }
 
-    /// Creates a block storage volume, optionally from a snapshot. Set `filesystem_type` to format the volume
-    /// automatically, and provide `snapshot_id` when creating from a snapshot. Pre-formatted volumes auto-mount only on
-    /// supported Droplets created on or after April 26, 2018; attaching them to unsupported Droplets is not
-    /// recommended.
+/// Creates a block storage volume, optionally from a snapshot. Set `filesystem_type` to format the volume automatically, and provide `snapshot_id` when creating from a snapshot. Pre-formatted volumes auto-mount only on supported Droplets created on or after April 26, 2018; attaching them to unsupported Droplets is not recommended.
     ///
-    /// To create a new volume, send a POST request to `/v2/volumes`. Optionally, a `filesystem_type` attribute may be
-    /// provided in order to automatically format the volume's filesystem. Pre-formatted volumes are automatically
-    /// mounted when attached to Ubuntu, Debian, Fedora, Fedora Atomic, and CentOS Droplets created on or after April
-    /// 26, 2018. Attaching pre-formatted volumes to Droplets without support for auto-mounting is not recommended.
-    public func volumesCreate(
-        body: VolumesCreateRequestBody,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Volume {
-        try await BlockStorageMethods.volumesCreate(config: config, body: body, requestOptions: requestOptions)
+    /// To create a new volume, send a POST request to `/v2/volumes`. Optionally, a `filesystem_type` attribute may be provided in order to automatically format the volume's filesystem. Pre-formatted volumes are automatically mounted when attached to Ubuntu, Debian, Fedora, Fedora Atomic, and CentOS Droplets created on or after April 26, 2018. Attaching pre-formatted volumes to Droplets without support for auto-mounting is not recommended.
+    public func volumesCreate(body: VolumesCreateRequestBody, requestOptions: RequestOptions? = nil) async throws -> Volume {
+        return try await BlockStorageMethods.volumesCreate(config: config, body: body, requestOptions: requestOptions)
     }
 
-    /// Block storage volumes may also be deleted by name by sending a DELETE request with the volume's **name** and the
-    /// **region slug** for the region it is located in as query parameters to
-    /// `/v2/volumes?name=$VOLUME_NAME&region=nyc1`. No response body will be sent back, but the response code will
-    /// indicate success. Specifically, the response code will be a 204, which means that the action was successful with
-    /// no returned body data.
-    public func volumesDeleteByName(
-        name: String? = nil,
-        region: RegionSlug? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await BlockStorageMethods.volumesDeleteByName(
-            config: config,
-            name: name,
-            region: region,
-            requestOptions: requestOptions
-        )
+/// Block storage volumes may also be deleted by name by sending a DELETE request with the volume's **name** and the **region slug** for the region it is located in as query parameters to `/v2/volumes?name=$VOLUME_NAME&region=nyc1`. No response body will be sent back, but the response code will indicate success. Specifically, the response code will be a 204, which means that the action was successful with no returned body data.
+    public func volumesDeleteByName(name: String? = nil, region: RegionSlug? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await BlockStorageMethods.volumesDeleteByName(config: config, name: name, region: region, requestOptions: requestOptions)
     }
 
-    /// To retrieve the details of a snapshot that has been created from a volume, send a GET request to
-    /// `/v2/volumes/snapshots/$VOLUME_SNAPSHOT_ID`.
-    public func volumeSnapshotsGetById(
-        snapshotId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VolumeSnapshot {
-        try await BlockStorageMethods.volumeSnapshotsGetById(
-            config: config,
-            snapshotId: snapshotId,
-            requestOptions: requestOptions
-        )
+/// To retrieve the details of a snapshot that has been created from a volume, send a GET request to `/v2/volumes/snapshots/$VOLUME_SNAPSHOT_ID`.
+    public func volumeSnapshotsGetById(snapshotId: String, requestOptions: RequestOptions? = nil) async throws -> VolumeSnapshot {
+        return try await BlockStorageMethods.volumeSnapshotsGetById(config: config, snapshotId: snapshotId, requestOptions: requestOptions)
     }
 
-    /// To delete a volume snapshot, send a DELETE request to `/v2/volumes/snapshots/$VOLUME_SNAPSHOT_ID`. A status of
-    /// 204 will be given. This indicates that the request was processed successfully, but that no response body is
-    /// needed.
-    public func volumeSnapshotsDeleteById(
-        snapshotId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await BlockStorageMethods.volumeSnapshotsDeleteById(
-            config: config,
-            snapshotId: snapshotId,
-            requestOptions: requestOptions
-        )
+/// To delete a volume snapshot, send a DELETE request to `/v2/volumes/snapshots/$VOLUME_SNAPSHOT_ID`. A status of 204 will be given. This indicates that the request was processed successfully, but that no response body is needed.
+    public func volumeSnapshotsDeleteById(snapshotId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await BlockStorageMethods.volumeSnapshotsDeleteById(config: config, snapshotId: snapshotId, requestOptions: requestOptions)
     }
 
-    /// To show information about a block storage volume, send a GET request to `/v2/volumes/$VOLUME_ID`.
+/// To show information about a block storage volume, send a GET request to `/v2/volumes/$VOLUME_ID`.
     public func volumesGet(volumeId: String, requestOptions: RequestOptions? = nil) async throws -> Volume {
-        try await BlockStorageMethods.volumesGet(config: config, volumeId: volumeId, requestOptions: requestOptions)
+        return try await BlockStorageMethods.volumesGet(config: config, volumeId: volumeId, requestOptions: requestOptions)
     }
 
-    /// To delete a block storage volume, destroying all data and removing it from your account, send a DELETE request
-    /// to `/v2/volumes/$VOLUME_ID`. No response body will be sent back, but the response code will indicate success.
-    /// Specifically, the response code will be a 204, which means that the action was successful with no returned body
-    /// data.
-    public func volumesDelete(
-        volumeId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await BlockStorageMethods.volumesDelete(config: config, volumeId: volumeId, requestOptions: requestOptions)
+/// To delete a block storage volume, destroying all data and removing it from your account, send a DELETE request to `/v2/volumes/$VOLUME_ID`. No response body will be sent back, but the response code will indicate success. Specifically, the response code will be a 204, which means that the action was successful with no returned body data.
+    public func volumesDelete(volumeId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await BlockStorageMethods.volumesDelete(config: config, volumeId: volumeId, requestOptions: requestOptions)
     }
 
-    /// To retrieve the snapshots that have been created from a volume, send a GET request to
-    /// `/v2/volumes/$VOLUME_ID/snapshots`.
-    public func volumeSnapshotsList(
-        volumeId: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VolumeSnapshots {
-        try await BlockStorageMethods.volumeSnapshotsList(
-            config: config,
-            volumeId: volumeId,
-            perPage: perPage,
-            page: page,
-            requestOptions: requestOptions
-        )
+/// To retrieve the snapshots that have been created from a volume, send a GET request to `/v2/volumes/$VOLUME_ID/snapshots`.
+    public func volumeSnapshotsList(volumeId: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> VolumeSnapshots {
+        return try await BlockStorageMethods.volumeSnapshotsList(config: config, volumeId: volumeId, perPage: perPage, page: page, requestOptions: requestOptions)
     }
 }
 
-public extension BlockStorageNamespace {
-    /// To create a snapshot from a volume, sent a POST request to `/v2/volumes/$VOLUME_ID/snapshots`.
-    func volumeSnapshotsCreate(
-        volumeId: String,
-        name: String,
-        tags: SdkOptional<TagsArray>? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VolumeSnapshot {
-        try await BlockStorageMethods.volumeSnapshotsCreate(
-            config: config,
-            volumeId: volumeId,
-            name: name,
-            tags: tags,
-            requestOptions: requestOptions
-        )
+extension BlockStorageNamespace {
+/// To create a snapshot from a volume, sent a POST request to `/v2/volumes/$VOLUME_ID/snapshots`.
+    public func volumeSnapshotsCreate(volumeId: String, name: String, tags: SdkOptional<TagsArray>? = nil, requestOptions: RequestOptions? = nil) async throws -> VolumeSnapshot {
+        return try await BlockStorageMethods.volumeSnapshotsCreate(config: config, volumeId: volumeId, name: name, tags: tags, requestOptions: requestOptions)
     }
 }
 
@@ -332,110 +131,28 @@ public class BlockStorageActionsNamespace {
         self.config = config
     }
 
-    /// Triggers an attach or detach action on a block storage volume identified by name. Set `type` to `attach` or
-    /// `detach` and provide the volume, Droplet, and region details for the action. Use `page` and `per_page` to
-    /// paginate the results.
+/// Triggers an attach or detach action on a block storage volume identified by name. Set `type` to `attach` or `detach` and provide the volume, Droplet, and region details for the action. Use `page` and `per_page` to paginate the results.
     ///
-    /// To initiate an action on a block storage volume by Name, send a POST request to `~/v2/volumes/actions`. The body
-    /// should contain the appropriate attributes for the respective action. ## Attach a Block Storage Volume to a
-    /// Droplet | Attribute | Details | | ----------- |
-    /// ------------------------------------------------------------------- | | type | This must be `attach` | |
-    /// volume_name | The name of the block storage volume | | droplet_id | Set to the Droplet's ID | | region | Set to
-    /// the slug representing the region where the volume is located | Each volume may only be attached to a single
-    /// Droplet. However, up to fifteen volumes may be attached to a Droplet at a time. Pre-formatted volumes will be
-    /// automatically mounted to Ubuntu, Debian, Fedora, Fedora Atomic, and CentOS Droplets created on or after April
-    /// 26, 2018 when attached. On older Droplets, [additional
-    /// configuration](https://docs.digitalocean.com/products/volumes/how-to/mount/) is required. ## Remove a Block
-    /// Storage Volume from a Droplet | Attribute | Details | | ----------- |
-    /// ------------------------------------------------------------------- | | type | This must be `detach` | |
-    /// volume_name | The name of the block storage volume | | droplet_id | Set to the Droplet's ID | | region | Set to
-    /// the slug representing the region where the volume is located |
-    public func volumeActionsPost(
-        body: VolumeActionsPostRequestBody,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VolumeActionResponse {
-        try await BlockStorageActionsMethods.volumeActionsPost(
-            config: config,
-            body: body,
-            perPage: perPage,
-            page: page,
-            requestOptions: requestOptions
-        )
+    /// To initiate an action on a block storage volume by Name, send a POST request to `~/v2/volumes/actions`. The body should contain the appropriate attributes for the respective action. ## Attach a Block Storage Volume to a Droplet | Attribute | Details | | ----------- | ------------------------------------------------------------------- | | type | This must be `attach` | | volume_name | The name of the block storage volume | | droplet_id | Set to the Droplet's ID | | region | Set to the slug representing the region where the volume is located | Each volume may only be attached to a single Droplet. However, up to fifteen volumes may be attached to a Droplet at a time. Pre-formatted volumes will be automatically mounted to Ubuntu, Debian, Fedora, Fedora Atomic, and CentOS Droplets created on or after April 26, 2018 when attached. On older Droplets, [additional configuration](https://docs.digitalocean.com/products/volumes/how-to/mount/) is required. ## Remove a Block Storage Volume from a Droplet | Attribute | Details | | ----------- | ------------------------------------------------------------------- | | type | This must be `detach` | | volume_name | The name of the block storage volume | | droplet_id | Set to the Droplet's ID | | region | Set to the slug representing the region where the volume is located |
+    public func volumeActionsPost(body: VolumeActionsPostRequestBody, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> VolumeActionResponse {
+        return try await BlockStorageActionsMethods.volumeActionsPost(config: config, body: body, perPage: perPage, page: page, requestOptions: requestOptions)
     }
 
-    /// To retrieve all actions that have been executed on a volume, send a GET request to
-    /// `/v2/volumes/$VOLUME_ID/actions`.
-    public func volumeActionsList(
-        volumeId: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VolumeActions {
-        try await BlockStorageActionsMethods.volumeActionsList(
-            config: config,
-            volumeId: volumeId,
-            perPage: perPage,
-            page: page,
-            requestOptions: requestOptions
-        )
+/// To retrieve all actions that have been executed on a volume, send a GET request to `/v2/volumes/$VOLUME_ID/actions`.
+    public func volumeActionsList(volumeId: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> VolumeActions {
+        return try await BlockStorageActionsMethods.volumeActionsList(config: config, volumeId: volumeId, perPage: perPage, page: page, requestOptions: requestOptions)
     }
 
-    /// Triggers an attach, detach, or resize action on a block storage volume identified by ID. Set `type` to the
-    /// action to perform and provide the corresponding Droplet or size details, along with the volume's region. Use
-    /// `page` and `per_page` to paginate the results.
+/// Triggers an attach, detach, or resize action on a block storage volume identified by ID. Set `type` to the action to perform and provide the corresponding Droplet or size details, along with the volume's region. Use `page` and `per_page` to paginate the results.
     ///
-    /// To initiate an action on a block storage volume by Id, send a POST request to `~/v2/volumes/$VOLUME_ID/actions`.
-    /// The body should contain the appropriate attributes for the respective action. ## Attach a Block Storage Volume
-    /// to a Droplet | Attribute | Details | | ---------- |
-    /// ------------------------------------------------------------------- | | type | This must be `attach` | |
-    /// droplet_id | Set to the Droplet's ID | | region | Set to the slug representing the region where the volume is
-    /// located | Each volume may only be attached to a single Droplet. However, up to fifteen volumes may be attached
-    /// to a Droplet at a time. Pre-formatted volumes will be automatically mounted to Ubuntu, Debian, Fedora, Fedora
-    /// Atomic, and CentOS Droplets created on or after April 26, 2018 when attached. On older Droplets, [additional
-    /// configuration](https://docs.digitalocean.com/products/volumes/how-to/mount/) is required. ## Remove a Block
-    /// Storage Volume from a Droplet | Attribute | Details | | ---------- |
-    /// ------------------------------------------------------------------- | | type | This must be `detach` | |
-    /// droplet_id | Set to the Droplet's ID | | region | Set to the slug representing the region where the volume is
-    /// located | ## Resize a Volume | Attribute | Details | | -------------- |
-    /// ------------------------------------------------------------------- | | type | This must be `resize` | |
-    /// size_gigabytes | The new size of the block storage volume in GiB (1024^3) | | region | Set to the slug
-    /// representing the region where the volume is located | Volumes may only be resized upwards. The maximum size for
-    /// a volume is 16TiB.
-    public func volumeActionsPostById(
-        volumeId: String,
-        body: VolumeActionsPostByIdRequestBody,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VolumeActionResponse {
-        try await BlockStorageActionsMethods.volumeActionsPostById(
-            config: config,
-            volumeId: volumeId,
-            body: body,
-            perPage: perPage,
-            page: page,
-            requestOptions: requestOptions
-        )
+    /// To initiate an action on a block storage volume by Id, send a POST request to `~/v2/volumes/$VOLUME_ID/actions`. The body should contain the appropriate attributes for the respective action. ## Attach a Block Storage Volume to a Droplet | Attribute | Details | | ---------- | ------------------------------------------------------------------- | | type | This must be `attach` | | droplet_id | Set to the Droplet's ID | | region | Set to the slug representing the region where the volume is located | Each volume may only be attached to a single Droplet. However, up to fifteen volumes may be attached to a Droplet at a time. Pre-formatted volumes will be automatically mounted to Ubuntu, Debian, Fedora, Fedora Atomic, and CentOS Droplets created on or after April 26, 2018 when attached. On older Droplets, [additional configuration](https://docs.digitalocean.com/products/volumes/how-to/mount/) is required. ## Remove a Block Storage Volume from a Droplet | Attribute | Details | | ---------- | ------------------------------------------------------------------- | | type | This must be `detach` | | droplet_id | Set to the Droplet's ID | | region | Set to the slug representing the region where the volume is located | ## Resize a Volume | Attribute | Details | | -------------- | ------------------------------------------------------------------- | | type | This must be `resize` | | size_gigabytes | The new size of the block storage volume in GiB (1024^3) | | region | Set to the slug representing the region where the volume is located | Volumes may only be resized upwards. The maximum size for a volume is 16TiB.
+    public func volumeActionsPostById(volumeId: String, body: VolumeActionsPostByIdRequestBody, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> VolumeActionResponse {
+        return try await BlockStorageActionsMethods.volumeActionsPostById(config: config, volumeId: volumeId, body: body, perPage: perPage, page: page, requestOptions: requestOptions)
     }
 
-    /// To retrieve the status of a volume action, send a GET request to `/v2/volumes/$VOLUME_ID/actions/$ACTION_ID`.
-    public func volumeActionsGet(
-        volumeId: String,
-        actionId: Int,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VolumeActionResponse {
-        try await BlockStorageActionsMethods.volumeActionsGet(
-            config: config,
-            volumeId: volumeId,
-            actionId: actionId,
-            perPage: perPage,
-            page: page,
-            requestOptions: requestOptions
-        )
+/// To retrieve the status of a volume action, send a GET request to `/v2/volumes/$VOLUME_ID/actions/$ACTION_ID`.
+    public func volumeActionsGet(volumeId: String, actionId: Int, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> VolumeActionResponse {
+        return try await BlockStorageActionsMethods.volumeActionsGet(config: config, volumeId: volumeId, actionId: actionId, perPage: perPage, page: page, requestOptions: requestOptions)
     }
 }
 
@@ -445,124 +162,55 @@ public class VpcsNamespace {
         self.config = config
     }
 
-    /// To list all of the VPCs on your account, send a GET request to `/v2/vpcs`.
-    public func list(
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AllVpcs {
-        try await VpcsMethods.vpcsList(config: config, perPage: perPage, page: page, requestOptions: requestOptions)
+/// To list all of the VPCs on your account, send a GET request to `/v2/vpcs`.
+    public func list(perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AllVpcs {
+        return try await VpcsMethods.vpcsList(config: config, perPage: perPage, page: page, requestOptions: requestOptions)
     }
 
-    /// To create a VPC, send a POST request to `/v2/vpcs` specifying the attributes in the table below in the JSON
-    /// body. **Note:** If you do not currently have a VPC network in a specific datacenter region, the first one that
-    /// you create will be set as the default for that region. The default VPC for a region cannot be changed or
-    /// deleted.
+/// To create a VPC, send a POST request to `/v2/vpcs` specifying the attributes in the table below in the JSON body. **Note:** If you do not currently have a VPC network in a specific datacenter region, the first one that you create will be set as the default for that region. The default VPC for a region cannot be changed or deleted.
     public func create(body: [String: JSONValue], requestOptions: RequestOptions? = nil) async throws -> ExistingVpc {
-        try await VpcsMethods.vpcsCreate(config: config, body: body, requestOptions: requestOptions)
+        return try await VpcsMethods.vpcsCreate(config: config, body: body, requestOptions: requestOptions)
     }
 
-    /// To show information about an existing VPC, send a GET request to `/v2/vpcs/$VPC_ID`.
+/// To show information about an existing VPC, send a GET request to `/v2/vpcs/$VPC_ID`.
     public func get(vpcId: String, requestOptions: RequestOptions? = nil) async throws -> ExistingVpc {
-        try await VpcsMethods.vpcsGet(config: config, vpcId: vpcId, requestOptions: requestOptions)
+        return try await VpcsMethods.vpcsGet(config: config, vpcId: vpcId, requestOptions: requestOptions)
     }
 
-    /// To update information about a VPC, send a PUT request to `/v2/vpcs/$VPC_ID`.
-    public func update(
-        vpcId: String,
-        body: [String: JSONValue],
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExistingVpc {
-        try await VpcsMethods.vpcsUpdate(config: config, vpcId: vpcId, body: body, requestOptions: requestOptions)
+/// To update information about a VPC, send a PUT request to `/v2/vpcs/$VPC_ID`.
+    public func update(vpcId: String, body: [String: JSONValue], requestOptions: RequestOptions? = nil) async throws -> ExistingVpc {
+        return try await VpcsMethods.vpcsUpdate(config: config, vpcId: vpcId, body: body, requestOptions: requestOptions)
     }
 
-    /// To update a subset of information about a VPC, send a PATCH request to `/v2/vpcs/$VPC_ID`.
-    public func patch(
-        vpcId: String,
-        body: VpcsPatchRequestBody,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExistingVpc {
-        try await VpcsMethods.vpcsPatch(config: config, vpcId: vpcId, body: body, requestOptions: requestOptions)
+/// To update a subset of information about a VPC, send a PATCH request to `/v2/vpcs/$VPC_ID`.
+    public func patch(vpcId: String, body: VpcsPatchRequestBody, requestOptions: RequestOptions? = nil) async throws -> ExistingVpc {
+        return try await VpcsMethods.vpcsPatch(config: config, vpcId: vpcId, body: body, requestOptions: requestOptions)
     }
 
-    /// To delete a VPC, send a DELETE request to `/v2/vpcs/$VPC_ID`. A 204 status code with no body will be returned in
-    /// response to a successful request. The default VPC for a region can not be deleted. Additionally, a VPC can only
-    /// be deleted if it does not contain any member resources. Attempting to delete a region's default VPC or a VPC
-    /// that still has members will result in a 403 Forbidden error response.
+/// To delete a VPC, send a DELETE request to `/v2/vpcs/$VPC_ID`. A 204 status code with no body will be returned in response to a successful request. The default VPC for a region can not be deleted. Additionally, a VPC can only be deleted if it does not contain any member resources. Attempting to delete a region's default VPC or a VPC that still has members will result in a 403 Forbidden error response.
     public func delete(vpcId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        try await VpcsMethods.vpcsDelete(config: config, vpcId: vpcId, requestOptions: requestOptions)
+        return try await VpcsMethods.vpcsDelete(config: config, vpcId: vpcId, requestOptions: requestOptions)
     }
 
-    /// To list all of the resources that are members of a VPC, send a GET request to `/v2/vpcs/$VPC_ID/members`. To
-    /// only list resources of a specific type that are members of the VPC, included a `resource_type` query parameter.
-    /// For example, to only list Droplets in the VPC, send a GET request to
-    /// `/v2/vpcs/$VPC_ID/members?resource_type=droplet`. Only resources that you are authorized to see will be returned
-    /// (e.g. to see Droplets, you must have `droplet:read`).
-    public func listMembers(
-        vpcId: String,
-        resourceType: VpcsListMembersParameter? = nil,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VpcMembers {
-        try await VpcsMethods.vpcsListMembers(
-            config: config,
-            vpcId: vpcId,
-            resourceType: resourceType,
-            perPage: perPage,
-            page: page,
-            requestOptions: requestOptions
-        )
+/// To list all of the resources that are members of a VPC, send a GET request to `/v2/vpcs/$VPC_ID/members`. To only list resources of a specific type that are members of the VPC, included a `resource_type` query parameter. For example, to only list Droplets in the VPC, send a GET request to `/v2/vpcs/$VPC_ID/members?resource_type=droplet`. Only resources that you are authorized to see will be returned (e.g. to see Droplets, you must have `droplet:read`).
+    public func listMembers(vpcId: String, resourceType: VpcsListMembersParameter? = nil, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> VpcMembers {
+        return try await VpcsMethods.vpcsListMembers(config: config, vpcId: vpcId, resourceType: resourceType, perPage: perPage, page: page, requestOptions: requestOptions)
     }
 
-    /// To list all of a VPC's peerings, send a GET request to `/v2/vpcs/$VPC_ID/peerings`.
-    public func listPeerings(
-        vpcId: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VpcPeerings {
-        try await VpcsMethods.vpcsListPeerings(
-            config: config,
-            vpcId: vpcId,
-            perPage: perPage,
-            page: page,
-            requestOptions: requestOptions
-        )
+/// To list all of a VPC's peerings, send a GET request to `/v2/vpcs/$VPC_ID/peerings`.
+    public func listPeerings(vpcId: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> VpcPeerings {
+        return try await VpcsMethods.vpcsListPeerings(config: config, vpcId: vpcId, perPage: perPage, page: page, requestOptions: requestOptions)
     }
 }
 
-public extension VpcsNamespace {
-    /// To create a new VPC peering for a given VPC, send a POST request to `/v2/vpcs/$VPC_ID/peerings`.
-    func createPeerings(
-        vpcId: String,
-        name: String,
-        vpcId2: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VpcPeeringResponse {
-        try await VpcsMethods.vpcsCreatePeerings(
-            config: config,
-            vpcId: vpcId,
-            name: name,
-            vpcId2: vpcId2,
-            requestOptions: requestOptions
-        )
+extension VpcsNamespace {
+/// To create a new VPC peering for a given VPC, send a POST request to `/v2/vpcs/$VPC_ID/peerings`.
+    public func createPeerings(vpcId: String, name: String, vpcId2: String, requestOptions: RequestOptions? = nil) async throws -> VpcPeeringResponse {
+        return try await VpcsMethods.vpcsCreatePeerings(config: config, vpcId: vpcId, name: name, vpcId2: vpcId2, requestOptions: requestOptions)
     }
 
-    /// To update the name of a VPC peering in a particular VPC, send a PATCH request to
-    /// `/v2/vpcs/$VPC_ID/peerings/$VPC_PEERING_ID` with the new `name` in the request body.
-    func patchPeerings(
-        vpcId: String,
-        vpcPeeringId: String,
-        name: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> VpcPeeringResponse {
-        try await VpcsMethods.vpcsPatchPeerings(
-            config: config,
-            vpcId: vpcId,
-            vpcPeeringId: vpcPeeringId,
-            name: name,
-            requestOptions: requestOptions
-        )
+/// To update the name of a VPC peering in a particular VPC, send a PATCH request to `/v2/vpcs/$VPC_ID/peerings/$VPC_PEERING_ID` with the new `name` in the request body.
+    public func patchPeerings(vpcId: String, vpcPeeringId: String, name: String, requestOptions: RequestOptions? = nil) async throws -> VpcPeeringResponse {
+        return try await VpcsMethods.vpcsPatchPeerings(config: config, vpcId: vpcId, vpcPeeringId: vpcPeeringId, name: name, requestOptions: requestOptions)
     }
 }

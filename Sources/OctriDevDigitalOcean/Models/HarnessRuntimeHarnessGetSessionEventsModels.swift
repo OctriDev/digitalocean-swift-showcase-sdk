@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HarnessRuntime domain models
+// HarnessRuntime domain models
 /// The JSON payload carried in each SSE event's `data:` field (canonical SPI event envelope). The SSE `event:`
 /// field repeats `type`, and the `id:` field repeats `event_id`.
 public struct StreamEvent: Codable {
@@ -79,57 +79,40 @@ public struct StreamEvent: Codable {
     }
 
     init() {
-        (eventId, runId, tenantId, sessionId, traceParent) = (nil, nil, nil, nil, nil)
-        (timestamp, seq, sourceEventId, sourceEventType, sourceTenantId) = (nil, nil, nil, nil, nil)
-        (producer, definitionId, revisionId, credentialBindingSetId, type) = (nil, nil, nil, nil, nil)
-        data = nil
+        (self.eventId, self.runId, self.tenantId, self.sessionId, self.traceParent) = (nil, nil, nil, nil, nil)
+        (self.timestamp, self.seq, self.sourceEventId, self.sourceEventType, self.sourceTenantId) = (nil, nil, nil, nil, nil)
+        (self.producer, self.definitionId, self.revisionId, self.credentialBindingSetId, self.type) = (nil, nil, nil, nil, nil)
+        self.data = nil
     }
 }
 
-public extension StreamEvent {
-    init(from decoder: Decoder) throws {
+extension StreamEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        eventId = try container.sdkDecodeIfPresent(.eventId)
-        runId = try container.sdkDecodeIfPresent(.runId)
-        tenantId = try container.sdkDecodeIfPresent(.tenantId)
-        sessionId = try container.sdkDecodeIfPresent(.sessionId)
-        traceParent = try container.sdkDecodeIfPresent(.traceParent)
-        timestamp = try container.sdkDecodeIfPresent(.timestamp)
-        seq = try container.sdkDecodeIfPresent(.seq)
-        sourceEventId = try container.sdkDecodeIfPresent(.sourceEventId)
-        sourceEventType = try container.sdkDecodeIfPresent(.sourceEventType)
-        sourceTenantId = try container.sdkDecodeIfPresent(.sourceTenantId)
-        producer = try container.sdkDecodeIfPresent(.producer)
-        definitionId = try container.sdkDecodeIfPresent(.definitionId)
-        revisionId = try container.sdkDecodeIfPresent(.revisionId)
-        credentialBindingSetId = try container.sdkDecodeIfPresent(.credentialBindingSetId)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
-        if let value = timestamp {
+        self.eventId = try container.sdkDecodeIfPresent(.eventId)
+        self.runId = try container.sdkDecodeIfPresent(.runId)
+        self.tenantId = try container.sdkDecodeIfPresent(.tenantId)
+        self.sessionId = try container.sdkDecodeIfPresent(.sessionId)
+        self.traceParent = try container.sdkDecodeIfPresent(.traceParent)
+        self.timestamp = try container.sdkDecodeIfPresent(.timestamp)
+        self.seq = try container.sdkDecodeIfPresent(.seq)
+        self.sourceEventId = try container.sdkDecodeIfPresent(.sourceEventId)
+        self.sourceEventType = try container.sdkDecodeIfPresent(.sourceEventType)
+        self.sourceTenantId = try container.sdkDecodeIfPresent(.sourceTenantId)
+        self.producer = try container.sdkDecodeIfPresent(.producer)
+        self.definitionId = try container.sdkDecodeIfPresent(.definitionId)
+        self.revisionId = try container.sdkDecodeIfPresent(.revisionId)
+        self.credentialBindingSetId = try container.sdkDecodeIfPresent(.credentialBindingSetId)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
+        if let value = self.timestamp {
             try sdkValidateDateTime("timestamp", sdkWireString(value))
         }
     }
 }
 
-public extension StreamEvent {
-    init(
-        eventId: String? = nil,
-        runId: String? = nil,
-        tenantId: String? = nil,
-        sessionId: String? = nil,
-        traceParent: String? = nil,
-        timestamp: Date? = nil,
-        seq: Int? = nil,
-        sourceEventId: String? = nil,
-        sourceEventType: String? = nil,
-        sourceTenantId: String? = nil,
-        producer: StreamEventProducer? = nil,
-        definitionId: String? = nil,
-        revisionId: String? = nil,
-        credentialBindingSetId: String? = nil,
-        type: StreamEventType? = nil,
-        data: [String: JSONValue]? = nil
-    ) throws {
+extension StreamEvent {
+    public init(eventId: String? = nil, runId: String? = nil, tenantId: String? = nil, sessionId: String? = nil, traceParent: String? = nil, timestamp: Date? = nil, seq: Int? = nil, sourceEventId: String? = nil, sourceEventType: String? = nil, sourceTenantId: String? = nil, producer: StreamEventProducer? = nil, definitionId: String? = nil, revisionId: String? = nil, credentialBindingSetId: String? = nil, type: StreamEventType? = nil, data: [String: JSONValue]? = nil) throws {
         self.init()
         (self.eventId, self.runId) = (eventId, runId)
         (self.tenantId, self.sessionId) = (tenantId, sessionId)
@@ -149,10 +132,7 @@ public extension StreamEvent {
 public struct StreamEventProducer: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let agent = StreamEventProducer(rawValue: "agent")
     public static let ohr = StreamEventProducer(rawValue: "ohr")
     public static let ohp = StreamEventProducer(rawValue: "ohp")
@@ -160,7 +140,7 @@ public struct StreamEventProducer: RawRepresentable, Hashable, Codable, Sendable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -173,10 +153,7 @@ public struct StreamEventProducer: RawRepresentable, Hashable, Codable, Sendable
 public struct StreamEventType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let runStarted = StreamEventType(rawValue: "run.started")
     public static let runTokenDelta = StreamEventType(rawValue: "run.token_delta")
     public static let runToolCallStarted = StreamEventType(rawValue: "run.tool_call_started")
@@ -200,7 +177,7 @@ public struct StreamEventType: RawRepresentable, Hashable, Codable, Sendable, Sd
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

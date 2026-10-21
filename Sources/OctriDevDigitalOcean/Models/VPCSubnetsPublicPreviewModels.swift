@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// VPCSubnetsPublicPreview domain models
+// VPCSubnetsPublicPreview domain models
 /// Typed representation of the `AllVpcSubnets` API schema.
 public struct AllVpcSubnets: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,29 +18,23 @@ public struct AllVpcSubnets: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllVpcSubnets {
-    init(from decoder: Decoder) throws {
+extension AllVpcSubnets {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        vpcSubnet = try container.sdkDecodeIfPresent(.vpcSubnet)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.vpcSubnet = try container.sdkDecodeIfPresent(.vpcSubnet)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllVpcSubnets {
-    init(meta: MetaMeta, vpcSubnet: [VpcSubnet]? = nil, links: PageLinks? = nil) {
+extension AllVpcSubnets {
+    public init(meta: MetaMeta, vpcSubnet: [VpcSubnet]? = nil, links: PageLinks? = nil) {
         (self.meta, self.vpcSubnet) = (meta, vpcSubnet)
         self.links = links
     }
@@ -56,19 +50,19 @@ public struct SingleVpcSubnet: Codable {
     }
 
     init() {
-        vpcSubnet = nil
+        self.vpcSubnet = nil
     }
 }
 
-public extension SingleVpcSubnet {
-    init(from decoder: Decoder) throws {
+extension SingleVpcSubnet {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        vpcSubnet = try container.sdkDecodeIfPresent(.vpcSubnet)
+        self.vpcSubnet = try container.sdkDecodeIfPresent(.vpcSubnet)
     }
 }
 
-public extension SingleVpcSubnet {
-    init(vpcSubnet: VpcSubnet? = nil) {
+extension SingleVpcSubnet {
+    public init(vpcSubnet: VpcSubnet? = nil) {
         self.init()
         self.vpcSubnet = vpcSubnet
     }
@@ -84,32 +78,26 @@ public struct VpcSubnetUpdate: Codable {
         case name
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VpcSubnetUpdate {
-    init(from decoder: Decoder) throws {
+extension VpcSubnetUpdate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        try validateLength("name", name, min: nil, max: 255)
-        try sdkValidatePattern("name", name, sdkPatterna828669d9fe5)
+        self.name = try container.sdkDecodeRequired(.name)
+            try validateLength("name", self.name, min: nil, max: 255)
+            try sdkValidatePattern("name", self.name, sdkPatterna828669d9fe5)
     }
 }
 
-public extension VpcSubnetUpdate {
-    init(name: String) throws {
+extension VpcSubnetUpdate {
+    public init(name: String) throws {
         self.name = name
-        try validateLength("name", self.name, min: nil, max: 255)
-        try sdkValidatePattern("name", self.name, sdkPatterna828669d9fe5)
+            try validateLength("name", self.name, min: nil, max: 255)
+            try sdkValidatePattern("name", self.name, sdkPatterna828669d9fe5)
     }
 }
 
@@ -127,29 +115,23 @@ public struct VpcSubnetMembers: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VpcSubnetMembers {
-    init(from decoder: Decoder) throws {
+extension VpcSubnetMembers {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        members = try container.sdkDecodeIfPresent(.members)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.members = try container.sdkDecodeIfPresent(.members)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension VpcSubnetMembers {
-    init(meta: MetaMeta, members: [VpcMember]? = nil, links: PageLinks? = nil) {
+extension VpcSubnetMembers {
+    public init(meta: MetaMeta, members: [VpcMember]? = nil, links: PageLinks? = nil) {
         (self.meta, self.members) = (meta, members)
         self.links = links
     }
@@ -169,33 +151,27 @@ public struct VpcSubnetCreate: Codable {
         case ipRange = "ip_range"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VpcSubnetCreate {
-    init(from decoder: Decoder) throws {
+extension VpcSubnetCreate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        ipRange = try container.sdkDecodeIfPresent(.ipRange)
-        try validateLength("name", name, min: nil, max: 255)
-        try sdkValidatePattern("name", name, sdkPatterna828669d9fe5)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.ipRange = try container.sdkDecodeIfPresent(.ipRange)
+            try validateLength("name", self.name, min: nil, max: 255)
+            try sdkValidatePattern("name", self.name, sdkPatterna828669d9fe5)
     }
 }
 
-public extension VpcSubnetCreate {
-    init(name: String, ipRange: String? = nil) throws {
+extension VpcSubnetCreate {
+    public init(name: String, ipRange: String? = nil) throws {
         (self.name, self.ipRange) = (name, ipRange)
-        try validateLength("name", self.name, min: nil, max: 255)
-        try sdkValidatePattern("name", self.name, sdkPatterna828669d9fe5)
+            try validateLength("name", self.name, min: nil, max: 255)
+            try sdkValidatePattern("name", self.name, sdkPatterna828669d9fe5)
     }
 }
 
@@ -207,19 +183,19 @@ public struct VpcSubnetMembersVariant0: Codable {
     }
 
     init() {
-        members = nil
+        self.members = nil
     }
 }
 
-public extension VpcSubnetMembersVariant0 {
-    init(from decoder: Decoder) throws {
+extension VpcSubnetMembersVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        members = try container.sdkDecodeIfPresent(.members)
+        self.members = try container.sdkDecodeIfPresent(.members)
     }
 }
 
-public extension VpcSubnetMembersVariant0 {
-    init(members: [VpcMember]? = nil) {
+extension VpcSubnetMembersVariant0 {
+    public init(members: [VpcMember]? = nil) {
         self.init()
         self.members = members
     }
@@ -235,19 +211,19 @@ public struct VpcSubnetMeta: Codable {
     }
 
     init() {
-        stats = nil
+        self.stats = nil
     }
 }
 
-public extension VpcSubnetMeta {
-    init(from decoder: Decoder) throws {
+extension VpcSubnetMeta {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        stats = try container.sdkDecodeIfPresent(.stats)
+        self.stats = try container.sdkDecodeIfPresent(.stats)
     }
 }
 
-public extension VpcSubnetMeta {
-    init(stats: VpcSubnetStatistics? = nil) {
+extension VpcSubnetMeta {
+    public init(stats: VpcSubnetStatistics? = nil) {
         self.init()
         self.stats = stats
     }
@@ -261,19 +237,19 @@ public struct AllVpcSubnetsVariant0: Codable {
     }
 
     init() {
-        vpcSubnet = nil
+        self.vpcSubnet = nil
     }
 }
 
-public extension AllVpcSubnetsVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllVpcSubnetsVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        vpcSubnet = try container.sdkDecodeIfPresent(.vpcSubnet)
+        self.vpcSubnet = try container.sdkDecodeIfPresent(.vpcSubnet)
     }
 }
 
-public extension AllVpcSubnetsVariant0 {
-    init(vpcSubnet: [VpcSubnet]? = nil) {
+extension AllVpcSubnetsVariant0 {
+    public init(vpcSubnet: [VpcSubnet]? = nil) {
         self.init()
         self.vpcSubnet = vpcSubnet
     }
@@ -320,96 +296,56 @@ public struct VpcSubnet: Codable {
         case meta
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VpcSubnet {
-    init(from decoder: Decoder) throws {
+extension VpcSubnet {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.urn) else {
-            throw SdkValidationError(
-                field: "urn",
-                code: "required",
-                message: "Validation failed for 'urn': value is required"
-            )
+            throw SdkValidationError(field: "urn", code: "required", message: "Validation failed for 'urn': value is required")
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.ipRange) else {
-            throw SdkValidationError(
-                field: "ip_range",
-                code: "required",
-                message: "Validation failed for 'ip_range': value is required"
-            )
+            throw SdkValidationError(field: "ip_range", code: "required", message: "Validation failed for 'ip_range': value is required")
         }
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        urn = try container.sdkDecodeRequired(.urn)
-        name = try container.sdkDecodeRequired(.name)
-        ipRange = try container.sdkDecodeRequired(.ipRange)
-        type = try container.sdkDecodeRequired(.type)
-        region = try container.sdkDecodeRequired(.region)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.default = try container.sdkDecodeIfPresent(.default)
-        meta = try container.sdkDecodeIfPresent(.meta)
-        try sdkValidateUuid("id", id)
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.id = try container.sdkDecodeRequired(.id)
+        self.urn = try container.sdkDecodeRequired(.urn)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.ipRange = try container.sdkDecodeRequired(.ipRange)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.`default` = try container.sdkDecodeIfPresent(.`default`)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
+            try sdkValidateUuid("id", self.id)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension VpcSubnet {
-    init(
-        id: String,
-        urn: String,
-        name: String,
-        ipRange: String,
-        type: VpcSubnetType,
-        region: String,
-        createdAt: Date,
-        default: Bool? = nil,
-        meta: VpcSubnetMeta? = nil
-    ) throws {
+extension VpcSubnet {
+    public init(id: String, urn: String, name: String, ipRange: String, type: VpcSubnetType, region: String, createdAt: Date, `default`: Bool? = nil, meta: VpcSubnetMeta? = nil) throws {
         (self.id, self.urn) = (id, urn)
         (self.name, self.ipRange) = (name, ipRange)
         (self.type, self.region) = (type, region)
-        (self.createdAt, self.default) = (createdAt, `default`)
+        (self.createdAt, self.`default`) = (createdAt, `default`)
         self.meta = meta
-        try sdkValidateUuid("id", self.id)
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateUuid("id", self.id)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -428,43 +364,27 @@ public struct VpcSubnetStatistics: Codable {
     }
 
     init() {
-        (members, resources) = (nil, nil)
+        (self.members, self.resources) = (nil, nil)
     }
 }
 
-public extension VpcSubnetStatistics {
-    init(from decoder: Decoder) throws {
+extension VpcSubnetStatistics {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        members = try container.sdkDecodeIfPresent(.members)
-        resources = try container.sdkDecodeIfPresent(.resources)
-        if let value = members {
-            try validateRange(
-                "members",
-                Double(value),
-                min: 0,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.members = try container.sdkDecodeIfPresent(.members)
+        self.resources = try container.sdkDecodeIfPresent(.resources)
+        if let value = self.members {
+            try validateRange("members", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
-public extension VpcSubnetStatistics {
-    init(members: Int? = nil, resources: [String: Int]? = nil) throws {
+extension VpcSubnetStatistics {
+    public init(members: Int? = nil, resources: [String: Int]? = nil) throws {
         self.init()
         (self.members, self.resources) = (members, resources)
         if let value = self.members {
-            try validateRange(
-                "members",
-                Double(value),
-                min: 0,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("members", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -473,17 +393,14 @@ public extension VpcSubnetStatistics {
 public struct VpcSubnetType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let regular = VpcSubnetType(rawValue: "REGULAR")
     public static let managed = VpcSubnetType(rawValue: "MANAGED")
     public static let overlay = VpcSubnetType(rawValue: "OVERLAY")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

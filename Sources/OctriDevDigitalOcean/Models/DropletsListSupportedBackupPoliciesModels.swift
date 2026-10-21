@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Droplets domain models
+// Droplets domain models
 /// Typed representation of the `DropletsSupportedBackupPolicies` API schema.
 public struct DropletsSupportedBackupPolicies: Codable {
     /// Optional array value serialized in the `supported_policies` wire field.
@@ -14,19 +14,19 @@ public struct DropletsSupportedBackupPolicies: Codable {
     }
 
     init() {
-        supportedPolicies = nil
+        self.supportedPolicies = nil
     }
 }
 
-public extension DropletsSupportedBackupPolicies {
-    init(from decoder: Decoder) throws {
+extension DropletsSupportedBackupPolicies {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        supportedPolicies = try container.sdkDecodeIfPresent(.supportedPolicies)
+        self.supportedPolicies = try container.sdkDecodeIfPresent(.supportedPolicies)
     }
 }
 
-public extension DropletsSupportedBackupPolicies {
-    init(supportedPolicies: [SupportedDropletBackupPolicy]? = nil) {
+extension DropletsSupportedBackupPolicies {
+    public init(supportedPolicies: [SupportedDropletBackupPolicy]? = nil) {
         self.init()
         self.supportedPolicies = supportedPolicies
     }
@@ -59,29 +59,23 @@ public struct SupportedDropletBackupPolicy: Codable {
     }
 
     init() {
-        (name, possibleWindowStarts, windowLengthHours, retentionPeriodDays, possibleDays) = (nil, nil, nil, nil, nil)
+        (self.name, self.possibleWindowStarts, self.windowLengthHours, self.retentionPeriodDays, self.possibleDays) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension SupportedDropletBackupPolicy {
-    init(from decoder: Decoder) throws {
+extension SupportedDropletBackupPolicy {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        possibleWindowStarts = try container.sdkDecodeIfPresent(.possibleWindowStarts)
-        windowLengthHours = try container.sdkDecodeIfPresent(.windowLengthHours)
-        retentionPeriodDays = try container.sdkDecodeIfPresent(.retentionPeriodDays)
-        possibleDays = try container.sdkDecodeIfPresent(.possibleDays)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.possibleWindowStarts = try container.sdkDecodeIfPresent(.possibleWindowStarts)
+        self.windowLengthHours = try container.sdkDecodeIfPresent(.windowLengthHours)
+        self.retentionPeriodDays = try container.sdkDecodeIfPresent(.retentionPeriodDays)
+        self.possibleDays = try container.sdkDecodeIfPresent(.possibleDays)
     }
 }
 
-public extension SupportedDropletBackupPolicy {
-    init(
-        name: String? = nil,
-        possibleWindowStarts: [Int]? = nil,
-        windowLengthHours: Int? = nil,
-        retentionPeriodDays: Int? = nil,
-        possibleDays: [String]? = nil
-    ) {
+extension SupportedDropletBackupPolicy {
+    public init(name: String? = nil, possibleWindowStarts: [Int]? = nil, windowLengthHours: Int? = nil, retentionPeriodDays: Int? = nil, possibleDays: [String]? = nil) {
         self.init()
         (self.name, self.possibleWindowStarts) = (name, possibleWindowStarts)
         (self.windowLengthHours, self.retentionPeriodDays) = (windowLengthHours, retentionPeriodDays)

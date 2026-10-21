@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiCreate domain models
+// AgentPlatformAPIApiCreate domain models
 /// Public request for presigned upload URLs for model evaluation dataset files.
 public struct ApiCreateModelEvalDatasetUploadPresignedUrlsInputPublic: Codable {
     /// A list of files to generate presigned URLs for.
@@ -14,19 +14,19 @@ public struct ApiCreateModelEvalDatasetUploadPresignedUrlsInputPublic: Codable {
     }
 
     init() {
-        files = nil
+        self.files = nil
     }
 }
 
-public extension ApiCreateModelEvalDatasetUploadPresignedUrlsInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiCreateModelEvalDatasetUploadPresignedUrlsInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        files = try container.sdkDecodeIfPresent(.files)
+        self.files = try container.sdkDecodeIfPresent(.files)
     }
 }
 
-public extension ApiCreateModelEvalDatasetUploadPresignedUrlsInputPublic {
-    init(files: [ApiPresignedUrlFile]? = nil) {
+extension ApiCreateModelEvalDatasetUploadPresignedUrlsInputPublic {
+    public init(files: [ApiPresignedUrlFile]? = nil) {
         self.init()
         self.files = files
     }

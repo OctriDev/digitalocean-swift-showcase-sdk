@@ -6,46 +6,17 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AppsMethods {
+extension AppsMethods {
     /// List all instance sizes for `service`, `worker`, and `job` components.
-    static func appsListInstanceSizes(
-        config: ClientConfig,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppsListInstanceSizesResponse {
-        try await (sdkRequest(
-            "GET",
-            "/v2/apps/tiers/instance_sizes",
-            config: config,
-            decoder: .json,
-            operationId: "apps_list_instanceSizes",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    public static func appsListInstanceSizes(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> AppsListInstanceSizesResponse {
+        return try (await sdkRequest("GET", "/v2/apps/tiers/instance_sizes", config: config, decoder: .json, operationId: "apps_list_instanceSizes", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// Retrieve information about a specific instance size for `service`, `worker`, and `job` components.
     ///
     /// - Parameters:
     /// - slug: The slug of the instance size
-    static func appsGetInstanceSize(
-        config: ClientConfig,
-        slug: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppsGetInstanceSizeResponse {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/apps/tiers/instance_sizes/", sdkEncodePathSegment(sdkWireString(slug))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "apps_get_instanceSize",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func appsGetInstanceSize(config: ClientConfig, slug: String, requestOptions: RequestOptions? = nil) async throws -> AppsGetInstanceSizeResponse {
+        return try (await sdkRequest("GET", ["/v2/apps/tiers/instance_sizes/", sdkEncodePathSegment(sdkWireString(slug))].joined(), config: config, decoder: .json, operationId: "apps_get_instanceSize", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

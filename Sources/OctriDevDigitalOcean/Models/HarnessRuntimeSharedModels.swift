@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HarnessRuntime domain models
+// HarnessRuntime domain models
 /// Customer-declared tool-execution permission policy (spec.permissions). REQUEST only: the policy engine resolves
 /// it (∩ tenant ∩ platform) into the canonical policy and validates it against the (agent, version) capability
 /// descriptor. Absent or empty means the agent keeps its built-in default gating — no policy is shipped to the
@@ -29,27 +29,22 @@ public struct Permissions: Codable {
     }
 
     init() {
-        (defaultAction, rules, filesystem, network) = (nil, nil, nil, nil)
+        (self.defaultAction, self.rules, self.filesystem, self.network) = (nil, nil, nil, nil)
     }
 }
 
-public extension Permissions {
-    init(from decoder: Decoder) throws {
+extension Permissions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        defaultAction = try container.sdkDecodeIfPresent(.defaultAction)
-        rules = try container.sdkDecodeIfPresent(.rules)
-        filesystem = try container.sdkDecodeIfPresent(.filesystem)
-        network = try container.sdkDecodeIfPresent(.network)
+        self.defaultAction = try container.sdkDecodeIfPresent(.defaultAction)
+        self.rules = try container.sdkDecodeIfPresent(.rules)
+        self.filesystem = try container.sdkDecodeIfPresent(.filesystem)
+        self.network = try container.sdkDecodeIfPresent(.network)
     }
 }
 
-public extension Permissions {
-    init(
-        defaultAction: PermissionsDefaultAction? = nil,
-        rules: [PermissionRule]? = nil,
-        filesystem: PermissionFilesystem? = nil,
-        network: PermissionNetwork? = nil
-    ) {
+extension Permissions {
+    public init(defaultAction: PermissionsDefaultAction? = nil, rules: [PermissionRule]? = nil, filesystem: PermissionFilesystem? = nil, network: PermissionNetwork? = nil) {
         self.init()
         (self.defaultAction, self.rules) = (defaultAction, rules)
         (self.filesystem, self.network) = (filesystem, network)
@@ -75,21 +70,21 @@ public struct InsightsOptIn: Codable {
     }
 
     init() {
-        (metrics, logs, traces) = (nil, nil, nil)
+        (self.metrics, self.logs, self.traces) = (nil, nil, nil)
     }
 }
 
-public extension InsightsOptIn {
-    init(from decoder: Decoder) throws {
+extension InsightsOptIn {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        metrics = try container.sdkDecodeIfPresent(.metrics)
-        logs = try container.sdkDecodeIfPresent(.logs)
-        traces = try container.sdkDecodeIfPresent(.traces)
+        self.metrics = try container.sdkDecodeIfPresent(.metrics)
+        self.logs = try container.sdkDecodeIfPresent(.logs)
+        self.traces = try container.sdkDecodeIfPresent(.traces)
     }
 }
 
-public extension InsightsOptIn {
-    init(metrics: Bool? = nil, logs: Bool? = nil, traces: Bool? = nil) {
+extension InsightsOptIn {
+    public init(metrics: Bool? = nil, logs: Bool? = nil, traces: Bool? = nil) {
         self.init()
         (self.metrics, self.logs) = (metrics, logs)
         self.traces = traces
@@ -115,24 +110,24 @@ public struct CronConfig: Codable {
     }
 
     init() {
-        (cronExpr, timezone, nextRunAt) = (nil, nil, nil)
+        (self.cronExpr, self.timezone, self.nextRunAt) = (nil, nil, nil)
     }
 }
 
-public extension CronConfig {
-    init(from decoder: Decoder) throws {
+extension CronConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        cronExpr = try container.sdkDecodeIfPresent(.cronExpr)
-        timezone = try container.sdkDecodeIfPresent(.timezone)
-        nextRunAt = try container.sdkDecodeIfPresent(.nextRunAt)
-        if let value = nextRunAt {
+        self.cronExpr = try container.sdkDecodeIfPresent(.cronExpr)
+        self.timezone = try container.sdkDecodeIfPresent(.timezone)
+        self.nextRunAt = try container.sdkDecodeIfPresent(.nextRunAt)
+        if let value = self.nextRunAt {
             try sdkValidateDateTime("next_run_at", sdkWireString(value))
         }
     }
 }
 
-public extension CronConfig {
-    init(cronExpr: String? = nil, timezone: String? = nil, nextRunAt: Date? = nil) throws {
+extension CronConfig {
+    public init(cronExpr: String? = nil, timezone: String? = nil, nextRunAt: Date? = nil) throws {
         self.init()
         (self.cronExpr, self.timezone) = (cronExpr, timezone)
         self.nextRunAt = nextRunAt
@@ -153,27 +148,21 @@ public struct SlackOutputWrite: Codable {
         case webhookUrl = "webhook_url"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SlackOutputWrite {
-    init(from decoder: Decoder) throws {
+extension SlackOutputWrite {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.webhookUrl) else {
-            throw SdkValidationError(
-                field: "webhook_url",
-                code: "required",
-                message: "Validation failed for 'webhook_url': value is required"
-            )
+            throw SdkValidationError(field: "webhook_url", code: "required", message: "Validation failed for 'webhook_url': value is required")
         }
-        webhookUrl = try container.sdkDecodeRequired(.webhookUrl)
+        self.webhookUrl = try container.sdkDecodeRequired(.webhookUrl)
     }
 }
 
-public extension SlackOutputWrite {
-    init(webhookUrl: String) {
+extension SlackOutputWrite {
+    public init(webhookUrl: String) {
         self.webhookUrl = webhookUrl
     }
 }
@@ -182,17 +171,14 @@ public extension SlackOutputWrite {
 public struct PermissionsDefaultAction: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let allow = PermissionsDefaultAction(rawValue: "allow")
     public static let ask = PermissionsDefaultAction(rawValue: "ask")
     public static let deny = PermissionsDefaultAction(rawValue: "deny")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

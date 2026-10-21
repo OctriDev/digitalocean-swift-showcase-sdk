@@ -6,27 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension KubernetesMethods {
-    /// To list the versions of Kubernetes available for use, the regions that support Kubernetes, and the available
-    /// node sizes, send a GET request to `/v2/kubernetes/options`.
-    static func kubernetesListOptions(
-        config: ClientConfig,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> KubernetesOptions {
-        try await (sdkRequest(
-            "GET",
-            "/v2/kubernetes/options",
-            config: config,
-            decoder: .json,
-            operationId: "kubernetes_list_options",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+extension KubernetesMethods {
+    /// To list the versions of Kubernetes available for use, the regions that support Kubernetes, and the available node sizes, send a GET request to `/v2/kubernetes/options`.
+    public static func kubernetesListOptions(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> KubernetesOptions {
+        return try (await sdkRequest("GET", "/v2/kubernetes/options", config: config, decoder: .json, operationId: "kubernetes_list_options", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

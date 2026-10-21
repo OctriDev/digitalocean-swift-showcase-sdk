@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Images domain models
+// Images domain models
 /// Typed representation of the `AllImages` API schema.
 public struct AllImages: Codable {
     public var images: [Image]
@@ -18,36 +18,26 @@ public struct AllImages: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllImages {
-    init(from decoder: Decoder) throws {
+extension AllImages {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.images) else {
-            throw SdkValidationError(
-                field: "images",
-                code: "required",
-                message: "Validation failed for 'images': value is required"
-            )
+            throw SdkValidationError(field: "images", code: "required", message: "Validation failed for 'images': value is required")
         }
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        images = try container.sdkDecodeRequired(.images)
-        meta = try container.sdkDecodeRequired(.meta)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.images = try container.sdkDecodeRequired(.images)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllImages {
-    init(images: [Image], meta: MetaMeta, links: PageLinks? = nil) {
+extension AllImages {
+    public init(images: [Image], meta: MetaMeta, links: PageLinks? = nil) {
         (self.images, self.meta) = (images, meta)
         self.links = links
     }
@@ -60,27 +50,21 @@ public struct AllImagesVariant0: Codable {
         case images
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllImagesVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllImagesVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.images) else {
-            throw SdkValidationError(
-                field: "images",
-                code: "required",
-                message: "Validation failed for 'images': value is required"
-            )
+            throw SdkValidationError(field: "images", code: "required", message: "Validation failed for 'images': value is required")
         }
-        images = try container.sdkDecodeRequired(.images)
+        self.images = try container.sdkDecodeRequired(.images)
     }
 }
 
-public extension AllImagesVariant0 {
-    init(images: [Image]) {
+extension AllImagesVariant0 {
+    public init(images: [Image]) {
         self.images = images
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Droplets domain models
+// Droplets domain models
 /// Typed representation of the `DropletBackupPolicyRecord` API schema.
 public struct DropletBackupPolicyRecord: Codable {
     /// The unique identifier for the Droplet.
@@ -25,27 +25,22 @@ public struct DropletBackupPolicyRecord: Codable {
     }
 
     init() {
-        (dropletId, backupEnabled, backupPolicy, nextBackupWindow) = (nil, nil, nil, nil)
+        (self.dropletId, self.backupEnabled, self.backupPolicy, self.nextBackupWindow) = (nil, nil, nil, nil)
     }
 }
 
-public extension DropletBackupPolicyRecord {
-    init(from decoder: Decoder) throws {
+extension DropletBackupPolicyRecord {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        dropletId = try container.sdkDecodeIfPresent(.dropletId)
-        backupEnabled = try container.sdkDecodeIfPresent(.backupEnabled)
-        backupPolicy = try container.sdkDecodeIfPresent(.backupPolicy)
-        nextBackupWindow = try container.sdkDecodeIfPresent(.nextBackupWindow)
+        self.dropletId = try container.sdkDecodeIfPresent(.dropletId)
+        self.backupEnabled = try container.sdkDecodeIfPresent(.backupEnabled)
+        self.backupPolicy = try container.sdkDecodeIfPresent(.backupPolicy)
+        self.nextBackupWindow = try container.sdkDecodeIfPresent(.nextBackupWindow)
     }
 }
 
-public extension DropletBackupPolicyRecord {
-    init(
-        dropletId: Int? = nil,
-        backupEnabled: Bool? = nil,
-        backupPolicy: DropletBackupPolicy? = nil,
-        nextBackupWindow: DropletNextBackupWindow? = nil
-    ) {
+extension DropletBackupPolicyRecord {
+    public init(dropletId: Int? = nil, backupEnabled: Bool? = nil, backupPolicy: DropletBackupPolicy? = nil, nextBackupWindow: DropletNextBackupWindow? = nil) {
         self.init()
         (self.dropletId, self.backupEnabled) = (dropletId, backupEnabled)
         (self.backupPolicy, self.nextBackupWindow) = (backupPolicy, nextBackupWindow)
@@ -88,89 +83,51 @@ public struct DropletSnapshot: Codable {
         case type
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DropletSnapshot {
-    init(from decoder: Decoder) throws {
+extension DropletSnapshot {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.regions) else {
-            throw SdkValidationError(
-                field: "regions",
-                code: "required",
-                message: "Validation failed for 'regions': value is required"
-            )
+            throw SdkValidationError(field: "regions", code: "required", message: "Validation failed for 'regions': value is required")
         }
         guard container.contains(.minDiskSize) else {
-            throw SdkValidationError(
-                field: "min_disk_size",
-                code: "required",
-                message: "Validation failed for 'min_disk_size': value is required"
-            )
+            throw SdkValidationError(field: "min_disk_size", code: "required", message: "Validation failed for 'min_disk_size': value is required")
         }
         guard container.contains(.sizeGigabytes) else {
-            throw SdkValidationError(
-                field: "size_gigabytes",
-                code: "required",
-                message: "Validation failed for 'size_gigabytes': value is required"
-            )
+            throw SdkValidationError(field: "size_gigabytes", code: "required", message: "Validation failed for 'size_gigabytes': value is required")
         }
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        name = try container.sdkDecodeRequired(.name)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        regions = try container.sdkDecodeRequired(.regions)
-        minDiskSize = try container.sdkDecodeRequired(.minDiskSize)
-        sizeGigabytes = try container.sdkDecodeRequired(.sizeGigabytes)
-        type = try container.sdkDecodeRequired(.type)
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.id = try container.sdkDecodeRequired(.id)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.regions = try container.sdkDecodeRequired(.regions)
+        self.minDiskSize = try container.sdkDecodeRequired(.minDiskSize)
+        self.sizeGigabytes = try container.sdkDecodeRequired(.sizeGigabytes)
+        self.type = try container.sdkDecodeRequired(.type)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension DropletSnapshot {
-    init(
-        id: Int,
-        name: String,
-        createdAt: Date,
-        regions: [String],
-        minDiskSize: Int,
-        sizeGigabytes: Double,
-        type: DropletSnapshotVariant2Type
-    ) throws {
+extension DropletSnapshot {
+    public init(id: Int, name: String, createdAt: Date, regions: [String], minDiskSize: Int, sizeGigabytes: Double, type: DropletSnapshotVariant2Type) throws {
         (self.id, self.name) = (id, name)
         (self.createdAt, self.regions) = (createdAt, regions)
         (self.minDiskSize, self.sizeGigabytes) = (minDiskSize, sizeGigabytes)
         self.type = type
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -184,27 +141,21 @@ public struct DropletSnapshotVariant2: Codable {
         case type
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DropletSnapshotVariant2 {
-    init(from decoder: Decoder) throws {
+extension DropletSnapshotVariant2 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
+        self.type = try container.sdkDecodeRequired(.type)
     }
 }
 
-public extension DropletSnapshotVariant2 {
-    init(type: DropletSnapshotVariant2Type) {
+extension DropletSnapshotVariant2 {
+    public init(type: DropletSnapshotVariant2Type) {
         self.type = type
     }
 }
@@ -218,27 +169,21 @@ public struct DropletSnapshotVariant0: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DropletSnapshotVariant0 {
-    init(from decoder: Decoder) throws {
+extension DropletSnapshotVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
+        self.id = try container.sdkDecodeRequired(.id)
     }
 }
 
-public extension DropletSnapshotVariant0 {
-    init(id: Int) {
+extension DropletSnapshotVariant0 {
+    public init(id: Int) {
         self.id = id
     }
 }
@@ -248,16 +193,13 @@ public extension DropletSnapshotVariant0 {
 public struct DropletSnapshotVariant2Type: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let snapshot = DropletSnapshotVariant2Type(rawValue: "snapshot")
     public static let backup = DropletSnapshotVariant2Type(rawValue: "backup")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

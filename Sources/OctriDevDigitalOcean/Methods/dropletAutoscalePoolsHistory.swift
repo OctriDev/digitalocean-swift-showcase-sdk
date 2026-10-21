@@ -6,48 +6,25 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DropletAutoscalePoolsMethods {
-    /// To list all of the scaling history events of an autoscale pool, send a GET request to
-    /// `/v2/droplets/autoscale/$AUTOSCALE_POOL_ID/history`. The response body will be a JSON object with a key of
-    /// `history`. This will be set to an array containing objects each representing a history event.
+extension DropletAutoscalePoolsMethods {
+    /// To list all of the scaling history events of an autoscale pool, send a GET request to `/v2/droplets/autoscale/$AUTOSCALE_POOL_ID/history`. The response body will be a JSON object with a key of `history`. This will be set to an array containing objects each representing a history event.
     ///
     /// - Parameters:
     /// - autoscalePoolId: A unique identifier for an autoscale pool.
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func autoscalepoolsListHistory(
-        config: ClientConfig,
-        autoscalePoolId: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> HistoryEvents {
-        if let perPage {
+    public static func autoscalepoolsListHistory(config: ClientConfig, autoscalePoolId: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> HistoryEvents {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/droplets/autoscale/", sdkEncodePathSegment(sdkWireString(autoscalePoolId)), "/history"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "autoscalepools_list_history",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/droplets/autoscale/", sdkEncodePathSegment(sdkWireString(autoscalePoolId)), "/history"].joined(), config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "autoscalepools_list_history", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

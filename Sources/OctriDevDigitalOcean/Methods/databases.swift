@@ -8,120 +8,32 @@ import Foundation
 #endif
 public enum DatabasesMethods {}
 
-public extension DatabasesMethods {
-    /// To list all of the database clusters available on your account, send a GET request to `/v2/databases`. To limit
-    /// the results to database clusters with a specific tag, include the `tag_name` query parameter set to the name of
-    /// the tag. For example, `/v2/databases?tag_name=$TAG_NAME`. The result will be a JSON object with a `databases`
-    /// key. This will be set to an array of database objects, each of which will contain the standard database
-    /// attributes. The embedded `connection` and `private_connection` objects will contain the information needed to
-    /// access the database cluster. For multi-node clusters, the `standby_connection` and `standby_private_connection`
-    /// objects will contain the information needed to connect to the cluster's standby node(s). The embedded
-    /// `maintenance_window` object will contain information about any scheduled maintenance for the database cluster.
+extension DatabasesMethods {
+    /// To list all of the database clusters available on your account, send a GET request to `/v2/databases`. To limit the results to database clusters with a specific tag, include the `tag_name` query parameter set to the name of the tag. For example, `/v2/databases?tag_name=$TAG_NAME`. The result will be a JSON object with a `databases` key. This will be set to an array of database objects, each of which will contain the standard database attributes. The embedded `connection` and `private_connection` objects will contain the information needed to access the database cluster. For multi-node clusters, the `standby_connection` and `standby_private_connection` objects will contain the information needed to connect to the cluster's standby node(s). The embedded `maintenance_window` object will contain information about any scheduled maintenance for the database cluster.
     ///
     /// - Parameters:
     /// - tagName: Limits the results to database clusters with a specific tag.
     ///   Requires `tag:read` scope.
-    static func databasesListClusters(
-        config: ClientConfig,
-        tagName: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DatabaseClusters {
-        try await (sdkRequest(
-            "GET",
-            "/v2/databases",
-            config: config,
-            query: [
-                SdkQueryParameter("tag_name", value: tagName),
-            ],
-            decoder: .json,
-            operationId: "databases_list_clusters",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func databasesListClusters(config: ClientConfig, tagName: String? = nil, requestOptions: RequestOptions? = nil) async throws -> DatabaseClusters {
+        return try (await sdkRequest("GET", "/v2/databases", config: config, query: [
+            SdkQueryParameter("tag_name", value: tagName),
+        ], decoder: .json, operationId: "databases_list_clusters", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Creates a database cluster with the selected engine, size, region, and node count. Supply `name`, `engine`,
-    /// `num_nodes`, `size`, and `region`; use `backup_restore` to create a cluster from an existing backup. The new
-    /// cluster starts with a `creating` status and changes to `online` when ready to receive traffic.
+    /// Creates a database cluster with the selected engine, size, region, and node count. Supply `name`, `engine`, `num_nodes`, `size`, and `region`; use `backup_restore` to create a cluster from an existing backup. The new cluster starts with a `creating` status and changes to `online` when ready to receive traffic.
     ///
-    /// To create a database cluster, send a POST request to `/v2/databases`. To see a list of options for each engine,
-    /// such as available regions, size slugs, and versions, send a GET request to the `/v2/databases/options` endpoint.
-    /// The available sizes for the `storage_size_mib` field depends on the cluster's size. To see a list of available
-    /// sizes, see [Managed Database Pricing](https://www.digitalocean.com/pricing/managed-databases). The create
-    /// response returns a JSON object with a key called `database`. The value of this is an object that contains the
-    /// standard attributes associated with a database cluster. The initial value of the database cluster's `status`
-    /// attribute is `creating`. When the cluster is ready to receive traffic, this changes to `online`. The embedded
-    /// `connection` and `private_connection` objects contains the information needed to access the database cluster.
-    /// For multi-node clusters, the `standby_connection` and `standby_private_connection` objects contain the
-    /// information needed to connect to the cluster's standby node(s). DigitalOcean managed PostgreSQL and MySQL
-    /// database clusters take automated daily backups. To create a new database cluster based on a backup of an
-    /// existing cluster, send a POST request to `/v2/databases`. In addition to the standard database cluster
-    /// attributes, the JSON body must include a key named `backup_restore` with the name of the original database
-    /// cluster and the timestamp of the backup to be restored. Creating a database from a backup is the same as forking
-    /// a database in the control panel. PostgreSQL and MySQL Advanced Edition clusters can be provisioned by setting
-    /// `engine` to `advanced_pg` or `advanced_mysql`. Advanced Edition clusters are currently in public preview and
-    /// target highly available workloads. `advanced_pg` supports 1-, 2-, and 3-node deployments; `advanced_mysql` only
-    /// supports 1- and 3-node deployments. See the [PostgreSQL Advanced…
-    static func databasesCreateCluster(
-        config: ClientConfig,
-        body: DatabasesCreateClusterRequestBody,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DatabaseClusterResponse {
-        try await (sdkRequest(
-            "POST",
-            "/v2/databases",
-            config: config,
-            rawBody: sdkEncodeBody(body, contentType: "application/json"),
-            decoder: .json,
-            operationId: "databases_create_cluster",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    /// To create a database cluster, send a POST request to `/v2/databases`. To see a list of options for each engine, such as available regions, size slugs, and versions, send a GET request to the `/v2/databases/options` endpoint. The available sizes for the `storage_size_mib` field depends on the cluster's size. To see a list of available sizes, see [Managed Database Pricing](https://www.digitalocean.com/pricing/managed-databases). The create response returns a JSON object with a key called `database`. The value of this is an object that contains the standard attributes associated with a database cluster. The initial value of the database cluster's `status` attribute is `creating`. When the cluster is ready to receive traffic, this changes to `online`. The embedded `connection` and `private_connection` objects contains the information needed to access the database cluster. For multi-node clusters, the `standby_connection` and `standby_private_connection` objects contain the information needed to connect to the cluster's standby node(s). DigitalOcean managed PostgreSQL and MySQL database clusters take automated daily backups. To create a new database cluster based on a backup of an existing cluster, send a POST request to `/v2/databases`. In addition to the standard database cluster attributes, the JSON body must include a key named `backup_restore` with the name of the original database cluster and the timestamp of the backup to be restored. Creating a database from a backup is the same as forking a database in the control panel. PostgreSQL and MySQL Advanced Edition clusters can be provisioned by setting `engine` to `advanced_pg` or `advanced_mysql`. Advanced Edition clusters are currently in public preview and target highly available workloads. `advanced_pg` supports 1-, 2-, and 3-node deployments; `advanced_mysql` only supports 1- and 3-node deployments. See the [PostgreSQL Advanced…
+    public static func databasesCreateCluster(config: ClientConfig, body: DatabasesCreateClusterRequestBody, requestOptions: RequestOptions? = nil) async throws -> DatabaseClusterResponse {
+        return try (await sdkRequest("POST", "/v2/databases", config: config, rawBody: (try sdkEncodeBody(body, contentType: "application/json")), decoder: .json, operationId: "databases_create_cluster", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To show information about an existing database cluster, send a GET request to `/v2/databases/$DATABASE_ID`. The
-    /// response will be a JSON object with a database key. This will be set to an object containing the standard
-    /// database cluster attributes. The embedded `connection` and `private_connection` objects will contain the
-    /// information needed to access the database cluster. For multi-node clusters, the `standby_connection` and
-    /// `standby_private_connection` objects contain the information needed to connect to the cluster's standby node(s).
-    /// The embedded maintenance_window object will contain information about any scheduled maintenance for the database
-    /// cluster.
+    /// To show information about an existing database cluster, send a GET request to `/v2/databases/$DATABASE_ID`. The response will be a JSON object with a database key. This will be set to an object containing the standard database cluster attributes. The embedded `connection` and `private_connection` objects will contain the information needed to access the database cluster. For multi-node clusters, the `standby_connection` and `standby_private_connection` objects contain the information needed to connect to the cluster's standby node(s). The embedded maintenance_window object will contain information about any scheduled maintenance for the database cluster.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    static func databasesGetCluster(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DatabaseClusterResponse {
+    public static func databasesGetCluster(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> DatabaseClusterResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "databases_get_cluster",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid))].joined(), config: config, decoder: .json, operationId: "databases_get_cluster", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

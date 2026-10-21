@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Security domain models
+// Security domain models
 public struct SettingsTierCoverageValue: Codable {
     /// - Example: ["do:droplet:fe3a2fd7-903d-46e6-ada3-3e4f285fb89d"]
     public var resources: [String]?
@@ -16,20 +16,20 @@ public struct SettingsTierCoverageValue: Codable {
     }
 
     init() {
-        (resources, tags) = (nil, nil)
+        (self.resources, self.tags) = (nil, nil)
     }
 }
 
-public extension SettingsTierCoverageValue {
-    init(from decoder: Decoder) throws {
+extension SettingsTierCoverageValue {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        resources = try container.sdkDecodeIfPresent(.resources)
-        tags = try container.sdkDecodeIfPresent(.tags)
+        self.resources = try container.sdkDecodeIfPresent(.resources)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-public extension SettingsTierCoverageValue {
-    init(resources: [String]? = nil, tags: [String]? = nil) {
+extension SettingsTierCoverageValue {
+    public init(resources: [String]? = nil, tags: [String]? = nil) {
         self.init()
         (self.resources, self.tags) = (resources, tags)
     }
@@ -45,19 +45,19 @@ public struct SettingsSettings: Codable {
     }
 
     init() {
-        suppressions = nil
+        self.suppressions = nil
     }
 }
 
-public extension SettingsSettings {
-    init(from decoder: Decoder) throws {
+extension SettingsSettings {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        suppressions = try container.sdkDecodeIfPresent(.suppressions)
+        self.suppressions = try container.sdkDecodeIfPresent(.suppressions)
     }
 }
 
-public extension SettingsSettings {
-    init(suppressions: SuppressedResourceRoot? = nil) {
+extension SettingsSettings {
+    public init(suppressions: SuppressedResourceRoot? = nil) {
         self.init()
         self.suppressions = suppressions
     }
@@ -79,25 +79,21 @@ public struct Settings: Codable {
     }
 
     init() {
-        (settings, tierCoverage, planDowngrades) = (nil, nil, nil)
+        (self.settings, self.tierCoverage, self.planDowngrades) = (nil, nil, nil)
     }
 }
 
-public extension Settings {
-    init(from decoder: Decoder) throws {
+extension Settings {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        settings = try container.sdkDecodeIfPresent(.settings)
-        tierCoverage = try container.sdkDecodeIfPresent(.tierCoverage)
-        planDowngrades = try container.sdkDecodeIfPresent(.planDowngrades)
+        self.settings = try container.sdkDecodeIfPresent(.settings)
+        self.tierCoverage = try container.sdkDecodeIfPresent(.tierCoverage)
+        self.planDowngrades = try container.sdkDecodeIfPresent(.planDowngrades)
     }
 }
 
-public extension Settings {
-    init(
-        settings: SettingsSettings? = nil,
-        tierCoverage: [String: SettingsTierCoverageValue]? = nil,
-        planDowngrades: [String: PlanDowngrades]? = nil
-    ) {
+extension Settings {
+    public init(settings: SettingsSettings? = nil, tierCoverage: [String: SettingsTierCoverageValue]? = nil, planDowngrades: [String: PlanDowngrades]? = nil) {
         self.init()
         (self.settings, self.tierCoverage) = (settings, tierCoverage)
         self.planDowngrades = planDowngrades
@@ -119,23 +115,23 @@ public struct PlanDowngrades: Codable {
     }
 
     init() {
-        (resources, effectiveAt) = (nil, nil)
+        (self.resources, self.effectiveAt) = (nil, nil)
     }
 }
 
-public extension PlanDowngrades {
-    init(from decoder: Decoder) throws {
+extension PlanDowngrades {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        resources = try container.sdkDecodeIfPresent(.resources)
-        effectiveAt = try container.sdkDecodeIfPresent(.effectiveAt)
-        if let value = effectiveAt {
+        self.resources = try container.sdkDecodeIfPresent(.resources)
+        self.effectiveAt = try container.sdkDecodeIfPresent(.effectiveAt)
+        if let value = self.effectiveAt {
             try sdkValidateDateTime("effective_at", sdkWireString(value))
         }
     }
 }
 
-public extension PlanDowngrades {
-    init(resources: [String]? = nil, effectiveAt: Date? = nil) throws {
+extension PlanDowngrades {
+    public init(resources: [String]? = nil, effectiveAt: Date? = nil) throws {
         self.init()
         (self.resources, self.effectiveAt) = (resources, effectiveAt)
         if let value = self.effectiveAt {

@@ -6,8 +6,7 @@ import Foundation
 import XCTest
 
 extension SdkMethodTests {
-    func testDropletsListSupportedBackupPoliciesDropletsListSupportedBackuXa6b5f9d82aReachesMockAndDecodesResponse(
-    ) async throws {
+    func testDropletsListSupportedBackupPoliciesDropletsListSupportedBackuXa6b5f9d82aReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -56,9 +55,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.firewalls.addRules(
-                firewallId: decoded("\"bb4b2611-3d72-467b-8602-280330ecd65c\""),
-                body: decoded(sdkMethodFixture403Value1)
-            )
+            firewallId: decoded("\"bb4b2611-3d72-467b-8602-280330ecd65c\""),
+            body: decoded(sdkMethodFixture403Value1)
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -97,9 +96,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.firewalls.addTags(
-                firewallId: decoded("\"bb4b2611-3d72-467b-8602-280330ecd65c\""),
-                tags: decoded("[\"frontend\"]")
-            )
+            firewallId: decoded("\"bb4b2611-3d72-467b-8602-280330ecd65c\""),
+            tags: decoded("[\"frontend\"]")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -138,9 +137,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.firewalls.assignDroplets(
-                firewallId: decoded("\"bb4b2611-3d72-467b-8602-280330ecd65c\""),
-                dropletIds: decoded("[49696269]")
-            )
+            firewallId: decoded("\"bb4b2611-3d72-467b-8602-280330ecd65c\""),
+            dropletIds: decoded("[49696269]")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -185,8 +184,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.firewalls.create(
-                body: decoded(sdkMethodFixture409Value1)
-            )
+            body: decoded(sdkMethodFixture409Value1)
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -224,8 +223,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.firewalls.delete(
-                firewallId: decoded("\"bb4b2611-3d72-467b-8602-280330ecd65c\"")
-            )
+            firewallId: decoded("\"bb4b2611-3d72-467b-8602-280330ecd65c\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -264,9 +263,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.firewalls.deleteDroplets(
-                firewallId: decoded("\"bb4b2611-3d72-467b-8602-280330ecd65c\""),
-                dropletIds: decoded("[49696269]")
-            )
+            firewallId: decoded("\"bb4b2611-3d72-467b-8602-280330ecd65c\""),
+            dropletIds: decoded("[49696269]")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -305,9 +304,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.firewalls.deleteRules(
-                firewallId: decoded("\"bb4b2611-3d72-467b-8602-280330ecd65c\""),
-                body: decoded(sdkMethodFixture415Value1)
-            )
+            firewallId: decoded("\"bb4b2611-3d72-467b-8602-280330ecd65c\""),
+            body: decoded(sdkMethodFixture415Value1)
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -346,9 +345,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.firewalls.deleteTags(
-                firewallId: decoded("\"bb4b2611-3d72-467b-8602-280330ecd65c\""),
-                tags: decoded("[\"frontend\"]")
-            )
+            firewallId: decoded("\"bb4b2611-3d72-467b-8602-280330ecd65c\""),
+            tags: decoded("[\"frontend\"]")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -393,8 +392,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.firewalls.get(
-                firewallId: decoded("\"bb4b2611-3d72-467b-8602-280330ecd65c\"")
-            )
+            firewallId: decoded("\"bb4b2611-3d72-467b-8602-280330ecd65c\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -440,9 +439,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.firewalls.list(
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -488,9 +487,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.firewalls.update(
-                firewallId: decoded("\"bb4b2611-3d72-467b-8602-280330ecd65c\""),
-                body: decoded(sdkMethodFixture423Value1)
-            )
+            firewallId: decoded("\"bb4b2611-3d72-467b-8602-280330ecd65c\""),
+            body: decoded(sdkMethodFixture423Value1)
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -536,9 +535,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.floatingIpActions.get(
-                floatingIp: decoded("\"45.55.96.47\""),
-                actionId: decoded("36804636")
-            )
+            floatingIp: decoded("\"45.55.96.47\""),
+            actionId: decoded("36804636")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

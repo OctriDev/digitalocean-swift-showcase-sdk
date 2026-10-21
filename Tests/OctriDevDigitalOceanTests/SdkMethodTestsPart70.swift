@@ -17,10 +17,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.toolsListSearchProviders(
-                query: decoded("\"search\""),
-                pageSize: decoded("20"),
-                pageToken: decoded("\"ZXhhX3dlYl9zZWFyY2hAMQ\"")
-            )
+            query: decoded("\"search\""),
+            pageSize: decoded("20"),
+            pageToken: decoded("\"ZXhhX3dlYl9zZWFyY2hAMQ\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -113,14 +113,14 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.uptime.createAlert(
-                checkId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-                name: decoded("\"Landing page degraded performance\""),
-                type: decoded("\"latency\""),
-                notifications: decoded(sdkMethodFixture1580Value1),
-                period: decoded("\"2m\""),
-                threshold: decoded("300"),
-                comparison: decoded("\"greater_than\"")
-            )
+            checkId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+            name: decoded("\"Landing page degraded performance\""),
+            type: decoded("\"latency\""),
+            notifications: decoded(sdkMethodFixture1580Value1),
+            period: decoded("\"2m\""),
+            threshold: decoded("300"),
+            comparison: decoded("\"greater_than\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -169,12 +169,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.uptime.createCheck(
-                name: decoded("\"Landing page check\""),
-                type: decoded("\"https\""),
-                target: decoded("\"https://www.landingpage.com\""),
-                regions: decoded("[\"us_east\",\"eu_west\"]"),
-                enabled: decoded("true")
-            )
+            name: decoded("\"Landing page check\""),
+            type: decoded("\"https\""),
+            target: decoded("\"https://www.landingpage.com\""),
+            regions: decoded("[\"us_east\",\"eu_west\"]"),
+            enabled: decoded("true")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -213,9 +213,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.uptime.deleteAlert(
-                checkId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-                alertId: decoded("\"17f0f0ae-b7e5-4ef6-86e3-aa569db58284\"")
-            )
+            checkId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+            alertId: decoded("\"17f0f0ae-b7e5-4ef6-86e3-aa569db58284\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -253,8 +253,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.uptime.deleteCheck(
-                checkId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
-            )
+            checkId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -300,9 +300,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.uptime.getAlert(
-                checkId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-                alertId: decoded("\"17f0f0ae-b7e5-4ef6-86e3-aa569db58284\"")
-            )
+            checkId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+            alertId: decoded("\"17f0f0ae-b7e5-4ef6-86e3-aa569db58284\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -347,8 +347,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.uptime.getCheck(
-                checkId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
-            )
+            checkId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -393,8 +393,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.uptime.getCheckState(
-                checkId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
-            )
+            checkId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -441,10 +441,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.uptime.listAlerts(
-                checkId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            checkId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -490,9 +490,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.uptime.listChecks(
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -513,14 +513,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try UptimeMethods.UptimeUpdateAlertOptions(
-            checkId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            alertId: decoded("\"17f0f0ae-b7e5-4ef6-86e3-aa569db58284\""),
-            name: decoded("\"Landing page degraded performance\""),
-            type: decoded("\"latency\""),
-            notifications: decoded(sdkMethodFixture1597Value1),
-            period: decoded("\"2m\"")
-        )
+        var options = try UptimeMethods.UptimeUpdateAlertOptions(checkId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""), alertId: decoded("\"17f0f0ae-b7e5-4ef6-86e3-aa569db58284\""), name: decoded("\"Landing page degraded performance\""), type: decoded("\"latency\""), notifications: decoded(sdkMethodFixture1597Value1), period: decoded("\"2m\""))
         options.threshold = try decoded("300")
         options.comparison = try decoded("\"greater_than\"")
         let actual = try await client.uptime.updateAlert(
@@ -541,14 +534,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try UptimeMethods.UptimeUpdateAlertOptions(
-            checkId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            alertId: decoded("\"17f0f0ae-b7e5-4ef6-86e3-aa569db58284\""),
-            name: decoded("\"Landing page degraded performance\""),
-            type: decoded("\"latency\""),
-            notifications: decoded(sdkMethodFixture1598Value1),
-            period: decoded("\"2m\"")
-        )
+        var options = try UptimeMethods.UptimeUpdateAlertOptions(checkId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""), alertId: decoded("\"17f0f0ae-b7e5-4ef6-86e3-aa569db58284\""), name: decoded("\"Landing page degraded performance\""), type: decoded("\"latency\""), notifications: decoded(sdkMethodFixture1598Value1), period: decoded("\"2m\""))
         options.threshold = try decoded("300")
         options.comparison = try decoded("\"greater_than\"")
         let expected = try JSONSerialization.jsonObject(
@@ -557,8 +543,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.uptime.updateAlert(
-                options: options
-            )
+            options: options
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

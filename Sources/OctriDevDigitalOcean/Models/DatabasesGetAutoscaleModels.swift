@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Databases domain models
+// Databases domain models
 /// Typed representation of the `Autoscale` API schema.
 public struct Autoscale: Codable {
     /// Contains all autoscaling configuration for a database cluster
@@ -14,19 +14,19 @@ public struct Autoscale: Codable {
     }
 
     init() {
-        autoscale = nil
+        self.autoscale = nil
     }
 }
 
-public extension Autoscale {
-    init(from decoder: Decoder) throws {
+extension Autoscale {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        autoscale = try container.sdkDecodeIfPresent(.autoscale)
+        self.autoscale = try container.sdkDecodeIfPresent(.autoscale)
     }
 }
 
-public extension Autoscale {
-    init(autoscale: DatabaseAutoscaleParams? = nil) {
+extension Autoscale {
+    public init(autoscale: DatabaseAutoscaleParams? = nil) {
         self.init()
         self.autoscale = autoscale
     }

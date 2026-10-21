@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiCreate domain models
+// AgentPlatformAPIApiCreate domain models
 /// Typed representation of the `ApiCreateAgentAPIKeyOutput` API schema.
 public struct ApiCreateAgentAPIKeyOutput: Codable {
     /// Agent API Key Info
@@ -14,19 +14,19 @@ public struct ApiCreateAgentAPIKeyOutput: Codable {
     }
 
     init() {
-        apiKeyInfo = nil
+        self.apiKeyInfo = nil
     }
 }
 
-public extension ApiCreateAgentAPIKeyOutput {
-    init(from decoder: Decoder) throws {
+extension ApiCreateAgentAPIKeyOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-public extension ApiCreateAgentAPIKeyOutput {
-    init(apiKeyInfo: ApiAgentAPIKeyInfo? = nil) {
+extension ApiCreateAgentAPIKeyOutput {
+    public init(apiKeyInfo: ApiAgentAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }
@@ -47,20 +47,20 @@ public struct ApiCreateAgentAPIKeyInputPublic: Codable {
     }
 
     init() {
-        (agentUuid, name) = (nil, nil)
+        (self.agentUuid, self.name) = (nil, nil)
     }
 }
 
-public extension ApiCreateAgentAPIKeyInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiCreateAgentAPIKeyInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
-        name = try container.sdkDecodeIfPresent(.name)
+        self.agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
+        self.name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-public extension ApiCreateAgentAPIKeyInputPublic {
-    init(agentUuid: String? = nil, name: String? = nil) {
+extension ApiCreateAgentAPIKeyInputPublic {
+    public init(agentUuid: String? = nil, name: String? = nil) {
         self.init()
         (self.agentUuid, self.name) = (agentUuid, name)
     }

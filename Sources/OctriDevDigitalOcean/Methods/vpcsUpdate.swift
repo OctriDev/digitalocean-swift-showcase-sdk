@@ -6,95 +6,34 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension VpcsMethods {
+extension VpcsMethods {
     /// To update information about a VPC, send a PUT request to `/v2/vpcs/$VPC_ID`.
     ///
     /// - Parameters:
     /// - vpcId: A unique identifier for a VPC.
-    static func vpcsUpdate(
-        config: ClientConfig,
-        vpcId: String,
-        body: [String: JSONValue],
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExistingVpc {
+    public static func vpcsUpdate(config: ClientConfig, vpcId: String, body: [String: JSONValue], requestOptions: RequestOptions? = nil) async throws -> ExistingVpc {
         try sdkValidateUuid("vpc_id", vpcId)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcId))].joined(),
-            config: config,
-            rawBody: sdkEncodeBody(body, contentType: "application/json"),
-            decoder: .json,
-            operationId: "vpcs_update",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcId))].joined(), config: config, rawBody: (try sdkEncodeBody(body, contentType: "application/json")), decoder: .json, operationId: "vpcs_update", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To update a subset of information about a VPC, send a PATCH request to `/v2/vpcs/$VPC_ID`.
     ///
     /// - Parameters:
     /// - vpcId: A unique identifier for a VPC.
-    static func vpcsPatch(
-        config: ClientConfig,
-        vpcId: String,
-        body: VpcsPatchRequestBody,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExistingVpc {
+    public static func vpcsPatch(config: ClientConfig, vpcId: String, body: VpcsPatchRequestBody, requestOptions: RequestOptions? = nil) async throws -> ExistingVpc {
         try sdkValidateUuid("vpc_id", vpcId)
 
-        return try await (sdkRequest(
-            "PATCH",
-            ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcId))].joined(),
-            config: config,
-            rawBody: sdkEncodeBody(body, contentType: "application/json"),
-            decoder: .json,
-            operationId: "vpcs_patch",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PATCH", ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcId))].joined(), config: config, rawBody: (try sdkEncodeBody(body, contentType: "application/json")), decoder: .json, operationId: "vpcs_patch", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To delete a VPC, send a DELETE request to `/v2/vpcs/$VPC_ID`. A 204 status code with no body will be returned in
-    /// response to a successful request. The default VPC for a region can not be deleted. Additionally, a VPC can only
-    /// be deleted if it does not contain any member resources. Attempting to delete a region's default VPC or a VPC
-    /// that still has members will result in a 403 Forbidden error response.
+    /// To delete a VPC, send a DELETE request to `/v2/vpcs/$VPC_ID`. A 204 status code with no body will be returned in response to a successful request. The default VPC for a region can not be deleted. Additionally, a VPC can only be deleted if it does not contain any member resources. Attempting to delete a region's default VPC or a VPC that still has members will result in a 403 Forbidden error response.
     ///
     /// - Parameters:
     /// - vpcId: A unique identifier for a VPC.
-    static func vpcsDelete(
-        config: ClientConfig,
-        vpcId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
+    public static func vpcsDelete(config: ClientConfig, vpcId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("vpc_id", vpcId)
 
-        return try await (sdkRequest(
-            "DELETE",
-            ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcId))].joined(),
-            config: config,
-            decoder: .empty,
-            operationId: "vpcs_delete",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("DELETE", ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcId))].joined(), config: config, decoder: .empty, operationId: "vpcs_delete", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

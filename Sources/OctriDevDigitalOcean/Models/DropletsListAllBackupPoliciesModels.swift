@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Droplets domain models
+// Droplets domain models
 /// Typed representation of the `AllDropletBackupPolicies` API schema.
 public struct AllDropletBackupPolicies: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -20,29 +20,23 @@ public struct AllDropletBackupPolicies: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllDropletBackupPolicies {
-    init(from decoder: Decoder) throws {
+extension AllDropletBackupPolicies {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        policies = try container.sdkDecodeIfPresent(.policies)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.policies = try container.sdkDecodeIfPresent(.policies)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllDropletBackupPolicies {
-    init(meta: MetaMeta, policies: [String: DropletBackupPolicyRecord]? = nil, links: PageLinks? = nil) {
+extension AllDropletBackupPolicies {
+    public init(meta: MetaMeta, policies: [String: DropletBackupPolicyRecord]? = nil, links: PageLinks? = nil) {
         (self.meta, self.policies) = (meta, policies)
         self.links = links
     }
@@ -58,19 +52,19 @@ public struct AllDropletBackupPoliciesVariant0: Codable {
     }
 
     init() {
-        policies = nil
+        self.policies = nil
     }
 }
 
-public extension AllDropletBackupPoliciesVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllDropletBackupPoliciesVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        policies = try container.sdkDecodeIfPresent(.policies)
+        self.policies = try container.sdkDecodeIfPresent(.policies)
     }
 }
 
-public extension AllDropletBackupPoliciesVariant0 {
-    init(policies: [String: DropletBackupPolicyRecord]? = nil) {
+extension AllDropletBackupPoliciesVariant0 {
+    public init(policies: [String: DropletBackupPolicyRecord]? = nil) {
         self.init()
         self.policies = policies
     }

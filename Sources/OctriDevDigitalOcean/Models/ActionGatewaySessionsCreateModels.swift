@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// ActionGateway domain models
+// ActionGateway domain models
 /// Returns the created session.
 public struct CreateSessionResponse: Codable {
     /// The created session.
@@ -22,21 +22,21 @@ public struct CreateSessionResponse: Codable {
     }
 
     init() {
-        (session, mcpUrl, tools) = (nil, nil, nil)
+        (self.session, self.mcpUrl, self.tools) = (nil, nil, nil)
     }
 }
 
-public extension CreateSessionResponse {
-    init(from decoder: Decoder) throws {
+extension CreateSessionResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        session = try container.sdkDecodeIfPresent(.session)
-        mcpUrl = try container.sdkDecodeIfPresent(.mcpUrl)
-        tools = try container.sdkDecodeIfPresent(.tools)
+        self.session = try container.sdkDecodeIfPresent(.session)
+        self.mcpUrl = try container.sdkDecodeIfPresent(.mcpUrl)
+        self.tools = try container.sdkDecodeIfPresent(.tools)
     }
 }
 
-public extension CreateSessionResponse {
-    init(session: Session? = nil, mcpUrl: String? = nil, tools: [String]? = nil) {
+extension CreateSessionResponse {
+    public init(session: Session? = nil, mcpUrl: String? = nil, tools: [String]? = nil) {
         self.init()
         (self.session, self.mcpUrl) = (session, mcpUrl)
         self.tools = tools

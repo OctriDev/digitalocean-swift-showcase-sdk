@@ -6,35 +6,16 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
-    /// To delete a saved model evaluation preset, send a DELETE request to
-    /// `/v2/gen-ai/model_evaluation_presets/{eval_preset_uuid}`.
+extension AgentPlatformApiMethods {
+    /// To delete a saved model evaluation preset, send a DELETE request to `/v2/gen-ai/model_evaluation_presets/{eval_preset_uuid}`.
     ///
     /// - Parameters:
     /// - evalPresetUuid: UUID of the evaluation preset to delete.
-    static func genaiDeleteModelEvaluationPreset(
-        config: ClientConfig,
-        evalPresetUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiDeleteModelEvaluationPresetOutput {
-        try await (sdkRequest(
-            "DELETE",
-            ["/v2/gen-ai/model_evaluation_presets/", sdkEncodePathSegment(sdkWireString(evalPresetUuid))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "genai_delete_model_evaluation_preset",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func genaiDeleteModelEvaluationPreset(config: ClientConfig, evalPresetUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiDeleteModelEvaluationPresetOutput {
+        return try (await sdkRequest("DELETE", ["/v2/gen-ai/model_evaluation_presets/", sdkEncodePathSegment(sdkWireString(evalPresetUuid))].joined(), config: config, decoder: .json, operationId: "genai_delete_model_evaluation_preset", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    struct GenaiListModelEvaluationRunsOptions: Codable {
+    public struct GenaiListModelEvaluationRunsOptions: Codable {
         public var evalPresetUuid: String?
         public var status: GenaiListModelEvaluationRunsParameter?
         public var page: Int?
@@ -62,36 +43,17 @@ public extension AgentPlatformApiMethods {
     ///   and dataset name (case-insensitive substring match). Empty means no search.
     /// - sortBy: Field to sort by. Defaults to creation date when unspecified.
     /// - sortDirection: Sort direction. Defaults to descending when unspecified.
-    static func genaiListModelEvaluationRuns(
-        config: ClientConfig,
-        options: GenaiListModelEvaluationRunsOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiListModelEvaluationRunsOutput {
-        try await (sdkRequest(
-            "GET",
-            "/v2/gen-ai/model_evaluation_runs",
-            config: config,
-            query: [
-                SdkQueryParameter("eval_preset_uuid", value: options.evalPresetUuid),
-                SdkQueryParameter("status", value: options.status),
-                SdkQueryParameter("page", value: options.page),
-                SdkQueryParameter("per_page", value: options.perPage),
-                SdkQueryParameter("statuses", values: options.statuses, style: "form", explode: true),
-                SdkQueryParameter("candidate_types", values: options.candidateTypes, style: "form", explode: true),
-                SdkQueryParameter("search", value: options.search),
-                SdkQueryParameter("sort_by", value: options.sortBy),
-                SdkQueryParameter("sort_direction", value: options.sortDirection),
-            ],
-            decoder: .json,
-            operationId: "genai_list_model_evaluation_runs",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func genaiListModelEvaluationRuns(config: ClientConfig, options: GenaiListModelEvaluationRunsOptions, requestOptions: RequestOptions? = nil) async throws -> ApiListModelEvaluationRunsOutput {
+        return try (await sdkRequest("GET", "/v2/gen-ai/model_evaluation_runs", config: config, query: [
+            SdkQueryParameter("eval_preset_uuid", value: options.evalPresetUuid),
+            SdkQueryParameter("status", value: options.status),
+            SdkQueryParameter("page", value: options.page),
+            SdkQueryParameter("per_page", value: options.perPage),
+            SdkQueryParameter("statuses", values: options.statuses, style: "form", explode: true),
+            SdkQueryParameter("candidate_types", values: options.candidateTypes, style: "form", explode: true),
+            SdkQueryParameter("search", value: options.search),
+            SdkQueryParameter("sort_by", value: options.sortBy),
+            SdkQueryParameter("sort_direction", value: options.sortDirection),
+        ], decoder: .json, operationId: "genai_list_model_evaluation_runs", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

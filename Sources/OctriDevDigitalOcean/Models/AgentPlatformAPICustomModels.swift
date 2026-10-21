@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPICustom domain models
+// AgentPlatformAPICustom domain models
 /// Endpoint URLs for a dedicated inference deployment associated with a custom model.
 public struct CustomModelActiveDeploymentEndpoints: Codable {
     /// Private FQDN for the deployment
@@ -19,20 +19,20 @@ public struct CustomModelActiveDeploymentEndpoints: Codable {
     }
 
     init() {
-        (privateEndpointFqdn, publicEndpointFqdn) = (nil, nil)
+        (self.privateEndpointFqdn, self.publicEndpointFqdn) = (nil, nil)
     }
 }
 
-public extension CustomModelActiveDeploymentEndpoints {
-    init(from decoder: Decoder) throws {
+extension CustomModelActiveDeploymentEndpoints {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        privateEndpointFqdn = try container.sdkDecodeIfPresent(.privateEndpointFqdn)
-        publicEndpointFqdn = try container.sdkDecodeIfPresent(.publicEndpointFqdn)
+        self.privateEndpointFqdn = try container.sdkDecodeIfPresent(.privateEndpointFqdn)
+        self.publicEndpointFqdn = try container.sdkDecodeIfPresent(.publicEndpointFqdn)
     }
 }
 
-public extension CustomModelActiveDeploymentEndpoints {
-    init(privateEndpointFqdn: String? = nil, publicEndpointFqdn: String? = nil) {
+extension CustomModelActiveDeploymentEndpoints {
+    public init(privateEndpointFqdn: String? = nil, publicEndpointFqdn: String? = nil) {
         self.init()
         (self.privateEndpointFqdn, self.publicEndpointFqdn) = (privateEndpointFqdn, publicEndpointFqdn)
     }
@@ -72,34 +72,26 @@ public struct CustomModelActiveDeployment: Codable {
     }
 
     init() {
-        (createdAt, endpoints, id, name, regionSlug) = (nil, nil, nil, nil, nil)
-        (state, updatedAt) = (nil, nil)
+        (self.createdAt, self.endpoints, self.id, self.name, self.regionSlug) = (nil, nil, nil, nil, nil)
+        (self.state, self.updatedAt) = (nil, nil)
     }
 }
 
-public extension CustomModelActiveDeployment {
-    init(from decoder: Decoder) throws {
+extension CustomModelActiveDeployment {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        endpoints = try container.sdkDecodeIfPresent(.endpoints)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        regionSlug = try container.sdkDecodeIfPresent(.regionSlug)
-        state = try container.sdkDecodeIfPresent(.state)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.endpoints = try container.sdkDecodeIfPresent(.endpoints)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.regionSlug = try container.sdkDecodeIfPresent(.regionSlug)
+        self.state = try container.sdkDecodeIfPresent(.state)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
     }
 }
 
-public extension CustomModelActiveDeployment {
-    init(
-        createdAt: String? = nil,
-        endpoints: CustomModelActiveDeploymentEndpoints? = nil,
-        id: String? = nil,
-        name: String? = nil,
-        regionSlug: String? = nil,
-        state: String? = nil,
-        updatedAt: String? = nil
-    ) {
+extension CustomModelActiveDeployment {
+    public init(createdAt: String? = nil, endpoints: CustomModelActiveDeploymentEndpoints? = nil, id: String? = nil, name: String? = nil, regionSlug: String? = nil, state: String? = nil, updatedAt: String? = nil) {
         self.init()
         (self.createdAt, self.endpoints) = (createdAt, endpoints)
         (self.id, self.name) = (id, name)
@@ -119,19 +111,19 @@ public struct CustomModelTags: Codable {
     }
 
     init() {
-        tags = nil
+        self.tags = nil
     }
 }
 
-public extension CustomModelTags {
-    init(from decoder: Decoder) throws {
+extension CustomModelTags {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        tags = try container.sdkDecodeIfPresent(.tags)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-public extension CustomModelTags {
-    init(tags: [String]? = nil) {
+extension CustomModelTags {
+    public init(tags: [String]? = nil) {
         self.init()
         self.tags = tags
     }
@@ -172,34 +164,26 @@ public struct CustomModelSourceRef: Codable {
     }
 
     init() {
-        (accessType, bucket, commitSha, hfToken, prefix) = (nil, nil, nil, nil, nil)
-        (region, repoId) = (nil, nil)
+        (self.accessType, self.bucket, self.commitSha, self.hfToken, self.prefix) = (nil, nil, nil, nil, nil)
+        (self.region, self.repoId) = (nil, nil)
     }
 }
 
-public extension CustomModelSourceRef {
-    init(from decoder: Decoder) throws {
+extension CustomModelSourceRef {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        accessType = try container.sdkDecodeIfPresent(.accessType)
-        bucket = try container.sdkDecodeIfPresent(.bucket)
-        commitSha = try container.sdkDecodeIfPresent(.commitSha)
-        hfToken = try container.sdkDecodeIfPresent(.hfToken)
-        prefix = try container.sdkDecodeIfPresent(.prefix)
-        region = try container.sdkDecodeIfPresent(.region)
-        repoId = try container.sdkDecodeIfPresent(.repoId)
+        self.accessType = try container.sdkDecodeIfPresent(.accessType)
+        self.bucket = try container.sdkDecodeIfPresent(.bucket)
+        self.commitSha = try container.sdkDecodeIfPresent(.commitSha)
+        self.hfToken = try container.sdkDecodeIfPresent(.hfToken)
+        self.prefix = try container.sdkDecodeIfPresent(.prefix)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.repoId = try container.sdkDecodeIfPresent(.repoId)
     }
 }
 
-public extension CustomModelSourceRef {
-    init(
-        accessType: SourceRefAccessType? = nil,
-        bucket: String? = nil,
-        commitSha: String? = nil,
-        hfToken: String? = nil,
-        prefix: String? = nil,
-        region: String? = nil,
-        repoId: String? = nil
-    ) {
+extension CustomModelSourceRef {
+    public init(accessType: SourceRefAccessType? = nil, bucket: String? = nil, commitSha: String? = nil, hfToken: String? = nil, prefix: String? = nil, region: String? = nil, repoId: String? = nil) {
         self.init()
         (self.accessType, self.bucket) = (accessType, bucket)
         (self.commitSha, self.hfToken) = (commitSha, hfToken)
@@ -212,10 +196,7 @@ public extension CustomModelSourceRef {
 public struct CustomModelSourceType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let sourceTypeUnspecified = CustomModelSourceType(rawValue: "SOURCE_TYPE_UNSPECIFIED")
     public static let sourceTypeHuggingface = CustomModelSourceType(rawValue: "SOURCE_TYPE_HUGGINGFACE")
     public static let sourceTypeSpacesBucket = CustomModelSourceType(rawValue: "SOURCE_TYPE_SPACES_BUCKET")
@@ -224,7 +205,7 @@ public struct CustomModelSourceType: RawRepresentable, Hashable, Codable, Sendab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

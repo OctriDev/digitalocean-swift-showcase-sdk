@@ -3,15 +3,9 @@
 
 import Foundation
 
-/// Shared domain models
-public extension ToolAnnotations {
-    init(
-        title: String? = nil,
-        readOnlyHint: Bool? = nil,
-        idempotentHint: Bool? = nil,
-        openWorldHint: Bool? = nil,
-        destructiveHint: Bool? = nil
-    ) {
+// Shared domain models
+extension ToolAnnotations {
+    public init(title: String? = nil, readOnlyHint: Bool? = nil, idempotentHint: Bool? = nil, openWorldHint: Bool? = nil, destructiveHint: Bool? = nil) {
         self.init()
         (self.title, self.readOnlyHint) = (title, readOnlyHint)
         (self.idempotentHint, self.openWorldHint) = (idempotentHint, openWorldHint)
@@ -37,21 +31,21 @@ public struct GpuInfo: Codable {
     }
 
     init() {
-        (count, model, vram) = (nil, nil, nil)
+        (self.count, self.model, self.vram) = (nil, nil, nil)
     }
 }
 
-public extension GpuInfo {
-    init(from decoder: Decoder) throws {
+extension GpuInfo {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        count = try container.sdkDecodeIfPresent(.count)
-        model = try container.sdkDecodeIfPresent(.model)
-        vram = try container.sdkDecodeIfPresent(.vram)
+        self.count = try container.sdkDecodeIfPresent(.count)
+        self.model = try container.sdkDecodeIfPresent(.model)
+        self.vram = try container.sdkDecodeIfPresent(.vram)
     }
 }
 
-public extension GpuInfo {
-    init(count: Int? = nil, model: String? = nil, vram: GpuInfoVram? = nil) {
+extension GpuInfo {
+    public init(count: Int? = nil, model: String? = nil, vram: GpuInfoVram? = nil) {
         self.init()
         (self.count, self.model) = (count, model)
         self.vram = vram
@@ -71,19 +65,19 @@ public struct PageLinks: Codable {
     }
 
     init() {
-        pages = nil
+        self.pages = nil
     }
 }
 
-public extension PageLinks {
-    init(from decoder: Decoder) throws {
+extension PageLinks {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        pages = try container.sdkDecodeIfPresent(.pages)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-public extension PageLinks {
-    init(pages: PageLinksPages? = nil) {
+extension PageLinks {
+    public init(pages: PageLinksPages? = nil) {
         self.init()
         self.pages = pages
     }
@@ -116,74 +110,41 @@ public struct CompletionUsage: Codable {
         case totalTokens = "total_tokens"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CompletionUsage {
-    init(from decoder: Decoder) throws {
+extension CompletionUsage {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.completionTokens) else {
-            throw SdkValidationError(
-                field: "completion_tokens",
-                code: "required",
-                message: "Validation failed for 'completion_tokens': value is required"
-            )
+            throw SdkValidationError(field: "completion_tokens", code: "required", message: "Validation failed for 'completion_tokens': value is required")
         }
         guard container.contains(.promptTokens) else {
-            throw SdkValidationError(
-                field: "prompt_tokens",
-                code: "required",
-                message: "Validation failed for 'prompt_tokens': value is required"
-            )
+            throw SdkValidationError(field: "prompt_tokens", code: "required", message: "Validation failed for 'prompt_tokens': value is required")
         }
         guard container.contains(.cacheCreatedInputTokens) else {
-            throw SdkValidationError(
-                field: "cache_created_input_tokens",
-                code: "required",
-                message: "Validation failed for 'cache_created_input_tokens': value is required"
-            )
+            throw SdkValidationError(field: "cache_created_input_tokens", code: "required", message: "Validation failed for 'cache_created_input_tokens': value is required")
         }
         guard container.contains(.cacheCreation) else {
-            throw SdkValidationError(
-                field: "cache_creation",
-                code: "required",
-                message: "Validation failed for 'cache_creation': value is required"
-            )
+            throw SdkValidationError(field: "cache_creation", code: "required", message: "Validation failed for 'cache_creation': value is required")
         }
         guard container.contains(.cacheReadInputTokens) else {
-            throw SdkValidationError(
-                field: "cache_read_input_tokens",
-                code: "required",
-                message: "Validation failed for 'cache_read_input_tokens': value is required"
-            )
+            throw SdkValidationError(field: "cache_read_input_tokens", code: "required", message: "Validation failed for 'cache_read_input_tokens': value is required")
         }
         guard container.contains(.totalTokens) else {
-            throw SdkValidationError(
-                field: "total_tokens",
-                code: "required",
-                message: "Validation failed for 'total_tokens': value is required"
-            )
+            throw SdkValidationError(field: "total_tokens", code: "required", message: "Validation failed for 'total_tokens': value is required")
         }
-        completionTokens = try container.sdkDecodeRequired(.completionTokens)
-        promptTokens = try container.sdkDecodeRequired(.promptTokens)
-        cacheCreatedInputTokens = try container.sdkDecodeRequired(.cacheCreatedInputTokens)
-        cacheCreation = try container.sdkDecodeRequired(.cacheCreation)
-        cacheReadInputTokens = try container.sdkDecodeRequired(.cacheReadInputTokens)
-        totalTokens = try container.sdkDecodeRequired(.totalTokens)
+        self.completionTokens = try container.sdkDecodeRequired(.completionTokens)
+        self.promptTokens = try container.sdkDecodeRequired(.promptTokens)
+        self.cacheCreatedInputTokens = try container.sdkDecodeRequired(.cacheCreatedInputTokens)
+        self.cacheCreation = try container.sdkDecodeRequired(.cacheCreation)
+        self.cacheReadInputTokens = try container.sdkDecodeRequired(.cacheReadInputTokens)
+        self.totalTokens = try container.sdkDecodeRequired(.totalTokens)
     }
 }
 
-public extension CompletionUsage {
-    init(
-        completionTokens: Int,
-        promptTokens: Int,
-        cacheCreatedInputTokens: Int,
-        cacheCreation: CompletionUsageCacheCreation,
-        cacheReadInputTokens: Int,
-        totalTokens: Int
-    ) {
+extension CompletionUsage {
+    public init(completionTokens: Int, promptTokens: Int, cacheCreatedInputTokens: Int, cacheCreation: CompletionUsageCacheCreation, cacheReadInputTokens: Int, totalTokens: Int) {
         (self.completionTokens, self.promptTokens) = (completionTokens, promptTokens)
         (self.cacheCreatedInputTokens, self.cacheCreation) = (cacheCreatedInputTokens, cacheCreation)
         (self.cacheReadInputTokens, self.totalTokens) = (cacheReadInputTokens, totalTokens)
@@ -204,29 +165,23 @@ public struct AllRepositoriesV2: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllRepositoriesV2 {
-    init(from decoder: Decoder) throws {
+extension AllRepositoriesV2 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        repositories = try container.sdkDecodeIfPresent(.repositories)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.repositories = try container.sdkDecodeIfPresent(.repositories)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllRepositoriesV2 {
-    init(meta: MetaMeta, repositories: [RepositoryV2]? = nil, links: PageLinks? = nil) {
+extension AllRepositoriesV2 {
+    public init(meta: MetaMeta, repositories: [RepositoryV2]? = nil, links: PageLinks? = nil) {
         (self.meta, self.repositories) = (meta, repositories)
         self.links = links
     }
@@ -247,20 +202,20 @@ public struct ForwardLinks: Codable {
     }
 
     init() {
-        (last, next) = (nil, nil)
+        (self.last, self.next) = (nil, nil)
     }
 }
 
-public extension ForwardLinks {
-    init(from decoder: Decoder) throws {
+extension ForwardLinks {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        last = try container.sdkDecodeIfPresent(.last)
-        next = try container.sdkDecodeIfPresent(.next)
+        self.last = try container.sdkDecodeIfPresent(.last)
+        self.next = try container.sdkDecodeIfPresent(.next)
     }
 }
 
-public extension ForwardLinks {
-    init(last: String? = nil, next: String? = nil) {
+extension ForwardLinks {
+    public init(last: String? = nil, next: String? = nil) {
         self.init()
         (self.last, self.next) = (last, next)
     }
@@ -302,84 +257,50 @@ public struct NfsAction2: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NfsAction2 {
-    init(from decoder: Decoder) throws {
+extension NfsAction2 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.regionSlug) else {
-            throw SdkValidationError(
-                field: "region_slug",
-                code: "required",
-                message: "Validation failed for 'region_slug': value is required"
-            )
+            throw SdkValidationError(field: "region_slug", code: "required", message: "Validation failed for 'region_slug': value is required")
         }
         guard container.contains(.resourceId) else {
-            throw SdkValidationError(
-                field: "resource_id",
-                code: "required",
-                message: "Validation failed for 'resource_id': value is required"
-            )
+            throw SdkValidationError(field: "resource_id", code: "required", message: "Validation failed for 'resource_id': value is required")
         }
         guard container.contains(.resourceType) else {
-            throw SdkValidationError(
-                field: "resource_type",
-                code: "required",
-                message: "Validation failed for 'resource_type': value is required"
-            )
+            throw SdkValidationError(field: "resource_type", code: "required", message: "Validation failed for 'resource_type': value is required")
         }
         guard container.contains(.startedAt) else {
-            throw SdkValidationError(
-                field: "started_at",
-                code: "required",
-                message: "Validation failed for 'started_at': value is required"
-            )
+            throw SdkValidationError(field: "started_at", code: "required", message: "Validation failed for 'started_at': value is required")
         }
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        regionSlug = try container.sdkDecodeRequired(.regionSlug)
-        resourceId = try container.sdkDecodeRequired(.resourceId)
-        resourceType = try container.sdkDecodeRequired(.resourceType)
-        startedAt = try container.sdkDecodeRequired(.startedAt)
-        status = try container.sdkDecodeRequired(.status)
-        type = try container.sdkDecodeRequired(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        try sdkValidateUuid("resource_id", resourceId)
-        try sdkValidateDateTime("started_at", sdkWireString(startedAt))
+        self.regionSlug = try container.sdkDecodeRequired(.regionSlug)
+        self.resourceId = try container.sdkDecodeRequired(.resourceId)
+        self.resourceType = try container.sdkDecodeRequired(.resourceType)
+        self.startedAt = try container.sdkDecodeRequired(.startedAt)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+            try sdkValidateUuid("resource_id", self.resourceId)
+            try sdkValidateDateTime("started_at", sdkWireString(self.startedAt))
     }
 }
 
-public extension NfsAction2 {
-    init(
-        regionSlug: String,
-        resourceId: String,
-        resourceType: NfsAction2ResourceType,
-        startedAt: Date,
-        status: NfsAction2Status,
-        type: String,
-        id: String? = nil
-    ) throws {
+extension NfsAction2 {
+    public init(regionSlug: String, resourceId: String, resourceType: NfsAction2ResourceType, startedAt: Date, status: NfsAction2Status, type: String, id: String? = nil) throws {
         (self.regionSlug, self.resourceId) = (regionSlug, resourceId)
         (self.resourceType, self.startedAt) = (resourceType, startedAt)
         (self.status, self.type) = (status, type)
         self.id = id
-        try sdkValidateUuid("resource_id", self.resourceId)
-        try sdkValidateDateTime("started_at", sdkWireString(self.startedAt))
+            try sdkValidateUuid("resource_id", self.resourceId)
+            try sdkValidateDateTime("started_at", sdkWireString(self.startedAt))
     }
 }
 
@@ -404,36 +325,26 @@ public struct Error2: Codable {
         case requestId = "request_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Error2 {
-    init(from decoder: Decoder) throws {
+extension Error2 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.message) else {
-            throw SdkValidationError(
-                field: "message",
-                code: "required",
-                message: "Validation failed for 'message': value is required"
-            )
+            throw SdkValidationError(field: "message", code: "required", message: "Validation failed for 'message': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        message = try container.sdkDecodeRequired(.message)
-        requestId = try container.sdkDecodeIfPresent(.requestId)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.message = try container.sdkDecodeRequired(.message)
+        self.requestId = try container.sdkDecodeIfPresent(.requestId)
     }
 }
 
-public extension Error2 {
-    init(id: String, message: String, requestId: String? = nil) {
+extension Error2 {
+    public init(id: String, message: String, requestId: String? = nil) {
         (self.id, self.message) = (id, message)
         self.requestId = requestId
     }
@@ -447,19 +358,19 @@ public struct AllRepositoriesV2Variant0: Codable {
     }
 
     init() {
-        repositories = nil
+        self.repositories = nil
     }
 }
 
-public extension AllRepositoriesV2Variant0 {
-    init(from decoder: Decoder) throws {
+extension AllRepositoriesV2Variant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        repositories = try container.sdkDecodeIfPresent(.repositories)
+        self.repositories = try container.sdkDecodeIfPresent(.repositories)
     }
 }
 
-public extension AllRepositoriesV2Variant0 {
-    init(repositories: [RepositoryV2]? = nil) {
+extension AllRepositoriesV2Variant0 {
+    public init(repositories: [RepositoryV2]? = nil) {
         self.init()
         self.repositories = repositories
     }
@@ -487,21 +398,21 @@ public struct Kernel: Codable {
     }
 
     init() {
-        (id, name, version) = (nil, nil, nil)
+        (self.id, self.name, self.version) = (nil, nil, nil)
     }
 }
 
-public extension Kernel {
-    init(from decoder: Decoder) throws {
+extension Kernel {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        version = try container.sdkDecodeIfPresent(.version)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.version = try container.sdkDecodeIfPresent(.version)
     }
 }
 
-public extension Kernel {
-    init(id: Int? = nil, name: String? = nil, version: String? = nil) {
+extension Kernel {
+    public init(id: Int? = nil, name: String? = nil, version: String? = nil) {
         self.init()
         (self.id, self.name) = (id, name)
         self.version = version
@@ -519,32 +430,26 @@ public struct ValidateRegistry: Codable {
         case name
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ValidateRegistry {
-    init(from decoder: Decoder) throws {
+extension ValidateRegistry {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        try validateLength("name", name, min: nil, max: 63)
-        try sdkValidatePattern("name", name, sdkPattern41dd286f4dc3)
+        self.name = try container.sdkDecodeRequired(.name)
+            try validateLength("name", self.name, min: nil, max: 63)
+            try sdkValidatePattern("name", self.name, sdkPattern41dd286f4dc3)
     }
 }
 
-public extension ValidateRegistry {
-    init(name: String) throws {
+extension ValidateRegistry {
+    public init(name: String) throws {
         self.name = name
-        try validateLength("name", self.name, min: nil, max: 63)
-        try sdkValidatePattern("name", self.name, sdkPattern41dd286f4dc3)
+            try validateLength("name", self.name, min: nil, max: 63)
+            try sdkValidatePattern("name", self.name, sdkPattern41dd286f4dc3)
     }
 }
 
@@ -553,17 +458,14 @@ public extension ValidateRegistry {
 public struct DiskInfoType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let local = DiskInfoType(rawValue: "local")
     public static let boot = DiskInfoType(rawValue: "boot")
     public static let scratch = DiskInfoType(rawValue: "scratch")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -578,10 +480,7 @@ public struct DiskInfoType: RawRepresentable, Hashable, Codable, Sendable, SdkWi
 public struct Distribution: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let archLinux = Distribution(rawValue: "Arch Linux")
     public static let centOs = Distribution(rawValue: "CentOS")
     public static let coreOs = Distribution(rawValue: "CoreOS")
@@ -598,7 +497,7 @@ public struct Distribution: RawRepresentable, Hashable, Codable, Sendable, SdkWi
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -611,17 +510,14 @@ public struct Distribution: RawRepresentable, Hashable, Codable, Sendable, SdkWi
 public struct NfsAction2Status: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let inProgress = NfsAction2Status(rawValue: "IN_PROGRESS")
     public static let completed = NfsAction2Status(rawValue: "COMPLETED")
     public static let actionFailed = NfsAction2Status(rawValue: "ACTION_FAILED")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

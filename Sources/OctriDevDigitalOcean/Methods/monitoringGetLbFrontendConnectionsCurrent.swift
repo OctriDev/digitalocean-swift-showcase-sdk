@@ -6,64 +6,32 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension MonitoringMethods {
-    /// To retrieve frontend total current active connections for a given load balancer, send a GET request to
-    /// `/v2/monitoring/metrics/load_balancer/frontend_connections_current`.
+extension MonitoringMethods {
+    /// To retrieve frontend total current active connections for a given load balancer, send a GET request to `/v2/monitoring/metrics/load_balancer/frontend_connections_current`.
     ///
     /// - Parameters:
     /// - lbId: A unique identifier for a load balancer.
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    static func monitoringGetLbFrontendConnectionsCurrent(
-        config: ClientConfig,
-        lbId: String,
-        start: String,
-        end: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Metrics {
-        try await (sdkRequest(
-            "GET",
-            "/v2/monitoring/metrics/load_balancer/frontend_connections_current",
-            config: config,
-            query: [
-                SdkQueryParameter("lb_id", value: lbId),
-                SdkQueryParameter("start", value: start),
-                SdkQueryParameter("end", value: end),
-            ],
-            decoder: .json,
-            operationId: "monitoring_get_lb_frontend_connections_current",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    public static func monitoringGetLbFrontendConnectionsCurrent(config: ClientConfig, lbId: String, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
+        return try (await sdkRequest("GET", "/v2/monitoring/metrics/load_balancer/frontend_connections_current", config: config, query: [
+            SdkQueryParameter("lb_id", value: lbId),
+            SdkQueryParameter("start", value: start),
+            SdkQueryParameter("end", value: end),
+        ], decoder: .json, operationId: "monitoring_get_lb_frontend_connections_current", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To retrieve frontend max connections limit for a given load balancer, send a GET request to
-    /// `/v2/monitoring/metrics/load_balancer/frontend_connections_limit`.
+    /// To retrieve frontend max connections limit for a given load balancer, send a GET request to `/v2/monitoring/metrics/load_balancer/frontend_connections_limit`.
     ///
     /// - Parameters:
     /// - lbId: A unique identifier for a load balancer.
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    static func monitoringGetLbFrontendConnectionsLimit(
-        config: ClientConfig,
-        lbId: String,
-        start: String,
-        end: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Metrics {
-        try await (sdkRequest(
-            "GET",
-            "/v2/monitoring/metrics/load_balancer/frontend_connections_limit",
-            config: config,
-            query: [
-                SdkQueryParameter("lb_id", value: lbId),
-                SdkQueryParameter("start", value: start),
-                SdkQueryParameter("end", value: end),
-            ],
-            decoder: .json,
-            operationId: "monitoring_get_lb_frontend_connections_limit",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    public static func monitoringGetLbFrontendConnectionsLimit(config: ClientConfig, lbId: String, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
+        return try (await sdkRequest("GET", "/v2/monitoring/metrics/load_balancer/frontend_connections_limit", config: config, query: [
+            SdkQueryParameter("lb_id", value: lbId),
+            SdkQueryParameter("start", value: start),
+            SdkQueryParameter("end", value: end),
+        ], decoder: .json, operationId: "monitoring_get_lb_frontend_connections_limit", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiCreate domain models
+// AgentPlatformAPIApiCreate domain models
 /// Data to create a knowledge base data source
 public struct ApiCreateKnowledgeBaseDataSourceInputPublic: Codable {
     /// AWS S3 Data Source
@@ -31,38 +31,25 @@ public struct ApiCreateKnowledgeBaseDataSourceInputPublic: Codable {
     }
 
     init() {
-        (awsDataSource, chunkingAlgorithm, chunkingOptions, knowledgeBaseUuid, spacesDataSource) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        webCrawlerDataSource = nil
+        (self.awsDataSource, self.chunkingAlgorithm, self.chunkingOptions, self.knowledgeBaseUuid, self.spacesDataSource) = (nil, nil, nil, nil, nil)
+        self.webCrawlerDataSource = nil
     }
 }
 
-public extension ApiCreateKnowledgeBaseDataSourceInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiCreateKnowledgeBaseDataSourceInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        awsDataSource = try container.sdkDecodeIfPresent(.awsDataSource)
-        chunkingAlgorithm = try container.sdkDecodeIfPresent(.chunkingAlgorithm)
-        chunkingOptions = try container.sdkDecodeIfPresent(.chunkingOptions)
-        knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
-        spacesDataSource = try container.sdkDecodeIfPresent(.spacesDataSource)
-        webCrawlerDataSource = try container.sdkDecodeIfPresent(.webCrawlerDataSource)
+        self.awsDataSource = try container.sdkDecodeIfPresent(.awsDataSource)
+        self.chunkingAlgorithm = try container.sdkDecodeIfPresent(.chunkingAlgorithm)
+        self.chunkingOptions = try container.sdkDecodeIfPresent(.chunkingOptions)
+        self.knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
+        self.spacesDataSource = try container.sdkDecodeIfPresent(.spacesDataSource)
+        self.webCrawlerDataSource = try container.sdkDecodeIfPresent(.webCrawlerDataSource)
     }
 }
 
-public extension ApiCreateKnowledgeBaseDataSourceInputPublic {
-    init(
-        awsDataSource: ApiAWSDataSource? = nil,
-        chunkingAlgorithm: ApiChunkingAlgorithm? = nil,
-        chunkingOptions: ApiChunkingOptions? = nil,
-        knowledgeBaseUuid: String? = nil,
-        spacesDataSource: ApiSpacesDataSource? = nil,
-        webCrawlerDataSource: ApiWebCrawlerDataSource? = nil
-    ) {
+extension ApiCreateKnowledgeBaseDataSourceInputPublic {
+    public init(awsDataSource: ApiAWSDataSource? = nil, chunkingAlgorithm: ApiChunkingAlgorithm? = nil, chunkingOptions: ApiChunkingOptions? = nil, knowledgeBaseUuid: String? = nil, spacesDataSource: ApiSpacesDataSource? = nil, webCrawlerDataSource: ApiWebCrawlerDataSource? = nil) {
         self.init()
         (self.awsDataSource, self.chunkingAlgorithm) = (awsDataSource, chunkingAlgorithm)
         (self.chunkingOptions, self.knowledgeBaseUuid) = (chunkingOptions, knowledgeBaseUuid)
@@ -80,19 +67,19 @@ public struct ApiCreateKnowledgeBaseDataSourceOutput: Codable {
     }
 
     init() {
-        knowledgeBaseDataSource = nil
+        self.knowledgeBaseDataSource = nil
     }
 }
 
-public extension ApiCreateKnowledgeBaseDataSourceOutput {
-    init(from decoder: Decoder) throws {
+extension ApiCreateKnowledgeBaseDataSourceOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        knowledgeBaseDataSource = try container.sdkDecodeIfPresent(.knowledgeBaseDataSource)
+        self.knowledgeBaseDataSource = try container.sdkDecodeIfPresent(.knowledgeBaseDataSource)
     }
 }
 
-public extension ApiCreateKnowledgeBaseDataSourceOutput {
-    init(knowledgeBaseDataSource: ApiKnowledgeBaseDataSource? = nil) {
+extension ApiCreateKnowledgeBaseDataSourceOutput {
+    public init(knowledgeBaseDataSource: ApiKnowledgeBaseDataSource? = nil) {
         self.init()
         self.knowledgeBaseDataSource = knowledgeBaseDataSource
     }

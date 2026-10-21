@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiSimulation domain models
+// AgentPlatformAPIApiSimulation domain models
 /// Per-scenario rollup of episode outcomes within a run, aggregated from the run's episode rows.
 public struct ApiSimulationScenarioResult: Codable {
     /// Episodes that have finished (successfully or not).
@@ -27,27 +27,22 @@ public struct ApiSimulationScenarioResult: Codable {
     }
 
     init() {
-        (episodesFinished, scenarioUuid, totalEpisodes, verdictCounts) = (nil, nil, nil, nil)
+        (self.episodesFinished, self.scenarioUuid, self.totalEpisodes, self.verdictCounts) = (nil, nil, nil, nil)
     }
 }
 
-public extension ApiSimulationScenarioResult {
-    init(from decoder: Decoder) throws {
+extension ApiSimulationScenarioResult {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        episodesFinished = try container.sdkDecodeIfPresent(.episodesFinished)
-        scenarioUuid = try container.sdkDecodeIfPresent(.scenarioUuid)
-        totalEpisodes = try container.sdkDecodeIfPresent(.totalEpisodes)
-        verdictCounts = try container.sdkDecodeIfPresent(.verdictCounts)
+        self.episodesFinished = try container.sdkDecodeIfPresent(.episodesFinished)
+        self.scenarioUuid = try container.sdkDecodeIfPresent(.scenarioUuid)
+        self.totalEpisodes = try container.sdkDecodeIfPresent(.totalEpisodes)
+        self.verdictCounts = try container.sdkDecodeIfPresent(.verdictCounts)
     }
 }
 
-public extension ApiSimulationScenarioResult {
-    init(
-        episodesFinished: Int? = nil,
-        scenarioUuid: String? = nil,
-        totalEpisodes: Int? = nil,
-        verdictCounts: ApiSimulationEpisodeCounts? = nil
-    ) {
+extension ApiSimulationScenarioResult {
+    public init(episodesFinished: Int? = nil, scenarioUuid: String? = nil, totalEpisodes: Int? = nil, verdictCounts: ApiSimulationEpisodeCounts? = nil) {
         self.init()
         (self.episodesFinished, self.scenarioUuid) = (episodesFinished, scenarioUuid)
         (self.totalEpisodes, self.verdictCounts) = (totalEpisodes, verdictCounts)

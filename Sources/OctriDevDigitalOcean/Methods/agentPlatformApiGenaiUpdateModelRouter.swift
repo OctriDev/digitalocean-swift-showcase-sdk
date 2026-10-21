@@ -6,10 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
-    /// Replaces the configuration of a model router identified by its UUID. Supply any settings you want to update,
-    /// such as `name`, `description`, or `policies`. The deprecated `regions` field does not affect deployment; omit it
-    /// or set it to `["all"]`.
+extension AgentPlatformApiMethods {
+    /// Replaces the configuration of a model router identified by its UUID. Supply any settings you want to update, such as `name`, `description`, or `policies`. The deprecated `regions` field does not affect deployment; omit it or set it to `["all"]`.
     ///
     /// To update a model router, send a PUT request to `/v2/gen-ai/models/routers/{uuid}`.
     ///
@@ -25,41 +23,9 @@ public extension AgentPlatformApiMethods {
     ///   routers are always deployed to all regions. Must be omitted or set to
     ///   ["all"].
     /// - uuid2: Model router id
-    static func genaiUpdateModelRouter(
-        config: ClientConfig,
-        uuid: String,
-        description: String? = nil,
-        fallbackModels: [[String: JSONValue]]? = nil,
-        name: String? = nil,
-        policies: [ApiModelRouterTaskPolicy]? = nil,
-        regions: [String]? = nil,
-        uuid2: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiUpdateModelRouterOutput {
-        let requestBody = GenaiUpdateModelRouterRequestBody(
-            description: description,
-            fallbackModels: fallbackModels,
-            name: name,
-            policies: policies,
-            regions: regions,
-            uuid2: uuid2
-        )
+    public static func genaiUpdateModelRouter(config: ClientConfig, uuid: String, description: String? = nil, fallbackModels: [[String: JSONValue]]? = nil, name: String? = nil, policies: [ApiModelRouterTaskPolicy]? = nil, regions: [String]? = nil, uuid2: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiUpdateModelRouterOutput {
+        let requestBody = GenaiUpdateModelRouterRequestBody(description: description, fallbackModels: fallbackModels, name: name, policies: policies, regions: regions, uuid2: uuid2)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/gen-ai/models/routers/", sdkEncodePathSegment(sdkWireString(uuid))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "genai_update_model_router",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/gen-ai/models/routers/", sdkEncodePathSegment(sdkWireString(uuid))].joined(), config: config, body: requestBody, decoder: .json, operationId: "genai_update_model_router", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

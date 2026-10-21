@@ -6,104 +6,41 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension PartnerNetworkConnectMethods {
-    /// To get the current BGP auth key for a partner attachment, send a `GET` request to
-    /// `/v2/partner_network_connect/attachments/{pa_id}/bgp_auth_key`.
+extension PartnerNetworkConnectMethods {
+    /// To get the current BGP auth key for a partner attachment, send a `GET` request to `/v2/partner_network_connect/attachments/{pa_id}/bgp_auth_key`.
     ///
     /// - Parameters:
     /// - paId: A unique identifier for a partner attachment.
-    static func partnerAttachmentsGetBgpAuthKey(
-        config: ClientConfig,
-        paId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SinglePartnerAttachmentBgpAuthKey {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/partner_network_connect/attachments/", sdkEncodePathSegment(sdkWireString(paId)), "/bgp_auth_key"]
-                .joined(),
-            config: config,
-            decoder: .json,
-            operationId: "partnerAttachments_get_bgp_auth_key",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func partnerAttachmentsGetBgpAuthKey(config: ClientConfig, paId: String, requestOptions: RequestOptions? = nil) async throws -> SinglePartnerAttachmentBgpAuthKey {
+        return try (await sdkRequest("GET", ["/v2/partner_network_connect/attachments/", sdkEncodePathSegment(sdkWireString(paId)), "/bgp_auth_key"].joined(), config: config, decoder: .json, operationId: "partnerAttachments_get_bgp_auth_key", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To list all remote routes associated with a partner attachment, send a `GET` request to
-    /// `/v2/partner_network_connect/attachments/{pa_id}/remote_routes`.
+    /// To list all remote routes associated with a partner attachment, send a `GET` request to `/v2/partner_network_connect/attachments/{pa_id}/remote_routes`.
     ///
     /// - Parameters:
     /// - paId: A unique identifier for a partner attachment.
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func partnerAttachmentsListRemoteRoutes(
-        config: ClientConfig,
-        paId: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AllPartnerAttachmentRemoteRoutes {
-        if let perPage {
+    public static func partnerAttachmentsListRemoteRoutes(config: ClientConfig, paId: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AllPartnerAttachmentRemoteRoutes {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/partner_network_connect/attachments/", sdkEncodePathSegment(sdkWireString(paId)), "/remote_routes"]
-                .joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "partnerAttachments_list_remote_routes",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/partner_network_connect/attachments/", sdkEncodePathSegment(sdkWireString(paId)), "/remote_routes"].joined(), config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "partnerAttachments_list_remote_routes", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To get the current service key for a partner attachment, send a `GET` request to
-    /// `/v2/partner_network_connect/attachments/{pa_id}/service_key`.
+    /// To get the current service key for a partner attachment, send a `GET` request to `/v2/partner_network_connect/attachments/{pa_id}/service_key`.
     ///
     /// - Parameters:
     /// - paId: A unique identifier for a partner attachment.
-    static func partnerAttachmentsGetServiceKey(
-        config: ClientConfig,
-        paId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SinglePartnerAttachmentServiceKey {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/partner_network_connect/attachments/", sdkEncodePathSegment(sdkWireString(paId)), "/service_key"]
-                .joined(),
-            config: config,
-            decoder: .json,
-            operationId: "partnerAttachments_get_service_key",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func partnerAttachmentsGetServiceKey(config: ClientConfig, paId: String, requestOptions: RequestOptions? = nil) async throws -> SinglePartnerAttachmentServiceKey {
+        return try (await sdkRequest("GET", ["/v2/partner_network_connect/attachments/", sdkEncodePathSegment(sdkWireString(paId)), "/service_key"].joined(), config: config, decoder: .json, operationId: "partnerAttachments_get_service_key", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

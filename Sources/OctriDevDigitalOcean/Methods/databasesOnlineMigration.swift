@@ -6,86 +6,31 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DatabasesMethods {
-    /// To retrieve the status of the most recent online migration, send a GET request to
-    /// `/v2/databases/$DATABASE_ID/online-migration`.
+extension DatabasesMethods {
+    /// To retrieve the status of the most recent online migration, send a GET request to `/v2/databases/$DATABASE_ID/online-migration`.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    static func databasesGetMigrationStatus(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> OnlineMigration {
+    public static func databasesGetMigrationStatus(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> OnlineMigration {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/online-migration"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "databases_get_migrationStatus",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/online-migration"].joined(), config: config, decoder: .json, operationId: "databases_get_migrationStatus", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Submits an online migration that connects a database cluster to an existing source cluster and replicates its
-    /// contents. Supply the source connection details in `source`; online migration is available for MySQL, PostgreSQL,
-    /// Caching, and Valkey clusters. If the source database continues to receive writes, migration can continue for up
-    /// to two weeks unless you stop it manually.
+    /// Submits an online migration that connects a database cluster to an existing source cluster and replicates its contents. Supply the source connection details in `source`; online migration is available for MySQL, PostgreSQL, Caching, and Valkey clusters. If the source database continues to receive writes, migration can continue for up to two weeks unless you stop it manually.
     ///
-    /// To start an online migration, send a PUT request to `/v2/databases/$DATABASE_ID/online-migration` endpoint.
-    /// Migrating a cluster establishes a connection with an existing cluster and replicates its contents to the target
-    /// cluster. Online migration is only available for MySQL, PostgreSQL, Caching, and Valkey clusters. If the existing
-    /// database is continuously being written to, the migration process will continue for up to two weeks unless it is
-    /// manually stopped. Online migration is only available for [MySQL](https://docs.digitalocean.com/products/databases/mysql/how-to/migrate/#:~:text=To%20migrate%20a%20MySQL%20database,then%20select%20Set%20Up%20Migration),
-    /// [PostgreSQL](https://docs.digitalocean.com/products/databases/postgresql/how-to/migrate/),
-    /// [Caching](https://docs.digitalocean.com/products/databases/redis/how-to/migrate/), and
-    /// [Valkey](https://docs.digitalocean.com/products/databases/valkey/how-to/migrate/) clusters.
+    /// To start an online migration, send a PUT request to `/v2/databases/$DATABASE_ID/online-migration` endpoint. Migrating a cluster establishes a connection with an existing cluster and replicates its contents to the target cluster. Online migration is only available for MySQL, PostgreSQL, Caching, and Valkey clusters. If the existing database is continuously being written to, the migration process will continue for up to two weeks unless it is manually stopped. Online migration is only available for [MySQL](https://docs.digitalocean.com/products/databases/mysql/how-to/migrate/#:~:text=To%20migrate%20a%20MySQL%20database,then%20select%20Set%20Up%20Migration), [PostgreSQL](https://docs.digitalocean.com/products/databases/postgresql/how-to/migrate/), [Caching](https://docs.digitalocean.com/products/databases/redis/how-to/migrate/), and [Valkey](https://docs.digitalocean.com/products/databases/valkey/how-to/migrate/) clusters.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - source: Required object value serialized in the `source` wire field.
     /// - disableSsl: Enables SSL encryption when connecting to the source database.
     /// - ignoreDbs: List of databases that should be ignored during migration.
-    static func databasesUpdateOnlineMigration(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        source: SourceDatabaseSource,
-        disableSsl: Bool? = nil,
-        ignoreDbs: [String]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> OnlineMigration {
+    public static func databasesUpdateOnlineMigration(config: ClientConfig, databaseClusterUuid: String, source: SourceDatabaseSource, disableSsl: Bool? = nil, ignoreDbs: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> OnlineMigration {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        let requestBody = DatabasesUpdateOnlineMigrationRequestBody(
-            source: source,
-            disableSsl: disableSsl,
-            ignoreDbs: ignoreDbs
-        )
+        let requestBody = DatabasesUpdateOnlineMigrationRequestBody(source: source, disableSsl: disableSsl, ignoreDbs: ignoreDbs)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/online-migration"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "databases_update_onlineMigration",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/online-migration"].joined(), config: config, body: requestBody, decoder: .json, operationId: "databases_update_onlineMigration", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

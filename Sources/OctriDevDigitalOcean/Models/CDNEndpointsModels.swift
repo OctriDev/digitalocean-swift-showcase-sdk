@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// CDNEndpoints domain models
+// CDNEndpoints domain models
 /// Typed representation of the `CdnEndpoint` API schema.
 public struct CdnEndpoint: Codable {
     /// The fully qualified domain name (FQDN) for the origin server which provides the content for the CDN. This is
@@ -41,50 +41,36 @@ public struct CdnEndpoint: Codable {
         case createdAt = "created_at"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CdnEndpoint {
-    init(from decoder: Decoder) throws {
+extension CdnEndpoint {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.origin) else {
-            throw SdkValidationError(
-                field: "origin",
-                code: "required",
-                message: "Validation failed for 'origin': value is required"
-            )
+            throw SdkValidationError(field: "origin", code: "required", message: "Validation failed for 'origin': value is required")
         }
-        origin = try container.sdkDecodeRequired(.origin)
-        id = try container.sdkDecodeIfPresent(.id)
-        endpoint = try container.sdkDecodeIfPresent(.endpoint)
-        ttl = try container.sdkDecodeIfPresent(.ttl)
-        certificateId = try container.sdkDecodeIfPresent(.certificateId)
-        customDomain = try container.sdkDecodeIfPresent(.customDomain)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        if let value = id {
+        self.origin = try container.sdkDecodeRequired(.origin)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.endpoint = try container.sdkDecodeIfPresent(.endpoint)
+        self.ttl = try container.sdkDecodeIfPresent(.ttl)
+        self.certificateId = try container.sdkDecodeIfPresent(.certificateId)
+        self.customDomain = try container.sdkDecodeIfPresent(.customDomain)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        if let value = self.id {
             try sdkValidateUuid("id", value)
         }
-        if let value = certificateId {
+        if let value = self.certificateId {
             try sdkValidateUuid("certificate_id", value)
         }
-        if let value = createdAt {
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-public extension CdnEndpoint {
-    init(
-        origin: String,
-        id: String? = nil,
-        endpoint: String? = nil,
-        ttl: Int? = nil,
-        certificateId: String? = nil,
-        customDomain: String? = nil,
-        createdAt: Date? = nil
-    ) throws {
+extension CdnEndpoint {
+    public init(origin: String, id: String? = nil, endpoint: String? = nil, ttl: Int? = nil, certificateId: String? = nil, customDomain: String? = nil, createdAt: Date? = nil) throws {
         (self.origin, self.id) = (origin, id)
         (self.endpoint, self.ttl) = (endpoint, ttl)
         (self.certificateId, self.customDomain) = (certificateId, customDomain)
@@ -115,29 +101,23 @@ public struct AllCdnEndpoints: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllCdnEndpoints {
-    init(from decoder: Decoder) throws {
+extension AllCdnEndpoints {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        endpoints = try container.sdkDecodeIfPresent(.endpoints)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.endpoints = try container.sdkDecodeIfPresent(.endpoints)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllCdnEndpoints {
-    init(meta: MetaMeta, endpoints: [CdnEndpoint]? = nil, links: PageLinks? = nil) {
+extension AllCdnEndpoints {
+    public init(meta: MetaMeta, endpoints: [CdnEndpoint]? = nil, links: PageLinks? = nil) {
         (self.meta, self.endpoints) = (meta, endpoints)
         self.links = links
     }
@@ -153,27 +133,21 @@ public struct PurgeCache: Codable {
         case files
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension PurgeCache {
-    init(from decoder: Decoder) throws {
+extension PurgeCache {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.files) else {
-            throw SdkValidationError(
-                field: "files",
-                code: "required",
-                message: "Validation failed for 'files': value is required"
-            )
+            throw SdkValidationError(field: "files", code: "required", message: "Validation failed for 'files': value is required")
         }
-        files = try container.sdkDecodeRequired(.files)
+        self.files = try container.sdkDecodeRequired(.files)
     }
 }
 
-public extension PurgeCache {
-    init(files: [String]) {
+extension PurgeCache {
+    public init(files: [String]) {
         self.files = files
     }
 }
@@ -198,24 +172,24 @@ public struct UpdateEndpoint: Codable {
     }
 
     init() {
-        (ttl, certificateId, customDomain) = (nil, nil, nil)
+        (self.ttl, self.certificateId, self.customDomain) = (nil, nil, nil)
     }
 }
 
-public extension UpdateEndpoint {
-    init(from decoder: Decoder) throws {
+extension UpdateEndpoint {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        ttl = try container.sdkDecodeIfPresent(.ttl)
-        certificateId = try container.sdkDecodeIfPresent(.certificateId)
-        customDomain = try container.sdkDecodeIfPresent(.customDomain)
-        if let value = certificateId {
+        self.ttl = try container.sdkDecodeIfPresent(.ttl)
+        self.certificateId = try container.sdkDecodeIfPresent(.certificateId)
+        self.customDomain = try container.sdkDecodeIfPresent(.customDomain)
+        if let value = self.certificateId {
             try sdkValidateUuid("certificate_id", value)
         }
     }
 }
 
-public extension UpdateEndpoint {
-    init(ttl: Int? = nil, certificateId: String? = nil, customDomain: String? = nil) throws {
+extension UpdateEndpoint {
+    public init(ttl: Int? = nil, certificateId: String? = nil, customDomain: String? = nil) throws {
         self.init()
         (self.ttl, self.certificateId) = (ttl, certificateId)
         self.customDomain = customDomain
@@ -249,33 +223,27 @@ public struct CdnEndpointRequest: Codable {
         case customDomain = "custom_domain"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CdnEndpointRequest {
-    init(from decoder: Decoder) throws {
+extension CdnEndpointRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.origin) else {
-            throw SdkValidationError(
-                field: "origin",
-                code: "required",
-                message: "Validation failed for 'origin': value is required"
-            )
+            throw SdkValidationError(field: "origin", code: "required", message: "Validation failed for 'origin': value is required")
         }
-        origin = try container.sdkDecodeRequired(.origin)
-        ttl = try container.sdkDecodeIfPresent(.ttl)
-        certificateId = try container.sdkDecodeIfPresent(.certificateId)
-        customDomain = try container.sdkDecodeIfPresent(.customDomain)
-        if let value = certificateId {
+        self.origin = try container.sdkDecodeRequired(.origin)
+        self.ttl = try container.sdkDecodeIfPresent(.ttl)
+        self.certificateId = try container.sdkDecodeIfPresent(.certificateId)
+        self.customDomain = try container.sdkDecodeIfPresent(.customDomain)
+        if let value = self.certificateId {
             try sdkValidateUuid("certificate_id", value)
         }
     }
 }
 
-public extension CdnEndpointRequest {
-    init(origin: String, ttl: Int? = nil, certificateId: String? = nil, customDomain: String? = nil) throws {
+extension CdnEndpointRequest {
+    public init(origin: String, ttl: Int? = nil, certificateId: String? = nil, customDomain: String? = nil) throws {
         (self.origin, self.ttl) = (origin, ttl)
         (self.certificateId, self.customDomain) = (certificateId, customDomain)
         if let value = self.certificateId {
@@ -292,19 +260,19 @@ public struct AllCdnEndpointsVariant0: Codable {
     }
 
     init() {
-        endpoints = nil
+        self.endpoints = nil
     }
 }
 
-public extension AllCdnEndpointsVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllCdnEndpointsVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        endpoints = try container.sdkDecodeIfPresent(.endpoints)
+        self.endpoints = try container.sdkDecodeIfPresent(.endpoints)
     }
 }
 
-public extension AllCdnEndpointsVariant0 {
-    init(endpoints: [CdnEndpoint]? = nil) {
+extension AllCdnEndpointsVariant0 {
+    public init(endpoints: [CdnEndpoint]? = nil) {
         self.init()
         self.endpoints = endpoints
     }
@@ -320,19 +288,19 @@ public struct ExistingEndpoint: Codable {
     }
 
     init() {
-        endpoint = nil
+        self.endpoint = nil
     }
 }
 
-public extension ExistingEndpoint {
-    init(from decoder: Decoder) throws {
+extension ExistingEndpoint {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        endpoint = try container.sdkDecodeIfPresent(.endpoint)
+        self.endpoint = try container.sdkDecodeIfPresent(.endpoint)
     }
 }
 
-public extension ExistingEndpoint {
-    init(endpoint: CdnEndpoint? = nil) {
+extension ExistingEndpoint {
+    public init(endpoint: CdnEndpoint? = nil) {
         self.init()
         self.endpoint = endpoint
     }

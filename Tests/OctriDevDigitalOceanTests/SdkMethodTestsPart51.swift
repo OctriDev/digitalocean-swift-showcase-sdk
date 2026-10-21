@@ -6,8 +6,7 @@ import Foundation
 import XCTest
 
 extension SdkMethodTests {
-    func testMonitoringGetDatabaseMysqlOpRatesMonitoringGetDatabaseMysqlOpRates401ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlOpRatesMonitoringGetDatabaseMysqlOpRates401ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -18,11 +17,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getDatabaseMysqlOpRates(
-                dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                metric: decoded("\"select\""),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\"")
-            )
+            dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            metric: decoded("\"select\""),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -38,8 +37,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetDatabaseMysqlSchemaLatencyMonitoringGetDatabaseMXa4496ae88fReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlSchemaLatencyMonitoringGetDatabaseMXa4496ae88fReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -61,8 +59,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetDatabaseMysqlSchemaLatencyMonitoringGetDatabaseMXbbf5028354ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlSchemaLatencyMonitoringGetDatabaseMXbbf5028354ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -73,12 +70,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getDatabaseMysqlSchemaLatency(
-                dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                schema: decoded("\"defaultdb\""),
-                metric: decoded("\"insert\""),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\"")
-            )
+            dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            schema: decoded("\"defaultdb\""),
+            metric: decoded("\"insert\""),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -94,8 +91,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetDatabaseMysqlSchemaThroughputMonitoringGetDatabaX74d4d6833cReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlSchemaThroughputMonitoringGetDatabaX74d4d6833cReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -117,8 +113,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetDatabaseMysqlSchemaThroughputMonitoringGetDatabaXdd0f3c03ffReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlSchemaThroughputMonitoringGetDatabaXdd0f3c03ffReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -129,12 +124,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getDatabaseMysqlSchemaThroughput(
-                dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                schema: decoded("\"defaultdb\""),
-                metric: decoded("\"insert\""),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\"")
-            )
+            dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            schema: decoded("\"defaultdb\""),
+            metric: decoded("\"insert\""),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -150,8 +145,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetDatabaseMysqlThreadsActiveMonitoringGetDatabaseMX6bb7b37800ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlThreadsActiveMonitoringGetDatabaseMX6bb7b37800ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -171,8 +165,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetDatabaseMysqlThreadsActiveMonitoringGetDatabaseMX8c0ab6277bReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlThreadsActiveMonitoringGetDatabaseMX8c0ab6277bReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -183,10 +176,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getDatabaseMysqlThreadsActive(
-                dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\"")
-            )
+            dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -202,8 +195,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetDatabaseMysqlThreadsConnectedMonitoringGetDatabaXb42bf232a8ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlThreadsConnectedMonitoringGetDatabaXb42bf232a8ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -223,8 +215,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetDatabaseMysqlThreadsConnectedMonitoringGetDatabaX8725682639ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlThreadsConnectedMonitoringGetDatabaX8725682639ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -235,10 +226,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getDatabaseMysqlThreadsConnected(
-                dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\"")
-            )
+            dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -254,8 +245,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetDatabaseMysqlThreadsCreatedRateMonitoringGetDataXc4ec5d7024ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlThreadsCreatedRateMonitoringGetDataXc4ec5d7024ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -275,8 +265,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetDatabaseMysqlThreadsCreatedRateMonitoringGetDataX9197389896ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDatabaseMysqlThreadsCreatedRateMonitoringGetDataX9197389896ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -287,10 +276,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getDatabaseMysqlThreadsCreatedRate(
-                dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\"")
-            )
+            dbId: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -335,8 +324,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getDestination(
-                destinationUuid: decoded("\"1a64809f-1708-48ee-a742-dec8d481b8d1\"")
-            )
+            destinationUuid: decoded("\"1a64809f-1708-48ee-a742-dec8d481b8d1\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -352,8 +341,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetDropletAutoscaleCurrentCpuUtilizationYmlMonitoriXaf692f1ec6ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDropletAutoscaleCurrentCpuUtilizationYmlMonitoriXaf692f1ec6ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -373,8 +361,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetDropletAutoscaleCurrentCpuUtilizationYmlMonitoriXbacaa3c136ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDropletAutoscaleCurrentCpuUtilizationYmlMonitoriXbacaa3c136ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -385,10 +372,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getDropletAutoscaleCurrentCpuUtilizationYml(
-                autoscalePoolId: decoded("\"0d3db13e-a604-4944-9827-7ec2642d32ac\""),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\"")
-            )
+            autoscalePoolId: decoded("\"0d3db13e-a604-4944-9827-7ec2642d32ac\""),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -404,8 +391,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetDropletAutoscaleCurrentInstancesMonitoringGetDroX886b429915ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDropletAutoscaleCurrentInstancesMonitoringGetDroX886b429915ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -425,8 +411,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetDropletAutoscaleCurrentInstancesMonitoringGetDroX093f8bf5a3ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDropletAutoscaleCurrentInstancesMonitoringGetDroX093f8bf5a3ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -437,10 +422,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getDropletAutoscaleCurrentInstances(
-                autoscalePoolId: decoded("\"0d3db13e-a604-4944-9827-7ec2642d32ac\""),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\"")
-            )
+            autoscalePoolId: decoded("\"0d3db13e-a604-4944-9827-7ec2642d32ac\""),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -456,8 +441,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetDropletAutoscaleCurrentMemoryUtilizationMonitoriX4421f6c407ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDropletAutoscaleCurrentMemoryUtilizationMonitoriX4421f6c407ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -477,8 +461,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetDropletAutoscaleCurrentMemoryUtilizationMonitoriX18184dce61ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDropletAutoscaleCurrentMemoryUtilizationMonitoriX18184dce61ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -489,10 +472,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getDropletAutoscaleCurrentMemoryUtilization(
-                autoscalePoolId: decoded("\"0d3db13e-a604-4944-9827-7ec2642d32ac\""),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\"")
-            )
+            autoscalePoolId: decoded("\"0d3db13e-a604-4944-9827-7ec2642d32ac\""),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -508,8 +491,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetDropletAutoscaleTargetCpuUtilizationMonitoringGeX2e3bc19a45ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetDropletAutoscaleTargetCpuUtilizationMonitoringGeX2e3bc19a45ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// VectorDatabases domain models
+// VectorDatabases domain models
 /// Backup represents a single backup of a vector database.
 public struct VectordbBackup: Codable {
     /// Unique identifier for the backup (e.g., "vectordb-{uuid}-20240101-120000").
@@ -27,28 +27,28 @@ public struct VectordbBackup: Codable {
     }
 
     init() {
-        (backupId, completedAt, startedAt, status) = (nil, nil, nil, nil)
+        (self.backupId, self.completedAt, self.startedAt, self.status) = (nil, nil, nil, nil)
     }
 }
 
-public extension VectordbBackup {
-    init(from decoder: Decoder) throws {
+extension VectordbBackup {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        backupId = try container.sdkDecodeIfPresent(.backupId)
-        completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        status = try container.sdkDecodeIfPresent(.status)
-        if let value = completedAt {
+        self.backupId = try container.sdkDecodeIfPresent(.backupId)
+        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        if let value = self.completedAt {
             try sdkValidateDateTime("completed_at", sdkWireString(value))
         }
-        if let value = startedAt {
+        if let value = self.startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
     }
 }
 
-public extension VectordbBackup {
-    init(backupId: String? = nil, completedAt: Date? = nil, startedAt: Date? = nil, status: String? = nil) throws {
+extension VectordbBackup {
+    public init(backupId: String? = nil, completedAt: Date? = nil, startedAt: Date? = nil, status: String? = nil) throws {
         self.init()
         (self.backupId, self.completedAt) = (backupId, completedAt)
         (self.startedAt, self.status) = (startedAt, status)
@@ -71,19 +71,19 @@ public struct VectordbListBackupsResponse: Codable {
     }
 
     init() {
-        backups = nil
+        self.backups = nil
     }
 }
 
-public extension VectordbListBackupsResponse {
-    init(from decoder: Decoder) throws {
+extension VectordbListBackupsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        backups = try container.sdkDecodeIfPresent(.backups)
+        self.backups = try container.sdkDecodeIfPresent(.backups)
     }
 }
 
-public extension VectordbListBackupsResponse {
-    init(backups: [VectordbBackup]? = nil) {
+extension VectordbListBackupsResponse {
+    public init(backups: [VectordbBackup]? = nil) {
         self.init()
         self.backups = backups
     }

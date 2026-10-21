@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AppsApps domain models
+// AppsApps domain models
 /// Typed representation of the `AppsGithubSourceSpec` API schema.
 public struct AppsGithubSourceSpec: Codable {
     /// The name of the branch to use
@@ -23,21 +23,21 @@ public struct AppsGithubSourceSpec: Codable {
     }
 
     init() {
-        (branch, deployOnPush, repo) = (nil, nil, nil)
+        (self.branch, self.deployOnPush, self.repo) = (nil, nil, nil)
     }
 }
 
-public extension AppsGithubSourceSpec {
-    init(from decoder: Decoder) throws {
+extension AppsGithubSourceSpec {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        branch = try container.sdkDecodeIfPresent(.branch)
-        deployOnPush = try container.sdkDecodeIfPresent(.deployOnPush)
-        repo = try container.sdkDecodeIfPresent(.repo)
+        self.branch = try container.sdkDecodeIfPresent(.branch)
+        self.deployOnPush = try container.sdkDecodeIfPresent(.deployOnPush)
+        self.repo = try container.sdkDecodeIfPresent(.repo)
     }
 }
 
-public extension AppsGithubSourceSpec {
-    init(branch: String? = nil, deployOnPush: Bool? = nil, repo: String? = nil) {
+extension AppsGithubSourceSpec {
+    public init(branch: String? = nil, deployOnPush: Bool? = nil, repo: String? = nil) {
         self.init()
         (self.branch, self.deployOnPush) = (branch, deployOnPush)
         self.repo = repo
@@ -83,39 +83,30 @@ public struct AppsRegion: Codable {
     }
 
     init() {
-        (continent, dataCenters, self.default, disabled, flag) = (nil, nil, nil, nil, nil)
-        (label, reason, slug) = (nil, nil, nil)
+        (self.continent, self.dataCenters, self.`default`, self.disabled, self.flag) = (nil, nil, nil, nil, nil)
+        (self.label, self.reason, self.slug) = (nil, nil, nil)
     }
 }
 
-public extension AppsRegion {
-    init(from decoder: Decoder) throws {
+extension AppsRegion {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        continent = try container.sdkDecodeIfPresent(.continent)
-        dataCenters = try container.sdkDecodeIfPresent(.dataCenters)
-        self.default = try container.sdkDecodeIfPresent(.default)
-        disabled = try container.sdkDecodeIfPresent(.disabled)
-        flag = try container.sdkDecodeIfPresent(.flag)
-        label = try container.sdkDecodeIfPresent(.label)
-        reason = try container.sdkDecodeIfPresent(.reason)
-        slug = try container.sdkDecodeIfPresent(.slug)
+        self.continent = try container.sdkDecodeIfPresent(.continent)
+        self.dataCenters = try container.sdkDecodeIfPresent(.dataCenters)
+        self.`default` = try container.sdkDecodeIfPresent(.`default`)
+        self.disabled = try container.sdkDecodeIfPresent(.disabled)
+        self.flag = try container.sdkDecodeIfPresent(.flag)
+        self.label = try container.sdkDecodeIfPresent(.label)
+        self.reason = try container.sdkDecodeIfPresent(.reason)
+        self.slug = try container.sdkDecodeIfPresent(.slug)
     }
 }
 
-public extension AppsRegion {
-    init(
-        continent: String? = nil,
-        dataCenters: [String]? = nil,
-        default: Bool? = nil,
-        disabled: Bool? = nil,
-        flag: String? = nil,
-        label: String? = nil,
-        reason: String? = nil,
-        slug: String? = nil
-    ) {
+extension AppsRegion {
+    public init(continent: String? = nil, dataCenters: [String]? = nil, `default`: Bool? = nil, disabled: Bool? = nil, flag: String? = nil, label: String? = nil, reason: String? = nil, slug: String? = nil) {
         self.init()
         (self.continent, self.dataCenters) = (continent, dataCenters)
-        (self.default, self.disabled) = (`default`, disabled)
+        (self.`default`, self.disabled) = (`default`, disabled)
         (self.flag, self.label) = (flag, label)
         (self.reason, self.slug) = (reason, slug)
     }
@@ -159,34 +150,26 @@ public struct AppsImageSourceSpec: Codable {
     }
 
     init() {
-        (registry, registryType, registryCredentials, repository, tag) = (nil, nil, nil, nil, nil)
-        (digest, deployOnPush) = (nil, nil)
+        (self.registry, self.registryType, self.registryCredentials, self.repository, self.tag) = (nil, nil, nil, nil, nil)
+        (self.digest, self.deployOnPush) = (nil, nil)
     }
 }
 
-public extension AppsImageSourceSpec {
-    init(from decoder: Decoder) throws {
+extension AppsImageSourceSpec {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        registry = try container.sdkDecodeIfPresent(.registry)
-        registryType = try container.sdkDecodeIfPresent(.registryType)
-        registryCredentials = try container.sdkDecodeIfPresent(.registryCredentials)
-        repository = try container.sdkDecodeIfPresent(.repository)
-        tag = try container.sdkDecodeIfPresent(.tag)
-        digest = try container.sdkDecodeIfPresent(.digest)
-        deployOnPush = try container.sdkDecodeIfPresent(.deployOnPush)
+        self.registry = try container.sdkDecodeIfPresent(.registry)
+        self.registryType = try container.sdkDecodeIfPresent(.registryType)
+        self.registryCredentials = try container.sdkDecodeIfPresent(.registryCredentials)
+        self.repository = try container.sdkDecodeIfPresent(.repository)
+        self.tag = try container.sdkDecodeIfPresent(.tag)
+        self.digest = try container.sdkDecodeIfPresent(.digest)
+        self.deployOnPush = try container.sdkDecodeIfPresent(.deployOnPush)
     }
 }
 
-public extension AppsImageSourceSpec {
-    init(
-        registry: String? = nil,
-        registryType: AppsImageSourceSpecRegistryType? = nil,
-        registryCredentials: String? = nil,
-        repository: String? = nil,
-        tag: String? = nil,
-        digest: String? = nil,
-        deployOnPush: AppsImageSourceSpecDeployOnPush? = nil
-    ) {
+extension AppsImageSourceSpec {
+    public init(registry: String? = nil, registryType: AppsImageSourceSpecRegistryType? = nil, registryCredentials: String? = nil, repository: String? = nil, tag: String? = nil, digest: String? = nil, deployOnPush: AppsImageSourceSpecDeployOnPush? = nil) {
         self.init()
         (self.registry, self.registryType) = (registry, registryType)
         (self.registryCredentials, self.repository) = (registryCredentials, repository)
@@ -207,19 +190,19 @@ public struct AppsImageSourceSpecDeployOnPush: Codable {
     }
 
     init() {
-        enabled = nil
+        self.enabled = nil
     }
 }
 
-public extension AppsImageSourceSpecDeployOnPush {
-    init(from decoder: Decoder) throws {
+extension AppsImageSourceSpecDeployOnPush {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        enabled = try container.sdkDecodeIfPresent(.enabled)
+        self.enabled = try container.sdkDecodeIfPresent(.enabled)
     }
 }
 
-public extension AppsImageSourceSpecDeployOnPush {
-    init(enabled: Bool? = nil) {
+extension AppsImageSourceSpecDeployOnPush {
+    public init(enabled: Bool? = nil) {
         self.init()
         self.enabled = enabled
     }
@@ -246,30 +229,30 @@ public struct AppsStringMatch: Codable {
     }
 
     init() {
-        (exact, prefix, regex) = (nil, nil, nil)
+        (self.exact, self.prefix, self.regex) = (nil, nil, nil)
     }
 }
 
-public extension AppsStringMatch {
-    init(from decoder: Decoder) throws {
+extension AppsStringMatch {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        exact = try container.sdkDecodeIfPresent(.exact)
-        prefix = try container.sdkDecodeIfPresent(.prefix)
-        regex = try container.sdkDecodeIfPresent(.regex)
-        if let value = exact {
+        self.exact = try container.sdkDecodeIfPresent(.exact)
+        self.prefix = try container.sdkDecodeIfPresent(.prefix)
+        self.regex = try container.sdkDecodeIfPresent(.regex)
+        if let value = self.exact {
             try validateLength("exact", value, min: nil, max: 256)
         }
-        if let value = prefix {
+        if let value = self.prefix {
             try validateLength("prefix", value, min: nil, max: 256)
         }
-        if let value = regex {
+        if let value = self.regex {
             try validateLength("regex", value, min: 1, max: 256)
         }
     }
 }
 
-public extension AppsStringMatch {
-    init(exact: String? = nil, prefix: String? = nil, regex: String? = nil) throws {
+extension AppsStringMatch {
+    public init(exact: String? = nil, prefix: String? = nil, regex: String? = nil) throws {
         self.init()
         (self.exact, self.prefix) = (exact, prefix)
         self.regex = regex
@@ -304,21 +287,21 @@ public struct AppsGitlabSourceSpec: Codable {
     }
 
     init() {
-        (branch, deployOnPush, repo) = (nil, nil, nil)
+        (self.branch, self.deployOnPush, self.repo) = (nil, nil, nil)
     }
 }
 
-public extension AppsGitlabSourceSpec {
-    init(from decoder: Decoder) throws {
+extension AppsGitlabSourceSpec {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        branch = try container.sdkDecodeIfPresent(.branch)
-        deployOnPush = try container.sdkDecodeIfPresent(.deployOnPush)
-        repo = try container.sdkDecodeIfPresent(.repo)
+        self.branch = try container.sdkDecodeIfPresent(.branch)
+        self.deployOnPush = try container.sdkDecodeIfPresent(.deployOnPush)
+        self.repo = try container.sdkDecodeIfPresent(.repo)
     }
 }
 
-public extension AppsGitlabSourceSpec {
-    init(branch: String? = nil, deployOnPush: Bool? = nil, repo: String? = nil) {
+extension AppsGitlabSourceSpec {
+    public init(branch: String? = nil, deployOnPush: Bool? = nil, repo: String? = nil) {
         self.init()
         (self.branch, self.deployOnPush) = (branch, deployOnPush)
         self.repo = repo
@@ -358,32 +341,25 @@ public struct AppsCorsPolicy: Codable {
     }
 
     init() {
-        (allowOrigins, allowMethods, allowHeaders, exposeHeaders, maxAge) = (nil, nil, nil, nil, nil)
-        allowCredentials = nil
+        (self.allowOrigins, self.allowMethods, self.allowHeaders, self.exposeHeaders, self.maxAge) = (nil, nil, nil, nil, nil)
+        self.allowCredentials = nil
     }
 }
 
-public extension AppsCorsPolicy {
-    init(from decoder: Decoder) throws {
+extension AppsCorsPolicy {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        allowOrigins = try container.sdkDecodeIfPresent(.allowOrigins)
-        allowMethods = try container.sdkDecodeIfPresent(.allowMethods)
-        allowHeaders = try container.sdkDecodeIfPresent(.allowHeaders)
-        exposeHeaders = try container.sdkDecodeIfPresent(.exposeHeaders)
-        maxAge = try container.sdkDecodeIfPresent(.maxAge)
-        allowCredentials = try container.sdkDecodeIfPresent(.allowCredentials)
+        self.allowOrigins = try container.sdkDecodeIfPresent(.allowOrigins)
+        self.allowMethods = try container.sdkDecodeIfPresent(.allowMethods)
+        self.allowHeaders = try container.sdkDecodeIfPresent(.allowHeaders)
+        self.exposeHeaders = try container.sdkDecodeIfPresent(.exposeHeaders)
+        self.maxAge = try container.sdkDecodeIfPresent(.maxAge)
+        self.allowCredentials = try container.sdkDecodeIfPresent(.allowCredentials)
     }
 }
 
-public extension AppsCorsPolicy {
-    init(
-        allowOrigins: [AppsStringMatch]? = nil,
-        allowMethods: [String]? = nil,
-        allowHeaders: [String]? = nil,
-        exposeHeaders: [String]? = nil,
-        maxAge: String? = nil,
-        allowCredentials: Bool? = nil
-    ) {
+extension AppsCorsPolicy {
+    public init(allowOrigins: [AppsStringMatch]? = nil, allowMethods: [String]? = nil, allowHeaders: [String]? = nil, exposeHeaders: [String]? = nil, maxAge: String? = nil, allowCredentials: Bool? = nil) {
         self.init()
         (self.allowOrigins, self.allowMethods) = (allowOrigins, allowMethods)
         (self.allowHeaders, self.exposeHeaders) = (allowHeaders, exposeHeaders)
@@ -410,21 +386,21 @@ public struct AppsBitbucketSourceSpec: Codable {
     }
 
     init() {
-        (branch, deployOnPush, repo) = (nil, nil, nil)
+        (self.branch, self.deployOnPush, self.repo) = (nil, nil, nil)
     }
 }
 
-public extension AppsBitbucketSourceSpec {
-    init(from decoder: Decoder) throws {
+extension AppsBitbucketSourceSpec {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        branch = try container.sdkDecodeIfPresent(.branch)
-        deployOnPush = try container.sdkDecodeIfPresent(.deployOnPush)
-        repo = try container.sdkDecodeIfPresent(.repo)
+        self.branch = try container.sdkDecodeIfPresent(.branch)
+        self.deployOnPush = try container.sdkDecodeIfPresent(.deployOnPush)
+        self.repo = try container.sdkDecodeIfPresent(.repo)
     }
 }
 
-public extension AppsBitbucketSourceSpec {
-    init(branch: String? = nil, deployOnPush: Bool? = nil, repo: String? = nil) {
+extension AppsBitbucketSourceSpec {
+    public init(branch: String? = nil, deployOnPush: Bool? = nil, repo: String? = nil) {
         self.init()
         (self.branch, self.deployOnPush) = (branch, deployOnPush)
         self.repo = repo
@@ -493,49 +469,34 @@ public struct AppsInstanceSize: Codable {
     }
 
     init() {
-        (bandwidthAllowanceGib, cpuType, cpus, deprecationIntent, memoryBytes) = (nil, nil, nil, nil, nil)
-        (name, scalable, singleInstanceOnly, slug, tierDowngradeTo) = (nil, nil, nil, nil, nil)
-        (tierSlug, tierUpgradeTo, usdPerMonth, usdPerSecond) = (nil, nil, nil, nil)
+        (self.bandwidthAllowanceGib, self.cpuType, self.cpus, self.deprecationIntent, self.memoryBytes) = (nil, nil, nil, nil, nil)
+        (self.name, self.scalable, self.singleInstanceOnly, self.slug, self.tierDowngradeTo) = (nil, nil, nil, nil, nil)
+        (self.tierSlug, self.tierUpgradeTo, self.usdPerMonth, self.usdPerSecond) = (nil, nil, nil, nil)
     }
 }
 
-public extension AppsInstanceSize {
-    init(from decoder: Decoder) throws {
+extension AppsInstanceSize {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        bandwidthAllowanceGib = try container.sdkDecodeIfPresent(.bandwidthAllowanceGib)
-        cpuType = try container.sdkDecodeIfPresent(.cpuType)
-        cpus = try container.sdkDecodeIfPresent(.cpus)
-        deprecationIntent = try container.sdkDecodeIfPresent(.deprecationIntent)
-        memoryBytes = try container.sdkDecodeIfPresent(.memoryBytes)
-        name = try container.sdkDecodeIfPresent(.name)
-        scalable = try container.sdkDecodeIfPresent(.scalable)
-        singleInstanceOnly = try container.sdkDecodeIfPresent(.singleInstanceOnly)
-        slug = try container.sdkDecodeIfPresent(.slug)
-        tierDowngradeTo = try container.sdkDecodeIfPresent(.tierDowngradeTo)
-        tierSlug = try container.sdkDecodeIfPresent(.tierSlug)
-        tierUpgradeTo = try container.sdkDecodeIfPresent(.tierUpgradeTo)
-        usdPerMonth = try container.sdkDecodeIfPresent(.usdPerMonth)
-        usdPerSecond = try container.sdkDecodeIfPresent(.usdPerSecond)
+        self.bandwidthAllowanceGib = try container.sdkDecodeIfPresent(.bandwidthAllowanceGib)
+        self.cpuType = try container.sdkDecodeIfPresent(.cpuType)
+        self.cpus = try container.sdkDecodeIfPresent(.cpus)
+        self.deprecationIntent = try container.sdkDecodeIfPresent(.deprecationIntent)
+        self.memoryBytes = try container.sdkDecodeIfPresent(.memoryBytes)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.scalable = try container.sdkDecodeIfPresent(.scalable)
+        self.singleInstanceOnly = try container.sdkDecodeIfPresent(.singleInstanceOnly)
+        self.slug = try container.sdkDecodeIfPresent(.slug)
+        self.tierDowngradeTo = try container.sdkDecodeIfPresent(.tierDowngradeTo)
+        self.tierSlug = try container.sdkDecodeIfPresent(.tierSlug)
+        self.tierUpgradeTo = try container.sdkDecodeIfPresent(.tierUpgradeTo)
+        self.usdPerMonth = try container.sdkDecodeIfPresent(.usdPerMonth)
+        self.usdPerSecond = try container.sdkDecodeIfPresent(.usdPerSecond)
     }
 }
 
-public extension AppsInstanceSize {
-    init(
-        bandwidthAllowanceGib: String? = nil,
-        cpuType: InstanceSizeCpuType? = nil,
-        cpus: String? = nil,
-        deprecationIntent: Bool? = nil,
-        memoryBytes: String? = nil,
-        name: String? = nil,
-        scalable: Bool? = nil,
-        singleInstanceOnly: Bool? = nil,
-        slug: String? = nil,
-        tierDowngradeTo: String? = nil,
-        tierSlug: String? = nil,
-        tierUpgradeTo: String? = nil,
-        usdPerMonth: String? = nil,
-        usdPerSecond: String? = nil
-    ) {
+extension AppsInstanceSize {
+    public init(bandwidthAllowanceGib: String? = nil, cpuType: InstanceSizeCpuType? = nil, cpus: String? = nil, deprecationIntent: Bool? = nil, memoryBytes: String? = nil, name: String? = nil, scalable: Bool? = nil, singleInstanceOnly: Bool? = nil, slug: String? = nil, tierDowngradeTo: String? = nil, tierSlug: String? = nil, tierUpgradeTo: String? = nil, usdPerMonth: String? = nil, usdPerSecond: String? = nil) {
         self.init()
         (self.bandwidthAllowanceGib, self.cpuType) = (bandwidthAllowanceGib, cpuType)
         (self.cpus, self.deprecationIntent) = (cpus, deprecationIntent)
@@ -564,20 +525,20 @@ public struct AppsRollbackAppRequest: Codable {
     }
 
     init() {
-        (deploymentId, skipPin) = (nil, nil)
+        (self.deploymentId, self.skipPin) = (nil, nil)
     }
 }
 
-public extension AppsRollbackAppRequest {
-    init(from decoder: Decoder) throws {
+extension AppsRollbackAppRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        deploymentId = try container.sdkDecodeIfPresent(.deploymentId)
-        skipPin = try container.sdkDecodeIfPresent(.skipPin)
+        self.deploymentId = try container.sdkDecodeIfPresent(.deploymentId)
+        self.skipPin = try container.sdkDecodeIfPresent(.skipPin)
     }
 }
 
-public extension AppsRollbackAppRequest {
-    init(deploymentId: String? = nil, skipPin: Bool? = nil) {
+extension AppsRollbackAppRequest {
+    public init(deploymentId: String? = nil, skipPin: Bool? = nil) {
         self.init()
         (self.deploymentId, self.skipPin) = (deploymentId, skipPin)
     }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// InsightsProm domain models
+// InsightsProm domain models
 public typealias PromMetricLabels = [String: String]
 
 public typealias PromSample = [PromSampleItem]
@@ -26,43 +26,29 @@ public struct PromError: Codable {
         case error
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension PromError {
-    init(from decoder: Decoder) throws {
+extension PromError {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.errorType) else {
-            throw SdkValidationError(
-                field: "errorType",
-                code: "required",
-                message: "Validation failed for 'errorType': value is required"
-            )
+            throw SdkValidationError(field: "errorType", code: "required", message: "Validation failed for 'errorType': value is required")
         }
         guard container.contains(.error) else {
-            throw SdkValidationError(
-                field: "error",
-                code: "required",
-                message: "Validation failed for 'error': value is required"
-            )
+            throw SdkValidationError(field: "error", code: "required", message: "Validation failed for 'error': value is required")
         }
-        status = try container.sdkDecodeRequired(.status)
-        errorType = try container.sdkDecodeRequired(.errorType)
-        error = try container.sdkDecodeRequired(.error)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.errorType = try container.sdkDecodeRequired(.errorType)
+        self.error = try container.sdkDecodeRequired(.error)
     }
 }
 
-public extension PromError {
-    init(status: PromErrorStatus, errorType: PromErrorErrorType, error: String) {
+extension PromError {
+    public init(status: PromErrorStatus, errorType: PromErrorErrorType, error: String) {
         (self.status, self.errorType) = (status, errorType)
         self.error = error
     }
@@ -82,35 +68,25 @@ public struct PromMatrixData: Codable {
         case result
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension PromMatrixData {
-    init(from decoder: Decoder) throws {
+extension PromMatrixData {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.resultType) else {
-            throw SdkValidationError(
-                field: "resultType",
-                code: "required",
-                message: "Validation failed for 'resultType': value is required"
-            )
+            throw SdkValidationError(field: "resultType", code: "required", message: "Validation failed for 'resultType': value is required")
         }
         guard container.contains(.result) else {
-            throw SdkValidationError(
-                field: "result",
-                code: "required",
-                message: "Validation failed for 'result': value is required"
-            )
+            throw SdkValidationError(field: "result", code: "required", message: "Validation failed for 'result': value is required")
         }
-        resultType = try container.sdkDecodeRequired(.resultType)
-        result = try container.sdkDecodeRequired(.result)
+        self.resultType = try container.sdkDecodeRequired(.resultType)
+        self.result = try container.sdkDecodeRequired(.result)
     }
 }
 
-public extension PromMatrixData {
-    init(resultType: PromMatrixDataResultType, result: [PromMatrixSample]) {
+extension PromMatrixData {
+    public init(resultType: PromMatrixDataResultType, result: [PromMatrixSample]) {
         (self.resultType, self.result) = (resultType, result)
     }
 }
@@ -132,38 +108,28 @@ public struct PromVectorSample: Codable {
         case value
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension PromVectorSample {
-    init(from decoder: Decoder) throws {
+extension PromVectorSample {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.metric) else {
-            throw SdkValidationError(
-                field: "metric",
-                code: "required",
-                message: "Validation failed for 'metric': value is required"
-            )
+            throw SdkValidationError(field: "metric", code: "required", message: "Validation failed for 'metric': value is required")
         }
         guard container.contains(.value) else {
-            throw SdkValidationError(
-                field: "value",
-                code: "required",
-                message: "Validation failed for 'value': value is required"
-            )
+            throw SdkValidationError(field: "value", code: "required", message: "Validation failed for 'value': value is required")
         }
-        metric = try container.sdkDecodeRequired(.metric)
-        value = try container.sdkDecodeRequired(.value)
-        try validateItems("value", value, min: 2, max: 2)
+        self.metric = try container.sdkDecodeRequired(.metric)
+        self.value = try container.sdkDecodeRequired(.value)
+            try validateItems("value", self.value, min: 2, max: 2)
     }
 }
 
-public extension PromVectorSample {
-    init(metric: PromMetricLabels, value: PromSample) throws {
+extension PromVectorSample {
+    public init(metric: PromMetricLabels, value: PromSample) throws {
         (self.metric, self.value) = (metric, value)
-        try validateItems("value", self.value, min: 2, max: 2)
+            try validateItems("value", self.value, min: 2, max: 2)
     }
 }
 
@@ -180,35 +146,25 @@ public struct PromSeriesResponse: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension PromSeriesResponse {
-    init(from decoder: Decoder) throws {
+extension PromSeriesResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.data) else {
-            throw SdkValidationError(
-                field: "data",
-                code: "required",
-                message: "Validation failed for 'data': value is required"
-            )
+            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
         }
-        status = try container.sdkDecodeRequired(.status)
-        data = try container.sdkDecodeRequired(.data)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.data = try container.sdkDecodeRequired(.data)
     }
 }
 
-public extension PromSeriesResponse {
-    init(status: PromSeriesResponseStatus, data: [PromMetricLabels]) {
+extension PromSeriesResponse {
+    public init(status: PromSeriesResponseStatus, data: [PromMetricLabels]) {
         (self.status, self.data) = (status, data)
     }
 }
@@ -219,29 +175,22 @@ public indirect enum PromSampleItem {
 }
 
 extension PromSampleItem: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for PromSampleItem")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension PromSampleItem {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(Double.self) {
-            return .doubleValue(value)
-        }
-        if let value = try? container.decode(String.self) {
-            return .stringValue(value)
-        }
+        if let value = try? container.decode(Double.self) { return .doubleValue(value) }
+        if let value = try? container.decode(String.self) { return .stringValue(value) }
         return nil
     }
 }
@@ -280,35 +229,25 @@ public struct PromQueryData: Codable {
         case result
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension PromQueryData {
-    init(from decoder: Decoder) throws {
+extension PromQueryData {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.resultType) else {
-            throw SdkValidationError(
-                field: "resultType",
-                code: "required",
-                message: "Validation failed for 'resultType': value is required"
-            )
+            throw SdkValidationError(field: "resultType", code: "required", message: "Validation failed for 'resultType': value is required")
         }
         guard container.contains(.result) else {
-            throw SdkValidationError(
-                field: "result",
-                code: "required",
-                message: "Validation failed for 'result': value is required"
-            )
+            throw SdkValidationError(field: "result", code: "required", message: "Validation failed for 'result': value is required")
         }
-        resultType = try container.sdkDecodeRequired(.resultType)
-        result = try container.sdkDecodeRequired(.result)
+        self.resultType = try container.sdkDecodeRequired(.resultType)
+        self.result = try container.sdkDecodeRequired(.result)
     }
 }
 
-public extension PromQueryData {
-    init(resultType: PromQueryDataResultType, result: PromQueryDataResult) {
+extension PromQueryData {
+    public init(resultType: PromQueryDataResultType, result: PromQueryDataResult) {
         (self.resultType, self.result) = (resultType, result)
     }
 }
@@ -326,35 +265,25 @@ public struct PromQueryRangeResponse: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension PromQueryRangeResponse {
-    init(from decoder: Decoder) throws {
+extension PromQueryRangeResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.data) else {
-            throw SdkValidationError(
-                field: "data",
-                code: "required",
-                message: "Validation failed for 'data': value is required"
-            )
+            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
         }
-        status = try container.sdkDecodeRequired(.status)
-        data = try container.sdkDecodeRequired(.data)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.data = try container.sdkDecodeRequired(.data)
     }
 }
 
-public extension PromQueryRangeResponse {
-    init(status: PromQueryRangeResponseStatus, data: PromMatrixData) {
+extension PromQueryRangeResponse {
+    public init(status: PromQueryRangeResponseStatus, data: PromMatrixData) {
         (self.status, self.data) = (status, data)
     }
 }
@@ -366,35 +295,23 @@ public indirect enum PromQueryDataResult {
 }
 
 extension PromQueryDataResult: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for PromQueryDataResult"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for PromQueryDataResult")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension PromQueryDataResult {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode([PromVectorSample].self) {
-            return .promVectorSampleList(value)
-        }
-        if let value = try? container.decode([PromMatrixSample].self) {
-            return .promMatrixSampleList(value)
-        }
-        if let value = try? container.decode(PromSample.self) {
-            return .promSample(value)
-        }
+        if let value = try? container.decode([PromVectorSample].self) { return .promVectorSampleList(value) }
+        if let value = try? container.decode([PromMatrixSample].self) { return .promMatrixSampleList(value) }
+        if let value = try? container.decode(PromSample.self) { return .promSample(value) }
         return nil
     }
 }
@@ -424,35 +341,25 @@ public struct PromStringListResponse: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension PromStringListResponse {
-    init(from decoder: Decoder) throws {
+extension PromStringListResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.data) else {
-            throw SdkValidationError(
-                field: "data",
-                code: "required",
-                message: "Validation failed for 'data': value is required"
-            )
+            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
         }
-        status = try container.sdkDecodeRequired(.status)
-        data = try container.sdkDecodeRequired(.data)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.data = try container.sdkDecodeRequired(.data)
     }
 }
 
-public extension PromStringListResponse {
-    init(status: PromStringListResponseStatus, data: [String]) {
+extension PromStringListResponse {
+    public init(status: PromStringListResponseStatus, data: [String]) {
         (self.status, self.data) = (status, data)
     }
 }
@@ -472,35 +379,25 @@ public struct PromMatrixSample: Codable {
         case values
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension PromMatrixSample {
-    init(from decoder: Decoder) throws {
+extension PromMatrixSample {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.metric) else {
-            throw SdkValidationError(
-                field: "metric",
-                code: "required",
-                message: "Validation failed for 'metric': value is required"
-            )
+            throw SdkValidationError(field: "metric", code: "required", message: "Validation failed for 'metric': value is required")
         }
         guard container.contains(.values) else {
-            throw SdkValidationError(
-                field: "values",
-                code: "required",
-                message: "Validation failed for 'values': value is required"
-            )
+            throw SdkValidationError(field: "values", code: "required", message: "Validation failed for 'values': value is required")
         }
-        metric = try container.sdkDecodeRequired(.metric)
-        values = try container.sdkDecodeRequired(.values)
+        self.metric = try container.sdkDecodeRequired(.metric)
+        self.values = try container.sdkDecodeRequired(.values)
     }
 }
 
-public extension PromMatrixSample {
-    init(metric: PromMetricLabels, values: [PromSample]) {
+extension PromMatrixSample {
+    public init(metric: PromMetricLabels, values: [PromSample]) {
         (self.metric, self.values) = (metric, values)
     }
 }
@@ -518,35 +415,25 @@ public struct PromQueryResponse: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension PromQueryResponse {
-    init(from decoder: Decoder) throws {
+extension PromQueryResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.data) else {
-            throw SdkValidationError(
-                field: "data",
-                code: "required",
-                message: "Validation failed for 'data': value is required"
-            )
+            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
         }
-        status = try container.sdkDecodeRequired(.status)
-        data = try container.sdkDecodeRequired(.data)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.data = try container.sdkDecodeRequired(.data)
     }
 }
 
-public extension PromQueryResponse {
-    init(status: PromQueryResponseStatus, data: PromQueryData) {
+extension PromQueryResponse {
+    public init(status: PromQueryResponseStatus, data: PromQueryData) {
         (self.status, self.data) = (status, data)
     }
 }
@@ -555,15 +442,12 @@ public extension PromQueryResponse {
 public struct PromSeriesResponseStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let success = PromSeriesResponseStatus(rawValue: "success")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -576,15 +460,12 @@ public struct PromSeriesResponseStatus: RawRepresentable, Hashable, Codable, Sen
 public struct PromStringListResponseStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let success = PromStringListResponseStatus(rawValue: "success")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -597,15 +478,12 @@ public struct PromStringListResponseStatus: RawRepresentable, Hashable, Codable,
 public struct PromQueryRangeResponseStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let success = PromQueryRangeResponseStatus(rawValue: "success")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -618,15 +496,12 @@ public struct PromQueryRangeResponseStatus: RawRepresentable, Hashable, Codable,
 public struct PromErrorStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let error = PromErrorStatus(rawValue: "error")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -639,15 +514,12 @@ public struct PromErrorStatus: RawRepresentable, Hashable, Codable, Sendable, Sd
 public struct PromQueryResponseStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let success = PromQueryResponseStatus(rawValue: "success")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

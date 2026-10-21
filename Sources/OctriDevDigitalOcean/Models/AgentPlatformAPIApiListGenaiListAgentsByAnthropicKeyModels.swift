@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiList domain models
+// AgentPlatformAPIApiList domain models
 /// List of Agents that linked to a specific Anthropic Key
 public struct ApiListAgentsByAnthropicKeyOutput: Codable {
     /// Optional array value serialized in the `agents` wire field.
@@ -20,21 +20,21 @@ public struct ApiListAgentsByAnthropicKeyOutput: Codable {
     }
 
     init() {
-        (agents, links, meta) = (nil, nil, nil)
+        (self.agents, self.links, self.meta) = (nil, nil, nil)
     }
 }
 
-public extension ApiListAgentsByAnthropicKeyOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListAgentsByAnthropicKeyOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agents = try container.sdkDecodeIfPresent(.agents)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
+        self.agents = try container.sdkDecodeIfPresent(.agents)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-public extension ApiListAgentsByAnthropicKeyOutput {
-    init(agents: [ApiAgent]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+extension ApiListAgentsByAnthropicKeyOutput {
+    public init(agents: [ApiAgent]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.agents, self.links) = (agents, links)
         self.meta = meta

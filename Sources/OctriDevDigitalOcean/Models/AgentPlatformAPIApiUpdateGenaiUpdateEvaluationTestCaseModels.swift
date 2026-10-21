@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiUpdate domain models
+// AgentPlatformAPIApiUpdate domain models
 /// Typed representation of the `ApiUpdateEvaluationTestCaseInputPublic` API schema.
 public struct ApiUpdateEvaluationTestCaseInputPublic: Codable {
     /// Dataset against which the test‑case is executed.
@@ -33,32 +33,25 @@ public struct ApiUpdateEvaluationTestCaseInputPublic: Codable {
     }
 
     init() {
-        (datasetUuid, description, metrics, name, starMetric) = (nil, nil, nil, nil, nil)
-        testCaseUuid = nil
+        (self.datasetUuid, self.description, self.metrics, self.name, self.starMetric) = (nil, nil, nil, nil, nil)
+        self.testCaseUuid = nil
     }
 }
 
-public extension ApiUpdateEvaluationTestCaseInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateEvaluationTestCaseInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        datasetUuid = try container.sdkDecodeIfPresent(.datasetUuid)
-        description = try container.sdkDecodeIfPresent(.description)
-        metrics = try container.sdkDecodeIfPresent(.metrics)
-        name = try container.sdkDecodeIfPresent(.name)
-        starMetric = try container.sdkDecodeIfPresent(.starMetric)
-        testCaseUuid = try container.sdkDecodeIfPresent(.testCaseUuid)
+        self.datasetUuid = try container.sdkDecodeIfPresent(.datasetUuid)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.metrics = try container.sdkDecodeIfPresent(.metrics)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.starMetric = try container.sdkDecodeIfPresent(.starMetric)
+        self.testCaseUuid = try container.sdkDecodeIfPresent(.testCaseUuid)
     }
 }
 
-public extension ApiUpdateEvaluationTestCaseInputPublic {
-    init(
-        datasetUuid: String? = nil,
-        description: String? = nil,
-        metrics: ApiEvaluationTestCaseMetricList? = nil,
-        name: String? = nil,
-        starMetric: ApiStarMetric? = nil,
-        testCaseUuid: String? = nil
-    ) {
+extension ApiUpdateEvaluationTestCaseInputPublic {
+    public init(datasetUuid: String? = nil, description: String? = nil, metrics: ApiEvaluationTestCaseMetricList? = nil, name: String? = nil, starMetric: ApiStarMetric? = nil, testCaseUuid: String? = nil) {
         self.init()
         (self.datasetUuid, self.description) = (datasetUuid, description)
         (self.metrics, self.name) = (metrics, name)
@@ -81,20 +74,20 @@ public struct ApiUpdateEvaluationTestCaseOutput: Codable {
     }
 
     init() {
-        (testCaseUuid, version) = (nil, nil)
+        (self.testCaseUuid, self.version) = (nil, nil)
     }
 }
 
-public extension ApiUpdateEvaluationTestCaseOutput {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateEvaluationTestCaseOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        testCaseUuid = try container.sdkDecodeIfPresent(.testCaseUuid)
-        version = try container.sdkDecodeIfPresent(.version)
+        self.testCaseUuid = try container.sdkDecodeIfPresent(.testCaseUuid)
+        self.version = try container.sdkDecodeIfPresent(.version)
     }
 }
 
-public extension ApiUpdateEvaluationTestCaseOutput {
-    init(testCaseUuid: String? = nil, version: Int? = nil) {
+extension ApiUpdateEvaluationTestCaseOutput {
+    public init(testCaseUuid: String? = nil, version: Int? = nil) {
         self.init()
         (self.testCaseUuid, self.version) = (testCaseUuid, version)
     }

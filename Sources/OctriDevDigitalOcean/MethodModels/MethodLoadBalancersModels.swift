@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-/// Canonical loadBalancers operation model declarations
+// Canonical loadBalancers operation model declarations
 public struct LoadBalancersAddDropletsRequestBody: Codable {
     /// An array containing the IDs of the Droplets assigned to the load balancer.
     /// - Example: [3164444,3164445]
@@ -20,27 +20,27 @@ public struct LoadBalancersAddDropletsRequestBody: Codable {
     }
 
     init() {
-        dropletIds = nil
+        self.dropletIds = nil
     }
 }
 
-public extension LoadBalancersAddDropletsRequestBody {
-    init(from decoder: Decoder) throws {
+extension LoadBalancersAddDropletsRequestBody {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
+        self.dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
         additionalProperties = try decoder.sdkAdditionalProperties(besides: CodingKeys.self)
     }
 }
 
-public extension LoadBalancersAddDropletsRequestBody {
-    init(dropletIds: [Int]? = nil) {
+extension LoadBalancersAddDropletsRequestBody {
+    public init(dropletIds: [Int]? = nil) {
         self.init()
         self.dropletIds = dropletIds
     }
 }
 
-public extension LoadBalancersAddDropletsRequestBody {
-    func encode(to encoder: Encoder) throws {
+extension LoadBalancersAddDropletsRequestBody {
+    public func encode(to encoder: Encoder) throws {
         try encoder.sdkEncodeAdditionalProperties(additionalProperties)
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(dropletIds, forKey: .dropletIds)
@@ -59,27 +59,27 @@ public struct LoadBalancersRemoveDropletsRequestBody: Codable {
     }
 
     init() {
-        dropletIds = nil
+        self.dropletIds = nil
     }
 }
 
-public extension LoadBalancersRemoveDropletsRequestBody {
-    init(from decoder: Decoder) throws {
+extension LoadBalancersRemoveDropletsRequestBody {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
+        self.dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
         additionalProperties = try decoder.sdkAdditionalProperties(besides: CodingKeys.self)
     }
 }
 
-public extension LoadBalancersRemoveDropletsRequestBody {
-    init(dropletIds: [Int]? = nil) {
+extension LoadBalancersRemoveDropletsRequestBody {
+    public init(dropletIds: [Int]? = nil) {
         self.init()
         self.dropletIds = dropletIds
     }
 }
 
-public extension LoadBalancersRemoveDropletsRequestBody {
-    func encode(to encoder: Encoder) throws {
+extension LoadBalancersRemoveDropletsRequestBody {
+    public func encode(to encoder: Encoder) throws {
         try encoder.sdkEncodeAdditionalProperties(additionalProperties)
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(dropletIds, forKey: .dropletIds)

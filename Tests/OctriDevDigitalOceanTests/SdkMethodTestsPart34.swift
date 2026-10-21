@@ -6,8 +6,7 @@ import Foundation
 import XCTest
 
 extension SdkMethodTests {
-    func testHarnessCancelSessionWorkspaceTransferHarnessCancelSessionWorkX755ecd42ffReachesMockAndDecodesResponse(
-    ) async throws {
+    func testHarnessCancelSessionWorkspaceTransferHarnessCancelSessionWorkX755ecd42ffReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -27,8 +26,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testHarnessCancelSessionWorkspaceTransferHarnessCancelSessionWorkX724a89538aReachesMockAndDecodesResponse(
-    ) async throws {
+    func testHarnessCancelSessionWorkspaceTransferHarnessCancelSessionWorkX724a89538aReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -39,10 +37,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.harnessRuntime.harnessCancelSessionWorkspaceTransfer(
-                sessionId: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\""),
-                transferId: decoded("\"tr_example\""),
-                reason: decoded("\"example\"")
-            )
+            sessionId: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\""),
+            transferId: decoded("\"tr_example\""),
+            reason: decoded("\"example\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -89,10 +87,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.harnessRuntime.harnessCancelTriggerExecution(
-                triggerId: decoded("\"b1a0c6de-1f2e-4a3b-9c8d-0e1f2a3b4c5d\""),
-                executionId: decoded("\"7c1f9e2a-3b4c-5d6e-7f80-91a2b3c4d5e6\""),
-                force: decoded("false")
-            )
+            triggerId: decoded("\"b1a0c6de-1f2e-4a3b-9c8d-0e1f2a3b4c5d\""),
+            executionId: decoded("\"7c1f9e2a-3b4c-5d6e-7f80-91a2b3c4d5e6\""),
+            force: decoded("false")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -108,8 +106,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testHarnessCommitSessionWorkspaceTransferHarnessCommitSessionWorkX206d8b7913ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testHarnessCommitSessionWorkspaceTransferHarnessCommitSessionWorkX206d8b7913ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -129,8 +126,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testHarnessCommitSessionWorkspaceTransferHarnessCommitSessionWorkXd9c077b43fReachesMockAndDecodesResponse(
-    ) async throws {
+    func testHarnessCommitSessionWorkspaceTransferHarnessCommitSessionWorkXd9c077b43fReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/400") else {
             return
         }
@@ -141,10 +137,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.harnessRuntime.harnessCommitSessionWorkspaceTransfer(
-                sessionId: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\""),
-                transferId: decoded("\"tr_example\""),
-                sha256: decoded("\"example\"")
-            )
+            sessionId: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\""),
+            transferId: decoded("\"tr_example\""),
+            sha256: decoded("\"example\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -191,10 +187,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.harnessRuntime.harnessCreateConfig(
-                name: decoded("\"support-agent\""),
-                manifestYaml: decoded(sdkMethodFixture767Value1),
-                insights: decoded("{\"metrics\":false,\"logs\":false,\"traces\":false}")
-            )
+            name: decoded("\"support-agent\""),
+            manifestYaml: decoded(sdkMethodFixture767Value1),
+            insights: decoded("{\"metrics\":false,\"logs\":false,\"traces\":false}")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -242,11 +238,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.harnessRuntime.harnessCreateConfigClone(
-                configId: decoded("\"019fb39c-14d9-7080-933e-b9b90e25acda\""),
-                name: decoded("\"a\""),
-                secrets: decoded("{\"key\":\"x\"}"),
-                oauthAssignments: decoded("{\"key\":\"00000000-0000-4000-8000-000000000000\"}")
-            )
+            configId: decoded("\"019fb39c-14d9-7080-933e-b9b90e25acda\""),
+            name: decoded("\"a\""),
+            secrets: decoded("{\"key\":\"x\"}"),
+            oauthAssignments: decoded("{\"key\":\"00000000-0000-4000-8000-000000000000\"}")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -296,13 +292,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.harnessRuntime.harnessCreateSession(
-                name: decoded("\"demo-agent\""),
-                configId: decoded("\"11111111-2222-3333-4444-555555555555\""),
-                openaiSessionId: decoded("\"sess_abc123\""),
-                resumeOnTopoff: decoded("false"),
-                xDeviceUuid: decoded("\"device-uuid-example\""),
-                resumeOnTopoff2: decoded("false")
-            )
+            name: decoded("\"demo-agent\""),
+            configId: decoded("\"11111111-2222-3333-4444-555555555555\""),
+            openaiSessionId: decoded("\"sess_abc123\""),
+            resumeOnTopoff: decoded("false"),
+            xDeviceUuid: decoded("\"device-uuid-example\""),
+            resumeOnTopoff2: decoded("false")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -337,8 +333,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testHarnessCreateSessionCheckpointHarnessCreateSessionCheckpoint401ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testHarnessCreateSessionCheckpointHarnessCreateSessionCheckpoint401ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -349,9 +344,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.harnessRuntime.harnessCreateSessionCheckpoint(
-                sessionId: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\""),
-                label: decoded("\"label\"")
-            )
+            sessionId: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\""),
+            label: decoded("\"label\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -398,10 +393,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.harnessRuntime.harnessCreateSessionFork(
-                sessionId: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\""),
-                fromCheckpointId: decoded("\"from_checkpoint-1\""),
-                count: decoded("1")
-            )
+            sessionId: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\""),
+            fromCheckpointId: decoded("\"from_checkpoint-1\""),
+            count: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -447,9 +442,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.harnessRuntime.harnessCreateSessionInput(
-                sessionId: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\""),
-                text: decoded("\"example\"")
-            )
+            sessionId: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\""),
+            text: decoded("\"example\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -465,8 +460,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testHarnessCreateSessionWorkspacePartUploadUrlsHarnessCreateSessiXc245d1948cReachesMockAndDecodesResponse(
-    ) async throws {
+    func testHarnessCreateSessionWorkspacePartUploadUrlsHarnessCreateSessiXc245d1948cReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -486,8 +480,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testHarnessCreateSessionWorkspacePartUploadUrlsHarnessCreateSessiX788441fe81ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testHarnessCreateSessionWorkspacePartUploadUrlsHarnessCreateSessiX788441fe81ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/400") else {
             return
         }
@@ -498,10 +491,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.harnessRuntime.harnessCreateSessionWorkspacePartUploadUrls(
-                sessionId: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\""),
-                transferId: decoded("\"tr_example\""),
-                partNumbers: decoded("[1]")
-            )
+            sessionId: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\""),
+            transferId: decoded("\"tr_example\""),
+            partNumbers: decoded("[1]")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -517,8 +510,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testHarnessCreateSessionWorkspaceTransferHarnessCreateSessionWorkX16a07862a6ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testHarnessCreateSessionWorkspaceTransferHarnessCreateSessionWorkX16a07862a6ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }

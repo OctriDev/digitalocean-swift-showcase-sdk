@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HarnessRuntime domain models
+// HarnessRuntime domain models
 /// Typed representation of the `RotateSecretResponse` API schema.
 public struct RotateSecretResponse: Codable {
     /// The new webhook secret, shown once.
@@ -23,28 +23,24 @@ public struct RotateSecretResponse: Codable {
     }
 
     init() {
-        (webhookSecret, previousSecretExpiresAt, previousSecretRevoked) = (nil, nil, nil)
+        (self.webhookSecret, self.previousSecretExpiresAt, self.previousSecretRevoked) = (nil, nil, nil)
     }
 }
 
-public extension RotateSecretResponse {
-    init(from decoder: Decoder) throws {
+extension RotateSecretResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        webhookSecret = try container.sdkDecodeIfPresent(.webhookSecret)
-        previousSecretExpiresAt = try container.sdkDecodeIfPresent(.previousSecretExpiresAt)
-        previousSecretRevoked = try container.sdkDecodeIfPresent(.previousSecretRevoked)
-        if let value = previousSecretExpiresAt {
+        self.webhookSecret = try container.sdkDecodeIfPresent(.webhookSecret)
+        self.previousSecretExpiresAt = try container.sdkDecodeIfPresent(.previousSecretExpiresAt)
+        self.previousSecretRevoked = try container.sdkDecodeIfPresent(.previousSecretRevoked)
+        if let value = self.previousSecretExpiresAt {
             try sdkValidateDateTime("previous_secret_expires_at", sdkWireString(value))
         }
     }
 }
 
-public extension RotateSecretResponse {
-    init(
-        webhookSecret: String? = nil,
-        previousSecretExpiresAt: Date? = nil,
-        previousSecretRevoked: Bool? = nil
-    ) throws {
+extension RotateSecretResponse {
+    public init(webhookSecret: String? = nil, previousSecretExpiresAt: Date? = nil, previousSecretRevoked: Bool? = nil) throws {
         self.init()
         (self.webhookSecret, self.previousSecretExpiresAt) = (webhookSecret, previousSecretExpiresAt)
         self.previousSecretRevoked = previousSecretRevoked

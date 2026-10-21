@@ -3,45 +3,9 @@
 
 import Foundation
 
-/// KubernetesCluster domain models
-public extension Cluster {
-    init(
-        name: String,
-        region: String,
-        version: String,
-        nodePools: [KubernetesNodePool],
-        id: String? = nil,
-        clusterSubnet: String? = nil,
-        serviceSubnet: String? = nil,
-        vpcUuid: String? = nil,
-        workerSubnetUuid: String? = nil,
-        ipv4: String? = nil,
-        endpoint: String? = nil,
-        tags: [String]? = nil,
-        maintenancePolicy: MaintenancePolicy? = nil,
-        autoUpgrade: Bool? = nil,
-        isolatedWorkers: Bool? = nil,
-        gpuOperatorReady: Bool? = nil,
-        status: ClusterStatus? = nil,
-        createdAt: Date? = nil,
-        updatedAt: Date? = nil,
-        surgeUpgrade: Bool? = nil,
-        ha: Bool? = nil,
-        registryEnabled: Bool? = nil,
-        controlPlaneFirewall: ControlPlaneFirewall? = nil,
-        clusterAutoscalerConfiguration: ClusterAutoscalerConfiguration? = nil,
-        sso: Sso? = nil,
-        routingAgent: RoutingAgent? = nil,
-        p2pOciRegistryPlugin: P2pOciRegistryPlugin? = nil,
-        nfsCsiPlugin: NfsCsiPlugin? = nil,
-        amdGpuDevicePlugin: AmdGpuDevicePlugin? = nil,
-        amdGpuDeviceMetricsExporterPlugin: AmdGpuDeviceMetricsExporterPlugin? = nil,
-        nvidiaGpuDevicePlugin: NvidiaGpuDevicePlugin? = nil,
-        nvidiaGpuDraDriver: NvidiaGpuDraDriver? = nil,
-        amdGpuDraDriver: AmdGpuDraDriver? = nil,
-        rdmaSharedDevPlugin: RdmaSharedDevPlugin? = nil,
-        corednsAutoscaler: CorednsAutoscaler? = nil
-    ) throws {
+// KubernetesCluster domain models
+extension Cluster {
+    public init(name: String, region: String, version: String, nodePools: [KubernetesNodePool], id: String? = nil, clusterSubnet: String? = nil, serviceSubnet: String? = nil, vpcUuid: String? = nil, workerSubnetUuid: String? = nil, ipv4: String? = nil, endpoint: String? = nil, tags: [String]? = nil, maintenancePolicy: MaintenancePolicy? = nil, autoUpgrade: Bool? = nil, isolatedWorkers: Bool? = nil, gpuOperatorReady: Bool? = nil, status: ClusterStatus? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, surgeUpgrade: Bool? = nil, ha: Bool? = nil, registryEnabled: Bool? = nil, controlPlaneFirewall: ControlPlaneFirewall? = nil, clusterAutoscalerConfiguration: ClusterAutoscalerConfiguration? = nil, sso: Sso? = nil, routingAgent: RoutingAgent? = nil, p2pOciRegistryPlugin: P2pOciRegistryPlugin? = nil, nfsCsiPlugin: NfsCsiPlugin? = nil, amdGpuDevicePlugin: AmdGpuDevicePlugin? = nil, amdGpuDeviceMetricsExporterPlugin: AmdGpuDeviceMetricsExporterPlugin? = nil, nvidiaGpuDevicePlugin: NvidiaGpuDevicePlugin? = nil, nvidiaGpuDraDriver: NvidiaGpuDraDriver? = nil, amdGpuDraDriver: AmdGpuDraDriver? = nil, rdmaSharedDevPlugin: RdmaSharedDevPlugin? = nil, corednsAutoscaler: CorednsAutoscaler? = nil) throws {
         (self.name, self.region) = (name, region)
         (self.version, self.nodePools) = (version, nodePools)
         (self.id, self.clusterSubnet) = (id, clusterSubnet)
@@ -94,20 +58,20 @@ public struct ClusterRegistries: Codable {
     }
 
     init() {
-        (clusterUuids, registries) = (nil, nil)
+        (self.clusterUuids, self.registries) = (nil, nil)
     }
 }
 
-public extension ClusterRegistries {
-    init(from decoder: Decoder) throws {
+extension ClusterRegistries {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        clusterUuids = try container.sdkDecodeIfPresent(.clusterUuids)
-        registries = try container.sdkDecodeIfPresent(.registries)
+        self.clusterUuids = try container.sdkDecodeIfPresent(.clusterUuids)
+        self.registries = try container.sdkDecodeIfPresent(.registries)
     }
 }
 
-public extension ClusterRegistries {
-    init(clusterUuids: [String]? = nil, registries: [String]? = nil) {
+extension ClusterRegistries {
+    public init(clusterUuids: [String]? = nil, registries: [String]? = nil) {
         self.init()
         (self.clusterUuids, self.registries) = (clusterUuids, registries)
     }
@@ -137,25 +101,21 @@ public struct ClusterAutoscalerConfiguration: Codable {
     }
 
     init() {
-        (scaleDownUtilizationThreshold, scaleDownUnneededTime, expanders) = (nil, nil, nil)
+        (self.scaleDownUtilizationThreshold, self.scaleDownUnneededTime, self.expanders) = (nil, nil, nil)
     }
 }
 
-public extension ClusterAutoscalerConfiguration {
-    init(from decoder: Decoder) throws {
+extension ClusterAutoscalerConfiguration {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        scaleDownUtilizationThreshold = try container.sdkDecodeIfPresent(.scaleDownUtilizationThreshold)
-        scaleDownUnneededTime = try container.sdkDecodeIfPresent(.scaleDownUnneededTime)
-        expanders = try container.sdkDecodeIfPresent(.expanders)
+        self.scaleDownUtilizationThreshold = try container.sdkDecodeIfPresent(.scaleDownUtilizationThreshold)
+        self.scaleDownUnneededTime = try container.sdkDecodeIfPresent(.scaleDownUnneededTime)
+        self.expanders = try container.sdkDecodeIfPresent(.expanders)
     }
 }
 
-public extension ClusterAutoscalerConfiguration {
-    init(
-        scaleDownUtilizationThreshold: Double? = nil,
-        scaleDownUnneededTime: String? = nil,
-        expanders: [ClusterAutoscalerConfigurationExpandersItem]? = nil
-    ) {
+extension ClusterAutoscalerConfiguration {
+    public init(scaleDownUtilizationThreshold: Double? = nil, scaleDownUnneededTime: String? = nil, expanders: [ClusterAutoscalerConfigurationExpandersItem]? = nil) {
         self.init()
         self.scaleDownUtilizationThreshold = scaleDownUtilizationThreshold
         (self.scaleDownUnneededTime, self.expanders) = (scaleDownUnneededTime, expanders)
@@ -178,20 +138,20 @@ public struct ClusterReadStatus: Codable {
     }
 
     init() {
-        (state, message) = (nil, nil)
+        (self.state, self.message) = (nil, nil)
     }
 }
 
-public extension ClusterReadStatus {
-    init(from decoder: Decoder) throws {
+extension ClusterReadStatus {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        state = try container.sdkDecodeIfPresent(.state)
-        message = try container.sdkDecodeIfPresent(.message)
+        self.state = try container.sdkDecodeIfPresent(.state)
+        self.message = try container.sdkDecodeIfPresent(.message)
     }
 }
 
-public extension ClusterReadStatus {
-    init(state: ClusterReadStatusState? = nil, message: String? = nil) {
+extension ClusterReadStatus {
+    public init(state: ClusterReadStatusState? = nil, message: String? = nil) {
         self.init()
         (self.state, self.message) = (state, message)
     }
@@ -208,40 +168,36 @@ public struct ClusterRegistry: Codable {
     }
 
     init() {
-        clusterUuids = nil
+        self.clusterUuids = nil
     }
 }
 
-public extension ClusterRegistry {
-    init(from decoder: Decoder) throws {
+extension ClusterRegistry {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        clusterUuids = try container.sdkDecodeIfPresent(.clusterUuids)
+        self.clusterUuids = try container.sdkDecodeIfPresent(.clusterUuids)
     }
 }
 
-public extension ClusterRegistry {
-    init(clusterUuids: [String]? = nil) {
+extension ClusterRegistry {
+    public init(clusterUuids: [String]? = nil) {
         self.init()
         self.clusterUuids = clusterUuids
     }
 }
 
 /// Required enumerated value serialized in the `expanders[]` wire field.
-public struct ClusterAutoscalerConfigurationExpandersItem: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct ClusterAutoscalerConfigurationExpandersItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let random = ClusterAutoscalerConfigurationExpandersItem(rawValue: "random")
     public static let priority = ClusterAutoscalerConfigurationExpandersItem(rawValue: "priority")
     public static let leastWaste = ClusterAutoscalerConfigurationExpandersItem(rawValue: "least_waste")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -254,10 +210,7 @@ public struct ClusterAutoscalerConfigurationExpandersItem: RawRepresentable, Has
 public struct ClusterReadStatusState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let running = ClusterReadStatusState(rawValue: "running")
     public static let provisioning = ClusterReadStatusState(rawValue: "provisioning")
     public static let degraded = ClusterReadStatusState(rawValue: "degraded")
@@ -268,7 +221,7 @@ public struct ClusterReadStatusState: RawRepresentable, Hashable, Codable, Senda
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -281,10 +234,7 @@ public struct ClusterReadStatusState: RawRepresentable, Hashable, Codable, Senda
 public struct ClusterStatusState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let running = ClusterStatusState(rawValue: "running")
     public static let provisioning = ClusterStatusState(rawValue: "provisioning")
     public static let degraded = ClusterStatusState(rawValue: "degraded")
@@ -295,7 +245,7 @@ public struct ClusterStatusState: RawRepresentable, Hashable, Codable, Sendable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

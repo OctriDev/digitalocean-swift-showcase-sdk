@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
-    struct GenaiListModelCatalogOptions: Codable {
+extension AgentPlatformApiMethods {
+    public struct GenaiListModelCatalogOptions: Codable {
         public var page: Int?
         public var limit: Int?
         public var search: String?
@@ -23,8 +23,7 @@ public extension AgentPlatformApiMethods {
         public init() {}
     }
 
-    /// Lists models available in the model catalog with pagination, filtering, and sorting options. Use `search` and
-    /// the model filters to narrow the results, and use `page` and `per_page` to paginate the results.
+    /// Lists models available in the model catalog with pagination, filtering, and sorting options. Use `search` and the model filters to narrow the results, and use `page` and `per_page` to paginate the results.
     ///
     /// Returns all available models.
     ///
@@ -68,38 +67,19 @@ public extension AgentPlatformApiMethods {
     ///   modalities include video. - MODEL_CATALOG_USE_CASE_EMBEDDING: Embedding and
     ///   reranking models: model_type is embedding or reranking, or usecases include
     ///   vectorization or reranking.
-    static func genaiListModelCatalog(
-        config: ClientConfig,
-        options: GenaiListModelCatalogOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiListModelCatalogOutput {
-        try await (sdkRequest(
-            "GET",
-            "/v2/gen-ai/models/catalog",
-            config: config,
-            query: [
-                SdkQueryParameter("page", value: options.page),
-                SdkQueryParameter("limit", value: options.limit),
-                SdkQueryParameter("search", value: options.search),
-                SdkQueryParameter("model_type", values: options.modelType, style: "form", explode: true),
-                SdkQueryParameter("provider", values: options.provider, style: "form", explode: true),
-                SdkQueryParameter("availability", values: options.availability, style: "form", explode: true),
-                SdkQueryParameter("badges", values: options.badges, style: "form", explode: true),
-                SdkQueryParameter("sort_by", value: options.sortBy),
-                SdkQueryParameter("per_page", value: options.perPage),
-                SdkQueryParameter("sort_direction", value: options.sortDirection),
-                SdkQueryParameter("use_case", value: options.useCase),
-            ],
-            decoder: .json,
-            operationId: "genai_list_model_catalog",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func genaiListModelCatalog(config: ClientConfig, options: GenaiListModelCatalogOptions, requestOptions: RequestOptions? = nil) async throws -> ApiListModelCatalogOutput {
+        return try (await sdkRequest("GET", "/v2/gen-ai/models/catalog", config: config, query: [
+            SdkQueryParameter("page", value: options.page),
+            SdkQueryParameter("limit", value: options.limit),
+            SdkQueryParameter("search", value: options.search),
+            SdkQueryParameter("model_type", values: options.modelType, style: "form", explode: true),
+            SdkQueryParameter("provider", values: options.provider, style: "form", explode: true),
+            SdkQueryParameter("availability", values: options.availability, style: "form", explode: true),
+            SdkQueryParameter("badges", values: options.badges, style: "form", explode: true),
+            SdkQueryParameter("sort_by", value: options.sortBy),
+            SdkQueryParameter("per_page", value: options.perPage),
+            SdkQueryParameter("sort_direction", value: options.sortDirection),
+            SdkQueryParameter("use_case", value: options.useCase),
+        ], decoder: .json, operationId: "genai_list_model_catalog", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

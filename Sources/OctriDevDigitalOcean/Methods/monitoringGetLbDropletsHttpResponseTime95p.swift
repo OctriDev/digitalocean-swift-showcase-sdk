@@ -6,64 +6,32 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension MonitoringMethods {
-    /// To retrieve Droplets 95th percentile HTTP response time in seconds for a given load balancer, send a GET request
-    /// to `/v2/monitoring/metrics/load_balancer/droplets_http_response_time_95p`.
+extension MonitoringMethods {
+    /// To retrieve Droplets 95th percentile HTTP response time in seconds for a given load balancer, send a GET request to `/v2/monitoring/metrics/load_balancer/droplets_http_response_time_95p`.
     ///
     /// - Parameters:
     /// - lbId: A unique identifier for a load balancer.
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    static func monitoringGetLbDropletsHttpResponseTime95p(
-        config: ClientConfig,
-        lbId: String,
-        start: String,
-        end: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Metrics {
-        try await (sdkRequest(
-            "GET",
-            "/v2/monitoring/metrics/load_balancer/droplets_http_response_time_95p",
-            config: config,
-            query: [
-                SdkQueryParameter("lb_id", value: lbId),
-                SdkQueryParameter("start", value: start),
-                SdkQueryParameter("end", value: end),
-            ],
-            decoder: .json,
-            operationId: "monitoring_get_lb_droplets_http_response_time_95p",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    public static func monitoringGetLbDropletsHttpResponseTime95p(config: ClientConfig, lbId: String, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
+        return try (await sdkRequest("GET", "/v2/monitoring/metrics/load_balancer/droplets_http_response_time_95p", config: config, query: [
+            SdkQueryParameter("lb_id", value: lbId),
+            SdkQueryParameter("start", value: start),
+            SdkQueryParameter("end", value: end),
+        ], decoder: .json, operationId: "monitoring_get_lb_droplets_http_response_time_95p", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To retrieve Droplets 99th percentile HTTP response time in seconds for a given load balancer, send a GET request
-    /// to `/v2/monitoring/metrics/load_balancer/droplets_http_response_time_99p`.
+    /// To retrieve Droplets 99th percentile HTTP response time in seconds for a given load balancer, send a GET request to `/v2/monitoring/metrics/load_balancer/droplets_http_response_time_99p`.
     ///
     /// - Parameters:
     /// - lbId: A unique identifier for a load balancer.
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    static func monitoringGetLbDropletsHttpResponseTime99p(
-        config: ClientConfig,
-        lbId: String,
-        start: String,
-        end: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Metrics {
-        try await (sdkRequest(
-            "GET",
-            "/v2/monitoring/metrics/load_balancer/droplets_http_response_time_99p",
-            config: config,
-            query: [
-                SdkQueryParameter("lb_id", value: lbId),
-                SdkQueryParameter("start", value: start),
-                SdkQueryParameter("end", value: end),
-            ],
-            decoder: .json,
-            operationId: "monitoring_get_lb_droplets_http_response_time_99p",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    public static func monitoringGetLbDropletsHttpResponseTime99p(config: ClientConfig, lbId: String, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
+        return try (await sdkRequest("GET", "/v2/monitoring/metrics/load_balancer/droplets_http_response_time_99p", config: config, query: [
+            SdkQueryParameter("lb_id", value: lbId),
+            SdkQueryParameter("start", value: start),
+            SdkQueryParameter("end", value: end),
+        ], decoder: .json, operationId: "monitoring_get_lb_droplets_http_response_time_99p", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

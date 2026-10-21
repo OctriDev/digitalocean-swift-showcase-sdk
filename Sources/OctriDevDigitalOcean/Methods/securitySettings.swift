@@ -6,75 +6,35 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension SecurityMethods {
+extension SecurityMethods {
     /// To list CSPM scan settings, send a GET request to `/v2/security/settings`.
     ///
     /// - Parameters:
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func securityListSettings(
-        config: ClientConfig,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Settings {
-        if let perPage {
+    public static func securityListSettings(config: ClientConfig, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> Settings {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/security/settings",
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "security_list_settings",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", "/v2/security/settings", config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "security_list_settings", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To update CSPM plan coverage, send a PUT request to `/v2/security/settings/plan`.
     ///
     /// - Parameters:
     /// - tierCoverage: Scan coverage for each available plan tier.
-    static func securityUpdateSettingsPlan(
-        config: ClientConfig,
-        tierCoverage: [String: SecurityUpdateSettingsPlanRequestBodyTierCoverageValue]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> TierCoverage {
+    public static func securityUpdateSettingsPlan(config: ClientConfig, tierCoverage: [String: SecurityUpdateSettingsPlanRequestBodyTierCoverageValue]? = nil, requestOptions: RequestOptions? = nil) async throws -> TierCoverage {
         let requestBody = SecurityUpdateSettingsPlanRequestBody(tierCoverage: tierCoverage)
 
-        return try await (sdkRequest(
-            "PUT",
-            "/v2/security/settings/plan",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "security_update_settings_plan",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", "/v2/security/settings/plan", config: config, body: requestBody, decoder: .json, operationId: "security_update_settings_plan", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To suppress scan findings, send a POST request to `/v2/security/settings/suppressions`.
@@ -82,30 +42,9 @@ public extension SecurityMethods {
     /// - Parameters:
     /// - ruleUuid: The rule UUID to suppress for the listed resources.
     /// - resources: The URNs of resources to suppress for the rule.
-    static func securityCreateSuppression(
-        config: ClientConfig,
-        ruleUuid: String? = nil,
-        resources: [String]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SuppressedResourceRoot {
+    public static func securityCreateSuppression(config: ClientConfig, ruleUuid: String? = nil, resources: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> SuppressedResourceRoot {
         let requestBody = SecurityCreateSuppressionRequestBody(ruleUuid: ruleUuid, resources: resources)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/security/settings/suppressions",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "security_create_suppression",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v2/security/settings/suppressions", config: config, body: requestBody, decoder: .json, operationId: "security_create_suppression", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DedicatedInference domain models
+// DedicatedInference domain models
 /// Typed representation of the `DedicatedInferenceResponse` API schema.
 public struct DedicatedInferenceResponse: Codable {
     /// A Dedicated Inference instance.
@@ -14,19 +14,19 @@ public struct DedicatedInferenceResponse: Codable {
     }
 
     init() {
-        dedicatedInference = nil
+        self.dedicatedInference = nil
     }
 }
 
-public extension DedicatedInferenceResponse {
-    init(from decoder: Decoder) throws {
+extension DedicatedInferenceResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        dedicatedInference = try container.sdkDecodeIfPresent(.dedicatedInference)
+        self.dedicatedInference = try container.sdkDecodeIfPresent(.dedicatedInference)
     }
 }
 
-public extension DedicatedInferenceResponse {
-    init(dedicatedInference: DedicatedInference? = nil) {
+extension DedicatedInferenceResponse {
+    public init(dedicatedInference: DedicatedInference? = nil) {
         self.init()
         self.dedicatedInference = dedicatedInference
     }

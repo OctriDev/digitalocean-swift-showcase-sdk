@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// MicroVMsPublicPreview domain models
+// MicroVMsPublicPreview domain models
 public struct AllMicrovmsVariant0: Codable {
     public var microvms: [Microvm]?
 
@@ -12,19 +12,19 @@ public struct AllMicrovmsVariant0: Codable {
     }
 
     init() {
-        microvms = nil
+        self.microvms = nil
     }
 }
 
-public extension AllMicrovmsVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllMicrovmsVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        microvms = try container.sdkDecodeIfPresent(.microvms)
+        self.microvms = try container.sdkDecodeIfPresent(.microvms)
     }
 }
 
-public extension AllMicrovmsVariant0 {
-    init(microvms: [Microvm]? = nil) {
+extension AllMicrovmsVariant0 {
+    public init(microvms: [Microvm]? = nil) {
         self.init()
         self.microvms = microvms
     }
@@ -44,29 +44,23 @@ public struct AllMicrovms: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllMicrovms {
-    init(from decoder: Decoder) throws {
+extension AllMicrovms {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        microvms = try container.sdkDecodeIfPresent(.microvms)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.microvms = try container.sdkDecodeIfPresent(.microvms)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllMicrovms {
-    init(meta: MetaMeta, microvms: [Microvm]? = nil, links: PageLinks? = nil) {
+extension AllMicrovms {
+    public init(meta: MetaMeta, microvms: [Microvm]? = nil, links: PageLinks? = nil) {
         (self.meta, self.microvms) = (meta, microvms)
         self.links = links
     }

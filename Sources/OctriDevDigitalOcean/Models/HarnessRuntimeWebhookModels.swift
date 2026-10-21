@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HarnessRuntimeWebhook domain models
+// HarnessRuntimeWebhook domain models
 /// Typed representation of the `WebhookAcceptedResponse` API schema.
 public struct WebhookAcceptedResponse: Codable {
     /// The queued (or deduped-existing) execution. Absent when the trigger is paused (202 with empty body).
@@ -15,19 +15,19 @@ public struct WebhookAcceptedResponse: Codable {
     }
 
     init() {
-        executionId = nil
+        self.executionId = nil
     }
 }
 
-public extension WebhookAcceptedResponse {
-    init(from decoder: Decoder) throws {
+extension WebhookAcceptedResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        executionId = try container.sdkDecodeIfPresent(.executionId)
+        self.executionId = try container.sdkDecodeIfPresent(.executionId)
     }
 }
 
-public extension WebhookAcceptedResponse {
-    init(executionId: String? = nil) {
+extension WebhookAcceptedResponse {
+    public init(executionId: String? = nil) {
         self.init()
         self.executionId = executionId
     }
@@ -49,20 +49,20 @@ public struct WebhookConfig: Codable {
     }
 
     init() {
-        (provider, webhookUrl) = (nil, nil)
+        (self.provider, self.webhookUrl) = (nil, nil)
     }
 }
 
-public extension WebhookConfig {
-    init(from decoder: Decoder) throws {
+extension WebhookConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        provider = try container.sdkDecodeIfPresent(.provider)
-        webhookUrl = try container.sdkDecodeIfPresent(.webhookUrl)
+        self.provider = try container.sdkDecodeIfPresent(.provider)
+        self.webhookUrl = try container.sdkDecodeIfPresent(.webhookUrl)
     }
 }
 
-public extension WebhookConfig {
-    init(provider: WebhookProviderKey? = nil, webhookUrl: String? = nil) {
+extension WebhookConfig {
+    public init(provider: WebhookProviderKey? = nil, webhookUrl: String? = nil) {
         self.init()
         (self.provider, self.webhookUrl) = (provider, webhookUrl)
     }
@@ -98,32 +98,25 @@ public struct WebhookProvider: Codable {
     }
 
     init() {
-        (key, displayName, description, docsUrl, pasteHint) = (nil, nil, nil, nil, nil)
-        signature = nil
+        (self.key, self.displayName, self.description, self.docsUrl, self.pasteHint) = (nil, nil, nil, nil, nil)
+        self.signature = nil
     }
 }
 
-public extension WebhookProvider {
-    init(from decoder: Decoder) throws {
+extension WebhookProvider {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        key = try container.sdkDecodeIfPresent(.key)
-        displayName = try container.sdkDecodeIfPresent(.displayName)
-        description = try container.sdkDecodeIfPresent(.description)
-        docsUrl = try container.sdkDecodeIfPresent(.docsUrl)
-        pasteHint = try container.sdkDecodeIfPresent(.pasteHint)
-        signature = try container.sdkDecodeIfPresent(.signature)
+        self.key = try container.sdkDecodeIfPresent(.key)
+        self.displayName = try container.sdkDecodeIfPresent(.displayName)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.docsUrl = try container.sdkDecodeIfPresent(.docsUrl)
+        self.pasteHint = try container.sdkDecodeIfPresent(.pasteHint)
+        self.signature = try container.sdkDecodeIfPresent(.signature)
     }
 }
 
-public extension WebhookProvider {
-    init(
-        key: WebhookProviderKey? = nil,
-        displayName: String? = nil,
-        description: String? = nil,
-        docsUrl: String? = nil,
-        pasteHint: String? = nil,
-        signature: WebhookProviderSignature? = nil
-    ) {
+extension WebhookProvider {
+    public init(key: WebhookProviderKey? = nil, displayName: String? = nil, description: String? = nil, docsUrl: String? = nil, pasteHint: String? = nil, signature: WebhookProviderSignature? = nil) {
         self.init()
         (self.key, self.displayName) = (key, displayName)
         (self.description, self.docsUrl) = (description, docsUrl)
@@ -147,20 +140,20 @@ public struct WebhookProviderSignature: Codable {
     }
 
     init() {
-        (header, scheme) = (nil, nil)
+        (self.header, self.scheme) = (nil, nil)
     }
 }
 
-public extension WebhookProviderSignature {
-    init(from decoder: Decoder) throws {
+extension WebhookProviderSignature {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        header = try container.sdkDecodeIfPresent(.header)
-        scheme = try container.sdkDecodeIfPresent(.scheme)
+        self.header = try container.sdkDecodeIfPresent(.header)
+        self.scheme = try container.sdkDecodeIfPresent(.scheme)
     }
 }
 
-public extension WebhookProviderSignature {
-    init(header: String? = nil, scheme: WebhookSignatureScheme? = nil) {
+extension WebhookProviderSignature {
+    public init(header: String? = nil, scheme: WebhookSignatureScheme? = nil) {
         self.init()
         (self.header, self.scheme) = (header, scheme)
     }
@@ -170,17 +163,14 @@ public extension WebhookProviderSignature {
 public struct WebhookProviderKey: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let github = WebhookProviderKey(rawValue: "github")
     public static let gitlab = WebhookProviderKey(rawValue: "gitlab")
     public static let custom = WebhookProviderKey(rawValue: "custom")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -194,17 +184,14 @@ public struct WebhookProviderKey: RawRepresentable, Hashable, Codable, Sendable,
 public struct WebhookSignatureScheme: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let hmacSha256 = WebhookSignatureScheme(rawValue: "hmac-sha256")
     public static let plaintext = WebhookSignatureScheme(rawValue: "plaintext")
     public static let doSignatureV1 = WebhookSignatureScheme(rawValue: "do-signature-v1")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -6,12 +6,10 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
-    /// Replaces a custom evaluation metric with an updated metric configuration. Use `metric_uuid` to identify the
-    /// metric and provide the metric fields you want to update. The update issues a new metric UUID.
+extension AgentPlatformApiMethods {
+    /// Replaces a custom evaluation metric with an updated metric configuration. Use `metric_uuid` to identify the metric and provide the metric fields you want to update. The update issues a new metric UUID.
     ///
-    /// To update a custom metric (issuing a new metric UUID), send a PUT request to
-    /// `/v2/gen-ai/custom_evaluation_metrics/{metric_uuid}`.
+    /// To update a custom metric (issuing a new metric UUID), send a PUT request to `/v2/gen-ai/custom_evaluation_metrics/{metric_uuid}`.
     ///
     /// - Parameters:
     /// - metricUuid: UUID of the custom metric to update.
@@ -24,64 +22,17 @@ public extension AgentPlatformApiMethods {
     ///   field.
     /// - metricUuid2: Optional `string` value serialized in the `metric_uuid` wire
     ///   field.
-    static func genaiUpdateCustomEvaluationMetric(
-        config: ClientConfig,
-        metricUuid: String,
-        config2: ApiCustomEvaluationMetricConfig? = nil,
-        description: String? = nil,
-        metricName: String? = nil,
-        metricUuid2: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiUpdateCustomEvaluationMetricOutput {
-        let requestBody = GenaiUpdateCustomEvaluationMetricRequestBody(
-            config2: config2,
-            description: description,
-            metricName: metricName,
-            metricUuid2: metricUuid2
-        )
+    public static func genaiUpdateCustomEvaluationMetric(config: ClientConfig, metricUuid: String, config2: ApiCustomEvaluationMetricConfig? = nil, description: String? = nil, metricName: String? = nil, metricUuid2: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiUpdateCustomEvaluationMetricOutput {
+        let requestBody = GenaiUpdateCustomEvaluationMetricRequestBody(config2: config2, description: description, metricName: metricName, metricUuid2: metricUuid2)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/gen-ai/custom_evaluation_metrics/", sdkEncodePathSegment(sdkWireString(metricUuid))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "genai_update_custom_evaluation_metric",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/gen-ai/custom_evaluation_metrics/", sdkEncodePathSegment(sdkWireString(metricUuid))].joined(), config: config, body: requestBody, decoder: .json, operationId: "genai_update_custom_evaluation_metric", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To soft-delete a custom model evaluation metric, send a DELETE request to
-    /// `/v2/gen-ai/custom_evaluation_metrics/{metric_uuid}`.
+    /// To soft-delete a custom model evaluation metric, send a DELETE request to `/v2/gen-ai/custom_evaluation_metrics/{metric_uuid}`.
     ///
     /// - Parameters:
     /// - metricUuid: UUID of the custom metric to delete.
-    static func genaiDeleteCustomEvaluationMetric(
-        config: ClientConfig,
-        metricUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiDeleteCustomEvaluationMetricOutput {
-        try await (sdkRequest(
-            "DELETE",
-            ["/v2/gen-ai/custom_evaluation_metrics/", sdkEncodePathSegment(sdkWireString(metricUuid))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "genai_delete_custom_evaluation_metric",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func genaiDeleteCustomEvaluationMetric(config: ClientConfig, metricUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiDeleteCustomEvaluationMetricOutput {
+        return try (await sdkRequest("DELETE", ["/v2/gen-ai/custom_evaluation_metrics/", sdkEncodePathSegment(sdkWireString(metricUuid))].joined(), config: config, decoder: .json, operationId: "genai_delete_custom_evaluation_metric", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

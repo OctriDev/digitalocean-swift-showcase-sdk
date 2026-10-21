@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// VPCs domain models
+// VPCs domain models
 public typealias Urn2 = String
 
 /// Typed representation of the `VpcCreate` API schema.
@@ -24,20 +24,20 @@ public struct VpcCreate: Codable {
     }
 
     init() {
-        (region, ipRange) = (nil, nil)
+        (self.region, self.ipRange) = (nil, nil)
     }
 }
 
-public extension VpcCreate {
-    init(from decoder: Decoder) throws {
+extension VpcCreate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        region = try container.sdkDecodeIfPresent(.region)
-        ipRange = try container.sdkDecodeIfPresent(.ipRange)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.ipRange = try container.sdkDecodeIfPresent(.ipRange)
     }
 }
 
-public extension VpcCreate {
-    init(region: String? = nil, ipRange: String? = nil) {
+extension VpcCreate {
+    public init(region: String? = nil, ipRange: String? = nil) {
         self.init()
         (self.region, self.ipRange) = (region, ipRange)
     }
@@ -53,19 +53,19 @@ public struct VpcPeeringResponse: Codable {
     }
 
     init() {
-        peering = nil
+        self.peering = nil
     }
 }
 
-public extension VpcPeeringResponse {
-    init(from decoder: Decoder) throws {
+extension VpcPeeringResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        peering = try container.sdkDecodeIfPresent(.peering)
+        self.peering = try container.sdkDecodeIfPresent(.peering)
     }
 }
 
-public extension VpcPeeringResponse {
-    init(peering: VpcPeering? = nil) {
+extension VpcPeeringResponse {
+    public init(peering: VpcPeering? = nil) {
         self.init()
         self.peering = peering
     }
@@ -85,29 +85,23 @@ public struct VpcMembers: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VpcMembers {
-    init(from decoder: Decoder) throws {
+extension VpcMembers {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        members = try container.sdkDecodeIfPresent(.members)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.members = try container.sdkDecodeIfPresent(.members)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension VpcMembers {
-    init(meta: MetaMeta, members: [VpcMember]? = nil, links: PageLinks? = nil) {
+extension VpcMembers {
+    public init(meta: MetaMeta, members: [VpcMember]? = nil, links: PageLinks? = nil) {
         (self.meta, self.members) = (meta, members)
         self.links = links
     }
@@ -121,19 +115,19 @@ public struct VpcPeeringsVariant0: Codable {
     }
 
     init() {
-        peerings = nil
+        self.peerings = nil
     }
 }
 
-public extension VpcPeeringsVariant0 {
-    init(from decoder: Decoder) throws {
+extension VpcPeeringsVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        peerings = try container.sdkDecodeIfPresent(.peerings)
+        self.peerings = try container.sdkDecodeIfPresent(.peerings)
     }
 }
 
-public extension VpcPeeringsVariant0 {
-    init(peerings: [VpcPeering]? = nil) {
+extension VpcPeeringsVariant0 {
+    public init(peerings: [VpcPeering]? = nil) {
         self.init()
         self.peerings = peerings
     }
@@ -153,29 +147,23 @@ public struct AllVpcs: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllVpcs {
-    init(from decoder: Decoder) throws {
+extension AllVpcs {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        vpcs = try container.sdkDecodeIfPresent(.vpcs)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.vpcs = try container.sdkDecodeIfPresent(.vpcs)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllVpcs {
-    init(meta: MetaMeta, vpcs: [Vpc]? = nil, links: PageLinks? = nil) {
+extension AllVpcs {
+    public init(meta: MetaMeta, vpcs: [Vpc]? = nil, links: PageLinks? = nil) {
         (self.meta, self.vpcs) = (meta, vpcs)
         self.links = links
     }
@@ -227,55 +215,46 @@ public struct Vpc: Codable {
     }
 
     init() {
-        (name, description, region, ipRange, self.default) = (nil, nil, nil, nil, nil)
-        (id, urn, createdAt) = (nil, nil, nil)
+        (self.name, self.description, self.region, self.ipRange, self.`default`) = (nil, nil, nil, nil, nil)
+        (self.id, self.urn, self.createdAt) = (nil, nil, nil)
     }
 }
 
-public extension Vpc {
-    init(from decoder: Decoder) throws {
+extension Vpc {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        region = try container.sdkDecodeIfPresent(.region)
-        ipRange = try container.sdkDecodeIfPresent(.ipRange)
-        self.default = try container.sdkDecodeIfPresent(.default)
-        id = try container.sdkDecodeIfPresent(.id)
-        urn = try container.sdkDecodeIfPresent(.urn)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        if let value = name {
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.ipRange = try container.sdkDecodeIfPresent(.ipRange)
+        self.`default` = try container.sdkDecodeIfPresent(.`default`)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.urn = try container.sdkDecodeIfPresent(.urn)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        if let value = self.name {
             try sdkValidatePattern("name", value, sdkPatternef0a913b6e4d)
         }
-        if let value = description {
+        if let value = self.description {
             try validateLength("description", value, min: nil, max: 255)
         }
-        if let value = id {
+        if let value = self.id {
             try sdkValidateUuid("id", value)
         }
-        if let value = urn {
+        if let value = self.urn {
             try sdkValidatePattern("urn", sdkWireString(value), sdkPattern9296ac5c6d12)
         }
-        if let value = createdAt {
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-public extension Vpc {
-    init(
-        name: String? = nil,
-        description: String? = nil,
-        region: String? = nil,
-        ipRange: String? = nil,
-        default: Bool? = nil,
-        id: String? = nil,
-        urn: Urn2? = nil,
-        createdAt: Date? = nil
-    ) throws {
+extension Vpc {
+    public init(name: String? = nil, description: String? = nil, region: String? = nil, ipRange: String? = nil, `default`: Bool? = nil, id: String? = nil, urn: Urn2? = nil, createdAt: Date? = nil) throws {
         self.init()
         (self.name, self.description) = (name, description)
         (self.region, self.ipRange) = (region, ipRange)
-        (self.default, self.id) = (`default`, id)
+        (self.`default`, self.id) = (`default`, id)
         (self.urn, self.createdAt) = (urn, createdAt)
         if let value = self.name {
             try sdkValidatePattern("name", value, sdkPatternef0a913b6e4d)
@@ -314,30 +293,30 @@ public struct VpcBase: Codable {
     }
 
     init() {
-        (id, urn, createdAt) = (nil, nil, nil)
+        (self.id, self.urn, self.createdAt) = (nil, nil, nil)
     }
 }
 
-public extension VpcBase {
-    init(from decoder: Decoder) throws {
+extension VpcBase {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        urn = try container.sdkDecodeIfPresent(.urn)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        if let value = id {
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.urn = try container.sdkDecodeIfPresent(.urn)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        if let value = self.id {
             try sdkValidateUuid("id", value)
         }
-        if let value = urn {
+        if let value = self.urn {
             try sdkValidatePattern("urn", sdkWireString(value), sdkPattern9296ac5c6d12)
         }
-        if let value = createdAt {
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-public extension VpcBase {
-    init(id: String? = nil, urn: Urn2? = nil, createdAt: Date? = nil) throws {
+extension VpcBase {
+    public init(id: String? = nil, urn: Urn2? = nil, createdAt: Date? = nil) throws {
         self.init()
         (self.id, self.urn) = (id, urn)
         self.createdAt = createdAt
@@ -361,19 +340,19 @@ public struct AllVpcsVariant0: Codable {
     }
 
     init() {
-        vpcs = nil
+        self.vpcs = nil
     }
 }
 
-public extension AllVpcsVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllVpcsVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        vpcs = try container.sdkDecodeIfPresent(.vpcs)
+        self.vpcs = try container.sdkDecodeIfPresent(.vpcs)
     }
 }
 
-public extension AllVpcsVariant0 {
-    init(vpcs: [Vpc]? = nil) {
+extension AllVpcsVariant0 {
+    public init(vpcs: [Vpc]? = nil) {
         self.init()
         self.vpcs = vpcs
     }
@@ -393,29 +372,23 @@ public struct VpcPeerings: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VpcPeerings {
-    init(from decoder: Decoder) throws {
+extension VpcPeerings {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        peerings = try container.sdkDecodeIfPresent(.peerings)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.peerings = try container.sdkDecodeIfPresent(.peerings)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension VpcPeerings {
-    init(meta: MetaMeta, peerings: [VpcPeering]? = nil, links: PageLinks? = nil) {
+extension VpcPeerings {
+    public init(meta: MetaMeta, peerings: [VpcPeering]? = nil, links: PageLinks? = nil) {
         (self.meta, self.peerings) = (meta, peerings)
         self.links = links
     }
@@ -436,21 +409,21 @@ public struct VpcDefault: Codable {
     }
 
     init() {
-        self.default = nil
+        self.`default` = nil
     }
 }
 
-public extension VpcDefault {
-    init(from decoder: Decoder) throws {
+extension VpcDefault {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.default = try container.sdkDecodeIfPresent(.default)
+        self.`default` = try container.sdkDecodeIfPresent(.`default`)
     }
 }
 
-public extension VpcDefault {
-    init(default: Bool? = nil) {
+extension VpcDefault {
+    public init(`default`: Bool? = nil) {
         self.init()
-        self.default = `default`
+        self.`default` = `default`
     }
 }
 
@@ -462,19 +435,19 @@ public struct VpcMembersVariant0: Codable {
     }
 
     init() {
-        members = nil
+        self.members = nil
     }
 }
 
-public extension VpcMembersVariant0 {
-    init(from decoder: Decoder) throws {
+extension VpcMembersVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        members = try container.sdkDecodeIfPresent(.members)
+        self.members = try container.sdkDecodeIfPresent(.members)
     }
 }
 
-public extension VpcMembersVariant0 {
-    init(members: [VpcMember]? = nil) {
+extension VpcMembersVariant0 {
+    public init(members: [VpcMember]? = nil) {
         self.init()
         self.members = members
     }
@@ -495,26 +468,26 @@ public struct VpcUpdatable: Codable {
     }
 
     init() {
-        (name, description) = (nil, nil)
+        (self.name, self.description) = (nil, nil)
     }
 }
 
-public extension VpcUpdatable {
-    init(from decoder: Decoder) throws {
+extension VpcUpdatable {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        if let value = name {
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        if let value = self.name {
             try sdkValidatePattern("name", value, sdkPatternef0a913b6e4d)
         }
-        if let value = description {
+        if let value = self.description {
             try validateLength("description", value, min: nil, max: 255)
         }
     }
 }
 
-public extension VpcUpdatable {
-    init(name: String? = nil, description: String? = nil) throws {
+extension VpcUpdatable {
+    public init(name: String? = nil, description: String? = nil) throws {
         self.init()
         (self.name, self.description) = (name, description)
         if let value = self.name {
@@ -536,19 +509,19 @@ public struct ExistingVpc: Codable {
     }
 
     init() {
-        vpc = nil
+        self.vpc = nil
     }
 }
 
-public extension ExistingVpc {
-    init(from decoder: Decoder) throws {
+extension ExistingVpc {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        vpc = try container.sdkDecodeIfPresent(.vpc)
+        self.vpc = try container.sdkDecodeIfPresent(.vpc)
     }
 }
 
-public extension ExistingVpc {
-    init(vpc: Vpc? = nil) {
+extension ExistingVpc {
+    public init(vpc: Vpc? = nil) {
         self.init()
         self.vpc = vpc
     }

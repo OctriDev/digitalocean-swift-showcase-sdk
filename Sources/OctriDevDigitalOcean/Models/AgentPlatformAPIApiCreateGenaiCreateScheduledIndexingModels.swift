@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiCreate domain models
+// AgentPlatformAPIApiCreate domain models
 /// Typed representation of the `ApiCreateScheduledIndexingOutput` API schema.
 public struct ApiCreateScheduledIndexingOutput: Codable {
     /// Metadata for scheduled indexing entries
@@ -14,19 +14,19 @@ public struct ApiCreateScheduledIndexingOutput: Codable {
     }
 
     init() {
-        indexingInfo = nil
+        self.indexingInfo = nil
     }
 }
 
-public extension ApiCreateScheduledIndexingOutput {
-    init(from decoder: Decoder) throws {
+extension ApiCreateScheduledIndexingOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        indexingInfo = try container.sdkDecodeIfPresent(.indexingInfo)
+        self.indexingInfo = try container.sdkDecodeIfPresent(.indexingInfo)
     }
 }
 
-public extension ApiCreateScheduledIndexingOutput {
-    init(indexingInfo: ApiScheduledIndexingInfo? = nil) {
+extension ApiCreateScheduledIndexingOutput {
+    public init(indexingInfo: ApiScheduledIndexingInfo? = nil) {
         self.init()
         self.indexingInfo = indexingInfo
     }
@@ -50,21 +50,21 @@ public struct ApiCreateScheduledIndexingInputPublic: Codable {
     }
 
     init() {
-        (days, knowledgeBaseUuid, time) = (nil, nil, nil)
+        (self.days, self.knowledgeBaseUuid, self.time) = (nil, nil, nil)
     }
 }
 
-public extension ApiCreateScheduledIndexingInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiCreateScheduledIndexingInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        days = try container.sdkDecodeIfPresent(.days)
-        knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
-        time = try container.sdkDecodeIfPresent(.time)
+        self.days = try container.sdkDecodeIfPresent(.days)
+        self.knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
+        self.time = try container.sdkDecodeIfPresent(.time)
     }
 }
 
-public extension ApiCreateScheduledIndexingInputPublic {
-    init(days: [Int]? = nil, knowledgeBaseUuid: String? = nil, time: String? = nil) {
+extension ApiCreateScheduledIndexingInputPublic {
+    public init(days: [Int]? = nil, knowledgeBaseUuid: String? = nil, time: String? = nil) {
         self.init()
         (self.days, self.knowledgeBaseUuid) = (days, knowledgeBaseUuid)
         self.time = time

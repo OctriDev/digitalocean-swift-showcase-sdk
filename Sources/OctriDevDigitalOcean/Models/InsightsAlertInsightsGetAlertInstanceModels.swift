@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// InsightsAlert domain models
+// InsightsAlert domain models
 /// Typed representation of the `AlertInstanceResponse` API schema.
 public struct AlertInstanceResponse: Codable {
     /// A read-only record of an alert rule firing against a resource.
@@ -13,27 +13,21 @@ public struct AlertInstanceResponse: Codable {
         case alertInstance = "alert_instance"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AlertInstanceResponse {
-    init(from decoder: Decoder) throws {
+extension AlertInstanceResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.alertInstance) else {
-            throw SdkValidationError(
-                field: "alert_instance",
-                code: "required",
-                message: "Validation failed for 'alert_instance': value is required"
-            )
+            throw SdkValidationError(field: "alert_instance", code: "required", message: "Validation failed for 'alert_instance': value is required")
         }
-        alertInstance = try container.sdkDecodeRequired(.alertInstance)
+        self.alertInstance = try container.sdkDecodeRequired(.alertInstance)
     }
 }
 
-public extension AlertInstanceResponse {
-    init(alertInstance: AlertInstance) {
+extension AlertInstanceResponse {
+    public init(alertInstance: AlertInstance) {
         self.alertInstance = alertInstance
     }
 }

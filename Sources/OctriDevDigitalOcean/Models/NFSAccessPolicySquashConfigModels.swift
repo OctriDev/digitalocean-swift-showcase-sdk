@@ -3,22 +3,19 @@
 
 import Foundation
 
-/// NFS domain models
+// NFS domain models
 /// The squash mode applied to the access point export.
 public struct AccessPolicySquashConfig: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let noSquash = AccessPolicySquashConfig(rawValue: "NO_SQUASH")
     public static let rootSquash = AccessPolicySquashConfig(rawValue: "ROOT_SQUASH")
     public static let allSquash = AccessPolicySquashConfig(rawValue: "ALL_SQUASH")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

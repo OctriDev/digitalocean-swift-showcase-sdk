@@ -6,31 +6,12 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AppsMethods {
-    /// Revert an app rollback. This action reverts the active rollback by creating a new deployment from the latest app
-    /// spec prior to the rollback and unpins the app to resume new deployments.
+extension AppsMethods {
+    /// Revert an app rollback. This action reverts the active rollback by creating a new deployment from the latest app spec prior to the rollback and unpins the app to resume new deployments.
     ///
     /// - Parameters:
     /// - appId: The app ID
-    static func appsRevertRollback(
-        config: ClientConfig,
-        appId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppsDeploymentResponse {
-        try await (sdkRequest(
-            "POST",
-            ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/rollback/revert"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "apps_revert_rollback",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func appsRevertRollback(config: ClientConfig, appId: String, requestOptions: RequestOptions? = nil) async throws -> AppsDeploymentResponse {
+        return try (await sdkRequest("POST", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/rollback/revert"].joined(), config: config, decoder: .json, operationId: "apps_revert_rollback", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

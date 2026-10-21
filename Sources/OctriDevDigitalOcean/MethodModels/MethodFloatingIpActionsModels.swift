@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-/// Canonical floatingIpActions operation model declarations
+// Canonical floatingIpActions operation model declarations
 public indirect enum FloatingIPsActionPostRequestBody {
     case floatingIpActionUnassign(FloatingIpActionUnassign)
     case floatingIpActionAssign(FloatingIpActionAssign)
@@ -16,6 +16,7 @@ public indirect enum FloatingIPsActionPostRequestBody {
 }
 
 extension FloatingIPsActionPostRequestBody: Codable {
+
     private enum CodingKeys: String, CodingKey {
         case discriminator = "type"
     }
@@ -23,16 +24,12 @@ extension FloatingIPsActionPostRequestBody: Codable {
     public init(from decoder: Decoder) throws {
         let tagged = try decoder.container(keyedBy: CodingKeys.self)
         let discriminator = try tagged.decode(String.self, forKey: .discriminator)
-        if let value = try Self.decodeGroup1(discriminator, from: decoder) {
-            self = value; return
-        }
+        if let value = try Self.decodeGroup1(discriminator, from: decoder) { self = value; return }
         self = try .unknown(tag: discriminator, raw: JSONValue(from: decoder))
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
         if case let .unknown(_, raw) = self {
             var container = encoder.singleValueContainer()
             try container.encode(raw)
@@ -43,9 +40,9 @@ extension FloatingIPsActionPostRequestBody: Codable {
 extension FloatingIPsActionPostRequestBody {
     static func decodeGroup1(_ discriminator: String, from decoder: Decoder) throws -> Self? {
         switch discriminator {
-        case "unassign": try .floatingIpActionUnassign(FloatingIpActionUnassign(from: decoder))
-        case "assign": try .floatingIpActionAssign(FloatingIpActionAssign(from: decoder))
-        default: nil
+        case "unassign": return .floatingIpActionUnassign(try FloatingIpActionUnassign(from: decoder))
+        case "assign": return .floatingIpActionAssign(try FloatingIpActionAssign(from: decoder))
+        default: return nil
         }
     }
 }

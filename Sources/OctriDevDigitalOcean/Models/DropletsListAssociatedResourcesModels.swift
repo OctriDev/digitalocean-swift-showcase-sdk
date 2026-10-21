@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Droplets domain models
+// Droplets domain models
 /// An objects containing information about a resource associated with a Droplet.
 public struct AssociatedResource: Codable {
     /// The unique identifier for the resource associated with the Droplet.
@@ -23,21 +23,21 @@ public struct AssociatedResource: Codable {
     }
 
     init() {
-        (id, name, cost) = (nil, nil, nil)
+        (self.id, self.name, self.cost) = (nil, nil, nil)
     }
 }
 
-public extension AssociatedResource {
-    init(from decoder: Decoder) throws {
+extension AssociatedResource {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        cost = try container.sdkDecodeIfPresent(.cost)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.cost = try container.sdkDecodeIfPresent(.cost)
     }
 }
 
-public extension AssociatedResource {
-    init(id: String? = nil, name: String? = nil, cost: String? = nil) {
+extension AssociatedResource {
+    public init(id: String? = nil, name: String? = nil, cost: String? = nil) {
         self.init()
         (self.id, self.name) = (id, name)
         self.cost = cost
@@ -66,29 +66,23 @@ public struct AssociatedResourcesList: Codable {
     }
 
     init() {
-        (reservedIps, floatingIps, snapshots, volumes, volumeSnapshots) = (nil, nil, nil, nil, nil)
+        (self.reservedIps, self.floatingIps, self.snapshots, self.volumes, self.volumeSnapshots) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension AssociatedResourcesList {
-    init(from decoder: Decoder) throws {
+extension AssociatedResourcesList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        reservedIps = try container.sdkDecodeIfPresent(.reservedIps)
-        floatingIps = try container.sdkDecodeIfPresent(.floatingIps)
-        snapshots = try container.sdkDecodeIfPresent(.snapshots)
-        volumes = try container.sdkDecodeIfPresent(.volumes)
-        volumeSnapshots = try container.sdkDecodeIfPresent(.volumeSnapshots)
+        self.reservedIps = try container.sdkDecodeIfPresent(.reservedIps)
+        self.floatingIps = try container.sdkDecodeIfPresent(.floatingIps)
+        self.snapshots = try container.sdkDecodeIfPresent(.snapshots)
+        self.volumes = try container.sdkDecodeIfPresent(.volumes)
+        self.volumeSnapshots = try container.sdkDecodeIfPresent(.volumeSnapshots)
     }
 }
 
-public extension AssociatedResourcesList {
-    init(
-        reservedIps: [AssociatedResource]? = nil,
-        floatingIps: [AssociatedResource]? = nil,
-        snapshots: [AssociatedResource]? = nil,
-        volumes: [AssociatedResource]? = nil,
-        volumeSnapshots: [AssociatedResource]? = nil
-    ) {
+extension AssociatedResourcesList {
+    public init(reservedIps: [AssociatedResource]? = nil, floatingIps: [AssociatedResource]? = nil, snapshots: [AssociatedResource]? = nil, volumes: [AssociatedResource]? = nil, volumeSnapshots: [AssociatedResource]? = nil) {
         self.init()
         (self.reservedIps, self.floatingIps) = (reservedIps, floatingIps)
         (self.snapshots, self.volumes) = (snapshots, volumes)
@@ -117,29 +111,23 @@ public struct AssociatedResourcesListVariant0: Codable {
     }
 
     init() {
-        (reservedIps, floatingIps, snapshots, volumes, volumeSnapshots) = (nil, nil, nil, nil, nil)
+        (self.reservedIps, self.floatingIps, self.snapshots, self.volumes, self.volumeSnapshots) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension AssociatedResourcesListVariant0 {
-    init(from decoder: Decoder) throws {
+extension AssociatedResourcesListVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        reservedIps = try container.sdkDecodeIfPresent(.reservedIps)
-        floatingIps = try container.sdkDecodeIfPresent(.floatingIps)
-        snapshots = try container.sdkDecodeIfPresent(.snapshots)
-        volumes = try container.sdkDecodeIfPresent(.volumes)
-        volumeSnapshots = try container.sdkDecodeIfPresent(.volumeSnapshots)
+        self.reservedIps = try container.sdkDecodeIfPresent(.reservedIps)
+        self.floatingIps = try container.sdkDecodeIfPresent(.floatingIps)
+        self.snapshots = try container.sdkDecodeIfPresent(.snapshots)
+        self.volumes = try container.sdkDecodeIfPresent(.volumes)
+        self.volumeSnapshots = try container.sdkDecodeIfPresent(.volumeSnapshots)
     }
 }
 
-public extension AssociatedResourcesListVariant0 {
-    init(
-        reservedIps: [AssociatedResource]? = nil,
-        floatingIps: [AssociatedResource]? = nil,
-        snapshots: [AssociatedResource]? = nil,
-        volumes: [AssociatedResource]? = nil,
-        volumeSnapshots: [AssociatedResource]? = nil
-    ) {
+extension AssociatedResourcesListVariant0 {
+    public init(reservedIps: [AssociatedResource]? = nil, floatingIps: [AssociatedResource]? = nil, snapshots: [AssociatedResource]? = nil, volumes: [AssociatedResource]? = nil, volumeSnapshots: [AssociatedResource]? = nil) {
         self.init()
         (self.reservedIps, self.floatingIps) = (reservedIps, floatingIps)
         (self.snapshots, self.volumes) = (snapshots, volumes)

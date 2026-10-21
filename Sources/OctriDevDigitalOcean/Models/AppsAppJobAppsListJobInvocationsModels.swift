@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AppsAppJob domain models
+// AppsAppJob domain models
 public struct AppJobInvocationsVariant0: Codable {
     /// A list of job invocations
     public var jobInvocations: [AppJobInvocation]?
@@ -13,19 +13,19 @@ public struct AppJobInvocationsVariant0: Codable {
     }
 
     init() {
-        jobInvocations = nil
+        self.jobInvocations = nil
     }
 }
 
-public extension AppJobInvocationsVariant0 {
-    init(from decoder: Decoder) throws {
+extension AppJobInvocationsVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        jobInvocations = try container.sdkDecodeIfPresent(.jobInvocations)
+        self.jobInvocations = try container.sdkDecodeIfPresent(.jobInvocations)
     }
 }
 
-public extension AppJobInvocationsVariant0 {
-    init(jobInvocations: [AppJobInvocation]? = nil) {
+extension AppJobInvocationsVariant0 {
+    public init(jobInvocations: [AppJobInvocation]? = nil) {
         self.init()
         self.jobInvocations = jobInvocations
     }
@@ -44,20 +44,20 @@ public struct AppJobInvocations: Codable {
     }
 
     init() {
-        (jobInvocations, links) = (nil, nil)
+        (self.jobInvocations, self.links) = (nil, nil)
     }
 }
 
-public extension AppJobInvocations {
-    init(from decoder: Decoder) throws {
+extension AppJobInvocations {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        jobInvocations = try container.sdkDecodeIfPresent(.jobInvocations)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.jobInvocations = try container.sdkDecodeIfPresent(.jobInvocations)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AppJobInvocations {
-    init(jobInvocations: [AppJobInvocation]? = nil, links: PageLinks? = nil) {
+extension AppJobInvocations {
+    public init(jobInvocations: [AppJobInvocation]? = nil, links: PageLinks? = nil) {
         self.init()
         (self.jobInvocations, self.links) = (jobInvocations, links)
     }

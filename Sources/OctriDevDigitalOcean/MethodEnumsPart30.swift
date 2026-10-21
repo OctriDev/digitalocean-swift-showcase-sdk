@@ -23,35 +23,35 @@ struct InferenceCreateResponseRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(model, forKey: SdkCodingKey("model"))
-        try keyedContainer.encode(input, forKey: SdkCodingKey("input"))
-        try keyedContainer.encodeIfPresent(maxOutputTokens, forKey: SdkCodingKey("max_output_tokens"))
-        try keyedContainer.encodeIfPresent(temperature, forKey: SdkCodingKey("temperature"))
-        try keyedContainer.encodeIfPresent(stream, forKey: SdkCodingKey("stream"))
-        try keyedContainer.encodeIfPresent(instructions, forKey: SdkCodingKey("instructions"))
-        try keyedContainer.encodeIfPresent(topP, forKey: SdkCodingKey("top_p"))
-        try keyedContainer.encodeIfPresent(streamOptions, forKey: SdkCodingKey("stream_options"))
-        try keyedContainer.encodeIfPresent(tools, forKey: SdkCodingKey("tools"))
-        try keyedContainer.encodeIfPresent(toolChoice, forKey: SdkCodingKey("tool_choice"))
-        try keyedContainer.encodeIfPresent(stop, forKey: SdkCodingKey("stop"))
-        try keyedContainer.encodeIfPresent(metadata, forKey: SdkCodingKey("metadata"))
-        try keyedContainer.encodeIfPresent(user, forKey: SdkCodingKey("user"))
+        try keyedContainer.encode(self.model, forKey: SdkCodingKey("model"))
+        try keyedContainer.encode(self.input, forKey: SdkCodingKey("input"))
+        try keyedContainer.encodeIfPresent(self.maxOutputTokens, forKey: SdkCodingKey("max_output_tokens"))
+        try keyedContainer.encodeIfPresent(self.temperature, forKey: SdkCodingKey("temperature"))
+        try keyedContainer.encodeIfPresent(self.stream, forKey: SdkCodingKey("stream"))
+        try keyedContainer.encodeIfPresent(self.instructions, forKey: SdkCodingKey("instructions"))
+        try keyedContainer.encodeIfPresent(self.topP, forKey: SdkCodingKey("top_p"))
+        try keyedContainer.encodeIfPresent(self.streamOptions, forKey: SdkCodingKey("stream_options"))
+        try keyedContainer.encodeIfPresent(self.tools, forKey: SdkCodingKey("tools"))
+        try keyedContainer.encodeIfPresent(self.toolChoice, forKey: SdkCodingKey("tool_choice"))
+        try keyedContainer.encodeIfPresent(self.stop, forKey: SdkCodingKey("stop"))
+        try keyedContainer.encodeIfPresent(self.metadata, forKey: SdkCodingKey("metadata"))
+        try keyedContainer.encodeIfPresent(self.user, forKey: SdkCodingKey("user"))
     }
 
     init(options: ServerlessInferenceMethods.InferenceCreateResponseOptions) {
-        model = options.model
-        input = options.input
-        maxOutputTokens = options.maxOutputTokens
-        temperature = options.temperature
-        stream = options.stream
-        instructions = options.instructions
-        topP = options.topP
-        streamOptions = options.streamOptions
-        tools = options.tools
-        toolChoice = options.toolChoice
-        stop = options.stop
-        metadata = options.metadata
-        user = options.user
+        self.model = options.model
+        self.input = options.input
+        self.maxOutputTokens = options.maxOutputTokens
+        self.temperature = options.temperature
+        self.stream = options.stream
+        self.instructions = options.instructions
+        self.topP = options.topP
+        self.streamOptions = options.streamOptions
+        self.tools = options.tools
+        self.toolChoice = options.toolChoice
+        self.stop = options.stop
+        self.metadata = options.metadata
+        self.user = options.user
     }
 }
 
@@ -72,35 +72,35 @@ struct InferenceCreateResponseStreamStreamRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(model, forKey: SdkCodingKey("model"))
-        try keyedContainer.encode(input, forKey: SdkCodingKey("input"))
-        try keyedContainer.encode(stream, forKey: SdkCodingKey("stream"))
-        try keyedContainer.encodeIfPresent(maxOutputTokens, forKey: SdkCodingKey("max_output_tokens"))
-        try keyedContainer.encodeIfPresent(temperature, forKey: SdkCodingKey("temperature"))
-        try keyedContainer.encodeIfPresent(instructions, forKey: SdkCodingKey("instructions"))
-        try keyedContainer.encodeIfPresent(topP, forKey: SdkCodingKey("top_p"))
-        try keyedContainer.encodeIfPresent(streamOptions, forKey: SdkCodingKey("stream_options"))
-        try keyedContainer.encodeIfPresent(tools, forKey: SdkCodingKey("tools"))
-        try keyedContainer.encodeIfPresent(toolChoice, forKey: SdkCodingKey("tool_choice"))
-        try keyedContainer.encodeIfPresent(stop, forKey: SdkCodingKey("stop"))
-        try keyedContainer.encodeIfPresent(metadata, forKey: SdkCodingKey("metadata"))
-        try keyedContainer.encodeIfPresent(user, forKey: SdkCodingKey("user"))
+        try keyedContainer.encode(self.model, forKey: SdkCodingKey("model"))
+        try keyedContainer.encode(self.input, forKey: SdkCodingKey("input"))
+        try keyedContainer.encode(self.stream, forKey: SdkCodingKey("stream"))
+        try keyedContainer.encodeIfPresent(self.maxOutputTokens, forKey: SdkCodingKey("max_output_tokens"))
+        try keyedContainer.encodeIfPresent(self.temperature, forKey: SdkCodingKey("temperature"))
+        try keyedContainer.encodeIfPresent(self.instructions, forKey: SdkCodingKey("instructions"))
+        try keyedContainer.encodeIfPresent(self.topP, forKey: SdkCodingKey("top_p"))
+        try keyedContainer.encodeIfPresent(self.streamOptions, forKey: SdkCodingKey("stream_options"))
+        try keyedContainer.encodeIfPresent(self.tools, forKey: SdkCodingKey("tools"))
+        try keyedContainer.encodeIfPresent(self.toolChoice, forKey: SdkCodingKey("tool_choice"))
+        try keyedContainer.encodeIfPresent(self.stop, forKey: SdkCodingKey("stop"))
+        try keyedContainer.encodeIfPresent(self.metadata, forKey: SdkCodingKey("metadata"))
+        try keyedContainer.encodeIfPresent(self.user, forKey: SdkCodingKey("user"))
     }
 
     init(options: ServerlessInferenceMethods.InferenceCreateResponseStreamOptions) {
-        model = options.model
-        input = options.input
-        stream = options.stream
-        maxOutputTokens = options.maxOutputTokens
-        temperature = options.temperature
-        instructions = options.instructions
-        topP = options.topP
-        streamOptions = options.streamOptions
-        tools = options.tools
-        toolChoice = options.toolChoice
-        stop = options.stop
-        metadata = options.metadata
-        user = options.user
+        self.model = options.model
+        self.input = options.input
+        self.stream = options.stream
+        self.maxOutputTokens = options.maxOutputTokens
+        self.temperature = options.temperature
+        self.instructions = options.instructions
+        self.topP = options.topP
+        self.streamOptions = options.streamOptions
+        self.tools = options.tools
+        self.toolChoice = options.toolChoice
+        self.stop = options.stop
+        self.metadata = options.metadata
+        self.user = options.user
     }
 }
 
@@ -111,9 +111,9 @@ struct InferenceCreateAsyncInvokeRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(modelId, forKey: SdkCodingKey("model_id"))
-        try keyedContainer.encode(input, forKey: SdkCodingKey("input"))
-        try keyedContainer.encodeIfPresent(tags, forKey: SdkCodingKey("tags"))
+        try keyedContainer.encode(self.modelId, forKey: SdkCodingKey("model_id"))
+        try keyedContainer.encode(self.input, forKey: SdkCodingKey("input"))
+        try keyedContainer.encodeIfPresent(self.tags, forKey: SdkCodingKey("tags"))
     }
 }
 
@@ -126,11 +126,11 @@ struct InferenceCreateSpeechRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(model, forKey: SdkCodingKey("model"))
-        try keyedContainer.encode(input, forKey: SdkCodingKey("input"))
-        try keyedContainer.encodeIfPresent(voice, forKey: SdkCodingKey("voice"))
-        try keyedContainer.encodeIfPresent(responseFormat, forKey: SdkCodingKey("response_format"))
-        try keyedContainer.encodeIfPresent(instructions, forKey: SdkCodingKey("instructions"))
+        try keyedContainer.encode(self.model, forKey: SdkCodingKey("model"))
+        try keyedContainer.encode(self.input, forKey: SdkCodingKey("input"))
+        try keyedContainer.encodeIfPresent(self.voice, forKey: SdkCodingKey("voice"))
+        try keyedContainer.encodeIfPresent(self.responseFormat, forKey: SdkCodingKey("response_format"))
+        try keyedContainer.encodeIfPresent(self.instructions, forKey: SdkCodingKey("instructions"))
     }
 }
 
@@ -142,10 +142,10 @@ struct InferenceCreateVideoRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(model, forKey: SdkCodingKey("model"))
-        try keyedContainer.encode(prompt, forKey: SdkCodingKey("prompt"))
-        try keyedContainer.encodeIfPresent(size, forKey: SdkCodingKey("size"))
-        try keyedContainer.encodeIfPresent(fps, forKey: SdkCodingKey("fps"))
+        try keyedContainer.encode(self.model, forKey: SdkCodingKey("model"))
+        try keyedContainer.encode(self.prompt, forKey: SdkCodingKey("prompt"))
+        try keyedContainer.encodeIfPresent(self.size, forKey: SdkCodingKey("size"))
+        try keyedContainer.encodeIfPresent(self.fps, forKey: SdkCodingKey("fps"))
     }
 }
 
@@ -174,50 +174,50 @@ struct AgentInferenceCreateChatCompletionRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(messages, forKey: SdkCodingKey("messages"))
-        try keyedContainer.encode(model, forKey: SdkCodingKey("model"))
-        try keyedContainer.encodeIfPresent(maxTokens, forKey: SdkCodingKey("max_tokens"))
-        try keyedContainer.encodeIfPresent(maxCompletionTokens, forKey: SdkCodingKey("max_completion_tokens"))
-        try keyedContainer.encodeIfPresent(frequencyPenalty, forKey: SdkCodingKey("frequency_penalty"))
-        try keyedContainer.encodeIfPresent(presencePenalty, forKey: SdkCodingKey("presence_penalty"))
-        try keyedContainer.encodeIfPresent(topLogprobs, forKey: SdkCodingKey("top_logprobs"))
-        try keyedContainer.encodeIfPresent(tools, forKey: SdkCodingKey("tools"))
-        try keyedContainer.encodeIfPresent(toolChoice, forKey: SdkCodingKey("tool_choice"))
-        try keyedContainer.encodeIfPresent(stream, forKey: SdkCodingKey("stream"))
-        try keyedContainer.encodeIfPresent(stop, forKey: SdkCodingKey("stop"))
-        try keyedContainer.encodeIfPresent(logitBias, forKey: SdkCodingKey("logit_bias"))
-        try keyedContainer.encodeIfPresent(logprobs, forKey: SdkCodingKey("logprobs"))
-        try keyedContainer.encodeIfPresent(n, forKey: SdkCodingKey("n"))
-        try keyedContainer.encodeIfPresent(streamOptions, forKey: SdkCodingKey("stream_options"))
-        try keyedContainer.encodeIfPresent(reasoningEffort, forKey: SdkCodingKey("reasoning_effort"))
-        try keyedContainer.encodeIfPresent(seed, forKey: SdkCodingKey("seed"))
-        try keyedContainer.encodeIfPresent(metadata, forKey: SdkCodingKey("metadata"))
-        try keyedContainer.encodeIfPresent(temperature, forKey: SdkCodingKey("temperature"))
-        try keyedContainer.encodeIfPresent(topP, forKey: SdkCodingKey("top_p"))
-        try keyedContainer.encodeIfPresent(user, forKey: SdkCodingKey("user"))
+        try keyedContainer.encode(self.messages, forKey: SdkCodingKey("messages"))
+        try keyedContainer.encode(self.model, forKey: SdkCodingKey("model"))
+        try keyedContainer.encodeIfPresent(self.maxTokens, forKey: SdkCodingKey("max_tokens"))
+        try keyedContainer.encodeIfPresent(self.maxCompletionTokens, forKey: SdkCodingKey("max_completion_tokens"))
+        try keyedContainer.encodeIfPresent(self.frequencyPenalty, forKey: SdkCodingKey("frequency_penalty"))
+        try keyedContainer.encodeIfPresent(self.presencePenalty, forKey: SdkCodingKey("presence_penalty"))
+        try keyedContainer.encodeIfPresent(self.topLogprobs, forKey: SdkCodingKey("top_logprobs"))
+        try keyedContainer.encodeIfPresent(self.tools, forKey: SdkCodingKey("tools"))
+        try keyedContainer.encodeIfPresent(self.toolChoice, forKey: SdkCodingKey("tool_choice"))
+        try keyedContainer.encodeIfPresent(self.stream, forKey: SdkCodingKey("stream"))
+        try keyedContainer.encodeIfPresent(self.stop, forKey: SdkCodingKey("stop"))
+        try keyedContainer.encodeIfPresent(self.logitBias, forKey: SdkCodingKey("logit_bias"))
+        try keyedContainer.encodeIfPresent(self.logprobs, forKey: SdkCodingKey("logprobs"))
+        try keyedContainer.encodeIfPresent(self.n, forKey: SdkCodingKey("n"))
+        try keyedContainer.encodeIfPresent(self.streamOptions, forKey: SdkCodingKey("stream_options"))
+        try keyedContainer.encodeIfPresent(self.reasoningEffort, forKey: SdkCodingKey("reasoning_effort"))
+        try keyedContainer.encodeIfPresent(self.seed, forKey: SdkCodingKey("seed"))
+        try keyedContainer.encodeIfPresent(self.metadata, forKey: SdkCodingKey("metadata"))
+        try keyedContainer.encodeIfPresent(self.temperature, forKey: SdkCodingKey("temperature"))
+        try keyedContainer.encodeIfPresent(self.topP, forKey: SdkCodingKey("top_p"))
+        try keyedContainer.encodeIfPresent(self.user, forKey: SdkCodingKey("user"))
     }
 
     init(options: AgentInferenceMethods.AgentInferenceCreateChatCompletionOptions) {
-        messages = options.messages
-        model = options.model
-        maxTokens = options.maxTokens
-        maxCompletionTokens = options.maxCompletionTokens
-        frequencyPenalty = options.frequencyPenalty
-        presencePenalty = options.presencePenalty
-        topLogprobs = options.topLogprobs
-        tools = options.tools
-        toolChoice = options.toolChoice
-        stream = options.stream
-        stop = options.stop
-        logitBias = options.logitBias
-        logprobs = options.logprobs
-        n = options.n
-        streamOptions = options.streamOptions
-        reasoningEffort = options.reasoningEffort
-        seed = options.seed
-        metadata = options.metadata
-        temperature = options.temperature
-        topP = options.topP
-        user = options.user
+        self.messages = options.messages
+        self.model = options.model
+        self.maxTokens = options.maxTokens
+        self.maxCompletionTokens = options.maxCompletionTokens
+        self.frequencyPenalty = options.frequencyPenalty
+        self.presencePenalty = options.presencePenalty
+        self.topLogprobs = options.topLogprobs
+        self.tools = options.tools
+        self.toolChoice = options.toolChoice
+        self.stream = options.stream
+        self.stop = options.stop
+        self.logitBias = options.logitBias
+        self.logprobs = options.logprobs
+        self.n = options.n
+        self.streamOptions = options.streamOptions
+        self.reasoningEffort = options.reasoningEffort
+        self.seed = options.seed
+        self.metadata = options.metadata
+        self.temperature = options.temperature
+        self.topP = options.topP
+        self.user = options.user
     }
 }

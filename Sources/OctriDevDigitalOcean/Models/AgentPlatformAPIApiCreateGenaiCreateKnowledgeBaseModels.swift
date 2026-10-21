@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiCreate domain models
+// AgentPlatformAPIApiCreate domain models
 /// Data to create a new knowledge base.
 public struct ApiCreateKnowledgeBaseInputPublic: Codable {
     /// Identifier of the DigitalOcean OpenSearch database this knowledge base will use, optional. If not provided,
@@ -52,40 +52,29 @@ public struct ApiCreateKnowledgeBaseInputPublic: Codable {
     }
 
     init() {
-        (databaseId, datasources, embeddingModelUuid, name, projectId) = (nil, nil, nil, nil, nil)
-        (region, rerankingConfig, size, tags, vpcUuid) = (nil, nil, nil, nil, nil)
+        (self.databaseId, self.datasources, self.embeddingModelUuid, self.name, self.projectId) = (nil, nil, nil, nil, nil)
+        (self.region, self.rerankingConfig, self.size, self.tags, self.vpcUuid) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ApiCreateKnowledgeBaseInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiCreateKnowledgeBaseInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        databaseId = try container.sdkDecodeIfPresent(.databaseId)
-        datasources = try container.sdkDecodeIfPresent(.datasources)
-        embeddingModelUuid = try container.sdkDecodeIfPresent(.embeddingModelUuid)
-        name = try container.sdkDecodeIfPresent(.name)
-        projectId = try container.sdkDecodeIfPresent(.projectId)
-        region = try container.sdkDecodeIfPresent(.region)
-        rerankingConfig = try container.sdkDecodeIfPresent(.rerankingConfig)
-        size = try container.sdkDecodeIfPresent(.size)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        self.databaseId = try container.sdkDecodeIfPresent(.databaseId)
+        self.datasources = try container.sdkDecodeIfPresent(.datasources)
+        self.embeddingModelUuid = try container.sdkDecodeIfPresent(.embeddingModelUuid)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.projectId = try container.sdkDecodeIfPresent(.projectId)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.rerankingConfig = try container.sdkDecodeIfPresent(.rerankingConfig)
+        self.size = try container.sdkDecodeIfPresent(.size)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
     }
 }
 
-public extension ApiCreateKnowledgeBaseInputPublic {
-    init(
-        databaseId: String? = nil,
-        datasources: [ApiKBDataSource]? = nil,
-        embeddingModelUuid: String? = nil,
-        name: String? = nil,
-        projectId: String? = nil,
-        region: String? = nil,
-        rerankingConfig: ApiRerankingConfiguration? = nil,
-        size: ApiOpenSearchPlanSize? = nil,
-        tags: [String]? = nil,
-        vpcUuid: String? = nil
-    ) {
+extension ApiCreateKnowledgeBaseInputPublic {
+    public init(databaseId: String? = nil, datasources: [ApiKBDataSource]? = nil, embeddingModelUuid: String? = nil, name: String? = nil, projectId: String? = nil, region: String? = nil, rerankingConfig: ApiRerankingConfiguration? = nil, size: ApiOpenSearchPlanSize? = nil, tags: [String]? = nil, vpcUuid: String? = nil) {
         self.init()
         (self.databaseId, self.datasources) = (databaseId, datasources)
         (self.embeddingModelUuid, self.name) = (embeddingModelUuid, name)
@@ -105,19 +94,19 @@ public struct ApiCreateKnowledgeBaseOutput: Codable {
     }
 
     init() {
-        knowledgeBase = nil
+        self.knowledgeBase = nil
     }
 }
 
-public extension ApiCreateKnowledgeBaseOutput {
-    init(from decoder: Decoder) throws {
+extension ApiCreateKnowledgeBaseOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        knowledgeBase = try container.sdkDecodeIfPresent(.knowledgeBase)
+        self.knowledgeBase = try container.sdkDecodeIfPresent(.knowledgeBase)
     }
 }
 
-public extension ApiCreateKnowledgeBaseOutput {
-    init(knowledgeBase: ApiKnowledgeBase? = nil) {
+extension ApiCreateKnowledgeBaseOutput {
+    public init(knowledgeBase: ApiKnowledgeBase? = nil) {
         self.init()
         self.knowledgeBase = knowledgeBase
     }

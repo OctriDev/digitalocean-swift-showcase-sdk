@@ -6,30 +6,12 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension MonitoringMethods {
+extension MonitoringMethods {
     /// To delete an alert policy, send a DELETE request to `/v2/monitoring/alerts/{alert_uuid}`
     ///
     /// - Parameters:
     /// - alertUuid: A unique identifier for an alert policy.
-    static func monitoringDeleteAlertPolicy(
-        config: ClientConfig,
-        alertUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await (sdkRequest(
-            "DELETE",
-            ["/v2/monitoring/alerts/", sdkEncodePathSegment(sdkWireString(alertUuid))].joined(),
-            config: config,
-            decoder: .empty,
-            operationId: "monitoring_delete_alertPolicy",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func monitoringDeleteAlertPolicy(config: ClientConfig, alertUuid: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try (await sdkRequest("DELETE", ["/v2/monitoring/alerts/", sdkEncodePathSegment(sdkWireString(alertUuid))].joined(), config: config, decoder: .empty, operationId: "monitoring_delete_alertPolicy", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

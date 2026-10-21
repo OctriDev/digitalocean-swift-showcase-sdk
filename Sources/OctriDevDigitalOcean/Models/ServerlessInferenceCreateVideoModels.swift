@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// ServerlessInferenceCreate domain models
+// ServerlessInferenceCreate domain models
 /// Request body to start an asynchronous video generation job.
 public struct CreateVideoRequest: Codable {
     /// The video generation model to use.
@@ -26,62 +26,36 @@ public struct CreateVideoRequest: Codable {
         case fps
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateVideoRequest {
-    init(from decoder: Decoder) throws {
+extension CreateVideoRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.model) else {
-            throw SdkValidationError(
-                field: "model",
-                code: "required",
-                message: "Validation failed for 'model': value is required"
-            )
+            throw SdkValidationError(field: "model", code: "required", message: "Validation failed for 'model': value is required")
         }
         guard container.contains(.prompt) else {
-            throw SdkValidationError(
-                field: "prompt",
-                code: "required",
-                message: "Validation failed for 'prompt': value is required"
-            )
+            throw SdkValidationError(field: "prompt", code: "required", message: "Validation failed for 'prompt': value is required")
         }
-        model = try container.sdkDecodeRequired(.model)
-        prompt = try container.sdkDecodeRequired(.prompt)
-        size = try container.sdkDecodeIfPresent(.size)
-        fps = try container.sdkDecodeIfPresent(.fps)
-        try validateLength("prompt", prompt, min: 1, max: nil)
-        if let value = fps {
-            try validateRange(
-                "fps",
-                Double(value),
-                min: 1,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.model = try container.sdkDecodeRequired(.model)
+        self.prompt = try container.sdkDecodeRequired(.prompt)
+        self.size = try container.sdkDecodeIfPresent(.size)
+        self.fps = try container.sdkDecodeIfPresent(.fps)
+            try validateLength("prompt", self.prompt, min: 1, max: nil)
+        if let value = self.fps {
+            try validateRange("fps", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
-public extension CreateVideoRequest {
-    init(model: String, prompt: String, size: String? = nil, fps: Int? = nil) throws {
+extension CreateVideoRequest {
+    public init(model: String, prompt: String, size: String? = nil, fps: Int? = nil) throws {
         (self.model, self.prompt) = (model, prompt)
         (self.size, self.fps) = (size, fps)
-        try validateLength("prompt", self.prompt, min: 1, max: nil)
+            try validateLength("prompt", self.prompt, min: 1, max: nil)
         if let value = self.fps {
-            try validateRange(
-                "fps",
-                Double(value),
-                min: 1,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("fps", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }

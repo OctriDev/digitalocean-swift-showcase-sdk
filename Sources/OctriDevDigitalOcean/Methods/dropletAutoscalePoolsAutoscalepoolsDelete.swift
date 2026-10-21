@@ -6,31 +6,12 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DropletAutoscalePoolsMethods {
-    /// To destroy an autoscale pool, send a DELETE request to the `/v2/droplets/autoscale/$AUTOSCALE_POOL_ID` endpoint.
-    /// A successful response will include a 202 response code and no content.
+extension DropletAutoscalePoolsMethods {
+    /// To destroy an autoscale pool, send a DELETE request to the `/v2/droplets/autoscale/$AUTOSCALE_POOL_ID` endpoint. A successful response will include a 202 response code and no content.
     ///
     /// - Parameters:
     /// - autoscalePoolId: A unique identifier for an autoscale pool.
-    static func autoscalepoolsDelete(
-        config: ClientConfig,
-        autoscalePoolId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await (sdkRequest(
-            "DELETE",
-            ["/v2/droplets/autoscale/", sdkEncodePathSegment(sdkWireString(autoscalePoolId))].joined(),
-            config: config,
-            decoder: .empty,
-            operationId: "autoscalepools_delete",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func autoscalepoolsDelete(config: ClientConfig, autoscalePoolId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try (await sdkRequest("DELETE", ["/v2/droplets/autoscale/", sdkEncodePathSegment(sdkWireString(autoscalePoolId))].joined(), config: config, decoder: .empty, operationId: "autoscalepools_delete", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

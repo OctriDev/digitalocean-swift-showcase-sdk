@@ -6,10 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension VpcRoutesPublicPreviewMethods {
-    /// To update the next hop for a user-defined VPC subnet route, send a PATCH request to
-    /// `/v2/vpcs/$VPC_UUID/subnets/$SUBNET_UUID/routes/$ROUTE_UUID`. The `destination_cidr` cannot be changed. Droplet
-    /// targets must use a numeric ID. A Droplet UUID or another invalid `target_urns` value returns a 422 response.
+extension VpcRoutesPublicPreviewMethods {
+    /// To update the next hop for a user-defined VPC subnet route, send a PATCH request to `/v2/vpcs/$VPC_UUID/subnets/$SUBNET_UUID/routes/$ROUTE_UUID`. The `destination_cidr` cannot be changed. Droplet targets must use a numeric ID. A Droplet UUID or another invalid `target_urns` value returns a 422 response.
     ///
     /// - Parameters:
     /// - vpcUuid: The unique identifier of the VPC.
@@ -18,14 +16,7 @@ public extension VpcRoutesPublicPreviewMethods {
     /// - targetUrns: The URNs of supported next-hop resources. Droplet targets must
     ///   use a numeric ID in the format `do:droplet:<id>`. VPC NAT Gateway targets
     ///   use a UUID in the format `do:nat_gateway:<uuid>`.
-    static func vpcSubnetRoutesUpdate(
-        config: ClientConfig,
-        vpcUuid: String,
-        subnetUuid: String,
-        routeUuid: String,
-        targetUrns: [String],
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SingleRoute {
+    public static func vpcSubnetRoutesUpdate(config: ClientConfig, vpcUuid: String, subnetUuid: String, routeUuid: String, targetUrns: [String], requestOptions: RequestOptions? = nil) async throws -> SingleRoute {
         try sdkValidateUuid("vpc_uuid", vpcUuid)
 
         try sdkValidateUuid("subnet_uuid", subnetUuid)
@@ -34,75 +25,22 @@ public extension VpcRoutesPublicPreviewMethods {
 
         let requestBody = VpcSubnetRoutesUpdateRequestBody(targetUrns: targetUrns)
 
-        return try await (sdkRequest(
-            "PATCH",
-            [
-                "/v2/vpcs/",
-                sdkEncodePathSegment(sdkWireString(vpcUuid)),
-                "/subnets/",
-                sdkEncodePathSegment(sdkWireString(subnetUuid)),
-                "/routes/",
-                sdkEncodePathSegment(sdkWireString(routeUuid)),
-            ].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "vpcSubnetRoutes_update",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "404": Error2.self,
-                "422": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PATCH", ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcUuid)), "/subnets/", sdkEncodePathSegment(sdkWireString(subnetUuid)), "/routes/", sdkEncodePathSegment(sdkWireString(routeUuid))].joined(), config: config, body: requestBody, decoder: .json, operationId: "vpcSubnetRoutes_update", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "422": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To delete a user-defined VPC subnet route, send a DELETE request to
-    /// `/v2/vpcs/$VPC_UUID/subnets/$SUBNET_UUID/routes/$ROUTE_UUID`. Managed routes cannot be deleted. A successful
-    /// request returns a 204 status code with no response body.
+    /// To delete a user-defined VPC subnet route, send a DELETE request to `/v2/vpcs/$VPC_UUID/subnets/$SUBNET_UUID/routes/$ROUTE_UUID`. Managed routes cannot be deleted. A successful request returns a 204 status code with no response body.
     ///
     /// - Parameters:
     /// - vpcUuid: The unique identifier of the VPC.
     /// - subnetUuid: The unique identifier of the VPC subnet.
     /// - routeUuid: The unique identifier of the route.
-    static func vpcSubnetRoutesDelete(
-        config: ClientConfig,
-        vpcUuid: String,
-        subnetUuid: String,
-        routeUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
+    public static func vpcSubnetRoutesDelete(config: ClientConfig, vpcUuid: String, subnetUuid: String, routeUuid: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("vpc_uuid", vpcUuid)
 
         try sdkValidateUuid("subnet_uuid", subnetUuid)
 
         try sdkValidateUuid("route_uuid", routeUuid)
 
-        return try await (sdkRequest(
-            "DELETE",
-            [
-                "/v2/vpcs/",
-                sdkEncodePathSegment(sdkWireString(vpcUuid)),
-                "/subnets/",
-                sdkEncodePathSegment(sdkWireString(subnetUuid)),
-                "/routes/",
-                sdkEncodePathSegment(sdkWireString(routeUuid)),
-            ].joined(),
-            config: config,
-            decoder: .empty,
-            operationId: "vpcSubnetRoutes_delete",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("DELETE", ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcUuid)), "/subnets/", sdkEncodePathSegment(sdkWireString(subnetUuid)), "/routes/", sdkEncodePathSegment(sdkWireString(routeUuid))].joined(), config: config, decoder: .empty, operationId: "vpcSubnetRoutes_delete", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

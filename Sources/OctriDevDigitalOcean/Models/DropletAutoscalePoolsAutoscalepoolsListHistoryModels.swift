@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DropletAutoscalePools domain models
+// DropletAutoscalePools domain models
 /// Typed representation of the `HistoryEvents` API schema.
 public struct HistoryEvents: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,29 +18,23 @@ public struct HistoryEvents: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension HistoryEvents {
-    init(from decoder: Decoder) throws {
+extension HistoryEvents {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        history = try container.sdkDecodeIfPresent(.history)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.history = try container.sdkDecodeIfPresent(.history)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension HistoryEvents {
-    init(meta: MetaMeta, history: [History]? = nil, links: PageLinks? = nil) {
+extension HistoryEvents {
+    public init(meta: MetaMeta, history: [History]? = nil, links: PageLinks? = nil) {
         (self.meta, self.history) = (meta, history)
         self.links = links
     }
@@ -54,19 +48,19 @@ public struct HistoryEventsVariant0: Codable {
     }
 
     init() {
-        history = nil
+        self.history = nil
     }
 }
 
-public extension HistoryEventsVariant0 {
-    init(from decoder: Decoder) throws {
+extension HistoryEventsVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        history = try container.sdkDecodeIfPresent(.history)
+        self.history = try container.sdkDecodeIfPresent(.history)
     }
 }
 
-public extension HistoryEventsVariant0 {
-    init(history: [History]? = nil) {
+extension HistoryEventsVariant0 {
+    public init(history: [History]? = nil) {
         self.init()
         self.history = history
     }
@@ -106,91 +100,53 @@ public struct History: Codable {
         case updatedAt = "updated_at"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension History {
-    init(from decoder: Decoder) throws {
+extension History {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.historyEventId) else {
-            throw SdkValidationError(
-                field: "history_event_id",
-                code: "required",
-                message: "Validation failed for 'history_event_id': value is required"
-            )
+            throw SdkValidationError(field: "history_event_id", code: "required", message: "Validation failed for 'history_event_id': value is required")
         }
         guard container.contains(.currentInstanceCount) else {
-            throw SdkValidationError(
-                field: "current_instance_count",
-                code: "required",
-                message: "Validation failed for 'current_instance_count': value is required"
-            )
+            throw SdkValidationError(field: "current_instance_count", code: "required", message: "Validation failed for 'current_instance_count': value is required")
         }
         guard container.contains(.desiredInstanceCount) else {
-            throw SdkValidationError(
-                field: "desired_instance_count",
-                code: "required",
-                message: "Validation failed for 'desired_instance_count': value is required"
-            )
+            throw SdkValidationError(field: "desired_instance_count", code: "required", message: "Validation failed for 'desired_instance_count': value is required")
         }
         guard container.contains(.reason) else {
-            throw SdkValidationError(
-                field: "reason",
-                code: "required",
-                message: "Validation failed for 'reason': value is required"
-            )
+            throw SdkValidationError(field: "reason", code: "required", message: "Validation failed for 'reason': value is required")
         }
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.updatedAt) else {
-            throw SdkValidationError(
-                field: "updated_at",
-                code: "required",
-                message: "Validation failed for 'updated_at': value is required"
-            )
+            throw SdkValidationError(field: "updated_at", code: "required", message: "Validation failed for 'updated_at': value is required")
         }
-        historyEventId = try container.sdkDecodeRequired(.historyEventId)
-        currentInstanceCount = try container.sdkDecodeRequired(.currentInstanceCount)
-        desiredInstanceCount = try container.sdkDecodeRequired(.desiredInstanceCount)
-        reason = try container.sdkDecodeRequired(.reason)
-        status = try container.sdkDecodeRequired(.status)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
-        try sdkValidateDateTime("updated_at", sdkWireString(updatedAt))
+        self.historyEventId = try container.sdkDecodeRequired(.historyEventId)
+        self.currentInstanceCount = try container.sdkDecodeRequired(.currentInstanceCount)
+        self.desiredInstanceCount = try container.sdkDecodeRequired(.desiredInstanceCount)
+        self.reason = try container.sdkDecodeRequired(.reason)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
-public extension History {
-    init(
-        historyEventId: String,
-        currentInstanceCount: Int,
-        desiredInstanceCount: Int,
-        reason: HistoryReason,
-        status: HistoryStatus,
-        createdAt: Date,
-        updatedAt: Date
-    ) throws {
+extension History {
+    public init(historyEventId: String, currentInstanceCount: Int, desiredInstanceCount: Int, reason: HistoryReason, status: HistoryStatus, createdAt: Date, updatedAt: Date) throws {
         (self.historyEventId, self.currentInstanceCount) = (historyEventId, currentInstanceCount)
         (self.desiredInstanceCount, self.reason) = (desiredInstanceCount, reason)
         (self.status, self.createdAt) = (status, createdAt)
         self.updatedAt = updatedAt
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-        try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
@@ -198,17 +154,14 @@ public extension History {
 public struct HistoryReason: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let configurationChange = HistoryReason(rawValue: "CONFIGURATION_CHANGE")
     public static let scaleUp = HistoryReason(rawValue: "SCALE_UP")
     public static let scaleDown = HistoryReason(rawValue: "SCALE_DOWN")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -221,17 +174,14 @@ public struct HistoryReason: RawRepresentable, Hashable, Codable, Sendable, SdkW
 public struct HistoryStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let inProgress = HistoryStatus(rawValue: "in_progress")
     public static let success = HistoryStatus(rawValue: "success")
     public static let error = HistoryStatus(rawValue: "error")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

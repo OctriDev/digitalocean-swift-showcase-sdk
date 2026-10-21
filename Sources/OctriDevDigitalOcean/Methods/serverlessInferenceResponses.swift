@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ServerlessInferenceMethods {
-    struct InferenceCreateResponseOptions: Codable {
+extension ServerlessInferenceMethods {
+    public struct InferenceCreateResponseOptions: Codable {
         public var model: String
         public var input: CreateResponseRequestInput
         public var maxOutputTokens: SdkOptional<Int>?
@@ -28,8 +28,7 @@ public extension ServerlessInferenceMethods {
         }
     }
 
-    /// Generate text responses from text prompts. This endpoint supports both streaming and non-streaming responses for
-    /// supported text models.
+    /// Generate text responses from text prompts. This endpoint supports both streaming and non-streaming responses for supported text models.
     ///
     /// - Parameters:
     /// - model: The model ID of the model you want to use. Get the model ID using
@@ -54,11 +53,7 @@ public extension ServerlessInferenceMethods {
     /// - stop: Up to 4 sequences where the API will stop generating further tokens.
     /// - metadata: Set of key-value pairs that can be attached to the request.
     /// - user: A unique identifier representing your end-user.
-    static func inferenceCreateResponse(
-        config: ClientConfig,
-        options: InferenceCreateResponseOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> CreateResponseResponse {
+    public static func inferenceCreateResponse(config: ClientConfig, options: InferenceCreateResponseOptions, requestOptions: RequestOptions? = nil) async throws -> CreateResponseResponse {
         if let maxOutputTokens = options.maxOutputTokens?.valueOrNil {
             try validateRange("max_output_tokens", Double(maxOutputTokens), min: 1)
         }
@@ -73,15 +68,6 @@ public extension ServerlessInferenceMethods {
 
         let requestBody = InferenceCreateResponseRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v1/responses",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "inference_create_response",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+        return try (await sdkRequest("POST", "/v1/responses", config: config, body: requestBody, decoder: .json, operationId: "inference_create_response", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

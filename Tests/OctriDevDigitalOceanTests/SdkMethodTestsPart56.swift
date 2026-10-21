@@ -6,8 +6,7 @@ import Foundation
 import XCTest
 
 extension SdkMethodTests {
-    func testMonitoringGetLbFrontendTlsConnectionsLimitMonitoringGetLbFronX406469ba78ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testMonitoringGetLbFrontendTlsConnectionsLimitMonitoringGetLbFronX406469ba78ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -18,10 +17,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getLbFrontendTlsConnectionsLimit(
-                lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-                start: decoded("\"1620683817\""),
-                end: decoded("\"1620705417\"")
-            )
+            lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+            start: decoded("\"1620683817\""),
+            end: decoded("\"1620705417\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -66,8 +65,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getSink(
-                sinkUuid: decoded("\"78b172b6-52c3-4a4b-96d5-78d3f1a0b18c\"")
-            )
+            sinkUuid: decoded("\"78b172b6-52c3-4a4b-96d5-78d3f1a0b18c\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -113,9 +112,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.listAlertPolicy(
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -202,8 +201,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.listSinks(
-                resourceId: decoded("\"do:kubernetes:5ba4518b-b9e2-4978-aa92-2d4c727e8824\"")
-            )
+            resourceId: decoded("\"do:kubernetes:5ba4518b-b9e2-4978-aa92-2d4c727e8824\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -225,22 +224,7 @@ extension SdkMethodTests {
         }
         _ = client
         let actual = try await client.monitoring.updateAlertPolicy(
-            options: MonitoringMethods.MonitoringUpdateAlertPolicyOptions(
-                required1: MonitoringUpdateAlertPolicyOptionsRequired1(
-                    alertUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-                    alerts: decoded(sdkMethodFixture1253Value1),
-                    compare: decoded("\"GreaterThan\""),
-                    description: decoded("\"CPU Alert\""),
-                    enabled: decoded("true"),
-                    entities: decoded("[\"192018292\"]"),
-                    tags: decoded("[\"droplet_tag\"]")
-                ),
-                required2: MonitoringUpdateAlertPolicyOptionsRequired2(
-                    type: decoded("\"v1/insights/droplet/cpu\""),
-                    value: decoded("80"),
-                    window: decoded("\"5m\"")
-                )
-            )
+            options: MonitoringMethods.MonitoringUpdateAlertPolicyOptions(required1: MonitoringUpdateAlertPolicyOptionsRequired1(alertUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""), alerts: decoded(sdkMethodFixture1253Value1), compare: decoded("\"GreaterThan\""), description: decoded("\"CPU Alert\""), enabled: decoded("true"), entities: decoded("[\"192018292\"]"), tags: decoded("[\"droplet_tag\"]")), required2: MonitoringUpdateAlertPolicyOptionsRequired2(type: decoded("\"v1/insights/droplet/cpu\""), value: decoded("80"), window: decoded("\"5m\"")))
         )
         let expected = try JSONSerialization.jsonObject(
             with: Data(sdkMethodFixture1253Expected.utf8),
@@ -263,23 +247,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.updateAlertPolicy(
-                options: MonitoringMethods.MonitoringUpdateAlertPolicyOptions(
-                    required1: MonitoringUpdateAlertPolicyOptionsRequired1(
-                        alertUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-                        alerts: decoded(sdkMethodFixture1254Value1),
-                        compare: decoded("\"GreaterThan\""),
-                        description: decoded("\"CPU Alert\""),
-                        enabled: decoded("true"),
-                        entities: decoded("[\"192018292\"]"),
-                        tags: decoded("[\"droplet_tag\"]")
-                    ),
-                    required2: MonitoringUpdateAlertPolicyOptionsRequired2(
-                        type: decoded("\"v1/insights/droplet/cpu\""),
-                        value: decoded("80"),
-                        window: decoded("\"5m\"")
-                    )
-                )
-            )
+            options: MonitoringMethods.MonitoringUpdateAlertPolicyOptions(required1: MonitoringUpdateAlertPolicyOptionsRequired1(alertUuid: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""), alerts: decoded(sdkMethodFixture1254Value1), compare: decoded("\"GreaterThan\""), description: decoded("\"CPU Alert\""), enabled: decoded("true"), entities: decoded("[\"192018292\"]"), tags: decoded("[\"droplet_tag\"]")), required2: MonitoringUpdateAlertPolicyOptionsRequired2(type: decoded("\"v1/insights/droplet/cpu\""), value: decoded("80"), window: decoded("\"5m\"")))
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -320,11 +289,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.updateDestination(
-                destinationUuid: decoded("\"1a64809f-1708-48ee-a742-dec8d481b8d1\""),
-                type: decoded("\"opensearch_dbaas\""),
-                config: decoded(sdkMethodFixture1256Value1),
-                name: decoded("\"managed_opensearch_cluster\"")
-            )
+            destinationUuid: decoded("\"1a64809f-1708-48ee-a742-dec8d481b8d1\""),
+            type: decoded("\"opensearch_dbaas\""),
+            config: decoded(sdkMethodFixture1256Value1),
+            name: decoded("\"managed_opensearch_cluster\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -373,12 +342,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.nfs.create(
-                name: decoded("\"sammy-share-drive\""),
-                sizeGib: decoded("1024"),
-                region: decoded("\"atl1\""),
-                vpcIds: decoded("[\"796c6fe3-2a1d-4da2-9f3e-38239827dc91\"]"),
-                performanceTier: decoded("\"standard\"")
-            )
+            name: decoded("\"sammy-share-drive\""),
+            sizeGib: decoded("1024"),
+            region: decoded("\"atl1\""),
+            vpcIds: decoded("[\"796c6fe3-2a1d-4da2-9f3e-38239827dc91\"]"),
+            performanceTier: decoded("\"standard\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -427,12 +396,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.nfs.createAccessPoint(
-                shareId: decoded("\"baf4827c-6fa9-456f-9dbd-9ddfcacd0720\""),
-                name: decoded("\"other-vpc\""),
-                path: decoded("\"/other-vpc\""),
-                accessPolicy: decoded(sdkMethodFixture1260Value1),
-                vpcId: decoded("\"3f34cdb2-1e4f-4100-b5c7-f55f2762085f\"")
-            )
+            shareId: decoded("\"baf4827c-6fa9-456f-9dbd-9ddfcacd0720\""),
+            name: decoded("\"other-vpc\""),
+            path: decoded("\"/other-vpc\""),
+            accessPolicy: decoded(sdkMethodFixture1260Value1),
+            vpcId: decoded("\"3f34cdb2-1e4f-4100-b5c7-f55f2762085f\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -478,9 +447,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.nfsActions.nfsCreateAction(
-                nfsId: decoded("\"0a1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d\""),
-                body: decoded(sdkMethodFixture1262Value1)
-            )
+            nfsId: decoded("\"0a1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d\""),
+            body: decoded(sdkMethodFixture1262Value1)
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -519,9 +488,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.nfs.delete(
-                nfsId: decoded("\"0a1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d\""),
-                region: decoded("\"atl1\"")
-            )
+            nfsId: decoded("\"0a1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d\""),
+            region: decoded("\"atl1\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -566,8 +535,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.nfs.deleteAccessPoint(
-                accessPointId: decoded("\"becd9f04-8afa-4ccd-b03e-9676447df603\"")
-            )
+            accessPointId: decoded("\"becd9f04-8afa-4ccd-b03e-9676447df603\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)

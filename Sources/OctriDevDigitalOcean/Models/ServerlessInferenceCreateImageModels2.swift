@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// ServerlessInferenceCreate domain models
+// ServerlessInferenceCreate domain models
 /// Request body for image generation.
 public struct CreateImageRequest: Codable {
     /// A text description of the desired image(s). Supports up to 32,000 characters and provides automatic prompt
@@ -62,121 +62,62 @@ public struct CreateImageRequest: Codable {
         case user
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateImageRequest {
-    init(from decoder: Decoder) throws {
+extension CreateImageRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.prompt) else {
-            throw SdkValidationError(
-                field: "prompt",
-                code: "required",
-                message: "Validation failed for 'prompt': value is required"
-            )
+            throw SdkValidationError(field: "prompt", code: "required", message: "Validation failed for 'prompt': value is required")
         }
         guard container.contains(.model) else {
-            throw SdkValidationError(
-                field: "model",
-                code: "required",
-                message: "Validation failed for 'model': value is required"
-            )
+            throw SdkValidationError(field: "model", code: "required", message: "Validation failed for 'model': value is required")
         }
         guard container.contains(.n) else {
-            throw SdkValidationError(
-                field: "n",
-                code: "required",
-                message: "Validation failed for 'n': value is required"
-            )
+            throw SdkValidationError(field: "n", code: "required", message: "Validation failed for 'n': value is required")
         }
-        prompt = try container.sdkDecodeRequired(.prompt)
-        model = try container.sdkDecodeRequired(.model)
-        n = try container.sdkDecodeRequired(.n)
-        moderation = try container.sdkDecodeIfPresent(.moderation)
-        background = try container.sdkDecodeIfPresent(.background)
-        outputFormat = try container.sdkDecodeIfPresent(.outputFormat)
-        outputCompression = try container.sdkDecodeIfPresent(.outputCompression)
-        quality = try container.sdkDecodeIfPresent(.quality)
-        size = try container.sdkDecodeIfPresent(.size)
-        stream = try container.sdkDecodeIfPresent(.stream)
-        partialImages = try container.sdkDecodeIfPresent(.partialImages)
-        user = try container.sdkDecodeIfPresent(.user)
-        try validateLength("prompt", prompt, min: 1, max: nil)
-        try validateRange("n", Double(n), min: 1, max: 10, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
-        if let value = outputCompression {
-            try validateRange(
-                "output_compression",
-                Double(value),
-                min: 0,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.prompt = try container.sdkDecodeRequired(.prompt)
+        self.model = try container.sdkDecodeRequired(.model)
+        self.n = try container.sdkDecodeRequired(.n)
+        self.moderation = try container.sdkDecodeIfPresent(.moderation)
+        self.background = try container.sdkDecodeIfPresent(.background)
+        self.outputFormat = try container.sdkDecodeIfPresent(.outputFormat)
+        self.outputCompression = try container.sdkDecodeIfPresent(.outputCompression)
+        self.quality = try container.sdkDecodeIfPresent(.quality)
+        self.size = try container.sdkDecodeIfPresent(.size)
+        self.stream = try container.sdkDecodeIfPresent(.stream)
+        self.partialImages = try container.sdkDecodeIfPresent(.partialImages)
+        self.user = try container.sdkDecodeIfPresent(.user)
+            try validateLength("prompt", self.prompt, min: 1, max: nil)
+            try validateRange("n", Double(self.n), min: 1, max: 10, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = self.outputCompression {
+            try validateRange("output_compression", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = partialImages {
-            try validateRange(
-                "partial_images",
-                Double(value),
-                min: 0,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.partialImages {
+            try validateRange("partial_images", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = user {
+        if let value = self.user {
             try validateLength("user", value, min: nil, max: 256)
         }
     }
 }
 
-public extension CreateImageRequest {
-    init(
-        prompt: String,
-        model: String,
-        n: Int,
-        moderation: String? = nil,
-        background: String? = nil,
-        outputFormat: String? = nil,
-        outputCompression: Int? = nil,
-        quality: String? = nil,
-        size: CreateImageRequestSize? = nil,
-        stream: Bool? = nil,
-        partialImages: Int? = nil,
-        user: String? = nil
-    ) throws {
+extension CreateImageRequest {
+    public init(prompt: String, model: String, n: Int, moderation: String? = nil, background: String? = nil, outputFormat: String? = nil, outputCompression: Int? = nil, quality: String? = nil, size: CreateImageRequestSize? = nil, stream: Bool? = nil, partialImages: Int? = nil, user: String? = nil) throws {
         (self.prompt, self.model) = (prompt, model)
         (self.n, self.moderation) = (n, moderation)
         (self.background, self.outputFormat) = (background, outputFormat)
         (self.outputCompression, self.quality) = (outputCompression, quality)
         (self.size, self.stream) = (size, stream)
         (self.partialImages, self.user) = (partialImages, user)
-        try validateLength("prompt", self.prompt, min: 1, max: nil)
-        try validateRange("n", Double(self.n), min: 1, max: 10, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateLength("prompt", self.prompt, min: 1, max: nil)
+            try validateRange("n", Double(self.n), min: 1, max: 10, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         if let value = self.outputCompression {
-            try validateRange(
-                "output_compression",
-                Double(value),
-                min: 0,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("output_compression", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.partialImages {
-            try validateRange(
-                "partial_images",
-                Double(value),
-                min: 0,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("partial_images", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.user {
             try validateLength("user", value, min: nil, max: 256)
@@ -189,17 +130,14 @@ public extension CreateImageRequest {
 public struct CreateImageRequestSize: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let auto = CreateImageRequestSize(rawValue: "auto")
     public static let value1536x1024 = CreateImageRequestSize(rawValue: "1536x1024")
     public static let value1024x1536 = CreateImageRequestSize(rawValue: "1024x1536")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -9,28 +9,18 @@ import Foundation
 public struct GenaiListModelCatalogParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let modelCatalogUseCaseUnspecified =
-        GenaiListModelCatalogParameter(rawValue: "MODEL_CATALOG_USE_CASE_UNSPECIFIED")
-    public static let modelCatalogUseCaseCoding =
-        GenaiListModelCatalogParameter(rawValue: "MODEL_CATALOG_USE_CASE_CODING")
-    public static let modelCatalogUseCaseAgents =
-        GenaiListModelCatalogParameter(rawValue: "MODEL_CATALOG_USE_CASE_AGENTS")
-    public static let modelCatalogUseCaseAudio =
-        GenaiListModelCatalogParameter(rawValue: "MODEL_CATALOG_USE_CASE_AUDIO")
-    public static let modelCatalogUseCaseImage =
-        GenaiListModelCatalogParameter(rawValue: "MODEL_CATALOG_USE_CASE_IMAGE")
-    public static let modelCatalogUseCaseVideo =
-        GenaiListModelCatalogParameter(rawValue: "MODEL_CATALOG_USE_CASE_VIDEO")
-    public static let modelCatalogUseCaseEmbedding =
-        GenaiListModelCatalogParameter(rawValue: "MODEL_CATALOG_USE_CASE_EMBEDDING")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let modelCatalogUseCaseUnspecified = GenaiListModelCatalogParameter(rawValue: "MODEL_CATALOG_USE_CASE_UNSPECIFIED")
+    public static let modelCatalogUseCaseCoding = GenaiListModelCatalogParameter(rawValue: "MODEL_CATALOG_USE_CASE_CODING")
+    public static let modelCatalogUseCaseAgents = GenaiListModelCatalogParameter(rawValue: "MODEL_CATALOG_USE_CASE_AGENTS")
+    public static let modelCatalogUseCaseAudio = GenaiListModelCatalogParameter(rawValue: "MODEL_CATALOG_USE_CASE_AUDIO")
+    public static let modelCatalogUseCaseImage = GenaiListModelCatalogParameter(rawValue: "MODEL_CATALOG_USE_CASE_IMAGE")
+    public static let modelCatalogUseCaseVideo = GenaiListModelCatalogParameter(rawValue: "MODEL_CATALOG_USE_CASE_VIDEO")
+    public static let modelCatalogUseCaseEmbedding = GenaiListModelCatalogParameter(rawValue: "MODEL_CATALOG_USE_CASE_EMBEDDING")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -42,10 +32,7 @@ public struct GenaiListModelCatalogParameter: RawRepresentable, Hashable, Codabl
 public struct NfsListAccessPointsParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let accessPointCreating = NfsListAccessPointsParameter(rawValue: "ACCESS_POINT_CREATING")
     public static let accessPointActive = NfsListAccessPointsParameter(rawValue: "ACCESS_POINT_ACTIVE")
     public static let accessPointFailed = NfsListAccessPointsParameter(rawValue: "ACCESS_POINT_FAILED")
@@ -53,7 +40,7 @@ public struct NfsListAccessPointsParameter: RawRepresentable, Hashable, Codable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -65,17 +52,14 @@ public struct NfsListAccessPointsParameter: RawRepresentable, Hashable, Codable,
 public struct DedicatedInferencesListParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let nyc2 = DedicatedInferencesListParameter(rawValue: "nyc2")
     public static let tor1 = DedicatedInferencesListParameter(rawValue: "tor1")
     public static let atl1 = DedicatedInferencesListParameter(rawValue: "atl1")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -84,22 +68,17 @@ public struct DedicatedInferencesListParameter: RawRepresentable, Hashable, Coda
     }
 }
 
-public struct GenaiListScenarioLibraryParameterXf3bee490: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct GenaiListScenarioLibraryParameterXf3bee490: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let sortDirectionUnspecified =
-        GenaiListScenarioLibraryParameterXf3bee490(rawValue: "SORT_DIRECTION_UNSPECIFIED")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let sortDirectionUnspecified = GenaiListScenarioLibraryParameterXf3bee490(rawValue: "SORT_DIRECTION_UNSPECIFIED")
     public static let sortDirectionAsc = GenaiListScenarioLibraryParameterXf3bee490(rawValue: "SORT_DIRECTION_ASC")
     public static let sortDirectionDesc = GenaiListScenarioLibraryParameterXf3bee490(rawValue: "SORT_DIRECTION_DESC")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -109,30 +88,21 @@ public struct GenaiListScenarioLibraryParameterXf3bee490: RawRepresentable, Hash
 }
 
 /// The compatibility level of the schema registry.
-public struct DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLevel: RawRepresentable, Hashable, Codable,
-    Sendable, SdkWireConvertible {
+public struct DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLevel: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let none = DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLevel(rawValue: "NONE")
-    public static let backward =
-        DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLevel(rawValue: "BACKWARD")
-    public static let backwardTransitive =
-        DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLevel(rawValue: "BACKWARD_TRANSITIVE")
-    public static let forward =
-        DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLevel(rawValue: "FORWARD")
-    public static let forwardTransitive =
-        DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLevel(rawValue: "FORWARD_TRANSITIVE")
+    public static let backward = DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLevel(rawValue: "BACKWARD")
+    public static let backwardTransitive = DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLevel(rawValue: "BACKWARD_TRANSITIVE")
+    public static let forward = DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLevel(rawValue: "FORWARD")
+    public static let forwardTransitive = DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLevel(rawValue: "FORWARD_TRANSITIVE")
     public static let full = DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLevel(rawValue: "FULL")
-    public static let fullTransitive =
-        DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLevel(rawValue: "FULL_TRANSITIVE")
+    public static let fullTransitive = DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLevel(rawValue: "FULL_TRANSITIVE")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -144,10 +114,7 @@ public struct DatabasesUpdateKafkaSchemaSubjectConfigRequestBodyCompatibilityLev
 public struct DomainsListRecordsParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let a = DomainsListRecordsParameter(rawValue: "A")
     public static let aaaa = DomainsListRecordsParameter(rawValue: "AAAA")
     public static let caa = DomainsListRecordsParameter(rawValue: "CAA")
@@ -160,7 +127,7 @@ public struct DomainsListRecordsParameter: RawRepresentable, Hashable, Codable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -172,19 +139,15 @@ public struct DomainsListRecordsParameter: RawRepresentable, Hashable, Codable, 
 public struct ToolsListHealthParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let healthWindowOneHour = ToolsListHealthParameter(rawValue: "HEALTH_WINDOW_ONE_HOUR")
-    public static let healthWindowTwentyFourHours =
-        ToolsListHealthParameter(rawValue: "HEALTH_WINDOW_TWENTY_FOUR_HOURS")
+    public static let healthWindowTwentyFourHours = ToolsListHealthParameter(rawValue: "HEALTH_WINDOW_TWENTY_FOUR_HOURS")
     public static let healthWindowSevenDays = ToolsListHealthParameter(rawValue: "HEALTH_WINDOW_SEVEN_DAYS")
     public static let healthWindowThirtyDays = ToolsListHealthParameter(rawValue: "HEALTH_WINDOW_THIRTY_DAYS")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -193,36 +156,23 @@ public struct ToolsListHealthParameter: RawRepresentable, Hashable, Codable, Sen
     }
 }
 
-public struct GenaiListModelEvaluationRunsParameterItem: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct GenaiListModelEvaluationRunsParameterItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let modelEvaluationRunStatusUnspecified =
-        GenaiListModelEvaluationRunsParameterItem(rawValue: "MODEL_EVALUATION_RUN_STATUS_UNSPECIFIED")
-    public static let modelEvaluationRunQueued =
-        GenaiListModelEvaluationRunsParameterItem(rawValue: "MODEL_EVALUATION_RUN_QUEUED")
-    public static let modelEvaluationRunRunningDataset =
-        GenaiListModelEvaluationRunsParameterItem(rawValue: "MODEL_EVALUATION_RUN_RUNNING_DATASET")
-    public static let modelEvaluationRunEvaluatingResults =
-        GenaiListModelEvaluationRunsParameterItem(rawValue: "MODEL_EVALUATION_RUN_EVALUATING_RESULTS")
-    public static let modelEvaluationRunCancelling =
-        GenaiListModelEvaluationRunsParameterItem(rawValue: "MODEL_EVALUATION_RUN_CANCELLING")
-    public static let modelEvaluationRunCancelled =
-        GenaiListModelEvaluationRunsParameterItem(rawValue: "MODEL_EVALUATION_RUN_CANCELLED")
-    public static let modelEvaluationRunSuccessful =
-        GenaiListModelEvaluationRunsParameterItem(rawValue: "MODEL_EVALUATION_RUN_SUCCESSFUL")
-    public static let modelEvaluationRunPartiallySuccessful =
-        GenaiListModelEvaluationRunsParameterItem(rawValue: "MODEL_EVALUATION_RUN_PARTIALLY_SUCCESSFUL")
-    public static let modelEvaluationRunFailed =
-        GenaiListModelEvaluationRunsParameterItem(rawValue: "MODEL_EVALUATION_RUN_FAILED")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let modelEvaluationRunStatusUnspecified = GenaiListModelEvaluationRunsParameterItem(rawValue: "MODEL_EVALUATION_RUN_STATUS_UNSPECIFIED")
+    public static let modelEvaluationRunQueued = GenaiListModelEvaluationRunsParameterItem(rawValue: "MODEL_EVALUATION_RUN_QUEUED")
+    public static let modelEvaluationRunRunningDataset = GenaiListModelEvaluationRunsParameterItem(rawValue: "MODEL_EVALUATION_RUN_RUNNING_DATASET")
+    public static let modelEvaluationRunEvaluatingResults = GenaiListModelEvaluationRunsParameterItem(rawValue: "MODEL_EVALUATION_RUN_EVALUATING_RESULTS")
+    public static let modelEvaluationRunCancelling = GenaiListModelEvaluationRunsParameterItem(rawValue: "MODEL_EVALUATION_RUN_CANCELLING")
+    public static let modelEvaluationRunCancelled = GenaiListModelEvaluationRunsParameterItem(rawValue: "MODEL_EVALUATION_RUN_CANCELLED")
+    public static let modelEvaluationRunSuccessful = GenaiListModelEvaluationRunsParameterItem(rawValue: "MODEL_EVALUATION_RUN_SUCCESSFUL")
+    public static let modelEvaluationRunPartiallySuccessful = GenaiListModelEvaluationRunsParameterItem(rawValue: "MODEL_EVALUATION_RUN_PARTIALLY_SUCCESSFUL")
+    public static let modelEvaluationRunFailed = GenaiListModelEvaluationRunsParameterItem(rawValue: "MODEL_EVALUATION_RUN_FAILED")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -234,18 +184,13 @@ public struct GenaiListModelEvaluationRunsParameterItem: RawRepresentable, Hasha
 public struct GenaiListEvaluationDatasetsParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let evaluationDatasetTypeUnknown =
-        GenaiListEvaluationDatasetsParameter(rawValue: "EVALUATION_DATASET_TYPE_UNKNOWN")
-    public static let evaluationDatasetTypeModel =
-        GenaiListEvaluationDatasetsParameter(rawValue: "EVALUATION_DATASET_TYPE_MODEL")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let evaluationDatasetTypeUnknown = GenaiListEvaluationDatasetsParameter(rawValue: "EVALUATION_DATASET_TYPE_UNKNOWN")
+    public static let evaluationDatasetTypeModel = GenaiListEvaluationDatasetsParameter(rawValue: "EVALUATION_DATASET_TYPE_MODEL")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -257,16 +202,13 @@ public struct GenaiListEvaluationDatasetsParameter: RawRepresentable, Hashable, 
 public struct ConnectionsListParameterXb8008b58: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let asc = ConnectionsListParameterXb8008b58(rawValue: "asc")
     public static let desc = ConnectionsListParameterXb8008b58(rawValue: "desc")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

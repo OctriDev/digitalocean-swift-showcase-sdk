@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Signals domain models
+// Signals domain models
 /// Required object value serialized in the `filters` wire field.
 public struct ExportOptionsFilters: Codable {
     /// The list of valid signal type values that can be used when creating an export.
@@ -17,27 +17,21 @@ public struct ExportOptionsFilters: Codable {
         case signalType = "signal_type"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ExportOptionsFilters {
-    init(from decoder: Decoder) throws {
+extension ExportOptionsFilters {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.signalType) else {
-            throw SdkValidationError(
-                field: "signal_type",
-                code: "required",
-                message: "Validation failed for 'signal_type': value is required"
-            )
+            throw SdkValidationError(field: "signal_type", code: "required", message: "Validation failed for 'signal_type': value is required")
         }
-        signalType = try container.sdkDecodeRequired(.signalType)
+        self.signalType = try container.sdkDecodeRequired(.signalType)
     }
 }
 
-public extension ExportOptionsFilters {
-    init(signalType: [String]) {
+extension ExportOptionsFilters {
+    public init(signalType: [String]) {
         self.signalType = signalType
     }
 }
@@ -51,27 +45,21 @@ public struct ExportOptions: Codable {
         case filters
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ExportOptions {
-    init(from decoder: Decoder) throws {
+extension ExportOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.filters) else {
-            throw SdkValidationError(
-                field: "filters",
-                code: "required",
-                message: "Validation failed for 'filters': value is required"
-            )
+            throw SdkValidationError(field: "filters", code: "required", message: "Validation failed for 'filters': value is required")
         }
-        filters = try container.sdkDecodeRequired(.filters)
+        self.filters = try container.sdkDecodeRequired(.filters)
     }
 }
 
-public extension ExportOptions {
-    init(filters: ExportOptionsFilters) {
+extension ExportOptions {
+    public init(filters: ExportOptionsFilters) {
         self.filters = filters
     }
 }

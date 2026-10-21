@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// BatchInference domain models
+// BatchInference domain models
 /// Presigned download URLs for a batch job. URLs are short-lived — download the artifacts soon after fetching them.
 public struct BatchResultsResponse: Codable {
     /// Required `uuid`-formatted value serialized in the `batch_id` wire field.
@@ -31,58 +31,42 @@ public struct BatchResultsResponse: Codable {
         case expiresAt = "expires_at"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension BatchResultsResponse {
-    init(from decoder: Decoder) throws {
+extension BatchResultsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.batchId) else {
-            throw SdkValidationError(
-                field: "batch_id",
-                code: "required",
-                message: "Validation failed for 'batch_id': value is required"
-            )
+            throw SdkValidationError(field: "batch_id", code: "required", message: "Validation failed for 'batch_id': value is required")
         }
         guard container.contains(.resultAvailable) else {
-            throw SdkValidationError(
-                field: "result_available",
-                code: "required",
-                message: "Validation failed for 'result_available': value is required"
-            )
+            throw SdkValidationError(field: "result_available", code: "required", message: "Validation failed for 'result_available': value is required")
         }
-        batchId = try container.sdkDecodeRequired(.batchId)
-        resultAvailable = try container.sdkDecodeRequired(.resultAvailable)
-        outputFileUrl = try container.sdkDecodeIfPresent(.outputFileUrl)
-        errorFileUrl = try container.sdkDecodeIfPresent(.errorFileUrl)
-        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
-        try sdkValidateUuid("batch_id", batchId)
-        if let value = outputFileUrl {
+        self.batchId = try container.sdkDecodeRequired(.batchId)
+        self.resultAvailable = try container.sdkDecodeRequired(.resultAvailable)
+        self.outputFileUrl = try container.sdkDecodeIfPresent(.outputFileUrl)
+        self.errorFileUrl = try container.sdkDecodeIfPresent(.errorFileUrl)
+        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+            try sdkValidateUuid("batch_id", self.batchId)
+        if let value = self.outputFileUrl {
             try sdkValidateUri("output_file_url", value)
         }
-        if let value = errorFileUrl {
+        if let value = self.errorFileUrl {
             try sdkValidateUri("error_file_url", value)
         }
-        if let value = expiresAt {
+        if let value = self.expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
     }
 }
 
-public extension BatchResultsResponse {
-    init(
-        batchId: String,
-        resultAvailable: Bool,
-        outputFileUrl: String? = nil,
-        errorFileUrl: String? = nil,
-        expiresAt: Date? = nil
-    ) throws {
+extension BatchResultsResponse {
+    public init(batchId: String, resultAvailable: Bool, outputFileUrl: String? = nil, errorFileUrl: String? = nil, expiresAt: Date? = nil) throws {
         (self.batchId, self.resultAvailable) = (batchId, resultAvailable)
         (self.outputFileUrl, self.errorFileUrl) = (outputFileUrl, errorFileUrl)
         self.expiresAt = expiresAt
-        try sdkValidateUuid("batch_id", self.batchId)
+            try sdkValidateUuid("batch_id", self.batchId)
         if let value = self.outputFileUrl {
             try sdkValidateUri("output_file_url", value)
         }

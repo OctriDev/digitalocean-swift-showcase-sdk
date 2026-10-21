@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// PartnerNetworkConnect domain models
+// PartnerNetworkConnect domain models
 /// Typed representation of the `AllPartnerAttachments` API schema.
 public struct AllPartnerAttachments: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,29 +18,23 @@ public struct AllPartnerAttachments: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllPartnerAttachments {
-    init(from decoder: Decoder) throws {
+extension AllPartnerAttachments {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        partnerAttachments = try container.sdkDecodeIfPresent(.partnerAttachments)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.partnerAttachments = try container.sdkDecodeIfPresent(.partnerAttachments)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllPartnerAttachments {
-    init(meta: MetaMeta, partnerAttachments: [PartnerAttachment]? = nil, links: PageLinks? = nil) {
+extension AllPartnerAttachments {
+    public init(meta: MetaMeta, partnerAttachments: [PartnerAttachment]? = nil, links: PageLinks? = nil) {
         (self.meta, self.partnerAttachments) = (meta, partnerAttachments)
         self.links = links
     }
@@ -54,19 +48,19 @@ public struct AllPartnerAttachmentsVariant0: Codable {
     }
 
     init() {
-        partnerAttachments = nil
+        self.partnerAttachments = nil
     }
 }
 
-public extension AllPartnerAttachmentsVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllPartnerAttachmentsVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        partnerAttachments = try container.sdkDecodeIfPresent(.partnerAttachments)
+        self.partnerAttachments = try container.sdkDecodeIfPresent(.partnerAttachments)
     }
 }
 
-public extension AllPartnerAttachmentsVariant0 {
-    init(partnerAttachments: [PartnerAttachment]? = nil) {
+extension AllPartnerAttachmentsVariant0 {
+    public init(partnerAttachments: [PartnerAttachment]? = nil) {
         self.init()
         self.partnerAttachments = partnerAttachments
     }

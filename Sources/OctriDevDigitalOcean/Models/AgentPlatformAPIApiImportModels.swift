@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiImport domain models
+// AgentPlatformAPIApiImport domain models
 /// Response containing imported model details (public)
 public struct ApiImportCustomModelOutputPublic: Codable {
     /// Optional `string` value serialized in the `error` wire field.
@@ -24,27 +24,22 @@ public struct ApiImportCustomModelOutputPublic: Codable {
     }
 
     init() {
-        (error, importJob, model, validationSteps) = (nil, nil, nil, nil)
+        (self.error, self.importJob, self.model, self.validationSteps) = (nil, nil, nil, nil)
     }
 }
 
-public extension ApiImportCustomModelOutputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiImportCustomModelOutputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        error = try container.sdkDecodeIfPresent(.error)
-        importJob = try container.sdkDecodeIfPresent(.importJob)
-        model = try container.sdkDecodeIfPresent(.model)
-        validationSteps = try container.sdkDecodeIfPresent(.validationSteps)
+        self.error = try container.sdkDecodeIfPresent(.error)
+        self.importJob = try container.sdkDecodeIfPresent(.importJob)
+        self.model = try container.sdkDecodeIfPresent(.model)
+        self.validationSteps = try container.sdkDecodeIfPresent(.validationSteps)
     }
 }
 
-public extension ApiImportCustomModelOutputPublic {
-    init(
-        error: String? = nil,
-        importJob: ApiCustomModelImportJob? = nil,
-        model: ApiCustomModel? = nil,
-        validationSteps: [ApiImportValidationStep]? = nil
-    ) {
+extension ApiImportCustomModelOutputPublic {
+    public init(error: String? = nil, importJob: ApiCustomModelImportJob? = nil, model: ApiCustomModel? = nil, validationSteps: [ApiImportValidationStep]? = nil) {
         self.init()
         (self.error, self.importJob) = (error, importJob)
         (self.model, self.validationSteps) = (model, validationSteps)
@@ -70,21 +65,21 @@ public struct ApiImportValidationStep: Codable {
     }
 
     init() {
-        (error, name, passed) = (nil, nil, nil)
+        (self.error, self.name, self.passed) = (nil, nil, nil)
     }
 }
 
-public extension ApiImportValidationStep {
-    init(from decoder: Decoder) throws {
+extension ApiImportValidationStep {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        error = try container.sdkDecodeIfPresent(.error)
-        name = try container.sdkDecodeIfPresent(.name)
-        passed = try container.sdkDecodeIfPresent(.passed)
+        self.error = try container.sdkDecodeIfPresent(.error)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.passed = try container.sdkDecodeIfPresent(.passed)
     }
 }
 
-public extension ApiImportValidationStep {
-    init(error: String? = nil, name: String? = nil, passed: Bool? = nil) {
+extension ApiImportValidationStep {
+    public init(error: String? = nil, name: String? = nil, passed: Bool? = nil) {
         self.init()
         (self.error, self.name) = (error, name)
         self.passed = passed
@@ -128,42 +123,27 @@ public struct ApiImportCustomModelInputPublic: Codable {
     }
 
     init() {
-        (acceptHfTokenStorage, acceptTermsAndConditions, description, name, preferredGpuRegion) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        (sourceRef, sourceType, tags) = (nil, nil, nil)
+        (self.acceptHfTokenStorage, self.acceptTermsAndConditions, self.description, self.name, self.preferredGpuRegion) = (nil, nil, nil, nil, nil)
+        (self.sourceRef, self.sourceType, self.tags) = (nil, nil, nil)
     }
 }
 
-public extension ApiImportCustomModelInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiImportCustomModelInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        acceptHfTokenStorage = try container.sdkDecodeIfPresent(.acceptHfTokenStorage)
-        acceptTermsAndConditions = try container.sdkDecodeIfPresent(.acceptTermsAndConditions)
-        description = try container.sdkDecodeIfPresent(.description)
-        name = try container.sdkDecodeIfPresent(.name)
-        preferredGpuRegion = try container.sdkDecodeIfPresent(.preferredGpuRegion)
-        sourceRef = try container.sdkDecodeIfPresent(.sourceRef)
-        sourceType = try container.sdkDecodeIfPresent(.sourceType)
-        tags = try container.sdkDecodeIfPresent(.tags)
+        self.acceptHfTokenStorage = try container.sdkDecodeIfPresent(.acceptHfTokenStorage)
+        self.acceptTermsAndConditions = try container.sdkDecodeIfPresent(.acceptTermsAndConditions)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.preferredGpuRegion = try container.sdkDecodeIfPresent(.preferredGpuRegion)
+        self.sourceRef = try container.sdkDecodeIfPresent(.sourceRef)
+        self.sourceType = try container.sdkDecodeIfPresent(.sourceType)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-public extension ApiImportCustomModelInputPublic {
-    init(
-        acceptHfTokenStorage: Bool? = nil,
-        acceptTermsAndConditions: Bool? = nil,
-        description: String? = nil,
-        name: String? = nil,
-        preferredGpuRegion: String? = nil,
-        sourceRef: CustomModelSourceRef? = nil,
-        sourceType: CustomModelSourceType? = nil,
-        tags: CustomModelTags? = nil
-    ) {
+extension ApiImportCustomModelInputPublic {
+    public init(acceptHfTokenStorage: Bool? = nil, acceptTermsAndConditions: Bool? = nil, description: String? = nil, name: String? = nil, preferredGpuRegion: String? = nil, sourceRef: CustomModelSourceRef? = nil, sourceType: CustomModelSourceType? = nil, tags: CustomModelTags? = nil) {
         self.init()
         self.acceptHfTokenStorage = acceptHfTokenStorage
         (self.acceptTermsAndConditions, self.description) = (acceptTermsAndConditions, description)

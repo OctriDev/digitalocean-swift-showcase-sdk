@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiGet domain models
+// AgentPlatformAPIApiGet domain models
 /// Child list for an agent
 public struct ApiGetChildrenOutput: Codable {
     /// Child agents
@@ -14,19 +14,19 @@ public struct ApiGetChildrenOutput: Codable {
     }
 
     init() {
-        children = nil
+        self.children = nil
     }
 }
 
-public extension ApiGetChildrenOutput {
-    init(from decoder: Decoder) throws {
+extension ApiGetChildrenOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        children = try container.sdkDecodeIfPresent(.children)
+        self.children = try container.sdkDecodeIfPresent(.children)
     }
 }
 
-public extension ApiGetChildrenOutput {
-    init(children: [ApiAgent]? = nil) {
+extension ApiGetChildrenOutput {
+    public init(children: [ApiAgent]? = nil) {
         self.init()
         self.children = children
     }

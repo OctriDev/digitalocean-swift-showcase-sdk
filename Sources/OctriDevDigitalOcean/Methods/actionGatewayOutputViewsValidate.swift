@@ -6,10 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ActionGatewayMethods {
-    /// Validates a projection exactly as create does and returns the view it would produce, including `output_schema`,
-    /// without storing anything. name and description are optional here; name uniqueness and the per-tool-version limit
-    /// are not checked.
+extension ActionGatewayMethods {
+    /// Validates a projection exactly as create does and returns the view it would produce, including `output_schema`, without storing anything. name and description are optional here; name uniqueness and the per-tool-version limit are not checked.
     ///
     /// - Parameters:
     /// - fields: Output paths to keep; as on create.
@@ -17,93 +15,25 @@ public extension ActionGatewayMethods {
     /// - toolId: Opaque ID of the tool version; as on create.
     /// - name: Optional view name, validated as on create when present.
     /// - description: Optional description, validated as on create when present.
-    static func outputViewsValidate(
-        config: ClientConfig,
-        fields: [String],
-        tool: String? = nil,
-        toolId: String? = nil,
-        name: String? = nil,
-        description: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> OutputViewResponse {
-        let requestBody = OutputViewsValidateRequestBody(
-            fields: fields,
-            tool: tool,
-            toolId: toolId,
-            name: name,
-            description: description
-        )
+    public static func outputViewsValidate(config: ClientConfig, fields: [String], tool: String? = nil, toolId: String? = nil, name: String? = nil, description: String? = nil, requestOptions: RequestOptions? = nil) async throws -> OutputViewResponse {
+        let requestBody = OutputViewsValidateRequestBody(fields: fields, tool: tool, toolId: toolId, name: name, description: description)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/action-gateway/output-views/preview",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "outputViews_validate",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v2/action-gateway/output-views/preview", config: config, body: requestBody, decoder: .json, operationId: "outputViews_validate", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Returns one of your team's views, or a published view on a tool version your catalog exposes. Returns 404 when
-    /// the view does not exist, was deleted, or belongs to another team.
+    /// Returns one of your team's views, or a published view on a tool version your catalog exposes. Returns 404 when the view does not exist, was deleted, or belongs to another team.
     ///
     /// - Parameters:
     /// - viewId: Output view ID.
-    static func outputViewsGet(
-        config: ClientConfig,
-        viewId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> OutputViewResponse {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/action-gateway/output-views/", sdkEncodePathSegment(sdkWireString(viewId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "outputViews_get",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func outputViewsGet(config: ClientConfig, viewId: String, requestOptions: RequestOptions? = nil) async throws -> OutputViewResponse {
+        return try (await sdkRequest("GET", ["/v2/action-gateway/output-views/", sdkEncodePathSegment(sdkWireString(viewId))].joined(), config: config, decoder: .json, operationId: "outputViews_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Deletes one of your team's views and returns it with audit.deleted_at set; it can no longer be used. Published
-    /// views cannot be deleted. Returns 404 when the view does not exist, is already deleted, or is not your team's.
+    /// Deletes one of your team's views and returns it with audit.deleted_at set; it can no longer be used. Published views cannot be deleted. Returns 404 when the view does not exist, is already deleted, or is not your team's.
     ///
     /// - Parameters:
     /// - viewId: Output view ID.
-    static func outputViewsDelete(
-        config: ClientConfig,
-        viewId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> OutputViewResponse {
-        try await (sdkRequest(
-            "DELETE",
-            ["/v2/action-gateway/output-views/", sdkEncodePathSegment(sdkWireString(viewId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "outputViews_delete",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func outputViewsDelete(config: ClientConfig, viewId: String, requestOptions: RequestOptions? = nil) async throws -> OutputViewResponse {
+        return try (await sdkRequest("DELETE", ["/v2/action-gateway/output-views/", sdkEncodePathSegment(sdkWireString(viewId))].joined(), config: config, decoder: .json, operationId: "outputViews_delete", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

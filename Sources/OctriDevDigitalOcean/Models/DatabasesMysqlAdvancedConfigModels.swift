@@ -3,446 +3,182 @@
 
 import Foundation
 
-/// DatabasesMysql domain models
+// DatabasesMysql domain models
 extension MysqlAdvancedConfig {
     mutating func sdkDecodeFieldsPart3(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        interactiveTimeout = try container.sdkDecodeIfPresent(.interactiveTimeout)
-        internalTmpMemStorageEngine = try container.sdkDecodeIfPresent(.internalTmpMemStorageEngine)
-        netReadTimeout = try container.sdkDecodeIfPresent(.netReadTimeout)
-        netWriteTimeout = try container.sdkDecodeIfPresent(.netWriteTimeout)
-        sqlRequirePrimaryKey = try container.sdkDecodeIfPresent(.sqlRequirePrimaryKey)
-        waitTimeout = try container.sdkDecodeIfPresent(.waitTimeout)
-        windowingUseHighPrecision = try container.sdkDecodeIfPresent(.windowingUseHighPrecision)
-        maxAllowedPacket = try container.sdkDecodeIfPresent(.maxAllowedPacket)
-        maxExecutionTime = try container.sdkDecodeIfPresent(.maxExecutionTime)
-        maxHeapTableSize = try container.sdkDecodeIfPresent(.maxHeapTableSize)
-        maxSeeksForKey = try container.sdkDecodeIfPresent(.maxSeeksForKey)
-        optimizerPruneLevel = try container.sdkDecodeIfPresent(.optimizerPruneLevel)
+        self.interactiveTimeout = try container.sdkDecodeIfPresent(.interactiveTimeout)
+        self.internalTmpMemStorageEngine = try container.sdkDecodeIfPresent(.internalTmpMemStorageEngine)
+        self.netReadTimeout = try container.sdkDecodeIfPresent(.netReadTimeout)
+        self.netWriteTimeout = try container.sdkDecodeIfPresent(.netWriteTimeout)
+        self.sqlRequirePrimaryKey = try container.sdkDecodeIfPresent(.sqlRequirePrimaryKey)
+        self.waitTimeout = try container.sdkDecodeIfPresent(.waitTimeout)
+        self.windowingUseHighPrecision = try container.sdkDecodeIfPresent(.windowingUseHighPrecision)
+        self.maxAllowedPacket = try container.sdkDecodeIfPresent(.maxAllowedPacket)
+        self.maxExecutionTime = try container.sdkDecodeIfPresent(.maxExecutionTime)
+        self.maxHeapTableSize = try container.sdkDecodeIfPresent(.maxHeapTableSize)
+        self.maxSeeksForKey = try container.sdkDecodeIfPresent(.maxSeeksForKey)
+        self.optimizerPruneLevel = try container.sdkDecodeIfPresent(.optimizerPruneLevel)
     }
 }
 
 extension MysqlAdvancedConfig {
     mutating func sdkDecodeFieldsPart4(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        optimizerSearchDepth = try container.sdkDecodeIfPresent(.optimizerSearchDepth)
-        optimizerSwitch = try container.sdkDecodeIfPresent(.optimizerSwitch)
-        sortBufferSize = try container.sdkDecodeIfPresent(.sortBufferSize)
-        tmpTableSize = try container.sdkDecodeIfPresent(.tmpTableSize)
-        slowQueryLog = try container.sdkDecodeIfPresent(.slowQueryLog)
-        longQueryTime = try container.sdkDecodeIfPresent(.longQueryTime)
-        binlogRetentionPeriod = try container.sdkDecodeIfPresent(.binlogRetentionPeriod)
-        innodbChangeBufferMaxSize = try container.sdkDecodeIfPresent(.innodbChangeBufferMaxSize)
-        innodbFlushNeighbors = try container.sdkDecodeIfPresent(.innodbFlushNeighbors)
-        innodbReadIoThreads = try container.sdkDecodeIfPresent(.innodbReadIoThreads)
-        innodbWriteIoThreads = try container.sdkDecodeIfPresent(.innodbWriteIoThreads)
-        innodbThreadConcurrency = try container.sdkDecodeIfPresent(.innodbThreadConcurrency)
+        self.optimizerSearchDepth = try container.sdkDecodeIfPresent(.optimizerSearchDepth)
+        self.optimizerSwitch = try container.sdkDecodeIfPresent(.optimizerSwitch)
+        self.sortBufferSize = try container.sdkDecodeIfPresent(.sortBufferSize)
+        self.tmpTableSize = try container.sdkDecodeIfPresent(.tmpTableSize)
+        self.slowQueryLog = try container.sdkDecodeIfPresent(.slowQueryLog)
+        self.longQueryTime = try container.sdkDecodeIfPresent(.longQueryTime)
+        self.binlogRetentionPeriod = try container.sdkDecodeIfPresent(.binlogRetentionPeriod)
+        self.innodbChangeBufferMaxSize = try container.sdkDecodeIfPresent(.innodbChangeBufferMaxSize)
+        self.innodbFlushNeighbors = try container.sdkDecodeIfPresent(.innodbFlushNeighbors)
+        self.innodbReadIoThreads = try container.sdkDecodeIfPresent(.innodbReadIoThreads)
+        self.innodbWriteIoThreads = try container.sdkDecodeIfPresent(.innodbWriteIoThreads)
+        self.innodbThreadConcurrency = try container.sdkDecodeIfPresent(.innodbThreadConcurrency)
     }
 }
 
 extension MysqlAdvancedConfig {
     mutating func sdkDecodeFieldsPart5(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        netBufferLength = try container.sdkDecodeIfPresent(.netBufferLength)
-        logOutput = try container.sdkDecodeIfPresent(.logOutput)
-        mysqlIncrementalBackup = try container.sdkDecodeIfPresent(.mysqlIncrementalBackup)
+        self.netBufferLength = try container.sdkDecodeIfPresent(.netBufferLength)
+        self.logOutput = try container.sdkDecodeIfPresent(.logOutput)
+        self.mysqlIncrementalBackup = try container.sdkDecodeIfPresent(.mysqlIncrementalBackup)
     }
 }
 
 extension MysqlAdvancedConfig {
     func sdkValidateConstraintsPart1() throws {
-        if let value = backupHour {
-            try validateRange(
-                "backup_hour",
-                Double(value),
-                min: 0,
-                max: 23,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.backupHour {
+            try validateRange("backup_hour", Double(value), min: 0, max: 23, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = backupMinute {
-            try validateRange(
-                "backup_minute",
-                Double(value),
-                min: 0,
-                max: 59,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.backupMinute {
+            try validateRange("backup_minute", Double(value), min: 0, max: 59, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = sqlMode {
+        if let value = self.sqlMode {
             try validateLength("sql_mode", value, min: nil, max: 1024)
             try sdkValidatePattern("sql_mode", value, sdkPattern19d439001fc7)
         }
-        if let value = connectTimeout {
-            try validateRange(
-                "connect_timeout",
-                Double(value),
-                min: 2,
-                max: 3600,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.connectTimeout {
+            try validateRange("connect_timeout", Double(value), min: 2, max: 3600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = defaultTimeZone {
+        if let value = self.defaultTimeZone {
             try validateLength("default_time_zone", value, min: 2, max: 100)
         }
-        if let value = divPrecisionIncrement {
-            try validateRange(
-                "div_precision_increment",
-                Double(value),
-                min: 0,
-                max: 30,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.divPrecisionIncrement {
+            try validateRange("div_precision_increment", Double(value), min: 0, max: 30, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = eqRangeIndexDiveLimit {
-            try validateRange(
-                "eq_range_index_dive_limit",
-                Double(value),
-                min: 0,
-                max: 4_294_967_295,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.eqRangeIndexDiveLimit {
+            try validateRange("eq_range_index_dive_limit", Double(value), min: 0, max: 4294967295, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = groupConcatMaxLen {
-            try validateRange(
-                "group_concat_max_len",
-                Double(value),
-                min: 4,
-                max: 18_446_744_073_709_551_616,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.groupConcatMaxLen {
+            try validateRange("group_concat_max_len", Double(value), min: 4, max: 18446744073709551616, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = informationSchemaStatsExpiry {
-            try validateRange(
-                "information_schema_stats_expiry",
-                Double(value),
-                min: 900,
-                max: 31_536_000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.informationSchemaStatsExpiry {
+            try validateRange("information_schema_stats_expiry", Double(value), min: 900, max: 31536000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = innodbFtMaxTokenSize {
-            try validateRange(
-                "innodb_ft_max_token_size",
-                Double(value),
-                min: 10,
-                max: 84,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.innodbFtMaxTokenSize {
+            try validateRange("innodb_ft_max_token_size", Double(value), min: 10, max: 84, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = innodbFtMinTokenSize {
-            try validateRange(
-                "innodb_ft_min_token_size",
-                Double(value),
-                min: 0,
-                max: 16,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.innodbFtMinTokenSize {
+            try validateRange("innodb_ft_min_token_size", Double(value), min: 0, max: 16, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = innodbFtNumWordOptimize {
-            try validateRange(
-                "innodb_ft_num_word_optimize",
-                Double(value),
-                min: 1000,
-                max: 10000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.innodbFtNumWordOptimize {
+            try validateRange("innodb_ft_num_word_optimize", Double(value), min: 1000, max: 10000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
 extension MysqlAdvancedConfig {
     func sdkValidateConstraintsPart2() throws {
-        if let value = innodbFtResultCacheLimit {
-            try validateRange(
-                "innodb_ft_result_cache_limit",
-                Double(value),
-                min: 1_000_000,
-                max: 4_294_967_295,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.innodbFtResultCacheLimit {
+            try validateRange("innodb_ft_result_cache_limit", Double(value), min: 1000000, max: 4294967295, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = innodbFtServerStopwordTable {
+        if let value = self.innodbFtServerStopwordTable {
             try validateLength("innodb_ft_server_stopword_table", value, min: nil, max: 1024)
             try sdkValidatePattern("innodb_ft_server_stopword_table", value, sdkPattern884cd4461254)
         }
-        if let value = innodbFtUserStopwordTable {
+        if let value = self.innodbFtUserStopwordTable {
             try validateLength("innodb_ft_user_stopword_table", value, min: nil, max: 1024)
             try sdkValidatePattern("innodb_ft_user_stopword_table", value, sdkPattern884cd4461254)
         }
-        if let value = innodbLockWaitTimeout {
-            try validateRange(
-                "innodb_lock_wait_timeout",
-                Double(value),
-                min: 1,
-                max: 3600,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.innodbLockWaitTimeout {
+            try validateRange("innodb_lock_wait_timeout", Double(value), min: 1, max: 3600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = innodbLogBufferSize {
-            try validateRange(
-                "innodb_log_buffer_size",
-                Double(value),
-                min: 1_048_576,
-                max: 4_294_967_295,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.innodbLogBufferSize {
+            try validateRange("innodb_log_buffer_size", Double(value), min: 1048576, max: 4294967295, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = innodbOnlineAlterLogMaxSize {
-            try validateRange(
-                "innodb_online_alter_log_max_size",
-                Double(value),
-                min: 65536,
-                max: 1_099_511_627_776,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.innodbOnlineAlterLogMaxSize {
+            try validateRange("innodb_online_alter_log_max_size", Double(value), min: 65536, max: 1099511627776, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = interactiveTimeout {
-            try validateRange(
-                "interactive_timeout",
-                Double(value),
-                min: 30,
-                max: 604_800,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.interactiveTimeout {
+            try validateRange("interactive_timeout", Double(value), min: 30, max: 604800, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = netReadTimeout {
-            try validateRange(
-                "net_read_timeout",
-                Double(value),
-                min: 1,
-                max: 3600,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.netReadTimeout {
+            try validateRange("net_read_timeout", Double(value), min: 1, max: 3600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = netWriteTimeout {
-            try validateRange(
-                "net_write_timeout",
-                Double(value),
-                min: 1,
-                max: 3600,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.netWriteTimeout {
+            try validateRange("net_write_timeout", Double(value), min: 1, max: 3600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = waitTimeout {
-            try validateRange(
-                "wait_timeout",
-                Double(value),
-                min: 1,
-                max: 2_147_483,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.waitTimeout {
+            try validateRange("wait_timeout", Double(value), min: 1, max: 2147483, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = maxAllowedPacket {
-            try validateRange(
-                "max_allowed_packet",
-                Double(value),
-                min: 102_400,
-                max: 1_073_741_824,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.maxAllowedPacket {
+            try validateRange("max_allowed_packet", Double(value), min: 102400, max: 1073741824, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = maxExecutionTime {
-            try validateRange(
-                "max_execution_time",
-                Double(value),
-                min: 0,
-                max: 4_294_967_295,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.maxExecutionTime {
+            try validateRange("max_execution_time", Double(value), min: 0, max: 4294967295, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
 extension MysqlAdvancedConfig {
     func sdkValidateConstraintsPart3() throws {
-        if let value = maxHeapTableSize {
-            try validateRange(
-                "max_heap_table_size",
-                Double(value),
-                min: 1_048_576,
-                max: 1_073_741_824,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.maxHeapTableSize {
+            try validateRange("max_heap_table_size", Double(value), min: 1048576, max: 1073741824, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = maxSeeksForKey {
-            try validateRange(
-                "max_seeks_for_key",
-                Double(value),
-                min: 1,
-                max: 18_446_744_073_709_551_616,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.maxSeeksForKey {
+            try validateRange("max_seeks_for_key", Double(value), min: 1, max: 18446744073709551616, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = optimizerPruneLevel {
-            try validateRange(
-                "optimizer_prune_level",
-                Double(value),
-                min: 0,
-                max: 1,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.optimizerPruneLevel {
+            try validateRange("optimizer_prune_level", Double(value), min: 0, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = optimizerSearchDepth {
-            try validateRange(
-                "optimizer_search_depth",
-                Double(value),
-                min: 0,
-                max: 62,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.optimizerSearchDepth {
+            try validateRange("optimizer_search_depth", Double(value), min: 0, max: 62, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = optimizerSwitch {
+        if let value = self.optimizerSwitch {
             try sdkValidatePattern("optimizer_switch", value, sdkPatternd578f7d3374f)
         }
-        if let value = sortBufferSize {
-            try validateRange(
-                "sort_buffer_size",
-                Double(value),
-                min: 32768,
-                max: 1_073_741_824,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.sortBufferSize {
+            try validateRange("sort_buffer_size", Double(value), min: 32768, max: 1073741824, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = tmpTableSize {
-            try validateRange(
-                "tmp_table_size",
-                Double(value),
-                min: 1_048_576,
-                max: 1_073_741_824,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.tmpTableSize {
+            try validateRange("tmp_table_size", Double(value), min: 1048576, max: 1073741824, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = longQueryTime {
-            try validateRange(
-                "long_query_time",
-                Double(value),
-                min: 0,
-                max: 3600,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.longQueryTime {
+            try validateRange("long_query_time", Double(value), min: 0, max: 3600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = binlogRetentionPeriod {
-            try validateRange(
-                "binlog_retention_period",
-                Double(value),
-                min: 600,
-                max: 604_800,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.binlogRetentionPeriod {
+            try validateRange("binlog_retention_period", Double(value), min: 600, max: 604800, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = innodbChangeBufferMaxSize {
-            try validateRange(
-                "innodb_change_buffer_max_size",
-                Double(value),
-                min: 0,
-                max: 50,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.innodbChangeBufferMaxSize {
+            try validateRange("innodb_change_buffer_max_size", Double(value), min: 0, max: 50, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = innodbReadIoThreads {
-            try validateRange(
-                "innodb_read_io_threads",
-                Double(value),
-                min: 1,
-                max: 64,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.innodbReadIoThreads {
+            try validateRange("innodb_read_io_threads", Double(value), min: 1, max: 64, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = innodbWriteIoThreads {
-            try validateRange(
-                "innodb_write_io_threads",
-                Double(value),
-                min: 1,
-                max: 64,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.innodbWriteIoThreads {
+            try validateRange("innodb_write_io_threads", Double(value), min: 1, max: 64, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
 extension MysqlAdvancedConfig {
     func sdkValidateConstraintsPart4() throws {
-        if let value = innodbThreadConcurrency {
-            try validateRange(
-                "innodb_thread_concurrency",
-                Double(value),
-                min: 0,
-                max: 1000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.innodbThreadConcurrency {
+            try validateRange("innodb_thread_concurrency", Double(value), min: 0, max: 1000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = netBufferLength {
-            try validateRange(
-                "net_buffer_length",
-                Double(value),
-                min: 1024,
-                max: 1_048_576,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.netBufferLength {
+            try validateRange("net_buffer_length", Double(value), min: 1024, max: 1048576, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -454,16 +190,13 @@ extension MysqlAdvancedConfig {
 public struct MysqlSettingsAuthPlugin: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let mysqlNativePassword = MysqlSettingsAuthPlugin(rawValue: "mysql_native_password")
     public static let cachingSha2Password = MysqlSettingsAuthPlugin(rawValue: "caching_sha2_password")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -477,10 +210,7 @@ public struct MysqlSettingsAuthPlugin: RawRepresentable, Hashable, Codable, Send
 public struct MysqlAdvancedConfigLogOutput: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let insights = MysqlAdvancedConfigLogOutput(rawValue: "INSIGHTS")
     public static let table = MysqlAdvancedConfigLogOutput(rawValue: "TABLE")
     public static let insightsTable = MysqlAdvancedConfigLogOutput(rawValue: "INSIGHTS,TABLE")
@@ -488,7 +218,7 @@ public struct MysqlAdvancedConfigLogOutput: RawRepresentable, Hashable, Codable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -498,20 +228,16 @@ public struct MysqlAdvancedConfigLogOutput: RawRepresentable, Hashable, Codable,
 }
 
 /// The storage engine for in-memory internal temporary tables.
-public struct MysqlAdvancedConfigInternalTmpMemStorageEngine: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct MysqlAdvancedConfigInternalTmpMemStorageEngine: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let tempTable = MysqlAdvancedConfigInternalTmpMemStorageEngine(rawValue: "TempTable")
     public static let memory = MysqlAdvancedConfigInternalTmpMemStorageEngine(rawValue: "MEMORY")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

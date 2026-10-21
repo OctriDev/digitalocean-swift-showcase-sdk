@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Uptime domain models
+// Uptime domain models
 /// Typed representation of the `AllAlerts` API schema.
 public struct AllAlerts: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,29 +18,23 @@ public struct AllAlerts: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllAlerts {
-    init(from decoder: Decoder) throws {
+extension AllAlerts {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        alerts = try container.sdkDecodeIfPresent(.alerts)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.alerts = try container.sdkDecodeIfPresent(.alerts)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllAlerts {
-    init(meta: MetaMeta, alerts: [Alert]? = nil, links: PageLinks? = nil) {
+extension AllAlerts {
+    public init(meta: MetaMeta, alerts: [Alert]? = nil, links: PageLinks? = nil) {
         (self.meta, self.alerts) = (meta, alerts)
         self.links = links
     }
@@ -54,19 +48,19 @@ public struct AllAlertsVariant0: Codable {
     }
 
     init() {
-        alerts = nil
+        self.alerts = nil
     }
 }
 
-public extension AllAlertsVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllAlertsVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        alerts = try container.sdkDecodeIfPresent(.alerts)
+        self.alerts = try container.sdkDecodeIfPresent(.alerts)
     }
 }
 
-public extension AllAlertsVariant0 {
-    init(alerts: [Alert]? = nil) {
+extension AllAlertsVariant0 {
+    public init(alerts: [Alert]? = nil) {
         self.init()
         self.alerts = alerts
     }

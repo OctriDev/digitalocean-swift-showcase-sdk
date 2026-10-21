@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// BatchInference domain models
+// BatchInference domain models
 /// Presigned upload URL and `file_id` for a new batch input file.
 public struct BatchFileCreateResponse: Codable {
     /// Pass this value as `file_id` when creating a batch job.
@@ -25,45 +25,35 @@ public struct BatchFileCreateResponse: Codable {
         case expiresAt = "expires_at"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension BatchFileCreateResponse {
-    init(from decoder: Decoder) throws {
+extension BatchFileCreateResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.fileId) else {
-            throw SdkValidationError(
-                field: "file_id",
-                code: "required",
-                message: "Validation failed for 'file_id': value is required"
-            )
+            throw SdkValidationError(field: "file_id", code: "required", message: "Validation failed for 'file_id': value is required")
         }
         guard container.contains(.uploadUrl) else {
-            throw SdkValidationError(
-                field: "upload_url",
-                code: "required",
-                message: "Validation failed for 'upload_url': value is required"
-            )
+            throw SdkValidationError(field: "upload_url", code: "required", message: "Validation failed for 'upload_url': value is required")
         }
-        fileId = try container.sdkDecodeRequired(.fileId)
-        uploadUrl = try container.sdkDecodeRequired(.uploadUrl)
-        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
-        try sdkValidateUuid("file_id", fileId)
-        try sdkValidateUri("upload_url", uploadUrl)
-        if let value = expiresAt {
+        self.fileId = try container.sdkDecodeRequired(.fileId)
+        self.uploadUrl = try container.sdkDecodeRequired(.uploadUrl)
+        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+            try sdkValidateUuid("file_id", self.fileId)
+            try sdkValidateUri("upload_url", self.uploadUrl)
+        if let value = self.expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
     }
 }
 
-public extension BatchFileCreateResponse {
-    init(fileId: String, uploadUrl: String, expiresAt: Date? = nil) throws {
+extension BatchFileCreateResponse {
+    public init(fileId: String, uploadUrl: String, expiresAt: Date? = nil) throws {
         (self.fileId, self.uploadUrl) = (fileId, uploadUrl)
         self.expiresAt = expiresAt
-        try sdkValidateUuid("file_id", self.fileId)
-        try sdkValidateUri("upload_url", self.uploadUrl)
+            try sdkValidateUuid("file_id", self.fileId)
+            try sdkValidateUri("upload_url", self.uploadUrl)
         if let value = self.expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
@@ -81,31 +71,25 @@ public struct BatchFileCreateRequest: Codable {
         case fileName = "file_name"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension BatchFileCreateRequest {
-    init(from decoder: Decoder) throws {
+extension BatchFileCreateRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.fileName) else {
-            throw SdkValidationError(
-                field: "file_name",
-                code: "required",
-                message: "Validation failed for 'file_name': value is required"
-            )
+            throw SdkValidationError(field: "file_name", code: "required", message: "Validation failed for 'file_name': value is required")
         }
-        fileName = try container.sdkDecodeRequired(.fileName)
-        try validateLength("file_name", fileName, min: 7, max: nil)
-        try sdkValidatePattern("file_name", fileName, sdkPatterna3234e480eb3)
+        self.fileName = try container.sdkDecodeRequired(.fileName)
+            try validateLength("file_name", self.fileName, min: 7, max: nil)
+            try sdkValidatePattern("file_name", self.fileName, sdkPatterna3234e480eb3)
     }
 }
 
-public extension BatchFileCreateRequest {
-    init(fileName: String) throws {
+extension BatchFileCreateRequest {
+    public init(fileName: String) throws {
         self.fileName = fileName
-        try validateLength("file_name", self.fileName, min: 7, max: nil)
-        try sdkValidatePattern("file_name", self.fileName, sdkPatterna3234e480eb3)
+            try validateLength("file_name", self.fileName, min: 7, max: nil)
+            try sdkValidatePattern("file_name", self.fileName, sdkPatterna3234e480eb3)
     }
 }

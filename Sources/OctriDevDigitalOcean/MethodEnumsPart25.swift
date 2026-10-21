@@ -14,10 +14,10 @@ struct GenaiCreateEvaluationDatasetRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(datasetParadigm, forKey: SdkCodingKey("dataset_paradigm"))
-        try keyedContainer.encodeIfPresent(datasetType, forKey: SdkCodingKey("dataset_type"))
-        try keyedContainer.encodeIfPresent(fileUploadDataset, forKey: SdkCodingKey("file_upload_dataset"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.datasetParadigm, forKey: SdkCodingKey("dataset_paradigm"))
+        try keyedContainer.encodeIfPresent(self.datasetType, forKey: SdkCodingKey("dataset_type"))
+        try keyedContainer.encodeIfPresent(self.fileUploadDataset, forKey: SdkCodingKey("file_upload_dataset"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
     }
 }
 
@@ -26,7 +26,7 @@ struct GenaiCreateEvaluationDatasetFileUploadPresignedUrlsRequestBody: Encodable
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(files, forKey: SdkCodingKey("files"))
+        try keyedContainer.encodeIfPresent(self.files, forKey: SdkCodingKey("files"))
     }
 }
 
@@ -37,9 +37,9 @@ struct GenaiCreateCustomEvaluationMetricRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(config2, forKey: SdkCodingKey("config"))
-        try keyedContainer.encodeIfPresent(description, forKey: SdkCodingKey("description"))
-        try keyedContainer.encodeIfPresent(metricName, forKey: SdkCodingKey("metric_name"))
+        try keyedContainer.encodeIfPresent(self.config2, forKey: SdkCodingKey("config"))
+        try keyedContainer.encodeIfPresent(self.description, forKey: SdkCodingKey("description"))
+        try keyedContainer.encodeIfPresent(self.metricName, forKey: SdkCodingKey("metric_name"))
     }
 }
 
@@ -51,10 +51,10 @@ struct GenaiUpdateCustomEvaluationMetricRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(config2, forKey: SdkCodingKey("config"))
-        try keyedContainer.encodeIfPresent(description, forKey: SdkCodingKey("description"))
-        try keyedContainer.encodeIfPresent(metricName, forKey: SdkCodingKey("metric_name"))
-        try keyedContainer.encodeIfPresent(metricUuid2, forKey: SdkCodingKey("metric_uuid"))
+        try keyedContainer.encodeIfPresent(self.config2, forKey: SdkCodingKey("config"))
+        try keyedContainer.encodeIfPresent(self.description, forKey: SdkCodingKey("description"))
+        try keyedContainer.encodeIfPresent(self.metricName, forKey: SdkCodingKey("metric_name"))
+        try keyedContainer.encodeIfPresent(self.metricUuid2, forKey: SdkCodingKey("metric_uuid"))
     }
 }
 
@@ -66,10 +66,10 @@ struct GenaiRunEvaluationTestCaseRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(agentDeploymentNames, forKey: SdkCodingKey("agent_deployment_names"))
-        try keyedContainer.encodeIfPresent(agentUuids, forKey: SdkCodingKey("agent_uuids"))
-        try keyedContainer.encodeIfPresent(runName, forKey: SdkCodingKey("run_name"))
-        try keyedContainer.encodeIfPresent(testCaseUuid, forKey: SdkCodingKey("test_case_uuid"))
+        try keyedContainer.encodeIfPresent(self.agentDeploymentNames, forKey: SdkCodingKey("agent_deployment_names"))
+        try keyedContainer.encodeIfPresent(self.agentUuids, forKey: SdkCodingKey("agent_uuids"))
+        try keyedContainer.encodeIfPresent(self.runName, forKey: SdkCodingKey("run_name"))
+        try keyedContainer.encodeIfPresent(self.testCaseUuid, forKey: SdkCodingKey("test_case_uuid"))
     }
 }
 
@@ -84,13 +84,13 @@ struct GenaiCreateEvaluationTestCaseRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(agentWorkspaceName, forKey: SdkCodingKey("agent_workspace_name"))
-        try keyedContainer.encodeIfPresent(datasetUuid, forKey: SdkCodingKey("dataset_uuid"))
-        try keyedContainer.encodeIfPresent(description, forKey: SdkCodingKey("description"))
-        try keyedContainer.encodeIfPresent(metrics, forKey: SdkCodingKey("metrics"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(starMetric, forKey: SdkCodingKey("star_metric"))
-        try keyedContainer.encodeIfPresent(workspaceUuid, forKey: SdkCodingKey("workspace_uuid"))
+        try keyedContainer.encodeIfPresent(self.agentWorkspaceName, forKey: SdkCodingKey("agent_workspace_name"))
+        try keyedContainer.encodeIfPresent(self.datasetUuid, forKey: SdkCodingKey("dataset_uuid"))
+        try keyedContainer.encodeIfPresent(self.description, forKey: SdkCodingKey("description"))
+        try keyedContainer.encodeIfPresent(self.metrics, forKey: SdkCodingKey("metrics"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.starMetric, forKey: SdkCodingKey("star_metric"))
+        try keyedContainer.encodeIfPresent(self.workspaceUuid, forKey: SdkCodingKey("workspace_uuid"))
     }
 }
 
@@ -104,12 +104,12 @@ struct GenaiUpdateEvaluationTestCaseRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(datasetUuid, forKey: SdkCodingKey("dataset_uuid"))
-        try keyedContainer.encodeIfPresent(description, forKey: SdkCodingKey("description"))
-        try keyedContainer.encodeIfPresent(metrics, forKey: SdkCodingKey("metrics"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(starMetric, forKey: SdkCodingKey("star_metric"))
-        try keyedContainer.encodeIfPresent(testCaseUuid2, forKey: SdkCodingKey("test_case_uuid"))
+        try keyedContainer.encodeIfPresent(self.datasetUuid, forKey: SdkCodingKey("dataset_uuid"))
+        try keyedContainer.encodeIfPresent(self.description, forKey: SdkCodingKey("description"))
+        try keyedContainer.encodeIfPresent(self.metrics, forKey: SdkCodingKey("metrics"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.starMetric, forKey: SdkCodingKey("star_metric"))
+        try keyedContainer.encodeIfPresent(self.testCaseUuid2, forKey: SdkCodingKey("test_case_uuid"))
     }
 }
 
@@ -119,8 +119,8 @@ struct GenaiCreateIndexingJobRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(dataSourceUuids, forKey: SdkCodingKey("data_source_uuids"))
-        try keyedContainer.encodeIfPresent(knowledgeBaseUuid, forKey: SdkCodingKey("knowledge_base_uuid"))
+        try keyedContainer.encodeIfPresent(self.dataSourceUuids, forKey: SdkCodingKey("data_source_uuids"))
+        try keyedContainer.encodeIfPresent(self.knowledgeBaseUuid, forKey: SdkCodingKey("knowledge_base_uuid"))
     }
 }
 
@@ -129,7 +129,7 @@ struct GenaiCancelIndexingJobRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(uuid2, forKey: SdkCodingKey("uuid"))
+        try keyedContainer.encodeIfPresent(self.uuid2, forKey: SdkCodingKey("uuid"))
     }
 }
 
@@ -147,29 +147,29 @@ struct GenaiCreateKnowledgeBaseRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(databaseId, forKey: SdkCodingKey("database_id"))
-        try keyedContainer.encodeIfPresent(datasources, forKey: SdkCodingKey("datasources"))
-        try keyedContainer.encodeIfPresent(embeddingModelUuid, forKey: SdkCodingKey("embedding_model_uuid"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(projectId, forKey: SdkCodingKey("project_id"))
-        try keyedContainer.encodeIfPresent(region, forKey: SdkCodingKey("region"))
-        try keyedContainer.encodeIfPresent(rerankingConfig, forKey: SdkCodingKey("reranking_config"))
-        try keyedContainer.encodeIfPresent(size, forKey: SdkCodingKey("size"))
-        try keyedContainer.encodeIfPresent(tags, forKey: SdkCodingKey("tags"))
-        try keyedContainer.encodeIfPresent(vpcUuid, forKey: SdkCodingKey("vpc_uuid"))
+        try keyedContainer.encodeIfPresent(self.databaseId, forKey: SdkCodingKey("database_id"))
+        try keyedContainer.encodeIfPresent(self.datasources, forKey: SdkCodingKey("datasources"))
+        try keyedContainer.encodeIfPresent(self.embeddingModelUuid, forKey: SdkCodingKey("embedding_model_uuid"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.projectId, forKey: SdkCodingKey("project_id"))
+        try keyedContainer.encodeIfPresent(self.region, forKey: SdkCodingKey("region"))
+        try keyedContainer.encodeIfPresent(self.rerankingConfig, forKey: SdkCodingKey("reranking_config"))
+        try keyedContainer.encodeIfPresent(self.size, forKey: SdkCodingKey("size"))
+        try keyedContainer.encodeIfPresent(self.tags, forKey: SdkCodingKey("tags"))
+        try keyedContainer.encodeIfPresent(self.vpcUuid, forKey: SdkCodingKey("vpc_uuid"))
     }
 
     init(options: AgentPlatformApiMethods.GenaiCreateKnowledgeBaseOptions) {
-        databaseId = options.databaseId
-        datasources = options.datasources
-        embeddingModelUuid = options.embeddingModelUuid
-        name = options.name
-        projectId = options.projectId
-        region = options.region
-        rerankingConfig = options.rerankingConfig
-        size = options.size
-        tags = options.tags
-        vpcUuid = options.vpcUuid
+        self.databaseId = options.databaseId
+        self.datasources = options.datasources
+        self.embeddingModelUuid = options.embeddingModelUuid
+        self.name = options.name
+        self.projectId = options.projectId
+        self.region = options.region
+        self.rerankingConfig = options.rerankingConfig
+        self.size = options.size
+        self.tags = options.tags
+        self.vpcUuid = options.vpcUuid
     }
 }
 
@@ -178,7 +178,7 @@ struct GenaiCreateDataSourceFileUploadPresignedUrlsRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(files, forKey: SdkCodingKey("files"))
+        try keyedContainer.encodeIfPresent(self.files, forKey: SdkCodingKey("files"))
     }
 }
 
@@ -192,11 +192,11 @@ struct GenaiCreateKnowledgeBaseDataSourceRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(awsDataSource, forKey: SdkCodingKey("aws_data_source"))
-        try keyedContainer.encodeIfPresent(chunkingAlgorithm, forKey: SdkCodingKey("chunking_algorithm"))
-        try keyedContainer.encodeIfPresent(chunkingOptions, forKey: SdkCodingKey("chunking_options"))
-        try keyedContainer.encodeIfPresent(knowledgeBaseUuid2, forKey: SdkCodingKey("knowledge_base_uuid"))
-        try keyedContainer.encodeIfPresent(spacesDataSource, forKey: SdkCodingKey("spaces_data_source"))
-        try keyedContainer.encodeIfPresent(webCrawlerDataSource, forKey: SdkCodingKey("web_crawler_data_source"))
+        try keyedContainer.encodeIfPresent(self.awsDataSource, forKey: SdkCodingKey("aws_data_source"))
+        try keyedContainer.encodeIfPresent(self.chunkingAlgorithm, forKey: SdkCodingKey("chunking_algorithm"))
+        try keyedContainer.encodeIfPresent(self.chunkingOptions, forKey: SdkCodingKey("chunking_options"))
+        try keyedContainer.encodeIfPresent(self.knowledgeBaseUuid2, forKey: SdkCodingKey("knowledge_base_uuid"))
+        try keyedContainer.encodeIfPresent(self.spacesDataSource, forKey: SdkCodingKey("spaces_data_source"))
+        try keyedContainer.encodeIfPresent(self.webCrawlerDataSource, forKey: SdkCodingKey("web_crawler_data_source"))
     }
 }

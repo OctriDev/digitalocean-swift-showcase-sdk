@@ -3,177 +3,81 @@
 
 import Foundation
 
-public extension AppsNamespace {
-    /// Retrieve the logs of an autoscaling event for an app.
-    func getEventLogs(
-        appId: String,
-        eventId: String,
-        type: AppsGetLogsActiveDeploymentParameter,
-        follow: Bool? = nil,
-        podConnectionTimeout: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppsGetLogsResponse {
-        try await AppsMethods.appsGetEventLogs(
-            config: config,
-            appId: appId,
-            eventId: eventId,
-            type: type,
-            follow: follow,
-            podConnectionTimeout: podConnectionTimeout,
-            requestOptions: requestOptions
-        )
+extension AppsNamespace {
+/// Retrieve the logs of an autoscaling event for an app.
+    public func getEventLogs(appId: String, eventId: String, type: AppsGetLogsActiveDeploymentParameter, follow: Bool? = nil, podConnectionTimeout: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsGetLogsResponse {
+        return try await AppsMethods.appsGetEventLogs(config: config, appId: appId, eventId: eventId, type: type, follow: follow, podConnectionTimeout: podConnectionTimeout, requestOptions: requestOptions)
     }
 
-    /// List all instance sizes for `service`, `worker`, and `job` components.
-    func listInstanceSizes(requestOptions: RequestOptions? = nil) async throws -> AppsListInstanceSizesResponse {
-        try await AppsMethods.appsListInstanceSizes(config: config, requestOptions: requestOptions)
+/// List all instance sizes for `service`, `worker`, and `job` components.
+    public func listInstanceSizes(requestOptions: RequestOptions? = nil) async throws -> AppsListInstanceSizesResponse {
+        return try await AppsMethods.appsListInstanceSizes(config: config, requestOptions: requestOptions)
     }
 
-    /// Retrieve information about a specific instance size for `service`, `worker`, and `job` components.
-    func getInstanceSize(
-        slug: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppsGetInstanceSizeResponse {
-        try await AppsMethods.appsGetInstanceSize(config: config, slug: slug, requestOptions: requestOptions)
+/// Retrieve information about a specific instance size for `service`, `worker`, and `job` components.
+    public func getInstanceSize(slug: String, requestOptions: RequestOptions? = nil) async throws -> AppsGetInstanceSizeResponse {
+        return try await AppsMethods.appsGetInstanceSize(config: config, slug: slug, requestOptions: requestOptions)
     }
 
-    /// Lists the regions supported by App Platform. Use the returned region slugs and availability details to choose a
-    /// region when configuring an app.
+/// Lists the regions supported by App Platform. Use the returned region slugs and availability details to choose a region when configuring an app.
     ///
     /// List all regions supported by App Platform.
-    func listRegions(requestOptions: RequestOptions? = nil) async throws -> AppsListRegionsResponse {
-        try await AppsMethods.appsListRegions(config: config, requestOptions: requestOptions)
+    public func listRegions(requestOptions: RequestOptions? = nil) async throws -> AppsListRegionsResponse {
+        return try await AppsMethods.appsListRegions(config: config, requestOptions: requestOptions)
     }
 
-    /// To propose and validate a spec for a new or existing app, send a POST request to the `/v2/apps/propose`
-    /// endpoint. The request returns some information about the proposed app, including app cost and upgrade cost. If
-    /// an existing app ID is specified, the app spec is treated as a proposed update to the existing app.
-    func validateAppSpec(
-        spec: AppSpecRequest,
-        appId: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppProposeResponse {
-        try await AppsMethods.appsValidateAppSpec(
-            config: config,
-            spec: spec,
-            appId: appId,
-            requestOptions: requestOptions
-        )
+/// To propose and validate a spec for a new or existing app, send a POST request to the `/v2/apps/propose` endpoint. The request returns some information about the proposed app, including app cost and upgrade cost. If an existing app ID is specified, the app spec is treated as a proposed update to the existing app.
+    public func validateAppSpec(spec: AppSpecRequest, appId: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AppProposeResponse {
+        return try await AppsMethods.appsValidateAppSpec(config: config, spec: spec, appId: appId, requestOptions: requestOptions)
     }
 
-    /// List alerts associated to the app and any components. This includes configuration information about the alerts
-    /// including emails, slack webhooks, and triggering events or conditions.
-    func listAlerts(appId: String, requestOptions: RequestOptions? = nil) async throws -> AppsListAlertsResponse {
-        try await AppsMethods.appsListAlerts(config: config, appId: appId, requestOptions: requestOptions)
+/// List alerts associated to the app and any components. This includes configuration information about the alerts including emails, slack webhooks, and triggering events or conditions.
+    public func listAlerts(appId: String, requestOptions: RequestOptions? = nil) async throws -> AppsListAlertsResponse {
+        return try await AppsMethods.appsListAlerts(config: config, appId: appId, requestOptions: requestOptions)
     }
 
-    /// Updates the email and Slack webhook destinations for an app alert. Supply destination details in `emails`,
-    /// `slack_webhooks`, or both; each email address must be associated with a user who has access to the app. The
-    /// response includes the updated alert object.
+/// Updates the email and Slack webhook destinations for an app alert. Supply destination details in `emails`, `slack_webhooks`, or both; each email address must be associated with a user who has access to the app. The response includes the updated alert object.
     ///
-    /// Updates the emails and slack webhook destinations for app alerts. Emails must be associated to a user with
-    /// access to the app.
-    func assignAlertDestinations(
-        appId: String,
-        alertId: String,
-        emails: [AppAlertEmail]? = nil,
-        slackWebhooks: [AppAlertSlackWebhook]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppsAlertResponse {
-        try await AppsMethods.appsAssignAlertDestinations(
-            config: config,
-            appId: appId,
-            alertId: alertId,
-            emails: emails,
-            slackWebhooks: slackWebhooks,
-            requestOptions: requestOptions
-        )
+    /// Updates the emails and slack webhook destinations for app alerts. Emails must be associated to a user with access to the app.
+    public func assignAlertDestinations(appId: String, alertId: String, emails: [AppAlertEmail]? = nil, slackWebhooks: [AppAlertSlackWebhook]? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsAlertResponse {
+        return try await AppsMethods.appsAssignAlertDestinations(config: config, appId: appId, alertId: alertId, emails: emails, slackWebhooks: slackWebhooks, requestOptions: requestOptions)
     }
 
-    /// Rollback an app to a previous deployment. A new deployment will be created to perform the rollback. The app will
-    /// be pinned to the rollback deployment preventing any new deployments from being created, either manually or
-    /// through Auto Deploy on Push webhooks. To resume deployments, the rollback must be either committed or reverted.
-    /// It is recommended to use the Validate App Rollback endpoint to double check if the rollback is valid and if
-    /// there are any warnings.
-    func createRollback(
-        appId: String,
-        deploymentId: String? = nil,
-        skipPin: Bool? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppsDeploymentResponse {
-        try await AppsMethods.appsCreateRollback(
-            config: config,
-            appId: appId,
-            deploymentId: deploymentId,
-            skipPin: skipPin,
-            requestOptions: requestOptions
-        )
+/// Rollback an app to a previous deployment. A new deployment will be created to perform the rollback. The app will be pinned to the rollback deployment preventing any new deployments from being created, either manually or through Auto Deploy on Push webhooks. To resume deployments, the rollback must be either committed or reverted. It is recommended to use the Validate App Rollback endpoint to double check if the rollback is valid and if there are any warnings.
+    public func createRollback(appId: String, deploymentId: String? = nil, skipPin: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsDeploymentResponse {
+        return try await AppsMethods.appsCreateRollback(config: config, appId: appId, deploymentId: deploymentId, skipPin: skipPin, requestOptions: requestOptions)
     }
 }
 
-public extension AppsNamespace {
-    /// Check whether an app can be rolled back to a specific deployment. This endpoint can also be used to check if
-    /// there are any warnings or validation conditions that will cause the rollback to proceed under unideal
-    /// circumstances. For example, if a component must be rebuilt as part of the rollback causing it to take longer
-    /// than usual.
-    func validateRollback(
-        appId: String,
-        deploymentId: String? = nil,
-        skipPin: Bool? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppsValidateRollback {
-        try await AppsMethods.appsValidateRollback(
-            config: config,
-            appId: appId,
-            deploymentId: deploymentId,
-            skipPin: skipPin,
-            requestOptions: requestOptions
-        )
+extension AppsNamespace {
+/// Check whether an app can be rolled back to a specific deployment. This endpoint can also be used to check if there are any warnings or validation conditions that will cause the rollback to proceed under unideal circumstances. For example, if a component must be rebuilt as part of the rollback causing it to take longer than usual.
+    public func validateRollback(appId: String, deploymentId: String? = nil, skipPin: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsValidateRollback {
+        return try await AppsMethods.appsValidateRollback(config: config, appId: appId, deploymentId: deploymentId, skipPin: skipPin, requestOptions: requestOptions)
     }
 
-    /// Commit an app rollback. This action permanently applies the rollback and unpins the app to resume new
-    /// deployments.
-    func commitRollback(appId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        try await AppsMethods.appsCommitRollback(config: config, appId: appId, requestOptions: requestOptions)
+/// Commit an app rollback. This action permanently applies the rollback and unpins the app to resume new deployments.
+    public func commitRollback(appId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await AppsMethods.appsCommitRollback(config: config, appId: appId, requestOptions: requestOptions)
     }
 
-    /// Revert an app rollback. This action reverts the active rollback by creating a new deployment from the latest app
-    /// spec prior to the rollback and unpins the app to resume new deployments.
-    func revertRollback(appId: String, requestOptions: RequestOptions? = nil) async throws -> AppsDeploymentResponse {
-        try await AppsMethods.appsRevertRollback(config: config, appId: appId, requestOptions: requestOptions)
+/// Revert an app rollback. This action reverts the active rollback by creating a new deployment from the latest app spec prior to the rollback and unpins the app to resume new deployments.
+    public func revertRollback(appId: String, requestOptions: RequestOptions? = nil) async throws -> AppsDeploymentResponse {
+        return try await AppsMethods.appsRevertRollback(config: config, appId: appId, requestOptions: requestOptions)
     }
 
-    /// Retrieve daily bandwidth usage metrics for a single app.
-    func getMetricsBandwidthDaily(
-        appId: String,
-        date: Date? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppMetricsBandwidthUsage {
-        try await AppsMethods.appsGetMetricsBandwidthDaily(
-            config: config,
-            appId: appId,
-            date: date,
-            requestOptions: requestOptions
-        )
+/// Retrieve daily bandwidth usage metrics for a single app.
+    public func getMetricsBandwidthDaily(appId: String, date: Date? = nil, requestOptions: RequestOptions? = nil) async throws -> AppMetricsBandwidthUsage {
+        return try await AppsMethods.appsGetMetricsBandwidthDaily(config: config, appId: appId, date: date, requestOptions: requestOptions)
     }
 
-    /// Retrieve daily bandwidth usage metrics for multiple apps.
-    func listMetricsBandwidthDaily(
-        appIds: [String],
-        date: Date? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppMetricsBandwidthUsage {
-        try await AppsMethods.appsListMetricsBandwidthDaily(
-            config: config,
-            appIds: appIds,
-            date: date,
-            requestOptions: requestOptions
-        )
+/// Retrieve daily bandwidth usage metrics for multiple apps.
+    public func listMetricsBandwidthDaily(appIds: [String], date: Date? = nil, requestOptions: RequestOptions? = nil) async throws -> AppMetricsBandwidthUsage {
+        return try await AppsMethods.appsListMetricsBandwidthDaily(config: config, appIds: appIds, date: date, requestOptions: requestOptions)
     }
 
-    /// Retrieve information like health status, cpu and memory utilization of app components.
-    func getHealth(appId: String, requestOptions: RequestOptions? = nil) async throws -> AppHealthResponse {
-        try await AppsMethods.appsGetHealth(config: config, appId: appId, requestOptions: requestOptions)
+/// Retrieve information like health status, cpu and memory utilization of app components.
+    public func getHealth(appId: String, requestOptions: RequestOptions? = nil) async throws -> AppHealthResponse {
+        return try await AppsMethods.appsGetHealth(config: config, appId: appId, requestOptions: requestOptions)
     }
 }
 
@@ -183,92 +87,34 @@ public class CdnEndpointsNamespace {
         self.config = config
     }
 
-    /// To list all of the CDN endpoints available on your account, send a GET request to `/v2/cdn/endpoints`.
-    public func cdnListEndpoints(
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AllCdnEndpoints {
-        try await CdnEndpointsMethods.cdnListEndpoints(
-            config: config,
-            perPage: perPage,
-            page: page,
-            requestOptions: requestOptions
-        )
+/// To list all of the CDN endpoints available on your account, send a GET request to `/v2/cdn/endpoints`.
+    public func cdnListEndpoints(perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AllCdnEndpoints {
+        return try await CdnEndpointsMethods.cdnListEndpoints(config: config, perPage: perPage, page: page, requestOptions: requestOptions)
     }
 
-    /// To create a new CDN endpoint, send a POST request to `/v2/cdn/endpoints`. The origin attribute must be set to
-    /// the fully qualified domain name (FQDN) of a DigitalOcean Space. Optionally, the TTL may be configured by setting
-    /// the `ttl` attribute. A custom subdomain may be configured by specifying the `custom_domain` and `certificate_id`
-    /// attributes.
-    public func cdnCreateEndpoint(
-        origin: String,
-        ttl: Int? = nil,
-        certificateId: String? = nil,
-        customDomain: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExistingEndpoint {
-        try await CdnEndpointsMethods.cdnCreateEndpoint(
-            config: config,
-            origin: origin,
-            ttl: ttl,
-            certificateId: certificateId,
-            customDomain: customDomain,
-            requestOptions: requestOptions
-        )
+/// To create a new CDN endpoint, send a POST request to `/v2/cdn/endpoints`. The origin attribute must be set to the fully qualified domain name (FQDN) of a DigitalOcean Space. Optionally, the TTL may be configured by setting the `ttl` attribute. A custom subdomain may be configured by specifying the `custom_domain` and `certificate_id` attributes.
+    public func cdnCreateEndpoint(origin: String, ttl: Int? = nil, certificateId: String? = nil, customDomain: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ExistingEndpoint {
+        return try await CdnEndpointsMethods.cdnCreateEndpoint(config: config, origin: origin, ttl: ttl, certificateId: certificateId, customDomain: customDomain, requestOptions: requestOptions)
     }
 
-    /// To show information about an existing CDN endpoint, send a GET request to `/v2/cdn/endpoints/$ENDPOINT_ID`.
+/// To show information about an existing CDN endpoint, send a GET request to `/v2/cdn/endpoints/$ENDPOINT_ID`.
     public func cdnGetEndpoint(cdnId: String, requestOptions: RequestOptions? = nil) async throws -> ExistingEndpoint {
-        try await CdnEndpointsMethods.cdnGetEndpoint(config: config, cdnId: cdnId, requestOptions: requestOptions)
+        return try await CdnEndpointsMethods.cdnGetEndpoint(config: config, cdnId: cdnId, requestOptions: requestOptions)
     }
 
-    /// To update the TTL, certificate ID, or the FQDN of the custom subdomain for an existing CDN endpoint, send a PUT
-    /// request to `/v2/cdn/endpoints/$ENDPOINT_ID`.
-    public func cdnUpdateEndpoints(
-        cdnId: String,
-        ttl: Int? = nil,
-        certificateId: String? = nil,
-        customDomain: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExistingEndpoint {
-        try await CdnEndpointsMethods.cdnUpdateEndpoints(
-            config: config,
-            cdnId: cdnId,
-            ttl: ttl,
-            certificateId: certificateId,
-            customDomain: customDomain,
-            requestOptions: requestOptions
-        )
+/// To update the TTL, certificate ID, or the FQDN of the custom subdomain for an existing CDN endpoint, send a PUT request to `/v2/cdn/endpoints/$ENDPOINT_ID`.
+    public func cdnUpdateEndpoints(cdnId: String, ttl: Int? = nil, certificateId: String? = nil, customDomain: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ExistingEndpoint {
+        return try await CdnEndpointsMethods.cdnUpdateEndpoints(config: config, cdnId: cdnId, ttl: ttl, certificateId: certificateId, customDomain: customDomain, requestOptions: requestOptions)
     }
 
-    /// To delete a specific CDN endpoint, send a DELETE request to `/v2/cdn/endpoints/$ENDPOINT_ID`. A status of 204
-    /// will be given. This indicates that the request was processed successfully, but that no response body is needed.
-    public func cdnDeleteEndpoint(
-        cdnId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await CdnEndpointsMethods.cdnDeleteEndpoint(config: config, cdnId: cdnId, requestOptions: requestOptions)
+/// To delete a specific CDN endpoint, send a DELETE request to `/v2/cdn/endpoints/$ENDPOINT_ID`. A status of 204 will be given. This indicates that the request was processed successfully, but that no response body is needed.
+    public func cdnDeleteEndpoint(cdnId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await CdnEndpointsMethods.cdnDeleteEndpoint(config: config, cdnId: cdnId, requestOptions: requestOptions)
     }
 
-    /// To purge cached content from a CDN endpoint, send a DELETE request to `/v2/cdn/endpoints/$ENDPOINT_ID/cache`.
-    /// The body of the request should include a `files` attribute containing a list of cached file paths to be purged.
-    /// A path may be for a single file or may contain a wildcard (`*`) to recursively purge all files under a
-    /// directory. When only a wildcard is provided, all cached files will be purged. There is a rate limit of 50 files
-    /// per 20 seconds that can be purged. CDN endpoints have a rate limit of 5 requests per 10 seconds. Purging files
-    /// using a wildcard path counts as a single request against the API's rate limit. Two identical purge requests
-    /// cannot be sent at the same time.
-    public func cdnPurgeCache(
-        cdnId: String,
-        files: [String],
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await CdnEndpointsMethods.cdnPurgeCache(
-            config: config,
-            cdnId: cdnId,
-            files: files,
-            requestOptions: requestOptions
-        )
+/// To purge cached content from a CDN endpoint, send a DELETE request to `/v2/cdn/endpoints/$ENDPOINT_ID/cache`. The body of the request should include a `files` attribute containing a list of cached file paths to be purged. A path may be for a single file or may contain a wildcard (`*`) to recursively purge all files under a directory. When only a wildcard is provided, all cached files will be purged. There is a rate limit of 50 files per 20 seconds that can be purged. CDN endpoints have a rate limit of 5 requests per 10 seconds. Purging files using a wildcard path counts as a single request against the API's rate limit. Two identical purge requests cannot be sent at the same time.
+    public func cdnPurgeCache(cdnId: String, files: [String], requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await CdnEndpointsMethods.cdnPurgeCache(config: config, cdnId: cdnId, files: files, requestOptions: requestOptions)
     }
 }
 
@@ -278,54 +124,26 @@ public class CertificatesNamespace {
         self.config = config
     }
 
-    /// To list all of the certificates available on your account, send a GET request to `/v2/certificates`.
-    public func list(
-        perPage: Int? = nil,
-        page: Int? = nil,
-        name: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AllCertificates {
-        try await CertificatesMethods.certificatesList(
-            config: config,
-            perPage: perPage,
-            page: page,
-            name: name,
-            requestOptions: requestOptions
-        )
+/// To list all of the certificates available on your account, send a GET request to `/v2/certificates`.
+    public func list(perPage: Int? = nil, page: Int? = nil, name: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AllCertificates {
+        return try await CertificatesMethods.certificatesList(config: config, perPage: perPage, page: page, name: name, requestOptions: requestOptions)
     }
 
-    /// Creates a certificate from a user-generated certificate and private key or requests one from Let's Encrypt. Set
-    /// `type` to `custom` and provide `private_key` and `leaf_certificate`, or set it to `lets_encrypt` and provide
-    /// `dns_names`; both request types require `name`. A Let's Encrypt certificate starts in the `pending` state and
-    /// transitions to `verified` when it is ready to use.
+/// Creates a certificate from a user-generated certificate and private key or requests one from Let's Encrypt. Set `type` to `custom` and provide `private_key` and `leaf_certificate`, or set it to `lets_encrypt` and provide `dns_names`; both request types require `name`. A Let's Encrypt certificate starts in the `pending` state and transitions to `verified` when it is ready to use.
     ///
-    /// To upload new SSL certificate which you have previously generated, send a POST request to `/v2/certificates`.
-    /// When uploading a user-generated certificate, the `private_key`, `leaf_certificate`, and optionally the
-    /// `certificate_chain` attributes should be provided. The type must be set to `custom`. When using Let's Encrypt to
-    /// create a certificate, the `dns_names` attribute must be provided, and the type must be set to `lets_encrypt`.
-    public func create(
-        body: CertificatesCreateRequestBody,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> NewCertificate {
-        try await CertificatesMethods.certificatesCreate(config: config, body: body, requestOptions: requestOptions)
+    /// To upload new SSL certificate which you have previously generated, send a POST request to `/v2/certificates`. When uploading a user-generated certificate, the `private_key`, `leaf_certificate`, and optionally the `certificate_chain` attributes should be provided. The type must be set to `custom`. When using Let's Encrypt to create a certificate, the `dns_names` attribute must be provided, and the type must be set to `lets_encrypt`.
+    public func create(body: CertificatesCreateRequestBody, requestOptions: RequestOptions? = nil) async throws -> NewCertificate {
+        return try await CertificatesMethods.certificatesCreate(config: config, body: body, requestOptions: requestOptions)
     }
 
-    /// To show information about an existing certificate, send a GET request to `/v2/certificates/$CERTIFICATE_ID`.
+/// To show information about an existing certificate, send a GET request to `/v2/certificates/$CERTIFICATE_ID`.
     public func get(certificateId: String, requestOptions: RequestOptions? = nil) async throws -> ExistingCertificate {
-        try await CertificatesMethods.certificatesGet(
-            config: config,
-            certificateId: certificateId,
-            requestOptions: requestOptions
-        )
+        return try await CertificatesMethods.certificatesGet(config: config, certificateId: certificateId, requestOptions: requestOptions)
     }
 
-    /// To delete a specific certificate, send a DELETE request to `/v2/certificates/$CERTIFICATE_ID`.
+/// To delete a specific certificate, send a DELETE request to `/v2/certificates/$CERTIFICATE_ID`.
     public func delete(certificateId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        try await CertificatesMethods.certificatesDelete(
-            config: config,
-            certificateId: certificateId,
-            requestOptions: requestOptions
-        )
+        return try await CertificatesMethods.certificatesDelete(config: config, certificateId: certificateId, requestOptions: requestOptions)
     }
 }
 
@@ -335,136 +153,60 @@ public class BillingNamespace {
         self.config = config
     }
 
-    /// To retrieve the balances on a customer's account, send a GET request to `/v2/customers/my/balance`.
+/// To retrieve the balances on a customer's account, send a GET request to `/v2/customers/my/balance`.
     public func balanceGet(requestOptions: RequestOptions? = nil) async throws -> Balance {
-        try await BillingMethods.balanceGet(config: config, requestOptions: requestOptions)
+        return try await BillingMethods.balanceGet(config: config, requestOptions: requestOptions)
     }
 
-    /// To retrieve the prepayment configuration and current prepayment status for a customer's account, send a GET
-    /// request to `/v2/customers/my/prepayment_config`.
+/// To retrieve the prepayment configuration and current prepayment status for a customer's account, send a GET request to `/v2/customers/my/prepayment_config`.
     public func prepaymentConfigGet(requestOptions: RequestOptions? = nil) async throws -> PrepaymentConfigResponse {
-        try await BillingMethods.prepaymentConfigGet(config: config, requestOptions: requestOptions)
+        return try await BillingMethods.prepaymentConfigGet(config: config, requestOptions: requestOptions)
     }
 
-    /// To retrieve the prepayment gate status and balances for a customer's account, send a GET request to
-    /// `/v2/customers/my/prepayment_status`.
+/// To retrieve the prepayment gate status and balances for a customer's account, send a GET request to `/v2/customers/my/prepayment_status`.
     public func prepaymentStatusGet(requestOptions: RequestOptions? = nil) async throws -> PrepaymentStatusResponse {
-        try await BillingMethods.prepaymentStatusGet(config: config, requestOptions: requestOptions)
+        return try await BillingMethods.prepaymentStatusGet(config: config, requestOptions: requestOptions)
     }
 
-    /// To retrieve a list of all billing history entries, send a GET request to `/v2/customers/my/billing_history`.
+/// To retrieve a list of all billing history entries, send a GET request to `/v2/customers/my/billing_history`.
     public func historyList(requestOptions: RequestOptions? = nil) async throws -> BillingHistoryResponse {
-        try await BillingMethods.billingHistoryList(config: config, requestOptions: requestOptions)
+        return try await BillingMethods.billingHistoryList(config: config, requestOptions: requestOptions)
     }
 
-    /// To retrieve a list of all invoices, send a GET request to `/v2/customers/my/invoices`.
-    public func invoicesList(
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Invoices {
-        try await BillingMethods.invoicesList(
-            config: config,
-            perPage: perPage,
-            page: page,
-            requestOptions: requestOptions
-        )
+/// To retrieve a list of all invoices, send a GET request to `/v2/customers/my/invoices`.
+    public func invoicesList(perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> Invoices {
+        return try await BillingMethods.invoicesList(config: config, perPage: perPage, page: page, requestOptions: requestOptions)
     }
 
-    /// To retrieve the invoice items for an invoice, send a GET request to `/v2/customers/my/invoices/$INVOICE_UUID`.
-    public func invoicesGetByUuid(
-        invoiceUuid: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Invoice {
-        try await BillingMethods.invoicesGetByUuid(
-            config: config,
-            invoiceUuid: invoiceUuid,
-            perPage: perPage,
-            page: page,
-            requestOptions: requestOptions
-        )
+/// To retrieve the invoice items for an invoice, send a GET request to `/v2/customers/my/invoices/$INVOICE_UUID`.
+    public func invoicesGetByUuid(invoiceUuid: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> Invoice {
+        return try await BillingMethods.invoicesGetByUuid(config: config, invoiceUuid: invoiceUuid, perPage: perPage, page: page, requestOptions: requestOptions)
     }
 
-    /// To retrieve a CSV for an invoice, send a GET request to `/v2/customers/my/invoices/$INVOICE_UUID/csv`.
-    public func invoicesGetCsvByUuid(
-        invoiceUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> String {
-        try await BillingMethods.invoicesGetCsvByUuid(
-            config: config,
-            invoiceUuid: invoiceUuid,
-            requestOptions: requestOptions
-        )
+/// To retrieve a CSV for an invoice, send a GET request to `/v2/customers/my/invoices/$INVOICE_UUID/csv`.
+    public func invoicesGetCsvByUuid(invoiceUuid: String, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await BillingMethods.invoicesGetCsvByUuid(config: config, invoiceUuid: invoiceUuid, requestOptions: requestOptions)
     }
 
-    /// To retrieve a PDF for an invoice, send a GET request to `/v2/customers/my/invoices/$INVOICE_UUID/pdf`.
+/// To retrieve a PDF for an invoice, send a GET request to `/v2/customers/my/invoices/$INVOICE_UUID/pdf`.
     public func invoicesGetPdfByUuid(invoiceUuid: String, requestOptions: RequestOptions? = nil) async throws -> Data {
-        try await BillingMethods.invoicesGetPdfByUuid(
-            config: config,
-            invoiceUuid: invoiceUuid,
-            requestOptions: requestOptions
-        )
+        return try await BillingMethods.invoicesGetPdfByUuid(config: config, invoiceUuid: invoiceUuid, requestOptions: requestOptions)
     }
 }
 
-public extension BillingNamespace {
-    /// To retrieve a summary for an invoice, send a GET request to `/v2/customers/my/invoices/$INVOICE_UUID/summary`.
-    func invoicesGetSummaryByUuid(
-        invoiceUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> InvoiceSummary {
-        try await BillingMethods.invoicesGetSummaryByUuid(
-            config: config,
-            invoiceUuid: invoiceUuid,
-            requestOptions: requestOptions
-        )
+extension BillingNamespace {
+/// To retrieve a summary for an invoice, send a GET request to `/v2/customers/my/invoices/$INVOICE_UUID/summary`.
+    public func invoicesGetSummaryByUuid(invoiceUuid: String, requestOptions: RequestOptions? = nil) async throws -> InvoiceSummary {
+        return try await BillingMethods.invoicesGetSummaryByUuid(config: config, invoiceUuid: invoiceUuid, requestOptions: requestOptions)
     }
 
-    /// This endpoint returns day-over-day changes in billing resource usage based on nightly invoice items, including
-    /// total amount, region, SKU, and description for a specified date range. It is important to note that the daily
-    /// resource usage may not reflect month-end billing totals when totaled for a given month as nightly invoice item
-    /// estimates do not necessarily encompass all invoicing factors for the entire month.
-    func insightsList(
-        accountUrn: String,
-        startDate: String,
-        endDate: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> BillingInsights {
-        try await BillingMethods.billingInsightsList(
-            config: config,
-            accountUrn: accountUrn,
-            startDate: startDate,
-            endDate: endDate,
-            perPage: perPage,
-            page: page,
-            requestOptions: requestOptions
-        )
+/// This endpoint returns day-over-day changes in billing resource usage based on nightly invoice items, including total amount, region, SKU, and description for a specified date range. It is important to note that the daily resource usage may not reflect month-end billing totals when totaled for a given month as nightly invoice item estimates do not necessarily encompass all invoicing factors for the entire month.
+    public func insightsList(accountUrn: String, startDate: String, endDate: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> BillingInsights {
+        return try await BillingMethods.billingInsightsList(config: config, accountUrn: accountUrn, startDate: startDate, endDate: endDate, perPage: perPage, page: page, requestOptions: requestOptions)
     }
 
-    /// This endpoint returns day-over-day changes in billing resource usage based on nightly invoice items, including
-    /// total amount, region, SKU, and description for a specified date range. It is important to note that the daily
-    /// resource usage may not reflect month-end billing totals when totaled for a given month as nightly invoice item
-    /// estimates do not necessarily encompass all invoicing factors for the entire month.
-    func insightsListPaginated(
-        accountUrn: String,
-        startDate: String,
-        endDate: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<BillingDataPoint, Swift.Error> {
-        BillingMethods.billingInsightsListPaginated(
-            config: config,
-            accountUrn: accountUrn,
-            startDate: startDate,
-            endDate: endDate,
-            perPage: perPage,
-            page: page,
-            requestOptions: requestOptions
-        )
+/// This endpoint returns day-over-day changes in billing resource usage based on nightly invoice items, including total amount, region, SKU, and description for a specified date range. It is important to note that the daily resource usage may not reflect month-end billing totals when totaled for a given month as nightly invoice item estimates do not necessarily encompass all invoicing factors for the entire month.
+    public func insightsListPaginated(accountUrn: String, startDate: String, endDate: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<BillingDataPoint, Swift.Error> {
+        return BillingMethods.billingInsightsListPaginated(config: config, accountUrn: accountUrn, startDate: startDate, endDate: endDate, perPage: perPage, page: page, requestOptions: requestOptions)
     }
 }

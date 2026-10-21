@@ -3,9 +3,9 @@
 
 import Foundation
 
-/// InsightsLogs domain models
-public extension LogsFilterExpressionTextSearch {
-    init(query: String) {
+// InsightsLogs domain models
+extension LogsFilterExpressionTextSearch {
+    public init(query: String) {
         self.query = query
     }
 }
@@ -19,27 +19,21 @@ public struct LogsFilterExpressionOr: Codable {
         case expressions
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension LogsFilterExpressionOr {
-    init(from decoder: Decoder) throws {
+extension LogsFilterExpressionOr {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.expressions) else {
-            throw SdkValidationError(
-                field: "expressions",
-                code: "required",
-                message: "Validation failed for 'expressions': value is required"
-            )
+            throw SdkValidationError(field: "expressions", code: "required", message: "Validation failed for 'expressions': value is required")
         }
-        expressions = try container.sdkDecodeRequired(.expressions)
+        self.expressions = try container.sdkDecodeRequired(.expressions)
     }
 }
 
-public extension LogsFilterExpressionOr {
-    init(expressions: [LogsFilterExpression]) {
+extension LogsFilterExpressionOr {
+    public init(expressions: [LogsFilterExpression]) {
         self.expressions = expressions
     }
 }
@@ -69,29 +63,23 @@ public struct LogsFilterValue: Codable {
     }
 
     init() {
-        (stringValue, numberValue, boolValue, stringArrayValue, numberArrayValue) = (nil, nil, nil, nil, nil)
+        (self.stringValue, self.numberValue, self.boolValue, self.stringArrayValue, self.numberArrayValue) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension LogsFilterValue {
-    init(from decoder: Decoder) throws {
+extension LogsFilterValue {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        stringValue = try container.sdkDecodeIfPresent(.stringValue)
-        numberValue = try container.sdkDecodeIfPresent(.numberValue)
-        boolValue = try container.sdkDecodeIfPresent(.boolValue)
-        stringArrayValue = try container.sdkDecodeIfPresent(.stringArrayValue)
-        numberArrayValue = try container.sdkDecodeIfPresent(.numberArrayValue)
+        self.stringValue = try container.sdkDecodeIfPresent(.stringValue)
+        self.numberValue = try container.sdkDecodeIfPresent(.numberValue)
+        self.boolValue = try container.sdkDecodeIfPresent(.boolValue)
+        self.stringArrayValue = try container.sdkDecodeIfPresent(.stringArrayValue)
+        self.numberArrayValue = try container.sdkDecodeIfPresent(.numberArrayValue)
     }
 }
 
-public extension LogsFilterValue {
-    init(
-        stringValue: String? = nil,
-        numberValue: Double? = nil,
-        boolValue: Bool? = nil,
-        stringArrayValue: LogsFilterValueStringArrayValue? = nil,
-        numberArrayValue: LogsFilterValueNumberArrayValue? = nil
-    ) {
+extension LogsFilterValue {
+    public init(stringValue: String? = nil, numberValue: Double? = nil, boolValue: Bool? = nil, stringArrayValue: LogsFilterValueStringArrayValue? = nil, numberArrayValue: LogsFilterValueNumberArrayValue? = nil) {
         self.init()
         (self.stringValue, self.numberValue) = (stringValue, numberValue)
         (self.boolValue, self.stringArrayValue) = (boolValue, stringArrayValue)
@@ -111,35 +99,25 @@ public struct LogsTimeRange: Codable {
         case to
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension LogsTimeRange {
-    init(from decoder: Decoder) throws {
+extension LogsTimeRange {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.from) else {
-            throw SdkValidationError(
-                field: "from",
-                code: "required",
-                message: "Validation failed for 'from': value is required"
-            )
+            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
         }
         guard container.contains(.to) else {
-            throw SdkValidationError(
-                field: "to",
-                code: "required",
-                message: "Validation failed for 'to': value is required"
-            )
+            throw SdkValidationError(field: "to", code: "required", message: "Validation failed for 'to': value is required")
         }
-        from = try container.sdkDecodeRequired(.from)
-        to = try container.sdkDecodeRequired(.to)
+        self.from = try container.sdkDecodeRequired(.from)
+        self.to = try container.sdkDecodeRequired(.to)
     }
 }
 
-public extension LogsTimeRange {
-    init(from: LogsTimeInstant, to: LogsTimeInstant) {
+extension LogsTimeRange {
+    public init(from: LogsTimeInstant, to: LogsTimeInstant) {
         (self.from, self.to) = (from, to)
     }
 }
@@ -149,16 +127,13 @@ public extension LogsTimeRange {
 public struct LogsFieldRefScope: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let fieldScopeResource = LogsFieldRefScope(rawValue: "FIELD_SCOPE_RESOURCE")
     public static let fieldScopeAttributes = LogsFieldRefScope(rawValue: "FIELD_SCOPE_ATTRIBUTES")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -171,16 +146,13 @@ public struct LogsFieldRefScope: RawRepresentable, Hashable, Codable, Sendable, 
 public struct LogsOrderByDirection: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let sortDirectionAsc = LogsOrderByDirection(rawValue: "SORT_DIRECTION_ASC")
     public static let sortDirectionDesc = LogsOrderByDirection(rawValue: "SORT_DIRECTION_DESC")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -193,10 +165,7 @@ public struct LogsOrderByDirection: RawRepresentable, Hashable, Codable, Sendabl
 public struct LogsFilterConditionOperator: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let filterOperatorEq = LogsFilterConditionOperator(rawValue: "FILTER_OPERATOR_EQ")
     public static let filterOperatorNeq = LogsFilterConditionOperator(rawValue: "FILTER_OPERATOR_NEQ")
     public static let filterOperatorIn = LogsFilterConditionOperator(rawValue: "FILTER_OPERATOR_IN")
@@ -206,7 +175,7 @@ public struct LogsFilterConditionOperator: RawRepresentable, Hashable, Codable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

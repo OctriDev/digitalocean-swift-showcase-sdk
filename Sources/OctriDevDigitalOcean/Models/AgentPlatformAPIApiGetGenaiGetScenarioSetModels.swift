@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiGet domain models
+// AgentPlatformAPIApiGet domain models
 /// Output for getting a scenario set.
 public struct ApiGetScenarioSetOutput: Codable {
     /// A team-owned collection of scenarios.
@@ -14,19 +14,19 @@ public struct ApiGetScenarioSetOutput: Codable {
     }
 
     init() {
-        scenarioSet = nil
+        self.scenarioSet = nil
     }
 }
 
-public extension ApiGetScenarioSetOutput {
-    init(from decoder: Decoder) throws {
+extension ApiGetScenarioSetOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        scenarioSet = try container.sdkDecodeIfPresent(.scenarioSet)
+        self.scenarioSet = try container.sdkDecodeIfPresent(.scenarioSet)
     }
 }
 
-public extension ApiGetScenarioSetOutput {
-    init(scenarioSet: ApiScenarioSet? = nil) {
+extension ApiGetScenarioSetOutput {
+    public init(scenarioSet: ApiScenarioSet? = nil) {
         self.init()
         self.scenarioSet = scenarioSet
     }

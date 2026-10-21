@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiList domain models
+// AgentPlatformAPIApiList domain models
 /// Output for listing evaluation datasets.
 public struct ApiListEvaluationDatasetsOutput: Codable {
     /// The list of evaluation datasets.
@@ -14,19 +14,19 @@ public struct ApiListEvaluationDatasetsOutput: Codable {
     }
 
     init() {
-        evaluationDatasets = nil
+        self.evaluationDatasets = nil
     }
 }
 
-public extension ApiListEvaluationDatasetsOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListEvaluationDatasetsOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        evaluationDatasets = try container.sdkDecodeIfPresent(.evaluationDatasets)
+        self.evaluationDatasets = try container.sdkDecodeIfPresent(.evaluationDatasets)
     }
 }
 
-public extension ApiListEvaluationDatasetsOutput {
-    init(evaluationDatasets: [ApiEvaluationDataset]? = nil) {
+extension ApiListEvaluationDatasetsOutput {
+    public init(evaluationDatasets: [ApiEvaluationDataset]? = nil) {
         self.init()
         self.evaluationDatasets = evaluationDatasets
     }

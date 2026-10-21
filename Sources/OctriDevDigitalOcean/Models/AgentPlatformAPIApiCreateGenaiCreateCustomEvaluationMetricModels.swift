@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiCreate domain models
+// AgentPlatformAPIApiCreate domain models
 /// Typed representation of the `ApiCreateCustomEvaluationMetricInputPublic` API schema.
 public struct ApiCreateCustomEvaluationMetricInputPublic: Codable {
     /// Configuration for a custom model-evaluation metric scored by an LLM judge. Prompt and model response are
@@ -23,21 +23,21 @@ public struct ApiCreateCustomEvaluationMetricInputPublic: Codable {
     }
 
     init() {
-        (config, description, metricName) = (nil, nil, nil)
+        (self.config, self.description, self.metricName) = (nil, nil, nil)
     }
 }
 
-public extension ApiCreateCustomEvaluationMetricInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiCreateCustomEvaluationMetricInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        config = try container.sdkDecodeIfPresent(.config)
-        description = try container.sdkDecodeIfPresent(.description)
-        metricName = try container.sdkDecodeIfPresent(.metricName)
+        self.config = try container.sdkDecodeIfPresent(.config)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.metricName = try container.sdkDecodeIfPresent(.metricName)
     }
 }
 
-public extension ApiCreateCustomEvaluationMetricInputPublic {
-    init(config: ApiCustomEvaluationMetricConfig? = nil, description: String? = nil, metricName: String? = nil) {
+extension ApiCreateCustomEvaluationMetricInputPublic {
+    public init(config: ApiCustomEvaluationMetricConfig? = nil, description: String? = nil, metricName: String? = nil) {
         self.init()
         (self.config, self.description) = (config, description)
         self.metricName = metricName
@@ -54,19 +54,19 @@ public struct ApiCreateCustomEvaluationMetricOutput: Codable {
     }
 
     init() {
-        metric = nil
+        self.metric = nil
     }
 }
 
-public extension ApiCreateCustomEvaluationMetricOutput {
-    init(from decoder: Decoder) throws {
+extension ApiCreateCustomEvaluationMetricOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        metric = try container.sdkDecodeIfPresent(.metric)
+        self.metric = try container.sdkDecodeIfPresent(.metric)
     }
 }
 
-public extension ApiCreateCustomEvaluationMetricOutput {
-    init(metric: ApiEvaluationMetric? = nil) {
+extension ApiCreateCustomEvaluationMetricOutput {
+    public init(metric: ApiEvaluationMetric? = nil) {
         self.init()
         self.metric = metric
     }

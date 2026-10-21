@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiToken domain models
+// AgentPlatformAPIApiToken domain models
 /// Typed representation of the `ApiTokenUsage` API schema.
 public struct ApiTokenUsage: Codable {
     /// Optional `uint64`-formatted value serialized in the `total_candidate_input_tokens` wire field.
@@ -35,38 +35,25 @@ public struct ApiTokenUsage: Codable {
     }
 
     init() {
-        (
-            totalCandidateInputTokens,
-            totalCandidateOutputTokens,
-            totalCandidateTokens,
-            totalJudgeInputTokens,
-            totalJudgeOutputTokens
-        ) = (nil, nil, nil, nil, nil)
-        totalJudgeTokens = nil
+        (self.totalCandidateInputTokens, self.totalCandidateOutputTokens, self.totalCandidateTokens, self.totalJudgeInputTokens, self.totalJudgeOutputTokens) = (nil, nil, nil, nil, nil)
+        self.totalJudgeTokens = nil
     }
 }
 
-public extension ApiTokenUsage {
-    init(from decoder: Decoder) throws {
+extension ApiTokenUsage {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        totalCandidateInputTokens = try container.sdkDecodeIfPresent(.totalCandidateInputTokens)
-        totalCandidateOutputTokens = try container.sdkDecodeIfPresent(.totalCandidateOutputTokens)
-        totalCandidateTokens = try container.sdkDecodeIfPresent(.totalCandidateTokens)
-        totalJudgeInputTokens = try container.sdkDecodeIfPresent(.totalJudgeInputTokens)
-        totalJudgeOutputTokens = try container.sdkDecodeIfPresent(.totalJudgeOutputTokens)
-        totalJudgeTokens = try container.sdkDecodeIfPresent(.totalJudgeTokens)
+        self.totalCandidateInputTokens = try container.sdkDecodeIfPresent(.totalCandidateInputTokens)
+        self.totalCandidateOutputTokens = try container.sdkDecodeIfPresent(.totalCandidateOutputTokens)
+        self.totalCandidateTokens = try container.sdkDecodeIfPresent(.totalCandidateTokens)
+        self.totalJudgeInputTokens = try container.sdkDecodeIfPresent(.totalJudgeInputTokens)
+        self.totalJudgeOutputTokens = try container.sdkDecodeIfPresent(.totalJudgeOutputTokens)
+        self.totalJudgeTokens = try container.sdkDecodeIfPresent(.totalJudgeTokens)
     }
 }
 
-public extension ApiTokenUsage {
-    init(
-        totalCandidateInputTokens: String? = nil,
-        totalCandidateOutputTokens: String? = nil,
-        totalCandidateTokens: String? = nil,
-        totalJudgeInputTokens: String? = nil,
-        totalJudgeOutputTokens: String? = nil,
-        totalJudgeTokens: String? = nil
-    ) {
+extension ApiTokenUsage {
+    public init(totalCandidateInputTokens: String? = nil, totalCandidateOutputTokens: String? = nil, totalCandidateTokens: String? = nil, totalJudgeInputTokens: String? = nil, totalJudgeOutputTokens: String? = nil, totalJudgeTokens: String? = nil) {
         self.init()
         self.totalCandidateInputTokens = totalCandidateInputTokens
         self.totalCandidateOutputTokens = totalCandidateOutputTokens
@@ -95,21 +82,21 @@ public struct ApiTokenPricing: Codable {
     }
 
     init() {
-        (inputCost, outputCost, totalCost) = (nil, nil, nil)
+        (self.inputCost, self.outputCost, self.totalCost) = (nil, nil, nil)
     }
 }
 
-public extension ApiTokenPricing {
-    init(from decoder: Decoder) throws {
+extension ApiTokenPricing {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        inputCost = try container.sdkDecodeIfPresent(.inputCost)
-        outputCost = try container.sdkDecodeIfPresent(.outputCost)
-        totalCost = try container.sdkDecodeIfPresent(.totalCost)
+        self.inputCost = try container.sdkDecodeIfPresent(.inputCost)
+        self.outputCost = try container.sdkDecodeIfPresent(.outputCost)
+        self.totalCost = try container.sdkDecodeIfPresent(.totalCost)
     }
 }
 
-public extension ApiTokenPricing {
-    init(inputCost: Double? = nil, outputCost: Double? = nil, totalCost: Double? = nil) {
+extension ApiTokenPricing {
+    public init(inputCost: Double? = nil, outputCost: Double? = nil, totalCost: Double? = nil) {
         self.init()
         (self.inputCost, self.outputCost) = (inputCost, outputCost)
         self.totalCost = totalCost

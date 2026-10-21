@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-/// Canonical reservedIPv6Actions operation model declarations
+// Canonical reservedIPv6Actions operation model declarations
 public indirect enum ReservedIPv6ActionsPostRequestBody {
     case reservedIpv6ActionUnassign(ReservedIpv6ActionUnassign)
     case reservedIpv6ActionAssign(ReservedIpv6ActionAssign)
@@ -16,6 +16,7 @@ public indirect enum ReservedIPv6ActionsPostRequestBody {
 }
 
 extension ReservedIPv6ActionsPostRequestBody: Codable {
+
     private enum CodingKeys: String, CodingKey {
         case discriminator = "type"
     }
@@ -23,16 +24,12 @@ extension ReservedIPv6ActionsPostRequestBody: Codable {
     public init(from decoder: Decoder) throws {
         let tagged = try decoder.container(keyedBy: CodingKeys.self)
         let discriminator = try tagged.decode(String.self, forKey: .discriminator)
-        if let value = try Self.decodeGroup1(discriminator, from: decoder) {
-            self = value; return
-        }
+        if let value = try Self.decodeGroup1(discriminator, from: decoder) { self = value; return }
         self = try .unknown(tag: discriminator, raw: JSONValue(from: decoder))
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
         if case let .unknown(_, raw) = self {
             var container = encoder.singleValueContainer()
             try container.encode(raw)
@@ -43,9 +40,9 @@ extension ReservedIPv6ActionsPostRequestBody: Codable {
 extension ReservedIPv6ActionsPostRequestBody {
     static func decodeGroup1(_ discriminator: String, from decoder: Decoder) throws -> Self? {
         switch discriminator {
-        case "unassign": try .reservedIpv6ActionUnassign(ReservedIpv6ActionUnassign(from: decoder))
-        case "assign": try .reservedIpv6ActionAssign(ReservedIpv6ActionAssign(from: decoder))
-        default: nil
+        case "unassign": return .reservedIpv6ActionUnassign(try ReservedIpv6ActionUnassign(from: decoder))
+        case "assign": return .reservedIpv6ActionAssign(try ReservedIpv6ActionAssign(from: decoder))
+        default: return nil
         }
     }
 }

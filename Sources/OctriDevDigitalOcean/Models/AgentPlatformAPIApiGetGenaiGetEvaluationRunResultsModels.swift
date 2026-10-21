@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiGet domain models
+// AgentPlatformAPIApiGet domain models
 /// Gets the full results of an evaluation run with all prompts.
 public struct ApiGetEvaluationRunResultsOutput: Codable {
     /// Optional object value serialized in the `evaluation_run` wire field.
@@ -23,27 +23,22 @@ public struct ApiGetEvaluationRunResultsOutput: Codable {
     }
 
     init() {
-        (evaluationRun, links, meta, prompts) = (nil, nil, nil, nil)
+        (self.evaluationRun, self.links, self.meta, self.prompts) = (nil, nil, nil, nil)
     }
 }
 
-public extension ApiGetEvaluationRunResultsOutput {
-    init(from decoder: Decoder) throws {
+extension ApiGetEvaluationRunResultsOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        evaluationRun = try container.sdkDecodeIfPresent(.evaluationRun)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
-        prompts = try container.sdkDecodeIfPresent(.prompts)
+        self.evaluationRun = try container.sdkDecodeIfPresent(.evaluationRun)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
+        self.prompts = try container.sdkDecodeIfPresent(.prompts)
     }
 }
 
-public extension ApiGetEvaluationRunResultsOutput {
-    init(
-        evaluationRun: ApiEvaluationRun? = nil,
-        links: ApiLinks? = nil,
-        meta: ApiMeta? = nil,
-        prompts: [ApiPrompt]? = nil
-    ) {
+extension ApiGetEvaluationRunResultsOutput {
+    public init(evaluationRun: ApiEvaluationRun? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil, prompts: [ApiPrompt]? = nil) {
         self.init()
         (self.evaluationRun, self.links) = (evaluationRun, links)
         (self.meta, self.prompts) = (meta, prompts)

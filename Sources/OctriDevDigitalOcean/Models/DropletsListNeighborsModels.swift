@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Droplets domain models
+// Droplets domain models
 /// Typed representation of the `NeighborDroplets` API schema.
 public struct NeighborDroplets: Codable {
     public var droplets: [Droplet]?
@@ -13,19 +13,19 @@ public struct NeighborDroplets: Codable {
     }
 
     init() {
-        droplets = nil
+        self.droplets = nil
     }
 }
 
-public extension NeighborDroplets {
-    init(from decoder: Decoder) throws {
+extension NeighborDroplets {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        droplets = try container.sdkDecodeIfPresent(.droplets)
+        self.droplets = try container.sdkDecodeIfPresent(.droplets)
     }
 }
 
-public extension NeighborDroplets {
-    init(droplets: [Droplet]? = nil) {
+extension NeighborDroplets {
+    public init(droplets: [Droplet]? = nil) {
         self.init()
         self.droplets = droplets
     }
@@ -39,19 +39,19 @@ public struct NeighborDropletsVariant0: Codable {
     }
 
     init() {
-        droplets = nil
+        self.droplets = nil
     }
 }
 
-public extension NeighborDropletsVariant0 {
-    init(from decoder: Decoder) throws {
+extension NeighborDropletsVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        droplets = try container.sdkDecodeIfPresent(.droplets)
+        self.droplets = try container.sdkDecodeIfPresent(.droplets)
     }
 }
 
-public extension NeighborDropletsVariant0 {
-    init(droplets: [Droplet]? = nil) {
+extension NeighborDropletsVariant0 {
+    public init(droplets: [Droplet]? = nil) {
         self.init()
         self.droplets = droplets
     }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Regions domain models
+// Regions domain models
 public struct AllRegionsVariant0: Codable {
     public var regions: [Region]
 
@@ -11,27 +11,21 @@ public struct AllRegionsVariant0: Codable {
         case regions
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllRegionsVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllRegionsVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.regions) else {
-            throw SdkValidationError(
-                field: "regions",
-                code: "required",
-                message: "Validation failed for 'regions': value is required"
-            )
+            throw SdkValidationError(field: "regions", code: "required", message: "Validation failed for 'regions': value is required")
         }
-        regions = try container.sdkDecodeRequired(.regions)
+        self.regions = try container.sdkDecodeRequired(.regions)
     }
 }
 
-public extension AllRegionsVariant0 {
-    init(regions: [Region]) {
+extension AllRegionsVariant0 {
+    public init(regions: [Region]) {
         self.regions = regions
     }
 }
@@ -50,36 +44,26 @@ public struct AllRegions: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllRegions {
-    init(from decoder: Decoder) throws {
+extension AllRegions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.regions) else {
-            throw SdkValidationError(
-                field: "regions",
-                code: "required",
-                message: "Validation failed for 'regions': value is required"
-            )
+            throw SdkValidationError(field: "regions", code: "required", message: "Validation failed for 'regions': value is required")
         }
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        regions = try container.sdkDecodeRequired(.regions)
-        meta = try container.sdkDecodeRequired(.meta)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.regions = try container.sdkDecodeRequired(.regions)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllRegions {
-    init(regions: [Region], meta: MetaMeta, links: PageLinks? = nil) {
+extension AllRegions {
+    public init(regions: [Region], meta: MetaMeta, links: PageLinks? = nil) {
         (self.regions, self.meta) = (regions, meta)
         self.links = links
     }

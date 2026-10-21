@@ -6,10 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ActionGatewayDataPlaneMethods {
-    /// Approves or denies a tool call that is waiting for approval, identifying the session with the `X-Session-Id`
-    /// header. It behaves the same as `POST /approvals/session/{session_id}/{approval_id}`, which is the path returned
-    /// in a result's `_meta.decide`.
+extension ActionGatewayDataPlaneMethods {
+    /// Approves or denies a tool call that is waiting for approval, identifying the session with the `X-Session-Id` header. It behaves the same as `POST /approvals/session/{session_id}/{approval_id}`, which is the path returned in a result's `_meta.decide`.
     ///
     /// - Parameters:
     /// - approvalId: The `approval_id` from a tool result whose `_meta.status` is
@@ -18,41 +16,15 @@ public extension ActionGatewayDataPlaneMethods {
     ///   `sessionUrn` and `mcpUrl`. The session must belong to the authenticated user
     ///   and team.
     /// - decision: Whether to let the pending call run.
-    static func gatewayApprovalsUpdate(
-        config: ClientConfig,
-        approvalId: String,
-        xSessionId: String,
-        decision: ApprovalDecisionDecision,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApprovalDecisionResponse {
+    public static func gatewayApprovalsUpdate(config: ClientConfig, approvalId: String, xSessionId: String, decision: ApprovalDecisionDecision, requestOptions: RequestOptions? = nil) async throws -> ApprovalDecisionResponse {
         try sdkValidateUuid("approval_id", approvalId)
 
         try sdkValidateUuid("X-Session-Id", xSessionId)
 
         let requestBody = GatewayApprovalsUpdateRequestBody(decision: decision)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/approvals/", sdkEncodePathSegment(sdkWireString(approvalId))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "gatewayApprovals_update",
-            extraHeaders: sdkHeaders([
-                ("X-Session-Id", sdkHeaderValue(xSessionId)),
-            ]),
-            options: requestOptions,
-            errors: [
-                "400": ToolResultError.self,
-                "401": Error2.self,
-                "403": Forbidden.self,
-                "404": ToolResultError.self,
-                "409": ToolResultError.self,
-                "412": ToolResultError.self,
-                "429": ToolResultError.self,
-                "500": ToolResultError.self,
-                "503": ToolResultError.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/approvals/", sdkEncodePathSegment(sdkWireString(approvalId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "gatewayApprovals_update", extraHeaders: sdkHeaders([
+            ("X-Session-Id", sdkHeaderValue(xSessionId)),
+        ]), options: requestOptions, errors: ["400": ToolResultError.self, "401": Error2.self, "403": Forbidden.self, "404": ToolResultError.self, "409": ToolResultError.self, "412": ToolResultError.self, "429": ToolResultError.self, "500": ToolResultError.self, "503": ToolResultError.self])).data
     }
 }

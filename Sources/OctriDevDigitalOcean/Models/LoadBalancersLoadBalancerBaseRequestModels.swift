@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// LoadBalancers domain models
+// LoadBalancers domain models
 /// Typed representation of the `LoadBalancerBaseRequest` API schema.
 public struct LoadBalancerBaseRequest: Codable {
     /// An array of objects specifying the forwarding rules for a load balancer.
@@ -112,102 +112,56 @@ public struct LoadBalancerBaseRequest: Codable {
         case tlsCipherPolicy = "tls_cipher_policy"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension LoadBalancerBaseRequest {
-    init(from decoder: Decoder) throws {
+extension LoadBalancerBaseRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.forwardingRules) else {
-            throw SdkValidationError(
-                field: "forwarding_rules",
-                code: "required",
-                message: "Validation failed for 'forwarding_rules': value is required"
-            )
+            throw SdkValidationError(field: "forwarding_rules", code: "required", message: "Validation failed for 'forwarding_rules': value is required")
         }
-        forwardingRules = try container.sdkDecodeRequired(.forwardingRules)
-        name = try container.sdkDecodeIfPresent(.name)
-        projectId = try container.sdkDecodeIfPresent(.projectId)
-        sizeUnit = try container.sdkDecodeIfPresent(.sizeUnit)
-        size = try container.sdkDecodeIfPresent(.size)
-        algorithm = try container.sdkDecodeIfPresent(.algorithm)
-        healthCheck = try container.sdkDecodeIfPresent(.healthCheck)
-        stickySessions = try container.sdkDecodeIfPresent(.stickySessions)
-        redirectHttpToHttps = try container.sdkDecodeIfPresent(.redirectHttpToHttps)
-        enableProxyProtocol = try container.sdkDecodeIfPresent(.enableProxyProtocol)
-        enableBackendKeepalive = try container.sdkDecodeIfPresent(.enableBackendKeepalive)
-        httpIdleTimeoutSeconds = try container.sdkDecodeIfPresent(.httpIdleTimeoutSeconds)
-        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
-        disableLetsEncryptDnsRecords = try container.sdkDecodeIfPresent(.disableLetsEncryptDnsRecords)
-        firewall = try container.sdkDecodeIfPresent(.firewall)
-        network = try container.sdkDecodeIfPresent(.network)
-        networkStack = try container.sdkDecodeIfPresent(.networkStack)
-        type = try container.sdkDecodeIfPresent(.type)
-        domains = try container.sdkDecodeIfPresent(.domains)
-        glbSettings = try container.sdkDecodeIfPresent(.glbSettings)
-        targetLoadBalancerIds = try container.sdkDecodeIfPresent(.targetLoadBalancerIds)
-        tlsCipherPolicy = try container.sdkDecodeIfPresent(.tlsCipherPolicy)
-        try validateItems("forwarding_rules", forwardingRules, min: 1, max: nil)
-        if let value = sizeUnit {
-            try validateRange(
-                "size_unit",
-                Double(value),
-                min: 1,
-                max: 100,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.forwardingRules = try container.sdkDecodeRequired(.forwardingRules)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.projectId = try container.sdkDecodeIfPresent(.projectId)
+        self.sizeUnit = try container.sdkDecodeIfPresent(.sizeUnit)
+        self.size = try container.sdkDecodeIfPresent(.size)
+        self.algorithm = try container.sdkDecodeIfPresent(.algorithm)
+        self.healthCheck = try container.sdkDecodeIfPresent(.healthCheck)
+        self.stickySessions = try container.sdkDecodeIfPresent(.stickySessions)
+        self.redirectHttpToHttps = try container.sdkDecodeIfPresent(.redirectHttpToHttps)
+        self.enableProxyProtocol = try container.sdkDecodeIfPresent(.enableProxyProtocol)
+        self.enableBackendKeepalive = try container.sdkDecodeIfPresent(.enableBackendKeepalive)
+        self.httpIdleTimeoutSeconds = try container.sdkDecodeIfPresent(.httpIdleTimeoutSeconds)
+        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        self.subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
+        self.disableLetsEncryptDnsRecords = try container.sdkDecodeIfPresent(.disableLetsEncryptDnsRecords)
+        self.firewall = try container.sdkDecodeIfPresent(.firewall)
+        self.network = try container.sdkDecodeIfPresent(.network)
+        self.networkStack = try container.sdkDecodeIfPresent(.networkStack)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.domains = try container.sdkDecodeIfPresent(.domains)
+        self.glbSettings = try container.sdkDecodeIfPresent(.glbSettings)
+        self.targetLoadBalancerIds = try container.sdkDecodeIfPresent(.targetLoadBalancerIds)
+        self.tlsCipherPolicy = try container.sdkDecodeIfPresent(.tlsCipherPolicy)
+            try validateItems("forwarding_rules", self.forwardingRules, min: 1, max: nil)
+        if let value = self.sizeUnit {
+            try validateRange("size_unit", Double(value), min: 1, max: 100, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = httpIdleTimeoutSeconds {
-            try validateRange(
-                "http_idle_timeout_seconds",
-                Double(value),
-                min: 30,
-                max: 600,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.httpIdleTimeoutSeconds {
+            try validateRange("http_idle_timeout_seconds", Double(value), min: 30, max: 600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = vpcUuid {
+        if let value = self.vpcUuid {
             try sdkValidateUuid("vpc_uuid", value)
         }
-        if let value = subnetUuid {
+        if let value = self.subnetUuid {
             try sdkValidateUuid("subnet_uuid", value)
         }
     }
 }
 
-public extension LoadBalancerBaseRequest {
-    init(
-        forwardingRules: [ForwardingRule],
-        name: String? = nil,
-        projectId: String? = nil,
-        sizeUnit: Int? = nil,
-        size: LoadBalancerBaseRequestSize? = nil,
-        algorithm: LoadBalancerBaseRequestAlgorithm? = nil,
-        healthCheck: HealthCheck? = nil,
-        stickySessions: StickySessions? = nil,
-        redirectHttpToHttps: Bool? = nil,
-        enableProxyProtocol: Bool? = nil,
-        enableBackendKeepalive: Bool? = nil,
-        httpIdleTimeoutSeconds: Int? = nil,
-        vpcUuid: String? = nil,
-        subnetUuid: String? = nil,
-        disableLetsEncryptDnsRecords: Bool? = nil,
-        firewall: LbFirewall? = nil,
-        network: LoadBalancerBaseRequestNetwork? = nil,
-        networkStack: LoadBalancerBaseRequestNetworkStack? = nil,
-        type: LoadBalancerBaseRequestType? = nil,
-        domains: [Domains]? = nil,
-        glbSettings: GlbSettings? = nil,
-        targetLoadBalancerIds: [String]? = nil,
-        tlsCipherPolicy: LoadBalancerBaseRequestTlsCipherPolicy? = nil
-    ) throws {
+extension LoadBalancerBaseRequest {
+    public init(forwardingRules: [ForwardingRule], name: String? = nil, projectId: String? = nil, sizeUnit: Int? = nil, size: LoadBalancerBaseRequestSize? = nil, algorithm: LoadBalancerBaseRequestAlgorithm? = nil, healthCheck: HealthCheck? = nil, stickySessions: StickySessions? = nil, redirectHttpToHttps: Bool? = nil, enableProxyProtocol: Bool? = nil, enableBackendKeepalive: Bool? = nil, httpIdleTimeoutSeconds: Int? = nil, vpcUuid: String? = nil, subnetUuid: String? = nil, disableLetsEncryptDnsRecords: Bool? = nil, firewall: LbFirewall? = nil, network: LoadBalancerBaseRequestNetwork? = nil, networkStack: LoadBalancerBaseRequestNetworkStack? = nil, type: LoadBalancerBaseRequestType? = nil, domains: [Domains]? = nil, glbSettings: GlbSettings? = nil, targetLoadBalancerIds: [String]? = nil, tlsCipherPolicy: LoadBalancerBaseRequestTlsCipherPolicy? = nil) throws {
         (self.forwardingRules, self.name) = (forwardingRules, name)
         (self.projectId, self.sizeUnit) = (projectId, sizeUnit)
         (self.size, self.algorithm) = (size, algorithm)
@@ -220,28 +174,12 @@ public extension LoadBalancerBaseRequest {
         (self.networkStack, self.type) = (networkStack, type)
         (self.domains, self.glbSettings) = (domains, glbSettings)
         (self.targetLoadBalancerIds, self.tlsCipherPolicy) = (targetLoadBalancerIds, tlsCipherPolicy)
-        try validateItems("forwarding_rules", self.forwardingRules, min: 1, max: nil)
+            try validateItems("forwarding_rules", self.forwardingRules, min: 1, max: nil)
         if let value = self.sizeUnit {
-            try validateRange(
-                "size_unit",
-                Double(value),
-                min: 1,
-                max: 100,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("size_unit", Double(value), min: 1, max: 100, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.httpIdleTimeoutSeconds {
-            try validateRange(
-                "http_idle_timeout_seconds",
-                Double(value),
-                min: 30,
-                max: 600,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("http_idle_timeout_seconds", Double(value), min: 30, max: 600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.vpcUuid {
             try sdkValidateUuid("vpc_uuid", value)
@@ -257,16 +195,13 @@ public extension LoadBalancerBaseRequest {
 public struct StickySessionsType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let cookies = StickySessionsType(rawValue: "cookies")
     public static let none = StickySessionsType(rawValue: "none")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -280,17 +215,14 @@ public struct StickySessionsType: RawRepresentable, Hashable, Codable, Sendable,
 public struct LoadBalancerBaseType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let regional = LoadBalancerBaseType(rawValue: "REGIONAL")
     public static let regionalNetwork = LoadBalancerBaseType(rawValue: "REGIONAL_NETWORK")
     public static let global = LoadBalancerBaseType(rawValue: "GLOBAL")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -301,20 +233,16 @@ public struct LoadBalancerBaseType: RawRepresentable, Hashable, Codable, Sendabl
 
 /// A string indicating the policy for the TLS cipher suites used by the load balancer. The possible values are
 /// `DEFAULT` or `STRONG`. The default value is `DEFAULT`.
-public struct LoadBalancerBaseRequestTlsCipherPolicy: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct LoadBalancerBaseRequestTlsCipherPolicy: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let `default` = LoadBalancerBaseRequestTlsCipherPolicy(rawValue: "DEFAULT")
     public static let strong = LoadBalancerBaseRequestTlsCipherPolicy(rawValue: "STRONG")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -327,16 +255,13 @@ public struct LoadBalancerBaseRequestTlsCipherPolicy: RawRepresentable, Hashable
 public struct LoadBalancerBaseAlgorithm: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let roundRobin = LoadBalancerBaseAlgorithm(rawValue: "round_robin")
     public static let leastConnections = LoadBalancerBaseAlgorithm(rawValue: "least_connections")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -351,16 +276,13 @@ public struct LoadBalancerBaseAlgorithm: RawRepresentable, Hashable, Codable, Se
 public struct LoadBalancerBaseNetwork: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let external = LoadBalancerBaseNetwork(rawValue: "EXTERNAL")
     public static let `internal` = LoadBalancerBaseNetwork(rawValue: "INTERNAL")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -374,17 +296,14 @@ public struct LoadBalancerBaseNetwork: RawRepresentable, Hashable, Codable, Send
 public struct GlbSettingsTargetProtocol: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let http = GlbSettingsTargetProtocol(rawValue: "http")
     public static let https = GlbSettingsTargetProtocol(rawValue: "https")
     public static let http2 = GlbSettingsTargetProtocol(rawValue: "http2")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -400,17 +319,14 @@ public struct GlbSettingsTargetProtocol: RawRepresentable, Hashable, Codable, Se
 public struct LoadBalancerBaseSize: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let lbSmall = LoadBalancerBaseSize(rawValue: "lb-small")
     public static let lbMedium = LoadBalancerBaseSize(rawValue: "lb-medium")
     public static let lbLarge = LoadBalancerBaseSize(rawValue: "lb-large")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -426,17 +342,14 @@ public struct LoadBalancerBaseSize: RawRepresentable, Hashable, Codable, Sendabl
 public struct LoadBalancerBaseRequestSize: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let lbSmall = LoadBalancerBaseRequestSize(rawValue: "lb-small")
     public static let lbMedium = LoadBalancerBaseRequestSize(rawValue: "lb-medium")
     public static let lbLarge = LoadBalancerBaseRequestSize(rawValue: "lb-large")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -450,16 +363,13 @@ public struct LoadBalancerBaseRequestSize: RawRepresentable, Hashable, Codable, 
 public struct LoadBalancerBaseTlsCipherPolicy: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let `default` = LoadBalancerBaseTlsCipherPolicy(rawValue: "DEFAULT")
     public static let strong = LoadBalancerBaseTlsCipherPolicy(rawValue: "STRONG")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -473,16 +383,13 @@ public struct LoadBalancerBaseTlsCipherPolicy: RawRepresentable, Hashable, Codab
 public struct LoadBalancerBaseRequestNetworkStack: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let ipv4 = LoadBalancerBaseRequestNetworkStack(rawValue: "IPV4")
     public static let dualstack = LoadBalancerBaseRequestNetworkStack(rawValue: "DUALSTACK")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -496,17 +403,14 @@ public struct LoadBalancerBaseRequestNetworkStack: RawRepresentable, Hashable, C
 public struct LoadBalancerBaseRequestType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let regional = LoadBalancerBaseRequestType(rawValue: "REGIONAL")
     public static let regionalNetwork = LoadBalancerBaseRequestType(rawValue: "REGIONAL_NETWORK")
     public static let global = LoadBalancerBaseRequestType(rawValue: "GLOBAL")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -519,16 +423,13 @@ public struct LoadBalancerBaseRequestType: RawRepresentable, Hashable, Codable, 
 public struct LoadBalancerBaseRequestAlgorithm: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let roundRobin = LoadBalancerBaseRequestAlgorithm(rawValue: "round_robin")
     public static let leastConnections = LoadBalancerBaseRequestAlgorithm(rawValue: "least_connections")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -543,16 +444,13 @@ public struct LoadBalancerBaseRequestAlgorithm: RawRepresentable, Hashable, Coda
 public struct LoadBalancerBaseRequestNetwork: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let external = LoadBalancerBaseRequestNetwork(rawValue: "EXTERNAL")
     public static let `internal` = LoadBalancerBaseRequestNetwork(rawValue: "INTERNAL")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -566,17 +464,14 @@ public struct LoadBalancerBaseRequestNetwork: RawRepresentable, Hashable, Codabl
 public struct HealthCheckProtocol: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let http = HealthCheckProtocol(rawValue: "http")
     public static let https = HealthCheckProtocol(rawValue: "https")
     public static let tcp = HealthCheckProtocol(rawValue: "tcp")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -590,16 +485,13 @@ public struct HealthCheckProtocol: RawRepresentable, Hashable, Codable, Sendable
 public struct LoadBalancerBaseNetworkStack: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let ipv4 = LoadBalancerBaseNetworkStack(rawValue: "IPV4")
     public static let dualstack = LoadBalancerBaseNetworkStack(rawValue: "DUALSTACK")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -615,10 +507,7 @@ public struct LoadBalancerBaseNetworkStack: RawRepresentable, Hashable, Codable,
 public struct ForwardingRuleEntryProtocol: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let http = ForwardingRuleEntryProtocol(rawValue: "http")
     public static let https = ForwardingRuleEntryProtocol(rawValue: "https")
     public static let http2 = ForwardingRuleEntryProtocol(rawValue: "http2")
@@ -628,7 +517,7 @@ public struct ForwardingRuleEntryProtocol: RawRepresentable, Hashable, Codable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -644,10 +533,7 @@ public struct ForwardingRuleEntryProtocol: RawRepresentable, Hashable, Codable, 
 public struct ForwardingRuleTargetProtocol: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let http = ForwardingRuleTargetProtocol(rawValue: "http")
     public static let https = ForwardingRuleTargetProtocol(rawValue: "https")
     public static let http2 = ForwardingRuleTargetProtocol(rawValue: "http2")
@@ -656,7 +542,7 @@ public struct ForwardingRuleTargetProtocol: RawRepresentable, Hashable, Codable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

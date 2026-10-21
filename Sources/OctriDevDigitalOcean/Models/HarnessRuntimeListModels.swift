@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HarnessRuntimeList domain models
+// HarnessRuntimeList domain models
 /// Typed representation of the `ListWebhookProvidersResponse` API schema.
 public struct ListWebhookProvidersResponse: Codable {
     /// Optional array value serialized in the `providers` wire field.
@@ -14,19 +14,19 @@ public struct ListWebhookProvidersResponse: Codable {
     }
 
     init() {
-        providers = nil
+        self.providers = nil
     }
 }
 
-public extension ListWebhookProvidersResponse {
-    init(from decoder: Decoder) throws {
+extension ListWebhookProvidersResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        providers = try container.sdkDecodeIfPresent(.providers)
+        self.providers = try container.sdkDecodeIfPresent(.providers)
     }
 }
 
-public extension ListWebhookProvidersResponse {
-    init(providers: [WebhookProvider]? = nil) {
+extension ListWebhookProvidersResponse {
+    public init(providers: [WebhookProvider]? = nil) {
         self.init()
         self.providers = providers
     }
@@ -45,20 +45,20 @@ public struct ListAgentConfigsResponse: Codable {
     }
 
     init() {
-        (configs, nextPageToken) = (nil, nil)
+        (self.configs, self.nextPageToken) = (nil, nil)
     }
 }
 
-public extension ListAgentConfigsResponse {
-    init(from decoder: Decoder) throws {
+extension ListAgentConfigsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        configs = try container.sdkDecodeIfPresent(.configs)
-        nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
+        self.configs = try container.sdkDecodeIfPresent(.configs)
+        self.nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
     }
 }
 
-public extension ListAgentConfigsResponse {
-    init(configs: [AgentConfigSummary]? = nil, nextPageToken: String? = nil) {
+extension ListAgentConfigsResponse {
+    public init(configs: [AgentConfigSummary]? = nil, nextPageToken: String? = nil) {
         self.init()
         (self.configs, self.nextPageToken) = (configs, nextPageToken)
     }
@@ -77,20 +77,20 @@ public struct ListTriggersResponse: Codable {
     }
 
     init() {
-        (triggers, nextPageToken) = (nil, nil)
+        (self.triggers, self.nextPageToken) = (nil, nil)
     }
 }
 
-public extension ListTriggersResponse {
-    init(from decoder: Decoder) throws {
+extension ListTriggersResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        triggers = try container.sdkDecodeIfPresent(.triggers)
-        nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
+        self.triggers = try container.sdkDecodeIfPresent(.triggers)
+        self.nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
     }
 }
 
-public extension ListTriggersResponse {
-    init(triggers: [Trigger]? = nil, nextPageToken: String? = nil) {
+extension ListTriggersResponse {
+    public init(triggers: [Trigger]? = nil, nextPageToken: String? = nil) {
         self.init()
         (self.triggers, self.nextPageToken) = (triggers, nextPageToken)
     }
@@ -109,20 +109,20 @@ public struct ListCheckpointsResponse: Codable {
     }
 
     init() {
-        (checkpoints, nextPageToken) = (nil, nil)
+        (self.checkpoints, self.nextPageToken) = (nil, nil)
     }
 }
 
-public extension ListCheckpointsResponse {
-    init(from decoder: Decoder) throws {
+extension ListCheckpointsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        checkpoints = try container.sdkDecodeIfPresent(.checkpoints)
-        nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
+        self.checkpoints = try container.sdkDecodeIfPresent(.checkpoints)
+        self.nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
     }
 }
 
-public extension ListCheckpointsResponse {
-    init(checkpoints: [Checkpoint]? = nil, nextPageToken: String? = nil) {
+extension ListCheckpointsResponse {
+    public init(checkpoints: [Checkpoint]? = nil, nextPageToken: String? = nil) {
         self.init()
         (self.checkpoints, self.nextPageToken) = (checkpoints, nextPageToken)
     }
@@ -141,20 +141,20 @@ public struct ListTriggerExecutionsResponse: Codable {
     }
 
     init() {
-        (executions, nextPageToken) = (nil, nil)
+        (self.executions, self.nextPageToken) = (nil, nil)
     }
 }
 
-public extension ListTriggerExecutionsResponse {
-    init(from decoder: Decoder) throws {
+extension ListTriggerExecutionsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        executions = try container.sdkDecodeIfPresent(.executions)
-        nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
+        self.executions = try container.sdkDecodeIfPresent(.executions)
+        self.nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
     }
 }
 
-public extension ListTriggerExecutionsResponse {
-    init(executions: [TriggerExecution]? = nil, nextPageToken: String? = nil) {
+extension ListTriggerExecutionsResponse {
+    public init(executions: [TriggerExecution]? = nil, nextPageToken: String? = nil) {
         self.init()
         (self.executions, self.nextPageToken) = (executions, nextPageToken)
     }
@@ -173,20 +173,20 @@ public struct ListReusableSessionsResponse: Codable {
     }
 
     init() {
-        (sessions, nextPageToken) = (nil, nil)
+        (self.sessions, self.nextPageToken) = (nil, nil)
     }
 }
 
-public extension ListReusableSessionsResponse {
-    init(from decoder: Decoder) throws {
+extension ListReusableSessionsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        sessions = try container.sdkDecodeIfPresent(.sessions)
-        nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
+        self.sessions = try container.sdkDecodeIfPresent(.sessions)
+        self.nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
     }
 }
 
-public extension ListReusableSessionsResponse {
-    init(sessions: [ReusableSession]? = nil, nextPageToken: String? = nil) {
+extension ListReusableSessionsResponse {
+    public init(sessions: [ReusableSession]? = nil, nextPageToken: String? = nil) {
         self.init()
         (self.sessions, self.nextPageToken) = (sessions, nextPageToken)
     }
@@ -205,20 +205,20 @@ public struct ListTemplatesResponse: Codable {
     }
 
     init() {
-        (templates, nextPageToken) = (nil, nil)
+        (self.templates, self.nextPageToken) = (nil, nil)
     }
 }
 
-public extension ListTemplatesResponse {
-    init(from decoder: Decoder) throws {
+extension ListTemplatesResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        templates = try container.sdkDecodeIfPresent(.templates)
-        nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
+        self.templates = try container.sdkDecodeIfPresent(.templates)
+        self.nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
     }
 }
 
-public extension ListTemplatesResponse {
-    init(templates: [SandboxTemplate]? = nil, nextPageToken: String? = nil) {
+extension ListTemplatesResponse {
+    public init(templates: [SandboxTemplate]? = nil, nextPageToken: String? = nil) {
         self.init()
         (self.templates, self.nextPageToken) = (templates, nextPageToken)
     }
@@ -237,20 +237,20 @@ public struct ListTemplateBuildsResponse: Codable {
     }
 
     init() {
-        (builds, nextPageToken) = (nil, nil)
+        (self.builds, self.nextPageToken) = (nil, nil)
     }
 }
 
-public extension ListTemplateBuildsResponse {
-    init(from decoder: Decoder) throws {
+extension ListTemplateBuildsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        builds = try container.sdkDecodeIfPresent(.builds)
-        nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
+        self.builds = try container.sdkDecodeIfPresent(.builds)
+        self.nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
     }
 }
 
-public extension ListTemplateBuildsResponse {
-    init(builds: [SandboxTemplateBuild]? = nil, nextPageToken: String? = nil) {
+extension ListTemplateBuildsResponse {
+    public init(builds: [SandboxTemplateBuild]? = nil, nextPageToken: String? = nil) {
         self.init()
         (self.builds, self.nextPageToken) = (builds, nextPageToken)
     }

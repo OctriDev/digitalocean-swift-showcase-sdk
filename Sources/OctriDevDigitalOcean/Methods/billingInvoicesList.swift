@@ -6,39 +6,25 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension BillingMethods {
+extension BillingMethods {
     /// To retrieve a list of all invoices, send a GET request to `/v2/customers/my/invoices`.
     ///
     /// - Parameters:
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func invoicesList(
-        config: ClientConfig,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Invoices {
-        if let perPage {
+    public static func invoicesList(config: ClientConfig, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> Invoices {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/customers/my/invoices",
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "invoices_list",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+        return try (await sdkRequest("GET", "/v2/customers/my/invoices", config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "invoices_list", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To retrieve the invoice items for an invoice, send a GET request to `/v2/customers/my/invoices/$INVOICE_UUID`.
@@ -47,65 +33,26 @@ public extension BillingMethods {
     /// - invoiceUuid: UUID of the invoice
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func invoicesGetByUuid(
-        config: ClientConfig,
-        invoiceUuid: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Invoice {
-        if let perPage {
+    public static func invoicesGetByUuid(config: ClientConfig, invoiceUuid: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> Invoice {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/customers/my/invoices/", sdkEncodePathSegment(sdkWireString(invoiceUuid))].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "invoices_get_byUUID",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/customers/my/invoices/", sdkEncodePathSegment(sdkWireString(invoiceUuid))].joined(), config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "invoices_get_byUUID", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To retrieve a CSV for an invoice, send a GET request to `/v2/customers/my/invoices/$INVOICE_UUID/csv`.
     ///
     /// - Parameters:
     /// - invoiceUuid: UUID of the invoice
-    static func invoicesGetCsvByUuid(
-        config: ClientConfig,
-        invoiceUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> String {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/customers/my/invoices/", sdkEncodePathSegment(sdkWireString(invoiceUuid)), "/csv"].joined(),
-            config: config,
-            decoder: .text,
-            operationId: "invoices_get_csvByUUID",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func invoicesGetCsvByUuid(config: ClientConfig, invoiceUuid: String, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try (await sdkRequest("GET", ["/v2/customers/my/invoices/", sdkEncodePathSegment(sdkWireString(invoiceUuid)), "/csv"].joined(), config: config, decoder: .text, operationId: "invoices_get_csvByUUID", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

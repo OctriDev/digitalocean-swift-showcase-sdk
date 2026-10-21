@@ -6,16 +6,10 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension HarnessRuntimeMethods {
-    /// Creates an immutable Environment Config for the team from a name and environment-spec YAML. Supply `name` and
-    /// `manifest_yaml`; optionally set per-signal Insights telemetry preferences with `insights`. Declare tenant
-    /// secrets in the environment spec, not as sibling request fields; secret values are never returned, and you must
-    /// create a clone to change config content.
+extension HarnessRuntimeMethods {
+    /// Creates an immutable Environment Config for the team from a name and environment-spec YAML. Supply `name` and `manifest_yaml`; optionally set per-signal Insights telemetry preferences with `insights`. Declare tenant secrets in the environment spec, not as sibling request fields; secret values are never returned, and you must create a clone to change config content.
     ///
-    /// Accepts name, environment-spec YAML text, and optional Insights telemetry opt-in. Tenant secrets are declared
-    /// inside the environment spec (write-only values), not as sibling request fields. Responses never echo secret
-    /// values; GET/create may include credential slot metadata (name/source/provider only). Configs are immutable after
-    /// create.
+    /// Accepts name, environment-spec YAML text, and optional Insights telemetry opt-in. Tenant secrets are declared inside the environment spec (write-only values), not as sibling request fields. Responses never echo secret values; GET/create may include credential slot metadata (name/source/provider only). Configs are immutable after create.
     ///
     /// - Parameters:
     /// - name: Config name, case-insensitively unique among the team's active
@@ -27,68 +21,24 @@ public extension HarnessRuntimeMethods {
     ///   content-hashed, while this value can be changed later from the Insights
     ///   settings page. When omitted, no choice is recorded and the product default
     ///   applies.
-    static func harnessCreateConfig(
-        config: ClientConfig,
-        name: String,
-        manifestYaml: String,
-        insights: InsightsOptIn? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AgentConfigResponse {
+    public static func harnessCreateConfig(config: ClientConfig, name: String, manifestYaml: String, insights: InsightsOptIn? = nil, requestOptions: RequestOptions? = nil) async throws -> AgentConfigResponse {
         try validateLength("name", name, min: 1, max: 64)
         try sdkValidatePattern("name", name, sdkPatternd6415432f58a)
 
-        try validateLength("manifest_yaml", manifestYaml, max: 524_288)
+        try validateLength("manifest_yaml", manifestYaml, max: 524288)
 
         let requestBody = HarnessCreateConfigRequestBody(name: name, manifestYaml: manifestYaml, insights: insights)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/agents/configs",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "harness_create_config",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "409": Error2.self,
-                "413": Error2.self,
-                "415": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v2/agents/configs", config: config, body: requestBody, decoder: .json, operationId: "harness_create_config", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "409": Error2.self, "413": Error2.self, "415": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Returns one team-scoped Environment Config including the sanitized environment spec and redacted credential slot
-    /// metadata. Secret values are never returned.
+    /// Returns one team-scoped Environment Config including the sanitized environment spec and redacted credential slot metadata. Secret values are never returned.
     ///
     /// - Parameters:
     /// - configId: The Environment Config UUID.
-    static func harnessGetConfig(
-        config: ClientConfig,
-        configId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AgentConfigResponse {
+    public static func harnessGetConfig(config: ClientConfig, configId: String, requestOptions: RequestOptions? = nil) async throws -> AgentConfigResponse {
         try sdkValidateUuid("config_id", configId)
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/agents/configs/", sdkEncodePathSegment(sdkWireString(configId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "harness_get_config",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/agents/configs/", sdkEncodePathSegment(sdkWireString(configId))].joined(), config: config, decoder: .json, operationId: "harness_get_config", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

@@ -36,9 +36,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListModelApiKeys(
-                page: decoded("1"),
-                perPage: decoded("1")
-            )
+            page: decoded("1"),
+            perPage: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -107,8 +107,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListModelCatalog(
-                options: options
-            )
+            options: options
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -140,8 +140,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testGenaiListModelEvaluationMetricsGenaiListModelEvaluationMetrics401ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testGenaiListModelEvaluationMetricsGenaiListModelEvaluationMetrics401ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -183,8 +182,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testGenaiListModelEvaluationPresetsGenaiListModelEvaluationPresets401ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testGenaiListModelEvaluationPresetsGenaiListModelEvaluationPresets401ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -259,8 +257,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListModelEvaluationRuns(
-                options: options
-            )
+            options: options
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -306,9 +304,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListModelRouterPresets(
-                page: decoded("1"),
-                perPage: decoded("1")
-            )
+            page: decoded("1"),
+            perPage: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -354,9 +352,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListModelRouters(
-                page: decoded("1"),
-                perPage: decoded("1")
-            )
+            page: decoded("1"),
+            perPage: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -391,8 +389,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testGenaiListModelRouterTaskPresetsGenaiListModelRouterTaskPresets401ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testGenaiListModelRouterTaskPresetsGenaiListModelRouterTaskPresets401ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -403,9 +400,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListModelRouterTaskPresets(
-                page: decoded("1"),
-                perPage: decoded("1")
-            )
+            page: decoded("1"),
+            perPage: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -453,11 +450,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListModels(
-                usecases: decoded("[\"MODEL_USECASE_UNKNOWN\"]"),
-                publicOnly: decoded("true"),
-                page: decoded("1"),
-                perPage: decoded("1")
-            )
+            usecases: decoded("[\"MODEL_USECASE_UNKNOWN\"]"),
+            publicOnly: decoded("true"),
+            page: decoded("1"),
+            perPage: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -503,9 +500,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListOpenaiApiKeys(
-                page: decoded("1"),
-                perPage: decoded("1")
-            )
+            page: decoded("1"),
+            perPage: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -555,13 +552,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListScenarioLibrary(
-                page: decoded("1"),
-                perPage: decoded("1"),
-                category: decoded("\"example string\""),
-                search: decoded("\"example string\""),
-                sortBy: decoded("\"SCENARIO_LIBRARY_SORT_FIELD_UNSPECIFIED\""),
-                sortDirection: decoded("\"SORT_DIRECTION_UNSPECIFIED\"")
-            )
+            page: decoded("1"),
+            perPage: decoded("1"),
+            category: decoded("\"example string\""),
+            search: decoded("\"example string\""),
+            sortBy: decoded("\"SCENARIO_LIBRARY_SORT_FIELD_UNSPECIFIED\""),
+            sortDirection: decoded("\"SORT_DIRECTION_UNSPECIFIED\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

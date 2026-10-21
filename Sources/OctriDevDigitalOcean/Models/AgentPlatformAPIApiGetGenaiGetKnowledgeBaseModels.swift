@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiGet domain models
+// AgentPlatformAPIApiGet domain models
 /// The knowledge base
 public struct ApiGetKnowledgeBaseOutput: Codable {
     /// Optional enumerated value serialized in the `database_status` wire field.
@@ -18,20 +18,20 @@ public struct ApiGetKnowledgeBaseOutput: Codable {
     }
 
     init() {
-        (databaseStatus, knowledgeBase) = (nil, nil)
+        (self.databaseStatus, self.knowledgeBase) = (nil, nil)
     }
 }
 
-public extension ApiGetKnowledgeBaseOutput {
-    init(from decoder: Decoder) throws {
+extension ApiGetKnowledgeBaseOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        databaseStatus = try container.sdkDecodeIfPresent(.databaseStatus)
-        knowledgeBase = try container.sdkDecodeIfPresent(.knowledgeBase)
+        self.databaseStatus = try container.sdkDecodeIfPresent(.databaseStatus)
+        self.knowledgeBase = try container.sdkDecodeIfPresent(.knowledgeBase)
     }
 }
 
-public extension ApiGetKnowledgeBaseOutput {
-    init(databaseStatus: DbaasClusterStatus? = nil, knowledgeBase: ApiKnowledgeBase? = nil) {
+extension ApiGetKnowledgeBaseOutput {
+    public init(databaseStatus: DbaasClusterStatus? = nil, knowledgeBase: ApiKnowledgeBase? = nil) {
         self.init()
         (self.databaseStatus, self.knowledgeBase) = (databaseStatus, knowledgeBase)
     }

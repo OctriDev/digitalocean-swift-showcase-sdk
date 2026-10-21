@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HarnessRuntimeAgent domain models
+// HarnessRuntimeAgent domain models
 /// Lightweight list representation; the manifest is available from config reads, not list responses.
 public struct AgentConfigSummary: Codable {
     /// Required `uuid`-formatted value serialized in the `id` wire field.
@@ -40,94 +40,56 @@ public struct AgentConfigSummary: Codable {
         case updatedAt = "updated_at"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AgentConfigSummary {
-    init(from decoder: Decoder) throws {
+extension AgentConfigSummary {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.agentspecSchemaVersion) else {
-            throw SdkValidationError(
-                field: "agentspec_schema_version",
-                code: "required",
-                message: "Validation failed for 'agentspec_schema_version': value is required"
-            )
+            throw SdkValidationError(field: "agentspec_schema_version", code: "required", message: "Validation failed for 'agentspec_schema_version': value is required")
         }
         guard container.contains(.contentHash) else {
-            throw SdkValidationError(
-                field: "content_hash",
-                code: "required",
-                message: "Validation failed for 'content_hash': value is required"
-            )
+            throw SdkValidationError(field: "content_hash", code: "required", message: "Validation failed for 'content_hash': value is required")
         }
         guard container.contains(.createdBy) else {
-            throw SdkValidationError(
-                field: "created_by",
-                code: "required",
-                message: "Validation failed for 'created_by': value is required"
-            )
+            throw SdkValidationError(field: "created_by", code: "required", message: "Validation failed for 'created_by': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.updatedAt) else {
-            throw SdkValidationError(
-                field: "updated_at",
-                code: "required",
-                message: "Validation failed for 'updated_at': value is required"
-            )
+            throw SdkValidationError(field: "updated_at", code: "required", message: "Validation failed for 'updated_at': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        name = try container.sdkDecodeRequired(.name)
-        agentspecSchemaVersion = try container.sdkDecodeRequired(.agentspecSchemaVersion)
-        contentHash = try container.sdkDecodeRequired(.contentHash)
-        createdBy = try container.sdkDecodeRequired(.createdBy)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        try sdkValidateUuid("id", id)
-        try sdkValidatePattern("content_hash", contentHash, sdkPattern52f851fad882)
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
-        try sdkValidateDateTime("updated_at", sdkWireString(updatedAt))
+        self.id = try container.sdkDecodeRequired(.id)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.agentspecSchemaVersion = try container.sdkDecodeRequired(.agentspecSchemaVersion)
+        self.contentHash = try container.sdkDecodeRequired(.contentHash)
+        self.createdBy = try container.sdkDecodeRequired(.createdBy)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
+            try sdkValidateUuid("id", self.id)
+            try sdkValidatePattern("content_hash", self.contentHash, sdkPattern52f851fad882)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
-public extension AgentConfigSummary {
-    init(
-        id: String,
-        name: String,
-        agentspecSchemaVersion: String,
-        contentHash: String,
-        createdBy: String,
-        createdAt: Date,
-        updatedAt: Date
-    ) throws {
+extension AgentConfigSummary {
+    public init(id: String, name: String, agentspecSchemaVersion: String, contentHash: String, createdBy: String, createdAt: Date, updatedAt: Date) throws {
         (self.id, self.name) = (id, name)
         (self.agentspecSchemaVersion, self.contentHash) = (agentspecSchemaVersion, contentHash)
         (self.createdBy, self.createdAt) = (createdBy, createdAt)
         self.updatedAt = updatedAt
-        try sdkValidateUuid("id", self.id)
-        try sdkValidatePattern("content_hash", self.contentHash, sdkPattern52f851fad882)
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-        try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+            try sdkValidateUuid("id", self.id)
+            try sdkValidatePattern("content_hash", self.contentHash, sdkPattern52f851fad882)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Droplets domain models
+// Droplets domain models
 /// Typed representation of the `AllDropletSnapshots` API schema.
 public struct AllDropletSnapshots: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,29 +18,23 @@ public struct AllDropletSnapshots: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllDropletSnapshots {
-    init(from decoder: Decoder) throws {
+extension AllDropletSnapshots {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        snapshots = try container.sdkDecodeIfPresent(.snapshots)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.snapshots = try container.sdkDecodeIfPresent(.snapshots)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllDropletSnapshots {
-    init(meta: MetaMeta, snapshots: [DropletSnapshot]? = nil, links: PageLinks? = nil) {
+extension AllDropletSnapshots {
+    public init(meta: MetaMeta, snapshots: [DropletSnapshot]? = nil, links: PageLinks? = nil) {
         (self.meta, self.snapshots) = (meta, snapshots)
         self.links = links
     }
@@ -54,19 +48,19 @@ public struct AllDropletSnapshotsVariant0: Codable {
     }
 
     init() {
-        snapshots = nil
+        self.snapshots = nil
     }
 }
 
-public extension AllDropletSnapshotsVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllDropletSnapshotsVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        snapshots = try container.sdkDecodeIfPresent(.snapshots)
+        self.snapshots = try container.sdkDecodeIfPresent(.snapshots)
     }
 }
 
-public extension AllDropletSnapshotsVariant0 {
-    init(snapshots: [DropletSnapshot]? = nil) {
+extension AllDropletSnapshotsVariant0 {
+    public init(snapshots: [DropletSnapshot]? = nil) {
         self.init()
         self.snapshots = snapshots
     }

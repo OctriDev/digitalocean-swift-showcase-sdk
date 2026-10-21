@@ -11,7 +11,7 @@ struct DatabasesPatchConfigRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(config2, forKey: SdkCodingKey("config"))
+        try keyedContainer.encodeIfPresent(self.config2, forKey: SdkCodingKey("config"))
     }
 }
 
@@ -22,9 +22,9 @@ struct DatabasesUpdateOnlineMigrationRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(source, forKey: SdkCodingKey("source"))
-        try keyedContainer.encodeIfPresent(disableSsl, forKey: SdkCodingKey("disable_ssl"))
-        try keyedContainer.encodeIfPresent(ignoreDbs, forKey: SdkCodingKey("ignore_dbs"))
+        try keyedContainer.encode(self.source, forKey: SdkCodingKey("source"))
+        try keyedContainer.encodeIfPresent(self.disableSsl, forKey: SdkCodingKey("disable_ssl"))
+        try keyedContainer.encodeIfPresent(self.ignoreDbs, forKey: SdkCodingKey("ignore_dbs"))
     }
 }
 
@@ -33,7 +33,7 @@ struct DatabasesUpdateRegionRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(region, forKey: SdkCodingKey("region"))
+        try keyedContainer.encode(self.region, forKey: SdkCodingKey("region"))
     }
 }
 
@@ -44,9 +44,9 @@ struct DatabasesUpdateClusterSizeRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(size, forKey: SdkCodingKey("size"))
-        try keyedContainer.encode(numNodes, forKey: SdkCodingKey("num_nodes"))
-        try keyedContainer.encodeIfPresent(storageSizeMib, forKey: SdkCodingKey("storage_size_mib"))
+        try keyedContainer.encode(self.size, forKey: SdkCodingKey("size"))
+        try keyedContainer.encode(self.numNodes, forKey: SdkCodingKey("num_nodes"))
+        try keyedContainer.encodeIfPresent(self.storageSizeMib, forKey: SdkCodingKey("storage_size_mib"))
     }
 }
 
@@ -55,7 +55,7 @@ struct DatabasesUpdateFirewallRulesRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(rules, forKey: SdkCodingKey("rules"))
+        try keyedContainer.encodeIfPresent(self.rules, forKey: SdkCodingKey("rules"))
     }
 }
 
@@ -64,7 +64,7 @@ struct DatabasesUpdateDoSettingsRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(doSettings, forKey: SdkCodingKey("do_settings"))
+        try keyedContainer.encode(self.doSettings, forKey: SdkCodingKey("do_settings"))
     }
 }
 
@@ -74,8 +74,8 @@ struct DatabasesUpdateMaintenanceWindowRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(day, forKey: SdkCodingKey("day"))
-        try keyedContainer.encode(hour, forKey: SdkCodingKey("hour"))
+        try keyedContainer.encode(self.day, forKey: SdkCodingKey("day"))
+        try keyedContainer.encode(self.hour, forKey: SdkCodingKey("hour"))
     }
 }
 
@@ -92,27 +92,27 @@ struct DatabasesCreateReplicaRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(size, forKey: SdkCodingKey("size"))
-        try keyedContainer.encodeIfPresent(region, forKey: SdkCodingKey("region"))
-        try keyedContainer.encodeIfPresent(tags, forKey: SdkCodingKey("tags"))
-        try keyedContainer.encodeIfPresent(privateNetworkUuid, forKey: SdkCodingKey("private_network_uuid"))
-        try keyedContainer.encodeIfPresent(connection, forKey: SdkCodingKey("connection"))
-        try keyedContainer.encodeIfPresent(privateConnection, forKey: SdkCodingKey("private_connection"))
-        try keyedContainer.encodeIfPresent(storageSizeMib, forKey: SdkCodingKey("storage_size_mib"))
-        try keyedContainer.encodeIfPresent(doSettings, forKey: SdkCodingKey("do_settings"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.size, forKey: SdkCodingKey("size"))
+        try keyedContainer.encodeIfPresent(self.region, forKey: SdkCodingKey("region"))
+        try keyedContainer.encodeIfPresent(self.tags, forKey: SdkCodingKey("tags"))
+        try keyedContainer.encodeIfPresent(self.privateNetworkUuid, forKey: SdkCodingKey("private_network_uuid"))
+        try keyedContainer.encodeIfPresent(self.connection, forKey: SdkCodingKey("connection"))
+        try keyedContainer.encodeIfPresent(self.privateConnection, forKey: SdkCodingKey("private_connection"))
+        try keyedContainer.encodeIfPresent(self.storageSizeMib, forKey: SdkCodingKey("storage_size_mib"))
+        try keyedContainer.encodeIfPresent(self.doSettings, forKey: SdkCodingKey("do_settings"))
     }
 
     init(options: DatabasesMethods.DatabasesCreateReplicaOptions) {
-        name = options.name
-        size = options.size
-        region = options.region
-        tags = options.tags
-        privateNetworkUuid = options.privateNetworkUuid
-        connection = options.connection
-        privateConnection = options.privateConnection
-        storageSizeMib = options.storageSizeMib
-        doSettings = options.doSettings
+        self.name = options.name
+        self.size = options.size
+        self.region = options.region
+        self.tags = options.tags
+        self.privateNetworkUuid = options.privateNetworkUuid
+        self.connection = options.connection
+        self.privateConnection = options.privateConnection
+        self.storageSizeMib = options.storageSizeMib
+        self.doSettings = options.doSettings
     }
 }
 
@@ -121,7 +121,7 @@ struct DatabasesResetAuthRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(mysqlSettings, forKey: SdkCodingKey("mysql_settings"))
+        try keyedContainer.encodeIfPresent(self.mysqlSettings, forKey: SdkCodingKey("mysql_settings"))
     }
 }
 
@@ -130,7 +130,7 @@ struct DatabasesAddRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
     }
 }
 
@@ -147,27 +147,27 @@ struct DatabasesAddConnectionPoolRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(mode, forKey: SdkCodingKey("mode"))
-        try keyedContainer.encode(size, forKey: SdkCodingKey("size"))
-        try keyedContainer.encode(db, forKey: SdkCodingKey("db"))
-        try keyedContainer.encodeIfPresent(user, forKey: SdkCodingKey("user"))
-        try keyedContainer.encodeIfPresent(connection, forKey: SdkCodingKey("connection"))
-        try keyedContainer.encodeIfPresent(privateConnection, forKey: SdkCodingKey("private_connection"))
-        try keyedContainer.encodeIfPresent(standbyConnection, forKey: SdkCodingKey("standby_connection"))
-        try keyedContainer.encodeIfPresent(standbyPrivateConnection, forKey: SdkCodingKey("standby_private_connection"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.mode, forKey: SdkCodingKey("mode"))
+        try keyedContainer.encode(self.size, forKey: SdkCodingKey("size"))
+        try keyedContainer.encode(self.db, forKey: SdkCodingKey("db"))
+        try keyedContainer.encodeIfPresent(self.user, forKey: SdkCodingKey("user"))
+        try keyedContainer.encodeIfPresent(self.connection, forKey: SdkCodingKey("connection"))
+        try keyedContainer.encodeIfPresent(self.privateConnection, forKey: SdkCodingKey("private_connection"))
+        try keyedContainer.encodeIfPresent(self.standbyConnection, forKey: SdkCodingKey("standby_connection"))
+        try keyedContainer.encodeIfPresent(self.standbyPrivateConnection, forKey: SdkCodingKey("standby_private_connection"))
     }
 
     init(options: DatabasesMethods.DatabasesAddConnectionPoolOptions) {
-        name = options.name
-        mode = options.mode
-        size = options.size
-        db = options.db
-        user = options.user
-        connection = options.connection
-        privateConnection = options.privateConnection
-        standbyConnection = options.standbyConnection
-        standbyPrivateConnection = options.standbyPrivateConnection
+        self.name = options.name
+        self.mode = options.mode
+        self.size = options.size
+        self.db = options.db
+        self.user = options.user
+        self.connection = options.connection
+        self.privateConnection = options.privateConnection
+        self.standbyConnection = options.standbyConnection
+        self.standbyPrivateConnection = options.standbyPrivateConnection
     }
 }
 
@@ -179,10 +179,10 @@ struct DatabasesUpdateConnectionPoolRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(mode, forKey: SdkCodingKey("mode"))
-        try keyedContainer.encode(size, forKey: SdkCodingKey("size"))
-        try keyedContainer.encode(db, forKey: SdkCodingKey("db"))
-        try keyedContainer.encodeIfPresent(user, forKey: SdkCodingKey("user"))
+        try keyedContainer.encode(self.mode, forKey: SdkCodingKey("mode"))
+        try keyedContainer.encode(self.size, forKey: SdkCodingKey("size"))
+        try keyedContainer.encode(self.db, forKey: SdkCodingKey("db"))
+        try keyedContainer.encodeIfPresent(self.user, forKey: SdkCodingKey("user"))
     }
 }
 
@@ -191,7 +191,7 @@ struct DatabasesUpdateEvictionPolicyRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(evictionPolicy, forKey: SdkCodingKey("eviction_policy"))
+        try keyedContainer.encode(self.evictionPolicy, forKey: SdkCodingKey("eviction_policy"))
     }
 }
 
@@ -200,7 +200,7 @@ struct DatabasesUpdateSqlModeRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(sqlMode, forKey: SdkCodingKey("sql_mode"))
+        try keyedContainer.encode(self.sqlMode, forKey: SdkCodingKey("sql_mode"))
     }
 }
 
@@ -209,6 +209,6 @@ struct DatabasesUpdateMajorVersionRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(version, forKey: SdkCodingKey("version"))
+        try keyedContainer.encodeIfPresent(self.version, forKey: SdkCodingKey("version"))
     }
 }

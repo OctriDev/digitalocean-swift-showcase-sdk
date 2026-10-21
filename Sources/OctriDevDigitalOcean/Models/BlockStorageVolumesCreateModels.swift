@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// BlockStorage domain models
+// BlockStorage domain models
 public typealias VolumeWriteFileSystemLabel = String
 
 /// Typed representation of the `VolumeBase` API schema.
@@ -46,34 +46,26 @@ public struct VolumeBase: Codable {
     }
 
     init() {
-        (id, dropletIds, name, description, sizeGigabytes) = (nil, nil, nil, nil, nil)
-        (createdAt, tags) = (nil, nil)
+        (self.id, self.dropletIds, self.name, self.description, self.sizeGigabytes) = (nil, nil, nil, nil, nil)
+        (self.createdAt, self.tags) = (nil, nil)
     }
 }
 
-public extension VolumeBase {
-    init(from decoder: Decoder) throws {
+extension VolumeBase {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        sizeGigabytes = try container.sdkDecodeIfPresent(.sizeGigabytes)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        tags = try container.sdkDecodeIfPresent(.tags)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.sizeGigabytes = try container.sdkDecodeIfPresent(.sizeGigabytes)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-public extension VolumeBase {
-    init(
-        id: String? = nil,
-        dropletIds: [Int]? = nil,
-        name: String? = nil,
-        description: String? = nil,
-        sizeGigabytes: Int? = nil,
-        createdAt: String? = nil,
-        tags: TagsArray? = nil
-    ) {
+extension VolumeBase {
+    public init(id: String? = nil, dropletIds: [Int]? = nil, name: String? = nil, description: String? = nil, sizeGigabytes: Int? = nil, createdAt: String? = nil, tags: TagsArray? = nil) {
         self.init()
         (self.id, self.dropletIds) = (id, dropletIds)
         (self.name, self.description) = (name, description)
@@ -97,19 +89,19 @@ public struct VolumeWriteFileSystemType: Codable {
     }
 
     init() {
-        filesystemType = nil
+        self.filesystemType = nil
     }
 }
 
-public extension VolumeWriteFileSystemType {
-    init(from decoder: Decoder) throws {
+extension VolumeWriteFileSystemType {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        filesystemType = try container.sdkDecodeIfPresent(.filesystemType)
+        self.filesystemType = try container.sdkDecodeIfPresent(.filesystemType)
     }
 }
 
-public extension VolumeWriteFileSystemType {
-    init(filesystemType: String? = nil) {
+extension VolumeWriteFileSystemType {
+    public init(filesystemType: String? = nil) {
         self.init()
         self.filesystemType = filesystemType
     }
@@ -172,63 +164,37 @@ public struct VolumesXfs: Codable {
         case filesystemLabel = "filesystem_label"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VolumesXfs {
-    init(from decoder: Decoder) throws {
+extension VolumesXfs {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.sizeGigabytes) else {
-            throw SdkValidationError(
-                field: "size_gigabytes",
-                code: "required",
-                message: "Validation failed for 'size_gigabytes': value is required"
-            )
+            throw SdkValidationError(field: "size_gigabytes", code: "required", message: "Validation failed for 'size_gigabytes': value is required")
         }
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        sizeGigabytes = try container.sdkDecodeRequired(.sizeGigabytes)
-        region = try container.sdkDecodeRequired(.region)
-        id = try container.sdkDecodeIfPresent(.id)
-        dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
-        description = try container.sdkDecodeIfPresent(.description)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        snapshotId = try container.sdkDecodeIfPresent(.snapshotId)
-        filesystemType = try container.sdkDecodeIfPresent(.filesystemType)
-        filesystemLabel = try container.sdkDecodeIfPresent(.filesystemLabel)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.sizeGigabytes = try container.sdkDecodeRequired(.sizeGigabytes)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.snapshotId = try container.sdkDecodeIfPresent(.snapshotId)
+        self.filesystemType = try container.sdkDecodeIfPresent(.filesystemType)
+        self.filesystemLabel = try container.sdkDecodeIfPresent(.filesystemLabel)
     }
 }
 
-public extension VolumesXfs {
-    init(
-        name: String,
-        sizeGigabytes: Int,
-        region: RegionSlug,
-        id: String? = nil,
-        dropletIds: [Int]? = nil,
-        description: String? = nil,
-        createdAt: String? = nil,
-        tags: TagsArray? = nil,
-        snapshotId: String? = nil,
-        filesystemType: String? = nil,
-        filesystemLabel: VolumeWriteFileSystemLabel? = nil
-    ) {
+extension VolumesXfs {
+    public init(name: String, sizeGigabytes: Int, region: RegionSlug, id: String? = nil, dropletIds: [Int]? = nil, description: String? = nil, createdAt: String? = nil, tags: TagsArray? = nil, snapshotId: String? = nil, filesystemType: String? = nil, filesystemLabel: VolumeWriteFileSystemLabel? = nil) {
         (self.name, self.sizeGigabytes) = (name, sizeGigabytes)
         (self.region, self.id) = (region, id)
         (self.dropletIds, self.description) = (dropletIds, description)
@@ -281,57 +247,34 @@ public struct VolumesExt4Request: Codable {
         case filesystemLabel = "filesystem_label"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VolumesExt4Request {
-    init(from decoder: Decoder) throws {
+extension VolumesExt4Request {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.sizeGigabytes) else {
-            throw SdkValidationError(
-                field: "size_gigabytes",
-                code: "required",
-                message: "Validation failed for 'size_gigabytes': value is required"
-            )
+            throw SdkValidationError(field: "size_gigabytes", code: "required", message: "Validation failed for 'size_gigabytes': value is required")
         }
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        sizeGigabytes = try container.sdkDecodeRequired(.sizeGigabytes)
-        region = try container.sdkDecodeRequired(.region)
-        description = try container.sdkDecodeIfPresent(.description)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        snapshotId = try container.sdkDecodeIfPresent(.snapshotId)
-        filesystemType = try container.sdkDecodeIfPresent(.filesystemType)
-        filesystemLabel = try container.sdkDecodeIfPresent(.filesystemLabel)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.sizeGigabytes = try container.sdkDecodeRequired(.sizeGigabytes)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.snapshotId = try container.sdkDecodeIfPresent(.snapshotId)
+        self.filesystemType = try container.sdkDecodeIfPresent(.filesystemType)
+        self.filesystemLabel = try container.sdkDecodeIfPresent(.filesystemLabel)
     }
 }
 
-public extension VolumesExt4Request {
-    init(
-        name: String,
-        sizeGigabytes: Int,
-        region: RegionSlug,
-        description: String? = nil,
-        tags: TagsArray? = nil,
-        snapshotId: String? = nil,
-        filesystemType: String? = nil,
-        filesystemLabel: VolumeWriteFileSystemLabel? = nil
-    ) {
+extension VolumesExt4Request {
+    public init(name: String, sizeGigabytes: Int, region: RegionSlug, description: String? = nil, tags: TagsArray? = nil, snapshotId: String? = nil, filesystemType: String? = nil, filesystemLabel: VolumeWriteFileSystemLabel? = nil) {
         (self.name, self.sizeGigabytes) = (name, sizeGigabytes)
         (self.region, self.description) = (region, description)
         (self.tags, self.snapshotId) = (tags, snapshotId)
@@ -350,28 +293,22 @@ public struct VolumesXfsVariant3: Codable {
         case filesystemLabel = "filesystem_label"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VolumesXfsVariant3 {
-    init(from decoder: Decoder) throws {
+extension VolumesXfsVariant3 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
-        region = try container.sdkDecodeRequired(.region)
-        filesystemLabel = try container.sdkDecodeIfPresent(.filesystemLabel)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.filesystemLabel = try container.sdkDecodeIfPresent(.filesystemLabel)
     }
 }
 
-public extension VolumesXfsVariant3 {
-    init(region: RegionSlug, filesystemLabel: VolumeWriteFileSystemLabel? = nil) {
+extension VolumesXfsVariant3 {
+    public init(region: RegionSlug, filesystemLabel: VolumeWriteFileSystemLabel? = nil) {
         (self.region, self.filesystemLabel) = (region, filesystemLabel)
     }
 }
@@ -402,22 +339,22 @@ public struct VolumeBaseRequest: Codable {
     }
 
     init() {
-        (name, description, sizeGigabytes, tags) = (nil, nil, nil, nil)
+        (self.name, self.description, self.sizeGigabytes, self.tags) = (nil, nil, nil, nil)
     }
 }
 
-public extension VolumeBaseRequest {
-    init(from decoder: Decoder) throws {
+extension VolumeBaseRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        sizeGigabytes = try container.sdkDecodeIfPresent(.sizeGigabytes)
-        tags = try container.sdkDecodeIfPresent(.tags)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.sizeGigabytes = try container.sdkDecodeIfPresent(.sizeGigabytes)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-public extension VolumeBaseRequest {
-    init(name: String? = nil, description: String? = nil, sizeGigabytes: Int? = nil, tags: TagsArray? = nil) {
+extension VolumeBaseRequest {
+    public init(name: String? = nil, description: String? = nil, sizeGigabytes: Int? = nil, tags: TagsArray? = nil) {
         self.init()
         (self.name, self.description) = (name, description)
         (self.sizeGigabytes, self.tags) = (sizeGigabytes, tags)
@@ -435,28 +372,22 @@ public struct VolumesExt4RequestVariant3: Codable {
         case filesystemLabel = "filesystem_label"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VolumesExt4RequestVariant3 {
-    init(from decoder: Decoder) throws {
+extension VolumesExt4RequestVariant3 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
-        region = try container.sdkDecodeRequired(.region)
-        filesystemLabel = try container.sdkDecodeIfPresent(.filesystemLabel)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.filesystemLabel = try container.sdkDecodeIfPresent(.filesystemLabel)
     }
 }
 
-public extension VolumesExt4RequestVariant3 {
-    init(region: RegionSlug, filesystemLabel: VolumeWriteFileSystemLabel? = nil) {
+extension VolumesExt4RequestVariant3 {
+    public init(region: RegionSlug, filesystemLabel: VolumeWriteFileSystemLabel? = nil) {
         (self.region, self.filesystemLabel) = (region, filesystemLabel)
     }
 }
@@ -472,19 +403,19 @@ public struct VolumeSnapshotId: Codable {
     }
 
     init() {
-        snapshotId = nil
+        self.snapshotId = nil
     }
 }
 
-public extension VolumeSnapshotId {
-    init(from decoder: Decoder) throws {
+extension VolumeSnapshotId {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        snapshotId = try container.sdkDecodeIfPresent(.snapshotId)
+        self.snapshotId = try container.sdkDecodeIfPresent(.snapshotId)
     }
 }
 
-public extension VolumeSnapshotId {
-    init(snapshotId: String? = nil) {
+extension VolumeSnapshotId {
+    public init(snapshotId: String? = nil) {
         self.init()
         self.snapshotId = snapshotId
     }

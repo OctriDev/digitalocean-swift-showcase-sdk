@@ -8,104 +8,53 @@ import Foundation
 #endif
 public enum VpcRoutesPublicPreviewMethods {}
 
-public extension VpcRoutesPublicPreviewMethods {
-    /// To list the read-only VPC-scoped routes for a VPC, send a GET request to `/v2/vpcs/$VPC_UUID/routes`. VPC-scoped
-    /// routes cannot be created, updated, or deleted through the public API.
+extension VpcRoutesPublicPreviewMethods {
+    /// To list the read-only VPC-scoped routes for a VPC, send a GET request to `/v2/vpcs/$VPC_UUID/routes`. VPC-scoped routes cannot be created, updated, or deleted through the public API.
     ///
     /// - Parameters:
     /// - vpcUuid: The unique identifier of the VPC.
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func vpcRoutesList(
-        config: ClientConfig,
-        vpcUuid: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AllVpcRoutes {
+    public static func vpcRoutesList(config: ClientConfig, vpcUuid: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AllVpcRoutes {
         try sdkValidateUuid("vpc_uuid", vpcUuid)
 
-        if let perPage {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcUuid)), "/routes"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "vpcRoutes_list",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcUuid)), "/routes"].joined(), config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "vpcRoutes_list", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To list routes for a VPC subnet, send a GET request to `/v2/vpcs/$VPC_UUID/subnets/$SUBNET_UUID/routes`. The
-    /// response includes VPC-scoped routes propagated into the subnet and subnet-scoped routes.
+    /// To list routes for a VPC subnet, send a GET request to `/v2/vpcs/$VPC_UUID/subnets/$SUBNET_UUID/routes`. The response includes VPC-scoped routes propagated into the subnet and subnet-scoped routes.
     ///
     /// - Parameters:
     /// - vpcUuid: The unique identifier of the VPC.
     /// - subnetUuid: The unique identifier of the VPC subnet.
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func vpcSubnetRoutesList(
-        config: ClientConfig,
-        vpcUuid: String,
-        subnetUuid: String,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AllVpcSubnetRoutes {
+    public static func vpcSubnetRoutesList(config: ClientConfig, vpcUuid: String, subnetUuid: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AllVpcSubnetRoutes {
         try sdkValidateUuid("vpc_uuid", vpcUuid)
 
         try sdkValidateUuid("subnet_uuid", subnetUuid)
 
-        if let perPage {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            [
-                "/v2/vpcs/",
-                sdkEncodePathSegment(sdkWireString(vpcUuid)),
-                "/subnets/",
-                sdkEncodePathSegment(sdkWireString(subnetUuid)),
-                "/routes",
-            ].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "vpcSubnetRoutes_list",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcUuid)), "/subnets/", sdkEncodePathSegment(sdkWireString(subnetUuid)), "/routes"].joined(), config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "vpcSubnetRoutes_list", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

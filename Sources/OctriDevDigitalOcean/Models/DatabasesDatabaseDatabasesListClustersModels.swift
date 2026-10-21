@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DatabasesDatabase domain models
+// DatabasesDatabase domain models
 /// Typed representation of the `DatabaseClusters` API schema.
 public struct DatabaseClusters: Codable {
     /// Optional array value serialized in the `databases` wire field.
@@ -14,19 +14,19 @@ public struct DatabaseClusters: Codable {
     }
 
     init() {
-        databases = nil
+        self.databases = nil
     }
 }
 
-public extension DatabaseClusters {
-    init(from decoder: Decoder) throws {
+extension DatabaseClusters {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        databases = try container.sdkDecodeIfPresent(.databases)
+        self.databases = try container.sdkDecodeIfPresent(.databases)
     }
 }
 
-public extension DatabaseClusters {
-    init(databases: [DatabaseClusterRead]? = nil) {
+extension DatabaseClusters {
+    public init(databases: [DatabaseClusterRead]? = nil) {
         self.init()
         self.databases = databases
     }

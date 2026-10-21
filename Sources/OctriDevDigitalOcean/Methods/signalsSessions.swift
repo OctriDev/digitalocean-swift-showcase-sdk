@@ -6,10 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension SignalsMethods {
-    /// To list the dialogue turns within a specific session, send a GET request to
-    /// `/v1/signals/sessions/{session_id}/dialogues`. Each dialogue represents a single turn of conversation between a
-    /// user and the environment, along with any signals detected. Results are paginated using cursor-based pagination.
+extension SignalsMethods {
+    /// To list the dialogue turns within a specific session, send a GET request to `/v1/signals/sessions/{session_id}/dialogues`. Each dialogue represents a single turn of conversation between a user and the environment, along with any signals detected. Results are paginated using cursor-based pagination.
     ///
     /// - Parameters:
     /// - sessionId: A unique identifier for a signals session.
@@ -22,51 +20,27 @@ public extension SignalsMethods {
     ///   (RFC 3339).
     /// - signalType: Filter results by signal type. Use the export options endpoint
     ///   to list available signal types.
-    static func signalsListSessionDialogues(
-        config: ClientConfig,
-        sessionId: String,
-        limit: Int? = nil,
-        after: String? = nil,
-        startTime: Date? = nil,
-        endTime: Date? = nil,
-        signalType: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ListDialoguesResponse {
+    public static func signalsListSessionDialogues(config: ClientConfig, sessionId: String, limit: Int? = nil, after: String? = nil, startTime: Date? = nil, endTime: Date? = nil, signalType: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListDialoguesResponse {
         try sdkValidateUuid("session_id", sessionId)
 
-        if let limit {
+        if let limit = limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        if let startTime {
+        if let startTime = startTime {
             try sdkValidateDateTime("start_time", startTime)
         }
 
-        if let endTime {
+        if let endTime = endTime {
             try sdkValidateDateTime("end_time", endTime)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v1/signals/sessions/", sdkEncodePathSegment(sdkWireString(sessionId)), "/dialogues"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("limit", value: limit),
-                SdkQueryParameter("after", value: after),
-                SdkQueryParameter("start_time", value: startTime),
-                SdkQueryParameter("end_time", value: endTime),
-                SdkQueryParameter("signal_type", value: signalType),
-            ],
-            decoder: .json,
-            operationId: "signals_list_session_dialogues",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v1/signals/sessions/", sdkEncodePathSegment(sdkWireString(sessionId)), "/dialogues"].joined(), config: config, query: [
+            SdkQueryParameter("limit", value: limit),
+            SdkQueryParameter("after", value: after),
+            SdkQueryParameter("start_time", value: startTime),
+            SdkQueryParameter("end_time", value: endTime),
+            SdkQueryParameter("signal_type", value: signalType),
+        ], decoder: .json, operationId: "signals_list_session_dialogues", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

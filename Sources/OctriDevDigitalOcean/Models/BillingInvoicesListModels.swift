@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Billing domain models
+// Billing domain models
 /// The invoice preview.
 public struct InvoicePreview: Codable {
     /// The UUID of the invoice. The canonical reference for the invoice.
@@ -31,29 +31,23 @@ public struct InvoicePreview: Codable {
     }
 
     init() {
-        (invoiceUuid, invoiceId, amount, invoicePeriod, updatedAt) = (nil, nil, nil, nil, nil)
+        (self.invoiceUuid, self.invoiceId, self.amount, self.invoicePeriod, self.updatedAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension InvoicePreview {
-    init(from decoder: Decoder) throws {
+extension InvoicePreview {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        invoiceUuid = try container.sdkDecodeIfPresent(.invoiceUuid)
-        invoiceId = try container.sdkDecodeIfPresent(.invoiceId)
-        amount = try container.sdkDecodeIfPresent(.amount)
-        invoicePeriod = try container.sdkDecodeIfPresent(.invoicePeriod)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.invoiceUuid = try container.sdkDecodeIfPresent(.invoiceUuid)
+        self.invoiceId = try container.sdkDecodeIfPresent(.invoiceId)
+        self.amount = try container.sdkDecodeIfPresent(.amount)
+        self.invoicePeriod = try container.sdkDecodeIfPresent(.invoicePeriod)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
     }
 }
 
-public extension InvoicePreview {
-    init(
-        invoiceUuid: String? = nil,
-        invoiceId: String? = nil,
-        amount: String? = nil,
-        invoicePeriod: String? = nil,
-        updatedAt: String? = nil
-    ) {
+extension InvoicePreview {
+    public init(invoiceUuid: String? = nil, invoiceId: String? = nil, amount: String? = nil, invoicePeriod: String? = nil, updatedAt: String? = nil) {
         self.init()
         (self.invoiceUuid, self.invoiceId) = (invoiceUuid, invoiceId)
         (self.amount, self.invoicePeriod) = (amount, invoicePeriod)
@@ -72,20 +66,20 @@ public struct InvoicesVariant0: Codable {
     }
 
     init() {
-        (invoices, invoicePreview) = (nil, nil)
+        (self.invoices, self.invoicePreview) = (nil, nil)
     }
 }
 
-public extension InvoicesVariant0 {
-    init(from decoder: Decoder) throws {
+extension InvoicesVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        invoices = try container.sdkDecodeIfPresent(.invoices)
-        invoicePreview = try container.sdkDecodeIfPresent(.invoicePreview)
+        self.invoices = try container.sdkDecodeIfPresent(.invoices)
+        self.invoicePreview = try container.sdkDecodeIfPresent(.invoicePreview)
     }
 }
 
-public extension InvoicesVariant0 {
-    init(invoices: [InvoicePreview]? = nil, invoicePreview: InvoicePreview? = nil) {
+extension InvoicesVariant0 {
+    public init(invoices: [InvoicePreview]? = nil, invoicePreview: InvoicePreview? = nil) {
         self.init()
         (self.invoices, self.invoicePreview) = (invoices, invoicePreview)
     }
@@ -108,35 +102,24 @@ public struct Invoices: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Invoices {
-    init(from decoder: Decoder) throws {
+extension Invoices {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        invoices = try container.sdkDecodeIfPresent(.invoices)
-        invoicePreview = try container.sdkDecodeIfPresent(.invoicePreview)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.invoices = try container.sdkDecodeIfPresent(.invoices)
+        self.invoicePreview = try container.sdkDecodeIfPresent(.invoicePreview)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension Invoices {
-    init(
-        meta: MetaMeta,
-        invoices: [InvoicePreview]? = nil,
-        invoicePreview: InvoicePreview? = nil,
-        links: PageLinks? = nil
-    ) {
+extension Invoices {
+    public init(meta: MetaMeta, invoices: [InvoicePreview]? = nil, invoicePreview: InvoicePreview? = nil, links: PageLinks? = nil) {
         (self.meta, self.invoices) = (meta, invoices)
         (self.invoicePreview, self.links) = (invoicePreview, links)
     }

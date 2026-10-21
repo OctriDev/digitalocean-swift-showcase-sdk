@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DropletAutoscalePools domain models
+// DropletAutoscalePools domain models
 /// Typed representation of the `AutoscalePool` API schema.
 public struct AutoscalePool: Codable {
     /// A unique identifier for each autoscale pool instance. This is automatically generated upon autoscale pool
@@ -47,47 +47,35 @@ public struct AutoscalePool: Codable {
         case currentUtilization = "current_utilization"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AutoscalePool {
-    init(from decoder: Decoder) throws {
+extension AutoscalePool {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeRequired(.id)
-        name = try container.sdkDecodeRequired(.name)
-        config = try container.sdkDecodeRequired(.config)
-        dropletTemplate = try container.sdkDecodeRequired(.dropletTemplate)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        status = try container.sdkDecodeRequired(.status)
-        activeResourcesCount = try container.sdkDecodeRequired(.activeResourcesCount)
-        currentUtilization = try container.sdkDecodeIfPresent(.currentUtilization)
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
-        try sdkValidateDateTime("updated_at", sdkWireString(updatedAt))
+        self.id = try container.sdkDecodeRequired(.id)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.config = try container.sdkDecodeRequired(.config)
+        self.dropletTemplate = try container.sdkDecodeRequired(.dropletTemplate)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.activeResourcesCount = try container.sdkDecodeRequired(.activeResourcesCount)
+        self.currentUtilization = try container.sdkDecodeIfPresent(.currentUtilization)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
-public extension AutoscalePool {
-    init(
-        id: String,
-        name: String,
-        config: AutoscalePoolConfig,
-        dropletTemplate: AutoscalePoolDropletTemplate,
-        createdAt: Date,
-        updatedAt: Date,
-        status: AutoscalePoolStatus,
-        activeResourcesCount: Int,
-        currentUtilization: CurrentUtilization? = nil
-    ) throws {
+extension AutoscalePool {
+    public init(id: String, name: String, config: AutoscalePoolConfig, dropletTemplate: AutoscalePoolDropletTemplate, createdAt: Date, updatedAt: Date, status: AutoscalePoolStatus, activeResourcesCount: Int, currentUtilization: CurrentUtilization? = nil) throws {
         (self.id, self.name) = (id, name)
         (self.config, self.dropletTemplate) = (config, dropletTemplate)
         (self.createdAt, self.updatedAt) = (createdAt, updatedAt)
         (self.status, self.activeResourcesCount) = (status, activeResourcesCount)
         self.currentUtilization = currentUtilization
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-        try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
@@ -106,65 +94,33 @@ public struct CurrentUtilization: Codable {
     }
 
     init() {
-        (memory, cpu) = (nil, nil)
+        (self.memory, self.cpu) = (nil, nil)
     }
 }
 
-public extension CurrentUtilization {
-    init(from decoder: Decoder) throws {
+extension CurrentUtilization {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        memory = try container.sdkDecodeIfPresent(.memory)
-        cpu = try container.sdkDecodeIfPresent(.cpu)
-        if let value = memory {
-            try validateRange(
-                "memory",
-                Double(value),
-                min: 0,
-                max: 1,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.memory = try container.sdkDecodeIfPresent(.memory)
+        self.cpu = try container.sdkDecodeIfPresent(.cpu)
+        if let value = self.memory {
+            try validateRange("memory", Double(value), min: 0, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = cpu {
-            try validateRange(
-                "cpu",
-                Double(value),
-                min: 0,
-                max: 1,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.cpu {
+            try validateRange("cpu", Double(value), min: 0, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
-public extension CurrentUtilization {
-    init(memory: Double? = nil, cpu: Double? = nil) throws {
+extension CurrentUtilization {
+    public init(memory: Double? = nil, cpu: Double? = nil) throws {
         self.init()
         (self.memory, self.cpu) = (memory, cpu)
         if let value = self.memory {
-            try validateRange(
-                "memory",
-                Double(value),
-                min: 0,
-                max: 1,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("memory", Double(value), min: 0, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.cpu {
-            try validateRange(
-                "cpu",
-                Double(value),
-                min: 0,
-                max: 1,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("cpu", Double(value), min: 0, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -173,10 +129,7 @@ public extension CurrentUtilization {
 public struct AutoscalePoolDropletTemplateRegion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let nyc1 = AutoscalePoolDropletTemplateRegion(rawValue: "nyc1")
     public static let nyc2 = AutoscalePoolDropletTemplateRegion(rawValue: "nyc2")
     public static let nyc3 = AutoscalePoolDropletTemplateRegion(rawValue: "nyc3")
@@ -194,7 +147,7 @@ public struct AutoscalePoolDropletTemplateRegion: RawRepresentable, Hashable, Co
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -207,17 +160,14 @@ public struct AutoscalePoolDropletTemplateRegion: RawRepresentable, Hashable, Co
 public struct AutoscalePoolStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let active = AutoscalePoolStatus(rawValue: "active")
     public static let deleting = AutoscalePoolStatus(rawValue: "deleting")
     public static let error = AutoscalePoolStatus(rawValue: "error")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

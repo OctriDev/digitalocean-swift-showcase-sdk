@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Signals domain models
+// Signals domain models
 /// Typed representation of the `UpdateConsentResponse` API schema.
 public struct UpdateConsentResponse: Codable {
     /// A consent record indicating whether signals collection is enabled for a source. Records with `source: agent`
@@ -14,27 +14,21 @@ public struct UpdateConsentResponse: Codable {
         case consent
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension UpdateConsentResponse {
-    init(from decoder: Decoder) throws {
+extension UpdateConsentResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.consent) else {
-            throw SdkValidationError(
-                field: "consent",
-                code: "required",
-                message: "Validation failed for 'consent': value is required"
-            )
+            throw SdkValidationError(field: "consent", code: "required", message: "Validation failed for 'consent': value is required")
         }
-        consent = try container.sdkDecodeRequired(.consent)
+        self.consent = try container.sdkDecodeRequired(.consent)
     }
 }
 
-public extension UpdateConsentResponse {
-    init(consent: ConsentRecord) {
+extension UpdateConsentResponse {
+    public init(consent: ConsentRecord) {
         self.consent = consent
     }
 }

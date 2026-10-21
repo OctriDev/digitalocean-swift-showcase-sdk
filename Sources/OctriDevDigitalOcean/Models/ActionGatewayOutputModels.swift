@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// ActionGatewayOutput domain models
+// ActionGatewayOutput domain models
 /// Describes a projection of one tool version's output.
 public struct OutputViewCreate: Codable {
     /// View name. Must match `^`[a-z]``[a-z0-9_-]`{0,63}$` and be unique per tool version within your team.
@@ -34,54 +34,38 @@ public struct OutputViewCreate: Codable {
         case description
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension OutputViewCreate {
-    init(from decoder: Decoder) throws {
+extension OutputViewCreate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.fields) else {
-            throw SdkValidationError(
-                field: "fields",
-                code: "required",
-                message: "Validation failed for 'fields': value is required"
-            )
+            throw SdkValidationError(field: "fields", code: "required", message: "Validation failed for 'fields': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        fields = try container.sdkDecodeRequired(.fields)
-        tool = try container.sdkDecodeIfPresent(.tool)
-        toolId = try container.sdkDecodeIfPresent(.toolId)
-        description = try container.sdkDecodeIfPresent(.description)
-        try sdkValidatePattern("name", name, sdkPattern96f04f9d57bc)
-        try validateItems("fields", fields, min: 1, max: 64)
-        if let value = description {
+        self.name = try container.sdkDecodeRequired(.name)
+        self.fields = try container.sdkDecodeRequired(.fields)
+        self.tool = try container.sdkDecodeIfPresent(.tool)
+        self.toolId = try container.sdkDecodeIfPresent(.toolId)
+        self.description = try container.sdkDecodeIfPresent(.description)
+            try sdkValidatePattern("name", self.name, sdkPattern96f04f9d57bc)
+            try validateItems("fields", self.fields, min: 1, max: 64)
+        if let value = self.description {
             try validateLength("description", value, min: nil, max: 512)
         }
     }
 }
 
-public extension OutputViewCreate {
-    init(
-        name: String,
-        fields: [String],
-        tool: String? = nil,
-        toolId: String? = nil,
-        description: String? = nil
-    ) throws {
+extension OutputViewCreate {
+    public init(name: String, fields: [String], tool: String? = nil, toolId: String? = nil, description: String? = nil) throws {
         (self.name, self.fields) = (name, fields)
         (self.tool, self.toolId) = (tool, toolId)
         self.description = description
-        try sdkValidatePattern("name", self.name, sdkPattern96f04f9d57bc)
-        try validateItems("fields", self.fields, min: 1, max: 64)
+            try sdkValidatePattern("name", self.name, sdkPattern96f04f9d57bc)
+            try validateItems("fields", self.fields, min: 1, max: 64)
         if let value = self.description {
             try validateLength("description", value, min: nil, max: 512)
         }
@@ -106,30 +90,30 @@ public struct OutputViewAudit: Codable {
     }
 
     init() {
-        (createdAt, updatedAt, deletedAt) = (nil, nil, nil)
+        (self.createdAt, self.updatedAt, self.deletedAt) = (nil, nil, nil)
     }
 }
 
-public extension OutputViewAudit {
-    init(from decoder: Decoder) throws {
+extension OutputViewAudit {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
-        if let value = createdAt {
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
+        if let value = self.createdAt {
             try sdkValidateDateTime("createdAt", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updatedAt", sdkWireString(value))
         }
-        if let value = deletedAt {
+        if let value = self.deletedAt {
             try sdkValidateDateTime("deletedAt", sdkWireString(value))
         }
     }
 }
 
-public extension OutputViewAudit {
-    init(createdAt: Date? = nil, updatedAt: Date? = nil, deletedAt: Date? = nil) throws {
+extension OutputViewAudit {
+    public init(createdAt: Date? = nil, updatedAt: Date? = nil, deletedAt: Date? = nil) throws {
         self.init()
         (self.createdAt, self.updatedAt) = (createdAt, updatedAt)
         self.deletedAt = deletedAt
@@ -155,19 +139,19 @@ public struct OutputViewResponse: Codable {
     }
 
     init() {
-        view = nil
+        self.view = nil
     }
 }
 
-public extension OutputViewResponse {
-    init(from decoder: Decoder) throws {
+extension OutputViewResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        view = try container.sdkDecodeIfPresent(.view)
+        self.view = try container.sdkDecodeIfPresent(.view)
     }
 }
 
-public extension OutputViewResponse {
-    init(view: OutputView? = nil) {
+extension OutputViewResponse {
+    public init(view: OutputView? = nil) {
         self.init()
         self.view = view
     }
@@ -199,37 +183,25 @@ public struct OutputViewPreview: Codable {
         case description
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension OutputViewPreview {
-    init(from decoder: Decoder) throws {
+extension OutputViewPreview {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.fields) else {
-            throw SdkValidationError(
-                field: "fields",
-                code: "required",
-                message: "Validation failed for 'fields': value is required"
-            )
+            throw SdkValidationError(field: "fields", code: "required", message: "Validation failed for 'fields': value is required")
         }
-        fields = try container.sdkDecodeRequired(.fields)
-        tool = try container.sdkDecodeIfPresent(.tool)
-        toolId = try container.sdkDecodeIfPresent(.toolId)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
+        self.fields = try container.sdkDecodeRequired(.fields)
+        self.tool = try container.sdkDecodeIfPresent(.tool)
+        self.toolId = try container.sdkDecodeIfPresent(.toolId)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
     }
 }
 
-public extension OutputViewPreview {
-    init(
-        fields: [String],
-        tool: String? = nil,
-        toolId: String? = nil,
-        name: String? = nil,
-        description: String? = nil
-    ) {
+extension OutputViewPreview {
+    public init(fields: [String], tool: String? = nil, toolId: String? = nil, name: String? = nil, description: String? = nil) {
         (self.fields, self.tool) = (fields, tool)
         (self.toolId, self.name) = (toolId, name)
         self.description = description
@@ -289,46 +261,34 @@ public struct OutputView: Codable {
     }
 
     init() {
-        (viewId, toolId, tool, version, teamId) = (nil, nil, nil, nil, nil)
-        (name, description, kind, fields, outputSchema) = (nil, nil, nil, nil, nil)
-        audit = nil
+        (self.viewId, self.toolId, self.tool, self.version, self.teamId) = (nil, nil, nil, nil, nil)
+        (self.name, self.description, self.kind, self.fields, self.outputSchema) = (nil, nil, nil, nil, nil)
+        self.audit = nil
     }
 }
 
-public extension OutputView {
-    init(from decoder: Decoder) throws {
+extension OutputView {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        viewId = try container.sdkDecodeIfPresent(.viewId)
-        toolId = try container.sdkDecodeIfPresent(.toolId)
-        tool = try container.sdkDecodeIfPresent(.tool)
-        version = try container.sdkDecodeIfPresent(.version)
-        teamId = try container.sdkDecodeIfPresent(.teamId)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        kind = try container.sdkDecodeIfPresent(.kind)
-        fields = try container.sdkDecodeIfPresent(.fields)
-        outputSchema = try container.sdkDecodeIfPresent(.outputSchema)
-        audit = try container.sdkDecodeIfPresent(.audit)
-        if let value = name {
+        self.viewId = try container.sdkDecodeIfPresent(.viewId)
+        self.toolId = try container.sdkDecodeIfPresent(.toolId)
+        self.tool = try container.sdkDecodeIfPresent(.tool)
+        self.version = try container.sdkDecodeIfPresent(.version)
+        self.teamId = try container.sdkDecodeIfPresent(.teamId)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.kind = try container.sdkDecodeIfPresent(.kind)
+        self.fields = try container.sdkDecodeIfPresent(.fields)
+        self.outputSchema = try container.sdkDecodeIfPresent(.outputSchema)
+        self.audit = try container.sdkDecodeIfPresent(.audit)
+        if let value = self.name {
             try sdkValidatePattern("name", value, sdkPattern96f04f9d57bc)
         }
     }
 }
 
-public extension OutputView {
-    init(
-        viewId: String? = nil,
-        toolId: String? = nil,
-        tool: String? = nil,
-        version: String? = nil,
-        teamId: String? = nil,
-        name: String? = nil,
-        description: String? = nil,
-        kind: OutputViewKind? = nil,
-        fields: [String]? = nil,
-        outputSchema: [String: JSONValue]? = nil,
-        audit: OutputViewAudit? = nil
-    ) throws {
+extension OutputView {
+    public init(viewId: String? = nil, toolId: String? = nil, tool: String? = nil, version: String? = nil, teamId: String? = nil, name: String? = nil, description: String? = nil, kind: OutputViewKind? = nil, fields: [String]? = nil, outputSchema: [String: JSONValue]? = nil, audit: OutputViewAudit? = nil) throws {
         self.init()
         (self.viewId, self.toolId) = (viewId, toolId)
         (self.tool, self.version) = (tool, version)
@@ -346,16 +306,13 @@ public extension OutputView {
 public struct OutputViewKind: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let outputViewKindProjection = OutputViewKind(rawValue: "OUTPUT_VIEW_KIND_PROJECTION")
     public static let outputViewKindTransform = OutputViewKind(rawValue: "OUTPUT_VIEW_KIND_TRANSFORM")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

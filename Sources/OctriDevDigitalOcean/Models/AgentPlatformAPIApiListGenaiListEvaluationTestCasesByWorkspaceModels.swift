@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiList domain models
+// AgentPlatformAPIApiList domain models
 /// Typed representation of the `ApiListEvaluationTestCasesByWorkspaceOutput` API schema.
 public struct ApiListEvaluationTestCasesByWorkspaceOutput: Codable {
     /// Optional array value serialized in the `evaluation_test_cases` wire field.
@@ -14,19 +14,19 @@ public struct ApiListEvaluationTestCasesByWorkspaceOutput: Codable {
     }
 
     init() {
-        evaluationTestCases = nil
+        self.evaluationTestCases = nil
     }
 }
 
-public extension ApiListEvaluationTestCasesByWorkspaceOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListEvaluationTestCasesByWorkspaceOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        evaluationTestCases = try container.sdkDecodeIfPresent(.evaluationTestCases)
+        self.evaluationTestCases = try container.sdkDecodeIfPresent(.evaluationTestCases)
     }
 }
 
-public extension ApiListEvaluationTestCasesByWorkspaceOutput {
-    init(evaluationTestCases: [ApiEvaluationTestCase]? = nil) {
+extension ApiListEvaluationTestCasesByWorkspaceOutput {
+    public init(evaluationTestCases: [ApiEvaluationTestCase]? = nil) {
         self.init()
         self.evaluationTestCases = evaluationTestCases
     }

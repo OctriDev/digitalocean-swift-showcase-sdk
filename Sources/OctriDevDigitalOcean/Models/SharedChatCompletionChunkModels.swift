@@ -3,63 +3,36 @@
 
 import Foundation
 
-/// SharedChat domain models
-public extension ChatCompletionChunk {
-    init(from decoder: Decoder) throws {
+// SharedChat domain models
+extension ChatCompletionChunk {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.choices) else {
-            throw SdkValidationError(
-                field: "choices",
-                code: "required",
-                message: "Validation failed for 'choices': value is required"
-            )
+            throw SdkValidationError(field: "choices", code: "required", message: "Validation failed for 'choices': value is required")
         }
         guard container.contains(.created) else {
-            throw SdkValidationError(
-                field: "created",
-                code: "required",
-                message: "Validation failed for 'created': value is required"
-            )
+            throw SdkValidationError(field: "created", code: "required", message: "Validation failed for 'created': value is required")
         }
         guard container.contains(.model) else {
-            throw SdkValidationError(
-                field: "model",
-                code: "required",
-                message: "Validation failed for 'model': value is required"
-            )
+            throw SdkValidationError(field: "model", code: "required", message: "Validation failed for 'model': value is required")
         }
         guard container.contains(.object) else {
-            throw SdkValidationError(
-                field: "object",
-                code: "required",
-                message: "Validation failed for 'object': value is required"
-            )
+            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        choices = try container.sdkDecodeRequired(.choices)
-        created = try container.sdkDecodeRequired(.created)
-        model = try container.sdkDecodeRequired(.model)
-        object = try container.sdkDecodeRequired(.object)
-        usage = try container.sdkDecodeIfPresent(.usage)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.choices = try container.sdkDecodeRequired(.choices)
+        self.created = try container.sdkDecodeRequired(.created)
+        self.model = try container.sdkDecodeRequired(.model)
+        self.object = try container.sdkDecodeRequired(.object)
+        self.usage = try container.sdkDecodeIfPresent(.usage)
     }
 }
 
-public extension ChatCompletionChunk {
-    init(
-        id: String,
-        choices: [ChatCompletionChunkChoicesItem],
-        created: Int,
-        model: String,
-        object: ChatCompletionChunkObject,
-        usage: CompletionUsage? = nil
-    ) {
+extension ChatCompletionChunk {
+    public init(id: String, choices: [ChatCompletionChunkChoicesItem], created: Int, model: String, object: ChatCompletionChunkObject, usage: CompletionUsage? = nil) {
         (self.id, self.choices) = (id, choices)
         (self.created, self.model) = (created, model)
         (self.object, self.usage) = (object, usage)
@@ -87,49 +60,30 @@ public struct ChatCompletionChunkChoicesItem: Codable {
         case logprobs
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ChatCompletionChunkChoicesItem {
-    init(from decoder: Decoder) throws {
+extension ChatCompletionChunkChoicesItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.delta) else {
-            throw SdkValidationError(
-                field: "delta",
-                code: "required",
-                message: "Validation failed for 'delta': value is required"
-            )
+            throw SdkValidationError(field: "delta", code: "required", message: "Validation failed for 'delta': value is required")
         }
         guard container.contains(.finishReason) else {
-            throw SdkValidationError(
-                field: "finish_reason",
-                code: "required",
-                message: "Validation failed for 'finish_reason': value is required"
-            )
+            throw SdkValidationError(field: "finish_reason", code: "required", message: "Validation failed for 'finish_reason': value is required")
         }
         guard container.contains(.index) else {
-            throw SdkValidationError(
-                field: "index",
-                code: "required",
-                message: "Validation failed for 'index': value is required"
-            )
+            throw SdkValidationError(field: "index", code: "required", message: "Validation failed for 'index': value is required")
         }
-        delta = try container.sdkDecodeRequired(.delta)
-        finishReason = try container.sdkDecodeNullable(.finishReason)
-        index = try container.sdkDecodeRequired(.index)
-        logprobs = try container.sdkDecodeIfPresent(.logprobs)
+        self.delta = try container.sdkDecodeRequired(.delta)
+        self.finishReason = try container.sdkDecodeNullable(.finishReason)
+        self.index = try container.sdkDecodeRequired(.index)
+        self.logprobs = try container.sdkDecodeIfPresent(.logprobs)
     }
 }
 
-public extension ChatCompletionChunkChoicesItem {
-    init(
-        delta: ChatCompletionStreamResponseDelta,
-        finishReason: ChatCompletionChunkChoicesItemFinishReason?,
-        index: Int,
-        logprobs: ChatCompletionChunkChoicesItemLogprobs? = nil
-    ) {
+extension ChatCompletionChunkChoicesItem {
+    public init(delta: ChatCompletionStreamResponseDelta, finishReason: ChatCompletionChunkChoicesItemFinishReason?, index: Int, logprobs: ChatCompletionChunkChoicesItemLogprobs? = nil) {
         (self.delta, self.finishReason) = (delta, finishReason)
         (self.index, self.logprobs) = (index, logprobs)
     }
@@ -157,51 +111,33 @@ public struct ChatCompletionTokenLogprob: Codable {
         case topLogprobs = "top_logprobs"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ChatCompletionTokenLogprob {
-    init(from decoder: Decoder) throws {
+extension ChatCompletionTokenLogprob {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.token) else {
-            throw SdkValidationError(
-                field: "token",
-                code: "required",
-                message: "Validation failed for 'token': value is required"
-            )
+            throw SdkValidationError(field: "token", code: "required", message: "Validation failed for 'token': value is required")
         }
         guard container.contains(.logprob) else {
-            throw SdkValidationError(
-                field: "logprob",
-                code: "required",
-                message: "Validation failed for 'logprob': value is required"
-            )
+            throw SdkValidationError(field: "logprob", code: "required", message: "Validation failed for 'logprob': value is required")
         }
         guard container.contains(.bytes) else {
-            throw SdkValidationError(
-                field: "bytes",
-                code: "required",
-                message: "Validation failed for 'bytes': value is required"
-            )
+            throw SdkValidationError(field: "bytes", code: "required", message: "Validation failed for 'bytes': value is required")
         }
         guard container.contains(.topLogprobs) else {
-            throw SdkValidationError(
-                field: "top_logprobs",
-                code: "required",
-                message: "Validation failed for 'top_logprobs': value is required"
-            )
+            throw SdkValidationError(field: "top_logprobs", code: "required", message: "Validation failed for 'top_logprobs': value is required")
         }
-        token = try container.sdkDecodeRequired(.token)
-        logprob = try container.sdkDecodeRequired(.logprob)
-        bytes = try container.sdkDecodeNullable(.bytes)
-        topLogprobs = try container.sdkDecodeRequired(.topLogprobs)
+        self.token = try container.sdkDecodeRequired(.token)
+        self.logprob = try container.sdkDecodeRequired(.logprob)
+        self.bytes = try container.sdkDecodeNullable(.bytes)
+        self.topLogprobs = try container.sdkDecodeRequired(.topLogprobs)
     }
 }
 
-public extension ChatCompletionTokenLogprob {
-    init(token: String, logprob: Double, bytes: [Int]?, topLogprobs: [ChatCompletionTopLogprobItem]) {
+extension ChatCompletionTokenLogprob {
+    public init(token: String, logprob: Double, bytes: [Int]?, topLogprobs: [ChatCompletionTopLogprobItem]) {
         (self.token, self.logprob) = (token, logprob)
         (self.bytes, self.topLogprobs) = (bytes, topLogprobs)
     }
@@ -234,39 +170,26 @@ public struct ChatMessage: Codable {
         case reasoningContent = "reasoning_content"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ChatMessage {
-    init(from decoder: Decoder) throws {
+extension ChatMessage {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.role) else {
-            throw SdkValidationError(
-                field: "role",
-                code: "required",
-                message: "Validation failed for 'role': value is required"
-            )
+            throw SdkValidationError(field: "role", code: "required", message: "Validation failed for 'role': value is required")
         }
-        role = try container.sdkDecodeRequired(.role)
-        content = try container.sdkDecodeIfPresent(.content)
-        refusal = try container.sdkDecodeIfPresent(.refusal)
-        toolCalls = try container.sdkDecodeIfPresent(.toolCalls)
-        toolCallId = try container.sdkDecodeIfPresent(.toolCallId)
-        reasoningContent = try container.sdkDecodeIfPresent(.reasoningContent)
+        self.role = try container.sdkDecodeRequired(.role)
+        self.content = try container.sdkDecodeIfPresent(.content)
+        self.refusal = try container.sdkDecodeIfPresent(.refusal)
+        self.toolCalls = try container.sdkDecodeIfPresent(.toolCalls)
+        self.toolCallId = try container.sdkDecodeIfPresent(.toolCallId)
+        self.reasoningContent = try container.sdkDecodeIfPresent(.reasoningContent)
     }
 }
 
-public extension ChatMessage {
-    init(
-        role: ChatMessageRole,
-        content: String? = nil,
-        refusal: String? = nil,
-        toolCalls: [ChatCompletionToolCall]? = nil,
-        toolCallId: String? = nil,
-        reasoningContent: String? = nil
-    ) {
+extension ChatMessage {
+    public init(role: ChatMessageRole, content: String? = nil, refusal: String? = nil, toolCalls: [ChatCompletionToolCall]? = nil, toolCallId: String? = nil, reasoningContent: String? = nil) {
         (self.role, self.content) = (role, content)
         (self.refusal, self.toolCalls) = (refusal, toolCalls)
         (self.toolCallId, self.reasoningContent) = (toolCallId, reasoningContent)
@@ -290,47 +213,29 @@ public struct ChatCompletionResponseChoicesItemMessageToolCallsItem: Codable {
         case function
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ChatCompletionResponseChoicesItemMessageToolCallsItem {
-    init(from decoder: Decoder) throws {
+extension ChatCompletionResponseChoicesItemMessageToolCallsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.function) else {
-            throw SdkValidationError(
-                field: "function",
-                code: "required",
-                message: "Validation failed for 'function': value is required"
-            )
+            throw SdkValidationError(field: "function", code: "required", message: "Validation failed for 'function': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        type = try container.sdkDecodeRequired(.type)
-        function = try container.sdkDecodeRequired(.function)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.function = try container.sdkDecodeRequired(.function)
     }
 }
 
-public extension ChatCompletionResponseChoicesItemMessageToolCallsItem {
-    init(
-        id: String,
-        type: ChatCompletionResponseChoicesItemMessageToolCallsItemType,
-        function: ChatCompletionResponseChoicesItemMessageToolCallsItemFunction
-    ) {
+extension ChatCompletionResponseChoicesItemMessageToolCallsItem {
+    public init(id: String, type: ChatCompletionResponseChoicesItemMessageToolCallsItemType, function: ChatCompletionResponseChoicesItemMessageToolCallsItemFunction) {
         (self.id, self.type) = (id, type)
         self.function = function
     }
@@ -348,35 +253,25 @@ public struct ChatCompletionResponseChoicesItemLogprobs: Codable {
         case refusal
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ChatCompletionResponseChoicesItemLogprobs {
-    init(from decoder: Decoder) throws {
+extension ChatCompletionResponseChoicesItemLogprobs {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.content) else {
-            throw SdkValidationError(
-                field: "content",
-                code: "required",
-                message: "Validation failed for 'content': value is required"
-            )
+            throw SdkValidationError(field: "content", code: "required", message: "Validation failed for 'content': value is required")
         }
         guard container.contains(.refusal) else {
-            throw SdkValidationError(
-                field: "refusal",
-                code: "required",
-                message: "Validation failed for 'refusal': value is required"
-            )
+            throw SdkValidationError(field: "refusal", code: "required", message: "Validation failed for 'refusal': value is required")
         }
-        content = try container.sdkDecodeNullable(.content)
-        refusal = try container.sdkDecodeNullable(.refusal)
+        self.content = try container.sdkDecodeNullable(.content)
+        self.refusal = try container.sdkDecodeNullable(.refusal)
     }
 }
 
-public extension ChatCompletionResponseChoicesItemLogprobs {
-    init(content: [ChatCompletionTokenLogprob]?, refusal: [ChatCompletionTokenLogprob]?) {
+extension ChatCompletionResponseChoicesItemLogprobs {
+    public init(content: [ChatCompletionTokenLogprob]?, refusal: [ChatCompletionTokenLogprob]?) {
         (self.content, self.refusal) = (content, refusal)
     }
 }
@@ -404,58 +299,34 @@ public struct ChatCompletionResponseChoicesItemMessage: Codable {
         case toolCalls = "tool_calls"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ChatCompletionResponseChoicesItemMessage {
-    init(from decoder: Decoder) throws {
+extension ChatCompletionResponseChoicesItemMessage {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.content) else {
-            throw SdkValidationError(
-                field: "content",
-                code: "required",
-                message: "Validation failed for 'content': value is required"
-            )
+            throw SdkValidationError(field: "content", code: "required", message: "Validation failed for 'content': value is required")
         }
         guard container.contains(.refusal) else {
-            throw SdkValidationError(
-                field: "refusal",
-                code: "required",
-                message: "Validation failed for 'refusal': value is required"
-            )
+            throw SdkValidationError(field: "refusal", code: "required", message: "Validation failed for 'refusal': value is required")
         }
         guard container.contains(.reasoningContent) else {
-            throw SdkValidationError(
-                field: "reasoning_content",
-                code: "required",
-                message: "Validation failed for 'reasoning_content': value is required"
-            )
+            throw SdkValidationError(field: "reasoning_content", code: "required", message: "Validation failed for 'reasoning_content': value is required")
         }
         guard container.contains(.role) else {
-            throw SdkValidationError(
-                field: "role",
-                code: "required",
-                message: "Validation failed for 'role': value is required"
-            )
+            throw SdkValidationError(field: "role", code: "required", message: "Validation failed for 'role': value is required")
         }
-        content = try container.sdkDecodeNullable(.content)
-        refusal = try container.sdkDecodeNullable(.refusal)
-        reasoningContent = try container.sdkDecodeNullable(.reasoningContent)
-        role = try container.sdkDecodeRequired(.role)
-        toolCalls = try container.sdkDecodeIfPresent(.toolCalls)
+        self.content = try container.sdkDecodeNullable(.content)
+        self.refusal = try container.sdkDecodeNullable(.refusal)
+        self.reasoningContent = try container.sdkDecodeNullable(.reasoningContent)
+        self.role = try container.sdkDecodeRequired(.role)
+        self.toolCalls = try container.sdkDecodeIfPresent(.toolCalls)
     }
 }
 
-public extension ChatCompletionResponseChoicesItemMessage {
-    init(
-        content: String?,
-        refusal: String?,
-        reasoningContent: String?,
-        role: ChatCompletionResponseChoicesItemMessageRole,
-        toolCalls: [ChatCompletionResponseChoicesItemMessageToolCallsItem]? = nil
-    ) {
+extension ChatCompletionResponseChoicesItemMessage {
+    public init(content: String?, refusal: String?, reasoningContent: String?, role: ChatCompletionResponseChoicesItemMessageRole, toolCalls: [ChatCompletionResponseChoicesItemMessageToolCallsItem]? = nil) {
         (self.content, self.refusal) = (content, refusal)
         (self.reasoningContent, self.role) = (reasoningContent, role)
         self.toolCalls = toolCalls
@@ -479,43 +350,29 @@ public struct ChatCompletionTopLogprobItem: Codable {
         case bytes
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ChatCompletionTopLogprobItem {
-    init(from decoder: Decoder) throws {
+extension ChatCompletionTopLogprobItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.token) else {
-            throw SdkValidationError(
-                field: "token",
-                code: "required",
-                message: "Validation failed for 'token': value is required"
-            )
+            throw SdkValidationError(field: "token", code: "required", message: "Validation failed for 'token': value is required")
         }
         guard container.contains(.logprob) else {
-            throw SdkValidationError(
-                field: "logprob",
-                code: "required",
-                message: "Validation failed for 'logprob': value is required"
-            )
+            throw SdkValidationError(field: "logprob", code: "required", message: "Validation failed for 'logprob': value is required")
         }
         guard container.contains(.bytes) else {
-            throw SdkValidationError(
-                field: "bytes",
-                code: "required",
-                message: "Validation failed for 'bytes': value is required"
-            )
+            throw SdkValidationError(field: "bytes", code: "required", message: "Validation failed for 'bytes': value is required")
         }
-        token = try container.sdkDecodeRequired(.token)
-        logprob = try container.sdkDecodeRequired(.logprob)
-        bytes = try container.sdkDecodeNullable(.bytes)
+        self.token = try container.sdkDecodeRequired(.token)
+        self.logprob = try container.sdkDecodeRequired(.logprob)
+        self.bytes = try container.sdkDecodeNullable(.bytes)
     }
 }
 
-public extension ChatCompletionTopLogprobItem {
-    init(token: String, logprob: Double, bytes: [Int]?) {
+extension ChatCompletionTopLogprobItem {
+    public init(token: String, logprob: Double, bytes: [Int]?) {
         (self.token, self.logprob) = (token, logprob)
         self.bytes = bytes
     }
@@ -542,27 +399,22 @@ public struct ChatCompletionToolCallChunk: Codable {
     }
 
     init() {
-        (index, id, type, function) = (nil, nil, nil, nil)
+        (self.index, self.id, self.type, self.function) = (nil, nil, nil, nil)
     }
 }
 
-public extension ChatCompletionToolCallChunk {
-    init(from decoder: Decoder) throws {
+extension ChatCompletionToolCallChunk {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        index = try container.sdkDecodeIfPresent(.index)
-        id = try container.sdkDecodeIfPresent(.id)
-        type = try container.sdkDecodeIfPresent(.type)
-        function = try container.sdkDecodeIfPresent(.function)
+        self.index = try container.sdkDecodeIfPresent(.index)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.function = try container.sdkDecodeIfPresent(.function)
     }
 }
 
-public extension ChatCompletionToolCallChunk {
-    init(
-        index: Int? = nil,
-        id: String? = nil,
-        type: ChatCompletionToolCallChunkType? = nil,
-        function: ChatCompletionToolCallChunkFunction? = nil
-    ) {
+extension ChatCompletionToolCallChunk {
+    public init(index: Int? = nil, id: String? = nil, type: ChatCompletionToolCallChunkType? = nil, function: ChatCompletionToolCallChunkFunction? = nil) {
         self.init()
         (self.index, self.id) = (index, id)
         (self.type, self.function) = (type, function)
@@ -593,29 +445,23 @@ public struct ChatCompletionStreamResponseDelta: Codable {
     }
 
     init() {
-        (content, toolCalls, reasoningContent, role, refusal) = (nil, nil, nil, nil, nil)
+        (self.content, self.toolCalls, self.reasoningContent, self.role, self.refusal) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ChatCompletionStreamResponseDelta {
-    init(from decoder: Decoder) throws {
+extension ChatCompletionStreamResponseDelta {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        content = try container.sdkDecodeIfPresent(.content)
-        toolCalls = try container.sdkDecodeIfPresent(.toolCalls)
-        reasoningContent = try container.sdkDecodeIfPresent(.reasoningContent)
-        role = try container.sdkDecodeIfPresent(.role)
-        refusal = try container.sdkDecodeIfPresent(.refusal)
+        self.content = try container.sdkDecodeIfPresent(.content)
+        self.toolCalls = try container.sdkDecodeIfPresent(.toolCalls)
+        self.reasoningContent = try container.sdkDecodeIfPresent(.reasoningContent)
+        self.role = try container.sdkDecodeIfPresent(.role)
+        self.refusal = try container.sdkDecodeIfPresent(.refusal)
     }
 }
 
-public extension ChatCompletionStreamResponseDelta {
-    init(
-        content: String? = nil,
-        toolCalls: [ChatCompletionToolCallChunk]? = nil,
-        reasoningContent: String? = nil,
-        role: ChatCompletionStreamResponseDeltaRole? = nil,
-        refusal: String? = nil
-    ) {
+extension ChatCompletionStreamResponseDelta {
+    public init(content: String? = nil, toolCalls: [ChatCompletionToolCallChunk]? = nil, reasoningContent: String? = nil, role: ChatCompletionStreamResponseDeltaRole? = nil, refusal: String? = nil) {
         self.init()
         (self.content, self.toolCalls) = (content, toolCalls)
         (self.reasoningContent, self.role) = (reasoningContent, role)
@@ -636,7 +482,5 @@ public struct ChatCompletionRequestToolChoiceVariant1: Codable {
         case function
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }

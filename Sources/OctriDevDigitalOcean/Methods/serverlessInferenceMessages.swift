@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ServerlessInferenceMethods {
-    struct InferenceCreateMessagesOptions: Codable {
+extension ServerlessInferenceMethods {
+    public struct InferenceCreateMessagesOptions: Codable {
         public var model: String
         public var maxTokens: Int
         public var messages: [MessagesApiMessageParam]
@@ -31,8 +31,7 @@ public extension ServerlessInferenceMethods {
         }
     }
 
-    /// Send a structured list of input messages with text and/or image content, and the model will generate the next
-    /// message in the conversation.
+    /// Send a structured list of input messages with text and/or image content, and the model will generate the next message in the conversation.
     ///
     /// - Parameters:
     /// - model: Model ID (for example `claude-opus-4-6` or a serverless model id).
@@ -57,11 +56,7 @@ public extension ServerlessInferenceMethods {
     ///   not supported.
     /// - thinking: Extended thinking configuration. Executors that do not support
     ///   thinking may ignore this field.
-    static func inferenceCreateMessages(
-        config: ClientConfig,
-        options: InferenceCreateMessagesOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> MessagesCreateResponse {
+    public static func inferenceCreateMessages(config: ClientConfig, options: InferenceCreateMessagesOptions, requestOptions: RequestOptions? = nil) async throws -> MessagesCreateResponse {
         try validateRange("max_tokens", Double(options.maxTokens), min: 1)
 
         try validateItems("messages", options.messages, min: 1)
@@ -76,21 +71,6 @@ public extension ServerlessInferenceMethods {
 
         let requestBody = InferenceCreateMessagesRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v1/messages",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "inference_create_messages",
-            options: requestOptions,
-            errors: [
-                "400": MessagesCreateErrorResponse.self,
-                "401": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v1/messages", config: config, body: requestBody, decoder: .json, operationId: "inference_create_messages", options: requestOptions, errors: ["400": MessagesCreateErrorResponse.self, "401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

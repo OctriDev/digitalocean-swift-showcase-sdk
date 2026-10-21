@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiGet domain models
+// AgentPlatformAPIApiGet domain models
 /// Typed representation of the `ApiGetEvaluationRunPromptResultsOutput` API schema.
 public struct ApiGetEvaluationRunPromptResultsOutput: Codable {
     /// Optional object value serialized in the `prompt` wire field.
@@ -14,19 +14,19 @@ public struct ApiGetEvaluationRunPromptResultsOutput: Codable {
     }
 
     init() {
-        prompt = nil
+        self.prompt = nil
     }
 }
 
-public extension ApiGetEvaluationRunPromptResultsOutput {
-    init(from decoder: Decoder) throws {
+extension ApiGetEvaluationRunPromptResultsOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        prompt = try container.sdkDecodeIfPresent(.prompt)
+        self.prompt = try container.sdkDecodeIfPresent(.prompt)
     }
 }
 
-public extension ApiGetEvaluationRunPromptResultsOutput {
-    init(prompt: ApiPrompt? = nil) {
+extension ApiGetEvaluationRunPromptResultsOutput {
+    public init(prompt: ApiPrompt? = nil) {
         self.init()
         self.prompt = prompt
     }

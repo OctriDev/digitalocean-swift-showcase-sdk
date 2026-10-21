@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiGet domain models
+// AgentPlatformAPIApiGet domain models
 /// Output containing a presigned download URL for a scenario set.
 public struct ApiGetScenarioSetDownloadURLOutput: Codable {
     /// The presigned URL to download the scenario set file.
@@ -19,23 +19,23 @@ public struct ApiGetScenarioSetDownloadURLOutput: Codable {
     }
 
     init() {
-        (downloadUrl, expiresAt) = (nil, nil)
+        (self.downloadUrl, self.expiresAt) = (nil, nil)
     }
 }
 
-public extension ApiGetScenarioSetDownloadURLOutput {
-    init(from decoder: Decoder) throws {
+extension ApiGetScenarioSetDownloadURLOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        downloadUrl = try container.sdkDecodeIfPresent(.downloadUrl)
-        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
-        if let value = expiresAt {
+        self.downloadUrl = try container.sdkDecodeIfPresent(.downloadUrl)
+        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+        if let value = self.expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApiGetScenarioSetDownloadURLOutput {
-    init(downloadUrl: String? = nil, expiresAt: Date? = nil) throws {
+extension ApiGetScenarioSetDownloadURLOutput {
+    public init(downloadUrl: String? = nil, expiresAt: Date? = nil) throws {
         self.init()
         (self.downloadUrl, self.expiresAt) = (downloadUrl, expiresAt)
         if let value = self.expiresAt {

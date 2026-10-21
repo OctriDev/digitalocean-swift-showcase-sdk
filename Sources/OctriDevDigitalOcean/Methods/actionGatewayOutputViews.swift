@@ -6,11 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ActionGatewayMethods {
-    /// An output view is a named projection of one tool version's output: tool calls that use it return only the listed
-    /// fields, and its `output_schema` describes the result. The view is bound to the tool version your catalog
-    /// currently releases. Returns 409 when your team already has a view with this name on the tool version, and 429
-    /// when your team already has the maximum of 20 views on it.
+extension ActionGatewayMethods {
+    /// An output view is a named projection of one tool version's output: tool calls that use it return only the listed fields, and its `output_schema` describes the result. The view is bound to the tool version your catalog currently releases. Returns 409 when your team already has a view with this name on the tool version, and 429 when your team already has the maximum of 20 views on it.
     ///
     /// - Parameters:
     /// - name: View name. Must match `^`[a-z]``[a-z0-9_-]`{0,63}$` and be unique
@@ -28,48 +25,17 @@ public extension ActionGatewayMethods {
     ///   other version returns 404.
     /// - toolId: Opaque ID of the tool version; see tool.
     /// - description: Optional description. At most 512 bytes.
-    static func outputViewsCreate(
-        config: ClientConfig,
-        name: String,
-        fields: [String],
-        tool: String? = nil,
-        toolId: String? = nil,
-        description: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> OutputViewResponse {
+    public static func outputViewsCreate(config: ClientConfig, name: String, fields: [String], tool: String? = nil, toolId: String? = nil, description: String? = nil, requestOptions: RequestOptions? = nil) async throws -> OutputViewResponse {
         try sdkValidatePattern("name", name, sdkPattern96f04f9d57bc)
 
         try validateItems("fields", fields, min: 1, max: 64)
 
-        if let description {
+        if let description = description {
             try validateLength("description", description, max: 512)
         }
 
-        let requestBody = OutputViewsCreateRequestBody(
-            name: name,
-            fields: fields,
-            tool: tool,
-            toolId: toolId,
-            description: description
-        )
+        let requestBody = OutputViewsCreateRequestBody(name: name, fields: fields, tool: tool, toolId: toolId, description: description)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/action-gateway/output-views",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "outputViews_create",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "404": Error2.self,
-                "409": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v2/action-gateway/output-views", config: config, body: requestBody, decoder: .json, operationId: "outputViews_create", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "409": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

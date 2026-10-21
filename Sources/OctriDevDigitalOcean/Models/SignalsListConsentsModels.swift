@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Signals domain models
+// Signals domain models
 /// A wrapper for a list of consent records.
 public struct ListConsents: Codable {
     /// A list of consent records for the team. Includes per-environment records (`source: agent`) and, when set,
@@ -18,28 +18,22 @@ public struct ListConsents: Codable {
         case source
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ListConsents {
-    init(from decoder: Decoder) throws {
+extension ListConsents {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.consents) else {
-            throw SdkValidationError(
-                field: "consents",
-                code: "required",
-                message: "Validation failed for 'consents': value is required"
-            )
+            throw SdkValidationError(field: "consents", code: "required", message: "Validation failed for 'consents': value is required")
         }
-        consents = try container.sdkDecodeRequired(.consents)
-        source = try container.sdkDecodeIfPresent(.source)
+        self.consents = try container.sdkDecodeRequired(.consents)
+        self.source = try container.sdkDecodeIfPresent(.source)
     }
 }
 
-public extension ListConsents {
-    init(consents: [ConsentRecord], source: ListConsentsSource? = nil) {
+extension ListConsents {
+    public init(consents: [ConsentRecord], source: ListConsentsSource? = nil) {
         (self.consents, self.source) = (consents, source)
     }
 }
@@ -48,16 +42,13 @@ public extension ListConsents {
 public struct ListConsentsSource: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let agent = ListConsentsSource(rawValue: "agent")
     public static let inference = ListConsentsSource(rawValue: "inference")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

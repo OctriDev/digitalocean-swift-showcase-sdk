@@ -6,9 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension UptimeMethods {
-    /// To create an Uptime alert, send a POST request to `/v2/uptime/checks/$CHECK_ID/alerts` specifying the attributes
-    /// in the table below in the JSON body.
+extension UptimeMethods {
+    /// To create an Uptime alert, send a POST request to `/v2/uptime/checks/$CHECK_ID/alerts` specifying the attributes in the table below in the JSON body.
     ///
     /// - Parameters:
     /// - checkId: A unique identifier for a check.
@@ -20,81 +19,24 @@ public extension UptimeMethods {
     /// - threshold: The threshold at which the alert will enter a trigger state.
     ///   The specific threshold is dependent on the alert type.
     /// - comparison: The comparison operator used against the alert's threshold.
-    static func uptimeCreateAlert(
-        config: ClientConfig,
-        checkId: String,
-        name: String,
-        type: UptimeCreateAlertRequestBodyType,
-        notifications: Notification,
-        period: UptimeCreateAlertRequestBodyPeriod,
-        threshold: Int? = nil,
-        comparison: UptimeCreateAlertRequestBodyComparison? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExistingAlert {
+    public static func uptimeCreateAlert(config: ClientConfig, checkId: String, name: String, type: UptimeCreateAlertRequestBodyType, notifications: Notification, period: UptimeCreateAlertRequestBodyPeriod, threshold: Int? = nil, comparison: UptimeCreateAlertRequestBodyComparison? = nil, requestOptions: RequestOptions? = nil) async throws -> ExistingAlert {
         try sdkValidateUuid("check_id", checkId)
 
-        let requestBody = UptimeCreateAlertRequestBody(
-            name: name,
-            type: type,
-            notifications: notifications,
-            period: period,
-            threshold: threshold,
-            comparison: comparison
-        )
+        let requestBody = UptimeCreateAlertRequestBody(name: name, type: type, notifications: notifications, period: period, threshold: threshold, comparison: comparison)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/uptime/checks/", sdkEncodePathSegment(sdkWireString(checkId)), "/alerts"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "uptime_create_alert",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/uptime/checks/", sdkEncodePathSegment(sdkWireString(checkId)), "/alerts"].joined(), config: config, body: requestBody, decoder: .json, operationId: "uptime_create_alert", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To show information about an existing alert, send a GET request to
-    /// `/v2/uptime/checks/$CHECK_ID/alerts/$ALERT_ID`.
+    /// To show information about an existing alert, send a GET request to `/v2/uptime/checks/$CHECK_ID/alerts/$ALERT_ID`.
     ///
     /// - Parameters:
     /// - checkId: A unique identifier for a check.
     /// - alertId: A unique identifier for an alert.
-    static func uptimeGetAlert(
-        config: ClientConfig,
-        checkId: String,
-        alertId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExistingAlert {
+    public static func uptimeGetAlert(config: ClientConfig, checkId: String, alertId: String, requestOptions: RequestOptions? = nil) async throws -> ExistingAlert {
         try sdkValidateUuid("check_id", checkId)
 
         try sdkValidateUuid("alert_id", alertId)
 
-        return try await (sdkRequest(
-            "GET",
-            [
-                "/v2/uptime/checks/",
-                sdkEncodePathSegment(sdkWireString(checkId)),
-                "/alerts/",
-                sdkEncodePathSegment(sdkWireString(alertId)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "uptime_get_alert",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/uptime/checks/", sdkEncodePathSegment(sdkWireString(checkId)), "/alerts/", sdkEncodePathSegment(sdkWireString(alertId))].joined(), config: config, decoder: .json, operationId: "uptime_get_alert", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

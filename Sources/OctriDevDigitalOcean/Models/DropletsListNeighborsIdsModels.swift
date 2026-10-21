@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Droplets domain models
+// Droplets domain models
 /// Typed representation of the `NeighborIds` API schema.
 public struct NeighborIds: Codable {
     /// An array of arrays. Each array will contain a set of Droplet IDs for Droplets that share a physical server.
@@ -15,19 +15,19 @@ public struct NeighborIds: Codable {
     }
 
     init() {
-        neighborIds = nil
+        self.neighborIds = nil
     }
 }
 
-public extension NeighborIds {
-    init(from decoder: Decoder) throws {
+extension NeighborIds {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        neighborIds = try container.sdkDecodeIfPresent(.neighborIds)
+        self.neighborIds = try container.sdkDecodeIfPresent(.neighborIds)
     }
 }
 
-public extension NeighborIds {
-    init(neighborIds: [[Int]]? = nil) {
+extension NeighborIds {
+    public init(neighborIds: [[Int]]? = nil) {
         self.init()
         self.neighborIds = neighborIds
     }

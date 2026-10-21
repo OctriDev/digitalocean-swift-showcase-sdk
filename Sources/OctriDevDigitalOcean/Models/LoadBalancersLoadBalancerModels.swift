@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// LoadBalancers domain models
+// LoadBalancers domain models
 /// Typed representation of the `LoadBalancer` API schema.
 public struct LoadBalancer: Codable {
     /// An array of objects specifying the forwarding rules for a load balancer.
@@ -146,90 +146,52 @@ public struct LoadBalancer: Codable {
         case tag
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension LoadBalancer {
-    init(from decoder: Decoder) throws {
+extension LoadBalancer {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.forwardingRules) else {
-            throw SdkValidationError(
-                field: "forwarding_rules",
-                code: "required",
-                message: "Validation failed for 'forwarding_rules': value is required"
-            )
+            throw SdkValidationError(field: "forwarding_rules", code: "required", message: "Validation failed for 'forwarding_rules': value is required")
         }
-        forwardingRules = try container.sdkDecodeRequired(.forwardingRules)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        projectId = try container.sdkDecodeIfPresent(.projectId)
-        ipv6 = try container.sdkDecodeIfPresent(.ipv6)
-        sizeUnit = try container.sdkDecodeIfPresent(.sizeUnit)
-        size = try container.sdkDecodeIfPresent(.size)
-        algorithm = try container.sdkDecodeIfPresent(.algorithm)
-        status = try container.sdkDecodeIfPresent(.status)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        healthCheck = try container.sdkDecodeIfPresent(.healthCheck)
-        stickySessions = try container.sdkDecodeIfPresent(.stickySessions)
-        redirectHttpToHttps = try container.sdkDecodeIfPresent(.redirectHttpToHttps)
-        enableProxyProtocol = try container.sdkDecodeIfPresent(.enableProxyProtocol)
-        enableBackendKeepalive = try container.sdkDecodeIfPresent(.enableBackendKeepalive)
-        httpIdleTimeoutSeconds = try container.sdkDecodeIfPresent(.httpIdleTimeoutSeconds)
-        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
-        disableLetsEncryptDnsRecords = try container.sdkDecodeIfPresent(.disableLetsEncryptDnsRecords)
-        firewall = try container.sdkDecodeIfPresent(.firewall)
-        network = try container.sdkDecodeIfPresent(.network)
-        networkStack = try container.sdkDecodeIfPresent(.networkStack)
-        type = try container.sdkDecodeIfPresent(.type)
-        domains = try container.sdkDecodeIfPresent(.domains)
-        glbSettings = try container.sdkDecodeIfPresent(.glbSettings)
-        targetLoadBalancerIds = try container.sdkDecodeIfPresent(.targetLoadBalancerIds)
-        tlsCipherPolicy = try container.sdkDecodeIfPresent(.tlsCipherPolicy)
-        ip = try container.sdkDecodeIfPresent(.ip)
-        region = try container.sdkDecodeIfPresent(.region)
-        dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
-        tag = try container.sdkDecodeIfPresent(.tag)
+        self.forwardingRules = try container.sdkDecodeRequired(.forwardingRules)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.projectId = try container.sdkDecodeIfPresent(.projectId)
+        self.ipv6 = try container.sdkDecodeIfPresent(.ipv6)
+        self.sizeUnit = try container.sdkDecodeIfPresent(.sizeUnit)
+        self.size = try container.sdkDecodeIfPresent(.size)
+        self.algorithm = try container.sdkDecodeIfPresent(.algorithm)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.healthCheck = try container.sdkDecodeIfPresent(.healthCheck)
+        self.stickySessions = try container.sdkDecodeIfPresent(.stickySessions)
+        self.redirectHttpToHttps = try container.sdkDecodeIfPresent(.redirectHttpToHttps)
+        self.enableProxyProtocol = try container.sdkDecodeIfPresent(.enableProxyProtocol)
+        self.enableBackendKeepalive = try container.sdkDecodeIfPresent(.enableBackendKeepalive)
+        self.httpIdleTimeoutSeconds = try container.sdkDecodeIfPresent(.httpIdleTimeoutSeconds)
+        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        self.subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
+        self.disableLetsEncryptDnsRecords = try container.sdkDecodeIfPresent(.disableLetsEncryptDnsRecords)
+        self.firewall = try container.sdkDecodeIfPresent(.firewall)
+        self.network = try container.sdkDecodeIfPresent(.network)
+        self.networkStack = try container.sdkDecodeIfPresent(.networkStack)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.domains = try container.sdkDecodeIfPresent(.domains)
+        self.glbSettings = try container.sdkDecodeIfPresent(.glbSettings)
+        self.targetLoadBalancerIds = try container.sdkDecodeIfPresent(.targetLoadBalancerIds)
+        self.tlsCipherPolicy = try container.sdkDecodeIfPresent(.tlsCipherPolicy)
+        self.ip = try container.sdkDecodeIfPresent(.ip)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
+        self.tag = try container.sdkDecodeIfPresent(.tag)
         try sdkValidateConstraints()
     }
 }
 
-public extension LoadBalancer {
-    init(
-        forwardingRules: [ForwardingRule],
-        id: String? = nil,
-        name: String? = nil,
-        projectId: String? = nil,
-        ipv6: String? = nil,
-        sizeUnit: Int? = nil,
-        size: LoadBalancerBaseSize? = nil,
-        algorithm: LoadBalancerBaseAlgorithm? = nil,
-        status: LoadBalancerBaseStatus? = nil,
-        createdAt: Date? = nil,
-        healthCheck: HealthCheck? = nil,
-        stickySessions: StickySessions? = nil,
-        redirectHttpToHttps: Bool? = nil,
-        enableProxyProtocol: Bool? = nil,
-        enableBackendKeepalive: Bool? = nil,
-        httpIdleTimeoutSeconds: Int? = nil,
-        vpcUuid: String? = nil,
-        subnetUuid: String? = nil,
-        disableLetsEncryptDnsRecords: Bool? = nil,
-        firewall: LbFirewall? = nil,
-        network: LoadBalancerBaseNetwork? = nil,
-        networkStack: LoadBalancerBaseNetworkStack? = nil,
-        type: LoadBalancerBaseType? = nil,
-        domains: [Domains]? = nil,
-        glbSettings: GlbSettings? = nil,
-        targetLoadBalancerIds: [String]? = nil,
-        tlsCipherPolicy: LoadBalancerBaseTlsCipherPolicy? = nil,
-        ip: String? = nil,
-        region: Region? = nil,
-        dropletIds: [Int]? = nil,
-        tag: String? = nil
-    ) throws {
+extension LoadBalancer {
+    public init(forwardingRules: [ForwardingRule], id: String? = nil, name: String? = nil, projectId: String? = nil, ipv6: String? = nil, sizeUnit: Int? = nil, size: LoadBalancerBaseSize? = nil, algorithm: LoadBalancerBaseAlgorithm? = nil, status: LoadBalancerBaseStatus? = nil, createdAt: Date? = nil, healthCheck: HealthCheck? = nil, stickySessions: StickySessions? = nil, redirectHttpToHttps: Bool? = nil, enableProxyProtocol: Bool? = nil, enableBackendKeepalive: Bool? = nil, httpIdleTimeoutSeconds: Int? = nil, vpcUuid: String? = nil, subnetUuid: String? = nil, disableLetsEncryptDnsRecords: Bool? = nil, firewall: LbFirewall? = nil, network: LoadBalancerBaseNetwork? = nil, networkStack: LoadBalancerBaseNetworkStack? = nil, type: LoadBalancerBaseType? = nil, domains: [Domains]? = nil, glbSettings: GlbSettings? = nil, targetLoadBalancerIds: [String]? = nil, tlsCipherPolicy: LoadBalancerBaseTlsCipherPolicy? = nil, ip: String? = nil, region: Region? = nil, dropletIds: [Int]? = nil, tag: String? = nil) throws {
         (self.forwardingRules, self.id) = (forwardingRules, id)
         (self.name, self.projectId) = (name, projectId)
         (self.ipv6, self.sizeUnit) = (ipv6, sizeUnit)
@@ -252,42 +214,26 @@ public extension LoadBalancer {
 
 extension LoadBalancer {
     func sdkValidateConstraints() throws {
-        try validateItems("forwarding_rules", forwardingRules, min: 1, max: nil)
-        if let value = id {
+            try validateItems("forwarding_rules", self.forwardingRules, min: 1, max: nil)
+        if let value = self.id {
             try sdkValidateUuid("id", value)
         }
-        if let value = sizeUnit {
-            try validateRange(
-                "size_unit",
-                Double(value),
-                min: 1,
-                max: 100,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.sizeUnit {
+            try validateRange("size_unit", Double(value), min: 1, max: 100, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = createdAt {
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = httpIdleTimeoutSeconds {
-            try validateRange(
-                "http_idle_timeout_seconds",
-                Double(value),
-                min: 30,
-                max: 600,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.httpIdleTimeoutSeconds {
+            try validateRange("http_idle_timeout_seconds", Double(value), min: 30, max: 600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = vpcUuid {
+        if let value = self.vpcUuid {
             try sdkValidateUuid("vpc_uuid", value)
         }
-        if let value = subnetUuid {
+        if let value = self.subnetUuid {
             try sdkValidateUuid("subnet_uuid", value)
         }
-        if let value = ip {
+        if let value = self.ip {
             try sdkValidatePattern("ip", value, sdkPattern456628267985)
         }
     }
@@ -308,20 +254,20 @@ public struct LbFirewall: Codable {
     }
 
     init() {
-        (deny, allow) = (nil, nil)
+        (self.deny, self.allow) = (nil, nil)
     }
 }
 
-public extension LbFirewall {
-    init(from decoder: Decoder) throws {
+extension LbFirewall {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        deny = try container.sdkDecodeIfPresent(.deny)
-        allow = try container.sdkDecodeIfPresent(.allow)
+        self.deny = try container.sdkDecodeIfPresent(.deny)
+        self.allow = try container.sdkDecodeIfPresent(.allow)
     }
 }
 
-public extension LbFirewall {
-    init(deny: [String]? = nil, allow: [String]? = nil) {
+extension LbFirewall {
+    public init(deny: [String]? = nil, allow: [String]? = nil) {
         self.init()
         (self.deny, self.allow) = (deny, allow)
     }
@@ -367,36 +313,28 @@ public struct HealthCheck: Codable {
     }
 
     init() {
-        (self.protocol, port, path, checkIntervalSeconds, responseTimeoutSeconds) = (nil, nil, nil, nil, nil)
-        (unhealthyThreshold, healthyThreshold) = (nil, nil)
+        (self.`protocol`, self.port, self.path, self.checkIntervalSeconds, self.responseTimeoutSeconds) = (nil, nil, nil, nil, nil)
+        (self.unhealthyThreshold, self.healthyThreshold) = (nil, nil)
     }
 }
 
-public extension HealthCheck {
-    init(from decoder: Decoder) throws {
+extension HealthCheck {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.protocol = try container.sdkDecodeIfPresent(.protocol)
-        port = try container.sdkDecodeIfPresent(.port)
-        path = try container.sdkDecodeIfPresent(.path)
-        checkIntervalSeconds = try container.sdkDecodeIfPresent(.checkIntervalSeconds)
-        responseTimeoutSeconds = try container.sdkDecodeIfPresent(.responseTimeoutSeconds)
-        unhealthyThreshold = try container.sdkDecodeIfPresent(.unhealthyThreshold)
-        healthyThreshold = try container.sdkDecodeIfPresent(.healthyThreshold)
+        self.`protocol` = try container.sdkDecodeIfPresent(.`protocol`)
+        self.port = try container.sdkDecodeIfPresent(.port)
+        self.path = try container.sdkDecodeIfPresent(.path)
+        self.checkIntervalSeconds = try container.sdkDecodeIfPresent(.checkIntervalSeconds)
+        self.responseTimeoutSeconds = try container.sdkDecodeIfPresent(.responseTimeoutSeconds)
+        self.unhealthyThreshold = try container.sdkDecodeIfPresent(.unhealthyThreshold)
+        self.healthyThreshold = try container.sdkDecodeIfPresent(.healthyThreshold)
     }
 }
 
-public extension HealthCheck {
-    init(
-        protocol: HealthCheckProtocol? = nil,
-        port: Int? = nil,
-        path: String? = nil,
-        checkIntervalSeconds: Int? = nil,
-        responseTimeoutSeconds: Int? = nil,
-        unhealthyThreshold: Int? = nil,
-        healthyThreshold: Int? = nil
-    ) {
+extension HealthCheck {
+    public init(`protocol`: HealthCheckProtocol? = nil, port: Int? = nil, path: String? = nil, checkIntervalSeconds: Int? = nil, responseTimeoutSeconds: Int? = nil, unhealthyThreshold: Int? = nil, healthyThreshold: Int? = nil) {
         self.init()
-        (self.protocol, self.port) = (`protocol`, port)
+        (self.`protocol`, self.port) = (`protocol`, port)
         (self.path, self.checkIntervalSeconds) = (path, checkIntervalSeconds)
         self.responseTimeoutSeconds = responseTimeoutSeconds
         (self.unhealthyThreshold, self.healthyThreshold) = (unhealthyThreshold, healthyThreshold)
@@ -414,19 +352,19 @@ public struct LoadBalancerDropletTag: Codable {
     }
 
     init() {
-        tag = nil
+        self.tag = nil
     }
 }
 
-public extension LoadBalancerDropletTag {
-    init(from decoder: Decoder) throws {
+extension LoadBalancerDropletTag {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        tag = try container.sdkDecodeIfPresent(.tag)
+        self.tag = try container.sdkDecodeIfPresent(.tag)
     }
 }
 
-public extension LoadBalancerDropletTag {
-    init(tag: String? = nil) {
+extension LoadBalancerDropletTag {
+    public init(tag: String? = nil) {
         self.init()
         self.tag = tag
     }
@@ -462,29 +400,23 @@ public struct GlbSettings: Codable {
     }
 
     init() {
-        (targetProtocol, targetPort, cdn, regionPriorities, failoverThreshold) = (nil, nil, nil, nil, nil)
+        (self.targetProtocol, self.targetPort, self.cdn, self.regionPriorities, self.failoverThreshold) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension GlbSettings {
-    init(from decoder: Decoder) throws {
+extension GlbSettings {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        targetProtocol = try container.sdkDecodeIfPresent(.targetProtocol)
-        targetPort = try container.sdkDecodeIfPresent(.targetPort)
-        cdn = try container.sdkDecodeIfPresent(.cdn)
-        regionPriorities = try container.sdkDecodeIfPresent(.regionPriorities)
-        failoverThreshold = try container.sdkDecodeIfPresent(.failoverThreshold)
+        self.targetProtocol = try container.sdkDecodeIfPresent(.targetProtocol)
+        self.targetPort = try container.sdkDecodeIfPresent(.targetPort)
+        self.cdn = try container.sdkDecodeIfPresent(.cdn)
+        self.regionPriorities = try container.sdkDecodeIfPresent(.regionPriorities)
+        self.failoverThreshold = try container.sdkDecodeIfPresent(.failoverThreshold)
     }
 }
 
-public extension GlbSettings {
-    init(
-        targetProtocol: GlbSettingsTargetProtocol? = nil,
-        targetPort: Int? = nil,
-        cdn: GlbSettingsCdn? = nil,
-        regionPriorities: [String: Int]? = nil,
-        failoverThreshold: Int? = nil
-    ) {
+extension GlbSettings {
+    public init(targetProtocol: GlbSettingsTargetProtocol? = nil, targetPort: Int? = nil, cdn: GlbSettingsCdn? = nil, regionPriorities: [String: Int]? = nil, failoverThreshold: Int? = nil) {
         self.init()
         (self.targetProtocol, self.targetPort) = (targetProtocol, targetPort)
         (self.cdn, self.regionPriorities) = (cdn, regionPriorities)
@@ -512,21 +444,21 @@ public struct Domains: Codable {
     }
 
     init() {
-        (name, isManaged, certificateId) = (nil, nil, nil)
+        (self.name, self.isManaged, self.certificateId) = (nil, nil, nil)
     }
 }
 
-public extension Domains {
-    init(from decoder: Decoder) throws {
+extension Domains {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        isManaged = try container.sdkDecodeIfPresent(.isManaged)
-        certificateId = try container.sdkDecodeIfPresent(.certificateId)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.isManaged = try container.sdkDecodeIfPresent(.isManaged)
+        self.certificateId = try container.sdkDecodeIfPresent(.certificateId)
     }
 }
 
-public extension Domains {
-    init(name: String? = nil, isManaged: Bool? = nil, certificateId: String? = nil) {
+extension Domains {
+    public init(name: String? = nil, isManaged: Bool? = nil, certificateId: String? = nil) {
         self.init()
         (self.name, self.isManaged) = (name, isManaged)
         self.certificateId = certificateId

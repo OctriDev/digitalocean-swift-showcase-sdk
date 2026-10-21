@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-/// Canonical imageActions operation model declarations
+// Canonical imageActions operation model declarations
 public indirect enum ImageActionsPostRequestBody {
     case imageActionBase(ImageActionBase)
     case imageActionTransfer(ImageActionTransfer)
@@ -16,6 +16,7 @@ public indirect enum ImageActionsPostRequestBody {
 }
 
 extension ImageActionsPostRequestBody: Codable {
+
     private enum CodingKeys: String, CodingKey {
         case discriminator = "type"
     }
@@ -23,16 +24,12 @@ extension ImageActionsPostRequestBody: Codable {
     public init(from decoder: Decoder) throws {
         let tagged = try decoder.container(keyedBy: CodingKeys.self)
         let discriminator = try tagged.decode(String.self, forKey: .discriminator)
-        if let value = try Self.decodeGroup1(discriminator, from: decoder) {
-            self = value; return
-        }
+        if let value = try Self.decodeGroup1(discriminator, from: decoder) { self = value; return }
         self = try .unknown(tag: discriminator, raw: JSONValue(from: decoder))
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
         if case let .unknown(_, raw) = self {
             var container = encoder.singleValueContainer()
             try container.encode(raw)
@@ -43,9 +40,9 @@ extension ImageActionsPostRequestBody: Codable {
 extension ImageActionsPostRequestBody {
     static func decodeGroup1(_ discriminator: String, from decoder: Decoder) throws -> Self? {
         switch discriminator {
-        case "convert": try .imageActionBase(ImageActionBase(from: decoder))
-        case "transfer": try .imageActionTransfer(ImageActionTransfer(from: decoder))
-        default: nil
+        case "convert": return .imageActionBase(try ImageActionBase(from: decoder))
+        case "transfer": return .imageActionTransfer(try ImageActionTransfer(from: decoder))
+        default: return nil
         }
     }
 }

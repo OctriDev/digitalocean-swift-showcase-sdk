@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// NFS domain models
+// NFS domain models
 /// Typed representation of the `NfsSnapshotGetResponse` API schema.
 public struct NfsSnapshotGetResponse: Codable {
     /// Represents an NFS snapshot.
@@ -14,19 +14,19 @@ public struct NfsSnapshotGetResponse: Codable {
     }
 
     init() {
-        snapshot = nil
+        self.snapshot = nil
     }
 }
 
-public extension NfsSnapshotGetResponse {
-    init(from decoder: Decoder) throws {
+extension NfsSnapshotGetResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        snapshot = try container.sdkDecodeIfPresent(.snapshot)
+        self.snapshot = try container.sdkDecodeIfPresent(.snapshot)
     }
 }
 
-public extension NfsSnapshotGetResponse {
-    init(snapshot: NfsSnapshotResponse? = nil) {
+extension NfsSnapshotGetResponse {
+    public init(snapshot: NfsSnapshotResponse? = nil) {
         self.init()
         self.snapshot = snapshot
     }

@@ -8,90 +8,39 @@ import Foundation
 #endif
 public enum FloatingIpsMethods {}
 
-public extension FloatingIpsMethods {
+extension FloatingIpsMethods {
     /// To list all of the floating IPs available on your account, send a GET request to `/v2/floating_ips`.
     ///
     /// - Parameters:
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func floatingIpsList(
-        config: ClientConfig,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> FloatingIpList {
-        if let perPage {
+    public static func floatingIpsList(config: ClientConfig, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> FloatingIpList {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/floating_ips",
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "floatingIPs_list",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+        return try (await sdkRequest("GET", "/v2/floating_ips", config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "floatingIPs_list", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Creates a floating IP assigned to a Droplet or reserved to a region. Supply `droplet_id` to assign it to a
-    /// Droplet, or supply `region` to reserve it; `project_id` can associate a region-reserved floating IP with a
-    /// project. A 202 response returns the floating IP object and, when assigning it to a Droplet, links to the Droplet
-    /// and assignment action.
+    /// Creates a floating IP assigned to a Droplet or reserved to a region. Supply `droplet_id` to assign it to a Droplet, or supply `region` to reserve it; `project_id` can associate a region-reserved floating IP with a project. A 202 response returns the floating IP object and, when assigning it to a Droplet, links to the Droplet and assignment action.
     ///
-    /// On creation, a floating IP must be either assigned to a Droplet or reserved to a region. * To create a new
-    /// floating IP assigned to a Droplet, send a POST request to `/v2/floating_ips` with the `droplet_id` attribute. *
-    /// To create a new floating IP reserved to a region, send a POST request to `/v2/floating_ips` with the `region`
-    /// attribute.
-    static func floatingIpsCreate(
-        config: ClientConfig,
-        body: FloatingIpCreate,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> FloatingIpCreated {
-        try await (sdkRequest(
-            "POST",
-            "/v2/floating_ips",
-            config: config,
-            rawBody: sdkEncodeBody(body, contentType: "application/json"),
-            decoder: .json,
-            operationId: "floatingIPs_create",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    /// On creation, a floating IP must be either assigned to a Droplet or reserved to a region. * To create a new floating IP assigned to a Droplet, send a POST request to `/v2/floating_ips` with the `droplet_id` attribute. * To create a new floating IP reserved to a region, send a POST request to `/v2/floating_ips` with the `region` attribute.
+    public static func floatingIpsCreate(config: ClientConfig, body: FloatingIpCreate, requestOptions: RequestOptions? = nil) async throws -> FloatingIpCreated {
+        return try (await sdkRequest("POST", "/v2/floating_ips", config: config, rawBody: (try sdkEncodeBody(body, contentType: "application/json")), decoder: .json, operationId: "floatingIPs_create", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To show information about a floating IP, send a GET request to `/v2/floating_ips/$FLOATING_IP_ADDR`.
     ///
     /// - Parameters:
     /// - floatingIp: A floating IP address.
-    static func floatingIpsGet(
-        config: ClientConfig,
-        floatingIp: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> FloatingIpResponse {
-        try await (sdkRequest(
-            "GET",
-            ["/v2/floating_ips/", sdkEncodePathSegment(sdkWireString(floatingIp))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "floatingIPs_get",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func floatingIpsGet(config: ClientConfig, floatingIp: String, requestOptions: RequestOptions? = nil) async throws -> FloatingIpResponse {
+        return try (await sdkRequest("GET", ["/v2/floating_ips/", sdkEncodePathSegment(sdkWireString(floatingIp))].joined(), config: config, decoder: .json, operationId: "floatingIPs_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

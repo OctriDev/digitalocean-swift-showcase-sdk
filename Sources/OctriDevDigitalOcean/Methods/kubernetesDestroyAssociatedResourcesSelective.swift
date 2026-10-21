@@ -6,13 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension KubernetesMethods {
-    /// To delete a Kubernetes cluster along with a subset of its associated resources, send a DELETE request to
-    /// `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/destroy_with_associated_resources/selective`. The JSON body of the
-    /// request should include `load_balancers`, `volumes`, or `volume_snapshots` keys each set to an array of IDs for
-    /// the associated resources to be destroyed. The IDs can be found by querying the cluster's associated resources
-    /// endpoint. Any associated resource not included in the request will remain and continue to accrue changes on your
-    /// account.
+extension KubernetesMethods {
+    /// To delete a Kubernetes cluster along with a subset of its associated resources, send a DELETE request to `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/destroy_with_associated_resources/selective`. The JSON body of the request should include `load_balancers`, `volumes`, or `volume_snapshots` keys each set to an array of IDs for the associated resources to be destroyed. The IDs can be found by querying the cluster's associated resources endpoint. Any associated resource not included in the request will remain and continue to accrue changes on your account.
     ///
     /// - Parameters:
     /// - clusterId: A unique ID that can be used to reference a Kubernetes cluster.
@@ -22,75 +17,21 @@ public extension KubernetesMethods {
     ///   cluster.
     /// - volumeSnapshots: A list of IDs for associated volume snapshots to destroy
     ///   along with the cluster.
-    static func kubernetesDestroyAssociatedResourcesSelective(
-        config: ClientConfig,
-        clusterId: String,
-        loadBalancers: [String]? = nil,
-        volumes: [String]? = nil,
-        volumeSnapshots: [String]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
+    public static func kubernetesDestroyAssociatedResourcesSelective(config: ClientConfig, clusterId: String, loadBalancers: [String]? = nil, volumes: [String]? = nil, volumeSnapshots: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("cluster_id", clusterId)
 
-        let requestBody = KubernetesDestroyAssociatedResourcesSelectiveRequestBody(
-            loadBalancers: loadBalancers,
-            volumes: volumes,
-            volumeSnapshots: volumeSnapshots
-        )
+        let requestBody = KubernetesDestroyAssociatedResourcesSelectiveRequestBody(loadBalancers: loadBalancers, volumes: volumes, volumeSnapshots: volumeSnapshots)
 
-        return try await (sdkRequest(
-            "DELETE",
-            [
-                "/v2/kubernetes/clusters/",
-                sdkEncodePathSegment(sdkWireString(clusterId)),
-                "/destroy_with_associated_resources/selective",
-            ].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .empty,
-            operationId: "kubernetes_destroy_associatedResourcesSelective",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("DELETE", ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(clusterId)), "/destroy_with_associated_resources/selective"].joined(), config: config, body: requestBody, decoder: .empty, operationId: "kubernetes_destroy_associatedResourcesSelective", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To delete a Kubernetes cluster with all of its associated resources, send a DELETE request to
-    /// `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/destroy_with_associated_resources/dangerous`. A 204 status code with no
-    /// body will be returned in response to a successful request.
+    /// To delete a Kubernetes cluster with all of its associated resources, send a DELETE request to `/v2/kubernetes/clusters/$K8S_CLUSTER_ID/destroy_with_associated_resources/dangerous`. A 204 status code with no body will be returned in response to a successful request.
     ///
     /// - Parameters:
     /// - clusterId: A unique ID that can be used to reference a Kubernetes cluster.
-    static func kubernetesDestroyAssociatedResourcesDangerous(
-        config: ClientConfig,
-        clusterId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
+    public static func kubernetesDestroyAssociatedResourcesDangerous(config: ClientConfig, clusterId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("cluster_id", clusterId)
 
-        return try await (sdkRequest(
-            "DELETE",
-            [
-                "/v2/kubernetes/clusters/",
-                sdkEncodePathSegment(sdkWireString(clusterId)),
-                "/destroy_with_associated_resources/dangerous",
-            ].joined(),
-            config: config,
-            decoder: .empty,
-            operationId: "kubernetes_destroy_associatedResourcesDangerous",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("DELETE", ["/v2/kubernetes/clusters/", sdkEncodePathSegment(sdkWireString(clusterId)), "/destroy_with_associated_resources/dangerous"].joined(), config: config, decoder: .empty, operationId: "kubernetes_destroy_associatedResourcesDangerous", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

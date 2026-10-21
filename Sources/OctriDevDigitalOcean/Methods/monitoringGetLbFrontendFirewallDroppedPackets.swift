@@ -6,65 +6,32 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension MonitoringMethods {
-    /// To retrieve firewall dropped packets per second for a given load balancer, send a GET request to
-    /// `/v2/monitoring/metrics/load_balancer/frontend_firewall_dropped_packets`. This is currently only supported for
-    /// network load balancers.
+extension MonitoringMethods {
+    /// To retrieve firewall dropped packets per second for a given load balancer, send a GET request to `/v2/monitoring/metrics/load_balancer/frontend_firewall_dropped_packets`. This is currently only supported for network load balancers.
     ///
     /// - Parameters:
     /// - lbId: A unique identifier for a load balancer.
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    static func monitoringGetLbFrontendFirewallDroppedPackets(
-        config: ClientConfig,
-        lbId: String,
-        start: String,
-        end: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Metrics {
-        try await (sdkRequest(
-            "GET",
-            "/v2/monitoring/metrics/load_balancer/frontend_firewall_dropped_packets",
-            config: config,
-            query: [
-                SdkQueryParameter("lb_id", value: lbId),
-                SdkQueryParameter("start", value: start),
-                SdkQueryParameter("end", value: end),
-            ],
-            decoder: .json,
-            operationId: "monitoring_get_lb_frontend_firewall_dropped_packets",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    public static func monitoringGetLbFrontendFirewallDroppedPackets(config: ClientConfig, lbId: String, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
+        return try (await sdkRequest("GET", "/v2/monitoring/metrics/load_balancer/frontend_firewall_dropped_packets", config: config, query: [
+            SdkQueryParameter("lb_id", value: lbId),
+            SdkQueryParameter("start", value: start),
+            SdkQueryParameter("end", value: end),
+        ], decoder: .json, operationId: "monitoring_get_lb_frontend_firewall_dropped_packets", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To retrieve frontend HTTP rate of response code for a given load balancer, send a GET request to
-    /// `/v2/monitoring/metrics/load_balancer/frontend_http_responses`.
+    /// To retrieve frontend HTTP rate of response code for a given load balancer, send a GET request to `/v2/monitoring/metrics/load_balancer/frontend_http_responses`.
     ///
     /// - Parameters:
     /// - lbId: A unique identifier for a load balancer.
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    static func monitoringGetLbFrontendHttpResponses(
-        config: ClientConfig,
-        lbId: String,
-        start: String,
-        end: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Metrics {
-        try await (sdkRequest(
-            "GET",
-            "/v2/monitoring/metrics/load_balancer/frontend_http_responses",
-            config: config,
-            query: [
-                SdkQueryParameter("lb_id", value: lbId),
-                SdkQueryParameter("start", value: start),
-                SdkQueryParameter("end", value: end),
-            ],
-            decoder: .json,
-            operationId: "monitoring_get_lb_frontend_http_responses",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    public static func monitoringGetLbFrontendHttpResponses(config: ClientConfig, lbId: String, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
+        return try (await sdkRequest("GET", "/v2/monitoring/metrics/load_balancer/frontend_http_responses", config: config, query: [
+            SdkQueryParameter("lb_id", value: lbId),
+            SdkQueryParameter("start", value: start),
+            SdkQueryParameter("end", value: end),
+        ], decoder: .json, operationId: "monitoring_get_lb_frontend_http_responses", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HarnessRuntimeDefinitions domain models
+// HarnessRuntimeDefinitions domain models
 /// Session is the user-facing record of a environment session + sandbox pair.
 public struct DefinitionsSession: Codable {
     /// Optional `string` value serialized in the `session_id` wire field.
@@ -116,72 +116,52 @@ public struct DefinitionsSession: Codable {
     }
 
     init() {
-        (sessionId, name, parentSessionId, forkId, forkFromCheckpointId) = (nil, nil, nil, nil, nil)
-        (agentKind, status, sandboxId, createdAt, lastEventAt) = (nil, nil, nil, nil, nil)
-        (keepWarm, resumeOnTopoff, pauseReason, idleTimeoutSeconds, repoHint) = (nil, nil, nil, nil, nil)
-        (warnings, configId, openaiSessionId, openaiEnvironmentId) = (nil, nil, nil, nil)
+        (self.sessionId, self.name, self.parentSessionId, self.forkId, self.forkFromCheckpointId) = (nil, nil, nil, nil, nil)
+        (self.agentKind, self.status, self.sandboxId, self.createdAt, self.lastEventAt) = (nil, nil, nil, nil, nil)
+        (self.keepWarm, self.resumeOnTopoff, self.pauseReason, self.idleTimeoutSeconds, self.repoHint) = (nil, nil, nil, nil, nil)
+        (self.warnings, self.configId, self.openaiSessionId, self.openaiEnvironmentId) = (nil, nil, nil, nil)
     }
 }
 
-public extension DefinitionsSession {
-    init(from decoder: Decoder) throws {
+extension DefinitionsSession {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        sessionId = try container.sdkDecodeIfPresent(.sessionId)
-        name = try container.sdkDecodeIfPresent(.name)
-        parentSessionId = try container.sdkDecodeIfPresent(.parentSessionId)
-        forkId = try container.sdkDecodeIfPresent(.forkId)
-        forkFromCheckpointId = try container.sdkDecodeIfPresent(.forkFromCheckpointId)
-        agentKind = try container.sdkDecodeIfPresent(.agentKind)
-        status = try container.sdkDecodeIfPresent(.status)
-        sandboxId = try container.sdkDecodeIfPresent(.sandboxId)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        lastEventAt = try container.sdkDecodeIfPresent(.lastEventAt)
-        keepWarm = try container.sdkDecodeIfPresent(.keepWarm)
-        resumeOnTopoff = try container.sdkDecodeIfPresent(.resumeOnTopoff)
-        pauseReason = try container.sdkDecodeIfPresent(.pauseReason)
-        idleTimeoutSeconds = try container.sdkDecodeIfPresent(.idleTimeoutSeconds)
-        repoHint = try container.sdkDecodeIfPresent(.repoHint)
-        warnings = try container.sdkDecodeIfPresent(.warnings)
-        configId = try container.sdkDecodeIfPresent(.configId)
-        openaiSessionId = try container.sdkDecodeIfPresent(.openaiSessionId)
-        openaiEnvironmentId = try container.sdkDecodeIfPresent(.openaiEnvironmentId)
-        if let value = forkId {
+        self.sessionId = try container.sdkDecodeIfPresent(.sessionId)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.parentSessionId = try container.sdkDecodeIfPresent(.parentSessionId)
+        self.forkId = try container.sdkDecodeIfPresent(.forkId)
+        self.forkFromCheckpointId = try container.sdkDecodeIfPresent(.forkFromCheckpointId)
+        self.agentKind = try container.sdkDecodeIfPresent(.agentKind)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.sandboxId = try container.sdkDecodeIfPresent(.sandboxId)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.lastEventAt = try container.sdkDecodeIfPresent(.lastEventAt)
+        self.keepWarm = try container.sdkDecodeIfPresent(.keepWarm)
+        self.resumeOnTopoff = try container.sdkDecodeIfPresent(.resumeOnTopoff)
+        self.pauseReason = try container.sdkDecodeIfPresent(.pauseReason)
+        self.idleTimeoutSeconds = try container.sdkDecodeIfPresent(.idleTimeoutSeconds)
+        self.repoHint = try container.sdkDecodeIfPresent(.repoHint)
+        self.warnings = try container.sdkDecodeIfPresent(.warnings)
+        self.configId = try container.sdkDecodeIfPresent(.configId)
+        self.openaiSessionId = try container.sdkDecodeIfPresent(.openaiSessionId)
+        self.openaiEnvironmentId = try container.sdkDecodeIfPresent(.openaiEnvironmentId)
+        if let value = self.forkId {
             try sdkValidateUuid("fork_id", value)
         }
-        if let value = createdAt {
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = lastEventAt {
+        if let value = self.lastEventAt {
             try sdkValidateDateTime("last_event_at", sdkWireString(value))
         }
-        if let value = configId {
+        if let value = self.configId {
             try sdkValidateUuid("config_id", value)
         }
     }
 }
 
-public extension DefinitionsSession {
-    init(
-        sessionId: String? = nil,
-        name: String? = nil,
-        parentSessionId: String? = nil,
-        forkId: String? = nil,
-        forkFromCheckpointId: String? = nil,
-        agentKind: AgentKind? = nil,
-        status: SessionStatus? = nil,
-        sandboxId: String? = nil,
-        createdAt: Date? = nil,
-        lastEventAt: Date? = nil,
-        keepWarm: Bool? = nil,
-        resumeOnTopoff: Bool? = nil,
-        pauseReason: String? = nil,
-        idleTimeoutSeconds: Int? = nil,
-        repoHint: String? = nil,
-        warnings: [String]? = nil,
-        configId: String? = nil,
-        openaiSessionId: String? = nil,
-        openaiEnvironmentId: String? = nil
-    ) throws {
+extension DefinitionsSession {
+    public init(sessionId: String? = nil, name: String? = nil, parentSessionId: String? = nil, forkId: String? = nil, forkFromCheckpointId: String? = nil, agentKind: AgentKind? = nil, status: SessionStatus? = nil, sandboxId: String? = nil, createdAt: Date? = nil, lastEventAt: Date? = nil, keepWarm: Bool? = nil, resumeOnTopoff: Bool? = nil, pauseReason: String? = nil, idleTimeoutSeconds: Int? = nil, repoHint: String? = nil, warnings: [String]? = nil, configId: String? = nil, openaiSessionId: String? = nil, openaiEnvironmentId: String? = nil) throws {
         self.init()
         (self.sessionId, self.name) = (sessionId, name)
         (self.parentSessionId, self.forkId) = (parentSessionId, forkId)
@@ -222,20 +202,20 @@ public struct DefinitionsListSessionsResponse: Codable {
     }
 
     init() {
-        (sessions, nextPageToken) = (nil, nil)
+        (self.sessions, self.nextPageToken) = (nil, nil)
     }
 }
 
-public extension DefinitionsListSessionsResponse {
-    init(from decoder: Decoder) throws {
+extension DefinitionsListSessionsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        sessions = try container.sdkDecodeIfPresent(.sessions)
-        nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
+        self.sessions = try container.sdkDecodeIfPresent(.sessions)
+        self.nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
     }
 }
 
-public extension DefinitionsListSessionsResponse {
-    init(sessions: [DefinitionsSession]? = nil, nextPageToken: String? = nil) {
+extension DefinitionsListSessionsResponse {
+    public init(sessions: [DefinitionsSession]? = nil, nextPageToken: String? = nil) {
         self.init()
         (self.sessions, self.nextPageToken) = (sessions, nextPageToken)
     }
@@ -251,19 +231,19 @@ public struct DefinitionsCreateSessionResponse: Codable {
     }
 
     init() {
-        session = nil
+        self.session = nil
     }
 }
 
-public extension DefinitionsCreateSessionResponse {
-    init(from decoder: Decoder) throws {
+extension DefinitionsCreateSessionResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        session = try container.sdkDecodeIfPresent(.session)
+        self.session = try container.sdkDecodeIfPresent(.session)
     }
 }
 
-public extension DefinitionsCreateSessionResponse {
-    init(session: DefinitionsSession? = nil) {
+extension DefinitionsCreateSessionResponse {
+    public init(session: DefinitionsSession? = nil) {
         self.init()
         self.session = session
     }

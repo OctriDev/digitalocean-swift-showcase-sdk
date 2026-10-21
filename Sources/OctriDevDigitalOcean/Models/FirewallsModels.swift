@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Firewalls domain models
+// Firewalls domain models
 /// Typed representation of the `GetFirewallResponse` API schema.
 public struct GetFirewallResponse: Codable {
     /// Optional object value serialized in the `firewall` wire field.
@@ -14,19 +14,19 @@ public struct GetFirewallResponse: Codable {
     }
 
     init() {
-        firewall = nil
+        self.firewall = nil
     }
 }
 
-public extension GetFirewallResponse {
-    init(from decoder: Decoder) throws {
+extension GetFirewallResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        firewall = try container.sdkDecodeIfPresent(.firewall)
+        self.firewall = try container.sdkDecodeIfPresent(.firewall)
     }
 }
 
-public extension GetFirewallResponse {
-    init(firewall: Firewall? = nil) {
+extension GetFirewallResponse {
+    public init(firewall: Firewall? = nil) {
         self.init()
         self.firewall = firewall
     }
@@ -40,19 +40,19 @@ public struct ListFirewallsResponseVariant0: Codable {
     }
 
     init() {
-        firewalls = nil
+        self.firewalls = nil
     }
 }
 
-public extension ListFirewallsResponseVariant0 {
-    init(from decoder: Decoder) throws {
+extension ListFirewallsResponseVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        firewalls = try container.sdkDecodeIfPresent(.firewalls)
+        self.firewalls = try container.sdkDecodeIfPresent(.firewalls)
     }
 }
 
-public extension ListFirewallsResponseVariant0 {
-    init(firewalls: [Firewall]? = nil) {
+extension ListFirewallsResponseVariant0 {
+    public init(firewalls: [Firewall]? = nil) {
         self.init()
         self.firewalls = firewalls
     }
@@ -72,29 +72,23 @@ public struct ListFirewallsResponse: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ListFirewallsResponse {
-    init(from decoder: Decoder) throws {
+extension ListFirewallsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        firewalls = try container.sdkDecodeIfPresent(.firewalls)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.firewalls = try container.sdkDecodeIfPresent(.firewalls)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension ListFirewallsResponse {
-    init(meta: MetaMeta, firewalls: [Firewall]? = nil, links: PageLinks? = nil) {
+extension ListFirewallsResponse {
+    public init(meta: MetaMeta, firewalls: [Firewall]? = nil, links: PageLinks? = nil) {
         (self.meta, self.firewalls) = (meta, firewalls)
         self.links = links
     }
@@ -124,32 +118,26 @@ public struct FirewallRequest: Codable {
     }
 
     init() {
-        (name, dropletIds, tags, inboundRules, outboundRules) = (nil, nil, nil, nil, nil)
+        (self.name, self.dropletIds, self.tags, self.inboundRules, self.outboundRules) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension FirewallRequest {
-    init(from decoder: Decoder) throws {
+extension FirewallRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        inboundRules = try container.sdkDecodeIfPresent(.inboundRules)
-        outboundRules = try container.sdkDecodeIfPresent(.outboundRules)
-        if let value = name {
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.inboundRules = try container.sdkDecodeIfPresent(.inboundRules)
+        self.outboundRules = try container.sdkDecodeIfPresent(.outboundRules)
+        if let value = self.name {
             try sdkValidatePattern("name", value, sdkPattern5867542e1667)
         }
     }
 }
 
-public extension FirewallRequest {
-    init(
-        name: String? = nil,
-        dropletIds: [Int]? = nil,
-        tags: ExistingTagsArray? = nil,
-        inboundRules: [FirewallRulesInboundRulesItem]? = nil,
-        outboundRules: [FirewallRulesOutboundRulesItem]? = nil
-    ) throws {
+extension FirewallRequest {
+    public init(name: String? = nil, dropletIds: [Int]? = nil, tags: ExistingTagsArray? = nil, inboundRules: [FirewallRulesInboundRulesItem]? = nil, outboundRules: [FirewallRulesOutboundRulesItem]? = nil) throws {
         self.init()
         (self.name, self.dropletIds) = (name, dropletIds)
         (self.tags, self.inboundRules) = (tags, inboundRules)
@@ -170,19 +158,19 @@ public struct CreateFirewallResponse: Codable {
     }
 
     init() {
-        firewall = nil
+        self.firewall = nil
     }
 }
 
-public extension CreateFirewallResponse {
-    init(from decoder: Decoder) throws {
+extension CreateFirewallResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        firewall = try container.sdkDecodeIfPresent(.firewall)
+        self.firewall = try container.sdkDecodeIfPresent(.firewall)
     }
 }
 
-public extension CreateFirewallResponse {
-    init(firewall: Firewall? = nil) {
+extension CreateFirewallResponse {
+    public init(firewall: Firewall? = nil) {
         self.init()
         self.firewall = firewall
     }
@@ -198,19 +186,19 @@ public struct PutFirewallResponse: Codable {
     }
 
     init() {
-        firewall = nil
+        self.firewall = nil
     }
 }
 
-public extension PutFirewallResponse {
-    init(from decoder: Decoder) throws {
+extension PutFirewallResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        firewall = try container.sdkDecodeIfPresent(.firewall)
+        self.firewall = try container.sdkDecodeIfPresent(.firewall)
     }
 }
 
-public extension PutFirewallResponse {
-    init(firewall: Firewall? = nil) {
+extension PutFirewallResponse {
+    public init(firewall: Firewall? = nil) {
         self.init()
         self.firewall = firewall
     }
@@ -233,24 +221,24 @@ public struct FirewallRequestVariant0: Codable {
     }
 
     init() {
-        (name, dropletIds, tags) = (nil, nil, nil)
+        (self.name, self.dropletIds, self.tags) = (nil, nil, nil)
     }
 }
 
-public extension FirewallRequestVariant0 {
-    init(from decoder: Decoder) throws {
+extension FirewallRequestVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        if let value = name {
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        if let value = self.name {
             try sdkValidatePattern("name", value, sdkPattern5867542e1667)
         }
     }
 }
 
-public extension FirewallRequestVariant0 {
-    init(name: String? = nil, dropletIds: [Int]? = nil, tags: ExistingTagsArray? = nil) throws {
+extension FirewallRequestVariant0 {
+    public init(name: String? = nil, dropletIds: [Int]? = nil, tags: ExistingTagsArray? = nil) throws {
         self.init()
         (self.name, self.dropletIds) = (name, dropletIds)
         self.tags = tags

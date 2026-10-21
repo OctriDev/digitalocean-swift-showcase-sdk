@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
-    struct GenaiCreateModelEvaluationRunOptions: Codable {
+extension AgentPlatformApiMethods {
+    public struct GenaiCreateModelEvaluationRunOptions: Codable {
         public var candidateInferenceConfig: ApiCandidateInferenceConfig?
         public var candidateModelName: String?
         public var candidateModelSource: ApiCandidateModelSource?
@@ -27,10 +27,7 @@ public extension AgentPlatformApiMethods {
         public init() {}
     }
 
-    /// Creates a model evaluation run to score a candidate model against a dataset using selected metrics and a judge
-    /// model. Configure the candidate, dataset, metrics, and judge with the corresponding fields;
-    /// `candidate_model_source` defaults to the serverless model source, and `epochs` defaults to 1 and is capped at 3.
-    /// A successful response returns the created run's `eval_run_uuid`.
+    /// Creates a model evaluation run to score a candidate model against a dataset using selected metrics and a judge model. Configure the candidate, dataset, metrics, and judge with the corresponding fields; `candidate_model_source` defaults to the serverless model source, and `epochs` defaults to 1 and is capped at 3. A successful response returns the created run's `eval_run_uuid`.
     ///
     /// To create a model evaluation run, send a POST request to `/v2/genai/model_evaluation_runs`.
     ///
@@ -72,28 +69,9 @@ public extension AgentPlatformApiMethods {
     /// - source: Source of the run creation (api, sdk, cli).
     /// - starMetric: Optional object value serialized in the `star_metric` wire
     ///   field.
-    static func genaiCreateModelEvaluationRun(
-        config: ClientConfig,
-        options: GenaiCreateModelEvaluationRunOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiCreateModelEvaluationRunOutput {
+    public static func genaiCreateModelEvaluationRun(config: ClientConfig, options: GenaiCreateModelEvaluationRunOptions, requestOptions: RequestOptions? = nil) async throws -> ApiCreateModelEvaluationRunOutput {
         let requestBody = GenaiCreateModelEvaluationRunRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/gen-ai/model_evaluation_runs",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "genai_create_model_evaluation_run",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v2/gen-ai/model_evaluation_runs", config: config, body: requestBody, decoder: .json, operationId: "genai_create_model_evaluation_run", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiCreate domain models
+// AgentPlatformAPIApiCreate domain models
 /// Output for creating a scenario set.
 public struct ApiCreateScenarioSetOutput: Codable {
     /// A team-owned collection of scenarios.
@@ -14,19 +14,19 @@ public struct ApiCreateScenarioSetOutput: Codable {
     }
 
     init() {
-        scenarioSet = nil
+        self.scenarioSet = nil
     }
 }
 
-public extension ApiCreateScenarioSetOutput {
-    init(from decoder: Decoder) throws {
+extension ApiCreateScenarioSetOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        scenarioSet = try container.sdkDecodeIfPresent(.scenarioSet)
+        self.scenarioSet = try container.sdkDecodeIfPresent(.scenarioSet)
     }
 }
 
-public extension ApiCreateScenarioSetOutput {
-    init(scenarioSet: ApiScenarioSet? = nil) {
+extension ApiCreateScenarioSetOutput {
+    public init(scenarioSet: ApiScenarioSet? = nil) {
         self.init()
         self.scenarioSet = scenarioSet
     }
@@ -49,21 +49,21 @@ public struct ApiCreateScenarioSetInputPublic: Codable {
     }
 
     init() {
-        (fileUploadScenarioSet, name, scenarios) = (nil, nil, nil)
+        (self.fileUploadScenarioSet, self.name, self.scenarios) = (nil, nil, nil)
     }
 }
 
-public extension ApiCreateScenarioSetInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiCreateScenarioSetInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        fileUploadScenarioSet = try container.sdkDecodeIfPresent(.fileUploadScenarioSet)
-        name = try container.sdkDecodeIfPresent(.name)
-        scenarios = try container.sdkDecodeIfPresent(.scenarios)
+        self.fileUploadScenarioSet = try container.sdkDecodeIfPresent(.fileUploadScenarioSet)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.scenarios = try container.sdkDecodeIfPresent(.scenarios)
     }
 }
 
-public extension ApiCreateScenarioSetInputPublic {
-    init(fileUploadScenarioSet: ApiFileUploadDataSource? = nil, name: String? = nil, scenarios: [ApiScenario]? = nil) {
+extension ApiCreateScenarioSetInputPublic {
+    public init(fileUploadScenarioSet: ApiFileUploadDataSource? = nil, name: String? = nil, scenarios: [ApiScenario]? = nil) {
         self.init()
         (self.fileUploadScenarioSet, self.name) = (fileUploadScenarioSet, name)
         self.scenarios = scenarios

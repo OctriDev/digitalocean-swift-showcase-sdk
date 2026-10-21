@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiGet domain models
+// AgentPlatformAPIApiGet domain models
 /// Output containing a presigned download URL for an episode's trajectory JSON.
 public struct ApiGetSimulationEpisodeTrajectoryURLOutput: Codable {
     /// The presigned URL to download the trajectory JSON file.
@@ -19,23 +19,23 @@ public struct ApiGetSimulationEpisodeTrajectoryURLOutput: Codable {
     }
 
     init() {
-        (downloadUrl, expiresAt) = (nil, nil)
+        (self.downloadUrl, self.expiresAt) = (nil, nil)
     }
 }
 
-public extension ApiGetSimulationEpisodeTrajectoryURLOutput {
-    init(from decoder: Decoder) throws {
+extension ApiGetSimulationEpisodeTrajectoryURLOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        downloadUrl = try container.sdkDecodeIfPresent(.downloadUrl)
-        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
-        if let value = expiresAt {
+        self.downloadUrl = try container.sdkDecodeIfPresent(.downloadUrl)
+        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+        if let value = self.expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApiGetSimulationEpisodeTrajectoryURLOutput {
-    init(downloadUrl: String? = nil, expiresAt: Date? = nil) throws {
+extension ApiGetSimulationEpisodeTrajectoryURLOutput {
+    public init(downloadUrl: String? = nil, expiresAt: Date? = nil) throws {
         self.init()
         (self.downloadUrl, self.expiresAt) = (downloadUrl, expiresAt)
         if let value = self.expiresAt {

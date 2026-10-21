@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DropletAutoscalePools domain models
+// DropletAutoscalePools domain models
 /// Typed representation of the `ExistingAutoscalePool` API schema.
 public struct ExistingAutoscalePool: Codable {
     /// Optional object value serialized in the `autoscale_pool` wire field.
@@ -14,19 +14,19 @@ public struct ExistingAutoscalePool: Codable {
     }
 
     init() {
-        autoscalePool = nil
+        self.autoscalePool = nil
     }
 }
 
-public extension ExistingAutoscalePool {
-    init(from decoder: Decoder) throws {
+extension ExistingAutoscalePool {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        autoscalePool = try container.sdkDecodeIfPresent(.autoscalePool)
+        self.autoscalePool = try container.sdkDecodeIfPresent(.autoscalePool)
     }
 }
 
-public extension ExistingAutoscalePool {
-    init(autoscalePool: AutoscalePool? = nil) {
+extension ExistingAutoscalePool {
+    public init(autoscalePool: AutoscalePool? = nil) {
         self.init()
         self.autoscalePool = autoscalePool
     }

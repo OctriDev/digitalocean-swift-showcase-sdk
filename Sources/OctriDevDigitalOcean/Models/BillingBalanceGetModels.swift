@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Billing domain models
+// Billing domain models
 /// Typed representation of the `Balance` API schema.
 public struct Balance: Codable {
     /// Balance as of the `generated_at` time. This value includes the `account_balance` and `month_to_date_usage`.
@@ -27,30 +27,25 @@ public struct Balance: Codable {
     }
 
     init() {
-        (monthToDateBalance, accountBalance, monthToDateUsage, generatedAt) = (nil, nil, nil, nil)
+        (self.monthToDateBalance, self.accountBalance, self.monthToDateUsage, self.generatedAt) = (nil, nil, nil, nil)
     }
 }
 
-public extension Balance {
-    init(from decoder: Decoder) throws {
+extension Balance {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        monthToDateBalance = try container.sdkDecodeIfPresent(.monthToDateBalance)
-        accountBalance = try container.sdkDecodeIfPresent(.accountBalance)
-        monthToDateUsage = try container.sdkDecodeIfPresent(.monthToDateUsage)
-        generatedAt = try container.sdkDecodeIfPresent(.generatedAt)
-        if let value = generatedAt {
+        self.monthToDateBalance = try container.sdkDecodeIfPresent(.monthToDateBalance)
+        self.accountBalance = try container.sdkDecodeIfPresent(.accountBalance)
+        self.monthToDateUsage = try container.sdkDecodeIfPresent(.monthToDateUsage)
+        self.generatedAt = try container.sdkDecodeIfPresent(.generatedAt)
+        if let value = self.generatedAt {
             try sdkValidateDateTime("generated_at", sdkWireString(value))
         }
     }
 }
 
-public extension Balance {
-    init(
-        monthToDateBalance: String? = nil,
-        accountBalance: String? = nil,
-        monthToDateUsage: String? = nil,
-        generatedAt: Date? = nil
-    ) throws {
+extension Balance {
+    public init(monthToDateBalance: String? = nil, accountBalance: String? = nil, monthToDateUsage: String? = nil, generatedAt: Date? = nil) throws {
         self.init()
         (self.monthToDateBalance, self.accountBalance) = (monthToDateBalance, accountBalance)
         (self.monthToDateUsage, self.generatedAt) = (monthToDateUsage, generatedAt)

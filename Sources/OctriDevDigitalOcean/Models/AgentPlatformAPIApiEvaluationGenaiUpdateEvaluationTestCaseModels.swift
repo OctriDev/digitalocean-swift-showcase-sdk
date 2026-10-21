@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiEvaluation domain models
+// AgentPlatformAPIApiEvaluation domain models
 /// Typed representation of the `ApiEvaluationTestCaseMetricList` API schema.
 public struct ApiEvaluationTestCaseMetricList: Codable {
     /// Optional array value serialized in the `metric_uuids` wire field.
@@ -15,19 +15,19 @@ public struct ApiEvaluationTestCaseMetricList: Codable {
     }
 
     init() {
-        metricUuids = nil
+        self.metricUuids = nil
     }
 }
 
-public extension ApiEvaluationTestCaseMetricList {
-    init(from decoder: Decoder) throws {
+extension ApiEvaluationTestCaseMetricList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        metricUuids = try container.sdkDecodeIfPresent(.metricUuids)
+        self.metricUuids = try container.sdkDecodeIfPresent(.metricUuids)
     }
 }
 
-public extension ApiEvaluationTestCaseMetricList {
-    init(metricUuids: [String]? = nil) {
+extension ApiEvaluationTestCaseMetricList {
+    public init(metricUuids: [String]? = nil) {
         self.init()
         self.metricUuids = metricUuids
     }

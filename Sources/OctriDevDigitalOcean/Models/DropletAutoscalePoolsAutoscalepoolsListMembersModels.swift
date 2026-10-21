@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DropletAutoscalePools domain models
+// DropletAutoscalePools domain models
 public struct AllMembersVariant0: Codable {
     public var droplets: [Member]?
 
@@ -12,19 +12,19 @@ public struct AllMembersVariant0: Codable {
     }
 
     init() {
-        droplets = nil
+        self.droplets = nil
     }
 }
 
-public extension AllMembersVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllMembersVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        droplets = try container.sdkDecodeIfPresent(.droplets)
+        self.droplets = try container.sdkDecodeIfPresent(.droplets)
     }
 }
 
-public extension AllMembersVariant0 {
-    init(droplets: [Member]? = nil) {
+extension AllMembersVariant0 {
+    public init(droplets: [Member]? = nil) {
         self.init()
         self.droplets = droplets
     }
@@ -64,84 +64,50 @@ public struct Member: Codable {
         case unhealthyReason = "unhealthy_reason"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Member {
-    init(from decoder: Decoder) throws {
+extension Member {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.dropletId) else {
-            throw SdkValidationError(
-                field: "droplet_id",
-                code: "required",
-                message: "Validation failed for 'droplet_id': value is required"
-            )
+            throw SdkValidationError(field: "droplet_id", code: "required", message: "Validation failed for 'droplet_id': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.updatedAt) else {
-            throw SdkValidationError(
-                field: "updated_at",
-                code: "required",
-                message: "Validation failed for 'updated_at': value is required"
-            )
+            throw SdkValidationError(field: "updated_at", code: "required", message: "Validation failed for 'updated_at': value is required")
         }
         guard container.contains(.healthStatus) else {
-            throw SdkValidationError(
-                field: "health_status",
-                code: "required",
-                message: "Validation failed for 'health_status': value is required"
-            )
+            throw SdkValidationError(field: "health_status", code: "required", message: "Validation failed for 'health_status': value is required")
         }
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.currentUtilization) else {
-            throw SdkValidationError(
-                field: "current_utilization",
-                code: "required",
-                message: "Validation failed for 'current_utilization': value is required"
-            )
+            throw SdkValidationError(field: "current_utilization", code: "required", message: "Validation failed for 'current_utilization': value is required")
         }
-        dropletId = try container.sdkDecodeRequired(.dropletId)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        healthStatus = try container.sdkDecodeRequired(.healthStatus)
-        status = try container.sdkDecodeRequired(.status)
-        currentUtilization = try container.sdkDecodeRequired(.currentUtilization)
-        unhealthyReason = try container.sdkDecodeIfPresent(.unhealthyReason)
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
-        try sdkValidateDateTime("updated_at", sdkWireString(updatedAt))
+        self.dropletId = try container.sdkDecodeRequired(.dropletId)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
+        self.healthStatus = try container.sdkDecodeRequired(.healthStatus)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.currentUtilization = try container.sdkDecodeRequired(.currentUtilization)
+        self.unhealthyReason = try container.sdkDecodeIfPresent(.unhealthyReason)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
-public extension Member {
-    init(
-        dropletId: Int,
-        createdAt: Date,
-        updatedAt: Date,
-        healthStatus: MemberHealthStatus,
-        status: MemberStatus,
-        currentUtilization: MemberCurrentUtilization,
-        unhealthyReason: String? = nil
-    ) throws {
+extension Member {
+    public init(dropletId: Int, createdAt: Date, updatedAt: Date, healthStatus: MemberHealthStatus, status: MemberStatus, currentUtilization: MemberCurrentUtilization, unhealthyReason: String? = nil) throws {
         (self.dropletId, self.createdAt) = (dropletId, createdAt)
         (self.updatedAt, self.healthStatus) = (updatedAt, healthStatus)
         (self.status, self.currentUtilization) = (status, currentUtilization)
         self.unhealthyReason = unhealthyReason
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-        try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
@@ -159,29 +125,23 @@ public struct AllMembers: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllMembers {
-    init(from decoder: Decoder) throws {
+extension AllMembers {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        droplets = try container.sdkDecodeIfPresent(.droplets)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.droplets = try container.sdkDecodeIfPresent(.droplets)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllMembers {
-    init(meta: MetaMeta, droplets: [Member]? = nil, links: PageLinks? = nil) {
+extension AllMembers {
+    public init(meta: MetaMeta, droplets: [Member]? = nil, links: PageLinks? = nil) {
         (self.meta, self.droplets) = (meta, droplets)
         self.links = links
     }
@@ -202,20 +162,20 @@ public struct MemberCurrentUtilization: Codable {
     }
 
     init() {
-        (memory, cpu) = (nil, nil)
+        (self.memory, self.cpu) = (nil, nil)
     }
 }
 
-public extension MemberCurrentUtilization {
-    init(from decoder: Decoder) throws {
+extension MemberCurrentUtilization {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        memory = try container.sdkDecodeIfPresent(.memory)
-        cpu = try container.sdkDecodeIfPresent(.cpu)
+        self.memory = try container.sdkDecodeIfPresent(.memory)
+        self.cpu = try container.sdkDecodeIfPresent(.cpu)
     }
 }
 
-public extension MemberCurrentUtilization {
-    init(memory: Double? = nil, cpu: Double? = nil) {
+extension MemberCurrentUtilization {
+    public init(memory: Double? = nil, cpu: Double? = nil) {
         self.init()
         (self.memory, self.cpu) = (memory, cpu)
     }
@@ -225,10 +185,7 @@ public extension MemberCurrentUtilization {
 public struct MemberStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let provisioning = MemberStatus(rawValue: "provisioning")
     public static let active = MemberStatus(rawValue: "active")
     public static let deleting = MemberStatus(rawValue: "deleting")
@@ -236,7 +193,7 @@ public struct MemberStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWi
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -249,16 +206,13 @@ public struct MemberStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWi
 public struct MemberHealthStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let healthy = MemberHealthStatus(rawValue: "healthy")
     public static let unhealthy = MemberHealthStatus(rawValue: "unhealthy")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

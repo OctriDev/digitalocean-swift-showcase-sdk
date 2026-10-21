@@ -6,109 +6,38 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DatabasesMethods {
-    /// To list all of the databases in a clusters, send a GET request to `/v2/databases/$DATABASE_ID/dbs`. The result
-    /// will be a JSON object with a `dbs` key. This will be set to an array of database objects, each of which will
-    /// contain the standard database attributes. Note: Database management is not supported for Caching or Valkey
-    /// clusters.
+extension DatabasesMethods {
+    /// To list all of the databases in a clusters, send a GET request to `/v2/databases/$DATABASE_ID/dbs`. The result will be a JSON object with a `dbs` key. This will be set to an array of database objects, each of which will contain the standard database attributes. Note: Database management is not supported for Caching or Valkey clusters.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    static func databasesList(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Databases {
+    public static func databasesList(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> Databases {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/dbs"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "databases_list",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/dbs"].joined(), config: config, decoder: .json, operationId: "databases_list", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To add a new database to an existing cluster, send a POST request to `/v2/databases/$DATABASE_ID/dbs`. Note:
-    /// Database management is not supported for Caching or Valkey clusters. The response will be a JSON object with a
-    /// key called `db`. The value of this will be an object that contains the standard attributes associated with a
-    /// database.
+    /// To add a new database to an existing cluster, send a POST request to `/v2/databases/$DATABASE_ID/dbs`. Note: Database management is not supported for Caching or Valkey clusters. The response will be a JSON object with a key called `db`. The value of this will be an object that contains the standard attributes associated with a database.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - name: The name of the database.
-    static func databasesAdd(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        name: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DatabaseResponse {
+    public static func databasesAdd(config: ClientConfig, databaseClusterUuid: String, name: String, requestOptions: RequestOptions? = nil) async throws -> DatabaseResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
         let requestBody = DatabasesAddRequestBody(name: name)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/dbs"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "databases_add",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/dbs"].joined(), config: config, body: requestBody, decoder: .json, operationId: "databases_add", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To show information about an existing database cluster, send a GET request to
-    /// `/v2/databases/$DATABASE_ID/dbs/$DB_NAME`. Note: Database management is not supported for Caching or Valkey
-    /// clusters. The response will be a JSON object with a `db` key. This will be set to an object containing the
-    /// standard database attributes.
+    /// To show information about an existing database cluster, send a GET request to `/v2/databases/$DATABASE_ID/dbs/$DB_NAME`. Note: Database management is not supported for Caching or Valkey clusters. The response will be a JSON object with a `db` key. This will be set to an object containing the standard database attributes.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - databaseName: The name of the database.
-    static func databasesGet(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        databaseName: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DatabaseResponse {
+    public static func databasesGet(config: ClientConfig, databaseClusterUuid: String, databaseName: String, requestOptions: RequestOptions? = nil) async throws -> DatabaseResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try await (sdkRequest(
-            "GET",
-            [
-                "/v2/databases/",
-                sdkEncodePathSegment(sdkWireString(databaseClusterUuid)),
-                "/dbs/",
-                sdkEncodePathSegment(sdkWireString(databaseName)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "databases_get",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/dbs/", sdkEncodePathSegment(sdkWireString(databaseName))].joined(), config: config, decoder: .json, operationId: "databases_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

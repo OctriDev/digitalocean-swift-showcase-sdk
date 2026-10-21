@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiList domain models
+// AgentPlatformAPIApiList domain models
 /// Output for listing the Common Scenario & Goal Library.
 public struct ApiListScenarioLibraryOutput: Codable {
     /// Categories currently in use, for filtering library results.
@@ -30,32 +30,25 @@ public struct ApiListScenarioLibraryOutput: Codable {
     }
 
     init() {
-        (availableCategories, availableSortBy, availableSortDirections, links, meta) = (nil, nil, nil, nil, nil)
-        scenarios = nil
+        (self.availableCategories, self.availableSortBy, self.availableSortDirections, self.links, self.meta) = (nil, nil, nil, nil, nil)
+        self.scenarios = nil
     }
 }
 
-public extension ApiListScenarioLibraryOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListScenarioLibraryOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        availableCategories = try container.sdkDecodeIfPresent(.availableCategories)
-        availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
-        availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
-        scenarios = try container.sdkDecodeIfPresent(.scenarios)
+        self.availableCategories = try container.sdkDecodeIfPresent(.availableCategories)
+        self.availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
+        self.availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
+        self.scenarios = try container.sdkDecodeIfPresent(.scenarios)
     }
 }
 
-public extension ApiListScenarioLibraryOutput {
-    init(
-        availableCategories: [String]? = nil,
-        availableSortBy: [ApiScenarioLibrarySortField]? = nil,
-        availableSortDirections: [ApiSortDirection]? = nil,
-        links: ApiLinks? = nil,
-        meta: ApiMeta? = nil,
-        scenarios: [ApiScenarioLibraryEntry]? = nil
-    ) {
+extension ApiListScenarioLibraryOutput {
+    public init(availableCategories: [String]? = nil, availableSortBy: [ApiScenarioLibrarySortField]? = nil, availableSortDirections: [ApiSortDirection]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil, scenarios: [ApiScenarioLibraryEntry]? = nil) {
         self.init()
         (self.availableCategories, self.availableSortBy) = (availableCategories, availableSortBy)
         (self.availableSortDirections, self.links) = (availableSortDirections, links)

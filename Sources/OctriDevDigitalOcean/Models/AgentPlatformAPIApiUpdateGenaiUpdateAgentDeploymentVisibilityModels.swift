@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiUpdate domain models
+// AgentPlatformAPIApiUpdate domain models
 /// UpdateAgentDeploymentVisbilityOutput description
 public struct ApiUpdateAgentDeploymentVisbilityOutput: Codable {
     /// An Agent
@@ -14,19 +14,19 @@ public struct ApiUpdateAgentDeploymentVisbilityOutput: Codable {
     }
 
     init() {
-        agent = nil
+        self.agent = nil
     }
 }
 
-public extension ApiUpdateAgentDeploymentVisbilityOutput {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateAgentDeploymentVisbilityOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agent = try container.sdkDecodeIfPresent(.agent)
+        self.agent = try container.sdkDecodeIfPresent(.agent)
     }
 }
 
-public extension ApiUpdateAgentDeploymentVisbilityOutput {
-    init(agent: ApiAgent? = nil) {
+extension ApiUpdateAgentDeploymentVisbilityOutput {
+    public init(agent: ApiAgent? = nil) {
         self.init()
         self.agent = agent
     }
@@ -51,20 +51,20 @@ public struct ApiUpdateAgentDeploymentVisibilityInputPublic: Codable {
     }
 
     init() {
-        (uuid, visibility) = (nil, nil)
+        (self.uuid, self.visibility) = (nil, nil)
     }
 }
 
-public extension ApiUpdateAgentDeploymentVisibilityInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateAgentDeploymentVisibilityInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
-        visibility = try container.sdkDecodeIfPresent(.visibility)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        self.visibility = try container.sdkDecodeIfPresent(.visibility)
     }
 }
 
-public extension ApiUpdateAgentDeploymentVisibilityInputPublic {
-    init(uuid: String? = nil, visibility: ApiDeploymentVisibility? = nil) {
+extension ApiUpdateAgentDeploymentVisibilityInputPublic {
+    public init(uuid: String? = nil, visibility: ApiDeploymentVisibility? = nil) {
         self.init()
         (self.uuid, self.visibility) = (uuid, visibility)
     }

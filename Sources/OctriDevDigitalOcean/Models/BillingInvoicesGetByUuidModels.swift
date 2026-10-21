@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Billing domain models
+// Billing domain models
 public struct InvoiceVariant0: Codable {
     public var invoiceItems: [InvoiceItem]?
 
@@ -12,19 +12,19 @@ public struct InvoiceVariant0: Codable {
     }
 
     init() {
-        invoiceItems = nil
+        self.invoiceItems = nil
     }
 }
 
-public extension InvoiceVariant0 {
-    init(from decoder: Decoder) throws {
+extension InvoiceVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        invoiceItems = try container.sdkDecodeIfPresent(.invoiceItems)
+        self.invoiceItems = try container.sdkDecodeIfPresent(.invoiceItems)
     }
 }
 
-public extension InvoiceVariant0 {
-    init(invoiceItems: [InvoiceItem]? = nil) {
+extension InvoiceVariant0 {
+    public init(invoiceItems: [InvoiceItem]? = nil) {
         self.init()
         self.invoiceItems = invoiceItems
     }
@@ -44,29 +44,23 @@ public struct Invoice: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Invoice {
-    init(from decoder: Decoder) throws {
+extension Invoice {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        invoiceItems = try container.sdkDecodeIfPresent(.invoiceItems)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.invoiceItems = try container.sdkDecodeIfPresent(.invoiceItems)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension Invoice {
-    init(meta: MetaMeta, invoiceItems: [InvoiceItem]? = nil, links: PageLinks? = nil) {
+extension Invoice {
+    public init(meta: MetaMeta, invoiceItems: [InvoiceItem]? = nil, links: PageLinks? = nil) {
         (self.meta, self.invoiceItems) = (meta, invoiceItems)
         self.links = links
     }
@@ -123,43 +117,31 @@ public struct InvoiceItem: Codable {
     }
 
     init() {
-        (product, resourceUuid, resourceId, groupDescription, description) = (nil, nil, nil, nil, nil)
-        (amount, duration, durationUnit, startTime, endTime) = (nil, nil, nil, nil, nil)
-        projectName = nil
+        (self.product, self.resourceUuid, self.resourceId, self.groupDescription, self.description) = (nil, nil, nil, nil, nil)
+        (self.amount, self.duration, self.durationUnit, self.startTime, self.endTime) = (nil, nil, nil, nil, nil)
+        self.projectName = nil
     }
 }
 
-public extension InvoiceItem {
-    init(from decoder: Decoder) throws {
+extension InvoiceItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        product = try container.sdkDecodeIfPresent(.product)
-        resourceUuid = try container.sdkDecodeIfPresent(.resourceUuid)
-        resourceId = try container.sdkDecodeIfPresent(.resourceId)
-        groupDescription = try container.sdkDecodeIfPresent(.groupDescription)
-        description = try container.sdkDecodeIfPresent(.description)
-        amount = try container.sdkDecodeIfPresent(.amount)
-        duration = try container.sdkDecodeIfPresent(.duration)
-        durationUnit = try container.sdkDecodeIfPresent(.durationUnit)
-        startTime = try container.sdkDecodeIfPresent(.startTime)
-        endTime = try container.sdkDecodeIfPresent(.endTime)
-        projectName = try container.sdkDecodeIfPresent(.projectName)
+        self.product = try container.sdkDecodeIfPresent(.product)
+        self.resourceUuid = try container.sdkDecodeIfPresent(.resourceUuid)
+        self.resourceId = try container.sdkDecodeIfPresent(.resourceId)
+        self.groupDescription = try container.sdkDecodeIfPresent(.groupDescription)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.amount = try container.sdkDecodeIfPresent(.amount)
+        self.duration = try container.sdkDecodeIfPresent(.duration)
+        self.durationUnit = try container.sdkDecodeIfPresent(.durationUnit)
+        self.startTime = try container.sdkDecodeIfPresent(.startTime)
+        self.endTime = try container.sdkDecodeIfPresent(.endTime)
+        self.projectName = try container.sdkDecodeIfPresent(.projectName)
     }
 }
 
-public extension InvoiceItem {
-    init(
-        product: String? = nil,
-        resourceUuid: String? = nil,
-        resourceId: String? = nil,
-        groupDescription: String? = nil,
-        description: String? = nil,
-        amount: String? = nil,
-        duration: String? = nil,
-        durationUnit: String? = nil,
-        startTime: String? = nil,
-        endTime: String? = nil,
-        projectName: String? = nil
-    ) {
+extension InvoiceItem {
+    public init(product: String? = nil, resourceUuid: String? = nil, resourceId: String? = nil, groupDescription: String? = nil, description: String? = nil, amount: String? = nil, duration: String? = nil, durationUnit: String? = nil, startTime: String? = nil, endTime: String? = nil, projectName: String? = nil) {
         self.init()
         (self.product, self.resourceUuid) = (product, resourceUuid)
         (self.resourceId, self.groupDescription) = (resourceId, groupDescription)

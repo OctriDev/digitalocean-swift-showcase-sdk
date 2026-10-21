@@ -6,64 +6,32 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension MonitoringMethods {
-    /// To retrieve free memory metrics for a given droplet, send a GET request to
-    /// `/v2/monitoring/metrics/droplet/memory_free`.
+extension MonitoringMethods {
+    /// To retrieve free memory metrics for a given droplet, send a GET request to `/v2/monitoring/metrics/droplet/memory_free`.
     ///
     /// - Parameters:
     /// - hostId: The droplet ID.
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    static func monitoringGetDropletMemoryFreeMetrics(
-        config: ClientConfig,
-        hostId: String,
-        start: String,
-        end: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Metrics {
-        try await (sdkRequest(
-            "GET",
-            "/v2/monitoring/metrics/droplet/memory_free",
-            config: config,
-            query: [
-                SdkQueryParameter("host_id", value: hostId),
-                SdkQueryParameter("start", value: start),
-                SdkQueryParameter("end", value: end),
-            ],
-            decoder: .json,
-            operationId: "monitoring_get_dropletMemoryFreeMetrics",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    public static func monitoringGetDropletMemoryFreeMetrics(config: ClientConfig, hostId: String, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
+        return try (await sdkRequest("GET", "/v2/monitoring/metrics/droplet/memory_free", config: config, query: [
+            SdkQueryParameter("host_id", value: hostId),
+            SdkQueryParameter("start", value: start),
+            SdkQueryParameter("end", value: end),
+        ], decoder: .json, operationId: "monitoring_get_dropletMemoryFreeMetrics", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To retrieve total memory metrics for a given droplet, send a GET request to
-    /// `/v2/monitoring/metrics/droplet/memory_total`.
+    /// To retrieve total memory metrics for a given droplet, send a GET request to `/v2/monitoring/metrics/droplet/memory_total`.
     ///
     /// - Parameters:
     /// - hostId: The droplet ID.
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    static func monitoringGetDropletMemoryTotalMetrics(
-        config: ClientConfig,
-        hostId: String,
-        start: String,
-        end: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Metrics {
-        try await (sdkRequest(
-            "GET",
-            "/v2/monitoring/metrics/droplet/memory_total",
-            config: config,
-            query: [
-                SdkQueryParameter("host_id", value: hostId),
-                SdkQueryParameter("start", value: start),
-                SdkQueryParameter("end", value: end),
-            ],
-            decoder: .json,
-            operationId: "monitoring_get_dropletMemoryTotalMetrics",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    public static func monitoringGetDropletMemoryTotalMetrics(config: ClientConfig, hostId: String, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
+        return try (await sdkRequest("GET", "/v2/monitoring/metrics/droplet/memory_total", config: config, query: [
+            SdkQueryParameter("host_id", value: hostId),
+            SdkQueryParameter("start", value: start),
+            SdkQueryParameter("end", value: end),
+        ], decoder: .json, operationId: "monitoring_get_dropletMemoryTotalMetrics", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

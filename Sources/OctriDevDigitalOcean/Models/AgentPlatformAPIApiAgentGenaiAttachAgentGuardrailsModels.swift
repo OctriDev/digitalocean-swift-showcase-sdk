@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiAgent domain models
+// AgentPlatformAPIApiAgent domain models
 /// Typed representation of the `ApiAgentGuardrailInput` API schema.
 public struct ApiAgentGuardrailInput: Codable {
     /// Guardrail uuid
@@ -19,20 +19,20 @@ public struct ApiAgentGuardrailInput: Codable {
     }
 
     init() {
-        (guardrailUuid, priority) = (nil, nil)
+        (self.guardrailUuid, self.priority) = (nil, nil)
     }
 }
 
-public extension ApiAgentGuardrailInput {
-    init(from decoder: Decoder) throws {
+extension ApiAgentGuardrailInput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        guardrailUuid = try container.sdkDecodeIfPresent(.guardrailUuid)
-        priority = try container.sdkDecodeIfPresent(.priority)
+        self.guardrailUuid = try container.sdkDecodeIfPresent(.guardrailUuid)
+        self.priority = try container.sdkDecodeIfPresent(.priority)
     }
 }
 
-public extension ApiAgentGuardrailInput {
-    init(guardrailUuid: String? = nil, priority: Int? = nil) {
+extension ApiAgentGuardrailInput {
+    public init(guardrailUuid: String? = nil, priority: Int? = nil) {
         self.init()
         (self.guardrailUuid, self.priority) = (guardrailUuid, priority)
     }

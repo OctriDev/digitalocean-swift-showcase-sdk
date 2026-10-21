@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AppsMethods {
-    struct AppsGetJobInvocationLogsOptions: Codable {
+extension AppsMethods {
+    public struct AppsGetJobInvocationLogsOptions: Codable {
         public var appId: String
         public var jobName: String
         public var jobInvocationId: String
@@ -25,10 +25,7 @@ public extension AppsMethods {
         }
     }
 
-    /// Retrieve the logs of a past, in-progress, or active deployment. If a component name is specified, the logs will
-    /// be limited to only that component. If deployment is omitted the active deployment will be selected (if
-    /// available). The response will include links to either real-time logs of an in-progress or active deployment or
-    /// archived logs of a past deployment.
+    /// Retrieve the logs of a past, in-progress, or active deployment. If a component name is specified, the logs will be limited to only that component. If deployment is omitted the active deployment will be selected (if available). The response will include links to either real-time logs of an in-progress or active deployment or archived logs of a past deployment.
     ///
     /// - Parameters:
     /// - appId: The app ID
@@ -40,40 +37,13 @@ public extension AppsMethods {
     /// - podConnectionTimeout: An optional time duration to wait if the underlying
     ///   component instance is not immediately available. Default: `3m`.
     /// - tailLines: The number of lines from the end of the logs to retrieve.
-    static func appsGetJobInvocationLogs(
-        config: ClientConfig,
-        options: AppsGetJobInvocationLogsOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppsGetLogsResponse {
-        try await (sdkRequest(
-            "GET",
-            [
-                "/v2/apps/",
-                sdkEncodePathSegment(sdkWireString(options.appId)),
-                "/jobs/",
-                sdkEncodePathSegment(sdkWireString(options.jobName)),
-                "/invocations/",
-                sdkEncodePathSegment(sdkWireString(options.jobInvocationId)),
-                "/logs",
-            ].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("type", value: options.type),
-                SdkQueryParameter("deployment_id", value: options.deploymentId),
-                SdkQueryParameter("follow", value: options.follow),
-                SdkQueryParameter("pod_connection_timeout", value: options.podConnectionTimeout),
-                SdkQueryParameter("tail_lines", value: options.tailLines),
-            ],
-            decoder: .json,
-            operationId: "apps_get_job_invocation_logs",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func appsGetJobInvocationLogs(config: ClientConfig, options: AppsGetJobInvocationLogsOptions, requestOptions: RequestOptions? = nil) async throws -> AppsGetLogsResponse {
+        return try (await sdkRequest("GET", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(options.appId)), "/jobs/", sdkEncodePathSegment(sdkWireString(options.jobName)), "/invocations/", sdkEncodePathSegment(sdkWireString(options.jobInvocationId)), "/logs"].joined(), config: config, query: [
+            SdkQueryParameter("type", value: options.type),
+            SdkQueryParameter("deployment_id", value: options.deploymentId),
+            SdkQueryParameter("follow", value: options.follow),
+            SdkQueryParameter("pod_connection_timeout", value: options.podConnectionTimeout),
+            SdkQueryParameter("tail_lines", value: options.tailLines),
+        ], decoder: .json, operationId: "apps_get_job_invocation_logs", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

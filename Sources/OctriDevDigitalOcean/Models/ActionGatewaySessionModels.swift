@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// ActionGatewaySession domain models
+// ActionGatewaySession domain models
 /// Required object value serialized in the `rules[]` wire field.
 public struct SessionPolicyRulesItem: Codable {
     /// Required. A tool slug, optionally `<tool_slug>@<version>`, or a toolbelt as `toolbelt:<name>@<version>`.
@@ -24,21 +24,21 @@ public struct SessionPolicyRulesItem: Codable {
     }
 
     init() {
-        (tool, match, action) = (nil, nil, nil)
+        (self.tool, self.match, self.action) = (nil, nil, nil)
     }
 }
 
-public extension SessionPolicyRulesItem {
-    init(from decoder: Decoder) throws {
+extension SessionPolicyRulesItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        tool = try container.sdkDecodeIfPresent(.tool)
-        match = try container.sdkDecodeIfPresent(.match)
-        action = try container.sdkDecodeIfPresent(.action)
+        self.tool = try container.sdkDecodeIfPresent(.tool)
+        self.match = try container.sdkDecodeIfPresent(.match)
+        self.action = try container.sdkDecodeIfPresent(.action)
     }
 }
 
-public extension SessionPolicyRulesItem {
-    init(tool: String? = nil, match: [String: String]? = nil, action: SessionPolicyRulesItemAction? = nil) {
+extension SessionPolicyRulesItem {
+    public init(tool: String? = nil, match: [String: String]? = nil, action: SessionPolicyRulesItemAction? = nil) {
         self.init()
         (self.tool, self.match) = (tool, match)
         self.action = action
@@ -55,19 +55,19 @@ public struct SessionTools: Codable {
     }
 
     init() {
-        references = nil
+        self.references = nil
     }
 }
 
-public extension SessionTools {
-    init(from decoder: Decoder) throws {
+extension SessionTools {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        references = try container.sdkDecodeIfPresent(.references)
+        self.references = try container.sdkDecodeIfPresent(.references)
     }
 }
 
-public extension SessionTools {
-    init(references: [SessionToolsReferencesItem]? = nil) {
+extension SessionTools {
+    public init(references: [SessionToolsReferencesItem]? = nil) {
         self.init()
         self.references = references
     }
@@ -112,44 +112,30 @@ public struct SessionCreate: Codable {
         case insights
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SessionCreate {
-    init(from decoder: Decoder) throws {
+extension SessionCreate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        actorId = try container.sdkDecodeIfPresent(.actorId)
-        policy = try container.sdkDecodeIfPresent(.policy)
-        tools = try container.sdkDecodeIfPresent(.tools)
-        config = try container.sdkDecodeIfPresent(.config)
-        network = try container.sdkDecodeIfPresent(.network)
-        insights = try container.sdkDecodeIfPresent(.insights)
-        if let value = actorId {
+        self.name = try container.sdkDecodeRequired(.name)
+        self.actorId = try container.sdkDecodeIfPresent(.actorId)
+        self.policy = try container.sdkDecodeIfPresent(.policy)
+        self.tools = try container.sdkDecodeIfPresent(.tools)
+        self.config = try container.sdkDecodeIfPresent(.config)
+        self.network = try container.sdkDecodeIfPresent(.network)
+        self.insights = try container.sdkDecodeIfPresent(.insights)
+        if let value = self.actorId {
             try sdkValidatePattern("actorId", value, sdkPatternd665a9126795)
         }
     }
 }
 
-public extension SessionCreate {
-    init(
-        name: String,
-        actorId: String? = nil,
-        policy: SessionPolicy? = nil,
-        tools: [String]? = nil,
-        config: [String: JSONValue]? = nil,
-        network: SessionNetwork? = nil,
-        insights: SessionInsights? = nil
-    ) throws {
+extension SessionCreate {
+    public init(name: String, actorId: String? = nil, policy: SessionPolicy? = nil, tools: [String]? = nil, config: [String: JSONValue]? = nil, network: SessionNetwork? = nil, insights: SessionInsights? = nil) throws {
         (self.name, self.actorId) = (name, actorId)
         (self.policy, self.tools) = (policy, tools)
         (self.config, self.network) = (config, network)
@@ -174,20 +160,20 @@ public struct SessionPolicy: Codable {
     }
 
     init() {
-        (defaultAction, rules) = (nil, nil)
+        (self.defaultAction, self.rules) = (nil, nil)
     }
 }
 
-public extension SessionPolicy {
-    init(from decoder: Decoder) throws {
+extension SessionPolicy {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        defaultAction = try container.sdkDecodeIfPresent(.defaultAction)
-        rules = try container.sdkDecodeIfPresent(.rules)
+        self.defaultAction = try container.sdkDecodeIfPresent(.defaultAction)
+        self.rules = try container.sdkDecodeIfPresent(.rules)
     }
 }
 
-public extension SessionPolicy {
-    init(defaultAction: SessionPolicyDefaultAction? = nil, rules: [SessionPolicyRulesItem]? = nil) {
+extension SessionPolicy {
+    public init(defaultAction: SessionPolicyDefaultAction? = nil, rules: [SessionPolicyRulesItem]? = nil) {
         self.init()
         (self.defaultAction, self.rules) = (defaultAction, rules)
     }
@@ -204,22 +190,22 @@ public struct SessionNetwork: Codable {
     }
 
     init() {
-        vpcUuid = nil
+        self.vpcUuid = nil
     }
 }
 
-public extension SessionNetwork {
-    init(from decoder: Decoder) throws {
+extension SessionNetwork {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        if let value = vpcUuid {
+        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        if let value = self.vpcUuid {
             try sdkValidateUuid("vpcUuid", value)
         }
     }
 }
 
-public extension SessionNetwork {
-    init(vpcUuid: String? = nil) throws {
+extension SessionNetwork {
+    public init(vpcUuid: String? = nil) throws {
         self.init()
         self.vpcUuid = vpcUuid
         if let value = self.vpcUuid {
@@ -247,21 +233,21 @@ public struct SessionToolsReferencesItem: Codable {
     }
 
     init() {
-        (kind, name, version) = (nil, nil, nil)
+        (self.kind, self.name, self.version) = (nil, nil, nil)
     }
 }
 
-public extension SessionToolsReferencesItem {
-    init(from decoder: Decoder) throws {
+extension SessionToolsReferencesItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        kind = try container.sdkDecodeIfPresent(.kind)
-        name = try container.sdkDecodeIfPresent(.name)
-        version = try container.sdkDecodeIfPresent(.version)
+        self.kind = try container.sdkDecodeIfPresent(.kind)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.version = try container.sdkDecodeIfPresent(.version)
     }
 }
 
-public extension SessionToolsReferencesItem {
-    init(kind: SessionToolsReferencesItemKind? = nil, name: String? = nil, version: String? = nil) {
+extension SessionToolsReferencesItem {
+    public init(kind: SessionToolsReferencesItemKind? = nil, name: String? = nil, version: String? = nil) {
         self.init()
         (self.kind, self.name) = (kind, name)
         self.version = version
@@ -286,21 +272,21 @@ public struct SessionInsights: Codable {
     }
 
     init() {
-        (metrics, logs, traces) = (nil, nil, nil)
+        (self.metrics, self.logs, self.traces) = (nil, nil, nil)
     }
 }
 
-public extension SessionInsights {
-    init(from decoder: Decoder) throws {
+extension SessionInsights {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        metrics = try container.sdkDecodeIfPresent(.metrics)
-        logs = try container.sdkDecodeIfPresent(.logs)
-        traces = try container.sdkDecodeIfPresent(.traces)
+        self.metrics = try container.sdkDecodeIfPresent(.metrics)
+        self.logs = try container.sdkDecodeIfPresent(.logs)
+        self.traces = try container.sdkDecodeIfPresent(.traces)
     }
 }
 
-public extension SessionInsights {
-    init(metrics: Bool? = nil, logs: Bool? = nil, traces: Bool? = nil) {
+extension SessionInsights {
+    public init(metrics: Bool? = nil, logs: Bool? = nil, traces: Bool? = nil) {
         self.init()
         (self.metrics, self.logs) = (metrics, logs)
         self.traces = traces
@@ -361,53 +347,39 @@ public struct Session: Codable {
     }
 
     init() {
-        (sessionUrn, name, actorId, policy, tools) = (nil, nil, nil, nil, nil)
-        (config, network, insights, agentUrn, agentName) = (nil, nil, nil, nil, nil)
-        (createdAt, updatedAt, owningUserId) = (nil, nil, nil)
+        (self.sessionUrn, self.name, self.actorId, self.policy, self.tools) = (nil, nil, nil, nil, nil)
+        (self.config, self.network, self.insights, self.agentUrn, self.agentName) = (nil, nil, nil, nil, nil)
+        (self.createdAt, self.updatedAt, self.owningUserId) = (nil, nil, nil)
     }
 }
 
-public extension Session {
-    init(from decoder: Decoder) throws {
+extension Session {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        sessionUrn = try container.sdkDecodeIfPresent(.sessionUrn)
-        name = try container.sdkDecodeIfPresent(.name)
-        actorId = try container.sdkDecodeIfPresent(.actorId)
-        policy = try container.sdkDecodeIfPresent(.policy)
-        tools = try container.sdkDecodeIfPresent(.tools)
-        config = try container.sdkDecodeIfPresent(.config)
-        network = try container.sdkDecodeIfPresent(.network)
-        insights = try container.sdkDecodeIfPresent(.insights)
-        agentUrn = try container.sdkDecodeIfPresent(.agentUrn)
-        agentName = try container.sdkDecodeIfPresent(.agentName)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        owningUserId = try container.sdkDecodeIfPresent(.owningUserId)
-        if let value = createdAt {
+        self.sessionUrn = try container.sdkDecodeIfPresent(.sessionUrn)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.actorId = try container.sdkDecodeIfPresent(.actorId)
+        self.policy = try container.sdkDecodeIfPresent(.policy)
+        self.tools = try container.sdkDecodeIfPresent(.tools)
+        self.config = try container.sdkDecodeIfPresent(.config)
+        self.network = try container.sdkDecodeIfPresent(.network)
+        self.insights = try container.sdkDecodeIfPresent(.insights)
+        self.agentUrn = try container.sdkDecodeIfPresent(.agentUrn)
+        self.agentName = try container.sdkDecodeIfPresent(.agentName)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.owningUserId = try container.sdkDecodeIfPresent(.owningUserId)
+        if let value = self.createdAt {
             try sdkValidateDateTime("createdAt", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updatedAt", sdkWireString(value))
         }
     }
 }
 
-public extension Session {
-    init(
-        sessionUrn: String? = nil,
-        name: String? = nil,
-        actorId: String? = nil,
-        policy: SessionPolicy? = nil,
-        tools: SessionTools? = nil,
-        config: [String: JSONValue]? = nil,
-        network: SessionNetwork? = nil,
-        insights: SessionInsights? = nil,
-        agentUrn: String? = nil,
-        agentName: String? = nil,
-        createdAt: Date? = nil,
-        updatedAt: Date? = nil,
-        owningUserId: String? = nil
-    ) throws {
+extension Session {
+    public init(sessionUrn: String? = nil, name: String? = nil, actorId: String? = nil, policy: SessionPolicy? = nil, tools: SessionTools? = nil, config: [String: JSONValue]? = nil, network: SessionNetwork? = nil, insights: SessionInsights? = nil, agentUrn: String? = nil, agentName: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, owningUserId: String? = nil) throws {
         self.init()
         (self.sessionUrn, self.name) = (sessionUrn, name)
         (self.actorId, self.policy) = (actorId, policy)
@@ -429,17 +401,14 @@ public extension Session {
 public struct SessionPolicyRulesItemAction: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let allow = SessionPolicyRulesItemAction(rawValue: "allow")
     public static let ask = SessionPolicyRulesItemAction(rawValue: "ask")
     public static let deny = SessionPolicyRulesItemAction(rawValue: "deny")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -452,17 +421,14 @@ public struct SessionPolicyRulesItemAction: RawRepresentable, Hashable, Codable,
 public struct SessionPolicyDefaultAction: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let allow = SessionPolicyDefaultAction(rawValue: "allow")
     public static let ask = SessionPolicyDefaultAction(rawValue: "ask")
     public static let deny = SessionPolicyDefaultAction(rawValue: "deny")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -475,18 +441,13 @@ public struct SessionPolicyDefaultAction: RawRepresentable, Hashable, Codable, S
 public struct SessionToolsReferencesItemKind: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let sessionToolReferenceKindTool =
-        SessionToolsReferencesItemKind(rawValue: "SESSION_TOOL_REFERENCE_KIND_TOOL")
-    public static let sessionToolReferenceKindToolbelt =
-        SessionToolsReferencesItemKind(rawValue: "SESSION_TOOL_REFERENCE_KIND_TOOLBELT")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let sessionToolReferenceKindTool = SessionToolsReferencesItemKind(rawValue: "SESSION_TOOL_REFERENCE_KIND_TOOL")
+    public static let sessionToolReferenceKindToolbelt = SessionToolsReferencesItemKind(rawValue: "SESSION_TOOL_REFERENCE_KIND_TOOLBELT")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

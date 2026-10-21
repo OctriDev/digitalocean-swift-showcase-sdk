@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DropletActions domain models
+// DropletActions domain models
 public struct AllDropletActionsVariant0: Codable {
     public var actions: [Action]?
 
@@ -12,19 +12,19 @@ public struct AllDropletActionsVariant0: Codable {
     }
 
     init() {
-        actions = nil
+        self.actions = nil
     }
 }
 
-public extension AllDropletActionsVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllDropletActionsVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        actions = try container.sdkDecodeIfPresent(.actions)
+        self.actions = try container.sdkDecodeIfPresent(.actions)
     }
 }
 
-public extension AllDropletActionsVariant0 {
-    init(actions: [Action]? = nil) {
+extension AllDropletActionsVariant0 {
+    public init(actions: [Action]? = nil) {
         self.init()
         self.actions = actions
     }
@@ -44,29 +44,23 @@ public struct AllDropletActions: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllDropletActions {
-    init(from decoder: Decoder) throws {
+extension AllDropletActions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        actions = try container.sdkDecodeIfPresent(.actions)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.actions = try container.sdkDecodeIfPresent(.actions)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllDropletActions {
-    init(meta: MetaMeta, actions: [Action]? = nil, links: PageLinks? = nil) {
+extension AllDropletActions {
+    public init(meta: MetaMeta, actions: [Action]? = nil, links: PageLinks? = nil) {
         (self.meta, self.actions) = (meta, actions)
         self.links = links
     }

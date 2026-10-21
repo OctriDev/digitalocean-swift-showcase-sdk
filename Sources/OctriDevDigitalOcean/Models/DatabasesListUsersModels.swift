@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Databases domain models
+// Databases domain models
 /// Typed representation of the `Users` API schema.
 public struct Users: Codable {
     /// Optional array value serialized in the `users` wire field.
@@ -14,19 +14,19 @@ public struct Users: Codable {
     }
 
     init() {
-        users = nil
+        self.users = nil
     }
 }
 
-public extension Users {
-    init(from decoder: Decoder) throws {
+extension Users {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        users = try container.sdkDecodeIfPresent(.users)
+        self.users = try container.sdkDecodeIfPresent(.users)
     }
 }
 
-public extension Users {
-    init(users: [DatabaseUser]? = nil) {
+extension Users {
+    public init(users: [DatabaseUser]? = nil) {
         self.init()
         self.users = users
     }

@@ -3,21 +3,17 @@
 
 import Foundation
 
-/// ServerlessInferenceCreate domain models
+// ServerlessInferenceCreate domain models
 /// The type of the tool call.
-public struct CreateResponseStreamResponseChoicesItemDeltaToolCallsItemType: RawRepresentable, Hashable, Codable,
-    Sendable, SdkWireConvertible {
+public struct CreateResponseStreamResponseChoicesItemDeltaToolCallsItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let function = CreateResponseStreamResponseChoicesItemDeltaToolCallsItemType(rawValue: "function")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -27,20 +23,16 @@ public struct CreateResponseStreamResponseChoicesItemDeltaToolCallsItemType: Raw
 }
 
 /// The type of content part. `reasoning_text` for reasoning content, `output_text` for final output text.
-public struct CreateResponseResponseOutputItemContentItemType: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct CreateResponseResponseOutputItemContentItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let reasoningText = CreateResponseResponseOutputItemContentItemType(rawValue: "reasoning_text")
     public static let outputText = CreateResponseResponseOutputItemContentItemType(rawValue: "output_text")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -50,19 +42,15 @@ public struct CreateResponseResponseOutputItemContentItemType: RawRepresentable,
 }
 
 /// The role of the message author. Only present in the first chunk.
-public struct CreateResponseStreamResponseChoicesItemDeltaRole: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct CreateResponseStreamResponseChoicesItemDeltaRole: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let assistant = CreateResponseStreamResponseChoicesItemDeltaRole(rawValue: "assistant")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -75,15 +63,12 @@ public struct CreateResponseStreamResponseChoicesItemDeltaRole: RawRepresentable
 public struct CreateResponseStreamResponseObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let responseChunk = CreateResponseStreamResponseObject(rawValue: "response.chunk")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -93,14 +78,10 @@ public struct CreateResponseStreamResponseObject: RawRepresentable, Hashable, Co
 }
 
 /// The role of the message author.
-public struct CreateResponseRequestInputVariant1ItemRole: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct CreateResponseRequestInputVariant1ItemRole: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let user = CreateResponseRequestInputVariant1ItemRole(rawValue: "user")
     public static let assistant = CreateResponseRequestInputVariant1ItemRole(rawValue: "assistant")
     public static let system = CreateResponseRequestInputVariant1ItemRole(rawValue: "system")
@@ -109,7 +90,7 @@ public struct CreateResponseRequestInputVariant1ItemRole: RawRepresentable, Hash
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -122,15 +103,12 @@ public struct CreateResponseRequestInputVariant1ItemRole: RawRepresentable, Hash
 public struct CreateResponseResponseToolsItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let function = CreateResponseResponseToolsItemType(rawValue: "function")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -143,15 +121,12 @@ public struct CreateResponseResponseToolsItemType: RawRepresentable, Hashable, C
 public struct CreateResponseResponseObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let response = CreateResponseResponseObject(rawValue: "response")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -164,17 +139,14 @@ public struct CreateResponseResponseObject: RawRepresentable, Hashable, Codable,
 public struct CreateResponseResponseOutputItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let reasoning = CreateResponseResponseOutputItemType(rawValue: "reasoning")
     public static let message = CreateResponseResponseOutputItemType(rawValue: "message")
     public static let functionCall = CreateResponseResponseOutputItemType(rawValue: "function_call")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -184,19 +156,15 @@ public struct CreateResponseResponseOutputItemType: RawRepresentable, Hashable, 
 }
 
 /// Required enumerated value serialized in the `type` wire field.
-public struct CreateResponseRequestToolChoiceVariant1Type: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct CreateResponseRequestToolChoiceVariant1Type: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let function = CreateResponseRequestToolChoiceVariant1Type(rawValue: "function")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -209,15 +177,12 @@ public struct CreateResponseRequestToolChoiceVariant1Type: RawRepresentable, Has
 public struct CreateResponseRequestToolsItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let function = CreateResponseRequestToolsItemType(rawValue: "function")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -227,14 +192,10 @@ public struct CreateResponseRequestToolsItemType: RawRepresentable, Hashable, Co
 }
 
 /// The reason the model stopped generating tokens. Only present in the final chunk.
-public struct CreateResponseStreamResponseChoicesItemFinishReason: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct CreateResponseStreamResponseChoicesItemFinishReason: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let stop = CreateResponseStreamResponseChoicesItemFinishReason(rawValue: "stop")
     public static let length = CreateResponseStreamResponseChoicesItemFinishReason(rawValue: "length")
     public static let toolCalls = CreateResponseStreamResponseChoicesItemFinishReason(rawValue: "tool_calls")
@@ -242,7 +203,7 @@ public struct CreateResponseStreamResponseChoicesItemFinishReason: RawRepresenta
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -252,21 +213,17 @@ public struct CreateResponseStreamResponseChoicesItemFinishReason: RawRepresenta
 }
 
 /// Optional enumerated value serialized in the `tool_choice` wire field.
-public struct CreateResponseRequestToolChoiceVariant0: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct CreateResponseRequestToolChoiceVariant0: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let none = CreateResponseRequestToolChoiceVariant0(rawValue: "none")
     public static let auto = CreateResponseRequestToolChoiceVariant0(rawValue: "auto")
     public static let required = CreateResponseRequestToolChoiceVariant0(rawValue: "required")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

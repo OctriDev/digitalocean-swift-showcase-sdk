@@ -79,10 +79,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dedicatedInference.listTokens(
-                dedicatedInferenceId: decoded("\"6b5c619c-359c-44ca-87e2-47e98170c01d\""),
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            dedicatedInferenceId: decoded("\"6b5c619c-359c-44ca-87e2-47e98170c01d\""),
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -129,10 +129,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dedicatedInference.patch(
-                dedicatedInferenceId: decoded("\"6b5c619c-359c-44ca-87e2-47e98170c01d\""),
-                spec: decoded(sdkMethodFixture337Value1),
-                accessTokens: decoded("{\"hugging_face_token\":\"$HF_TOKEN\"}")
-            )
+            dedicatedInferenceId: decoded("\"6b5c619c-359c-44ca-87e2-47e98170c01d\""),
+            spec: decoded(sdkMethodFixture337Value1),
+            accessTokens: decoded("{\"hugging_face_token\":\"$HF_TOKEN\"}")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -178,9 +178,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.domains.create(
-                name: decoded("\"example.com\""),
-                ipAddress: decoded("null")
-            )
+            name: decoded("\"example.com\""),
+            ipAddress: decoded("null")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -226,9 +226,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.domainRecords.domainsCreateRecord(
-                domainName: decoded("\"example.com\""),
-                body: decoded(sdkMethodFixture341Value1)
-            )
+            domainName: decoded("\"example.com\""),
+            body: decoded(sdkMethodFixture341Value1)
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -266,8 +266,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.domains.delete(
-                domainName: decoded("\"example.com\"")
-            )
+            domainName: decoded("\"example.com\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -306,9 +306,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.domainRecords.domainsDeleteRecord(
-                domainName: decoded("\"example.com\""),
-                domainRecordId: decoded("3352896")
-            )
+            domainName: decoded("\"example.com\""),
+            domainRecordId: decoded("3352896")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -353,8 +353,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.domains.get(
-                domainName: decoded("\"example.com\"")
-            )
+            domainName: decoded("\"example.com\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -400,9 +400,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.domainRecords.domainsGetRecord(
-                domainName: decoded("\"example.com\""),
-                domainRecordId: decoded("3352896")
-            )
+            domainName: decoded("\"example.com\""),
+            domainRecordId: decoded("3352896")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -448,9 +448,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.domains.list(
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -499,12 +499,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.domainRecords.domainsListRecords(
-                domainName: decoded("\"example.com\""),
-                name: decoded("\"sub.example.com\""),
-                type: decoded("\"A\""),
-                perPage: decoded("2"),
-                page: decoded("1")
-            )
+            domainName: decoded("\"example.com\""),
+            name: decoded("\"sub.example.com\""),
+            type: decoded("\"A\""),
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -525,11 +525,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try DomainRecordsMethods.DomainsPatchRecordOptions(
-            domainName: decoded("\"example.com\""),
-            domainRecordId: decoded("3352896"),
-            type: decoded("\"A\"")
-        )
+        var options = try DomainRecordsMethods.DomainsPatchRecordOptions(domainName: decoded("\"example.com\""), domainRecordId: decoded("3352896"), type: decoded("\"A\""))
         options.name = try decoded("\"blog\"")
         options.data = try decoded("null")
         options.priority = try decoded("null")

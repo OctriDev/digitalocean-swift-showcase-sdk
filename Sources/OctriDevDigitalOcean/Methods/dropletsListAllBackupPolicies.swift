@@ -6,68 +6,29 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DropletsMethods {
-    /// To list information about the backup policies for all Droplets in the account, send a GET request to
-    /// `/v2/droplets/backups/policies`.
+extension DropletsMethods {
+    /// To list information about the backup policies for all Droplets in the account, send a GET request to `/v2/droplets/backups/policies`.
     ///
     /// - Parameters:
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    static func listAllBackupPolicies(
-        config: ClientConfig,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AllDropletBackupPolicies {
-        if let perPage {
+    public static func listAllBackupPolicies(config: ClientConfig, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AllDropletBackupPolicies {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/droplets/backups/policies",
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-            ],
-            decoder: .json,
-            operationId: "listAllBackupPolicies",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", "/v2/droplets/backups/policies", config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "listAllBackupPolicies", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To retrieve a list of all supported Droplet backup policies, send a GET request to
-    /// `/v2/droplets/backups/supported_policies`.
-    static func dropletsListSupportedBackupPolicies(
-        config: ClientConfig,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DropletsSupportedBackupPolicies {
-        try await (sdkRequest(
-            "GET",
-            "/v2/droplets/backups/supported_policies",
-            config: config,
-            decoder: .json,
-            operationId: "droplets_list_supported_backup_policies",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    /// To retrieve a list of all supported Droplet backup policies, send a GET request to `/v2/droplets/backups/supported_policies`.
+    public static func dropletsListSupportedBackupPolicies(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> DropletsSupportedBackupPolicies {
+        return try (await sdkRequest("GET", "/v2/droplets/backups/supported_policies", config: config, decoder: .json, operationId: "droplets_list_supported_backup_policies", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

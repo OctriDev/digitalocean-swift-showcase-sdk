@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HarnessRuntime domain models
+// HarnessRuntime domain models
 /// A rule after resolution (∩ tenant ∩ platform), carrying a stable id for audit correlation.
 public struct ResolvedRule: Codable {
     /// Stable rule id assigned during resolution; correlates with the PolicyDenied event's matched rule.
@@ -30,29 +30,23 @@ public struct ResolvedRule: Codable {
     }
 
     init() {
-        (id, tool, match, action, enforcement) = (nil, nil, nil, nil, nil)
+        (self.id, self.tool, self.match, self.action, self.enforcement) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ResolvedRule {
-    init(from decoder: Decoder) throws {
+extension ResolvedRule {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        tool = try container.sdkDecodeIfPresent(.tool)
-        match = try container.sdkDecodeIfPresent(.match)
-        action = try container.sdkDecodeIfPresent(.action)
-        enforcement = try container.sdkDecodeIfPresent(.enforcement)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.tool = try container.sdkDecodeIfPresent(.tool)
+        self.match = try container.sdkDecodeIfPresent(.match)
+        self.action = try container.sdkDecodeIfPresent(.action)
+        self.enforcement = try container.sdkDecodeIfPresent(.enforcement)
     }
 }
 
-public extension ResolvedRule {
-    init(
-        id: String? = nil,
-        tool: String? = nil,
-        match: [String: String]? = nil,
-        action: ResolvedRuleAction? = nil,
-        enforcement: ResolvedRuleEnforcement? = nil
-    ) {
+extension ResolvedRule {
+    public init(id: String? = nil, tool: String? = nil, match: [String: String]? = nil, action: ResolvedRuleAction? = nil, enforcement: ResolvedRuleEnforcement? = nil) {
         self.init()
         (self.id, self.tool) = (id, tool)
         (self.match, self.action) = (match, action)
@@ -105,36 +99,27 @@ public struct ValidationResult: Codable {
     }
 
     init() {
-        (agent, version, ok, defaultAction, defaultActionVerdict) = (nil, nil, nil, nil, nil)
-        (defaultActionRendered, defaultActionReason, verdicts) = (nil, nil, nil)
+        (self.agent, self.version, self.ok, self.defaultAction, self.defaultActionVerdict) = (nil, nil, nil, nil, nil)
+        (self.defaultActionRendered, self.defaultActionReason, self.verdicts) = (nil, nil, nil)
     }
 }
 
-public extension ValidationResult {
-    init(from decoder: Decoder) throws {
+extension ValidationResult {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        agent = try container.sdkDecodeIfPresent(.agent)
-        version = try container.sdkDecodeIfPresent(.version)
-        ok = try container.sdkDecodeIfPresent(.ok)
-        defaultAction = try container.sdkDecodeIfPresent(.defaultAction)
-        defaultActionVerdict = try container.sdkDecodeIfPresent(.defaultActionVerdict)
-        defaultActionRendered = try container.sdkDecodeIfPresent(.defaultActionRendered)
-        defaultActionReason = try container.sdkDecodeIfPresent(.defaultActionReason)
-        verdicts = try container.sdkDecodeIfPresent(.verdicts)
+        self.agent = try container.sdkDecodeIfPresent(.agent)
+        self.version = try container.sdkDecodeIfPresent(.version)
+        self.ok = try container.sdkDecodeIfPresent(.ok)
+        self.defaultAction = try container.sdkDecodeIfPresent(.defaultAction)
+        self.defaultActionVerdict = try container.sdkDecodeIfPresent(.defaultActionVerdict)
+        self.defaultActionRendered = try container.sdkDecodeIfPresent(.defaultActionRendered)
+        self.defaultActionReason = try container.sdkDecodeIfPresent(.defaultActionReason)
+        self.verdicts = try container.sdkDecodeIfPresent(.verdicts)
     }
 }
 
-public extension ValidationResult {
-    init(
-        agent: String? = nil,
-        version: String? = nil,
-        ok: Bool? = nil,
-        defaultAction: ValidationResultDefaultAction? = nil,
-        defaultActionVerdict: ValidationResultDefaultActionVerdict? = nil,
-        defaultActionRendered: ValidationResultDefaultActionRendered? = nil,
-        defaultActionReason: String? = nil,
-        verdicts: [RuleVerdict]? = nil
-    ) {
+extension ValidationResult {
+    public init(agent: String? = nil, version: String? = nil, ok: Bool? = nil, defaultAction: ValidationResultDefaultAction? = nil, defaultActionVerdict: ValidationResultDefaultActionVerdict? = nil, defaultActionRendered: ValidationResultDefaultActionRendered? = nil, defaultActionReason: String? = nil, verdicts: [RuleVerdict]? = nil) {
         self.init()
         (self.agent, self.version) = (agent, version)
         (self.ok, self.defaultAction) = (ok, defaultAction)
@@ -173,29 +158,23 @@ public struct RuleVerdict: Codable {
     }
 
     init() {
-        (rule, verdict, rendered, reason, suggestion) = (nil, nil, nil, nil, nil)
+        (self.rule, self.verdict, self.rendered, self.reason, self.suggestion) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension RuleVerdict {
-    init(from decoder: Decoder) throws {
+extension RuleVerdict {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        rule = try container.sdkDecodeIfPresent(.rule)
-        verdict = try container.sdkDecodeIfPresent(.verdict)
-        rendered = try container.sdkDecodeIfPresent(.rendered)
-        reason = try container.sdkDecodeIfPresent(.reason)
-        suggestion = try container.sdkDecodeIfPresent(.suggestion)
+        self.rule = try container.sdkDecodeIfPresent(.rule)
+        self.verdict = try container.sdkDecodeIfPresent(.verdict)
+        self.rendered = try container.sdkDecodeIfPresent(.rendered)
+        self.reason = try container.sdkDecodeIfPresent(.reason)
+        self.suggestion = try container.sdkDecodeIfPresent(.suggestion)
     }
 }
 
-public extension RuleVerdict {
-    init(
-        rule: ResolvedRule? = nil,
-        verdict: RuleVerdictVerdict? = nil,
-        rendered: RuleVerdictRendered? = nil,
-        reason: String? = nil,
-        suggestion: String? = nil
-    ) {
+extension RuleVerdict {
+    public init(rule: ResolvedRule? = nil, verdict: RuleVerdictVerdict? = nil, rendered: RuleVerdictRendered? = nil, reason: String? = nil, suggestion: String? = nil) {
         self.init()
         (self.rule, self.verdict) = (rule, verdict)
         (self.rendered, self.reason) = (rendered, reason)
@@ -207,16 +186,13 @@ public extension RuleVerdict {
 public struct ResolvedRuleEnforcement: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let strict = ResolvedRuleEnforcement(rawValue: "strict")
     public static let bestEffort = ResolvedRuleEnforcement(rawValue: "best-effort")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -230,17 +206,14 @@ public struct ResolvedRuleEnforcement: RawRepresentable, Hashable, Codable, Send
 public struct RuleVerdictRendered: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let allow = RuleVerdictRendered(rawValue: "allow")
     public static let ask = RuleVerdictRendered(rawValue: "ask")
     public static let deny = RuleVerdictRendered(rawValue: "deny")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -254,17 +227,14 @@ public struct RuleVerdictRendered: RawRepresentable, Hashable, Codable, Sendable
 public struct ValidationResultDefaultActionRendered: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let allow = ValidationResultDefaultActionRendered(rawValue: "allow")
     public static let ask = ValidationResultDefaultActionRendered(rawValue: "ask")
     public static let deny = ValidationResultDefaultActionRendered(rawValue: "deny")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -279,10 +249,7 @@ public struct ValidationResultDefaultActionRendered: RawRepresentable, Hashable,
 public struct RuleVerdictVerdict: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let exact = RuleVerdictVerdict(rawValue: "exact")
     public static let degraded = RuleVerdictVerdict(rawValue: "degraded")
     public static let unsupported = RuleVerdictVerdict(rawValue: "unsupported")
@@ -290,7 +257,7 @@ public struct RuleVerdictVerdict: RawRepresentable, Hashable, Codable, Sendable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -305,17 +272,14 @@ public struct RuleVerdictVerdict: RawRepresentable, Hashable, Codable, Sendable,
 public struct ValidationResultDefaultAction: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let allow = ValidationResultDefaultAction(rawValue: "allow")
     public static let ask = ValidationResultDefaultAction(rawValue: "ask")
     public static let deny = ValidationResultDefaultAction(rawValue: "deny")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -328,17 +292,14 @@ public struct ValidationResultDefaultAction: RawRepresentable, Hashable, Codable
 public struct ResolvedRuleAction: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let allow = ResolvedRuleAction(rawValue: "allow")
     public static let ask = ResolvedRuleAction(rawValue: "ask")
     public static let deny = ResolvedRuleAction(rawValue: "deny")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -353,10 +314,7 @@ public struct ResolvedRuleAction: RawRepresentable, Hashable, Codable, Sendable,
 public struct ValidationResultDefaultActionVerdict: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let exact = ValidationResultDefaultActionVerdict(rawValue: "exact")
     public static let degraded = ValidationResultDefaultActionVerdict(rawValue: "degraded")
     public static let unsupported = ValidationResultDefaultActionVerdict(rawValue: "unsupported")
@@ -364,7 +322,7 @@ public struct ValidationResultDefaultActionVerdict: RawRepresentable, Hashable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

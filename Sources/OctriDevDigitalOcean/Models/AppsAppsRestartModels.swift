@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AppsApps domain models
+// AppsApps domain models
 /// Typed representation of the `AppsRestartRequest` API schema.
 public struct AppsRestartRequest: Codable {
     /// Optional array value serialized in the `components` wire field.
@@ -15,19 +15,19 @@ public struct AppsRestartRequest: Codable {
     }
 
     init() {
-        components = nil
+        self.components = nil
     }
 }
 
-public extension AppsRestartRequest {
-    init(from decoder: Decoder) throws {
+extension AppsRestartRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        components = try container.sdkDecodeIfPresent(.components)
+        self.components = try container.sdkDecodeIfPresent(.components)
     }
 }
 
-public extension AppsRestartRequest {
-    init(components: [String]? = nil) {
+extension AppsRestartRequest {
+    public init(components: [String]? = nil) {
         self.init()
         self.components = components
     }

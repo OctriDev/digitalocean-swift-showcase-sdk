@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// BatchInference domain models
+// BatchInference domain models
 /// Request body for creating a batch inference job. When `provider` is `openai`, `endpoint` is required and must be
 /// one of `/v1/responses` or `/v1/chat/completions`. When `provider` is `anthropic`, `endpoint` must be omitted —
 /// the Anthropic Message Batches API does not need a per-job endpoint.
@@ -40,65 +40,40 @@ public struct BatchCreateRequest: Codable {
         case metadata
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension BatchCreateRequest {
-    init(from decoder: Decoder) throws {
+extension BatchCreateRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.fileId) else {
-            throw SdkValidationError(
-                field: "file_id",
-                code: "required",
-                message: "Validation failed for 'file_id': value is required"
-            )
+            throw SdkValidationError(field: "file_id", code: "required", message: "Validation failed for 'file_id': value is required")
         }
         guard container.contains(.provider) else {
-            throw SdkValidationError(
-                field: "provider",
-                code: "required",
-                message: "Validation failed for 'provider': value is required"
-            )
+            throw SdkValidationError(field: "provider", code: "required", message: "Validation failed for 'provider': value is required")
         }
         guard container.contains(.completionWindow) else {
-            throw SdkValidationError(
-                field: "completion_window",
-                code: "required",
-                message: "Validation failed for 'completion_window': value is required"
-            )
+            throw SdkValidationError(field: "completion_window", code: "required", message: "Validation failed for 'completion_window': value is required")
         }
         guard container.contains(.requestId) else {
-            throw SdkValidationError(
-                field: "request_id",
-                code: "required",
-                message: "Validation failed for 'request_id': value is required"
-            )
+            throw SdkValidationError(field: "request_id", code: "required", message: "Validation failed for 'request_id': value is required")
         }
-        fileId = try container.sdkDecodeRequired(.fileId)
-        provider = try container.sdkDecodeRequired(.provider)
-        completionWindow = try container.sdkDecodeRequired(.completionWindow)
-        requestId = try container.sdkDecodeRequired(.requestId)
-        endpoint = try container.sdkDecodeIfPresent(.endpoint)
-        metadata = try container.sdkDecodeIfPresent(.metadata)
-        try sdkValidateUuid("file_id", fileId)
+        self.fileId = try container.sdkDecodeRequired(.fileId)
+        self.provider = try container.sdkDecodeRequired(.provider)
+        self.completionWindow = try container.sdkDecodeRequired(.completionWindow)
+        self.requestId = try container.sdkDecodeRequired(.requestId)
+        self.endpoint = try container.sdkDecodeIfPresent(.endpoint)
+        self.metadata = try container.sdkDecodeIfPresent(.metadata)
+            try sdkValidateUuid("file_id", self.fileId)
     }
 }
 
-public extension BatchCreateRequest {
-    init(
-        fileId: String,
-        provider: BatchCreateRequestProvider,
-        completionWindow: BatchCreateRequestCompletionWindow,
-        requestId: String,
-        endpoint: BatchCreateRequestEndpoint? = nil,
-        metadata: [String: String]? = nil
-    ) throws {
+extension BatchCreateRequest {
+    public init(fileId: String, provider: BatchCreateRequestProvider, completionWindow: BatchCreateRequestCompletionWindow, requestId: String, endpoint: BatchCreateRequestEndpoint? = nil, metadata: [String: String]? = nil) throws {
         (self.fileId, self.provider) = (fileId, provider)
         (self.completionWindow, self.requestId) = (completionWindow, requestId)
         (self.endpoint, self.metadata) = (endpoint, metadata)
-        try sdkValidateUuid("file_id", self.fileId)
+            try sdkValidateUuid("file_id", self.fileId)
     }
 }
 
@@ -107,16 +82,13 @@ public extension BatchCreateRequest {
 public struct BatchCreateRequestEndpoint: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let v1Responses = BatchCreateRequestEndpoint(rawValue: "/v1/responses")
     public static let v1ChatCompletions = BatchCreateRequestEndpoint(rawValue: "/v1/chat/completions")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -129,15 +101,12 @@ public struct BatchCreateRequestEndpoint: RawRepresentable, Hashable, Codable, S
 public struct BatchCreateRequestCompletionWindow: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let value24h = BatchCreateRequestCompletionWindow(rawValue: "24h")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -152,16 +121,13 @@ public struct BatchCreateRequestCompletionWindow: RawRepresentable, Hashable, Co
 public struct BatchCreateRequestProvider: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let openai = BatchCreateRequestProvider(rawValue: "openai")
     public static let anthropic = BatchCreateRequestProvider(rawValue: "anthropic")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

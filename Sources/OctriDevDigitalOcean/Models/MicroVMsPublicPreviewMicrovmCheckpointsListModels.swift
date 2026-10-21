@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// MicroVMsPublicPreview domain models
+// MicroVMsPublicPreview domain models
 /// Typed representation of the `AllCheckpoints` API schema.
 public struct AllCheckpoints: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,29 +18,23 @@ public struct AllCheckpoints: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllCheckpoints {
-    init(from decoder: Decoder) throws {
+extension AllCheckpoints {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        checkpoints = try container.sdkDecodeIfPresent(.checkpoints)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.checkpoints = try container.sdkDecodeIfPresent(.checkpoints)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllCheckpoints {
-    init(meta: MetaMeta, checkpoints: [Checkpoint2]? = nil, links: PageLinks? = nil) {
+extension AllCheckpoints {
+    public init(meta: MetaMeta, checkpoints: [Checkpoint2]? = nil, links: PageLinks? = nil) {
         (self.meta, self.checkpoints) = (meta, checkpoints)
         self.links = links
     }
@@ -54,19 +48,19 @@ public struct AllCheckpointsVariant0: Codable {
     }
 
     init() {
-        checkpoints = nil
+        self.checkpoints = nil
     }
 }
 
-public extension AllCheckpointsVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllCheckpointsVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        checkpoints = try container.sdkDecodeIfPresent(.checkpoints)
+        self.checkpoints = try container.sdkDecodeIfPresent(.checkpoints)
     }
 }
 
-public extension AllCheckpointsVariant0 {
-    init(checkpoints: [Checkpoint2]? = nil) {
+extension AllCheckpointsVariant0 {
+    public init(checkpoints: [Checkpoint2]? = nil) {
         self.init()
         self.checkpoints = checkpoints
     }

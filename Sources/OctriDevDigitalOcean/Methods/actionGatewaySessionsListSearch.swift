@@ -6,10 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ActionGatewayMethods {
-    /// Returns the sessions you can see whose name, `actor_id`, `session_urn`, or `agentName` contains query,
-    /// case-insensitively, ranked across the whole result set. Cursor-paged with `page_size` and `page_token`; no total
-    /// is reported.
+extension ActionGatewayMethods {
+    /// Returns the sessions you can see whose name, `actor_id`, `session_urn`, or `agentName` contains query, case-insensitively, ranked across the whole result set. Cursor-paged with `page_size` and `page_token`; no total is reported.
     ///
     /// - Parameters:
     /// - query: Matched case-insensitively as a substring of name, `actor_id`,
@@ -24,44 +22,20 @@ public extension ActionGatewayMethods {
     /// - pageToken: `next_page_token` from the previous response. Valid only with
     ///   the same query and `end_user_id`; otherwise the request is rejected with
     ///   400.
-    static func sessionsListSearch(
-        config: ClientConfig,
-        query: String? = nil,
-        endUserId: String? = nil,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SearchSessionsResponse {
-        if let pageSize {
+    public static func sessionsListSearch(config: ClientConfig, query: String? = nil, endUserId: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) async throws -> SearchSessionsResponse {
+        if let pageSize = pageSize {
             try validateRange("page_size", Double(pageSize), min: 1, max: 100)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/action-gateway/sessions/search",
-            config: config,
-            query: [
-                SdkQueryParameter("query", value: query),
-                SdkQueryParameter("end_user_id", value: endUserId),
-                SdkQueryParameter("page_size", value: pageSize),
-                SdkQueryParameter("page_token", value: pageToken),
-            ],
-            decoder: .json,
-            operationId: "sessions_list_search",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", "/v2/action-gateway/sessions/search", config: config, query: [
+            SdkQueryParameter("query", value: query),
+            SdkQueryParameter("end_user_id", value: endUserId),
+            SdkQueryParameter("page_size", value: pageSize),
+            SdkQueryParameter("page_token", value: pageToken),
+        ], decoder: .json, operationId: "sessions_list_search", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Returns the sessions you can see whose name, `actor_id`, `session_urn`, or `agentName` contains query,
-    /// case-insensitively, ranked across the whole result set. Cursor-paged with `page_size` and `page_token`; no total
-    /// is reported.
+    /// Returns the sessions you can see whose name, `actor_id`, `session_urn`, or `agentName` contains query, case-insensitively, ranked across the whole result set. Cursor-paged with `page_size` and `page_token`; no total is reported.
     ///
     /// - Parameters:
     /// - query: Matched case-insensitively as a substring of name, `actor_id`,
@@ -76,40 +50,17 @@ public extension ActionGatewayMethods {
     /// - pageToken: `next_page_token` from the previous response. Valid only with
     ///   the same query and `end_user_id`; otherwise the request is rejected with
     ///   400.
-    static func sessionsListSearchPaginated(
-        config: ClientConfig,
-        query: String? = nil,
-        endUserId: String? = nil,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<Session, Swift.Error> {
-        AsyncThrowingStream<Session, Swift.Error> { (continuation: AsyncThrowingStream<
-            Session,
-            Swift.Error
-        >.Continuation) in
+    public static func sessionsListSearchPaginated(config: ClientConfig, query: String? = nil, endUserId: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<Session, Swift.Error> {
+        return AsyncThrowingStream<Session, Swift.Error> { (continuation: AsyncThrowingStream<Session, Swift.Error>.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await sessionsListSearch(
-                            config: config,
-                            query: query,
-                            endUserId: endUserId,
-                            pageSize: pageSize,
-                            pageToken: pageCursor,
-                            requestOptions: requestOptions
-                        )
+                        let pageResponse = try await sessionsListSearch(config: config, query: query, endUserId: endUserId, pageSize: pageSize, pageToken: pageCursor, requestOptions: requestOptions)
                         let pageItems = (pageResponse.sessions ?? [])
-                        if pageItems.isEmpty {
-                            break
-                        }
-                        for item in pageItems {
-                            continuation.yield(item)
-                        }
-                        guard let nextCursor = pageResponse.nextPageToken else {
-                            break
-                        }
+                        if pageItems.isEmpty { break }
+                        for item in pageItems { continuation.yield(item) }
+                        guard let nextCursor = pageResponse.nextPageToken else { break }
                         pageCursor = nextCursor
                     }
                 } catch {
@@ -122,52 +73,25 @@ public extension ActionGatewayMethods {
         }
     }
 
-    struct SessionsListSearchPage {
+    public struct SessionsListSearchPage {
         public let data: SearchSessionsResponse
         public let items: [Session]
         public let hasMore: Bool
     }
 
-    static func sessionsListSearchPages(
-        config: ClientConfig,
-        query: String? = nil,
-        endUserId: String? = nil,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<SessionsListSearchPage, Swift.Error> {
-        AsyncThrowingStream<SessionsListSearchPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<
-            SessionsListSearchPage,
-            Swift.Error
-        >.Continuation) in
+    public static func sessionsListSearchPages(config: ClientConfig, query: String? = nil, endUserId: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<SessionsListSearchPage, Swift.Error> {
+        return AsyncThrowingStream<SessionsListSearchPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<SessionsListSearchPage, Swift.Error>.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await sessionsListSearch(
-                            config: config,
-                            query: query,
-                            endUserId: endUserId,
-                            pageSize: pageSize,
-                            pageToken: pageCursor,
-                            requestOptions: requestOptions
-                        )
+                        let pageResponse = try await sessionsListSearch(config: config, query: query, endUserId: endUserId, pageSize: pageSize, pageToken: pageCursor, requestOptions: requestOptions)
                         let pageItems = (pageResponse.sessions ?? [])
-                        if pageItems.isEmpty {
-                            break
-                        }
+                        if pageItems.isEmpty { break }
                         let hasMore = pageResponse.nextPageToken != nil
-                        pageContinuation.yield(SessionsListSearchPage(
-                            data: pageResponse,
-                            items: pageItems,
-                            hasMore: hasMore
-                        ))
-                        if !hasMore {
-                            break
-                        }
-                        guard let nextCursor = pageResponse.nextPageToken else {
-                            break
-                        }
+                        pageContinuation.yield(SessionsListSearchPage(data: pageResponse, items: pageItems, hasMore: hasMore))
+                        if !hasMore { break }
+                        guard let nextCursor = pageResponse.nextPageToken else { break }
                         pageCursor = nextCursor
                     }
                 } catch {

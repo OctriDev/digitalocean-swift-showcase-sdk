@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-/// Canonical vpcs operation model declarations
+// Canonical vpcs operation model declarations
 public struct VpcsPatchRequestBody: Codable {
     /// The name of the VPC. Must be unique and may only contain alphanumeric characters, dashes, and periods.
     /// - Example: "env.prod-vpc"
@@ -30,30 +30,30 @@ public struct VpcsPatchRequestBody: Codable {
     }
 
     init() {
-        (name, description, self.default) = (nil, nil, nil)
+        (self.name, self.description, self.`default`) = (nil, nil, nil)
     }
 }
 
-public extension VpcsPatchRequestBody {
-    init(from decoder: Decoder) throws {
+extension VpcsPatchRequestBody {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        self.default = try container.sdkDecodeIfPresent(.default)
-        if let value = name {
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.`default` = try container.sdkDecodeIfPresent(.`default`)
+        if let value = self.name {
             try sdkValidatePattern("name", value, sdkPatternef0a913b6e4d)
         }
-        if let value = description {
+        if let value = self.description {
             try validateLength("description", value, min: nil, max: 255)
         }
     }
 }
 
-public extension VpcsPatchRequestBody {
-    init(name: String? = nil, description: String? = nil, default: Bool? = nil) throws {
+extension VpcsPatchRequestBody {
+    public init(name: String? = nil, description: String? = nil, `default`: Bool? = nil) throws {
         self.init()
         (self.name, self.description) = (name, description)
-        self.default = `default`
+        self.`default` = `default`
         if let value = self.name {
             try sdkValidatePattern("name", value, sdkPatternef0a913b6e4d)
         }
@@ -87,44 +87,34 @@ public struct VpcsCreateRequestBody: Codable {
         case ipRange = "ip_range"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VpcsCreateRequestBody {
-    init(from decoder: Decoder) throws {
+extension VpcsCreateRequestBody {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        region = try container.sdkDecodeRequired(.region)
-        description = try container.sdkDecodeIfPresent(.description)
-        ipRange = try container.sdkDecodeIfPresent(.ipRange)
-        try sdkValidatePattern("name", name, sdkPatternef0a913b6e4d)
-        if let value = description {
+        self.name = try container.sdkDecodeRequired(.name)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.ipRange = try container.sdkDecodeIfPresent(.ipRange)
+            try sdkValidatePattern("name", self.name, sdkPatternef0a913b6e4d)
+        if let value = self.description {
             try validateLength("description", value, min: nil, max: 255)
         }
     }
 }
 
-public extension VpcsCreateRequestBody {
-    init(name: String, region: String, description: String? = nil, ipRange: String? = nil) throws {
+extension VpcsCreateRequestBody {
+    public init(name: String, region: String, description: String? = nil, ipRange: String? = nil) throws {
         (self.name, self.region) = (name, region)
         (self.description, self.ipRange) = (description, ipRange)
-        try sdkValidatePattern("name", self.name, sdkPatternef0a913b6e4d)
+            try sdkValidatePattern("name", self.name, sdkPatternef0a913b6e4d)
         if let value = self.description {
             try validateLength("description", value, min: nil, max: 255)
         }
@@ -152,36 +142,30 @@ public struct VpcsUpdateRequestBody: Codable {
         case `default`
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension VpcsUpdateRequestBody {
-    init(from decoder: Decoder) throws {
+extension VpcsUpdateRequestBody {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        self.default = try container.sdkDecodeIfPresent(.default)
-        try sdkValidatePattern("name", name, sdkPatternef0a913b6e4d)
-        if let value = description {
+        self.name = try container.sdkDecodeRequired(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.`default` = try container.sdkDecodeIfPresent(.`default`)
+            try sdkValidatePattern("name", self.name, sdkPatternef0a913b6e4d)
+        if let value = self.description {
             try validateLength("description", value, min: nil, max: 255)
         }
     }
 }
 
-public extension VpcsUpdateRequestBody {
-    init(name: String, description: String? = nil, default: Bool? = nil) throws {
+extension VpcsUpdateRequestBody {
+    public init(name: String, description: String? = nil, `default`: Bool? = nil) throws {
         (self.name, self.description) = (name, description)
-        self.default = `default`
-        try sdkValidatePattern("name", self.name, sdkPatternef0a913b6e4d)
+        self.`default` = `default`
+            try sdkValidatePattern("name", self.name, sdkPatternef0a913b6e4d)
         if let value = self.description {
             try validateLength("description", value, min: nil, max: 255)
         }

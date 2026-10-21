@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Databases domain models
+// Databases domain models
 /// PGBouncer connection pooling settings
 public struct PgbouncerAdvancedConfig: Codable {
     /// Run server_reset_query (DISCARD ALL) in all pooling modes.
@@ -49,45 +49,29 @@ public struct PgbouncerAdvancedConfig: Codable {
     }
 
     init() {
-        (serverResetQueryAlways, ignoreStartupParameters, minPoolSize, serverLifetime, serverIdleTimeout) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        (autodbPoolSize, autodbPoolMode, autodbMaxDbConnections, autodbIdleTimeout) = (nil, nil, nil, nil)
+        (self.serverResetQueryAlways, self.ignoreStartupParameters, self.minPoolSize, self.serverLifetime, self.serverIdleTimeout) = (nil, nil, nil, nil, nil)
+        (self.autodbPoolSize, self.autodbPoolMode, self.autodbMaxDbConnections, self.autodbIdleTimeout) = (nil, nil, nil, nil)
     }
 }
 
-public extension PgbouncerAdvancedConfig {
-    init(from decoder: Decoder) throws {
+extension PgbouncerAdvancedConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        serverResetQueryAlways = try container.sdkDecodeIfPresent(.serverResetQueryAlways)
-        ignoreStartupParameters = try container.sdkDecodeIfPresent(.ignoreStartupParameters)
-        minPoolSize = try container.sdkDecodeIfPresent(.minPoolSize)
-        serverLifetime = try container.sdkDecodeIfPresent(.serverLifetime)
-        serverIdleTimeout = try container.sdkDecodeIfPresent(.serverIdleTimeout)
-        autodbPoolSize = try container.sdkDecodeIfPresent(.autodbPoolSize)
-        autodbPoolMode = try container.sdkDecodeIfPresent(.autodbPoolMode)
-        autodbMaxDbConnections = try container.sdkDecodeIfPresent(.autodbMaxDbConnections)
-        autodbIdleTimeout = try container.sdkDecodeIfPresent(.autodbIdleTimeout)
+        self.serverResetQueryAlways = try container.sdkDecodeIfPresent(.serverResetQueryAlways)
+        self.ignoreStartupParameters = try container.sdkDecodeIfPresent(.ignoreStartupParameters)
+        self.minPoolSize = try container.sdkDecodeIfPresent(.minPoolSize)
+        self.serverLifetime = try container.sdkDecodeIfPresent(.serverLifetime)
+        self.serverIdleTimeout = try container.sdkDecodeIfPresent(.serverIdleTimeout)
+        self.autodbPoolSize = try container.sdkDecodeIfPresent(.autodbPoolSize)
+        self.autodbPoolMode = try container.sdkDecodeIfPresent(.autodbPoolMode)
+        self.autodbMaxDbConnections = try container.sdkDecodeIfPresent(.autodbMaxDbConnections)
+        self.autodbIdleTimeout = try container.sdkDecodeIfPresent(.autodbIdleTimeout)
         try sdkValidateConstraints()
     }
 }
 
-public extension PgbouncerAdvancedConfig {
-    init(
-        serverResetQueryAlways: Bool? = nil,
-        ignoreStartupParameters: [PgbouncerAdvancedConfigIgnoreStartupParametersItem]? = nil,
-        minPoolSize: Int? = nil,
-        serverLifetime: Int? = nil,
-        serverIdleTimeout: Int? = nil,
-        autodbPoolSize: Int? = nil,
-        autodbPoolMode: PgbouncerAdvancedConfigAutodbPoolMode? = nil,
-        autodbMaxDbConnections: Int? = nil,
-        autodbIdleTimeout: Int? = nil
-    ) throws {
+extension PgbouncerAdvancedConfig {
+    public init(serverResetQueryAlways: Bool? = nil, ignoreStartupParameters: [PgbouncerAdvancedConfigIgnoreStartupParametersItem]? = nil, minPoolSize: Int? = nil, serverLifetime: Int? = nil, serverIdleTimeout: Int? = nil, autodbPoolSize: Int? = nil, autodbPoolMode: PgbouncerAdvancedConfigAutodbPoolMode? = nil, autodbMaxDbConnections: Int? = nil, autodbIdleTimeout: Int? = nil) throws {
         self.init()
         self.serverResetQueryAlways = serverResetQueryAlways
         (self.ignoreStartupParameters, self.minPoolSize) = (ignoreStartupParameters, minPoolSize)
@@ -100,74 +84,26 @@ public extension PgbouncerAdvancedConfig {
 
 extension PgbouncerAdvancedConfig {
     func sdkValidateConstraints() throws {
-        if let value = ignoreStartupParameters {
+        if let value = self.ignoreStartupParameters {
             try validateItems("ignore_startup_parameters", value, min: nil, max: 32)
         }
-        if let value = minPoolSize {
-            try validateRange(
-                "min_pool_size",
-                Double(value),
-                min: 0,
-                max: 10000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.minPoolSize {
+            try validateRange("min_pool_size", Double(value), min: 0, max: 10000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = serverLifetime {
-            try validateRange(
-                "server_lifetime",
-                Double(value),
-                min: 60,
-                max: 86400,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.serverLifetime {
+            try validateRange("server_lifetime", Double(value), min: 60, max: 86400, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = serverIdleTimeout {
-            try validateRange(
-                "server_idle_timeout",
-                Double(value),
-                min: 0,
-                max: 86400,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.serverIdleTimeout {
+            try validateRange("server_idle_timeout", Double(value), min: 0, max: 86400, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = autodbPoolSize {
-            try validateRange(
-                "autodb_pool_size",
-                Double(value),
-                min: 0,
-                max: 10000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.autodbPoolSize {
+            try validateRange("autodb_pool_size", Double(value), min: 0, max: 10000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = autodbMaxDbConnections {
-            try validateRange(
-                "autodb_max_db_connections",
-                Double(value),
-                min: 0,
-                max: 2_147_483_647,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.autodbMaxDbConnections {
+            try validateRange("autodb_max_db_connections", Double(value), min: 0, max: 2147483647, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = autodbIdleTimeout {
-            try validateRange(
-                "autodb_idle_timeout",
-                Double(value),
-                min: 0,
-                max: 86400,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.autodbIdleTimeout {
+            try validateRange("autodb_idle_timeout", Double(value), min: 0, max: 86400, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -186,35 +122,25 @@ public struct DatadogLogsink: Codable {
         case datadogApiKey = "datadog_api_key"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DatadogLogsink {
-    init(from decoder: Decoder) throws {
+extension DatadogLogsink {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.site) else {
-            throw SdkValidationError(
-                field: "site",
-                code: "required",
-                message: "Validation failed for 'site': value is required"
-            )
+            throw SdkValidationError(field: "site", code: "required", message: "Validation failed for 'site': value is required")
         }
         guard container.contains(.datadogApiKey) else {
-            throw SdkValidationError(
-                field: "datadog_api_key",
-                code: "required",
-                message: "Validation failed for 'datadog_api_key': value is required"
-            )
+            throw SdkValidationError(field: "datadog_api_key", code: "required", message: "Validation failed for 'datadog_api_key': value is required")
         }
-        site = try container.sdkDecodeRequired(.site)
-        datadogApiKey = try container.sdkDecodeRequired(.datadogApiKey)
+        self.site = try container.sdkDecodeRequired(.site)
+        self.datadogApiKey = try container.sdkDecodeRequired(.datadogApiKey)
     }
 }
 
-public extension DatadogLogsink {
-    init(site: String, datadogApiKey: String) {
+extension DatadogLogsink {
+    public init(site: String, datadogApiKey: String) {
         (self.site, self.datadogApiKey) = (site, datadogApiKey)
     }
 }
@@ -296,60 +222,34 @@ public struct ValkeyAdvancedConfig: Codable {
     }
 
     init() {
-        (
-            valkeyMaxmemoryPolicy,
-            valkeyPubsubClientOutputBufferLimit,
-            valkeyNumberOfDatabases,
-            valkeyIoThreads,
-            valkeyLfuLogFactor
-        ) = (nil, nil, nil, nil, nil)
-        (valkeyLfuDecayTime, valkeySsl, valkeyTimeout, valkeyNotifyKeyspaceEvents, valkeyPersistence) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        (valkeyAclChannelsDefault, frequentSnapshots, valkeyActiveExpireEffort) = (nil, nil, nil)
+        (self.valkeyMaxmemoryPolicy, self.valkeyPubsubClientOutputBufferLimit, self.valkeyNumberOfDatabases, self.valkeyIoThreads, self.valkeyLfuLogFactor) = (nil, nil, nil, nil, nil)
+        (self.valkeyLfuDecayTime, self.valkeySsl, self.valkeyTimeout, self.valkeyNotifyKeyspaceEvents, self.valkeyPersistence) = (nil, nil, nil, nil, nil)
+        (self.valkeyAclChannelsDefault, self.frequentSnapshots, self.valkeyActiveExpireEffort) = (nil, nil, nil)
     }
 }
 
-public extension ValkeyAdvancedConfig {
-    init(from decoder: Decoder) throws {
+extension ValkeyAdvancedConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        valkeyMaxmemoryPolicy = try container.sdkDecodeIfPresent(.valkeyMaxmemoryPolicy)
-        valkeyPubsubClientOutputBufferLimit = try container.sdkDecodeIfPresent(.valkeyPubsubClientOutputBufferLimit)
-        valkeyNumberOfDatabases = try container.sdkDecodeIfPresent(.valkeyNumberOfDatabases)
-        valkeyIoThreads = try container.sdkDecodeIfPresent(.valkeyIoThreads)
-        valkeyLfuLogFactor = try container.sdkDecodeIfPresent(.valkeyLfuLogFactor)
-        valkeyLfuDecayTime = try container.sdkDecodeIfPresent(.valkeyLfuDecayTime)
-        valkeySsl = try container.sdkDecodeIfPresent(.valkeySsl)
-        valkeyTimeout = try container.sdkDecodeIfPresent(.valkeyTimeout)
-        valkeyNotifyKeyspaceEvents = try container.sdkDecodeIfPresent(.valkeyNotifyKeyspaceEvents)
-        valkeyPersistence = try container.sdkDecodeIfPresent(.valkeyPersistence)
-        valkeyAclChannelsDefault = try container.sdkDecodeIfPresent(.valkeyAclChannelsDefault)
-        frequentSnapshots = try container.sdkDecodeIfPresent(.frequentSnapshots)
-        valkeyActiveExpireEffort = try container.sdkDecodeIfPresent(.valkeyActiveExpireEffort)
+        self.valkeyMaxmemoryPolicy = try container.sdkDecodeIfPresent(.valkeyMaxmemoryPolicy)
+        self.valkeyPubsubClientOutputBufferLimit = try container.sdkDecodeIfPresent(.valkeyPubsubClientOutputBufferLimit)
+        self.valkeyNumberOfDatabases = try container.sdkDecodeIfPresent(.valkeyNumberOfDatabases)
+        self.valkeyIoThreads = try container.sdkDecodeIfPresent(.valkeyIoThreads)
+        self.valkeyLfuLogFactor = try container.sdkDecodeIfPresent(.valkeyLfuLogFactor)
+        self.valkeyLfuDecayTime = try container.sdkDecodeIfPresent(.valkeyLfuDecayTime)
+        self.valkeySsl = try container.sdkDecodeIfPresent(.valkeySsl)
+        self.valkeyTimeout = try container.sdkDecodeIfPresent(.valkeyTimeout)
+        self.valkeyNotifyKeyspaceEvents = try container.sdkDecodeIfPresent(.valkeyNotifyKeyspaceEvents)
+        self.valkeyPersistence = try container.sdkDecodeIfPresent(.valkeyPersistence)
+        self.valkeyAclChannelsDefault = try container.sdkDecodeIfPresent(.valkeyAclChannelsDefault)
+        self.frequentSnapshots = try container.sdkDecodeIfPresent(.frequentSnapshots)
+        self.valkeyActiveExpireEffort = try container.sdkDecodeIfPresent(.valkeyActiveExpireEffort)
         try sdkValidateConstraints()
     }
 }
 
-public extension ValkeyAdvancedConfig {
-    init(
-        valkeyMaxmemoryPolicy: EvictionPolicyModel? = nil,
-        valkeyPubsubClientOutputBufferLimit: Int? = nil,
-        valkeyNumberOfDatabases: Int? = nil,
-        valkeyIoThreads: Int? = nil,
-        valkeyLfuLogFactor: Int? = nil,
-        valkeyLfuDecayTime: Int? = nil,
-        valkeySsl: Bool? = nil,
-        valkeyTimeout: Int? = nil,
-        valkeyNotifyKeyspaceEvents: String? = nil,
-        valkeyPersistence: ValkeyAdvancedConfigValkeyPersistence? = nil,
-        valkeyAclChannelsDefault: ValkeyAdvancedConfigValkeyAclChannelsDefault? = nil,
-        frequentSnapshots: Bool? = nil,
-        valkeyActiveExpireEffort: Int? = nil
-    ) throws {
+extension ValkeyAdvancedConfig {
+    public init(valkeyMaxmemoryPolicy: EvictionPolicyModel? = nil, valkeyPubsubClientOutputBufferLimit: Int? = nil, valkeyNumberOfDatabases: Int? = nil, valkeyIoThreads: Int? = nil, valkeyLfuLogFactor: Int? = nil, valkeyLfuDecayTime: Int? = nil, valkeySsl: Bool? = nil, valkeyTimeout: Int? = nil, valkeyNotifyKeyspaceEvents: String? = nil, valkeyPersistence: ValkeyAdvancedConfigValkeyPersistence? = nil, valkeyAclChannelsDefault: ValkeyAdvancedConfigValkeyAclChannelsDefault? = nil, frequentSnapshots: Bool? = nil, valkeyActiveExpireEffort: Int? = nil) throws {
         self.init()
         self.valkeyMaxmemoryPolicy = valkeyMaxmemoryPolicy
         self.valkeyPubsubClientOutputBufferLimit = valkeyPubsubClientOutputBufferLimit
@@ -367,86 +267,30 @@ public extension ValkeyAdvancedConfig {
 
 extension ValkeyAdvancedConfig {
     func sdkValidateConstraints() throws {
-        if let value = valkeyPubsubClientOutputBufferLimit {
-            try validateRange(
-                "valkey_pubsub_client_output_buffer_limit",
-                Double(value),
-                min: 32,
-                max: 512,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.valkeyPubsubClientOutputBufferLimit {
+            try validateRange("valkey_pubsub_client_output_buffer_limit", Double(value), min: 32, max: 512, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = valkeyNumberOfDatabases {
-            try validateRange(
-                "valkey_number_of_databases",
-                Double(value),
-                min: 1,
-                max: 128,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.valkeyNumberOfDatabases {
+            try validateRange("valkey_number_of_databases", Double(value), min: 1, max: 128, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = valkeyIoThreads {
-            try validateRange(
-                "valkey_io_threads",
-                Double(value),
-                min: 1,
-                max: 32,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.valkeyIoThreads {
+            try validateRange("valkey_io_threads", Double(value), min: 1, max: 32, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = valkeyLfuLogFactor {
-            try validateRange(
-                "valkey_lfu_log_factor",
-                Double(value),
-                min: 0,
-                max: 100,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.valkeyLfuLogFactor {
+            try validateRange("valkey_lfu_log_factor", Double(value), min: 0, max: 100, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = valkeyLfuDecayTime {
-            try validateRange(
-                "valkey_lfu_decay_time",
-                Double(value),
-                min: 1,
-                max: 120,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.valkeyLfuDecayTime {
+            try validateRange("valkey_lfu_decay_time", Double(value), min: 1, max: 120, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = valkeyTimeout {
-            try validateRange(
-                "valkey_timeout",
-                Double(value),
-                min: 0,
-                max: 31_536_000,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.valkeyTimeout {
+            try validateRange("valkey_timeout", Double(value), min: 0, max: 31536000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = valkeyNotifyKeyspaceEvents {
+        if let value = self.valkeyNotifyKeyspaceEvents {
             try validateLength("valkey_notify_keyspace_events", value, min: nil, max: 32)
             try sdkValidatePattern("valkey_notify_keyspace_events", value, sdkPatterna2b5ab460d71)
         }
-        if let value = valkeyActiveExpireEffort {
-            try validateRange(
-                "valkey_active_expire_effort",
-                Double(value),
-                min: 1,
-                max: 10,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.valkeyActiveExpireEffort {
+            try validateRange("valkey_active_expire_effort", Double(value), min: 1, max: 10, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -470,21 +314,21 @@ public struct OnlineMigration: Codable {
     }
 
     init() {
-        (id, status, createdAt) = (nil, nil, nil)
+        (self.id, self.status, self.createdAt) = (nil, nil, nil)
     }
 }
 
-public extension OnlineMigration {
-    init(from decoder: Decoder) throws {
+extension OnlineMigration {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        status = try container.sdkDecodeIfPresent(.status)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
     }
 }
 
-public extension OnlineMigration {
-    init(id: String? = nil, status: OnlineMigrationStatus? = nil, createdAt: String? = nil) {
+extension OnlineMigration {
+    public init(id: String? = nil, status: OnlineMigrationStatus? = nil, createdAt: String? = nil) {
         self.init()
         (self.id, self.status) = (id, status)
         self.createdAt = createdAt
@@ -512,20 +356,20 @@ public struct PostgresAdvancedConfigPgaudit: Codable {
     }
 
     init() {
-        (featureEnabled, log) = (nil, nil)
+        (self.featureEnabled, self.log) = (nil, nil)
     }
 }
 
-public extension PostgresAdvancedConfigPgaudit {
-    init(from decoder: Decoder) throws {
+extension PostgresAdvancedConfigPgaudit {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        featureEnabled = try container.sdkDecodeIfPresent(.featureEnabled)
-        log = try container.sdkDecodeIfPresent(.log)
+        self.featureEnabled = try container.sdkDecodeIfPresent(.featureEnabled)
+        self.log = try container.sdkDecodeIfPresent(.log)
     }
 }
 
-public extension PostgresAdvancedConfigPgaudit {
-    init(featureEnabled: Bool? = nil, log: [PostgresAdvancedConfigPgauditLogItem]? = nil) {
+extension PostgresAdvancedConfigPgaudit {
+    public init(featureEnabled: Bool? = nil, log: [PostgresAdvancedConfigPgauditLogItem]? = nil) {
         self.init()
         (self.featureEnabled, self.log) = (featureEnabled, log)
     }
@@ -543,42 +387,26 @@ public struct TimescaledbAdvancedConfig: Codable {
     }
 
     init() {
-        maxBackgroundWorkers = nil
+        self.maxBackgroundWorkers = nil
     }
 }
 
-public extension TimescaledbAdvancedConfig {
-    init(from decoder: Decoder) throws {
+extension TimescaledbAdvancedConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        maxBackgroundWorkers = try container.sdkDecodeIfPresent(.maxBackgroundWorkers)
-        if let value = maxBackgroundWorkers {
-            try validateRange(
-                "max_background_workers",
-                Double(value),
-                min: 1,
-                max: 4096,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.maxBackgroundWorkers = try container.sdkDecodeIfPresent(.maxBackgroundWorkers)
+        if let value = self.maxBackgroundWorkers {
+            try validateRange("max_background_workers", Double(value), min: 1, max: 4096, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
-public extension TimescaledbAdvancedConfig {
-    init(maxBackgroundWorkers: Int? = nil) throws {
+extension TimescaledbAdvancedConfig {
+    public init(maxBackgroundWorkers: Int? = nil) throws {
         self.init()
         self.maxBackgroundWorkers = maxBackgroundWorkers
         if let value = self.maxBackgroundWorkers {
-            try validateRange(
-                "max_background_workers",
-                Double(value),
-                min: 1,
-                max: 4096,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("max_background_workers", Double(value), min: 1, max: 4096, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }

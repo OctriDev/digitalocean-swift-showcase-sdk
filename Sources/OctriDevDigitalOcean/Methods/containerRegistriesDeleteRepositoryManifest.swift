@@ -6,14 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContainerRegistriesMethods {
-    /// To delete a container repository manifest by digest in one of your registries, send a DELETE request to
-    /// `/v2/registries/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/digests/$MANIFEST_DIGEST`. Note that if your
-    /// repository name contains `/` characters, it must be URL-encoded in the request URL. For example, to delete
-    /// `registry.digitalocean.com/example/my/repo@sha256:abcd`, the path would be
-    /// `/v2/registry/example/repositories/my%2Frepo/digests/sha256:abcd`. A successful request will receive a 204
-    /// status code with no body in response. This indicates that the request was processed successfully. It is similar
-    /// to DELETE `/v2/registry/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/digests/$MANIFEST_DIGEST`.
+extension ContainerRegistriesMethods {
+    /// To delete a container repository manifest by digest in one of your registries, send a DELETE request to `/v2/registries/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/digests/$MANIFEST_DIGEST`. Note that if your repository name contains `/` characters, it must be URL-encoded in the request URL. For example, to delete `registry.digitalocean.com/example/my/repo@sha256:abcd`, the path would be `/v2/registry/example/repositories/my%2Frepo/digests/sha256:abcd`. A successful request will receive a 204 status code with no body in response. This indicates that the request was processed successfully. It is similar to DELETE `/v2/registry/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/digests/$MANIFEST_DIGEST`.
     ///
     /// - Parameters:
     /// - registryName: The name of a container registry.
@@ -21,34 +15,7 @@ public extension ContainerRegistriesMethods {
     ///   contains `/` characters, they must be URL-encoded, e.g. `%2F`.
     /// - manifestDigest: The manifest digest of a container registry repository
     ///   tag.
-    static func registriesDeleteRepositoryManifest(
-        config: ClientConfig,
-        registryName: String,
-        repositoryName: String,
-        manifestDigest: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await (sdkRequest(
-            "DELETE",
-            [
-                "/v2/registries/",
-                sdkEncodePathSegment(sdkWireString(registryName)),
-                "/repositories/",
-                sdkEncodePathSegment(sdkWireString(repositoryName)),
-                "/digests/",
-                sdkEncodePathSegment(sdkWireString(manifestDigest)),
-            ].joined(),
-            config: config,
-            decoder: .empty,
-            operationId: "registries_delete_repositoryManifest",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func registriesDeleteRepositoryManifest(config: ClientConfig, registryName: String, repositoryName: String, manifestDigest: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try (await sdkRequest("DELETE", ["/v2/registries/", sdkEncodePathSegment(sdkWireString(registryName)), "/repositories/", sdkEncodePathSegment(sdkWireString(repositoryName)), "/digests/", sdkEncodePathSegment(sdkWireString(manifestDigest))].joined(), config: config, decoder: .empty, operationId: "registries_delete_repositoryManifest", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

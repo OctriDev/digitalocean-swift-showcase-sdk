@@ -6,44 +6,17 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ServerlessInferenceMethods {
-    /// Evaluates a provided state against one or more typed questions using TypeSafe AI's Jev model. Unlike chat
-    /// completion endpoints, System One returns typed answers, a truth-likelihood score, a choice from a fixed set, or
-    /// a numeric score, each paired with a calibrated probability, instead of free-form text.
+extension ServerlessInferenceMethods {
+    /// Evaluates a provided state against one or more typed questions using TypeSafe AI's Jev model. Unlike chat completion endpoints, System One returns typed answers, a truth-likelihood score, a choice from a fixed set, or a numeric score, each paired with a calibrated probability, instead of free-form text.
     ///
     /// - Parameters:
     /// - state: The state to evaluate.
     /// - model: Model ID used to evaluate the request.
     /// - questions: A map of question name to question definition. Each key becomes
     ///   the corresponding key in the response's `answers` object.
-    static func inferenceCreateSystemone(
-        config: ClientConfig,
-        state: String,
-        model: String,
-        questions: [String: SystemoneQuestion],
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SystemoneResponse {
+    public static func inferenceCreateSystemone(config: ClientConfig, state: String, model: String, questions: [String: SystemoneQuestion], requestOptions: RequestOptions? = nil) async throws -> SystemoneResponse {
         let requestBody = InferenceCreateSystemoneRequestBody(state: state, model: model, questions: questions)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v1/systemone",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "inference_create_systemone",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "403": Error2.self,
-                "422": Error2.self,
-                "424": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "502": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v1/systemone", config: config, body: requestBody, decoder: .json, operationId: "inference_create_systemone", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "403": Error2.self, "422": Error2.self, "424": Error2.self, "429": Error2.self, "500": Error2.self, "502": Error2.self, "default": Error2.self])).data
     }
 }

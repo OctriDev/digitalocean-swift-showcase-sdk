@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiList domain models
+// AgentPlatformAPIApiList domain models
 /// Output for listing simulation runs.
 public struct ApiListSimulationRunsOutput: Codable {
     /// Sort-by values available for this list request.
@@ -29,32 +29,25 @@ public struct ApiListSimulationRunsOutput: Codable {
     }
 
     init() {
-        (availableSortBy, availableSortDirections, availableStatuses, links, meta) = (nil, nil, nil, nil, nil)
-        simulationRuns = nil
+        (self.availableSortBy, self.availableSortDirections, self.availableStatuses, self.links, self.meta) = (nil, nil, nil, nil, nil)
+        self.simulationRuns = nil
     }
 }
 
-public extension ApiListSimulationRunsOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListSimulationRunsOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
-        availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
-        availableStatuses = try container.sdkDecodeIfPresent(.availableStatuses)
-        links = try container.sdkDecodeIfPresent(.links)
-        meta = try container.sdkDecodeIfPresent(.meta)
-        simulationRuns = try container.sdkDecodeIfPresent(.simulationRuns)
+        self.availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
+        self.availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
+        self.availableStatuses = try container.sdkDecodeIfPresent(.availableStatuses)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
+        self.simulationRuns = try container.sdkDecodeIfPresent(.simulationRuns)
     }
 }
 
-public extension ApiListSimulationRunsOutput {
-    init(
-        availableSortBy: [ApiSimulationRunSortField]? = nil,
-        availableSortDirections: [ApiSortDirection]? = nil,
-        availableStatuses: [ApiSimulationRunStatus]? = nil,
-        links: ApiLinks? = nil,
-        meta: ApiMeta? = nil,
-        simulationRuns: [ApiSimulationRun]? = nil
-    ) {
+extension ApiListSimulationRunsOutput {
+    public init(availableSortBy: [ApiSimulationRunSortField]? = nil, availableSortDirections: [ApiSortDirection]? = nil, availableStatuses: [ApiSimulationRunStatus]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil, simulationRuns: [ApiSimulationRun]? = nil) {
         self.init()
         (self.availableSortBy, self.availableSortDirections) = (availableSortBy, availableSortDirections)
         (self.availableStatuses, self.links) = (availableStatuses, links)

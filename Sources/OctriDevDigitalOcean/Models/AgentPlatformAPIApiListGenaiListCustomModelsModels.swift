@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiList domain models
+// AgentPlatformAPIApiList domain models
 /// Response containing a list of custom models (public)
 public struct ApiListCustomModelsOutputPublic: Codable {
     /// Links to other pages
@@ -24,22 +24,22 @@ public struct ApiListCustomModelsOutputPublic: Codable {
     }
 
     init() {
-        (links, maxThreshold, meta, models) = (nil, nil, nil, nil)
+        (self.links, self.maxThreshold, self.meta, self.models) = (nil, nil, nil, nil)
     }
 }
 
-public extension ApiListCustomModelsOutputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiListCustomModelsOutputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        links = try container.sdkDecodeIfPresent(.links)
-        maxThreshold = try container.sdkDecodeIfPresent(.maxThreshold)
-        meta = try container.sdkDecodeIfPresent(.meta)
-        models = try container.sdkDecodeIfPresent(.models)
+        self.links = try container.sdkDecodeIfPresent(.links)
+        self.maxThreshold = try container.sdkDecodeIfPresent(.maxThreshold)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
+        self.models = try container.sdkDecodeIfPresent(.models)
     }
 }
 
-public extension ApiListCustomModelsOutputPublic {
-    init(links: ApiLinks? = nil, maxThreshold: Int? = nil, meta: ApiMeta? = nil, models: [ApiCustomModel]? = nil) {
+extension ApiListCustomModelsOutputPublic {
+    public init(links: ApiLinks? = nil, maxThreshold: Int? = nil, meta: ApiMeta? = nil, models: [ApiCustomModel]? = nil) {
         self.init()
         (self.links, self.maxThreshold) = (links, maxThreshold)
         (self.meta, self.models) = (meta, models)

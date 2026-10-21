@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Databases domain models
+// Databases domain models
 /// Typed representation of the `PostgresAdvancedConfig` API schema.
 public struct PostgresAdvancedConfig: Codable {
     /// Specifies the maximum age (in transactions) that a table's pg_class.relfrozenxid field can attain before a
@@ -284,8 +284,8 @@ extension PostgresAdvancedConfig {
     }
 }
 
-public extension PostgresAdvancedConfig {
-    init(from decoder: Decoder) throws {
+extension PostgresAdvancedConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init(sdkDefaults: ())
         try sdkDecodeFieldsPart1(container)
@@ -300,66 +300,8 @@ public extension PostgresAdvancedConfig {
     }
 }
 
-public extension PostgresAdvancedConfig {
-    init(
-        autovacuumFreezeMaxAge: Int? = nil,
-        autovacuumMaxWorkers: Int? = nil,
-        autovacuumNaptime: Int? = nil,
-        autovacuumVacuumThreshold: Int? = nil,
-        autovacuumAnalyzeThreshold: Int? = nil,
-        autovacuumVacuumScaleFactor: Double? = nil,
-        autovacuumAnalyzeScaleFactor: Double? = nil,
-        autovacuumVacuumCostDelay: Int? = nil,
-        autovacuumVacuumCostLimit: Int? = nil,
-        backupHour: Int? = nil,
-        backupMinute: Int? = nil,
-        bgwriterDelay: Int? = nil,
-        bgwriterFlushAfter: Int? = nil,
-        bgwriterLruMaxpages: Int? = nil,
-        bgwriterLruMultiplier: Double? = nil,
-        deadlockTimeout: Int? = nil,
-        defaultToastCompression: PostgresAdvancedConfigDefaultToastCompression? = nil,
-        idleInTransactionSessionTimeout: Int? = nil,
-        jit: Bool? = nil,
-        logAutovacuumMinDuration: Int? = nil,
-        logErrorVerbosity: PostgresAdvancedConfigLogErrorVerbosity? = nil,
-        logLinePrefix: PostgresAdvancedConfigLogLinePrefix? = nil,
-        logMinDurationStatement: Int? = nil,
-        maxFilesPerProcess: Int? = nil,
-        maxPreparedTransactions: Int? = nil,
-        maxPredLocksPerTransaction: Int? = nil,
-        maxLocksPerTransaction: Int? = nil,
-        maxStackDepth: Int? = nil,
-        maxStandbyArchiveDelay: Int? = nil,
-        maxStandbyStreamingDelay: Int? = nil,
-        maxReplicationSlots: Int? = nil,
-        maxLogicalReplicationWorkers: Int? = nil,
-        maxParallelWorkers: Int? = nil,
-        maxParallelWorkersPerGather: Int? = nil,
-        maxWorkerProcesses: Int? = nil,
-        pgPartmanBgwRole: String? = nil,
-        pgPartmanBgwInterval: Int? = nil,
-        pgStatStatementsTrack: PostgresAdvancedConfigPgStatStatementsTrack? = nil,
-        tempFileLimit: Int? = nil,
-        timezone: String? = nil,
-        trackActivityQuerySize: Int? = nil,
-        trackCommitTimestamp: PostgresAdvancedConfigTrackCommitTimestamp? = nil,
-        trackFunctions: PostgresAdvancedConfigTrackFunctions? = nil,
-        trackIoTiming: PostgresAdvancedConfigTrackIoTiming? = nil,
-        maxWalSenders: Int? = nil,
-        walSenderTimeout: Int? = nil,
-        walWriterDelay: Int? = nil,
-        sharedBuffersPercentage: Double? = nil,
-        pgbouncer: PgbouncerAdvancedConfig? = nil,
-        workMem: Int? = nil,
-        timescaledb: TimescaledbAdvancedConfig? = nil,
-        synchronousReplication: PostgresAdvancedConfigSynchronousReplication? = nil,
-        statMonitorEnable: Bool? = nil,
-        maxFailoverReplicationTimeLag: Int? = nil,
-        maxConnections: Int? = nil,
-        maxSlotWalKeepSize: Int? = nil,
-        pgaudit: PostgresAdvancedConfigPgaudit? = nil
-    ) throws {
+extension PostgresAdvancedConfig {
+    public init(autovacuumFreezeMaxAge: Int? = nil, autovacuumMaxWorkers: Int? = nil, autovacuumNaptime: Int? = nil, autovacuumVacuumThreshold: Int? = nil, autovacuumAnalyzeThreshold: Int? = nil, autovacuumVacuumScaleFactor: Double? = nil, autovacuumAnalyzeScaleFactor: Double? = nil, autovacuumVacuumCostDelay: Int? = nil, autovacuumVacuumCostLimit: Int? = nil, backupHour: Int? = nil, backupMinute: Int? = nil, bgwriterDelay: Int? = nil, bgwriterFlushAfter: Int? = nil, bgwriterLruMaxpages: Int? = nil, bgwriterLruMultiplier: Double? = nil, deadlockTimeout: Int? = nil, defaultToastCompression: PostgresAdvancedConfigDefaultToastCompression? = nil, idleInTransactionSessionTimeout: Int? = nil, jit: Bool? = nil, logAutovacuumMinDuration: Int? = nil, logErrorVerbosity: PostgresAdvancedConfigLogErrorVerbosity? = nil, logLinePrefix: PostgresAdvancedConfigLogLinePrefix? = nil, logMinDurationStatement: Int? = nil, maxFilesPerProcess: Int? = nil, maxPreparedTransactions: Int? = nil, maxPredLocksPerTransaction: Int? = nil, maxLocksPerTransaction: Int? = nil, maxStackDepth: Int? = nil, maxStandbyArchiveDelay: Int? = nil, maxStandbyStreamingDelay: Int? = nil, maxReplicationSlots: Int? = nil, maxLogicalReplicationWorkers: Int? = nil, maxParallelWorkers: Int? = nil, maxParallelWorkersPerGather: Int? = nil, maxWorkerProcesses: Int? = nil, pgPartmanBgwRole: String? = nil, pgPartmanBgwInterval: Int? = nil, pgStatStatementsTrack: PostgresAdvancedConfigPgStatStatementsTrack? = nil, tempFileLimit: Int? = nil, timezone: String? = nil, trackActivityQuerySize: Int? = nil, trackCommitTimestamp: PostgresAdvancedConfigTrackCommitTimestamp? = nil, trackFunctions: PostgresAdvancedConfigTrackFunctions? = nil, trackIoTiming: PostgresAdvancedConfigTrackIoTiming? = nil, maxWalSenders: Int? = nil, walSenderTimeout: Int? = nil, walWriterDelay: Int? = nil, sharedBuffersPercentage: Double? = nil, pgbouncer: PgbouncerAdvancedConfig? = nil, workMem: Int? = nil, timescaledb: TimescaledbAdvancedConfig? = nil, synchronousReplication: PostgresAdvancedConfigSynchronousReplication? = nil, statMonitorEnable: Bool? = nil, maxFailoverReplicationTimeLag: Int? = nil, maxConnections: Int? = nil, maxSlotWalKeepSize: Int? = nil, pgaudit: PostgresAdvancedConfigPgaudit? = nil) throws {
         self.init(sdkDefaults: ())
         sdkSet1(autovacuumFreezeMaxAge, autovacuumMaxWorkers, autovacuumNaptime, autovacuumVacuumThreshold)
         sdkSet2(autovacuumAnalyzeThreshold, autovacuumVacuumScaleFactor, autovacuumAnalyzeScaleFactor)
@@ -383,12 +325,7 @@ public extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet1(
-        _ autovacuumFreezeMaxAge: Int?,
-        _ autovacuumMaxWorkers: Int?,
-        _ autovacuumNaptime: Int?,
-        _ autovacuumVacuumThreshold: Int?
-    ) {
+    mutating func sdkSet1(_ autovacuumFreezeMaxAge: Int?, _ autovacuumMaxWorkers: Int?, _ autovacuumNaptime: Int?, _ autovacuumVacuumThreshold: Int?) {
         self.autovacuumFreezeMaxAge = autovacuumFreezeMaxAge
         self.autovacuumMaxWorkers = autovacuumMaxWorkers
         self.autovacuumNaptime = autovacuumNaptime
@@ -397,11 +334,7 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet2(
-        _ autovacuumAnalyzeThreshold: Int?,
-        _ autovacuumVacuumScaleFactor: Double?,
-        _ autovacuumAnalyzeScaleFactor: Double?
-    ) {
+    mutating func sdkSet2(_ autovacuumAnalyzeThreshold: Int?, _ autovacuumVacuumScaleFactor: Double?, _ autovacuumAnalyzeScaleFactor: Double?) {
         self.autovacuumAnalyzeThreshold = autovacuumAnalyzeThreshold
         self.autovacuumVacuumScaleFactor = autovacuumVacuumScaleFactor
         self.autovacuumAnalyzeScaleFactor = autovacuumAnalyzeScaleFactor
@@ -409,13 +342,7 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet3(
-        _ autovacuumVacuumCostDelay: Int?,
-        _ autovacuumVacuumCostLimit: Int?,
-        _ backupHour: Int?,
-        _ backupMinute: Int?,
-        _ bgwriterDelay: Int?
-    ) {
+    mutating func sdkSet3(_ autovacuumVacuumCostDelay: Int?, _ autovacuumVacuumCostLimit: Int?, _ backupHour: Int?, _ backupMinute: Int?, _ bgwriterDelay: Int?) {
         self.autovacuumVacuumCostDelay = autovacuumVacuumCostDelay
         self.autovacuumVacuumCostLimit = autovacuumVacuumCostLimit
         self.backupHour = backupHour
@@ -425,12 +352,7 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet4(
-        _ bgwriterFlushAfter: Int?,
-        _ bgwriterLruMaxpages: Int?,
-        _ bgwriterLruMultiplier: Double?,
-        _ deadlockTimeout: Int?
-    ) {
+    mutating func sdkSet4(_ bgwriterFlushAfter: Int?, _ bgwriterLruMaxpages: Int?, _ bgwriterLruMultiplier: Double?, _ deadlockTimeout: Int?) {
         self.bgwriterFlushAfter = bgwriterFlushAfter
         self.bgwriterLruMaxpages = bgwriterLruMaxpages
         self.bgwriterLruMultiplier = bgwriterLruMultiplier
@@ -439,12 +361,7 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet5(
-        _ defaultToastCompression: PostgresAdvancedConfigDefaultToastCompression?,
-        _ idleInTransactionSessionTimeout: Int?,
-        _ jit: Bool?,
-        _ logAutovacuumMinDuration: Int?
-    ) {
+    mutating func sdkSet5(_ defaultToastCompression: PostgresAdvancedConfigDefaultToastCompression?, _ idleInTransactionSessionTimeout: Int?, _ jit: Bool?, _ logAutovacuumMinDuration: Int?) {
         self.defaultToastCompression = defaultToastCompression
         self.idleInTransactionSessionTimeout = idleInTransactionSessionTimeout
         self.jit = jit
@@ -453,12 +370,7 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet6(
-        _ logErrorVerbosity: PostgresAdvancedConfigLogErrorVerbosity?,
-        _ logLinePrefix: PostgresAdvancedConfigLogLinePrefix?,
-        _ logMinDurationStatement: Int?,
-        _ maxFilesPerProcess: Int?
-    ) {
+    mutating func sdkSet6(_ logErrorVerbosity: PostgresAdvancedConfigLogErrorVerbosity?, _ logLinePrefix: PostgresAdvancedConfigLogLinePrefix?, _ logMinDurationStatement: Int?, _ maxFilesPerProcess: Int?) {
         self.logErrorVerbosity = logErrorVerbosity
         self.logLinePrefix = logLinePrefix
         self.logMinDurationStatement = logMinDurationStatement
@@ -467,12 +379,7 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet7(
-        _ maxPreparedTransactions: Int?,
-        _ maxPredLocksPerTransaction: Int?,
-        _ maxLocksPerTransaction: Int?,
-        _ maxStackDepth: Int?
-    ) {
+    mutating func sdkSet7(_ maxPreparedTransactions: Int?, _ maxPredLocksPerTransaction: Int?, _ maxLocksPerTransaction: Int?, _ maxStackDepth: Int?) {
         self.maxPreparedTransactions = maxPreparedTransactions
         self.maxPredLocksPerTransaction = maxPredLocksPerTransaction
         self.maxLocksPerTransaction = maxLocksPerTransaction
@@ -481,12 +388,7 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet8(
-        _ maxStandbyArchiveDelay: Int?,
-        _ maxStandbyStreamingDelay: Int?,
-        _ maxReplicationSlots: Int?,
-        _ maxLogicalReplicationWorkers: Int?
-    ) {
+    mutating func sdkSet8(_ maxStandbyArchiveDelay: Int?, _ maxStandbyStreamingDelay: Int?, _ maxReplicationSlots: Int?, _ maxLogicalReplicationWorkers: Int?) {
         self.maxStandbyArchiveDelay = maxStandbyArchiveDelay
         self.maxStandbyStreamingDelay = maxStandbyStreamingDelay
         self.maxReplicationSlots = maxReplicationSlots
@@ -495,12 +397,7 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet9(
-        _ maxParallelWorkers: Int?,
-        _ maxParallelWorkersPerGather: Int?,
-        _ maxWorkerProcesses: Int?,
-        _ pgPartmanBgwRole: String?
-    ) {
+    mutating func sdkSet9(_ maxParallelWorkers: Int?, _ maxParallelWorkersPerGather: Int?, _ maxWorkerProcesses: Int?, _ pgPartmanBgwRole: String?) {
         self.maxParallelWorkers = maxParallelWorkers
         self.maxParallelWorkersPerGather = maxParallelWorkersPerGather
         self.maxWorkerProcesses = maxWorkerProcesses
@@ -509,13 +406,7 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet10(
-        _ pgPartmanBgwInterval: Int?,
-        _ pgStatStatementsTrack: PostgresAdvancedConfigPgStatStatementsTrack?,
-        _ tempFileLimit: Int?,
-        _ timezone: String?,
-        _ trackActivityQuerySize: Int?
-    ) {
+    mutating func sdkSet10(_ pgPartmanBgwInterval: Int?, _ pgStatStatementsTrack: PostgresAdvancedConfigPgStatStatementsTrack?, _ tempFileLimit: Int?, _ timezone: String?, _ trackActivityQuerySize: Int?) {
         self.pgPartmanBgwInterval = pgPartmanBgwInterval
         self.pgStatStatementsTrack = pgStatStatementsTrack
         self.tempFileLimit = tempFileLimit
@@ -525,13 +416,7 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet11(
-        _ trackCommitTimestamp: PostgresAdvancedConfigTrackCommitTimestamp?,
-        _ trackFunctions: PostgresAdvancedConfigTrackFunctions?,
-        _ trackIoTiming: PostgresAdvancedConfigTrackIoTiming?,
-        _ maxWalSenders: Int?,
-        _ walSenderTimeout: Int?
-    ) {
+    mutating func sdkSet11(_ trackCommitTimestamp: PostgresAdvancedConfigTrackCommitTimestamp?, _ trackFunctions: PostgresAdvancedConfigTrackFunctions?, _ trackIoTiming: PostgresAdvancedConfigTrackIoTiming?, _ maxWalSenders: Int?, _ walSenderTimeout: Int?) {
         self.trackCommitTimestamp = trackCommitTimestamp
         self.trackFunctions = trackFunctions
         self.trackIoTiming = trackIoTiming
@@ -541,13 +426,7 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet12(
-        _ walWriterDelay: Int?,
-        _ sharedBuffersPercentage: Double?,
-        _ pgbouncer: PgbouncerAdvancedConfig?,
-        _ workMem: Int?,
-        _ timescaledb: TimescaledbAdvancedConfig?
-    ) {
+    mutating func sdkSet12(_ walWriterDelay: Int?, _ sharedBuffersPercentage: Double?, _ pgbouncer: PgbouncerAdvancedConfig?, _ workMem: Int?, _ timescaledb: TimescaledbAdvancedConfig?) {
         self.walWriterDelay = walWriterDelay
         self.sharedBuffersPercentage = sharedBuffersPercentage
         self.pgbouncer = pgbouncer
@@ -557,12 +436,7 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet13(
-        _ synchronousReplication: PostgresAdvancedConfigSynchronousReplication?,
-        _ statMonitorEnable: Bool?,
-        _ maxFailoverReplicationTimeLag: Int?,
-        _ maxConnections: Int?
-    ) {
+    mutating func sdkSet13(_ synchronousReplication: PostgresAdvancedConfigSynchronousReplication?, _ statMonitorEnable: Bool?, _ maxFailoverReplicationTimeLag: Int?, _ maxConnections: Int?) {
         self.synchronousReplication = synchronousReplication
         self.statMonitorEnable = statMonitorEnable
         self.maxFailoverReplicationTimeLag = maxFailoverReplicationTimeLag
@@ -579,34 +453,34 @@ extension PostgresAdvancedConfig {
 
 extension PostgresAdvancedConfig {
     mutating func sdkDecodeFieldsPart1(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        autovacuumFreezeMaxAge = try container.sdkDecodeIfPresent(.autovacuumFreezeMaxAge)
-        autovacuumMaxWorkers = try container.sdkDecodeIfPresent(.autovacuumMaxWorkers)
-        autovacuumNaptime = try container.sdkDecodeIfPresent(.autovacuumNaptime)
-        autovacuumVacuumThreshold = try container.sdkDecodeIfPresent(.autovacuumVacuumThreshold)
-        autovacuumAnalyzeThreshold = try container.sdkDecodeIfPresent(.autovacuumAnalyzeThreshold)
-        autovacuumVacuumScaleFactor = try container.sdkDecodeIfPresent(.autovacuumVacuumScaleFactor)
-        autovacuumAnalyzeScaleFactor = try container.sdkDecodeIfPresent(.autovacuumAnalyzeScaleFactor)
-        autovacuumVacuumCostDelay = try container.sdkDecodeIfPresent(.autovacuumVacuumCostDelay)
-        autovacuumVacuumCostLimit = try container.sdkDecodeIfPresent(.autovacuumVacuumCostLimit)
-        backupHour = try container.sdkDecodeIfPresent(.backupHour)
-        backupMinute = try container.sdkDecodeIfPresent(.backupMinute)
-        bgwriterDelay = try container.sdkDecodeIfPresent(.bgwriterDelay)
+        self.autovacuumFreezeMaxAge = try container.sdkDecodeIfPresent(.autovacuumFreezeMaxAge)
+        self.autovacuumMaxWorkers = try container.sdkDecodeIfPresent(.autovacuumMaxWorkers)
+        self.autovacuumNaptime = try container.sdkDecodeIfPresent(.autovacuumNaptime)
+        self.autovacuumVacuumThreshold = try container.sdkDecodeIfPresent(.autovacuumVacuumThreshold)
+        self.autovacuumAnalyzeThreshold = try container.sdkDecodeIfPresent(.autovacuumAnalyzeThreshold)
+        self.autovacuumVacuumScaleFactor = try container.sdkDecodeIfPresent(.autovacuumVacuumScaleFactor)
+        self.autovacuumAnalyzeScaleFactor = try container.sdkDecodeIfPresent(.autovacuumAnalyzeScaleFactor)
+        self.autovacuumVacuumCostDelay = try container.sdkDecodeIfPresent(.autovacuumVacuumCostDelay)
+        self.autovacuumVacuumCostLimit = try container.sdkDecodeIfPresent(.autovacuumVacuumCostLimit)
+        self.backupHour = try container.sdkDecodeIfPresent(.backupHour)
+        self.backupMinute = try container.sdkDecodeIfPresent(.backupMinute)
+        self.bgwriterDelay = try container.sdkDecodeIfPresent(.bgwriterDelay)
     }
 }
 
 extension PostgresAdvancedConfig {
     mutating func sdkDecodeFieldsPart2(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        bgwriterFlushAfter = try container.sdkDecodeIfPresent(.bgwriterFlushAfter)
-        bgwriterLruMaxpages = try container.sdkDecodeIfPresent(.bgwriterLruMaxpages)
-        bgwriterLruMultiplier = try container.sdkDecodeIfPresent(.bgwriterLruMultiplier)
-        deadlockTimeout = try container.sdkDecodeIfPresent(.deadlockTimeout)
-        defaultToastCompression = try container.sdkDecodeIfPresent(.defaultToastCompression)
-        idleInTransactionSessionTimeout = try container.sdkDecodeIfPresent(.idleInTransactionSessionTimeout)
-        jit = try container.sdkDecodeIfPresent(.jit)
-        logAutovacuumMinDuration = try container.sdkDecodeIfPresent(.logAutovacuumMinDuration)
-        logErrorVerbosity = try container.sdkDecodeIfPresent(.logErrorVerbosity)
-        logLinePrefix = try container.sdkDecodeIfPresent(.logLinePrefix)
-        logMinDurationStatement = try container.sdkDecodeIfPresent(.logMinDurationStatement)
-        maxFilesPerProcess = try container.sdkDecodeIfPresent(.maxFilesPerProcess)
+        self.bgwriterFlushAfter = try container.sdkDecodeIfPresent(.bgwriterFlushAfter)
+        self.bgwriterLruMaxpages = try container.sdkDecodeIfPresent(.bgwriterLruMaxpages)
+        self.bgwriterLruMultiplier = try container.sdkDecodeIfPresent(.bgwriterLruMultiplier)
+        self.deadlockTimeout = try container.sdkDecodeIfPresent(.deadlockTimeout)
+        self.defaultToastCompression = try container.sdkDecodeIfPresent(.defaultToastCompression)
+        self.idleInTransactionSessionTimeout = try container.sdkDecodeIfPresent(.idleInTransactionSessionTimeout)
+        self.jit = try container.sdkDecodeIfPresent(.jit)
+        self.logAutovacuumMinDuration = try container.sdkDecodeIfPresent(.logAutovacuumMinDuration)
+        self.logErrorVerbosity = try container.sdkDecodeIfPresent(.logErrorVerbosity)
+        self.logLinePrefix = try container.sdkDecodeIfPresent(.logLinePrefix)
+        self.logMinDurationStatement = try container.sdkDecodeIfPresent(.logMinDurationStatement)
+        self.maxFilesPerProcess = try container.sdkDecodeIfPresent(.maxFilesPerProcess)
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// ActionGateway domain models
+// ActionGateway domain models
 /// Reports the result of a discovery.
 public struct ResyncMcpServerResponse: Codable {
     /// The server, including `syncStatus` and `syncError`.
@@ -25,27 +25,22 @@ public struct ResyncMcpServerResponse: Codable {
     }
 
     init() {
-        (mcpServer, tools, pending, authorization) = (nil, nil, nil, nil)
+        (self.mcpServer, self.tools, self.pending, self.authorization) = (nil, nil, nil, nil)
     }
 }
 
-public extension ResyncMcpServerResponse {
-    init(from decoder: Decoder) throws {
+extension ResyncMcpServerResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        mcpServer = try container.sdkDecodeIfPresent(.mcpServer)
-        tools = try container.sdkDecodeIfPresent(.tools)
-        pending = try container.sdkDecodeIfPresent(.pending)
-        authorization = try container.sdkDecodeIfPresent(.authorization)
+        self.mcpServer = try container.sdkDecodeIfPresent(.mcpServer)
+        self.tools = try container.sdkDecodeIfPresent(.tools)
+        self.pending = try container.sdkDecodeIfPresent(.pending)
+        self.authorization = try container.sdkDecodeIfPresent(.authorization)
     }
 }
 
-public extension ResyncMcpServerResponse {
-    init(
-        mcpServer: McpServer? = nil,
-        tools: [McpServerTool]? = nil,
-        pending: Bool? = nil,
-        authorization: ConnectionAuthorization? = nil
-    ) {
+extension ResyncMcpServerResponse {
+    public init(mcpServer: McpServer? = nil, tools: [McpServerTool]? = nil, pending: Bool? = nil, authorization: ConnectionAuthorization? = nil) {
         self.init()
         (self.mcpServer, self.tools) = (mcpServer, tools)
         (self.pending, self.authorization) = (pending, authorization)

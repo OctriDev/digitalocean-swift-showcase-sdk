@@ -6,38 +6,18 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DatabasesMethods {
+extension DatabasesMethods {
     /// To list logsinks for a database cluster, send a GET request to `/v2/databases/$DATABASE_ID/logsink`.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    static func databasesListLogsink(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Logsinks {
+    public static func databasesListLogsink(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> Logsinks {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/logsink"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "databases_list_logsink",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/logsink"].joined(), config: config, decoder: .json, operationId: "databases_list_logsink", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Creates a logsink for a database cluster to configure log delivery to an external destination. Provide
-    /// `sink_name`, `sink_type`, and `config` to specify the logsink and its destination settings. A 201 response
-    /// returns the created logsink.
+    /// Creates a logsink for a database cluster to configure log delivery to an external destination. Provide `sink_name`, `sink_type`, and `config` to specify the logsink and its destination settings. A 201 response returns the created logsink.
     ///
     /// To create logsink for a database cluster, send a POST request to `/v2/databases/$DATABASE_ID/logsink`.
     ///
@@ -49,33 +29,11 @@ public extension DatabasesMethods {
     ///   `rsyslog` for general syslog forwarding. - Other supported types include
     ///   `elasticsearch` and `opensearch`. More details about the configuration can
     ///   be found in the `config` property.
-    static func databasesCreateLogsink(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        sinkName: String,
-        sinkType: DatabasesCreateLogsinkRequestBodySinkType,
-        config2: DatabasesCreateLogsinkRequestBodyConfig,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Logsink {
+    public static func databasesCreateLogsink(config: ClientConfig, databaseClusterUuid: String, sinkName: String, sinkType: DatabasesCreateLogsinkRequestBodySinkType, config2: DatabasesCreateLogsinkRequestBodyConfig, requestOptions: RequestOptions? = nil) async throws -> Logsink {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
         let requestBody = DatabasesCreateLogsinkRequestBody(sinkName: sinkName, sinkType: sinkType, config2: config2)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/logsink"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "databases_create_logsink",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/logsink"].joined(), config: config, body: requestBody, decoder: .json, operationId: "databases_create_logsink", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

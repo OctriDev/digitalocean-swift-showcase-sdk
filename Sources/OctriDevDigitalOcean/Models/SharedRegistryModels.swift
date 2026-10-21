@@ -3,9 +3,8 @@
 
 import Foundation
 
-/// SharedRegistry domain models
-public typealias RegistryOptionsResponseOptionsSubscriptionTiersItemEligibilitX1022c70705 =
-    [RegistryOptionsResponseOptionsSubscriptionTiersItemEligibilitX9de7ff0c43]
+// SharedRegistry domain models
+public typealias RegistryOptionsResponseOptionsSubscriptionTiersItemEligibilitX1022c70705 = [RegistryOptionsResponseOptionsSubscriptionTiersItemEligibilitX9de7ff0c43]
 
 /// Required object value serialized in the `subscription_tiers[]` wire field.
 public struct RegistryOptionsResponseOptionsSubscriptionTiersItem: Codable {
@@ -57,46 +56,29 @@ public struct RegistryOptionsResponseOptionsSubscriptionTiersItem: Codable {
     }
 
     init() {
-        (name, slug, includedRepositories, includedStorageBytes, allowStorageOverage) = (nil, nil, nil, nil, nil)
-        (includedBandwidthBytes, monthlyPriceInCents, storageOveragePriceInCents, eligible, eligibilityReasons) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
+        (self.name, self.slug, self.includedRepositories, self.includedStorageBytes, self.allowStorageOverage) = (nil, nil, nil, nil, nil)
+        (self.includedBandwidthBytes, self.monthlyPriceInCents, self.storageOveragePriceInCents, self.eligible, self.eligibilityReasons) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension RegistryOptionsResponseOptionsSubscriptionTiersItem {
-    init(from decoder: Decoder) throws {
+extension RegistryOptionsResponseOptionsSubscriptionTiersItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        slug = try container.sdkDecodeIfPresent(.slug)
-        includedRepositories = try container.sdkDecodeIfPresent(.includedRepositories)
-        includedStorageBytes = try container.sdkDecodeIfPresent(.includedStorageBytes)
-        allowStorageOverage = try container.sdkDecodeIfPresent(.allowStorageOverage)
-        includedBandwidthBytes = try container.sdkDecodeIfPresent(.includedBandwidthBytes)
-        monthlyPriceInCents = try container.sdkDecodeIfPresent(.monthlyPriceInCents)
-        storageOveragePriceInCents = try container.sdkDecodeIfPresent(.storageOveragePriceInCents)
-        eligible = try container.sdkDecodeIfPresent(.eligible)
-        eligibilityReasons = try container.sdkDecodeIfPresent(.eligibilityReasons)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.slug = try container.sdkDecodeIfPresent(.slug)
+        self.includedRepositories = try container.sdkDecodeIfPresent(.includedRepositories)
+        self.includedStorageBytes = try container.sdkDecodeIfPresent(.includedStorageBytes)
+        self.allowStorageOverage = try container.sdkDecodeIfPresent(.allowStorageOverage)
+        self.includedBandwidthBytes = try container.sdkDecodeIfPresent(.includedBandwidthBytes)
+        self.monthlyPriceInCents = try container.sdkDecodeIfPresent(.monthlyPriceInCents)
+        self.storageOveragePriceInCents = try container.sdkDecodeIfPresent(.storageOveragePriceInCents)
+        self.eligible = try container.sdkDecodeIfPresent(.eligible)
+        self.eligibilityReasons = try container.sdkDecodeIfPresent(.eligibilityReasons)
     }
 }
 
-public extension RegistryOptionsResponseOptionsSubscriptionTiersItem {
-    init(
-        name: String? = nil,
-        slug: String? = nil,
-        includedRepositories: Int? = nil,
-        includedStorageBytes: Int? = nil,
-        allowStorageOverage: Bool? = nil,
-        includedBandwidthBytes: Int? = nil,
-        monthlyPriceInCents: Int? = nil,
-        storageOveragePriceInCents: Int? = nil,
-        eligible: Bool? = nil,
-        eligibilityReasons: RegistryOptionsResponseOptionsSubscriptionTiersItemEligibilitX1022c70705? = nil
-    ) {
+extension RegistryOptionsResponseOptionsSubscriptionTiersItem {
+    public init(name: String? = nil, slug: String? = nil, includedRepositories: Int? = nil, includedStorageBytes: Int? = nil, allowStorageOverage: Bool? = nil, includedBandwidthBytes: Int? = nil, monthlyPriceInCents: Int? = nil, storageOveragePriceInCents: Int? = nil, eligible: Bool? = nil, eligibilityReasons: RegistryOptionsResponseOptionsSubscriptionTiersItemEligibilitX1022c70705? = nil) {
         self.init()
         (self.name, self.slug) = (name, slug)
         self.includedRepositories = includedRepositories
@@ -137,39 +119,33 @@ public struct RegistryBase: Codable {
     }
 
     init() {
-        (name, createdAt, region, storageUsageBytes, storageUsageBytesUpdatedAt) = (nil, nil, nil, nil, nil)
+        (self.name, self.createdAt, self.region, self.storageUsageBytes, self.storageUsageBytesUpdatedAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension RegistryBase {
-    init(from decoder: Decoder) throws {
+extension RegistryBase {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        region = try container.sdkDecodeIfPresent(.region)
-        storageUsageBytes = try container.sdkDecodeIfPresent(.storageUsageBytes)
-        storageUsageBytesUpdatedAt = try container.sdkDecodeIfPresent(.storageUsageBytesUpdatedAt)
-        if let value = name {
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.storageUsageBytes = try container.sdkDecodeIfPresent(.storageUsageBytes)
+        self.storageUsageBytesUpdatedAt = try container.sdkDecodeIfPresent(.storageUsageBytesUpdatedAt)
+        if let value = self.name {
             try validateLength("name", value, min: nil, max: 63)
             try sdkValidatePattern("name", value, sdkPattern41dd286f4dc3)
         }
-        if let value = createdAt {
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = storageUsageBytesUpdatedAt {
+        if let value = self.storageUsageBytesUpdatedAt {
             try sdkValidateDateTime("storage_usage_bytes_updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension RegistryBase {
-    init(
-        name: String? = nil,
-        createdAt: Date? = nil,
-        region: String? = nil,
-        storageUsageBytes: Int? = nil,
-        storageUsageBytesUpdatedAt: Date? = nil
-    ) throws {
+extension RegistryBase {
+    public init(name: String? = nil, createdAt: Date? = nil, region: String? = nil, storageUsageBytes: Int? = nil, storageUsageBytesUpdatedAt: Date? = nil) throws {
         self.init()
         (self.name, self.createdAt) = (name, createdAt)
         (self.region, self.storageUsageBytes) = (region, storageUsageBytes)
@@ -201,23 +177,20 @@ public struct RegistryOptionsResponseOptions: Codable {
     }
 
     init() {
-        (availableRegions, subscriptionTiers) = (nil, nil)
+        (self.availableRegions, self.subscriptionTiers) = (nil, nil)
     }
 }
 
-public extension RegistryOptionsResponseOptions {
-    init(from decoder: Decoder) throws {
+extension RegistryOptionsResponseOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        availableRegions = try container.sdkDecodeIfPresent(.availableRegions)
-        subscriptionTiers = try container.sdkDecodeIfPresent(.subscriptionTiers)
+        self.availableRegions = try container.sdkDecodeIfPresent(.availableRegions)
+        self.subscriptionTiers = try container.sdkDecodeIfPresent(.subscriptionTiers)
     }
 }
 
-public extension RegistryOptionsResponseOptions {
-    init(
-        availableRegions: [String]? = nil,
-        subscriptionTiers: [RegistryOptionsResponseOptionsSubscriptionTiersItem]? = nil
-    ) {
+extension RegistryOptionsResponseOptions {
+    public init(availableRegions: [String]? = nil, subscriptionTiers: [RegistryOptionsResponseOptionsSubscriptionTiersItem]? = nil) {
         self.init()
         (self.availableRegions, self.subscriptionTiers) = (availableRegions, subscriptionTiers)
     }
@@ -233,19 +206,19 @@ public struct RegistryVariant1: Codable {
     }
 
     init() {
-        subscription = nil
+        self.subscription = nil
     }
 }
 
-public extension RegistryVariant1 {
-    init(from decoder: Decoder) throws {
+extension RegistryVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        subscription = try container.sdkDecodeIfPresent(.subscription)
+        self.subscription = try container.sdkDecodeIfPresent(.subscription)
     }
 }
 
-public extension RegistryVariant1 {
-    init(subscription: RegistryVariant1Subscription? = nil) {
+extension RegistryVariant1 {
+    public init(subscription: RegistryVariant1Subscription? = nil) {
         self.init()
         self.subscription = subscription
     }
@@ -269,27 +242,27 @@ public struct RegistryVariant1Subscription: Codable {
     }
 
     init() {
-        (tier, createdAt, updatedAt) = (nil, nil, nil)
+        (self.tier, self.createdAt, self.updatedAt) = (nil, nil, nil)
     }
 }
 
-public extension RegistryVariant1Subscription {
-    init(from decoder: Decoder) throws {
+extension RegistryVariant1Subscription {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        tier = try container.sdkDecodeIfPresent(.tier)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = createdAt {
+        self.tier = try container.sdkDecodeIfPresent(.tier)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension RegistryVariant1Subscription {
-    init(tier: SubscriptionTierBase? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) throws {
+extension RegistryVariant1Subscription {
+    public init(tier: SubscriptionTierBase? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) throws {
         self.init()
         (self.tier, self.createdAt) = (tier, createdAt)
         self.updatedAt = updatedAt
@@ -312,19 +285,19 @@ public struct RegistryOptionsResponse: Codable {
     }
 
     init() {
-        options = nil
+        self.options = nil
     }
 }
 
-public extension RegistryOptionsResponse {
-    init(from decoder: Decoder) throws {
+extension RegistryOptionsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        options = try container.sdkDecodeIfPresent(.options)
+        self.options = try container.sdkDecodeIfPresent(.options)
     }
 }
 
-public extension RegistryOptionsResponse {
-    init(options: RegistryOptionsResponseOptions? = nil) {
+extension RegistryOptionsResponse {
+    public init(options: RegistryOptionsResponseOptions? = nil) {
         self.init()
         self.options = options
     }
@@ -362,42 +335,35 @@ public struct Registry: Codable {
     }
 
     init() {
-        (name, createdAt, region, storageUsageBytes, storageUsageBytesUpdatedAt) = (nil, nil, nil, nil, nil)
-        subscription = nil
+        (self.name, self.createdAt, self.region, self.storageUsageBytes, self.storageUsageBytesUpdatedAt) = (nil, nil, nil, nil, nil)
+        self.subscription = nil
     }
 }
 
-public extension Registry {
-    init(from decoder: Decoder) throws {
+extension Registry {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        region = try container.sdkDecodeIfPresent(.region)
-        storageUsageBytes = try container.sdkDecodeIfPresent(.storageUsageBytes)
-        storageUsageBytesUpdatedAt = try container.sdkDecodeIfPresent(.storageUsageBytesUpdatedAt)
-        subscription = try container.sdkDecodeIfPresent(.subscription)
-        if let value = name {
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.storageUsageBytes = try container.sdkDecodeIfPresent(.storageUsageBytes)
+        self.storageUsageBytesUpdatedAt = try container.sdkDecodeIfPresent(.storageUsageBytesUpdatedAt)
+        self.subscription = try container.sdkDecodeIfPresent(.subscription)
+        if let value = self.name {
             try validateLength("name", value, min: nil, max: 63)
             try sdkValidatePattern("name", value, sdkPattern41dd286f4dc3)
         }
-        if let value = createdAt {
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = storageUsageBytesUpdatedAt {
+        if let value = self.storageUsageBytesUpdatedAt {
             try sdkValidateDateTime("storage_usage_bytes_updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension Registry {
-    init(
-        name: String? = nil,
-        createdAt: Date? = nil,
-        region: String? = nil,
-        storageUsageBytes: Int? = nil,
-        storageUsageBytesUpdatedAt: Date? = nil,
-        subscription: RegistryVariant1Subscription? = nil
-    ) throws {
+extension Registry {
+    public init(name: String? = nil, createdAt: Date? = nil, region: String? = nil, storageUsageBytes: Int? = nil, storageUsageBytesUpdatedAt: Date? = nil, subscription: RegistryVariant1Subscription? = nil) throws {
         self.init()
         (self.name, self.createdAt) = (name, createdAt)
         (self.region, self.storageUsageBytes) = (region, storageUsageBytes)
@@ -416,22 +382,16 @@ public extension Registry {
 }
 
 /// Required enumerated value serialized in the `eligibility_reasons[]` wire field.
-public struct RegistryOptionsResponseOptionsSubscriptionTiersItemEligibilitX9de7ff0c43: RawRepresentable, Hashable,
-    Codable, Sendable, SdkWireConvertible {
+public struct RegistryOptionsResponseOptionsSubscriptionTiersItemEligibilitX9de7ff0c43: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let overRepositoryLimit =
-        RegistryOptionsResponseOptionsSubscriptionTiersItemEligibilitX9de7ff0c43(rawValue: "OverRepositoryLimit")
-    public static let overStorageLimit =
-        RegistryOptionsResponseOptionsSubscriptionTiersItemEligibilitX9de7ff0c43(rawValue: "OverStorageLimit")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let overRepositoryLimit = RegistryOptionsResponseOptionsSubscriptionTiersItemEligibilitX9de7ff0c43(rawValue: "OverRepositoryLimit")
+    public static let overStorageLimit = RegistryOptionsResponseOptionsSubscriptionTiersItemEligibilitX9de7ff0c43(rawValue: "OverStorageLimit")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

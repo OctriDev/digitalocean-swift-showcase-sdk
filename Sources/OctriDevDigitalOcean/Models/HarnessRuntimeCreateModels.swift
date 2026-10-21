@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HarnessRuntimeCreate domain models
+// HarnessRuntimeCreate domain models
 /// Typed representation of the `CreateTemplateRequest` API schema.
 public struct CreateTemplateRequest: Codable {
     /// Required `string` value serialized in the `name` wire field.
@@ -20,43 +20,29 @@ public struct CreateTemplateRequest: Codable {
         case sourceOciRef = "source_oci_ref"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateTemplateRequest {
-    init(from decoder: Decoder) throws {
+extension CreateTemplateRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.baseTemplate) else {
-            throw SdkValidationError(
-                field: "base_template",
-                code: "required",
-                message: "Validation failed for 'base_template': value is required"
-            )
+            throw SdkValidationError(field: "base_template", code: "required", message: "Validation failed for 'base_template': value is required")
         }
         guard container.contains(.sourceOciRef) else {
-            throw SdkValidationError(
-                field: "source_oci_ref",
-                code: "required",
-                message: "Validation failed for 'source_oci_ref': value is required"
-            )
+            throw SdkValidationError(field: "source_oci_ref", code: "required", message: "Validation failed for 'source_oci_ref': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        baseTemplate = try container.sdkDecodeRequired(.baseTemplate)
-        sourceOciRef = try container.sdkDecodeRequired(.sourceOciRef)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.baseTemplate = try container.sdkDecodeRequired(.baseTemplate)
+        self.sourceOciRef = try container.sdkDecodeRequired(.sourceOciRef)
     }
 }
 
-public extension CreateTemplateRequest {
-    init(name: String, baseTemplate: String, sourceOciRef: String) {
+extension CreateTemplateRequest {
+    public init(name: String, baseTemplate: String, sourceOciRef: String) {
         (self.name, self.baseTemplate) = (name, baseTemplate)
         self.sourceOciRef = sourceOciRef
     }
@@ -73,19 +59,19 @@ public struct CreateWebhookConfig: Codable {
     }
 
     init() {
-        provider = nil
+        self.provider = nil
     }
 }
 
-public extension CreateWebhookConfig {
-    init(from decoder: Decoder) throws {
+extension CreateWebhookConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        provider = try container.sdkDecodeIfPresent(.provider)
+        self.provider = try container.sdkDecodeIfPresent(.provider)
     }
 }
 
-public extension CreateWebhookConfig {
-    init(provider: WebhookProviderKey? = nil) {
+extension CreateWebhookConfig {
+    public init(provider: WebhookProviderKey? = nil) {
         self.init()
         self.provider = provider
     }
@@ -101,19 +87,19 @@ public struct CreateCheckpointRequest: Codable {
     }
 
     init() {
-        label = nil
+        self.label = nil
     }
 }
 
-public extension CreateCheckpointRequest {
-    init(from decoder: Decoder) throws {
+extension CreateCheckpointRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        label = try container.sdkDecodeIfPresent(.label)
+        self.label = try container.sdkDecodeIfPresent(.label)
     }
 }
 
-public extension CreateCheckpointRequest {
-    init(label: String? = nil) {
+extension CreateCheckpointRequest {
+    public init(label: String? = nil) {
         self.init()
         self.label = label
     }
@@ -132,19 +118,19 @@ public struct CreateCheckpointResponse: Codable {
     }
 
     init() {
-        checkpoint = nil
+        self.checkpoint = nil
     }
 }
 
-public extension CreateCheckpointResponse {
-    init(from decoder: Decoder) throws {
+extension CreateCheckpointResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        checkpoint = try container.sdkDecodeIfPresent(.checkpoint)
+        self.checkpoint = try container.sdkDecodeIfPresent(.checkpoint)
     }
 }
 
-public extension CreateCheckpointResponse {
-    init(checkpoint: Checkpoint? = nil) {
+extension CreateCheckpointResponse {
+    public init(checkpoint: Checkpoint? = nil) {
         self.init()
         self.checkpoint = checkpoint
     }
@@ -164,35 +150,25 @@ public struct CreateCronConfig: Codable {
         case timezone
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateCronConfig {
-    init(from decoder: Decoder) throws {
+extension CreateCronConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.cronExpr) else {
-            throw SdkValidationError(
-                field: "cron_expr",
-                code: "required",
-                message: "Validation failed for 'cron_expr': value is required"
-            )
+            throw SdkValidationError(field: "cron_expr", code: "required", message: "Validation failed for 'cron_expr': value is required")
         }
         guard container.contains(.timezone) else {
-            throw SdkValidationError(
-                field: "timezone",
-                code: "required",
-                message: "Validation failed for 'timezone': value is required"
-            )
+            throw SdkValidationError(field: "timezone", code: "required", message: "Validation failed for 'timezone': value is required")
         }
-        cronExpr = try container.sdkDecodeRequired(.cronExpr)
-        timezone = try container.sdkDecodeRequired(.timezone)
+        self.cronExpr = try container.sdkDecodeRequired(.cronExpr)
+        self.timezone = try container.sdkDecodeRequired(.timezone)
     }
 }
 
-public extension CreateCronConfig {
-    init(cronExpr: String, timezone: String) {
+extension CreateCronConfig {
+    public init(cronExpr: String, timezone: String) {
         (self.cronExpr, self.timezone) = (cronExpr, timezone)
     }
 }
@@ -240,85 +216,53 @@ public struct CreateTriggerRequest: Codable {
         case cron
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateTriggerRequest {
-    init(from decoder: Decoder) throws {
+extension CreateTriggerRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.kind) else {
-            throw SdkValidationError(
-                field: "kind",
-                code: "required",
-                message: "Validation failed for 'kind': value is required"
-            )
+            throw SdkValidationError(field: "kind", code: "required", message: "Validation failed for 'kind': value is required")
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.sessionMode) else {
-            throw SdkValidationError(
-                field: "session_mode",
-                code: "required",
-                message: "Validation failed for 'session_mode': value is required"
-            )
+            throw SdkValidationError(field: "session_mode", code: "required", message: "Validation failed for 'session_mode': value is required")
         }
         guard container.contains(.promptTemplate) else {
-            throw SdkValidationError(
-                field: "prompt_template",
-                code: "required",
-                message: "Validation failed for 'prompt_template': value is required"
-            )
+            throw SdkValidationError(field: "prompt_template", code: "required", message: "Validation failed for 'prompt_template': value is required")
         }
         guard container.contains(.output) else {
-            throw SdkValidationError(
-                field: "output",
-                code: "required",
-                message: "Validation failed for 'output': value is required"
-            )
+            throw SdkValidationError(field: "output", code: "required", message: "Validation failed for 'output': value is required")
         }
-        kind = try container.sdkDecodeRequired(.kind)
-        name = try container.sdkDecodeRequired(.name)
-        sessionMode = try container.sdkDecodeRequired(.sessionMode)
-        promptTemplate = try container.sdkDecodeRequired(.promptTemplate)
-        output = try container.sdkDecodeRequired(.output)
-        sessionTemplate = try container.sdkDecodeIfPresent(.sessionTemplate)
-        boundSessionId = try container.sdkDecodeIfPresent(.boundSessionId)
-        webhook = try container.sdkDecodeIfPresent(.webhook)
-        cron = try container.sdkDecodeIfPresent(.cron)
-        try validateLength("name", name, min: 1, max: 64)
-        try sdkValidatePattern("name", name, sdkPatternd6415432f58a)
-        if let value = boundSessionId {
+        self.kind = try container.sdkDecodeRequired(.kind)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.sessionMode = try container.sdkDecodeRequired(.sessionMode)
+        self.promptTemplate = try container.sdkDecodeRequired(.promptTemplate)
+        self.output = try container.sdkDecodeRequired(.output)
+        self.sessionTemplate = try container.sdkDecodeIfPresent(.sessionTemplate)
+        self.boundSessionId = try container.sdkDecodeIfPresent(.boundSessionId)
+        self.webhook = try container.sdkDecodeIfPresent(.webhook)
+        self.cron = try container.sdkDecodeIfPresent(.cron)
+            try validateLength("name", self.name, min: 1, max: 64)
+            try sdkValidatePattern("name", self.name, sdkPatternd6415432f58a)
+        if let value = self.boundSessionId {
             try sdkValidateUuid("bound_session_id", value)
         }
     }
 }
 
-public extension CreateTriggerRequest {
-    init(
-        kind: TriggerKind,
-        name: String,
-        sessionMode: TriggerSessionMode,
-        promptTemplate: String,
-        output: TriggerOutputWrite,
-        sessionTemplate: String? = nil,
-        boundSessionId: String? = nil,
-        webhook: CreateWebhookConfig? = nil,
-        cron: CreateCronConfig? = nil
-    ) throws {
+extension CreateTriggerRequest {
+    public init(kind: TriggerKind, name: String, sessionMode: TriggerSessionMode, promptTemplate: String, output: TriggerOutputWrite, sessionTemplate: String? = nil, boundSessionId: String? = nil, webhook: CreateWebhookConfig? = nil, cron: CreateCronConfig? = nil) throws {
         (self.kind, self.name) = (kind, name)
         (self.sessionMode, self.promptTemplate) = (sessionMode, promptTemplate)
         (self.output, self.sessionTemplate) = (output, sessionTemplate)
         (self.boundSessionId, self.webhook) = (boundSessionId, webhook)
         self.cron = cron
-        try validateLength("name", self.name, min: 1, max: 64)
-        try sdkValidatePattern("name", self.name, sdkPatternd6415432f58a)
+            try validateLength("name", self.name, min: 1, max: 64)
+            try sdkValidatePattern("name", self.name, sdkPatternd6415432f58a)
         if let value = self.boundSessionId {
             try sdkValidateUuid("bound_session_id", value)
         }
@@ -347,42 +291,32 @@ public struct CreateSessionConfigRequest: Codable {
         case resumeOnTopoff = "resume_on_topoff"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateSessionConfigRequest {
-    init(from decoder: Decoder) throws {
+extension CreateSessionConfigRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.configId) else {
-            throw SdkValidationError(
-                field: "config_id",
-                code: "required",
-                message: "Validation failed for 'config_id': value is required"
-            )
+            throw SdkValidationError(field: "config_id", code: "required", message: "Validation failed for 'config_id': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        configId = try container.sdkDecodeRequired(.configId)
-        resumeOnTopoff = try container.sdkDecodeIfPresent(.resumeOnTopoff)
-        try validateLength("name", name, min: 1, max: 64)
-        try sdkValidateUuid("config_id", configId)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.configId = try container.sdkDecodeRequired(.configId)
+        self.resumeOnTopoff = try container.sdkDecodeIfPresent(.resumeOnTopoff)
+            try validateLength("name", self.name, min: 1, max: 64)
+            try sdkValidateUuid("config_id", self.configId)
     }
 }
 
-public extension CreateSessionConfigRequest {
-    init(name: String, configId: String, resumeOnTopoff: Bool? = nil) throws {
+extension CreateSessionConfigRequest {
+    public init(name: String, configId: String, resumeOnTopoff: Bool? = nil) throws {
         (self.name, self.configId) = (name, configId)
         self.resumeOnTopoff = resumeOnTopoff
-        try validateLength("name", self.name, min: 1, max: 64)
-        try sdkValidateUuid("config_id", self.configId)
+            try validateLength("name", self.name, min: 1, max: 64)
+            try sdkValidateUuid("config_id", self.configId)
     }
 }
 
@@ -404,20 +338,20 @@ public struct CreateTriggerResponse: Codable {
     }
 
     init() {
-        (trigger, webhookSecret) = (nil, nil)
+        (self.trigger, self.webhookSecret) = (nil, nil)
     }
 }
 
-public extension CreateTriggerResponse {
-    init(from decoder: Decoder) throws {
+extension CreateTriggerResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        trigger = try container.sdkDecodeIfPresent(.trigger)
-        webhookSecret = try container.sdkDecodeIfPresent(.webhookSecret)
+        self.trigger = try container.sdkDecodeIfPresent(.trigger)
+        self.webhookSecret = try container.sdkDecodeIfPresent(.webhookSecret)
     }
 }
 
-public extension CreateTriggerResponse {
-    init(trigger: Trigger? = nil, webhookSecret: String? = nil) {
+extension CreateTriggerResponse {
+    public init(trigger: Trigger? = nil, webhookSecret: String? = nil) {
         self.init()
         (self.trigger, self.webhookSecret) = (trigger, webhookSecret)
     }
@@ -433,19 +367,19 @@ public struct CreateTemplateResponse: Codable {
     }
 
     init() {
-        template = nil
+        self.template = nil
     }
 }
 
-public extension CreateTemplateResponse {
-    init(from decoder: Decoder) throws {
+extension CreateTemplateResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        template = try container.sdkDecodeIfPresent(.template)
+        self.template = try container.sdkDecodeIfPresent(.template)
     }
 }
 
-public extension CreateTemplateResponse {
-    init(template: SandboxTemplate? = nil) {
+extension CreateTemplateResponse {
+    public init(template: SandboxTemplate? = nil) {
         self.init()
         self.template = template
     }

@@ -3,33 +3,25 @@
 
 import Foundation
 
-/// LoadBalancers domain models
+// LoadBalancers domain models
 public indirect enum LoadBalancerCreateRequest {
     case loadBalancerCreateRequestVariant0(LoadBalancerCreateRequestVariant0)
     case loadBalancerCreateRequestVariant1(LoadBalancerCreateRequestVariant1)
 }
 
 extension LoadBalancerCreateRequest: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for LoadBalancerCreateRequest"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for LoadBalancerCreateRequest")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -47,14 +39,8 @@ extension LoadBalancerCreateRequest {
 
 extension LoadBalancerCreateRequest {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container
-            .decode(LoadBalancerCreateRequestVariant0.self) {
-            return .loadBalancerCreateRequestVariant0(value)
-        }
-        if let value = try? container
-            .decode(LoadBalancerCreateRequestVariant1.self) {
-            return .loadBalancerCreateRequestVariant1(value)
-        }
+        if let value = try? container.decode(LoadBalancerCreateRequestVariant0.self) { return .loadBalancerCreateRequestVariant0(value) }
+        if let value = try? container.decode(LoadBalancerCreateRequestVariant1.self) { return .loadBalancerCreateRequestVariant1(value) }
         return nil
     }
 }
@@ -79,19 +65,19 @@ public struct LoadBalancerCreateRequestVariant1Variant2: Codable {
     }
 
     init() {
-        region = nil
+        self.region = nil
     }
 }
 
-public extension LoadBalancerCreateRequestVariant1Variant2 {
-    init(from decoder: Decoder) throws {
+extension LoadBalancerCreateRequestVariant1Variant2 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        region = try container.sdkDecodeIfPresent(.region)
+        self.region = try container.sdkDecodeIfPresent(.region)
     }
 }
 
-public extension LoadBalancerCreateRequestVariant1Variant2 {
-    init(region: RegionSlug? = nil) {
+extension LoadBalancerCreateRequestVariant1Variant2 {
+    public init(region: RegionSlug? = nil) {
         self.init()
         self.region = region
     }
@@ -107,19 +93,19 @@ public struct LoadBalancerCreateResponse: Codable {
     }
 
     init() {
-        loadBalancer = nil
+        self.loadBalancer = nil
     }
 }
 
-public extension LoadBalancerCreateResponse {
-    init(from decoder: Decoder) throws {
+extension LoadBalancerCreateResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        loadBalancer = try container.sdkDecodeIfPresent(.loadBalancer)
+        self.loadBalancer = try container.sdkDecodeIfPresent(.loadBalancer)
     }
 }
 
-public extension LoadBalancerCreateResponse {
-    init(loadBalancer: LoadBalancer? = nil) {
+extension LoadBalancerCreateResponse {
+    public init(loadBalancer: LoadBalancer? = nil) {
         self.init()
         self.loadBalancer = loadBalancer
     }
@@ -248,125 +234,68 @@ public struct LoadBalancerCreateRequestVariant0: Codable {
         case tlsCipherPolicy = "tls_cipher_policy"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension LoadBalancerCreateRequestVariant0 {
-    init(from decoder: Decoder) throws {
+extension LoadBalancerCreateRequestVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.dropletIds) else {
-            throw SdkValidationError(
-                field: "droplet_ids",
-                code: "required",
-                message: "Validation failed for 'droplet_ids': value is required"
-            )
+            throw SdkValidationError(field: "droplet_ids", code: "required", message: "Validation failed for 'droplet_ids': value is required")
         }
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
         guard container.contains(.forwardingRules) else {
-            throw SdkValidationError(
-                field: "forwarding_rules",
-                code: "required",
-                message: "Validation failed for 'forwarding_rules': value is required"
-            )
+            throw SdkValidationError(field: "forwarding_rules", code: "required", message: "Validation failed for 'forwarding_rules': value is required")
         }
-        dropletIds = try container.sdkDecodeRequired(.dropletIds)
-        region = try container.sdkDecodeRequired(.region)
-        forwardingRules = try container.sdkDecodeRequired(.forwardingRules)
-        ip = try container.sdkDecodeIfPresent(.ip)
-        name = try container.sdkDecodeIfPresent(.name)
-        projectId = try container.sdkDecodeIfPresent(.projectId)
-        sizeUnit = try container.sdkDecodeIfPresent(.sizeUnit)
-        size = try container.sdkDecodeIfPresent(.size)
-        algorithm = try container.sdkDecodeIfPresent(.algorithm)
-        healthCheck = try container.sdkDecodeIfPresent(.healthCheck)
-        stickySessions = try container.sdkDecodeIfPresent(.stickySessions)
-        redirectHttpToHttps = try container.sdkDecodeIfPresent(.redirectHttpToHttps)
-        enableProxyProtocol = try container.sdkDecodeIfPresent(.enableProxyProtocol)
-        enableBackendKeepalive = try container.sdkDecodeIfPresent(.enableBackendKeepalive)
-        httpIdleTimeoutSeconds = try container.sdkDecodeIfPresent(.httpIdleTimeoutSeconds)
-        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
-        disableLetsEncryptDnsRecords = try container.sdkDecodeIfPresent(.disableLetsEncryptDnsRecords)
-        firewall = try container.sdkDecodeIfPresent(.firewall)
-        network = try container.sdkDecodeIfPresent(.network)
-        networkStack = try container.sdkDecodeIfPresent(.networkStack)
-        type = try container.sdkDecodeIfPresent(.type)
-        domains = try container.sdkDecodeIfPresent(.domains)
-        glbSettings = try container.sdkDecodeIfPresent(.glbSettings)
-        targetLoadBalancerIds = try container.sdkDecodeIfPresent(.targetLoadBalancerIds)
-        tlsCipherPolicy = try container.sdkDecodeIfPresent(.tlsCipherPolicy)
-        try validateItems("forwarding_rules", forwardingRules, min: 1, max: nil)
-        if let value = ip {
+        self.dropletIds = try container.sdkDecodeRequired(.dropletIds)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.forwardingRules = try container.sdkDecodeRequired(.forwardingRules)
+        self.ip = try container.sdkDecodeIfPresent(.ip)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.projectId = try container.sdkDecodeIfPresent(.projectId)
+        self.sizeUnit = try container.sdkDecodeIfPresent(.sizeUnit)
+        self.size = try container.sdkDecodeIfPresent(.size)
+        self.algorithm = try container.sdkDecodeIfPresent(.algorithm)
+        self.healthCheck = try container.sdkDecodeIfPresent(.healthCheck)
+        self.stickySessions = try container.sdkDecodeIfPresent(.stickySessions)
+        self.redirectHttpToHttps = try container.sdkDecodeIfPresent(.redirectHttpToHttps)
+        self.enableProxyProtocol = try container.sdkDecodeIfPresent(.enableProxyProtocol)
+        self.enableBackendKeepalive = try container.sdkDecodeIfPresent(.enableBackendKeepalive)
+        self.httpIdleTimeoutSeconds = try container.sdkDecodeIfPresent(.httpIdleTimeoutSeconds)
+        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        self.subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
+        self.disableLetsEncryptDnsRecords = try container.sdkDecodeIfPresent(.disableLetsEncryptDnsRecords)
+        self.firewall = try container.sdkDecodeIfPresent(.firewall)
+        self.network = try container.sdkDecodeIfPresent(.network)
+        self.networkStack = try container.sdkDecodeIfPresent(.networkStack)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.domains = try container.sdkDecodeIfPresent(.domains)
+        self.glbSettings = try container.sdkDecodeIfPresent(.glbSettings)
+        self.targetLoadBalancerIds = try container.sdkDecodeIfPresent(.targetLoadBalancerIds)
+        self.tlsCipherPolicy = try container.sdkDecodeIfPresent(.tlsCipherPolicy)
+            try validateItems("forwarding_rules", self.forwardingRules, min: 1, max: nil)
+        if let value = self.ip {
             try sdkValidatePattern("ip", value, sdkPattern456628267985)
         }
-        if let value = sizeUnit {
-            try validateRange(
-                "size_unit",
-                Double(value),
-                min: 1,
-                max: 100,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.sizeUnit {
+            try validateRange("size_unit", Double(value), min: 1, max: 100, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = httpIdleTimeoutSeconds {
-            try validateRange(
-                "http_idle_timeout_seconds",
-                Double(value),
-                min: 30,
-                max: 600,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        if let value = self.httpIdleTimeoutSeconds {
+            try validateRange("http_idle_timeout_seconds", Double(value), min: 30, max: 600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
-        if let value = vpcUuid {
+        if let value = self.vpcUuid {
             try sdkValidateUuid("vpc_uuid", value)
         }
-        if let value = subnetUuid {
+        if let value = self.subnetUuid {
             try sdkValidateUuid("subnet_uuid", value)
         }
     }
 }
 
-public extension LoadBalancerCreateRequestVariant0 {
-    init(
-        dropletIds: [Int],
-        region: RegionSlug,
-        forwardingRules: [ForwardingRule],
-        ip: String? = nil,
-        name: String? = nil,
-        projectId: String? = nil,
-        sizeUnit: Int? = nil,
-        size: LoadBalancerBaseRequestSize? = nil,
-        algorithm: LoadBalancerBaseRequestAlgorithm? = nil,
-        healthCheck: HealthCheck? = nil,
-        stickySessions: StickySessions? = nil,
-        redirectHttpToHttps: Bool? = nil,
-        enableProxyProtocol: Bool? = nil,
-        enableBackendKeepalive: Bool? = nil,
-        httpIdleTimeoutSeconds: Int? = nil,
-        vpcUuid: String? = nil,
-        subnetUuid: String? = nil,
-        disableLetsEncryptDnsRecords: Bool? = nil,
-        firewall: LbFirewall? = nil,
-        network: LoadBalancerBaseRequestNetwork? = nil,
-        networkStack: LoadBalancerBaseRequestNetworkStack? = nil,
-        type: LoadBalancerBaseRequestType? = nil,
-        domains: [Domains]? = nil,
-        glbSettings: GlbSettings? = nil,
-        targetLoadBalancerIds: [String]? = nil,
-        tlsCipherPolicy: LoadBalancerBaseRequestTlsCipherPolicy? = nil
-    ) throws {
+extension LoadBalancerCreateRequestVariant0 {
+    public init(dropletIds: [Int], region: RegionSlug, forwardingRules: [ForwardingRule], ip: String? = nil, name: String? = nil, projectId: String? = nil, sizeUnit: Int? = nil, size: LoadBalancerBaseRequestSize? = nil, algorithm: LoadBalancerBaseRequestAlgorithm? = nil, healthCheck: HealthCheck? = nil, stickySessions: StickySessions? = nil, redirectHttpToHttps: Bool? = nil, enableProxyProtocol: Bool? = nil, enableBackendKeepalive: Bool? = nil, httpIdleTimeoutSeconds: Int? = nil, vpcUuid: String? = nil, subnetUuid: String? = nil, disableLetsEncryptDnsRecords: Bool? = nil, firewall: LbFirewall? = nil, network: LoadBalancerBaseRequestNetwork? = nil, networkStack: LoadBalancerBaseRequestNetworkStack? = nil, type: LoadBalancerBaseRequestType? = nil, domains: [Domains]? = nil, glbSettings: GlbSettings? = nil, targetLoadBalancerIds: [String]? = nil, tlsCipherPolicy: LoadBalancerBaseRequestTlsCipherPolicy? = nil) throws {
         (self.dropletIds, self.region) = (dropletIds, region)
         (self.forwardingRules, self.ip) = (forwardingRules, ip)
         (self.name, self.projectId) = (name, projectId)
@@ -381,31 +310,15 @@ public extension LoadBalancerCreateRequestVariant0 {
         (self.networkStack, self.type) = (networkStack, type)
         (self.domains, self.glbSettings) = (domains, glbSettings)
         (self.targetLoadBalancerIds, self.tlsCipherPolicy) = (targetLoadBalancerIds, tlsCipherPolicy)
-        try validateItems("forwarding_rules", self.forwardingRules, min: 1, max: nil)
+            try validateItems("forwarding_rules", self.forwardingRules, min: 1, max: nil)
         if let value = self.ip {
             try sdkValidatePattern("ip", value, sdkPattern456628267985)
         }
         if let value = self.sizeUnit {
-            try validateRange(
-                "size_unit",
-                Double(value),
-                min: 1,
-                max: 100,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("size_unit", Double(value), min: 1, max: 100, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.httpIdleTimeoutSeconds {
-            try validateRange(
-                "http_idle_timeout_seconds",
-                Double(value),
-                min: 30,
-                max: 600,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("http_idle_timeout_seconds", Double(value), min: 30, max: 600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
         if let value = self.vpcUuid {
             try sdkValidateUuid("vpc_uuid", value)
@@ -431,22 +344,22 @@ public struct LoadBalancerIp: Codable {
     }
 
     init() {
-        ip = nil
+        self.ip = nil
     }
 }
 
-public extension LoadBalancerIp {
-    init(from decoder: Decoder) throws {
+extension LoadBalancerIp {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        ip = try container.sdkDecodeIfPresent(.ip)
-        if let value = ip {
+        self.ip = try container.sdkDecodeIfPresent(.ip)
+        if let value = self.ip {
             try sdkValidatePattern("ip", value, sdkPattern456628267985)
         }
     }
 }
 
-public extension LoadBalancerIp {
-    init(ip: String? = nil) throws {
+extension LoadBalancerIp {
+    public init(ip: String? = nil) throws {
         self.init()
         self.ip = ip
         if let value = self.ip {
@@ -465,19 +378,19 @@ public struct LoadBalancerCreateRequestVariant0Variant2: Codable {
     }
 
     init() {
-        region = nil
+        self.region = nil
     }
 }
 
-public extension LoadBalancerCreateRequestVariant0Variant2 {
-    init(from decoder: Decoder) throws {
+extension LoadBalancerCreateRequestVariant0Variant2 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        region = try container.sdkDecodeIfPresent(.region)
+        self.region = try container.sdkDecodeIfPresent(.region)
     }
 }
 
-public extension LoadBalancerCreateRequestVariant0Variant2 {
-    init(region: RegionSlug? = nil) {
+extension LoadBalancerCreateRequestVariant0Variant2 {
+    public init(region: RegionSlug? = nil) {
         self.init()
         self.region = region
     }

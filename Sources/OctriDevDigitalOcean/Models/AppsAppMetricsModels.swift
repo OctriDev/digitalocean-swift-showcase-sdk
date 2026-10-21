@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AppsAppMetrics domain models
+// AppsAppMetrics domain models
 /// Typed representation of the `AppMetricsBandwidthUsageRequest` API schema.
 public struct AppMetricsBandwidthUsageRequest: Codable {
     /// A list of app IDs to query bandwidth metrics for.
@@ -18,34 +18,28 @@ public struct AppMetricsBandwidthUsageRequest: Codable {
         case date
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AppMetricsBandwidthUsageRequest {
-    init(from decoder: Decoder) throws {
+extension AppMetricsBandwidthUsageRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.appIds) else {
-            throw SdkValidationError(
-                field: "app_ids",
-                code: "required",
-                message: "Validation failed for 'app_ids': value is required"
-            )
+            throw SdkValidationError(field: "app_ids", code: "required", message: "Validation failed for 'app_ids': value is required")
         }
-        appIds = try container.sdkDecodeRequired(.appIds)
-        date = try container.sdkDecodeIfPresent(.date)
-        try validateItems("app_ids", appIds, min: nil, max: 100)
-        if let value = date {
+        self.appIds = try container.sdkDecodeRequired(.appIds)
+        self.date = try container.sdkDecodeIfPresent(.date)
+            try validateItems("app_ids", self.appIds, min: nil, max: 100)
+        if let value = self.date {
             try sdkValidateDateTime("date", sdkWireString(value))
         }
     }
 }
 
-public extension AppMetricsBandwidthUsageRequest {
-    init(appIds: [String], date: Date? = nil) throws {
+extension AppMetricsBandwidthUsageRequest {
+    public init(appIds: [String], date: Date? = nil) throws {
         (self.appIds, self.date) = (appIds, date)
-        try validateItems("app_ids", self.appIds, min: nil, max: 100)
+            try validateItems("app_ids", self.appIds, min: nil, max: 100)
         if let value = self.date {
             try sdkValidateDateTime("date", sdkWireString(value))
         }
@@ -67,20 +61,20 @@ public struct AppMetricsBandwidthUsageDetails: Codable {
     }
 
     init() {
-        (appId, bandwidthBytes) = (nil, nil)
+        (self.appId, self.bandwidthBytes) = (nil, nil)
     }
 }
 
-public extension AppMetricsBandwidthUsageDetails {
-    init(from decoder: Decoder) throws {
+extension AppMetricsBandwidthUsageDetails {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        appId = try container.sdkDecodeIfPresent(.appId)
-        bandwidthBytes = try container.sdkDecodeIfPresent(.bandwidthBytes)
+        self.appId = try container.sdkDecodeIfPresent(.appId)
+        self.bandwidthBytes = try container.sdkDecodeIfPresent(.bandwidthBytes)
     }
 }
 
-public extension AppMetricsBandwidthUsageDetails {
-    init(appId: String? = nil, bandwidthBytes: String? = nil) {
+extension AppMetricsBandwidthUsageDetails {
+    public init(appId: String? = nil, bandwidthBytes: String? = nil) {
         self.init()
         (self.appId, self.bandwidthBytes) = (appId, bandwidthBytes)
     }
@@ -100,23 +94,23 @@ public struct AppMetricsBandwidthUsage: Codable {
     }
 
     init() {
-        (appBandwidthUsage, date) = (nil, nil)
+        (self.appBandwidthUsage, self.date) = (nil, nil)
     }
 }
 
-public extension AppMetricsBandwidthUsage {
-    init(from decoder: Decoder) throws {
+extension AppMetricsBandwidthUsage {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        appBandwidthUsage = try container.sdkDecodeIfPresent(.appBandwidthUsage)
-        date = try container.sdkDecodeIfPresent(.date)
-        if let value = date {
+        self.appBandwidthUsage = try container.sdkDecodeIfPresent(.appBandwidthUsage)
+        self.date = try container.sdkDecodeIfPresent(.date)
+        if let value = self.date {
             try sdkValidateDateTime("date", sdkWireString(value))
         }
     }
 }
 
-public extension AppMetricsBandwidthUsage {
-    init(appBandwidthUsage: [AppMetricsBandwidthUsageDetails]? = nil, date: Date? = nil) throws {
+extension AppMetricsBandwidthUsage {
+    public init(appBandwidthUsage: [AppMetricsBandwidthUsageDetails]? = nil, date: Date? = nil) throws {
         self.init()
         (self.appBandwidthUsage, self.date) = (appBandwidthUsage, date)
         if let value = self.date {

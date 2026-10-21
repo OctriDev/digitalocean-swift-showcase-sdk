@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DatabasesDatabase domain models
+// DatabasesDatabase domain models
 /// Optional object value serialized in the `scheduled_backup_time` wire field.
 public struct DatabaseBackupsScheduledBackupTime: Codable {
     /// The hour of the day when the backup is scheduled (in UTC).
@@ -23,21 +23,21 @@ public struct DatabaseBackupsScheduledBackupTime: Codable {
     }
 
     init() {
-        (backupHour, backupMinute, backupIntervalHours) = (nil, nil, nil)
+        (self.backupHour, self.backupMinute, self.backupIntervalHours) = (nil, nil, nil)
     }
 }
 
-public extension DatabaseBackupsScheduledBackupTime {
-    init(from decoder: Decoder) throws {
+extension DatabaseBackupsScheduledBackupTime {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        backupHour = try container.sdkDecodeIfPresent(.backupHour)
-        backupMinute = try container.sdkDecodeIfPresent(.backupMinute)
-        backupIntervalHours = try container.sdkDecodeIfPresent(.backupIntervalHours)
+        self.backupHour = try container.sdkDecodeIfPresent(.backupHour)
+        self.backupMinute = try container.sdkDecodeIfPresent(.backupMinute)
+        self.backupIntervalHours = try container.sdkDecodeIfPresent(.backupIntervalHours)
     }
 }
 
-public extension DatabaseBackupsScheduledBackupTime {
-    init(backupHour: Int? = nil, backupMinute: Int? = nil, backupIntervalHours: Int? = nil) {
+extension DatabaseBackupsScheduledBackupTime {
+    public init(backupHour: Int? = nil, backupMinute: Int? = nil, backupIntervalHours: Int? = nil) {
         self.init()
         (self.backupHour, self.backupMinute) = (backupHour, backupMinute)
         self.backupIntervalHours = backupIntervalHours
@@ -61,33 +61,23 @@ public struct DatabaseBackups: Codable {
         case backupProgress = "backup_progress"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DatabaseBackups {
-    init(from decoder: Decoder) throws {
+extension DatabaseBackups {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.backups) else {
-            throw SdkValidationError(
-                field: "backups",
-                code: "required",
-                message: "Validation failed for 'backups': value is required"
-            )
+            throw SdkValidationError(field: "backups", code: "required", message: "Validation failed for 'backups': value is required")
         }
-        backups = try container.sdkDecodeRequired(.backups)
-        scheduledBackupTime = try container.sdkDecodeIfPresent(.scheduledBackupTime)
-        backupProgress = try container.sdkDecodeIfPresent(.backupProgress)
+        self.backups = try container.sdkDecodeRequired(.backups)
+        self.scheduledBackupTime = try container.sdkDecodeIfPresent(.scheduledBackupTime)
+        self.backupProgress = try container.sdkDecodeIfPresent(.backupProgress)
     }
 }
 
-public extension DatabaseBackups {
-    init(
-        backups: [Backup],
-        scheduledBackupTime: DatabaseBackupsScheduledBackupTime? = nil,
-        backupProgress: String? = nil
-    ) {
+extension DatabaseBackups {
+    public init(backups: [Backup], scheduledBackupTime: DatabaseBackupsScheduledBackupTime? = nil, backupProgress: String? = nil) {
         (self.backups, self.scheduledBackupTime) = (backups, scheduledBackupTime)
         self.backupProgress = backupProgress
     }

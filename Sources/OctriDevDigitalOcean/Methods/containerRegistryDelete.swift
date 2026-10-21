@@ -6,32 +6,11 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContainerRegistryMethods {
-    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To delete your
-    /// container registry, destroying all container image data stored in it, send a DELETE request to `/v2/registry`.
-    /// This operation is not compatible with multiple registries in a DO account. You should use
-    /// `/v2/registries/{registry_name}` instead.
+extension ContainerRegistryMethods {
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To delete your container registry, destroying all container image data stored in it, send a DELETE request to `/v2/registry`. This operation is not compatible with multiple registries in a DO account. You should use `/v2/registries/{registry_name}` instead.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    static func registryDelete(
-        config: ClientConfig,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await (sdkRequest(
-            "DELETE",
-            "/v2/registry",
-            config: config,
-            decoder: .empty,
-            operationId: "registry_delete",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "412": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func registryDelete(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try (await sdkRequest("DELETE", "/v2/registry", config: config, decoder: .empty, operationId: "registry_delete", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "412": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

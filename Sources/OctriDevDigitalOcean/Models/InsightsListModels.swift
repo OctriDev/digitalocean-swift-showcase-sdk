@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// InsightsList domain models
+// InsightsList domain models
 /// Typed representation of the `ListNotificationChannels` API schema.
 public struct ListNotificationChannels: Codable {
     /// Required array value serialized in the `notification_channels` wire field.
@@ -13,27 +13,21 @@ public struct ListNotificationChannels: Codable {
         case notificationChannels = "notification_channels"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ListNotificationChannels {
-    init(from decoder: Decoder) throws {
+extension ListNotificationChannels {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.notificationChannels) else {
-            throw SdkValidationError(
-                field: "notification_channels",
-                code: "required",
-                message: "Validation failed for 'notification_channels': value is required"
-            )
+            throw SdkValidationError(field: "notification_channels", code: "required", message: "Validation failed for 'notification_channels': value is required")
         }
-        notificationChannels = try container.sdkDecodeRequired(.notificationChannels)
+        self.notificationChannels = try container.sdkDecodeRequired(.notificationChannels)
     }
 }
 
-public extension ListNotificationChannels {
-    init(notificationChannels: [NotificationChannel]) {
+extension ListNotificationChannels {
+    public init(notificationChannels: [NotificationChannel]) {
         self.notificationChannels = notificationChannels
     }
 }
@@ -46,19 +40,19 @@ public struct ListAlertInstancesResponseVariant0: Codable {
     }
 
     init() {
-        alertInstances = nil
+        self.alertInstances = nil
     }
 }
 
-public extension ListAlertInstancesResponseVariant0 {
-    init(from decoder: Decoder) throws {
+extension ListAlertInstancesResponseVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        alertInstances = try container.sdkDecodeIfPresent(.alertInstances)
+        self.alertInstances = try container.sdkDecodeIfPresent(.alertInstances)
     }
 }
 
-public extension ListAlertInstancesResponseVariant0 {
-    init(alertInstances: [AlertInstance]? = nil) {
+extension ListAlertInstancesResponseVariant0 {
+    public init(alertInstances: [AlertInstance]? = nil) {
         self.init()
         self.alertInstances = alertInstances
     }
@@ -78,29 +72,23 @@ public struct ListAlertInstancesResponse: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ListAlertInstancesResponse {
-    init(from decoder: Decoder) throws {
+extension ListAlertInstancesResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        alertInstances = try container.sdkDecodeIfPresent(.alertInstances)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.alertInstances = try container.sdkDecodeIfPresent(.alertInstances)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension ListAlertInstancesResponse {
-    init(meta: MetaMeta, alertInstances: [AlertInstance]? = nil, links: PageLinks? = nil) {
+extension ListAlertInstancesResponse {
+    public init(meta: MetaMeta, alertInstances: [AlertInstance]? = nil, links: PageLinks? = nil) {
         (self.meta, self.alertInstances) = (meta, alertInstances)
         self.links = links
     }
@@ -115,27 +103,21 @@ public struct ListAlertRules: Codable {
         case alertRules = "alert_rules"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ListAlertRules {
-    init(from decoder: Decoder) throws {
+extension ListAlertRules {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.alertRules) else {
-            throw SdkValidationError(
-                field: "alert_rules",
-                code: "required",
-                message: "Validation failed for 'alert_rules': value is required"
-            )
+            throw SdkValidationError(field: "alert_rules", code: "required", message: "Validation failed for 'alert_rules': value is required")
         }
-        alertRules = try container.sdkDecodeRequired(.alertRules)
+        self.alertRules = try container.sdkDecodeRequired(.alertRules)
     }
 }
 
-public extension ListAlertRules {
-    init(alertRules: [AlertRule]) {
+extension ListAlertRules {
+    public init(alertRules: [AlertRule]) {
         self.alertRules = alertRules
     }
 }

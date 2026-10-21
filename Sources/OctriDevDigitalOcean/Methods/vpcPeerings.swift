@@ -8,7 +8,7 @@ import Foundation
 #endif
 public enum VpcPeeringsMethods {}
 
-public extension VpcPeeringsMethods {
+extension VpcPeeringsMethods {
     /// To list all of the VPC peerings on your account, send a GET request to `/v2/vpc_peerings`.
     ///
     /// - Parameters:
@@ -16,88 +16,34 @@ public extension VpcPeeringsMethods {
     /// - page: Which 'page' of paginated results to return.
     /// - region: The slug identifier for the region where the resource is
     ///   available.
-    static func vpcPeeringsList(
-        config: ClientConfig,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        region: RegionSlug? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AllVpcPeerings {
-        if let perPage {
+    public static func vpcPeeringsList(config: ClientConfig, perPage: Int? = nil, page: Int? = nil, region: RegionSlug? = nil, requestOptions: RequestOptions? = nil) async throws -> AllVpcPeerings {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/vpc_peerings",
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("page", value: page),
-                SdkQueryParameter("region", value: region),
-            ],
-            decoder: .json,
-            operationId: "vpcPeerings_list",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", "/v2/vpc_peerings", config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+            SdkQueryParameter("region", value: region),
+        ], decoder: .json, operationId: "vpcPeerings_list", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To create a new VPC Peering, send a POST request to `/v2/vpc_peerings` specifying a name and a list of two VPC
-    /// IDs to peer. The response code, 202 Accepted, does not indicate the success or failure of the operation, just
-    /// that the request has been accepted for processing.
-    static func vpcPeeringsCreate(
-        config: ClientConfig,
-        body: [String: JSONValue],
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ProvisioningVpcPeering {
-        try await (sdkRequest(
-            "POST",
-            "/v2/vpc_peerings",
-            config: config,
-            rawBody: sdkEncodeBody(body, contentType: "application/json"),
-            decoder: .json,
-            operationId: "vpcPeerings_create",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    /// To create a new VPC Peering, send a POST request to `/v2/vpc_peerings` specifying a name and a list of two VPC IDs to peer. The response code, 202 Accepted, does not indicate the success or failure of the operation, just that the request has been accepted for processing.
+    public static func vpcPeeringsCreate(config: ClientConfig, body: [String: JSONValue], requestOptions: RequestOptions? = nil) async throws -> ProvisioningVpcPeering {
+        return try (await sdkRequest("POST", "/v2/vpc_peerings", config: config, rawBody: (try sdkEncodeBody(body, contentType: "application/json")), decoder: .json, operationId: "vpcPeerings_create", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To show information about an existing VPC Peering, send a GET request to `/v2/vpc_peerings/$VPC_PEERING_ID`.
     ///
     /// - Parameters:
     /// - vpcPeeringId: A unique identifier for a VPC peering.
-    static func vpcPeeringsGet(
-        config: ClientConfig,
-        vpcPeeringId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ActiveVpcPeering {
+    public static func vpcPeeringsGet(config: ClientConfig, vpcPeeringId: String, requestOptions: RequestOptions? = nil) async throws -> ActiveVpcPeering {
         try sdkValidateUuid("vpc_peering_id", vpcPeeringId)
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/vpc_peerings/", sdkEncodePathSegment(sdkWireString(vpcPeeringId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "vpcPeerings_get",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/vpc_peerings/", sdkEncodePathSegment(sdkWireString(vpcPeeringId))].joined(), config: config, decoder: .json, operationId: "vpcPeerings_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

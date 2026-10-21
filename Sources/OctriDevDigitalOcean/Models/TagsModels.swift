@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Tags domain models
+// Tags domain models
 /// An embedded object containing key value pairs of resource type and resource statistics. It also includes a count
 /// of the total number of resources tagged with the current tag as well as a `last_tagged_uri` attribute set to the
 /// last resource tagged with the current tag. This will only include resources that you are authorized to see. For
@@ -37,60 +37,36 @@ public struct TagsResources: Codable {
     }
 
     init() {
-        (count, lastTaggedUri, droplets, imgages, volumes) = (nil, nil, nil, nil, nil)
-        (volumeSnapshots, databases) = (nil, nil)
+        (self.count, self.lastTaggedUri, self.droplets, self.imgages, self.volumes) = (nil, nil, nil, nil, nil)
+        (self.volumeSnapshots, self.databases) = (nil, nil)
     }
 }
 
-public extension TagsResources {
-    init(from decoder: Decoder) throws {
+extension TagsResources {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        count = try container.sdkDecodeIfPresent(.count)
-        lastTaggedUri = try container.sdkDecodeIfPresent(.lastTaggedUri)
-        droplets = try container.sdkDecodeIfPresent(.droplets)
-        imgages = try container.sdkDecodeIfPresent(.imgages)
-        volumes = try container.sdkDecodeIfPresent(.volumes)
-        volumeSnapshots = try container.sdkDecodeIfPresent(.volumeSnapshots)
-        databases = try container.sdkDecodeIfPresent(.databases)
-        if let value = count {
-            try validateRange(
-                "count",
-                Double(value),
-                min: 0,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.count = try container.sdkDecodeIfPresent(.count)
+        self.lastTaggedUri = try container.sdkDecodeIfPresent(.lastTaggedUri)
+        self.droplets = try container.sdkDecodeIfPresent(.droplets)
+        self.imgages = try container.sdkDecodeIfPresent(.imgages)
+        self.volumes = try container.sdkDecodeIfPresent(.volumes)
+        self.volumeSnapshots = try container.sdkDecodeIfPresent(.volumeSnapshots)
+        self.databases = try container.sdkDecodeIfPresent(.databases)
+        if let value = self.count {
+            try validateRange("count", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
-public extension TagsResources {
-    init(
-        count: Int? = nil,
-        lastTaggedUri: String? = nil,
-        droplets: TagsMetadata? = nil,
-        imgages: TagsMetadata? = nil,
-        volumes: TagsMetadata? = nil,
-        volumeSnapshots: TagsMetadata? = nil,
-        databases: TagsMetadata? = nil
-    ) throws {
+extension TagsResources {
+    public init(count: Int? = nil, lastTaggedUri: String? = nil, droplets: TagsMetadata? = nil, imgages: TagsMetadata? = nil, volumes: TagsMetadata? = nil, volumeSnapshots: TagsMetadata? = nil, databases: TagsMetadata? = nil) throws {
         self.init()
         (self.count, self.lastTaggedUri) = (count, lastTaggedUri)
         (self.droplets, self.imgages) = (droplets, imgages)
         (self.volumes, self.volumeSnapshots) = (volumes, volumeSnapshots)
         self.databases = databases
         if let value = self.count {
-            try validateRange(
-                "count",
-                Double(value),
-                min: 0,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("count", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -112,36 +88,26 @@ public struct ErrorWithRootCauses: Codable {
         case messages
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ErrorWithRootCauses {
-    init(from decoder: Decoder) throws {
+extension ErrorWithRootCauses {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.error) else {
-            throw SdkValidationError(
-                field: "error",
-                code: "required",
-                message: "Validation failed for 'error': value is required"
-            )
+            throw SdkValidationError(field: "error", code: "required", message: "Validation failed for 'error': value is required")
         }
         guard container.contains(.rootCauses) else {
-            throw SdkValidationError(
-                field: "root_causes",
-                code: "required",
-                message: "Validation failed for 'root_causes': value is required"
-            )
+            throw SdkValidationError(field: "root_causes", code: "required", message: "Validation failed for 'root_causes': value is required")
         }
-        error = try container.sdkDecodeRequired(.error)
-        rootCauses = try container.sdkDecodeRequired(.rootCauses)
-        messages = try container.sdkDecodeIfPresent(.messages)
+        self.error = try container.sdkDecodeRequired(.error)
+        self.rootCauses = try container.sdkDecodeRequired(.rootCauses)
+        self.messages = try container.sdkDecodeIfPresent(.messages)
     }
 }
 
-public extension ErrorWithRootCauses {
-    init(error: String, rootCauses: [String], messages: [String]? = nil) {
+extension ErrorWithRootCauses {
+    public init(error: String, rootCauses: [String], messages: [String]? = nil) {
         (self.error, self.rootCauses) = (error, rootCauses)
         self.messages = messages
     }
@@ -162,43 +128,27 @@ public struct TagsMetadata: Codable {
     }
 
     init() {
-        (count, lastTaggedUri) = (nil, nil)
+        (self.count, self.lastTaggedUri) = (nil, nil)
     }
 }
 
-public extension TagsMetadata {
-    init(from decoder: Decoder) throws {
+extension TagsMetadata {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        count = try container.sdkDecodeIfPresent(.count)
-        lastTaggedUri = try container.sdkDecodeIfPresent(.lastTaggedUri)
-        if let value = count {
-            try validateRange(
-                "count",
-                Double(value),
-                min: 0,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+        self.count = try container.sdkDecodeIfPresent(.count)
+        self.lastTaggedUri = try container.sdkDecodeIfPresent(.lastTaggedUri)
+        if let value = self.count {
+            try validateRange("count", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
 
-public extension TagsMetadata {
-    init(count: Int? = nil, lastTaggedUri: String? = nil) throws {
+extension TagsMetadata {
+    public init(count: Int? = nil, lastTaggedUri: String? = nil) throws {
         self.init()
         (self.count, self.lastTaggedUri) = (count, lastTaggedUri)
         if let value = self.count {
-            try validateRange(
-                "count",
-                Double(value),
-                min: 0,
-                max: nil,
-                exclusiveMin: nil,
-                exclusiveMax: nil,
-                multipleOf: nil
-            )
+            try validateRange("count", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
         }
     }
 }
@@ -218,20 +168,20 @@ public struct TagsResourceResourcesItem: Codable {
     }
 
     init() {
-        (resourceId, resourceType) = (nil, nil)
+        (self.resourceId, self.resourceType) = (nil, nil)
     }
 }
 
-public extension TagsResourceResourcesItem {
-    init(from decoder: Decoder) throws {
+extension TagsResourceResourcesItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        resourceId = try container.sdkDecodeIfPresent(.resourceId)
-        resourceType = try container.sdkDecodeIfPresent(.resourceType)
+        self.resourceId = try container.sdkDecodeIfPresent(.resourceId)
+        self.resourceType = try container.sdkDecodeIfPresent(.resourceType)
     }
 }
 
-public extension TagsResourceResourcesItem {
-    init(resourceId: String? = nil, resourceType: TagsResourceResourcesItemResourceType? = nil) {
+extension TagsResourceResourcesItem {
+    public init(resourceId: String? = nil, resourceType: TagsResourceResourcesItemResourceType? = nil) {
         self.init()
         (self.resourceId, self.resourceType) = (resourceId, resourceType)
     }
@@ -250,27 +200,21 @@ public struct TagsResource: Codable {
         case resources
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension TagsResource {
-    init(from decoder: Decoder) throws {
+extension TagsResource {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.resources) else {
-            throw SdkValidationError(
-                field: "resources",
-                code: "required",
-                message: "Validation failed for 'resources': value is required"
-            )
+            throw SdkValidationError(field: "resources", code: "required", message: "Validation failed for 'resources': value is required")
         }
-        resources = try container.sdkDecodeRequired(.resources)
+        self.resources = try container.sdkDecodeRequired(.resources)
     }
 }
 
-public extension TagsResource {
-    init(resources: [TagsResourceResourcesItem]) {
+extension TagsResource {
+    public init(resources: [TagsResourceResourcesItem]) {
         self.resources = resources
     }
 }
@@ -306,24 +250,24 @@ public struct Tags: Codable {
     }
 
     init() {
-        (name, resources) = (nil, nil)
+        (self.name, self.resources) = (nil, nil)
     }
 }
 
-public extension Tags {
-    init(from decoder: Decoder) throws {
+extension Tags {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        resources = try container.sdkDecodeIfPresent(.resources)
-        if let value = name {
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.resources = try container.sdkDecodeIfPresent(.resources)
+        if let value = self.name {
             try validateLength("name", value, min: nil, max: 255)
             try sdkValidatePattern("name", value, sdkPattern6b8f6cfdcfdf)
         }
     }
 }
 
-public extension Tags {
-    init(name: String? = nil, resources: TagsResources? = nil) throws {
+extension Tags {
+    public init(name: String? = nil, resources: TagsResources? = nil) throws {
         self.init()
         (self.name, self.resources) = (name, resources)
         if let value = self.name {
@@ -346,19 +290,19 @@ public struct TagsExisting: Codable {
     }
 
     init() {
-        tag = nil
+        self.tag = nil
     }
 }
 
-public extension TagsExisting {
-    init(from decoder: Decoder) throws {
+extension TagsExisting {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        tag = try container.sdkDecodeIfPresent(.tag)
+        self.tag = try container.sdkDecodeIfPresent(.tag)
     }
 }
 
-public extension TagsExisting {
-    init(tag: Tags? = nil) {
+extension TagsExisting {
+    public init(tag: Tags? = nil) {
         self.init()
         self.tag = tag
     }
@@ -382,23 +326,23 @@ public struct TagsRequest: Codable {
     }
 
     init() {
-        name = nil
+        self.name = nil
     }
 }
 
-public extension TagsRequest {
-    init(from decoder: Decoder) throws {
+extension TagsRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        if let value = name {
+        self.name = try container.sdkDecodeIfPresent(.name)
+        if let value = self.name {
             try validateLength("name", value, min: nil, max: 255)
             try sdkValidatePattern("name", value, sdkPattern6b8f6cfdcfdf)
         }
     }
 }
 
-public extension TagsRequest {
-    init(name: String? = nil) throws {
+extension TagsRequest {
+    public init(name: String? = nil) throws {
         self.init()
         self.name = name
         if let value = self.name {
@@ -421,19 +365,19 @@ public struct TagsNew: Codable {
     }
 
     init() {
-        tag = nil
+        self.tag = nil
     }
 }
 
-public extension TagsNew {
-    init(from decoder: Decoder) throws {
+extension TagsNew {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        tag = try container.sdkDecodeIfPresent(.tag)
+        self.tag = try container.sdkDecodeIfPresent(.tag)
     }
 }
 
-public extension TagsNew {
-    init(tag: Tags? = nil) {
+extension TagsNew {
+    public init(tag: Tags? = nil) {
         self.init()
         self.tag = tag
     }
@@ -453,29 +397,23 @@ public struct TagsAll: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension TagsAll {
-    init(from decoder: Decoder) throws {
+extension TagsAll {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension TagsAll {
-    init(meta: MetaMeta, tags: [Tags]? = nil, links: PageLinks? = nil) {
+extension TagsAll {
+    public init(meta: MetaMeta, tags: [Tags]? = nil, links: PageLinks? = nil) {
         (self.meta, self.tags) = (meta, tags)
         self.links = links
     }
@@ -489,19 +427,19 @@ public struct TagsAllVariant0: Codable {
     }
 
     init() {
-        tags = nil
+        self.tags = nil
     }
 }
 
-public extension TagsAllVariant0 {
-    init(from decoder: Decoder) throws {
+extension TagsAllVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        tags = try container.sdkDecodeIfPresent(.tags)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-public extension TagsAllVariant0 {
-    init(tags: [Tags]? = nil) {
+extension TagsAllVariant0 {
+    public init(tags: [Tags]? = nil) {
         self.init()
         self.tags = tags
     }
@@ -511,10 +449,7 @@ public extension TagsAllVariant0 {
 public struct TagsResourceResourcesItemResourceType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let droplet = TagsResourceResourcesItemResourceType(rawValue: "droplet")
     public static let image = TagsResourceResourcesItemResourceType(rawValue: "image")
     public static let volume = TagsResourceResourcesItemResourceType(rawValue: "volume")
@@ -522,7 +457,7 @@ public struct TagsResourceResourcesItemResourceType: RawRepresentable, Hashable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

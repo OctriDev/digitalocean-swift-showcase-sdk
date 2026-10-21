@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// VectorDatabases domain models
+// VectorDatabases domain models
 /// Typed representation of the `VectordbUpdateVectorDBTagsResponse` API schema.
 public struct VectordbUpdateVectorDBTagsResponse: Codable {
     /// VectorDB represents a provisioned vector database instance.
@@ -14,19 +14,19 @@ public struct VectordbUpdateVectorDBTagsResponse: Codable {
     }
 
     init() {
-        vectorDb = nil
+        self.vectorDb = nil
     }
 }
 
-public extension VectordbUpdateVectorDBTagsResponse {
-    init(from decoder: Decoder) throws {
+extension VectordbUpdateVectorDBTagsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        vectorDb = try container.sdkDecodeIfPresent(.vectorDb)
+        self.vectorDb = try container.sdkDecodeIfPresent(.vectorDb)
     }
 }
 
-public extension VectordbUpdateVectorDBTagsResponse {
-    init(vectorDb: VectordbVectorDB? = nil) {
+extension VectordbUpdateVectorDBTagsResponse {
+    public init(vectorDb: VectordbVectorDB? = nil) {
         self.init()
         self.vectorDb = vectorDb
     }
@@ -47,20 +47,20 @@ public struct VectordbUpdateVectorDBTagsRequest: Codable {
     }
 
     init() {
-        (id, tags) = (nil, nil)
+        (self.id, self.tags) = (nil, nil)
     }
 }
 
-public extension VectordbUpdateVectorDBTagsRequest {
-    init(from decoder: Decoder) throws {
+extension VectordbUpdateVectorDBTagsRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        tags = try container.sdkDecodeIfPresent(.tags)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-public extension VectordbUpdateVectorDBTagsRequest {
-    init(id: String? = nil, tags: [String]? = nil) {
+extension VectordbUpdateVectorDBTagsRequest {
+    public init(id: String? = nil, tags: [String]? = nil) {
         self.init()
         (self.id, self.tags) = (id, tags)
     }

@@ -6,40 +6,15 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AgentPlatformApiMethods {
-    /// To delete a function route from an agent, send a DELETE request to
-    /// `/v2/gen-ai/agents/{agent_uuid}/functions/{function_uuid}`.
+extension AgentPlatformApiMethods {
+    /// To delete a function route from an agent, send a DELETE request to `/v2/gen-ai/agents/{agent_uuid}/functions/{function_uuid}`.
     ///
     /// - Parameters:
     /// - agentUuid: The id of the agent the function route belongs to.
     /// - functionUuid: The function route to be destroyed. This does not destroy
     ///   the function itself.
-    static func genaiDetachAgentFunction(
-        config: ClientConfig,
-        agentUuid: String,
-        functionUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiUnlinkAgentFunctionOutput {
-        try await (sdkRequest(
-            "DELETE",
-            [
-                "/v2/gen-ai/agents/",
-                sdkEncodePathSegment(sdkWireString(agentUuid)),
-                "/functions/",
-                sdkEncodePathSegment(sdkWireString(functionUuid)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "genai_detach_agent_function",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func genaiDetachAgentFunction(config: ClientConfig, agentUuid: String, functionUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiUnlinkAgentFunctionOutput {
+        return try (await sdkRequest("DELETE", ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(agentUuid)), "/functions/", sdkEncodePathSegment(sdkWireString(functionUuid))].joined(), config: config, decoder: .json, operationId: "genai_detach_agent_function", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
     /// To attach guardrails to an agent, send a POST request to `/v2/gen-ai/agents/{agent_uuid}/guardrails`.
@@ -48,64 +23,18 @@ public extension AgentPlatformApiMethods {
     /// - agentUuid: The UUID of the agent.
     /// - agentUuid2: The UUID of the agent.
     /// - guardrails: The list of guardrails to attach.
-    static func genaiAttachAgentGuardrails(
-        config: ClientConfig,
-        agentUuid: String,
-        agentUuid2: String? = nil,
-        guardrails: [ApiAgentGuardrailInput]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiLinkAgentGuardrailOutput {
+    public static func genaiAttachAgentGuardrails(config: ClientConfig, agentUuid: String, agentUuid2: String? = nil, guardrails: [ApiAgentGuardrailInput]? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiLinkAgentGuardrailOutput {
         let requestBody = GenaiAttachAgentGuardrailsRequestBody(agentUuid2: agentUuid2, guardrails: guardrails)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(agentUuid)), "/guardrails"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "genai_attach_agent_guardrails",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(agentUuid)), "/guardrails"].joined(), config: config, body: requestBody, decoder: .json, operationId: "genai_attach_agent_guardrails", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To detach a guardrail from an agent, send a DELETE request to
-    /// `/v2/gen-ai/agents/{agent_uuid}/guardrails/{guardrail_uuid}`.
+    /// To detach a guardrail from an agent, send a DELETE request to `/v2/gen-ai/agents/{agent_uuid}/guardrails/{guardrail_uuid}`.
     ///
     /// - Parameters:
     /// - agentUuid: The UUID of the agent.
     /// - guardrailUuid: The UUID of the guardrail to detach.
-    static func genaiDetachAgentGuardrail(
-        config: ClientConfig,
-        agentUuid: String,
-        guardrailUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ApiUnlinkAgentGuardrailOutput {
-        try await (sdkRequest(
-            "DELETE",
-            [
-                "/v2/gen-ai/agents/",
-                sdkEncodePathSegment(sdkWireString(agentUuid)),
-                "/guardrails/",
-                sdkEncodePathSegment(sdkWireString(guardrailUuid)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "genai_detach_agent_guardrail",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+    public static func genaiDetachAgentGuardrail(config: ClientConfig, agentUuid: String, guardrailUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiUnlinkAgentGuardrailOutput {
+        return try (await sdkRequest("DELETE", ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(agentUuid)), "/guardrails/", sdkEncodePathSegment(sdkWireString(guardrailUuid))].joined(), config: config, decoder: .json, operationId: "genai_detach_agent_guardrail", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

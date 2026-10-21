@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// ServerlessInference domain models
+// ServerlessInference domain models
 /// Describes a model offering that can be used with the API.
 public struct Model: Codable {
     /// The model identifier, which can be referenced in the API endpoints.
@@ -26,51 +26,33 @@ public struct Model: Codable {
         case ownedBy = "owned_by"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Model {
-    init(from decoder: Decoder) throws {
+extension Model {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.created) else {
-            throw SdkValidationError(
-                field: "created",
-                code: "required",
-                message: "Validation failed for 'created': value is required"
-            )
+            throw SdkValidationError(field: "created", code: "required", message: "Validation failed for 'created': value is required")
         }
         guard container.contains(.object) else {
-            throw SdkValidationError(
-                field: "object",
-                code: "required",
-                message: "Validation failed for 'object': value is required"
-            )
+            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
         }
         guard container.contains(.ownedBy) else {
-            throw SdkValidationError(
-                field: "owned_by",
-                code: "required",
-                message: "Validation failed for 'owned_by': value is required"
-            )
+            throw SdkValidationError(field: "owned_by", code: "required", message: "Validation failed for 'owned_by': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        created = try container.sdkDecodeRequired(.created)
-        object = try container.sdkDecodeRequired(.object)
-        ownedBy = try container.sdkDecodeRequired(.ownedBy)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.created = try container.sdkDecodeRequired(.created)
+        self.object = try container.sdkDecodeRequired(.object)
+        self.ownedBy = try container.sdkDecodeRequired(.ownedBy)
     }
 }
 
-public extension Model {
-    init(id: String, created: Int, object: ModelObject, ownedBy: String) {
+extension Model {
+    public init(id: String, created: Int, object: ModelObject, ownedBy: String) {
         (self.id, self.created) = (id, created)
         (self.object, self.ownedBy) = (object, ownedBy)
     }
@@ -89,35 +71,25 @@ public struct ListModelsResponse: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ListModelsResponse {
-    init(from decoder: Decoder) throws {
+extension ListModelsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.object) else {
-            throw SdkValidationError(
-                field: "object",
-                code: "required",
-                message: "Validation failed for 'object': value is required"
-            )
+            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
         }
         guard container.contains(.data) else {
-            throw SdkValidationError(
-                field: "data",
-                code: "required",
-                message: "Validation failed for 'data': value is required"
-            )
+            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
         }
-        object = try container.sdkDecodeRequired(.object)
-        data = try container.sdkDecodeRequired(.data)
+        self.object = try container.sdkDecodeRequired(.object)
+        self.data = try container.sdkDecodeRequired(.data)
     }
 }
 
-public extension ListModelsResponse {
-    init(object: ListModelsResponseObject, data: [Model]) {
+extension ListModelsResponse {
+    public init(object: ListModelsResponseObject, data: [Model]) {
         (self.object, self.data) = (object, data)
     }
 }
@@ -126,15 +98,12 @@ public extension ListModelsResponse {
 public struct ListModelsResponseObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = ListModelsResponseObject(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -147,15 +116,12 @@ public struct ListModelsResponseObject: RawRepresentable, Hashable, Codable, Sen
 public struct ModelObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let model = ModelObject(rawValue: "model")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

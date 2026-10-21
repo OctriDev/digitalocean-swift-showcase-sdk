@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiList domain models
+// AgentPlatformAPIApiList domain models
 /// Typed representation of the `ApiListEvaluationMetricsOutput` API schema.
 public struct ApiListEvaluationMetricsOutput: Codable {
     /// Optional array value serialized in the `metrics` wire field.
@@ -14,19 +14,19 @@ public struct ApiListEvaluationMetricsOutput: Codable {
     }
 
     init() {
-        metrics = nil
+        self.metrics = nil
     }
 }
 
-public extension ApiListEvaluationMetricsOutput {
-    init(from decoder: Decoder) throws {
+extension ApiListEvaluationMetricsOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        metrics = try container.sdkDecodeIfPresent(.metrics)
+        self.metrics = try container.sdkDecodeIfPresent(.metrics)
     }
 }
 
-public extension ApiListEvaluationMetricsOutput {
-    init(metrics: [ApiEvaluationMetric]? = nil) {
+extension ApiListEvaluationMetricsOutput {
+    public init(metrics: [ApiEvaluationMetric]? = nil) {
         self.init()
         self.metrics = metrics
     }

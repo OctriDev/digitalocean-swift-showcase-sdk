@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension MonitoringMethods {
-    struct MonitoringCreateAlertPolicyOptions: Codable {
+extension MonitoringMethods {
+    public struct MonitoringCreateAlertPolicyOptions: Codable {
         public var alerts: Alerts
         public var compare: AlertPolicyRequestCompare
         public var description: String
@@ -18,26 +18,20 @@ public extension MonitoringMethods {
         public var value: Double
         public var window: AlertPolicyRequestWindow
 
-        public init(
-            required1: MonitoringCreateAlertPolicyOptionsRequired1,
-            required2: MonitoringCreateAlertPolicyOptionsRequired2
-        ) {
-            alerts = required1.alerts
-            compare = required1.compare
-            description = required1.description
-            enabled = required1.enabled
-            entities = required1.entities
-            tags = required1.tags
-            type = required1.type
-            value = required2.value
-            window = required2.window
+        public init(required1: MonitoringCreateAlertPolicyOptionsRequired1, required2: MonitoringCreateAlertPolicyOptionsRequired2) {
+            self.alerts = required1.alerts
+            self.compare = required1.compare
+            self.description = required1.description
+            self.enabled = required1.enabled
+            self.entities = required1.entities
+            self.tags = required1.tags
+            self.type = required1.type
+            self.value = required2.value
+            self.window = required2.window
         }
     }
 
-    /// Creates an alert policy that monitors a selected metric for droplets, load balancers, databases, or autoscale
-    /// pools. Set `type`, `entities`, and `tags` to define what the policy monitors; when both `entities` and `tags`
-    /// are empty, it applies to all entities of the selected type in the account. A 200 response returns the alert
-    /// policy, including its generated UUID.
+    /// Creates an alert policy that monitors a selected metric for droplets, load balancers, databases, or autoscale pools. Set `type`, `entities`, and `tags` to define what the policy monitors; when both `entities` and `tags` are empty, it applies to all entities of the selected type in the account. A 200 response returns the alert policy, including its generated UUID.
     ///
     /// To create a new alert, send a POST request to `/v2/monitoring/alerts`.
     ///
@@ -53,22 +47,9 @@ public extension MonitoringMethods {
     /// - value: Required `float`-formatted value serialized in the `value` wire
     ///   field.
     /// - window: Required enumerated value serialized in the `window` wire field.
-    static func monitoringCreateAlertPolicy(
-        config: ClientConfig,
-        options: MonitoringCreateAlertPolicyOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AlertPolicyResponse {
+    public static func monitoringCreateAlertPolicy(config: ClientConfig, options: MonitoringCreateAlertPolicyOptions, requestOptions: RequestOptions? = nil) async throws -> AlertPolicyResponse {
         let requestBody = MonitoringCreateAlertPolicyRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/monitoring/alerts",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "monitoring_create_alertPolicy",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+        return try (await sdkRequest("POST", "/v2/monitoring/alerts", config: config, body: requestBody, decoder: .json, operationId: "monitoring_create_alertPolicy", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DedicatedInference domain models
+// DedicatedInference domain models
 /// Supported GPU and model configurations for Dedicated Inference.
 public struct DedicatedInferenceGpuModelConfigsResponse: Codable {
     /// Optional array value serialized in the `gpu_model_configs` wire field.
@@ -14,19 +14,19 @@ public struct DedicatedInferenceGpuModelConfigsResponse: Codable {
     }
 
     init() {
-        gpuModelConfigs = nil
+        self.gpuModelConfigs = nil
     }
 }
 
-public extension DedicatedInferenceGpuModelConfigsResponse {
-    init(from decoder: Decoder) throws {
+extension DedicatedInferenceGpuModelConfigsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        gpuModelConfigs = try container.sdkDecodeIfPresent(.gpuModelConfigs)
+        self.gpuModelConfigs = try container.sdkDecodeIfPresent(.gpuModelConfigs)
     }
 }
 
-public extension DedicatedInferenceGpuModelConfigsResponse {
-    init(gpuModelConfigs: [DedicatedInferenceGpuModelConfig]? = nil) {
+extension DedicatedInferenceGpuModelConfigsResponse {
+    public init(gpuModelConfigs: [DedicatedInferenceGpuModelConfig]? = nil) {
         self.init()
         self.gpuModelConfigs = gpuModelConfigs
     }
@@ -54,22 +54,22 @@ public struct DedicatedInferenceGpuModelConfig: Codable {
     }
 
     init() {
-        (gpuSlugs, modelSlug, modelName, isGatedModel) = (nil, nil, nil, nil)
+        (self.gpuSlugs, self.modelSlug, self.modelName, self.isGatedModel) = (nil, nil, nil, nil)
     }
 }
 
-public extension DedicatedInferenceGpuModelConfig {
-    init(from decoder: Decoder) throws {
+extension DedicatedInferenceGpuModelConfig {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        gpuSlugs = try container.sdkDecodeIfPresent(.gpuSlugs)
-        modelSlug = try container.sdkDecodeIfPresent(.modelSlug)
-        modelName = try container.sdkDecodeIfPresent(.modelName)
-        isGatedModel = try container.sdkDecodeIfPresent(.isGatedModel)
+        self.gpuSlugs = try container.sdkDecodeIfPresent(.gpuSlugs)
+        self.modelSlug = try container.sdkDecodeIfPresent(.modelSlug)
+        self.modelName = try container.sdkDecodeIfPresent(.modelName)
+        self.isGatedModel = try container.sdkDecodeIfPresent(.isGatedModel)
     }
 }
 
-public extension DedicatedInferenceGpuModelConfig {
-    init(gpuSlugs: [String]? = nil, modelSlug: String? = nil, modelName: String? = nil, isGatedModel: Bool? = nil) {
+extension DedicatedInferenceGpuModelConfig {
+    public init(gpuSlugs: [String]? = nil, modelSlug: String? = nil, modelName: String? = nil, isGatedModel: Bool? = nil) {
         self.init()
         (self.gpuSlugs, self.modelSlug) = (gpuSlugs, modelSlug)
         (self.modelName, self.isGatedModel) = (modelName, isGatedModel)

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Functions domain models
+// Functions domain models
 public struct ListNamespacesVariant0: Codable {
     public var namespaces: [NamespaceInfo]?
 
@@ -12,19 +12,19 @@ public struct ListNamespacesVariant0: Codable {
     }
 
     init() {
-        namespaces = nil
+        self.namespaces = nil
     }
 }
 
-public extension ListNamespacesVariant0 {
-    init(from decoder: Decoder) throws {
+extension ListNamespacesVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        namespaces = try container.sdkDecodeIfPresent(.namespaces)
+        self.namespaces = try container.sdkDecodeIfPresent(.namespaces)
     }
 }
 
-public extension ListNamespacesVariant0 {
-    init(namespaces: [NamespaceInfo]? = nil) {
+extension ListNamespacesVariant0 {
+    public init(namespaces: [NamespaceInfo]? = nil) {
         self.init()
         self.namespaces = namespaces
     }
@@ -39,19 +39,19 @@ public struct ListNamespaces: Codable {
     }
 
     init() {
-        namespaces = nil
+        self.namespaces = nil
     }
 }
 
-public extension ListNamespaces {
-    init(from decoder: Decoder) throws {
+extension ListNamespaces {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        namespaces = try container.sdkDecodeIfPresent(.namespaces)
+        self.namespaces = try container.sdkDecodeIfPresent(.namespaces)
     }
 }
 
-public extension ListNamespaces {
-    init(namespaces: [NamespaceInfo]? = nil) {
+extension ListNamespaces {
+    public init(namespaces: [NamespaceInfo]? = nil) {
         self.init()
         self.namespaces = namespaces
     }

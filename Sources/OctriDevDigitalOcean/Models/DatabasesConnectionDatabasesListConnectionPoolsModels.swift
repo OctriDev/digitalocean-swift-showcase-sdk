@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DatabasesConnection domain models
+// DatabasesConnection domain models
 /// Typed representation of the `ConnectionPools` API schema.
 public struct ConnectionPools: Codable {
     /// An array of connection pool objects.
@@ -14,19 +14,19 @@ public struct ConnectionPools: Codable {
     }
 
     init() {
-        pools = nil
+        self.pools = nil
     }
 }
 
-public extension ConnectionPools {
-    init(from decoder: Decoder) throws {
+extension ConnectionPools {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        pools = try container.sdkDecodeIfPresent(.pools)
+        self.pools = try container.sdkDecodeIfPresent(.pools)
     }
 }
 
-public extension ConnectionPools {
-    init(pools: [ConnectionPool]? = nil) {
+extension ConnectionPools {
+    public init(pools: [ConnectionPool]? = nil) {
         self.init()
         self.pools = pools
     }

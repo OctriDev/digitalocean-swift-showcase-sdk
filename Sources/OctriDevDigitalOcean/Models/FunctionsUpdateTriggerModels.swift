@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Functions domain models
+// Functions domain models
 /// Typed representation of the `UpdateTrigger` API schema.
 public struct UpdateTrigger: Codable {
     /// Indicates weather the trigger is paused or unpaused.
@@ -18,20 +18,20 @@ public struct UpdateTrigger: Codable {
     }
 
     init() {
-        (isEnabled, scheduledDetails) = (nil, nil)
+        (self.isEnabled, self.scheduledDetails) = (nil, nil)
     }
 }
 
-public extension UpdateTrigger {
-    init(from decoder: Decoder) throws {
+extension UpdateTrigger {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        isEnabled = try container.sdkDecodeIfPresent(.isEnabled)
-        scheduledDetails = try container.sdkDecodeIfPresent(.scheduledDetails)
+        self.isEnabled = try container.sdkDecodeIfPresent(.isEnabled)
+        self.scheduledDetails = try container.sdkDecodeIfPresent(.scheduledDetails)
     }
 }
 
-public extension UpdateTrigger {
-    init(isEnabled: Bool? = nil, scheduledDetails: ScheduledDetails? = nil) {
+extension UpdateTrigger {
+    public init(isEnabled: Bool? = nil, scheduledDetails: ScheduledDetails? = nil) {
         self.init()
         (self.isEnabled, self.scheduledDetails) = (isEnabled, scheduledDetails)
     }

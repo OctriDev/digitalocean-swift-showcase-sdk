@@ -3,30 +3,25 @@
 
 import Foundation
 
-/// ActionGatewayDataPlane domain models
+// ActionGatewayDataPlane domain models
 public indirect enum Forbidden {
     case toolResultError(ToolResultError)
     case error2(Error2)
 }
 
 extension Forbidden: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for Forbidden")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -44,12 +39,8 @@ extension Forbidden {
 
 extension Forbidden {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(ToolResultError.self) {
-            return .toolResultError(value)
-        }
-        if let value = try? container.decode(Error2.self) {
-            return .error2(value)
-        }
+        if let value = try? container.decode(ToolResultError.self) { return .toolResultError(value) }
+        if let value = try? container.decode(Error2.self) { return .error2(value) }
         return nil
     }
 }
@@ -81,43 +72,29 @@ public struct ToolResultError: Codable {
         case callId = "call_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ToolResultError {
-    init(from decoder: Decoder) throws {
+extension ToolResultError {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.error) else {
-            throw SdkValidationError(
-                field: "error",
-                code: "required",
-                message: "Validation failed for 'error': value is required"
-            )
+            throw SdkValidationError(field: "error", code: "required", message: "Validation failed for 'error': value is required")
         }
         guard container.contains(.callId) else {
-            throw SdkValidationError(
-                field: "call_id",
-                code: "required",
-                message: "Validation failed for 'call_id': value is required"
-            )
+            throw SdkValidationError(field: "call_id", code: "required", message: "Validation failed for 'call_id': value is required")
         }
-        status = try container.sdkDecodeRequired(.status)
-        error = try container.sdkDecodeRequired(.error)
-        callId = try container.sdkDecodeRequired(.callId)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.error = try container.sdkDecodeRequired(.error)
+        self.callId = try container.sdkDecodeRequired(.callId)
     }
 }
 
-public extension ToolResultError {
-    init(status: ToolResultErrorStatus, error: ErrorEnvelope, callId: String) {
+extension ToolResultError {
+    public init(status: ToolResultErrorStatus, error: ErrorEnvelope, callId: String) {
         (self.status, self.error) = (status, error)
         self.callId = callId
     }
@@ -133,27 +110,21 @@ public struct ApprovalDecision: Codable {
         case decision
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ApprovalDecision {
-    init(from decoder: Decoder) throws {
+extension ApprovalDecision {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.decision) else {
-            throw SdkValidationError(
-                field: "decision",
-                code: "required",
-                message: "Validation failed for 'decision': value is required"
-            )
+            throw SdkValidationError(field: "decision", code: "required", message: "Validation failed for 'decision': value is required")
         }
-        decision = try container.sdkDecodeRequired(.decision)
+        self.decision = try container.sdkDecodeRequired(.decision)
     }
 }
 
-public extension ApprovalDecision {
-    init(decision: ApprovalDecisionDecision) {
+extension ApprovalDecision {
+    public init(decision: ApprovalDecisionDecision) {
         self.decision = decision
     }
 }
@@ -192,44 +163,28 @@ public struct ToolResult: Codable {
         case meta = "_meta"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ToolResult {
-    init(from decoder: Decoder) throws {
+extension ToolResult {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.callId) else {
-            throw SdkValidationError(
-                field: "call_id",
-                code: "required",
-                message: "Validation failed for 'call_id': value is required"
-            )
+            throw SdkValidationError(field: "call_id", code: "required", message: "Validation failed for 'call_id': value is required")
         }
-        status = try container.sdkDecodeRequired(.status)
-        callId = try container.sdkDecodeRequired(.callId)
-        output = try container.sdkDecodeIfPresent(.output)
-        error = try container.sdkDecodeIfPresent(.error)
-        meta = try container.sdkDecodeIfPresent(.meta)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.callId = try container.sdkDecodeRequired(.callId)
+        self.output = try container.sdkDecodeIfPresent(.output)
+        self.error = try container.sdkDecodeIfPresent(.error)
+        self.meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-public extension ToolResult {
-    init(
-        status: ToolResultStatus,
-        callId: String,
-        output: [String: JSONValue]? = nil,
-        error: ErrorEnvelope? = nil,
-        meta: [String: JSONValue]? = nil
-    ) {
+extension ToolResult {
+    public init(status: ToolResultStatus, callId: String, output: [String: JSONValue]? = nil, error: ErrorEnvelope? = nil, meta: [String: JSONValue]? = nil) {
         (self.status, self.callId) = (status, callId)
         (self.output, self.error) = (output, error)
         self.meta = meta
@@ -258,29 +213,24 @@ public struct ErrorEnvelope: Codable {
     }
 
     init() {
-        (self.class, message, retriable, recoveryHint) = (nil, nil, nil, nil)
+        (self.`class`, self.message, self.retriable, self.recoveryHint) = (nil, nil, nil, nil)
     }
 }
 
-public extension ErrorEnvelope {
-    init(from decoder: Decoder) throws {
+extension ErrorEnvelope {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.class = try container.sdkDecodeIfPresent(.class)
-        message = try container.sdkDecodeIfPresent(.message)
-        retriable = try container.sdkDecodeIfPresent(.retriable)
-        recoveryHint = try container.sdkDecodeIfPresent(.recoveryHint)
+        self.`class` = try container.sdkDecodeIfPresent(.`class`)
+        self.message = try container.sdkDecodeIfPresent(.message)
+        self.retriable = try container.sdkDecodeIfPresent(.retriable)
+        self.recoveryHint = try container.sdkDecodeIfPresent(.recoveryHint)
     }
 }
 
-public extension ErrorEnvelope {
-    init(
-        class: ErrorEnvelopeClass? = nil,
-        message: String? = nil,
-        retriable: Bool? = nil,
-        recoveryHint: ErrorEnvelopeRecoveryHint? = nil
-    ) {
+extension ErrorEnvelope {
+    public init(`class`: ErrorEnvelopeClass? = nil, message: String? = nil, retriable: Bool? = nil, recoveryHint: ErrorEnvelopeRecoveryHint? = nil) {
         self.init()
-        (self.class, self.message) = (`class`, message)
+        (self.`class`, self.message) = (`class`, message)
         (self.retriable, self.recoveryHint) = (retriable, recoveryHint)
     }
 }
@@ -304,24 +254,24 @@ public struct ApprovalDecisionResponse: Codable {
     }
 
     init() {
-        (id, status, expiresAt) = (nil, nil, nil)
+        (self.id, self.status, self.expiresAt) = (nil, nil, nil)
     }
 }
 
-public extension ApprovalDecisionResponse {
-    init(from decoder: Decoder) throws {
+extension ApprovalDecisionResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        status = try container.sdkDecodeIfPresent(.status)
-        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
-        if let value = expiresAt {
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+        if let value = self.expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
     }
 }
 
-public extension ApprovalDecisionResponse {
-    init(id: String? = nil, status: ApprovalDecisionResponseStatus? = nil, expiresAt: Date? = nil) throws {
+extension ApprovalDecisionResponse {
+    public init(id: String? = nil, status: ApprovalDecisionResponseStatus? = nil, expiresAt: Date? = nil) throws {
         self.init()
         (self.id, self.status) = (id, status)
         self.expiresAt = expiresAt
@@ -335,15 +285,12 @@ public extension ApprovalDecisionResponse {
 public struct ToolResultErrorStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let failed = ToolResultErrorStatus(rawValue: "failed")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -356,16 +303,13 @@ public struct ToolResultErrorStatus: RawRepresentable, Hashable, Codable, Sendab
 public struct ToolResultStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let succeeded = ToolResultStatus(rawValue: "succeeded")
     public static let failed = ToolResultStatus(rawValue: "failed")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -378,10 +322,7 @@ public struct ToolResultStatus: RawRepresentable, Hashable, Codable, Sendable, S
 public struct ErrorEnvelopeClass: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let invalidArgument = ErrorEnvelopeClass(rawValue: "invalid_argument")
     public static let unauthorized = ErrorEnvelopeClass(rawValue: "unauthorized")
     public static let forbidden = ErrorEnvelopeClass(rawValue: "forbidden")
@@ -399,7 +340,7 @@ public struct ErrorEnvelopeClass: RawRepresentable, Hashable, Codable, Sendable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -412,16 +353,13 @@ public struct ErrorEnvelopeClass: RawRepresentable, Hashable, Codable, Sendable,
 public struct ApprovalDecisionResponseStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let approved = ApprovalDecisionResponseStatus(rawValue: "approved")
     public static let denied = ApprovalDecisionResponseStatus(rawValue: "denied")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -434,10 +372,7 @@ public struct ApprovalDecisionResponseStatus: RawRepresentable, Hashable, Codabl
 public struct ErrorEnvelopeRecoveryHint: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let fixArgs = ErrorEnvelopeRecoveryHint(rawValue: "fix_args")
     public static let refreshAuth = ErrorEnvelopeRecoveryHint(rawValue: "refresh_auth")
     public static let retryLater = ErrorEnvelopeRecoveryHint(rawValue: "retry_later")
@@ -447,7 +382,7 @@ public struct ErrorEnvelopeRecoveryHint: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -460,16 +395,13 @@ public struct ErrorEnvelopeRecoveryHint: RawRepresentable, Hashable, Codable, Se
 public struct ApprovalDecisionDecision: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let approve = ApprovalDecisionDecision(rawValue: "approve")
     public static let deny = ApprovalDecisionDecision(rawValue: "deny")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

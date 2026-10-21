@@ -17,8 +17,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.mcpServersGet(
-                serverRef: decoded("\"docs\"")
-            )
+            serverRef: decoded("\"docs\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -105,8 +105,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.mcpServersListTools(
-                serverRef: decoded("\"docs\"")
-            )
+            serverRef: decoded("\"docs\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -152,9 +152,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.mcpServersPatch(
-                serverRef: decoded("\"docs\""),
-                description: decoded("\"Internal documentation and runbook search.\"")
-            )
+            serverRef: decoded("\"docs\""),
+            description: decoded("\"Internal documentation and runbook search.\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -200,9 +200,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.mcpServersRunResync(
-                serverRef: decoded("\"docs\""),
-                userId: decoded("null")
-            )
+            serverRef: decoded("\"docs\""),
+            userId: decoded("null")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -249,10 +249,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.mcpServersUpdateTools(
-                serverRef: decoded("\"docs\""),
-                enabledToolSlugs: decoded("[\"docs_get_page\"]"),
-                userId: decoded("null")
-            )
+            serverRef: decoded("\"docs\""),
+            enabledToolSlugs: decoded("[\"docs_get_page\"]"),
+            userId: decoded("null")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -298,9 +298,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.microVmsPublicPreview.microvmCheckpointsCreate(
-                microvmId: decoded("\"01a0ef1a-d873-793d-ae6a-5dd6239be62a\""),
-                name: decoded("\"example-checkpoint\"")
-            )
+            microvmId: decoded("\"01a0ef1a-d873-793d-ae6a-5dd6239be62a\""),
+            name: decoded("\"example-checkpoint\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -338,8 +338,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.microVmsPublicPreview.microvmCheckpointsDelete(
-                checkpointId: decoded("\"01a0ed98-0a74-75dd-a625-e4856adbc298\"")
-            )
+            checkpointId: decoded("\"01a0ed98-0a74-75dd-a625-e4856adbc298\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -384,8 +384,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.microVmsPublicPreview.microvmCheckpointsGet(
-                checkpointId: decoded("\"01a0ed98-0a74-75dd-a625-e4856adbc298\"")
-            )
+            checkpointId: decoded("\"01a0ed98-0a74-75dd-a625-e4856adbc298\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -432,10 +432,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.microVmsPublicPreview.microvmCheckpointsList(
-                page: decoded("1"),
-                perPage: decoded("25"),
-                microvmId: decoded("\"01a0ef1a-d873-793d-ae6a-5dd6239be62a\"")
-            )
+            page: decoded("1"),
+            perPage: decoded("25"),
+            microvmId: decoded("\"01a0ef1a-d873-793d-ae6a-5dd6239be62a\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -456,10 +456,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try MicroVmsPublicPreviewMethods.MicrovmsCreateOptions(
-            name: decoded("\"example-microvm\""),
-            source: decoded("{\"oci_ref\":\"docker.io/library/nginx:latest\"}")
-        )
+        var options = try MicroVmsPublicPreviewMethods.MicrovmsCreateOptions(name: decoded("\"example-microvm\""), source: decoded("{\"oci_ref\":\"docker.io/library/nginx:latest\"}"))
         options.region = try decoded("\"mkc1\"")
         options.size = try decoded("{\"cpu\":1,\"memory\":2048}")
         options.networking = try decoded("null")
@@ -489,10 +486,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try MicroVmsPublicPreviewMethods.MicrovmsCreateOptions(
-            name: decoded("\"example-microvm\""),
-            source: decoded("{\"oci_ref\":\"docker.io/library/nginx:latest\"}")
-        )
+        var options = try MicroVmsPublicPreviewMethods.MicrovmsCreateOptions(name: decoded("\"example-microvm\""), source: decoded("{\"oci_ref\":\"docker.io/library/nginx:latest\"}"))
         options.region = try decoded("\"mkc1\"")
         options.size = try decoded("{\"cpu\":1,\"memory\":2048}")
         options.networking = try decoded("null")
@@ -510,8 +504,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.microVmsPublicPreview.microvmsCreate(
-                options: options
-            )
+            options: options
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -549,8 +543,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.microVmsPublicPreview.microvmsDelete(
-                microvmId: decoded("\"01a0ef1a-d873-793d-ae6a-5dd6239be62a\"")
-            )
+            microvmId: decoded("\"01a0ef1a-d873-793d-ae6a-5dd6239be62a\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

@@ -7,60 +7,25 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum Model1ClickApplicationsMethods {
-    /// To list all available 1-Click applications, send a GET request to `/v2/1-clicks`. The `type` may be provided as
-    /// query paramater in order to restrict results to a certain type of 1-Click, for example:
-    /// `/v2/1-clicks?type=droplet`. Current supported types are `kubernetes` and `droplet`. The response will be a JSON
-    /// object with a key called `1_clicks`. This will be set to an array of 1-Click application data, each of which
-    /// will contain the the slug and type for the 1-Click.
+    /// To list all available 1-Click applications, send a GET request to `/v2/1-clicks`. The `type` may be provided as query paramater in order to restrict results to a certain type of 1-Click, for example: `/v2/1-clicks?type=droplet`. Current supported types are `kubernetes` and `droplet`. The response will be a JSON object with a key called `1_clicks`. This will be set to an array of 1-Click application data, each of which will contain the the slug and type for the 1-Click.
     ///
     /// - Parameters:
     /// - type: Restrict results to a certain type of 1-Click.
-    public static func oneClicksList(
-        config: ClientConfig,
-        type: OneClicksListParameter? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> OneClicksAll {
-        try await (sdkRequest(
-            "GET",
-            "/v2/1-clicks",
-            config: config,
-            query: [
-                SdkQueryParameter("type", value: type),
-            ],
-            decoder: .json,
-            operationId: "oneClicks_list",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    public static func oneClicksList(config: ClientConfig, type: OneClicksListParameter? = nil, requestOptions: RequestOptions? = nil) async throws -> OneClicksAll {
+        return try (await sdkRequest("GET", "/v2/1-clicks", config: config, query: [
+            SdkQueryParameter("type", value: type),
+        ], decoder: .json, operationId: "oneClicks_list", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
-
-    /// To install a Kubernetes 1-Click application on a cluster, send a POST request to `/v2/1-clicks/kubernetes`. The
-    /// `addon_slugs` and `cluster_uuid` must be provided as body parameter in order to specify which 1-Click
-    /// application(s) to install. To list all available 1-Click Kubernetes applications, send a request to
-    /// `/v2/1-clicks?type=kubernetes`.
+    /// To install a Kubernetes 1-Click application on a cluster, send a POST request to `/v2/1-clicks/kubernetes`. The `addon_slugs` and `cluster_uuid` must be provided as body parameter in order to specify which 1-Click application(s) to install. To list all available 1-Click Kubernetes applications, send a request to `/v2/1-clicks?type=kubernetes`.
     ///
     /// - Parameters:
     /// - addonSlugs: An array of 1-Click Application slugs to be installed to the
     ///   Kubernetes cluster.
     /// - clusterUuid: A unique ID for the Kubernetes cluster to which the 1-Click
     ///   Applications will be installed.
-    public static func oneClicksInstallKubernetes(
-        config: ClientConfig,
-        addonSlugs: [String],
-        clusterUuid: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> OneClicksCreateResponse {
+    public static func oneClicksInstallKubernetes(config: ClientConfig, addonSlugs: [String], clusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> OneClicksCreateResponse {
         let requestBody = OneClicksInstallKubernetesRequestBody(addonSlugs: addonSlugs, clusterUuid: clusterUuid)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/1-clicks/kubernetes",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "oneClicks_install_kubernetes",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+        return try (await sdkRequest("POST", "/v2/1-clicks/kubernetes", config: config, body: requestBody, decoder: .json, operationId: "oneClicks_install_kubernetes", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

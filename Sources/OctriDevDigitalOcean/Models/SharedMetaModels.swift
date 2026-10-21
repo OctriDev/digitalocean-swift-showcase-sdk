@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// SharedMeta domain models
+// SharedMeta domain models
 /// Information about the response itself.
 public struct MetaProperties: Codable {
     /// Number of objects returned by the request.
@@ -15,19 +15,19 @@ public struct MetaProperties: Codable {
     }
 
     init() {
-        total = nil
+        self.total = nil
     }
 }
 
-public extension MetaProperties {
-    init(from decoder: Decoder) throws {
+extension MetaProperties {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        total = try container.sdkDecodeIfPresent(.total)
+        self.total = try container.sdkDecodeIfPresent(.total)
     }
 }
 
-public extension MetaProperties {
-    init(total: Int? = nil) {
+extension MetaProperties {
+    public init(total: Int? = nil) {
         self.init()
         self.total = total
     }
@@ -44,19 +44,19 @@ public struct MetaMeta: Codable {
     }
 
     init() {
-        total = nil
+        self.total = nil
     }
 }
 
-public extension MetaMeta {
-    init(from decoder: Decoder) throws {
+extension MetaMeta {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        total = try container.sdkDecodeIfPresent(.total)
+        self.total = try container.sdkDecodeIfPresent(.total)
     }
 }
 
-public extension MetaMeta {
-    init(total: Int? = nil) {
+extension MetaMeta {
+    public init(total: Int? = nil) {
         self.init()
         self.total = total
     }
@@ -71,27 +71,21 @@ public struct Meta: Codable {
         case meta
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Meta {
-    init(from decoder: Decoder) throws {
+extension Meta {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
+        self.meta = try container.sdkDecodeRequired(.meta)
     }
 }
 
-public extension Meta {
-    init(meta: MetaMeta) {
+extension Meta {
+    public init(meta: MetaMeta) {
         self.meta = meta
     }
 }

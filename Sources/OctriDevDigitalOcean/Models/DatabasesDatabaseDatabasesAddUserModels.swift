@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DatabasesDatabase domain models
+// DatabasesDatabase domain models
 /// Typed representation of the `DatabaseUserRequest` API schema.
 public struct DatabaseUserRequest: Codable {
     /// The name of a database user.
@@ -20,29 +20,23 @@ public struct DatabaseUserRequest: Codable {
         case settings
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DatabaseUserRequest {
-    init(from decoder: Decoder) throws {
+extension DatabaseUserRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        mysqlSettings = try container.sdkDecodeIfPresent(.mysqlSettings)
-        settings = try container.sdkDecodeIfPresent(.settings)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.mysqlSettings = try container.sdkDecodeIfPresent(.mysqlSettings)
+        self.settings = try container.sdkDecodeIfPresent(.settings)
     }
 }
 
-public extension DatabaseUserRequest {
-    init(name: String, mysqlSettings: MysqlSettings? = nil, settings: UserSettings? = nil) {
+extension DatabaseUserRequest {
+    public init(name: String, mysqlSettings: MysqlSettings? = nil, settings: UserSettings? = nil) {
         (self.name, self.mysqlSettings) = (name, mysqlSettings)
         self.settings = settings
     }

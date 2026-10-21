@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// NFS domain models
+// NFS domain models
 /// Payload for creating a new access point on a share.
 public struct AccessPointRequest: Codable {
     /// The name for the access point. Must be unique per share. Must be 2–63 characters and match
@@ -32,51 +32,33 @@ public struct AccessPointRequest: Codable {
         case vpcId = "vpc_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AccessPointRequest {
-    init(from decoder: Decoder) throws {
+extension AccessPointRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.path) else {
-            throw SdkValidationError(
-                field: "path",
-                code: "required",
-                message: "Validation failed for 'path': value is required"
-            )
+            throw SdkValidationError(field: "path", code: "required", message: "Validation failed for 'path': value is required")
         }
         guard container.contains(.accessPolicy) else {
-            throw SdkValidationError(
-                field: "access_policy",
-                code: "required",
-                message: "Validation failed for 'access_policy': value is required"
-            )
+            throw SdkValidationError(field: "access_policy", code: "required", message: "Validation failed for 'access_policy': value is required")
         }
         guard container.contains(.vpcId) else {
-            throw SdkValidationError(
-                field: "vpc_id",
-                code: "required",
-                message: "Validation failed for 'vpc_id': value is required"
-            )
+            throw SdkValidationError(field: "vpc_id", code: "required", message: "Validation failed for 'vpc_id': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        path = try container.sdkDecodeRequired(.path)
-        accessPolicy = try container.sdkDecodeRequired(.accessPolicy)
-        vpcId = try container.sdkDecodeRequired(.vpcId)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.path = try container.sdkDecodeRequired(.path)
+        self.accessPolicy = try container.sdkDecodeRequired(.accessPolicy)
+        self.vpcId = try container.sdkDecodeRequired(.vpcId)
     }
 }
 
-public extension AccessPointRequest {
-    init(name: String, path: String, accessPolicy: AccessPolicy, vpcId: String) {
+extension AccessPointRequest {
+    public init(name: String, path: String, accessPolicy: AccessPolicy, vpcId: String) {
         (self.name, self.path) = (name, path)
         (self.accessPolicy, self.vpcId) = (accessPolicy, vpcId)
     }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AppsAppsCreate domain models
+// AppsAppsCreate domain models
 /// Typed representation of the `AppsCreateDeploymentRequest` API schema.
 public struct AppsCreateDeploymentRequest: Codable {
     /// Optional `boolean` value serialized in the `force_build` wire field.
@@ -15,19 +15,19 @@ public struct AppsCreateDeploymentRequest: Codable {
     }
 
     init() {
-        forceBuild = nil
+        self.forceBuild = nil
     }
 }
 
-public extension AppsCreateDeploymentRequest {
-    init(from decoder: Decoder) throws {
+extension AppsCreateDeploymentRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        forceBuild = try container.sdkDecodeIfPresent(.forceBuild)
+        self.forceBuild = try container.sdkDecodeIfPresent(.forceBuild)
     }
 }
 
-public extension AppsCreateDeploymentRequest {
-    init(forceBuild: Bool? = nil) {
+extension AppsCreateDeploymentRequest {
+    public init(forceBuild: Bool? = nil) {
         self.init()
         self.forceBuild = forceBuild
     }
@@ -46,28 +46,22 @@ public struct AppsCreateAppRequestRequest: Codable {
         case projectId = "project_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AppsCreateAppRequestRequest {
-    init(from decoder: Decoder) throws {
+extension AppsCreateAppRequestRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.spec) else {
-            throw SdkValidationError(
-                field: "spec",
-                code: "required",
-                message: "Validation failed for 'spec': value is required"
-            )
+            throw SdkValidationError(field: "spec", code: "required", message: "Validation failed for 'spec': value is required")
         }
-        spec = try container.sdkDecodeRequired(.spec)
-        projectId = try container.sdkDecodeIfPresent(.projectId)
+        self.spec = try container.sdkDecodeRequired(.spec)
+        self.projectId = try container.sdkDecodeIfPresent(.projectId)
     }
 }
 
-public extension AppsCreateAppRequestRequest {
-    init(spec: AppSpecRequest, projectId: String? = nil) {
+extension AppsCreateAppRequestRequest {
+    public init(spec: AppSpecRequest, projectId: String? = nil) {
         (self.spec, self.projectId) = (spec, projectId)
     }
 }
@@ -85,28 +79,22 @@ public struct AppsCreateAppRequest: Codable {
         case projectId = "project_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AppsCreateAppRequest {
-    init(from decoder: Decoder) throws {
+extension AppsCreateAppRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.spec) else {
-            throw SdkValidationError(
-                field: "spec",
-                code: "required",
-                message: "Validation failed for 'spec': value is required"
-            )
+            throw SdkValidationError(field: "spec", code: "required", message: "Validation failed for 'spec': value is required")
         }
-        spec = try container.sdkDecodeRequired(.spec)
-        projectId = try container.sdkDecodeIfPresent(.projectId)
+        self.spec = try container.sdkDecodeRequired(.spec)
+        self.projectId = try container.sdkDecodeIfPresent(.projectId)
     }
 }
 
-public extension AppsCreateAppRequest {
-    init(spec: AppSpec, projectId: String? = nil) {
+extension AppsCreateAppRequest {
+    public init(spec: AppSpec, projectId: String? = nil) {
         (self.spec, self.projectId) = (spec, projectId)
     }
 }

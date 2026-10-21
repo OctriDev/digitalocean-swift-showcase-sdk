@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AppsAppsDedicated domain models
+// AppsAppsDedicated domain models
 /// Typed representation of the `AppsDedicatedEgressIp` API schema.
 public struct AppsDedicatedEgressIp: Codable {
     /// Optional `string` value serialized in the `ip` wire field.
@@ -23,21 +23,21 @@ public struct AppsDedicatedEgressIp: Codable {
     }
 
     init() {
-        (ip, id, status) = (nil, nil, nil)
+        (self.ip, self.id, self.status) = (nil, nil, nil)
     }
 }
 
-public extension AppsDedicatedEgressIp {
-    init(from decoder: Decoder) throws {
+extension AppsDedicatedEgressIp {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        ip = try container.sdkDecodeIfPresent(.ip)
-        id = try container.sdkDecodeIfPresent(.id)
-        status = try container.sdkDecodeIfPresent(.status)
+        self.ip = try container.sdkDecodeIfPresent(.ip)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.status = try container.sdkDecodeIfPresent(.status)
     }
 }
 
-public extension AppsDedicatedEgressIp {
-    init(ip: String? = nil, id: String? = nil, status: AppsDedicatedEgressIpStatus? = nil) {
+extension AppsDedicatedEgressIp {
+    public init(ip: String? = nil, id: String? = nil, status: AppsDedicatedEgressIpStatus? = nil) {
         self.init()
         (self.ip, self.id) = (ip, id)
         self.status = status
@@ -48,10 +48,7 @@ public extension AppsDedicatedEgressIp {
 public struct AppsDedicatedEgressIpStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let unknown = AppsDedicatedEgressIpStatus(rawValue: "UNKNOWN")
     public static let assigning = AppsDedicatedEgressIpStatus(rawValue: "ASSIGNING")
     public static let assigned = AppsDedicatedEgressIpStatus(rawValue: "ASSIGNED")
@@ -59,7 +56,7 @@ public struct AppsDedicatedEgressIpStatus: RawRepresentable, Hashable, Codable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AppsApps domain models
+// AppsApps domain models
 public struct AppsResponseVariant0: Codable {
     /// A list of apps
     public var apps: [App]?
@@ -13,19 +13,19 @@ public struct AppsResponseVariant0: Codable {
     }
 
     init() {
-        apps = nil
+        self.apps = nil
     }
 }
 
-public extension AppsResponseVariant0 {
-    init(from decoder: Decoder) throws {
+extension AppsResponseVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        apps = try container.sdkDecodeIfPresent(.apps)
+        self.apps = try container.sdkDecodeIfPresent(.apps)
     }
 }
 
-public extension AppsResponseVariant0 {
-    init(apps: [App]? = nil) {
+extension AppsResponseVariant0 {
+    public init(apps: [App]? = nil) {
         self.init()
         self.apps = apps
     }
@@ -46,29 +46,23 @@ public struct AppsResponse: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AppsResponse {
-    init(from decoder: Decoder) throws {
+extension AppsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        apps = try container.sdkDecodeIfPresent(.apps)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.apps = try container.sdkDecodeIfPresent(.apps)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AppsResponse {
-    init(meta: MetaMeta, apps: [App]? = nil, links: PageLinks? = nil) {
+extension AppsResponse {
+    public init(meta: MetaMeta, apps: [App]? = nil, links: PageLinks? = nil) {
         (self.meta, self.apps) = (meta, apps)
         self.links = links
     }

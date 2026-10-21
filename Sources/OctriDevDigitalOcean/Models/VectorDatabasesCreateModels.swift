@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// VectorDatabases domain models
+// VectorDatabases domain models
 /// Typed representation of the `VectordbCreateVectorDBRequest` API schema.
 public struct VectordbCreateVectorDBRequest: Codable {
     /// Required. Human-readable name for the database.
@@ -31,29 +31,23 @@ public struct VectordbCreateVectorDBRequest: Codable {
     }
 
     init() {
-        (name, projectId, region, size, tags) = (nil, nil, nil, nil, nil)
+        (self.name, self.projectId, self.region, self.size, self.tags) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension VectordbCreateVectorDBRequest {
-    init(from decoder: Decoder) throws {
+extension VectordbCreateVectorDBRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        projectId = try container.sdkDecodeIfPresent(.projectId)
-        region = try container.sdkDecodeIfPresent(.region)
-        size = try container.sdkDecodeIfPresent(.size)
-        tags = try container.sdkDecodeIfPresent(.tags)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.projectId = try container.sdkDecodeIfPresent(.projectId)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.size = try container.sdkDecodeIfPresent(.size)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-public extension VectordbCreateVectorDBRequest {
-    init(
-        name: String? = nil,
-        projectId: String? = nil,
-        region: String? = nil,
-        size: String? = nil,
-        tags: [String]? = nil
-    ) {
+extension VectordbCreateVectorDBRequest {
+    public init(name: String? = nil, projectId: String? = nil, region: String? = nil, size: String? = nil, tags: [String]? = nil) {
         self.init()
         (self.name, self.projectId) = (name, projectId)
         (self.region, self.size) = (region, size)
@@ -71,19 +65,19 @@ public struct VectordbCreateVectorDBResponse: Codable {
     }
 
     init() {
-        vectorDb = nil
+        self.vectorDb = nil
     }
 }
 
-public extension VectordbCreateVectorDBResponse {
-    init(from decoder: Decoder) throws {
+extension VectordbCreateVectorDBResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        vectorDb = try container.sdkDecodeIfPresent(.vectorDb)
+        self.vectorDb = try container.sdkDecodeIfPresent(.vectorDb)
     }
 }
 
-public extension VectordbCreateVectorDBResponse {
-    init(vectorDb: VectordbVectorDB? = nil) {
+extension VectordbCreateVectorDBResponse {
+    public init(vectorDb: VectordbVectorDB? = nil) {
         self.init()
         self.vectorDb = vectorDb
     }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// NFSActions domain models
+// NFSActions domain models
 /// Action response of an NFS share.
 public struct NfsActionsResponse: Codable {
     /// The action that was submitted.
@@ -13,27 +13,21 @@ public struct NfsActionsResponse: Codable {
         case action
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension NfsActionsResponse {
-    init(from decoder: Decoder) throws {
+extension NfsActionsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.action) else {
-            throw SdkValidationError(
-                field: "action",
-                code: "required",
-                message: "Validation failed for 'action': value is required"
-            )
+            throw SdkValidationError(field: "action", code: "required", message: "Validation failed for 'action': value is required")
         }
-        action = try container.sdkDecodeRequired(.action)
+        self.action = try container.sdkDecodeRequired(.action)
     }
 }
 
-public extension NfsActionsResponse {
-    init(action: NfsAction2) {
+extension NfsActionsResponse {
+    public init(action: NfsAction2) {
         self.action = action
     }
 }
@@ -46,19 +40,19 @@ public struct NfsActionAttachVariant1: Codable {
     }
 
     init() {
-        params = nil
+        self.params = nil
     }
 }
 
-public extension NfsActionAttachVariant1 {
-    init(from decoder: Decoder) throws {
+extension NfsActionAttachVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        params = try container.sdkDecodeIfPresent(.params)
+        self.params = try container.sdkDecodeIfPresent(.params)
     }
 }
 
-public extension NfsActionAttachVariant1 {
-    init(params: NfsActionAttachVariant1Params? = nil) {
+extension NfsActionAttachVariant1 {
+    public init(params: NfsActionAttachVariant1Params? = nil) {
         self.init()
         self.params = params
     }
@@ -72,19 +66,19 @@ public struct NfsActionResizeVariant1: Codable {
     }
 
     init() {
-        params = nil
+        self.params = nil
     }
 }
 
-public extension NfsActionResizeVariant1 {
-    init(from decoder: Decoder) throws {
+extension NfsActionResizeVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        params = try container.sdkDecodeIfPresent(.params)
+        self.params = try container.sdkDecodeIfPresent(.params)
     }
 }
 
-public extension NfsActionResizeVariant1 {
-    init(params: NfsActionResizeVariant1Params? = nil) {
+extension NfsActionResizeVariant1 {
+    public init(params: NfsActionResizeVariant1Params? = nil) {
         self.init()
         self.params = params
     }

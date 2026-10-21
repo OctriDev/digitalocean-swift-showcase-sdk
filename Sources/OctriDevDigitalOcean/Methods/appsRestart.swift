@@ -6,10 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AppsMethods {
-    /// Triggers a rolling restart of an app, either across all components or only the components you specify. Pass
-    /// `components` to limit the restart; omit it to restart all components. A successful response includes the
-    /// resulting deployment object.
+extension AppsMethods {
+    /// Triggers a rolling restart of an app, either across all components or only the components you specify. Pass `components` to limit the restart; omit it to restart all components. A successful response includes the resulting deployment object.
     ///
     /// Perform a rolling restart of all or specific components in an app.
     ///
@@ -17,29 +15,9 @@ public extension AppsMethods {
     /// - appId: The app ID
     /// - components: Optional array value serialized in the `components` wire
     ///   field.
-    static func appsRestart(
-        config: ClientConfig,
-        appId: String,
-        components: [String]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppsDeploymentResponse {
+    public static func appsRestart(config: ClientConfig, appId: String, components: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsDeploymentResponse {
         let requestBody = AppsRestartRequestBody(components: components)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/restart"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "apps_restart",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/restart"].joined(), config: config, body: requestBody, decoder: .json, operationId: "apps_restart", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

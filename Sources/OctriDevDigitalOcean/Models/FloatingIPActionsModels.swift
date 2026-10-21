@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// FloatingIPActions domain models
+// FloatingIPActions domain models
 public struct FloatingIpActionsVariant0: Codable {
     public var actions: [Action]?
 
@@ -12,19 +12,19 @@ public struct FloatingIpActionsVariant0: Codable {
     }
 
     init() {
-        actions = nil
+        self.actions = nil
     }
 }
 
-public extension FloatingIpActionsVariant0 {
-    init(from decoder: Decoder) throws {
+extension FloatingIpActionsVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        actions = try container.sdkDecodeIfPresent(.actions)
+        self.actions = try container.sdkDecodeIfPresent(.actions)
     }
 }
 
-public extension FloatingIpActionsVariant0 {
-    init(actions: [Action]? = nil) {
+extension FloatingIpActionsVariant0 {
+    public init(actions: [Action]? = nil) {
         self.init()
         self.actions = actions
     }
@@ -39,30 +39,24 @@ public struct FloatingIPsAction: Codable {
         case type
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension FloatingIPsAction {
-    init(from decoder: Decoder) throws {
+extension FloatingIPsAction {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        try sdkValidateRawEnum("type", type, FloatingIPsActionType.allCases.map(\.rawValue))
+        self.type = try container.sdkDecodeRequired(.type)
+            try sdkValidateRawEnum("type", self.type, FloatingIPsActionType.allCases.map(\.rawValue))
     }
 }
 
-public extension FloatingIPsAction {
-    init(type: FloatingIPsActionType) throws {
+extension FloatingIPsAction {
+    public init(type: FloatingIPsActionType) throws {
         self.type = type
-        try sdkValidateRawEnum("type", self.type, FloatingIPsActionType.allCases.map(\.rawValue))
+            try sdkValidateRawEnum("type", self.type, FloatingIPsActionType.allCases.map(\.rawValue))
     }
 }
 
@@ -79,38 +73,28 @@ public struct FloatingIpActionAssign: Codable {
         case dropletId = "droplet_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension FloatingIpActionAssign {
-    init(from decoder: Decoder) throws {
+extension FloatingIpActionAssign {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.dropletId) else {
-            throw SdkValidationError(
-                field: "droplet_id",
-                code: "required",
-                message: "Validation failed for 'droplet_id': value is required"
-            )
+            throw SdkValidationError(field: "droplet_id", code: "required", message: "Validation failed for 'droplet_id': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        dropletId = try container.sdkDecodeRequired(.dropletId)
-        try sdkValidateRawEnum("type", type, FloatingIPsActionType.allCases.map(\.rawValue))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.dropletId = try container.sdkDecodeRequired(.dropletId)
+            try sdkValidateRawEnum("type", self.type, FloatingIPsActionType.allCases.map(\.rawValue))
     }
 }
 
-public extension FloatingIpActionAssign {
-    init(type: FloatingIPsActionType, dropletId: Int) throws {
+extension FloatingIpActionAssign {
+    public init(type: FloatingIPsActionType, dropletId: Int) throws {
         (self.type, self.dropletId) = (type, dropletId)
-        try sdkValidateRawEnum("type", self.type, FloatingIPsActionType.allCases.map(\.rawValue))
+            try sdkValidateRawEnum("type", self.type, FloatingIPsActionType.allCases.map(\.rawValue))
     }
 }
 
@@ -128,29 +112,23 @@ public struct FloatingIpActions: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension FloatingIpActions {
-    init(from decoder: Decoder) throws {
+extension FloatingIpActions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        actions = try container.sdkDecodeIfPresent(.actions)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.actions = try container.sdkDecodeIfPresent(.actions)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension FloatingIpActions {
-    init(meta: MetaMeta, actions: [Action]? = nil, links: PageLinks? = nil) {
+extension FloatingIpActions {
+    public init(meta: MetaMeta, actions: [Action]? = nil, links: PageLinks? = nil) {
         (self.meta, self.actions) = (meta, actions)
         self.links = links
     }
@@ -165,27 +143,21 @@ public struct FloatingIpActionAssignVariant1: Codable {
         case dropletId = "droplet_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension FloatingIpActionAssignVariant1 {
-    init(from decoder: Decoder) throws {
+extension FloatingIpActionAssignVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.dropletId) else {
-            throw SdkValidationError(
-                field: "droplet_id",
-                code: "required",
-                message: "Validation failed for 'droplet_id': value is required"
-            )
+            throw SdkValidationError(field: "droplet_id", code: "required", message: "Validation failed for 'droplet_id': value is required")
         }
-        dropletId = try container.sdkDecodeRequired(.dropletId)
+        self.dropletId = try container.sdkDecodeRequired(.dropletId)
     }
 }
 
-public extension FloatingIpActionAssignVariant1 {
-    init(dropletId: Int) {
+extension FloatingIpActionAssignVariant1 {
+    public init(dropletId: Int) {
         self.dropletId = dropletId
     }
 }
@@ -201,36 +173,30 @@ public struct FloatingIpActionUnassign: Codable {
         case type
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension FloatingIpActionUnassign {
-    init(from decoder: Decoder) throws {
+extension FloatingIpActionUnassign {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
+        self.type = try container.sdkDecodeRequired(.type)
         additionalProperties = try decoder.sdkAdditionalProperties(besides: CodingKeys.self)
-        try sdkValidateRawEnum("type", type, FloatingIPsActionType.allCases.map(\.rawValue))
+            try sdkValidateRawEnum("type", self.type, FloatingIPsActionType.allCases.map(\.rawValue))
     }
 }
 
-public extension FloatingIpActionUnassign {
-    init(type: FloatingIPsActionType) throws {
+extension FloatingIpActionUnassign {
+    public init(type: FloatingIPsActionType) throws {
         self.type = type
-        try sdkValidateRawEnum("type", self.type, FloatingIPsActionType.allCases.map(\.rawValue))
+            try sdkValidateRawEnum("type", self.type, FloatingIPsActionType.allCases.map(\.rawValue))
     }
 }
 
-public extension FloatingIpActionUnassign {
-    func encode(to encoder: Encoder) throws {
+extension FloatingIpActionUnassign {
+    public func encode(to encoder: Encoder) throws {
         try encoder.sdkEncodeAdditionalProperties(additionalProperties)
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(type, forKey: .type)
@@ -247,19 +213,19 @@ public struct FloatingIpAction: Codable {
     }
 
     init() {
-        action = nil
+        self.action = nil
     }
 }
 
-public extension FloatingIpAction {
-    init(from decoder: Decoder) throws {
+extension FloatingIpAction {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        action = try container.sdkDecodeIfPresent(.action)
+        self.action = try container.sdkDecodeIfPresent(.action)
     }
 }
 
-public extension FloatingIpAction {
-    init(action: FloatingIpActionAction? = nil) {
+extension FloatingIpAction {
+    public init(action: FloatingIpActionAction? = nil) {
         self.init()
         self.action = action
     }
@@ -312,49 +278,38 @@ public struct FloatingIpActionAction: Codable {
     }
 
     init() {
-        (id, status, type, startedAt, completedAt) = (nil, nil, nil, nil, nil)
-        (resourceId, resourceType, region, regionSlug, projectId) = (nil, nil, nil, nil, nil)
+        (self.id, self.status, self.type, self.startedAt, self.completedAt) = (nil, nil, nil, nil, nil)
+        (self.resourceId, self.resourceType, self.region, self.regionSlug, self.projectId) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension FloatingIpActionAction {
-    init(from decoder: Decoder) throws {
+extension FloatingIpActionAction {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        status = try container.sdkDecodeIfPresent(.status)
-        type = try container.sdkDecodeIfPresent(.type)
-        startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        resourceId = try container.sdkDecodeIfPresent(.resourceId)
-        resourceType = try container.sdkDecodeIfPresent(.resourceType)
-        region = try container.sdkDecodeIfPresent(.region)
-        regionSlug = try container.sdkDecodeIfPresent(.regionSlug)
-        projectId = try container.sdkDecodeIfPresent(.projectId)
-        if let value = startedAt {
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        self.resourceId = try container.sdkDecodeIfPresent(.resourceId)
+        self.resourceType = try container.sdkDecodeIfPresent(.resourceType)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.regionSlug = try container.sdkDecodeIfPresent(.regionSlug)
+        self.projectId = try container.sdkDecodeIfPresent(.projectId)
+        if let value = self.startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
-        if let value = completedAt {
+        if let value = self.completedAt {
             try sdkValidateDateTime("completed_at", sdkWireString(value))
         }
-        if let value = projectId {
+        if let value = self.projectId {
             try sdkValidateUuid("project_id", value)
         }
     }
 }
 
-public extension FloatingIpActionAction {
-    init(
-        id: Int? = nil,
-        status: FloatingIpActionActionStatus? = nil,
-        type: String? = nil,
-        startedAt: Date? = nil,
-        completedAt: Date? = nil,
-        resourceId: Int? = nil,
-        resourceType: String? = nil,
-        region: Region? = nil,
-        regionSlug: String? = nil,
-        projectId: String? = nil
-    ) throws {
+extension FloatingIpActionAction {
+    public init(id: Int? = nil, status: FloatingIpActionActionStatus? = nil, type: String? = nil, startedAt: Date? = nil, completedAt: Date? = nil, resourceId: Int? = nil, resourceType: String? = nil, region: Region? = nil, regionSlug: String? = nil, projectId: String? = nil) throws {
         self.init()
         (self.id, self.status) = (id, status)
         (self.type, self.startedAt) = (type, startedAt)
@@ -396,17 +351,14 @@ public enum FloatingIPsActionType: String, CaseIterable, Codable {
 public struct FloatingIpActionActionStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let inProgress = FloatingIpActionActionStatus(rawValue: "in-progress")
     public static let completed = FloatingIpActionActionStatus(rawValue: "completed")
     public static let errored = FloatingIpActionActionStatus(rawValue: "errored")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,22 +3,18 @@
 
 import Foundation
 
-/// Databases domain models
+// Databases domain models
 /// Synchronous replication type. Note that the service plan also needs to support synchronous replication.
-public struct PostgresAdvancedConfigSynchronousReplication: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct PostgresAdvancedConfigSynchronousReplication: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let off = PostgresAdvancedConfigSynchronousReplication(rawValue: "off")
     public static let quorum = PostgresAdvancedConfigSynchronousReplication(rawValue: "quorum")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -33,17 +29,14 @@ public struct PostgresAdvancedConfigSynchronousReplication: RawRepresentable, Ha
 public struct MongoAdvancedConfigDefaultReadConcern: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let local = MongoAdvancedConfigDefaultReadConcern(rawValue: "local")
     public static let available = MongoAdvancedConfigDefaultReadConcern(rawValue: "available")
     public static let majority = MongoAdvancedConfigDefaultReadConcern(rawValue: "majority")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -56,10 +49,7 @@ public struct MongoAdvancedConfigDefaultReadConcern: RawRepresentable, Hashable,
 public struct OnlineMigrationStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let running = OnlineMigrationStatus(rawValue: "running")
     public static let syncing = OnlineMigrationStatus(rawValue: "syncing")
     public static let canceled = OnlineMigrationStatus(rawValue: "canceled")
@@ -68,7 +58,7 @@ public struct OnlineMigrationStatus: RawRepresentable, Hashable, Codable, Sendab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

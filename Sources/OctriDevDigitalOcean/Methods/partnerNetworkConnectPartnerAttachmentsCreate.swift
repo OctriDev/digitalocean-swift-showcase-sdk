@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension PartnerNetworkConnectMethods {
-    struct PartnerAttachmentsCreateOptions: Codable {
+extension PartnerNetworkConnectMethods {
+    public struct PartnerAttachmentsCreateOptions: Codable {
         public var name: String
         public var connectionBandwidthInMbps: Int
         public var region: PartnerAttachmentWritableRegion
@@ -17,13 +17,7 @@ public extension PartnerNetworkConnectMethods {
         public var bgp: PartnerAttachmentWritableBgp?
         public var redundancyZone: PartnerAttachmentWritableRedundancyZone?
 
-        public init(
-            name: String,
-            connectionBandwidthInMbps: Int,
-            region: PartnerAttachmentWritableRegion,
-            naasProvider: String,
-            vpcIds: [String]
-        ) {
+        public init(name: String, connectionBandwidthInMbps: Int, region: PartnerAttachmentWritableRegion, naasProvider: String, vpcIds: [String]) {
             self.name = name
             self.connectionBandwidthInMbps = connectionBandwidthInMbps
             self.region = region
@@ -32,13 +26,9 @@ public extension PartnerNetworkConnectMethods {
         }
     }
 
-    /// Creates a partner attachment that connects VPCs through a partner network provider. Supply `name`,
-    /// `connection_bandwidth_in_mbps`, `region`, `naas_provider`, and `vpc_ids`; the name must use alphanumeric
-    /// characters, dashes, or periods, and the bandwidth and region must be supported values. A 202 response returns
-    /// attachment details, including attached VPC network IDs and BGP configuration information.
+    /// Creates a partner attachment that connects VPCs through a partner network provider. Supply `name`, `connection_bandwidth_in_mbps`, `region`, `naas_provider`, and `vpc_ids`; the name must use alphanumeric characters, dashes, or periods, and the bandwidth and region must be supported values. A 202 response returns attachment details, including attached VPC network IDs and BGP configuration information.
     ///
-    /// To create a new partner attachment, send a `POST` request to `/v2/partner_network_connect/attachments` with a
-    /// JSON object containing the required configuration details.
+    /// To create a new partner attachment, send a `POST` request to `/v2/partner_network_connect/attachments` with a JSON object containing the required configuration details.
     ///
     /// - Parameters:
     /// - name: The name of the partner attachment. Must be unique and may only
@@ -51,33 +41,13 @@ public extension PartnerNetworkConnectMethods {
     /// - parentUuid: Optional associated partner attachment UUID
     /// - bgp: Optional BGP configurations
     /// - redundancyZone: Optional redundancy zone for the partner attachment.
-    static func partnerAttachmentsCreate(
-        config: ClientConfig,
-        options: PartnerAttachmentsCreateOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SinglePartnerAttachment {
+    public static func partnerAttachmentsCreate(config: ClientConfig, options: PartnerAttachmentsCreateOptions, requestOptions: RequestOptions? = nil) async throws -> SinglePartnerAttachment {
         try sdkValidatePattern("name", options.name, sdkPatternef0a913b6e4d)
 
         try validateItems("vpc_ids", options.vpcIds, min: 1)
 
         let requestBody = PartnerAttachmentsCreateRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "POST",
-            "/v2/partner_network_connect/attachments",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "partnerAttachments_create",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "422": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", "/v2/partner_network_connect/attachments", config: config, body: requestBody, decoder: .json, operationId: "partnerAttachments_create", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

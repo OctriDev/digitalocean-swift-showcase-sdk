@@ -17,8 +17,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.getCa(
-                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
-            )
+            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -63,8 +63,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.getCluster(
-                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
-            )
+            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -80,8 +80,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testDatabasesGetClusterMetricsCredentialsDatabasesGetClusterMetriX612ce8570fReachesMockAndDecodesResponse(
-    ) async throws {
+    func testDatabasesGetClusterMetricsCredentialsDatabasesGetClusterMetriX612ce8570fReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -97,8 +96,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testDatabasesGetClusterMetricsCredentialsDatabasesGetClusterMetriX38b5b14731ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testDatabasesGetClusterMetricsCredentialsDatabasesGetClusterMetriX38b5b14731ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -153,8 +151,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.getConfig(
-                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
-            )
+            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -200,9 +198,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.getConnectionPool(
-                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                poolName: decoded("\"backend-pool\"")
-            )
+            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            poolName: decoded("\"backend-pool\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -247,8 +245,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.getDoSettings(
-                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
-            )
+            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -293,8 +291,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.getEvictionPolicy(
-                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
-            )
+            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -340,9 +338,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.getKafkaSchema(
-                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                subjectName: decoded("\"customer-schema\"")
-            )
+            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            subjectName: decoded("\"customer-schema\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -387,8 +385,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.getKafkaSchemaConfig(
-                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
-            )
+            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -404,8 +402,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testDatabasesGetKafkaSchemaSubjectConfigDatabasesGetKafkaSchemaSubjectConfigReachesMockAndDecodesResponse(
-    ) async throws {
+    func testDatabasesGetKafkaSchemaSubjectConfigDatabasesGetKafkaSchemaSubjectConfigReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -424,8 +421,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testDatabasesGetKafkaSchemaSubjectConfigDatabasesGetKafkaSchemaSuX96dfe13ea6ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testDatabasesGetKafkaSchemaSubjectConfigDatabasesGetKafkaSchemaSuX96dfe13ea6ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -436,9 +432,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.getKafkaSchemaSubjectConfig(
-                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                subjectName: decoded("\"customer-schema\"")
-            )
+            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            subjectName: decoded("\"customer-schema\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -474,8 +470,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testDatabasesGetKafkaSchemaVersionDatabasesGetKafkaSchemaVersion401ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testDatabasesGetKafkaSchemaVersionDatabasesGetKafkaSchemaVersion401ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -486,10 +481,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.getKafkaSchemaVersion(
-                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                subjectName: decoded("\"customer-schema\""),
-                version: decoded("\"1\"")
-            )
+            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            subjectName: decoded("\"customer-schema\""),
+            version: decoded("\"1\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -535,9 +530,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.getKafkaTopic(
-                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-                topicName: decoded("\"customer-events\"")
-            )
+            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+            topicName: decoded("\"customer-events\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

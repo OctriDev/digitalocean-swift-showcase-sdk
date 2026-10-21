@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Account domain models
+// Account domain models
 /// Typed representation of the `AccountResponse` API schema.
 public struct AccountResponse: Codable {
     /// Optional object value serialized in the `account` wire field.
@@ -14,19 +14,19 @@ public struct AccountResponse: Codable {
     }
 
     init() {
-        account = nil
+        self.account = nil
     }
 }
 
-public extension AccountResponse {
-    init(from decoder: Decoder) throws {
+extension AccountResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        account = try container.sdkDecodeIfPresent(.account)
+        self.account = try container.sdkDecodeIfPresent(.account)
     }
 }
 
-public extension AccountResponse {
-    init(account: Account? = nil) {
+extension AccountResponse {
+    public init(account: Account? = nil) {
         self.init()
         self.account = account
     }
@@ -47,20 +47,20 @@ public struct AccountTeam: Codable {
     }
 
     init() {
-        (uuid, name) = (nil, nil)
+        (self.uuid, self.name) = (nil, nil)
     }
 }
 
-public extension AccountTeam {
-    init(from decoder: Decoder) throws {
+extension AccountTeam {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        uuid = try container.sdkDecodeIfPresent(.uuid)
-        name = try container.sdkDecodeIfPresent(.name)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        self.name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-public extension AccountTeam {
-    init(uuid: String? = nil, name: String? = nil) {
+extension AccountTeam {
+    public init(uuid: String? = nil, name: String? = nil) {
         self.init()
         (self.uuid, self.name) = (uuid, name)
     }
@@ -108,87 +108,47 @@ public struct Account: Codable {
         case team
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Account {
-    init(from decoder: Decoder) throws {
+extension Account {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.dropletLimit) else {
-            throw SdkValidationError(
-                field: "droplet_limit",
-                code: "required",
-                message: "Validation failed for 'droplet_limit': value is required"
-            )
+            throw SdkValidationError(field: "droplet_limit", code: "required", message: "Validation failed for 'droplet_limit': value is required")
         }
         guard container.contains(.floatingIpLimit) else {
-            throw SdkValidationError(
-                field: "floating_ip_limit",
-                code: "required",
-                message: "Validation failed for 'floating_ip_limit': value is required"
-            )
+            throw SdkValidationError(field: "floating_ip_limit", code: "required", message: "Validation failed for 'floating_ip_limit': value is required")
         }
         guard container.contains(.email) else {
-            throw SdkValidationError(
-                field: "email",
-                code: "required",
-                message: "Validation failed for 'email': value is required"
-            )
+            throw SdkValidationError(field: "email", code: "required", message: "Validation failed for 'email': value is required")
         }
         guard container.contains(.uuid) else {
-            throw SdkValidationError(
-                field: "uuid",
-                code: "required",
-                message: "Validation failed for 'uuid': value is required"
-            )
+            throw SdkValidationError(field: "uuid", code: "required", message: "Validation failed for 'uuid': value is required")
         }
         guard container.contains(.emailVerified) else {
-            throw SdkValidationError(
-                field: "email_verified",
-                code: "required",
-                message: "Validation failed for 'email_verified': value is required"
-            )
+            throw SdkValidationError(field: "email_verified", code: "required", message: "Validation failed for 'email_verified': value is required")
         }
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.statusMessage) else {
-            throw SdkValidationError(
-                field: "status_message",
-                code: "required",
-                message: "Validation failed for 'status_message': value is required"
-            )
+            throw SdkValidationError(field: "status_message", code: "required", message: "Validation failed for 'status_message': value is required")
         }
-        dropletLimit = try container.sdkDecodeRequired(.dropletLimit)
-        floatingIpLimit = try container.sdkDecodeRequired(.floatingIpLimit)
-        email = try container.sdkDecodeRequired(.email)
-        uuid = try container.sdkDecodeRequired(.uuid)
-        emailVerified = try container.sdkDecodeRequired(.emailVerified)
-        status = try container.sdkDecodeRequired(.status)
-        statusMessage = try container.sdkDecodeRequired(.statusMessage)
-        name = try container.sdkDecodeIfPresent(.name)
-        team = try container.sdkDecodeIfPresent(.team)
+        self.dropletLimit = try container.sdkDecodeRequired(.dropletLimit)
+        self.floatingIpLimit = try container.sdkDecodeRequired(.floatingIpLimit)
+        self.email = try container.sdkDecodeRequired(.email)
+        self.uuid = try container.sdkDecodeRequired(.uuid)
+        self.emailVerified = try container.sdkDecodeRequired(.emailVerified)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.statusMessage = try container.sdkDecodeRequired(.statusMessage)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.team = try container.sdkDecodeIfPresent(.team)
     }
 }
 
-public extension Account {
-    init(
-        dropletLimit: Int,
-        floatingIpLimit: Int,
-        email: String,
-        uuid: String,
-        emailVerified: Bool,
-        status: AccountStatus,
-        statusMessage: String,
-        name: String? = nil,
-        team: AccountTeam? = nil
-    ) {
+extension Account {
+    public init(dropletLimit: Int, floatingIpLimit: Int, email: String, uuid: String, emailVerified: Bool, status: AccountStatus, statusMessage: String, name: String? = nil, team: AccountTeam? = nil) {
         (self.dropletLimit, self.floatingIpLimit) = (dropletLimit, floatingIpLimit)
         (self.email, self.uuid) = (email, uuid)
         (self.emailVerified, self.status) = (emailVerified, status)
@@ -201,17 +161,14 @@ public extension Account {
 public struct AccountStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let active = AccountStatus(rawValue: "active")
     public static let warning = AccountStatus(rawValue: "warning")
     public static let locked = AccountStatus(rawValue: "locked")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

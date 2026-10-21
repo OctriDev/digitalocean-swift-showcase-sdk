@@ -6,10 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AppsMethods {
-    /// Update an existing app by submitting a new app specification. For documentation on app specifications (`AppSpec`
-    /// objects), please refer to [the product
-    /// documentation](https://docs.digitalocean.com/products/app-platform/reference/app-spec/).
+extension AppsMethods {
+    /// Update an existing app by submitting a new app specification. For documentation on app specifications (`AppSpec` objects), please refer to [the product documentation](https://docs.digitalocean.com/products/app-platform/reference/app-spec/).
     ///
     /// - Parameters:
     /// - id: The ID of the app
@@ -19,30 +17,9 @@ public extension AppsMethods {
     ///   (when this is false) only newly added sources will be updated to avoid
     ///   changes like updating the scale of a component from also updating the
     ///   respective code.
-    static func appsUpdate(
-        config: ClientConfig,
-        id: String,
-        spec: AppSpecRequest,
-        updateAllSourceVersions: Bool? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppResponse {
+    public static func appsUpdate(config: ClientConfig, id: String, spec: AppSpecRequest, updateAllSourceVersions: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> AppResponse {
         let requestBody = AppsUpdateRequestBody(spec: spec, updateAllSourceVersions: updateAllSourceVersions)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/apps/", sdkEncodePathSegment(sdkWireString(id))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "apps_update",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, body: requestBody, decoder: .json, operationId: "apps_update", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

@@ -6,41 +6,15 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DatabasesMethods {
-    /// To delete a single topic within a Kafka cluster, send a DELETE request to
-    /// `/v2/databases/$DATABASE_ID/topics/$TOPIC_NAME`. A status of 204 will be given. This indicates that the request
-    /// was processed successfully, but that no response body is needed.
+extension DatabasesMethods {
+    /// To delete a single topic within a Kafka cluster, send a DELETE request to `/v2/databases/$DATABASE_ID/topics/$TOPIC_NAME`. A status of 204 will be given. This indicates that the request was processed successfully, but that no response body is needed.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - topicName: The name used to identify the Kafka topic.
-    static func databasesDeleteKafkaTopic(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        topicName: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
+    public static func databasesDeleteKafkaTopic(config: ClientConfig, databaseClusterUuid: String, topicName: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try await (sdkRequest(
-            "DELETE",
-            [
-                "/v2/databases/",
-                sdkEncodePathSegment(sdkWireString(databaseClusterUuid)),
-                "/topics/",
-                sdkEncodePathSegment(sdkWireString(topicName)),
-            ].joined(),
-            config: config,
-            decoder: .empty,
-            operationId: "databases_delete_kafka_topic",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("DELETE", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/topics/", sdkEncodePathSegment(sdkWireString(topicName))].joined(), config: config, decoder: .empty, operationId: "databases_delete_kafka_topic", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

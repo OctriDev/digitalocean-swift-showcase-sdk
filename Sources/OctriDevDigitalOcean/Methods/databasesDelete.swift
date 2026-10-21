@@ -6,41 +6,15 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DatabasesMethods {
-    /// To delete a specific database, send a DELETE request to `/v2/databases/$DATABASE_ID/dbs/$DB_NAME`. A status of
-    /// 204 will be given. This indicates that the request was processed successfully, but that no response body is
-    /// needed. Note: Database management is not supported for Caching or Valkey clusters.
+extension DatabasesMethods {
+    /// To delete a specific database, send a DELETE request to `/v2/databases/$DATABASE_ID/dbs/$DB_NAME`. A status of 204 will be given. This indicates that the request was processed successfully, but that no response body is needed. Note: Database management is not supported for Caching or Valkey clusters.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - databaseName: The name of the database.
-    static func databasesDelete(
-        config: ClientConfig,
-        databaseClusterUuid: String,
-        databaseName: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
+    public static func databasesDelete(config: ClientConfig, databaseClusterUuid: String, databaseName: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try await (sdkRequest(
-            "DELETE",
-            [
-                "/v2/databases/",
-                sdkEncodePathSegment(sdkWireString(databaseClusterUuid)),
-                "/dbs/",
-                sdkEncodePathSegment(sdkWireString(databaseName)),
-            ].joined(),
-            config: config,
-            decoder: .empty,
-            operationId: "databases_delete",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("DELETE", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/dbs/", sdkEncodePathSegment(sdkWireString(databaseName))].joined(), config: config, decoder: .empty, operationId: "databases_delete", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

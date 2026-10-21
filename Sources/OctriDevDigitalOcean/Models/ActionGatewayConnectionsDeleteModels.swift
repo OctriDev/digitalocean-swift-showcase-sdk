@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// ActionGateway domain models
+// ActionGateway domain models
 /// Returns the revoked connection.
 public struct DeleteConnectionResponse: Codable {
     /// The resulting revoked connection.
@@ -14,19 +14,19 @@ public struct DeleteConnectionResponse: Codable {
     }
 
     init() {
-        connection = nil
+        self.connection = nil
     }
 }
 
-public extension DeleteConnectionResponse {
-    init(from decoder: Decoder) throws {
+extension DeleteConnectionResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        connection = try container.sdkDecodeIfPresent(.connection)
+        self.connection = try container.sdkDecodeIfPresent(.connection)
     }
 }
 
-public extension DeleteConnectionResponse {
-    init(connection: Connection? = nil) {
+extension DeleteConnectionResponse {
+    public init(connection: Connection? = nil) {
         self.init()
         self.connection = connection
     }

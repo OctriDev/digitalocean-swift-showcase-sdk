@@ -6,28 +6,11 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContainerRegistryMethods {
-    /// **Note: This endpoint is deprecated and may be removed in a future version. There is no alternative.****Note:
-    /// This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** This endpoint serves to provide
-    /// additional information as to which option values are available when creating a container registry. There are
-    /// multiple subscription tiers available for container registry. Each tier allows a different number of image
-    /// repositories to be created in your registry, and has a different amount of storage and transfer included. There
-    /// are multiple regions available for container registry and controls where your data is stored. To list the
-    /// available options, send a GET request to `/v2/registry/options`.
+extension ContainerRegistryMethods {
+    /// **Note: This endpoint is deprecated and may be removed in a future version. There is no alternative.****Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** This endpoint serves to provide additional information as to which option values are available when creating a container registry. There are multiple subscription tiers available for container registry. Each tier allows a different number of image repositories to be created in your registry, and has a different amount of storage and transfer included. There are multiple regions available for container registry and controls where your data is stored. To list the available options, send a GET request to `/v2/registry/options`.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    static func registryGetOptions(
-        config: ClientConfig,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> RegistryOptionsResponse {
-        try await (sdkRequest(
-            "GET",
-            "/v2/registry/options",
-            config: config,
-            decoder: .json,
-            operationId: "registry_get_options",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    public static func registryGetOptions(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> RegistryOptionsResponse {
+        return try (await sdkRequest("GET", "/v2/registry/options", config: config, decoder: .json, operationId: "registry_get_options", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

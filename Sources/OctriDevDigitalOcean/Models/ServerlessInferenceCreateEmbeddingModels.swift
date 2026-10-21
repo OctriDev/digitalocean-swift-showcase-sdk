@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// ServerlessInference domain models
+// ServerlessInference domain models
 /// One row in the embeddings `data` array, aligned with a single `input` item.
 public struct EmbeddingDataItem: Codable {
     /// Zero-based index of the corresponding `input` item (0 when `input` is a string).
@@ -21,43 +21,29 @@ public struct EmbeddingDataItem: Codable {
         case embedding
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension EmbeddingDataItem {
-    init(from decoder: Decoder) throws {
+extension EmbeddingDataItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.index) else {
-            throw SdkValidationError(
-                field: "index",
-                code: "required",
-                message: "Validation failed for 'index': value is required"
-            )
+            throw SdkValidationError(field: "index", code: "required", message: "Validation failed for 'index': value is required")
         }
         guard container.contains(.object) else {
-            throw SdkValidationError(
-                field: "object",
-                code: "required",
-                message: "Validation failed for 'object': value is required"
-            )
+            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
         }
         guard container.contains(.embedding) else {
-            throw SdkValidationError(
-                field: "embedding",
-                code: "required",
-                message: "Validation failed for 'embedding': value is required"
-            )
+            throw SdkValidationError(field: "embedding", code: "required", message: "Validation failed for 'embedding': value is required")
         }
-        index = try container.sdkDecodeRequired(.index)
-        object = try container.sdkDecodeRequired(.object)
-        embedding = try container.sdkDecodeRequired(.embedding)
+        self.index = try container.sdkDecodeRequired(.index)
+        self.object = try container.sdkDecodeRequired(.object)
+        self.embedding = try container.sdkDecodeRequired(.embedding)
     }
 }
 
-public extension EmbeddingDataItem {
-    init(index: Int, object: EmbeddingDataItemObject, embedding: EmbeddingDataItemEmbedding) {
+extension EmbeddingDataItem {
+    public init(index: Int, object: EmbeddingDataItemObject, embedding: EmbeddingDataItemEmbedding) {
         (self.index, self.object) = (index, object)
         self.embedding = embedding
     }
@@ -69,32 +55,22 @@ public indirect enum EmbeddingDataItemEmbedding {
 }
 
 extension EmbeddingDataItemEmbedding: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for EmbeddingDataItemEmbedding"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for EmbeddingDataItemEmbedding")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension EmbeddingDataItemEmbedding {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode([Double].self) {
-            return .doubleList(value)
-        }
-        if let value = try? container.decode(String.self) {
-            return .stringValue(value)
-        }
+        if let value = try? container.decode([Double].self) { return .doubleList(value) }
+        if let value = try? container.decode(String.self) { return .stringValue(value) }
         return nil
     }
 }
@@ -113,15 +89,12 @@ extension EmbeddingDataItemEmbedding {
 public struct EmbeddingDataItemObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let embedding = EmbeddingDataItemObject(rawValue: "embedding")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

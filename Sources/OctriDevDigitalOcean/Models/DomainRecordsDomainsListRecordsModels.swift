@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DomainRecords domain models
+// DomainRecords domain models
 /// Typed representation of the `AllDomainRecordsResponse` API schema.
 public struct AllDomainRecordsResponse: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,29 +18,23 @@ public struct AllDomainRecordsResponse: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AllDomainRecordsResponse {
-    init(from decoder: Decoder) throws {
+extension AllDomainRecordsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.meta) else {
-            throw SdkValidationError(
-                field: "meta",
-                code: "required",
-                message: "Validation failed for 'meta': value is required"
-            )
+            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
         }
-        meta = try container.sdkDecodeRequired(.meta)
-        domainRecords = try container.sdkDecodeIfPresent(.domainRecords)
-        links = try container.sdkDecodeIfPresent(.links)
+        self.meta = try container.sdkDecodeRequired(.meta)
+        self.domainRecords = try container.sdkDecodeIfPresent(.domainRecords)
+        self.links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-public extension AllDomainRecordsResponse {
-    init(meta: MetaMeta, domainRecords: [DomainRecord]? = nil, links: PageLinks? = nil) {
+extension AllDomainRecordsResponse {
+    public init(meta: MetaMeta, domainRecords: [DomainRecord]? = nil, links: PageLinks? = nil) {
         (self.meta, self.domainRecords) = (meta, domainRecords)
         self.links = links
     }
@@ -54,19 +48,19 @@ public struct AllDomainRecordsResponseVariant0: Codable {
     }
 
     init() {
-        domainRecords = nil
+        self.domainRecords = nil
     }
 }
 
-public extension AllDomainRecordsResponseVariant0 {
-    init(from decoder: Decoder) throws {
+extension AllDomainRecordsResponseVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        domainRecords = try container.sdkDecodeIfPresent(.domainRecords)
+        self.domainRecords = try container.sdkDecodeIfPresent(.domainRecords)
     }
 }
 
-public extension AllDomainRecordsResponseVariant0 {
-    init(domainRecords: [DomainRecord]? = nil) {
+extension AllDomainRecordsResponseVariant0 {
+    public init(domainRecords: [DomainRecord]? = nil) {
         self.init()
         self.domainRecords = domainRecords
     }

@@ -6,37 +6,18 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension CdnEndpointsMethods {
+extension CdnEndpointsMethods {
     /// To show information about an existing CDN endpoint, send a GET request to `/v2/cdn/endpoints/$ENDPOINT_ID`.
     ///
     /// - Parameters:
     /// - cdnId: A unique identifier for a CDN endpoint.
-    static func cdnGetEndpoint(
-        config: ClientConfig,
-        cdnId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExistingEndpoint {
+    public static func cdnGetEndpoint(config: ClientConfig, cdnId: String, requestOptions: RequestOptions? = nil) async throws -> ExistingEndpoint {
         try sdkValidateUuid("cdn_id", cdnId)
 
-        return try await (sdkRequest(
-            "GET",
-            ["/v2/cdn/endpoints/", sdkEncodePathSegment(sdkWireString(cdnId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "cdn_get_endpoint",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", ["/v2/cdn/endpoints/", sdkEncodePathSegment(sdkWireString(cdnId))].joined(), config: config, decoder: .json, operationId: "cdn_get_endpoint", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// To update the TTL, certificate ID, or the FQDN of the custom subdomain for an existing CDN endpoint, send a PUT
-    /// request to `/v2/cdn/endpoints/$ENDPOINT_ID`.
+    /// To update the TTL, certificate ID, or the FQDN of the custom subdomain for an existing CDN endpoint, send a PUT request to `/v2/cdn/endpoints/$ENDPOINT_ID`.
     ///
     /// - Parameters:
     /// - cdnId: A unique identifier for a CDN endpoint.
@@ -47,41 +28,15 @@ public extension CdnEndpointsMethods {
     ///   SSL when a custom subdomain is provided.
     /// - customDomain: The fully qualified domain name (FQDN) of the custom
     ///   subdomain used with the CDN endpoint.
-    static func cdnUpdateEndpoints(
-        config: ClientConfig,
-        cdnId: String,
-        ttl: Int? = nil,
-        certificateId: String? = nil,
-        customDomain: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExistingEndpoint {
+    public static func cdnUpdateEndpoints(config: ClientConfig, cdnId: String, ttl: Int? = nil, certificateId: String? = nil, customDomain: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ExistingEndpoint {
         try sdkValidateUuid("cdn_id", cdnId)
 
-        if let certificateId {
+        if let certificateId = certificateId {
             try sdkValidateUuid("certificate_id", certificateId)
         }
 
-        let requestBody = CdnUpdateEndpointsRequestBody(
-            ttl: ttl,
-            certificateId: certificateId,
-            customDomain: customDomain
-        )
+        let requestBody = CdnUpdateEndpointsRequestBody(ttl: ttl, certificateId: certificateId, customDomain: customDomain)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/v2/cdn/endpoints/", sdkEncodePathSegment(sdkWireString(cdnId))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "cdn_update_endpoints",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("PUT", ["/v2/cdn/endpoints/", sdkEncodePathSegment(sdkWireString(cdnId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "cdn_update_endpoints", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

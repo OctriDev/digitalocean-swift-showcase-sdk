@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DatabasesLogsink domain models
+// DatabasesLogsink domain models
 public indirect enum LogsinkUpdateConfig {
     case rsyslogLogsink(RsyslogLogsink)
     case elasticsearchLogsink(ElasticsearchLogsink)
@@ -12,26 +12,18 @@ public indirect enum LogsinkUpdateConfig {
 }
 
 extension LogsinkUpdateConfig: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for LogsinkUpdateConfig"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for LogsinkUpdateConfig")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -55,18 +47,10 @@ extension LogsinkUpdateConfig {
 
 extension LogsinkUpdateConfig {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(RsyslogLogsink.self) {
-            return .rsyslogLogsink(value)
-        }
-        if let value = try? container.decode(ElasticsearchLogsink.self) {
-            return .elasticsearchLogsink(value)
-        }
-        if let value = try? container.decode(OpensearchLogsink.self) {
-            return .opensearchLogsink(value)
-        }
-        if let value = try? container.decode(DatadogLogsink.self) {
-            return .datadogLogsink(value)
-        }
+        if let value = try? container.decode(RsyslogLogsink.self) { return .rsyslogLogsink(value) }
+        if let value = try? container.decode(ElasticsearchLogsink.self) { return .elasticsearchLogsink(value) }
+        if let value = try? container.decode(OpensearchLogsink.self) { return .opensearchLogsink(value) }
+        if let value = try? container.decode(DatadogLogsink.self) { return .datadogLogsink(value) }
         return nil
     }
 }
@@ -93,19 +77,19 @@ public struct Logsink: Codable {
     }
 
     init() {
-        sink = nil
+        self.sink = nil
     }
 }
 
-public extension Logsink {
-    init(from decoder: Decoder) throws {
+extension Logsink {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        sink = try container.sdkDecodeIfPresent(.sink)
+        self.sink = try container.sdkDecodeIfPresent(.sink)
     }
 }
 
-public extension Logsink {
-    init(sink: LogsinkSchema? = nil) {
+extension Logsink {
+    public init(sink: LogsinkSchema? = nil) {
         self.init()
         self.sink = sink
     }
@@ -120,27 +104,21 @@ public struct LogsinkUpdate: Codable {
         case config
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension LogsinkUpdate {
-    init(from decoder: Decoder) throws {
+extension LogsinkUpdate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.config) else {
-            throw SdkValidationError(
-                field: "config",
-                code: "required",
-                message: "Validation failed for 'config': value is required"
-            )
+            throw SdkValidationError(field: "config", code: "required", message: "Validation failed for 'config': value is required")
         }
-        config = try container.sdkDecodeRequired(.config)
+        self.config = try container.sdkDecodeRequired(.config)
     }
 }
 
-public extension LogsinkUpdate {
-    init(config: LogsinkUpdateConfig) {
+extension LogsinkUpdate {
+    public init(config: LogsinkUpdateConfig) {
         self.config = config
     }
 }
@@ -153,26 +131,18 @@ public indirect enum LogsinkSchemaConfig {
 }
 
 extension LogsinkSchemaConfig: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for LogsinkSchemaConfig"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for LogsinkSchemaConfig")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -196,18 +166,10 @@ extension LogsinkSchemaConfig {
 
 extension LogsinkSchemaConfig {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(RsyslogLogsink.self) {
-            return .rsyslogLogsink(value)
-        }
-        if let value = try? container.decode(ElasticsearchLogsink.self) {
-            return .elasticsearchLogsink(value)
-        }
-        if let value = try? container.decode(OpensearchLogsink.self) {
-            return .opensearchLogsink(value)
-        }
-        if let value = try? container.decode(DatadogLogsink.self) {
-            return .datadogLogsink(value)
-        }
+        if let value = try? container.decode(RsyslogLogsink.self) { return .rsyslogLogsink(value) }
+        if let value = try? container.decode(ElasticsearchLogsink.self) { return .elasticsearchLogsink(value) }
+        if let value = try? container.decode(OpensearchLogsink.self) { return .opensearchLogsink(value) }
+        if let value = try? container.decode(DatadogLogsink.self) { return .datadogLogsink(value) }
         return nil
     }
 }
@@ -246,51 +208,33 @@ public struct LogsinkSchema: Codable {
         case config
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension LogsinkSchema {
-    init(from decoder: Decoder) throws {
+extension LogsinkSchema {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.sinkId) else {
-            throw SdkValidationError(
-                field: "sink_id",
-                code: "required",
-                message: "Validation failed for 'sink_id': value is required"
-            )
+            throw SdkValidationError(field: "sink_id", code: "required", message: "Validation failed for 'sink_id': value is required")
         }
         guard container.contains(.sinkName) else {
-            throw SdkValidationError(
-                field: "sink_name",
-                code: "required",
-                message: "Validation failed for 'sink_name': value is required"
-            )
+            throw SdkValidationError(field: "sink_name", code: "required", message: "Validation failed for 'sink_name': value is required")
         }
         guard container.contains(.sinkType) else {
-            throw SdkValidationError(
-                field: "sink_type",
-                code: "required",
-                message: "Validation failed for 'sink_type': value is required"
-            )
+            throw SdkValidationError(field: "sink_type", code: "required", message: "Validation failed for 'sink_type': value is required")
         }
         guard container.contains(.config) else {
-            throw SdkValidationError(
-                field: "config",
-                code: "required",
-                message: "Validation failed for 'config': value is required"
-            )
+            throw SdkValidationError(field: "config", code: "required", message: "Validation failed for 'config': value is required")
         }
-        sinkId = try container.sdkDecodeRequired(.sinkId)
-        sinkName = try container.sdkDecodeRequired(.sinkName)
-        sinkType = try container.sdkDecodeRequired(.sinkType)
-        config = try container.sdkDecodeRequired(.config)
+        self.sinkId = try container.sdkDecodeRequired(.sinkId)
+        self.sinkName = try container.sdkDecodeRequired(.sinkName)
+        self.sinkType = try container.sdkDecodeRequired(.sinkType)
+        self.config = try container.sdkDecodeRequired(.config)
     }
 }
 
-public extension LogsinkSchema {
-    init(sinkId: String, sinkName: String, sinkType: LogsinkSchemaSinkType, config: LogsinkSchemaConfig) {
+extension LogsinkSchema {
+    public init(sinkId: String, sinkName: String, sinkType: LogsinkSchemaSinkType, config: LogsinkSchemaConfig) {
         (self.sinkId, self.sinkName) = (sinkId, sinkName)
         (self.sinkType, self.config) = (sinkType, config)
     }
@@ -300,17 +244,14 @@ public extension LogsinkSchema {
 public struct LogsinkSchemaSinkType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let rsyslog = LogsinkSchemaSinkType(rawValue: "rsyslog")
     public static let elasticsearch = LogsinkSchemaSinkType(rawValue: "elasticsearch")
     public static let opensearch = LogsinkSchemaSinkType(rawValue: "opensearch")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiGet domain models
+// AgentPlatformAPIApiGet domain models
 /// Output for getting a simulation run.
 public struct ApiGetSimulationRunOutput: Codable {
     /// Per-scenario breakdown of episode outcomes, aggregated from episode rows.
@@ -17,20 +17,20 @@ public struct ApiGetSimulationRunOutput: Codable {
     }
 
     init() {
-        (scenarioResults, simulationRun) = (nil, nil)
+        (self.scenarioResults, self.simulationRun) = (nil, nil)
     }
 }
 
-public extension ApiGetSimulationRunOutput {
-    init(from decoder: Decoder) throws {
+extension ApiGetSimulationRunOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        scenarioResults = try container.sdkDecodeIfPresent(.scenarioResults)
-        simulationRun = try container.sdkDecodeIfPresent(.simulationRun)
+        self.scenarioResults = try container.sdkDecodeIfPresent(.scenarioResults)
+        self.simulationRun = try container.sdkDecodeIfPresent(.simulationRun)
     }
 }
 
-public extension ApiGetSimulationRunOutput {
-    init(scenarioResults: [ApiSimulationScenarioResult]? = nil, simulationRun: ApiSimulationRun? = nil) {
+extension ApiGetSimulationRunOutput {
+    public init(scenarioResults: [ApiSimulationScenarioResult]? = nil, simulationRun: ApiSimulationRun? = nil) {
         self.init()
         (self.scenarioResults, self.simulationRun) = (scenarioResults, simulationRun)
     }

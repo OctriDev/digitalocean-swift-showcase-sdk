@@ -6,23 +6,11 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AppsMethods {
-    /// Lists the regions supported by App Platform. Use the returned region slugs and availability details to choose a
-    /// region when configuring an app.
+extension AppsMethods {
+    /// Lists the regions supported by App Platform. Use the returned region slugs and availability details to choose a region when configuring an app.
     ///
     /// List all regions supported by App Platform.
-    static func appsListRegions(
-        config: ClientConfig,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AppsListRegionsResponse {
-        try await (sdkRequest(
-            "GET",
-            "/v2/apps/regions",
-            config: config,
-            decoder: .json,
-            operationId: "apps_list_regions",
-            options: requestOptions,
-            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
-        )).data
+    public static func appsListRegions(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> AppsListRegionsResponse {
+        return try (await sdkRequest("GET", "/v2/apps/regions", config: config, decoder: .json, operationId: "apps_list_regions", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

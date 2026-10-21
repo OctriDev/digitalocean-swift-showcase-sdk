@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// WebhookBasicAuth domain models
+// WebhookBasicAuth domain models
 /// HTTP basic authentication credentials for a webhook create or update request. `password` is write-only: send the
 /// full value to set or rotate. Omit `password` on update to keep the existing password.
 public struct WebhookBasicAuth: Codable {
@@ -15,27 +15,21 @@ public struct WebhookBasicAuth: Codable {
         case username
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension WebhookBasicAuth {
-    init(from decoder: Decoder) throws {
+extension WebhookBasicAuth {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.username) else {
-            throw SdkValidationError(
-                field: "username",
-                code: "required",
-                message: "Validation failed for 'username': value is required"
-            )
+            throw SdkValidationError(field: "username", code: "required", message: "Validation failed for 'username': value is required")
         }
-        username = try container.sdkDecodeRequired(.username)
+        self.username = try container.sdkDecodeRequired(.username)
     }
 }
 
-public extension WebhookBasicAuth {
-    init(username: String) {
+extension WebhookBasicAuth {
+    public init(username: String) {
         self.username = username
     }
 }

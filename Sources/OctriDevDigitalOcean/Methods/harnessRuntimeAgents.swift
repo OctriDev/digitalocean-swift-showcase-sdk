@@ -6,9 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension HarnessRuntimeMethods {
-    /// Returns lightweight team-scoped config metadata without loading or returning environment-spec JSON. Soft-deleted
-    /// configs are excluded.
+extension HarnessRuntimeMethods {
+    /// Returns lightweight team-scoped config metadata without loading or returning environment-spec JSON. Soft-deleted configs are excluded.
     ///
     /// - Parameters:
     /// - pageSize: Page size. Defaults to 50 when omitted. Values above 200 are
@@ -17,45 +16,23 @@ public extension HarnessRuntimeMethods {
     /// - search: Optional case-insensitive substring filter on config name
     ///   (contains). Empty or omitted returns the unfiltered page. At most 64
     ///   characters.
-    static func harnessListConfigs(
-        config: ClientConfig,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        search: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ListAgentConfigsResponse {
-        if let pageSize {
+    public static func harnessListConfigs(config: ClientConfig, pageSize: Int? = nil, pageToken: String? = nil, search: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListAgentConfigsResponse {
+        if let pageSize = pageSize {
             try validateRange("page_size", Double(pageSize), min: 1, max: 200)
         }
 
-        if let search {
+        if let search = search {
             try validateLength("search", search, max: 64)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            "/v2/agents/configs",
-            config: config,
-            query: [
-                SdkQueryParameter("page_size", value: pageSize),
-                SdkQueryParameter("page_token", value: pageToken),
-                SdkQueryParameter("search", value: search),
-            ],
-            decoder: .json,
-            operationId: "harness_list_configs",
-            options: requestOptions,
-            errors: [
-                "400": Error2.self,
-                "401": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("GET", "/v2/agents/configs", config: config, query: [
+            SdkQueryParameter("page_size", value: pageSize),
+            SdkQueryParameter("page_token", value: pageToken),
+            SdkQueryParameter("search", value: search),
+        ], decoder: .json, operationId: "harness_list_configs", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 
-    /// Returns lightweight team-scoped config metadata without loading or returning environment-spec JSON. Soft-deleted
-    /// configs are excluded.
+    /// Returns lightweight team-scoped config metadata without loading or returning environment-spec JSON. Soft-deleted configs are excluded.
     ///
     /// - Parameters:
     /// - pageSize: Page size. Defaults to 50 when omitted. Values above 200 are
@@ -64,38 +41,17 @@ public extension HarnessRuntimeMethods {
     /// - search: Optional case-insensitive substring filter on config name
     ///   (contains). Empty or omitted returns the unfiltered page. At most 64
     ///   characters.
-    static func harnessListConfigsPaginated(
-        config: ClientConfig,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        search: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<AgentConfigSummary, Swift.Error> {
-        AsyncThrowingStream<AgentConfigSummary, Swift.Error> { (continuation: AsyncThrowingStream<
-            AgentConfigSummary,
-            Swift.Error
-        >.Continuation) in
+    public static func harnessListConfigsPaginated(config: ClientConfig, pageSize: Int? = nil, pageToken: String? = nil, search: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<AgentConfigSummary, Swift.Error> {
+        return AsyncThrowingStream<AgentConfigSummary, Swift.Error> { (continuation: AsyncThrowingStream<AgentConfigSummary, Swift.Error>.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await harnessListConfigs(
-                            config: config,
-                            pageSize: pageSize,
-                            pageToken: pageCursor,
-                            search: search,
-                            requestOptions: requestOptions
-                        )
+                        let pageResponse = try await harnessListConfigs(config: config, pageSize: pageSize, pageToken: pageCursor, search: search, requestOptions: requestOptions)
                         let pageItems = (pageResponse.configs ?? [])
-                        if pageItems.isEmpty {
-                            break
-                        }
-                        for item in pageItems {
-                            continuation.yield(item)
-                        }
-                        guard let nextCursor = pageResponse.nextPageToken else {
-                            break
-                        }
+                        if pageItems.isEmpty { break }
+                        for item in pageItems { continuation.yield(item) }
+                        guard let nextCursor = pageResponse.nextPageToken else { break }
                         pageCursor = nextCursor
                     }
                 } catch {
@@ -108,50 +64,25 @@ public extension HarnessRuntimeMethods {
         }
     }
 
-    struct HarnessListConfigsPage {
+    public struct HarnessListConfigsPage {
         public let data: ListAgentConfigsResponse
         public let items: [AgentConfigSummary]
         public let hasMore: Bool
     }
 
-    static func harnessListConfigsPages(
-        config: ClientConfig,
-        pageSize: Int? = nil,
-        pageToken: String? = nil,
-        search: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<HarnessListConfigsPage, Swift.Error> {
-        AsyncThrowingStream<HarnessListConfigsPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<
-            HarnessListConfigsPage,
-            Swift.Error
-        >.Continuation) in
+    public static func harnessListConfigsPages(config: ClientConfig, pageSize: Int? = nil, pageToken: String? = nil, search: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<HarnessListConfigsPage, Swift.Error> {
+        return AsyncThrowingStream<HarnessListConfigsPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<HarnessListConfigsPage, Swift.Error>.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await harnessListConfigs(
-                            config: config,
-                            pageSize: pageSize,
-                            pageToken: pageCursor,
-                            search: search,
-                            requestOptions: requestOptions
-                        )
+                        let pageResponse = try await harnessListConfigs(config: config, pageSize: pageSize, pageToken: pageCursor, search: search, requestOptions: requestOptions)
                         let pageItems = (pageResponse.configs ?? [])
-                        if pageItems.isEmpty {
-                            break
-                        }
+                        if pageItems.isEmpty { break }
                         let hasMore = pageResponse.nextPageToken != nil
-                        pageContinuation.yield(HarnessListConfigsPage(
-                            data: pageResponse,
-                            items: pageItems,
-                            hasMore: hasMore
-                        ))
-                        if !hasMore {
-                            break
-                        }
-                        guard let nextCursor = pageResponse.nextPageToken else {
-                            break
-                        }
+                        pageContinuation.yield(HarnessListConfigsPage(data: pageResponse, items: pageItems, hasMore: hasMore))
+                        if !hasMore { break }
+                        guard let nextCursor = pageResponse.nextPageToken else { break }
                         pageCursor = nextCursor
                     }
                 } catch {

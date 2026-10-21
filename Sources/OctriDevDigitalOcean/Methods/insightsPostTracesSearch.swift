@@ -6,21 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension InsightsMethods {
-    /// To search traces in a region, send a POST request to `/v2/insights/query/{region}/traces/search` with a JSON
-    /// body describing the time range, optional filter, ordering, and pagination. Each result is one trace, aggregated
-    /// from all of its spans in the time range. A trace is included when at least one of its spans matches `filter`.
-    /// The time range must not exceed 7 days (`168h`). `pagination.limit` defaults to 100 (also used when `limit` is
-    /// `0`) and must be between 0 and 1000. Results are ordered by `started` descending unless `orderBy` is set. JSON
-    /// field names are camelCase (`timeRange`, `orderBy`, `hasMore`, `traceId`). Unknown request properties, invalid
-    /// filters, and out-of-range values are rejected with `400`. Each request searches a single region; there is no
-    /// multi-region search. Supported regions are `ams2`, `ams3`, `atl1`, `blr1`, `fra1`, `lon1`, `mem1`, `nyc1`,
-    /// `nyc2`, `nyc3`, `ric1`, `sfo1`, `sfo2`, `sfo3`, `sgp1`, `syd1`, and `tor1`. Requests time out after 60 seconds.
-    /// Errors produced by the traces service (`400`) have a `text/plain` body containing a short message.
-    /// Authentication and authorization errors (`401`, `403`), rate limiting (`429`), and routing errors (for example,
-    /// `404` for an unknown region) come from the API gateway and use the standard JSON error object with `id` and
-    /// `message`. `403` is also returned for accounts that are in a trial or not in good standing. If the regional
-    /// traces backend cannot be reached, the response is `502` with a `text/plain` body.
+extension InsightsMethods {
+    /// To search traces in a region, send a POST request to `/v2/insights/query/{region}/traces/search` with a JSON body describing the time range, optional filter, ordering, and pagination. Each result is one trace, aggregated from all of its spans in the time range. A trace is included when at least one of its spans matches `filter`. The time range must not exceed 7 days (`168h`). `pagination.limit` defaults to 100 (also used when `limit` is `0`) and must be between 0 and 1000. Results are ordered by `started` descending unless `orderBy` is set. JSON field names are camelCase (`timeRange`, `orderBy`, `hasMore`, `traceId`). Unknown request properties, invalid filters, and out-of-range values are rejected with `400`. Each request searches a single region; there is no multi-region search. Supported regions are `ams2`, `ams3`, `atl1`, `blr1`, `fra1`, `lon1`, `mem1`, `nyc1`, `nyc2`, `nyc3`, `ric1`, `sfo1`, `sfo2`, `sfo3`, `sgp1`, `syd1`, and `tor1`. Requests time out after 60 seconds. Errors produced by the traces service (`400`) have a `text/plain` body containing a short message. Authentication and authorization errors (`401`, `403`), rate limiting (`429`), and routing errors (for example, `404` for an unknown region) come from the API gateway and use the standard JSON error object with `id` and `message`. `403` is also returned for accounts that are in a trial or not in good standing. If the regional traces backend cannot be reached, the response is `502` with a `text/plain` body.
     ///
     /// - Parameters:
     /// - region: The datacenter region slug for the query.
@@ -41,38 +28,9 @@ public extension InsightsMethods {
     /// - pagination: Limits the size of a traces search result set. There is no
     ///   cursor; use `pagination.hasMore` in the response to tell whether more traces
     ///   matched, and narrow the time range or filter to see them.
-    static func insightsPostTracesSearch(
-        config: ClientConfig,
-        region: String,
-        timeRange: TracesTimeRange,
-        filter: TracesFilterExpression? = nil,
-        orderBy: [TracesOrderBy]? = nil,
-        pagination: TracesPaginationRequest? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> TracesSearchResponse {
-        let requestBody = InsightsPostTracesSearchRequestBody(
-            timeRange: timeRange,
-            filter: filter,
-            orderBy: orderBy,
-            pagination: pagination
-        )
+    public static func insightsPostTracesSearch(config: ClientConfig, region: String, timeRange: TracesTimeRange, filter: TracesFilterExpression? = nil, orderBy: [TracesOrderBy]? = nil, pagination: TracesPaginationRequest? = nil, requestOptions: RequestOptions? = nil) async throws -> TracesSearchResponse {
+        let requestBody = InsightsPostTracesSearchRequestBody(timeRange: timeRange, filter: filter, orderBy: orderBy, pagination: pagination)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/v2/insights/query/", sdkEncodePathSegment(sdkWireString(region)), "/traces/search"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "insights_post_tracesSearch",
-            options: requestOptions,
-            errors: [
-                "401": Error2.self,
-                "403": Error2.self,
-                "404": Error2.self,
-                "429": Error2.self,
-                "500": Error2.self,
-                "default": Error2.self,
-            ]
-        )).data
+        return try (await sdkRequest("POST", ["/v2/insights/query/", sdkEncodePathSegment(sdkWireString(region)), "/traces/search"].joined(), config: config, body: requestBody, decoder: .json, operationId: "insights_post_tracesSearch", options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
     }
 }

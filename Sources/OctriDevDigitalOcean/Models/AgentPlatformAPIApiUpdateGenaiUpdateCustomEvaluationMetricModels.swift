@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiUpdate domain models
+// AgentPlatformAPIApiUpdate domain models
 /// Typed representation of the `ApiUpdateCustomEvaluationMetricInputPublic` API schema.
 public struct ApiUpdateCustomEvaluationMetricInputPublic: Codable {
     /// Configuration for a custom model-evaluation metric scored by an LLM judge. Prompt and model response are
@@ -27,27 +27,22 @@ public struct ApiUpdateCustomEvaluationMetricInputPublic: Codable {
     }
 
     init() {
-        (config, description, metricName, metricUuid) = (nil, nil, nil, nil)
+        (self.config, self.description, self.metricName, self.metricUuid) = (nil, nil, nil, nil)
     }
 }
 
-public extension ApiUpdateCustomEvaluationMetricInputPublic {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateCustomEvaluationMetricInputPublic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        config = try container.sdkDecodeIfPresent(.config)
-        description = try container.sdkDecodeIfPresent(.description)
-        metricName = try container.sdkDecodeIfPresent(.metricName)
-        metricUuid = try container.sdkDecodeIfPresent(.metricUuid)
+        self.config = try container.sdkDecodeIfPresent(.config)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.metricName = try container.sdkDecodeIfPresent(.metricName)
+        self.metricUuid = try container.sdkDecodeIfPresent(.metricUuid)
     }
 }
 
-public extension ApiUpdateCustomEvaluationMetricInputPublic {
-    init(
-        config: ApiCustomEvaluationMetricConfig? = nil,
-        description: String? = nil,
-        metricName: String? = nil,
-        metricUuid: String? = nil
-    ) {
+extension ApiUpdateCustomEvaluationMetricInputPublic {
+    public init(config: ApiCustomEvaluationMetricConfig? = nil, description: String? = nil, metricName: String? = nil, metricUuid: String? = nil) {
         self.init()
         (self.config, self.description) = (config, description)
         (self.metricName, self.metricUuid) = (metricName, metricUuid)
@@ -64,19 +59,19 @@ public struct ApiUpdateCustomEvaluationMetricOutput: Codable {
     }
 
     init() {
-        metric = nil
+        self.metric = nil
     }
 }
 
-public extension ApiUpdateCustomEvaluationMetricOutput {
-    init(from decoder: Decoder) throws {
+extension ApiUpdateCustomEvaluationMetricOutput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        metric = try container.sdkDecodeIfPresent(.metric)
+        self.metric = try container.sdkDecodeIfPresent(.metric)
     }
 }
 
-public extension ApiUpdateCustomEvaluationMetricOutput {
-    init(metric: ApiEvaluationMetric? = nil) {
+extension ApiUpdateCustomEvaluationMetricOutput {
+    public init(metric: ApiEvaluationMetric? = nil) {
         self.init()
         self.metric = metric
     }

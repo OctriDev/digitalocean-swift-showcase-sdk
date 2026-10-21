@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HarnessRuntimeSend domain models
+// HarnessRuntimeSend domain models
 /// Typed representation of the `SendInputResponse` API schema.
 public struct SendInputResponse: Codable {
     /// The run id the input was attributed to. Clients can correlate against the run.started event on the stream.
@@ -16,19 +16,19 @@ public struct SendInputResponse: Codable {
     }
 
     init() {
-        runId = nil
+        self.runId = nil
     }
 }
 
-public extension SendInputResponse {
-    init(from decoder: Decoder) throws {
+extension SendInputResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        runId = try container.sdkDecodeIfPresent(.runId)
+        self.runId = try container.sdkDecodeIfPresent(.runId)
     }
 }
 
-public extension SendInputResponse {
-    init(runId: String? = nil) {
+extension SendInputResponse {
+    public init(runId: String? = nil) {
         self.init()
         self.runId = runId
     }
@@ -44,27 +44,21 @@ public struct SendInputRequest: Codable {
         case text
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SendInputRequest {
-    init(from decoder: Decoder) throws {
+extension SendInputRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.text) else {
-            throw SdkValidationError(
-                field: "text",
-                code: "required",
-                message: "Validation failed for 'text': value is required"
-            )
+            throw SdkValidationError(field: "text", code: "required", message: "Validation failed for 'text': value is required")
         }
-        text = try container.sdkDecodeRequired(.text)
+        self.text = try container.sdkDecodeRequired(.text)
     }
 }
 
-public extension SendInputRequest {
-    init(text: String) {
+extension SendInputRequest {
+    public init(text: String) {
         self.text = text
     }
 }

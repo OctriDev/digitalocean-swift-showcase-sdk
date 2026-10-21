@@ -3,15 +3,12 @@
 
 import Foundation
 
-/// AgentPlatformAPIApiTrace domain models
+// AgentPlatformAPIApiTrace domain models
 /// Types of spans in a trace
 public struct ApiTraceSpanType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let traceSpanTypeUnknown = ApiTraceSpanType(rawValue: "TRACE_SPAN_TYPE_UNKNOWN")
     public static let traceSpanTypeLlm = ApiTraceSpanType(rawValue: "TRACE_SPAN_TYPE_LLM")
     public static let traceSpanTypeRetriever = ApiTraceSpanType(rawValue: "TRACE_SPAN_TYPE_RETRIEVER")
@@ -21,7 +18,7 @@ public struct ApiTraceSpanType: RawRepresentable, Hashable, Codable, Sendable, S
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

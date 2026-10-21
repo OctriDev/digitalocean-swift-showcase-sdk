@@ -37,63 +37,63 @@ struct GenaiUpdateAgentRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(agentLogInsightsEnabled, forKey: SdkCodingKey("agent_log_insights_enabled"))
-        try keyedContainer.encodeIfPresent(allowedDomains, forKey: SdkCodingKey("allowed_domains"))
-        try keyedContainer.encodeIfPresent(anthropicKeyUuid, forKey: SdkCodingKey("anthropic_key_uuid"))
-        try keyedContainer.encodeIfPresent(clearMcpServers, forKey: SdkCodingKey("clear_mcp_servers"))
-        try keyedContainer.encodeIfPresent(conversationLogsEnabled, forKey: SdkCodingKey("conversation_logs_enabled"))
-        try keyedContainer.encodeIfPresent(description, forKey: SdkCodingKey("description"))
-        try keyedContainer.encodeIfPresent(instruction, forKey: SdkCodingKey("instruction"))
-        try keyedContainer.encodeIfPresent(k, forKey: SdkCodingKey("k"))
-        try keyedContainer.encodeIfPresent(maxTokens, forKey: SdkCodingKey("max_tokens"))
-        try keyedContainer.encodeIfPresent(mcpServers, forKey: SdkCodingKey("mcp_servers"))
-        try keyedContainer.encodeIfPresent(modelProviderKeyUuid, forKey: SdkCodingKey("model_provider_key_uuid"))
-        try keyedContainer.encodeIfPresent(modelRouterUuid, forKey: SdkCodingKey("model_router_uuid"))
-        try keyedContainer.encodeIfPresent(modelUuid, forKey: SdkCodingKey("model_uuid"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(openAiKeyUuid, forKey: SdkCodingKey("open_ai_key_uuid"))
-        try keyedContainer.encodeIfPresent(projectId, forKey: SdkCodingKey("project_id"))
-        try keyedContainer.encodeIfPresent(provideCitations, forKey: SdkCodingKey("provide_citations"))
-        try keyedContainer.encodeIfPresent(reasoningEffort, forKey: SdkCodingKey("reasoning_effort"))
-        try keyedContainer.encodeIfPresent(retrievalMethod, forKey: SdkCodingKey("retrieval_method"))
-        try keyedContainer.encodeIfPresent(routerPresetSlug, forKey: SdkCodingKey("router_preset_slug"))
-        try keyedContainer.encodeIfPresent(tags, forKey: SdkCodingKey("tags"))
-        try keyedContainer.encodeIfPresent(temperature, forKey: SdkCodingKey("temperature"))
-        try keyedContainer.encodeIfPresent(thinkingTokenBudget, forKey: SdkCodingKey("thinking_token_budget"))
-        try keyedContainer.encodeIfPresent(topP, forKey: SdkCodingKey("top_p"))
-        try keyedContainer.encodeIfPresent(uuid2, forKey: SdkCodingKey("uuid"))
-        try keyedContainer.encodeIfPresent(webFetchEnabled, forKey: SdkCodingKey("web_fetch_enabled"))
-        try keyedContainer.encodeIfPresent(webSearchEnabled, forKey: SdkCodingKey("web_search_enabled"))
+        try keyedContainer.encodeIfPresent(self.agentLogInsightsEnabled, forKey: SdkCodingKey("agent_log_insights_enabled"))
+        try keyedContainer.encodeIfPresent(self.allowedDomains, forKey: SdkCodingKey("allowed_domains"))
+        try keyedContainer.encodeIfPresent(self.anthropicKeyUuid, forKey: SdkCodingKey("anthropic_key_uuid"))
+        try keyedContainer.encodeIfPresent(self.clearMcpServers, forKey: SdkCodingKey("clear_mcp_servers"))
+        try keyedContainer.encodeIfPresent(self.conversationLogsEnabled, forKey: SdkCodingKey("conversation_logs_enabled"))
+        try keyedContainer.encodeIfPresent(self.description, forKey: SdkCodingKey("description"))
+        try keyedContainer.encodeIfPresent(self.instruction, forKey: SdkCodingKey("instruction"))
+        try keyedContainer.encodeIfPresent(self.k, forKey: SdkCodingKey("k"))
+        try keyedContainer.encodeIfPresent(self.maxTokens, forKey: SdkCodingKey("max_tokens"))
+        try keyedContainer.encodeIfPresent(self.mcpServers, forKey: SdkCodingKey("mcp_servers"))
+        try keyedContainer.encodeIfPresent(self.modelProviderKeyUuid, forKey: SdkCodingKey("model_provider_key_uuid"))
+        try keyedContainer.encodeIfPresent(self.modelRouterUuid, forKey: SdkCodingKey("model_router_uuid"))
+        try keyedContainer.encodeIfPresent(self.modelUuid, forKey: SdkCodingKey("model_uuid"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.openAiKeyUuid, forKey: SdkCodingKey("open_ai_key_uuid"))
+        try keyedContainer.encodeIfPresent(self.projectId, forKey: SdkCodingKey("project_id"))
+        try keyedContainer.encodeIfPresent(self.provideCitations, forKey: SdkCodingKey("provide_citations"))
+        try keyedContainer.encodeIfPresent(self.reasoningEffort, forKey: SdkCodingKey("reasoning_effort"))
+        try keyedContainer.encodeIfPresent(self.retrievalMethod, forKey: SdkCodingKey("retrieval_method"))
+        try keyedContainer.encodeIfPresent(self.routerPresetSlug, forKey: SdkCodingKey("router_preset_slug"))
+        try keyedContainer.encodeIfPresent(self.tags, forKey: SdkCodingKey("tags"))
+        try keyedContainer.encodeIfPresent(self.temperature, forKey: SdkCodingKey("temperature"))
+        try keyedContainer.encodeIfPresent(self.thinkingTokenBudget, forKey: SdkCodingKey("thinking_token_budget"))
+        try keyedContainer.encodeIfPresent(self.topP, forKey: SdkCodingKey("top_p"))
+        try keyedContainer.encodeIfPresent(self.uuid2, forKey: SdkCodingKey("uuid"))
+        try keyedContainer.encodeIfPresent(self.webFetchEnabled, forKey: SdkCodingKey("web_fetch_enabled"))
+        try keyedContainer.encodeIfPresent(self.webSearchEnabled, forKey: SdkCodingKey("web_search_enabled"))
     }
 
     init(options: AgentPlatformApiMethods.GenaiUpdateAgentOptions) {
-        agentLogInsightsEnabled = options.agentLogInsightsEnabled
-        allowedDomains = options.allowedDomains
-        anthropicKeyUuid = options.anthropicKeyUuid
-        clearMcpServers = options.clearMcpServers
-        conversationLogsEnabled = options.conversationLogsEnabled
-        description = options.description
-        instruction = options.instruction
-        k = options.k
-        maxTokens = options.maxTokens
-        mcpServers = options.mcpServers
-        modelProviderKeyUuid = options.modelProviderKeyUuid
-        modelRouterUuid = options.modelRouterUuid
-        modelUuid = options.modelUuid
-        name = options.name
-        openAiKeyUuid = options.openAiKeyUuid
-        projectId = options.projectId
-        provideCitations = options.provideCitations
-        reasoningEffort = options.reasoningEffort
-        retrievalMethod = options.retrievalMethod
-        routerPresetSlug = options.routerPresetSlug
-        tags = options.tags
-        temperature = options.temperature
-        thinkingTokenBudget = options.thinkingTokenBudget
-        topP = options.topP
-        uuid2 = options.uuid2
-        webFetchEnabled = options.webFetchEnabled
-        webSearchEnabled = options.webSearchEnabled
+        self.agentLogInsightsEnabled = options.agentLogInsightsEnabled
+        self.allowedDomains = options.allowedDomains
+        self.anthropicKeyUuid = options.anthropicKeyUuid
+        self.clearMcpServers = options.clearMcpServers
+        self.conversationLogsEnabled = options.conversationLogsEnabled
+        self.description = options.description
+        self.instruction = options.instruction
+        self.k = options.k
+        self.maxTokens = options.maxTokens
+        self.mcpServers = options.mcpServers
+        self.modelProviderKeyUuid = options.modelProviderKeyUuid
+        self.modelRouterUuid = options.modelRouterUuid
+        self.modelUuid = options.modelUuid
+        self.name = options.name
+        self.openAiKeyUuid = options.openAiKeyUuid
+        self.projectId = options.projectId
+        self.provideCitations = options.provideCitations
+        self.reasoningEffort = options.reasoningEffort
+        self.retrievalMethod = options.retrievalMethod
+        self.routerPresetSlug = options.routerPresetSlug
+        self.tags = options.tags
+        self.temperature = options.temperature
+        self.thinkingTokenBudget = options.thinkingTokenBudget
+        self.topP = options.topP
+        self.uuid2 = options.uuid2
+        self.webFetchEnabled = options.webFetchEnabled
+        self.webSearchEnabled = options.webSearchEnabled
     }
 }
 
@@ -103,8 +103,8 @@ struct GenaiUpdateAgentDeploymentVisibilityRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(uuid2, forKey: SdkCodingKey("uuid"))
-        try keyedContainer.encodeIfPresent(visibility, forKey: SdkCodingKey("visibility"))
+        try keyedContainer.encodeIfPresent(self.uuid2, forKey: SdkCodingKey("uuid"))
+        try keyedContainer.encodeIfPresent(self.visibility, forKey: SdkCodingKey("visibility"))
     }
 }
 
@@ -114,8 +114,8 @@ struct GenaiRollbackToAgentVersionRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(uuid2, forKey: SdkCodingKey("uuid"))
-        try keyedContainer.encodeIfPresent(versionHash, forKey: SdkCodingKey("version_hash"))
+        try keyedContainer.encodeIfPresent(self.uuid2, forKey: SdkCodingKey("uuid"))
+        try keyedContainer.encodeIfPresent(self.versionHash, forKey: SdkCodingKey("version_hash"))
     }
 }
 
@@ -125,8 +125,8 @@ struct GenaiCreateAnthropicApiKeyRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(apiKey, forKey: SdkCodingKey("api_key"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.apiKey, forKey: SdkCodingKey("api_key"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
     }
 }
 
@@ -137,9 +137,9 @@ struct GenaiUpdateAnthropicApiKeyRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(apiKey, forKey: SdkCodingKey("api_key"))
-        try keyedContainer.encodeIfPresent(apiKeyUuid2, forKey: SdkCodingKey("api_key_uuid"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.apiKey, forKey: SdkCodingKey("api_key"))
+        try keyedContainer.encodeIfPresent(self.apiKeyUuid2, forKey: SdkCodingKey("api_key_uuid"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
     }
 }
 
@@ -155,28 +155,25 @@ struct GenaiImportCustomModelRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(acceptHfTokenStorage, forKey: SdkCodingKey("accept_hf_token_storage"))
-        try keyedContainer.encodeIfPresent(
-            acceptTermsAndConditions,
-            forKey: SdkCodingKey("accept_terms_and_conditions")
-        )
-        try keyedContainer.encodeIfPresent(description, forKey: SdkCodingKey("description"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(preferredGpuRegion, forKey: SdkCodingKey("preferred_gpu_region"))
-        try keyedContainer.encodeIfPresent(sourceRef, forKey: SdkCodingKey("source_ref"))
-        try keyedContainer.encodeIfPresent(sourceType, forKey: SdkCodingKey("source_type"))
-        try keyedContainer.encodeIfPresent(tags, forKey: SdkCodingKey("tags"))
+        try keyedContainer.encodeIfPresent(self.acceptHfTokenStorage, forKey: SdkCodingKey("accept_hf_token_storage"))
+        try keyedContainer.encodeIfPresent(self.acceptTermsAndConditions, forKey: SdkCodingKey("accept_terms_and_conditions"))
+        try keyedContainer.encodeIfPresent(self.description, forKey: SdkCodingKey("description"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.preferredGpuRegion, forKey: SdkCodingKey("preferred_gpu_region"))
+        try keyedContainer.encodeIfPresent(self.sourceRef, forKey: SdkCodingKey("source_ref"))
+        try keyedContainer.encodeIfPresent(self.sourceType, forKey: SdkCodingKey("source_type"))
+        try keyedContainer.encodeIfPresent(self.tags, forKey: SdkCodingKey("tags"))
     }
 
     init(options: AgentPlatformApiMethods.GenaiImportCustomModelOptions) {
-        acceptHfTokenStorage = options.acceptHfTokenStorage
-        acceptTermsAndConditions = options.acceptTermsAndConditions
-        description = options.description
-        name = options.name
-        preferredGpuRegion = options.preferredGpuRegion
-        sourceRef = options.sourceRef
-        sourceType = options.sourceType
-        tags = options.tags
+        self.acceptHfTokenStorage = options.acceptHfTokenStorage
+        self.acceptTermsAndConditions = options.acceptTermsAndConditions
+        self.description = options.description
+        self.name = options.name
+        self.preferredGpuRegion = options.preferredGpuRegion
+        self.sourceRef = options.sourceRef
+        self.sourceType = options.sourceType
+        self.tags = options.tags
     }
 }
 
@@ -192,24 +189,24 @@ struct GenaiUpdateCustomModelMetadataRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(description, forKey: SdkCodingKey("description"))
-        try keyedContainer.encodeIfPresent(inputModalities, forKey: SdkCodingKey("input_modalities"))
-        try keyedContainer.encodeIfPresent(license, forKey: SdkCodingKey("license"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(outputModalities, forKey: SdkCodingKey("output_modalities"))
-        try keyedContainer.encodeIfPresent(parameters, forKey: SdkCodingKey("parameters"))
-        try keyedContainer.encodeIfPresent(tags, forKey: SdkCodingKey("tags"))
-        try keyedContainer.encodeIfPresent(uuid2, forKey: SdkCodingKey("uuid"))
+        try keyedContainer.encodeIfPresent(self.description, forKey: SdkCodingKey("description"))
+        try keyedContainer.encodeIfPresent(self.inputModalities, forKey: SdkCodingKey("input_modalities"))
+        try keyedContainer.encodeIfPresent(self.license, forKey: SdkCodingKey("license"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.outputModalities, forKey: SdkCodingKey("output_modalities"))
+        try keyedContainer.encodeIfPresent(self.parameters, forKey: SdkCodingKey("parameters"))
+        try keyedContainer.encodeIfPresent(self.tags, forKey: SdkCodingKey("tags"))
+        try keyedContainer.encodeIfPresent(self.uuid2, forKey: SdkCodingKey("uuid"))
     }
 
     init(options: AgentPlatformApiMethods.GenaiUpdateCustomModelMetadataOptions) {
-        description = options.description
-        inputModalities = options.inputModalities
-        license = options.license
-        name = options.name
-        outputModalities = options.outputModalities
-        parameters = options.parameters
-        tags = options.tags
-        uuid2 = options.uuid2
+        self.description = options.description
+        self.inputModalities = options.inputModalities
+        self.license = options.license
+        self.name = options.name
+        self.outputModalities = options.outputModalities
+        self.parameters = options.parameters
+        self.tags = options.tags
+        self.uuid2 = options.uuid2
     }
 }
