@@ -8,10 +8,6 @@ public typealias ImageDescription = String
 
 public typealias ImageName = String
 
-
-
-
-
 /// Typed representation of the `Image` API schema.
 public struct Image: Codable {
     /// A unique number that can be used to identify and reference a specific image.

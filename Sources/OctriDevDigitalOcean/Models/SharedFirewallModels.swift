@@ -108,10 +108,6 @@ extension FirewallRuleTarget {
     }
 }
 
-
-
-
-
 /// Required object value serialized in the `outbound_rules[]` wire field.
 public struct FirewallRulesOutboundRulesItem: Codable {
     /// The type of traffic to be allowed. This may be one of `tcp`, `udp`, or `icmp`.

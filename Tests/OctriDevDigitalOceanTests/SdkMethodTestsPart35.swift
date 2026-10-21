@@ -6,67 +6,13 @@ import Foundation
 import XCTest
 
 extension SdkMethodTests {
-    func testHarnessCreateSessionWorkspacePartUploadUrlsHarnessCreateSessiX788441fe81ReachesMockAndDecodesResponse() async throws {
-        guard let client = configuredClient(statusPrefix: "/__mockStatus/400") else {
-            return
-        }
-        _ = client
-        let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture781Expected.utf8),
-            options: [.fragmentsAllowed]
-        )
-        do {
-            _ = try await client.harnessRuntime.harnessCreateSessionWorkspacePartUploadUrls(
-            sessionId: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\""),
-            transferId: decoded("\"tr_example\""),
-            partNumbers: decoded("[1]")
-        )
-            XCTFail("did not raise its declared error")
-        } catch let error as SdkHttpError {
-            XCTAssertEqual(error.statusCode, 400)
-            let data = try XCTUnwrap(
-                error.data as? any Encodable,
-                "decoded no error body"
-            )
-            XCTAssertNil(
-                try mismatch(jsonValue(data), expected),
-                "decoded an error body that differs from the mock"
-            )
-        }
-        XCTAssertTrue(true)
-    }
-
-    func testHarnessCreateSessionWorkspaceTransferHarnessCreateSessionWorkX16a07862a6ReachesMockAndDecodesResponse() async throws {
-        guard let client = configuredClient() else {
-            return
-        }
-        _ = client
-        let actual = try await client.harnessRuntime.harnessCreateSessionWorkspaceTransfer(
-            sessionId: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\""),
-            direction: decoded("\"upload\""),
-            path: decoded("\"example\""),
-            isArchive: decoded("true"),
-            asArchive: decoded("true"),
-            sizeBytes: decoded("\"example\""),
-            sha256: decoded("\"example\"")
-        )
-        let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture782Expected.utf8),
-            options: [.fragmentsAllowed]
-        )
-        XCTAssertNil(
-            try mismatch(jsonValue(actual), expected),
-            "decoded a response that differs from the mock"
-        )
-    }
-
     func testHarnessCreateSessionWorkspaceTransferHarnessCreateSessionWorkX60dd918f9eReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/400") else {
             return
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture783Expected.utf8),
+            with: Data(sdkMethodFixture781Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -107,7 +53,7 @@ extension SdkMethodTests {
             xContentSha256: decoded("\"example\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture784Expected.utf8),
+            with: Data(sdkMethodFixture782Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -122,7 +68,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture785Expected.utf8),
+            with: Data(sdkMethodFixture783Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -159,7 +105,7 @@ extension SdkMethodTests {
             sourceOciRef: decoded("\"source_oci_ref\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture786Expected.utf8),
+            with: Data(sdkMethodFixture784Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -174,7 +120,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture787Expected.utf8),
+            with: Data(sdkMethodFixture785Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -203,7 +149,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try HarnessRuntimeMethods.HarnessCreateTriggerOptions(kind: decoded("\"webhook\""), name: decoded("\"nightly-deploy-check\""), sessionMode: decoded("\"fresh\""), promptTemplate: decoded("\"Review the latest push and summarize risks.\""), output: decoded(sdkMethodFixture788Value1))
+        var options = try HarnessRuntimeMethods.HarnessCreateTriggerOptions(kind: decoded("\"webhook\""), name: decoded("\"nightly-deploy-check\""), sessionMode: decoded("\"fresh\""), promptTemplate: decoded("\"Review the latest push and summarize risks.\""), output: decoded(sdkMethodFixture786Value1))
         options.sessionTemplate = try decoded("\"\"")
         options.boundSessionId = try decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"")
         options.webhook = try decoded("{\"provider\":\"github\"}")
@@ -212,7 +158,7 @@ extension SdkMethodTests {
             options: options
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture788Expected.utf8),
+            with: Data(sdkMethodFixture786Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -226,13 +172,13 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try HarnessRuntimeMethods.HarnessCreateTriggerOptions(kind: decoded("\"webhook\""), name: decoded("\"nightly-deploy-check\""), sessionMode: decoded("\"fresh\""), promptTemplate: decoded("\"Review the latest push and summarize risks.\""), output: decoded(sdkMethodFixture789Value1))
+        var options = try HarnessRuntimeMethods.HarnessCreateTriggerOptions(kind: decoded("\"webhook\""), name: decoded("\"nightly-deploy-check\""), sessionMode: decoded("\"fresh\""), promptTemplate: decoded("\"Review the latest push and summarize risks.\""), output: decoded(sdkMethodFixture787Value1))
         options.sessionTemplate = try decoded("\"\"")
         options.boundSessionId = try decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"")
         options.webhook = try decoded("{\"provider\":\"github\"}")
         options.cron = try decoded("{\"cron_expr\":\"0 9 * * 1-5\",\"timezone\":\"America/New_York\"}")
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture789Expected.utf8),
+            with: Data(sdkMethodFixture787Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -271,7 +217,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture791Expected.utf8),
+            with: Data(sdkMethodFixture789Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -311,7 +257,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture793Expected.utf8),
+            with: Data(sdkMethodFixture791Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -344,7 +290,7 @@ extension SdkMethodTests {
             checkpointId: decoded("\"cp_9f2c1a4b\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture794Expected.utf8),
+            with: Data(sdkMethodFixture792Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -359,7 +305,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture795Expected.utf8),
+            with: Data(sdkMethodFixture793Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -391,7 +337,7 @@ extension SdkMethodTests {
             templateId: decoded("\"11111111-2222-3333-4444-555555555555\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture796Expected.utf8),
+            with: Data(sdkMethodFixture794Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -406,7 +352,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture797Expected.utf8),
+            with: Data(sdkMethodFixture795Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -445,7 +391,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture799Expected.utf8),
+            with: Data(sdkMethodFixture797Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -476,7 +422,7 @@ extension SdkMethodTests {
             configId: decoded("\"019fb39c-14d9-7080-933e-b9b90e25acda\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture800Expected.utf8),
+            with: Data(sdkMethodFixture798Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -491,7 +437,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture801Expected.utf8),
+            with: Data(sdkMethodFixture799Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -522,7 +468,7 @@ extension SdkMethodTests {
             sessionId: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture802Expected.utf8),
+            with: Data(sdkMethodFixture800Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -537,12 +483,60 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture803Expected.utf8),
+            with: Data(sdkMethodFixture801Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
             _ = try await client.harnessRuntime.harnessGetSession(
             sessionId: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"")
+        )
+            XCTFail("did not raise its declared error")
+        } catch let error as SdkHttpError {
+            XCTAssertEqual(error.statusCode, 401)
+            let data = try XCTUnwrap(
+                error.data as? any Encodable,
+                "decoded no error body"
+            )
+            XCTAssertNil(
+                try mismatch(jsonValue(data), expected),
+                "decoded an error body that differs from the mock"
+            )
+        }
+        XCTAssertTrue(true)
+    }
+
+    func testHarnessGetSessionCheckpointHarnessGetSessionCheckpointReachesMockAndDecodesResponse() async throws {
+        guard let client = configuredClient() else {
+            return
+        }
+        _ = client
+        let actual = try await client.harnessRuntime.harnessGetSessionCheckpoint(
+            sessionId: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\""),
+            checkpointId: decoded("\"cp_9f2c1a4b\"")
+        )
+        let expected = try JSONSerialization.jsonObject(
+            with: Data(sdkMethodFixture802Expected.utf8),
+            options: [.fragmentsAllowed]
+        )
+        XCTAssertNil(
+            try mismatch(jsonValue(actual), expected),
+            "decoded a response that differs from the mock"
+        )
+    }
+
+    func testHarnessGetSessionCheckpointHarnessGetSessionCheckpoint401ReachesMockAndDecodesResponse() async throws {
+        guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
+            return
+        }
+        _ = client
+        let expected = try JSONSerialization.jsonObject(
+            with: Data(sdkMethodFixture803Expected.utf8),
+            options: [.fragmentsAllowed]
+        )
+        do {
+            _ = try await client.harnessRuntime.harnessGetSessionCheckpoint(
+            sessionId: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\""),
+            checkpointId: decoded("\"cp_9f2c1a4b\"")
         )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {

@@ -7,3 +7,47 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum ByoipPrefixesMethods {}
+
+extension ByoipPrefixesMethods {
+    /// To create a BYOIP prefix, send a POST request to `/v2/byoip_prefixes`. A successful request will initiate the process of bringing your BYOIP Prefix into your account. The response will include the details of the created prefix, including its UUID and status.
+    ///
+    /// - Parameters:
+    /// - prefix: The IP prefix in CIDR notation to bring
+    /// - region: The region where the prefix will be created
+    /// - signature: The signature hash for the prefix creation request
+    public static func byoipPrefixesCreate(config: ClientConfig, prefix: String, region: String, signature: String, requestOptions: RequestOptions? = nil) async throws -> ByoipPrefixCreateResponse {
+        let requestBody = ByoipPrefixesCreateRequestBody(prefix: prefix, region: region, signature: signature)
+
+        return try (await sdkRequest("POST", "/v2/byoip_prefixes", config: config, body: requestBody, decoder: .json, operationId: "byoipPrefixes_create", options: requestOptions, errors: ["401": Error2.self, "422": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    }
+
+    /// To list all BYOIP prefixes, send a GET request to `/v2/byoip_prefixes`. A successful response will return a list of all BYOIP prefixes associated with the account.
+    ///
+    /// - Parameters:
+    /// - perPage: Number of items returned per page
+    /// - page: Which 'page' of paginated results to return.
+    public static func byoipPrefixesList(config: ClientConfig, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ByoipPrefixList {
+        if let perPage = perPage {
+            try validateRange("per_page", Double(perPage), min: 1, max: 200)
+        }
+
+        if let page = page {
+            try validateRange("page", Double(page), min: 1)
+        }
+
+        return try (await sdkRequest("GET", "/v2/byoip_prefixes", config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "byoipPrefixes_list", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    }
+
+    /// To get a BYOIP prefix, send a GET request to `/v2/byoip_prefixes/$byoip_prefix_uuid`. A successful response will return the details of the specified BYOIP prefix.
+    ///
+    /// - Parameters:
+    /// - byoipPrefixUuid: The unique identifier for the BYOIP Prefix.
+    public static func byoipPrefixesGet(config: ClientConfig, byoipPrefixUuid: String, requestOptions: RequestOptions? = nil) async throws -> ByoipPrefixGet {
+        try sdkValidateUuid("byoip_prefix_uuid", byoipPrefixUuid)
+
+        return try (await sdkRequest("GET", ["/v2/byoip_prefixes/", sdkEncodePathSegment(sdkWireString(byoipPrefixUuid))].joined(), config: config, decoder: .json, operationId: "byoipPrefixes_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    }
+}

@@ -123,10 +123,6 @@ extension WorkspaceUploadResponse {
     }
 }
 
-
-
-
-
 /// Response to CreateWorkspaceTransfer. Upload responses carry `upload_id`, `part_size`, and `expires_at`; download
 /// responses carry only `transfer_id`, `direction`, and `status`.
 public struct WorkspaceTransferCreated: Codable {
@@ -190,10 +186,6 @@ extension WorkspaceTransferCreated {
         }
     }
 }
-
-
-
-
 
 /// Typed representation of the `WorkspaceTransferStatus` API schema.
 public struct WorkspaceTransferStatus: Codable {

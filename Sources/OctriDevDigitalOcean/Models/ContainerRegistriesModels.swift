@@ -166,10 +166,6 @@ extension AllRegistriesInfoRegistriesItem {
     }
 }
 
-
-
-
-
 /// Typed representation of the `MultiregistryCreate` API schema.
 public struct MultiregistryCreate: Codable {
     /// A globally unique name for the container registry. Must be lowercase and be composed only of numbers,

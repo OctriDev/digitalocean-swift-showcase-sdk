@@ -95,10 +95,6 @@ extension McpServerUpdate {
     }
 }
 
-
-
-
-
 /// Describes an MCP server to register.
 public struct McpServerCreateRequest: Codable {
     /// Identifier for the server, unique within your team. Must match `^`[a-z]``[a-z0-9-]`{0,63}$`.
@@ -209,12 +205,6 @@ extension McpServerCreateRequest {
         }
     }
 }
-
-
-
-
-
-
 
 /// MCP server registered by your team. It never contains secret material.
 public struct McpServer: Codable {

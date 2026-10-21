@@ -6,52 +6,13 @@ import Foundation
 import XCTest
 
 extension SdkMethodTests {
-    func testInsightsDeleteAlertRuleInsightsDeleteAlertRule401ReachesMockAndDecodesResponse() async throws {
-        guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
-            return
-        }
-        _ = client
-        let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture940Expected.utf8),
-            options: [.fragmentsAllowed]
-        )
-        do {
-            _ = try await client.insights.deleteAlertRule(
-            id: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"")
-        )
-            XCTFail("did not raise its declared error")
-        } catch let error as SdkHttpError {
-            XCTAssertEqual(error.statusCode, 401)
-            let data = try XCTUnwrap(
-                error.data as? any Encodable,
-                "decoded no error body"
-            )
-            XCTAssertNil(
-                try mismatch(jsonValue(data), expected),
-                "decoded an error body that differs from the mock"
-            )
-        }
-        XCTAssertTrue(true)
-    }
-
-    func testInsightsDeleteNotificationChannelInsightsDeleteNotificationChannelReachesMockAndDecodesResponse() async throws {
-        guard let client = configuredClient() else {
-            return
-        }
-        _ = client
-        _ = try await client.insights.deleteNotificationChannel(
-            id: decoded("\"550e8400-e29b-41d4-a716-446655440000\"")
-        )
-        XCTAssertTrue(true)
-    }
-
     func testInsightsDeleteNotificationChannelInsightsDeleteNotificationChannel401ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture942Expected.utf8),
+            with: Data(sdkMethodFixture940Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -82,7 +43,7 @@ extension SdkMethodTests {
             id: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture943Expected.utf8),
+            with: Data(sdkMethodFixture941Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -97,7 +58,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture944Expected.utf8),
+            with: Data(sdkMethodFixture942Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -128,7 +89,7 @@ extension SdkMethodTests {
             id: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture945Expected.utf8),
+            with: Data(sdkMethodFixture943Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -143,7 +104,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture946Expected.utf8),
+            with: Data(sdkMethodFixture944Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -174,7 +135,7 @@ extension SdkMethodTests {
             id: decoded("\"550e8400-e29b-41d4-a716-446655440000\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture947Expected.utf8),
+            with: Data(sdkMethodFixture945Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -189,7 +150,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture948Expected.utf8),
+            with: Data(sdkMethodFixture946Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -223,7 +184,7 @@ extension SdkMethodTests {
             match: decoded("[\"{__name__=~\\\".+\\\"}\"]")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture949Expected.utf8),
+            with: Data(sdkMethodFixture947Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -238,7 +199,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture950Expected.utf8),
+            with: Data(sdkMethodFixture948Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -276,7 +237,7 @@ extension SdkMethodTests {
             match: decoded("[\"{__name__=~\\\".+\\\"}\"]")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture951Expected.utf8),
+            with: Data(sdkMethodFixture949Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -291,7 +252,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture952Expected.utf8),
+            with: Data(sdkMethodFixture950Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -329,7 +290,7 @@ extension SdkMethodTests {
             timeout: decoded("\"30s\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture953Expected.utf8),
+            with: Data(sdkMethodFixture951Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -344,7 +305,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture954Expected.utf8),
+            with: Data(sdkMethodFixture952Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -383,7 +344,7 @@ extension SdkMethodTests {
             timeout: decoded("\"30s\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture955Expected.utf8),
+            with: Data(sdkMethodFixture953Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -398,7 +359,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture956Expected.utf8),
+            with: Data(sdkMethodFixture954Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -437,7 +398,7 @@ extension SdkMethodTests {
             end: decoded("\"1620705417\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture957Expected.utf8),
+            with: Data(sdkMethodFixture955Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -452,7 +413,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture958Expected.utf8),
+            with: Data(sdkMethodFixture956Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -489,7 +450,7 @@ extension SdkMethodTests {
             to: decoded("\"now\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture959Expected.utf8),
+            with: Data(sdkMethodFixture957Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -504,7 +465,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture960Expected.utf8),
+            with: Data(sdkMethodFixture958Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -539,6 +500,58 @@ extension SdkMethodTests {
             page: decoded("1"),
             status: decoded("\"active\""),
             ruleId: decoded("\"8f3a2b1c-4d5e-6f7a-8b9c-0d1e2f3a4b5c\""),
+            resourceUrn: decoded("\"do:droplet:12345\"")
+        )
+        let expected = try JSONSerialization.jsonObject(
+            with: Data(sdkMethodFixture959Expected.utf8),
+            options: [.fragmentsAllowed]
+        )
+        XCTAssertNil(
+            try mismatch(jsonValue(actual), expected),
+            "decoded a response that differs from the mock"
+        )
+    }
+
+    func testInsightsListAlertInstancesInsightsListAlertInstances400ReachesMockAndDecodesResponse() async throws {
+        guard let client = configuredClient(statusPrefix: "/__mockStatus/400") else {
+            return
+        }
+        _ = client
+        let expected = try JSONSerialization.jsonObject(
+            with: Data(sdkMethodFixture960Expected.utf8),
+            options: [.fragmentsAllowed]
+        )
+        do {
+            _ = try await client.insights.listAlertInstances(
+            perPage: decoded("2"),
+            page: decoded("1"),
+            status: decoded("\"active\""),
+            ruleId: decoded("\"8f3a2b1c-4d5e-6f7a-8b9c-0d1e2f3a4b5c\""),
+            resourceUrn: decoded("\"do:droplet:12345\"")
+        )
+            XCTFail("did not raise its declared error")
+        } catch let error as SdkHttpError {
+            XCTAssertEqual(error.statusCode, 400)
+            let data = try XCTUnwrap(
+                error.data as? any Encodable,
+                "decoded no error body"
+            )
+            XCTAssertNil(
+                try mismatch(jsonValue(data), expected),
+                "decoded an error body that differs from the mock"
+            )
+        }
+        XCTAssertTrue(true)
+    }
+
+    func testInsightsListAlertRulesInsightsListAlertRulesReachesMockAndDecodesResponse() async throws {
+        guard let client = configuredClient() else {
+            return
+        }
+        _ = client
+        let actual = try await client.insights.listAlertRules(
+            page: decoded("1"),
+            perPage: decoded("2"),
             resourceUrn: decoded("\"do:droplet:12345\"")
         )
         let expected = try JSONSerialization.jsonObject(

@@ -4,12 +4,130 @@
 import Foundation
 
 // KubernetesCluster domain models
+extension Cluster {
+    public init(name: String, region: String, version: String, nodePools: [KubernetesNodePool], id: String? = nil, clusterSubnet: String? = nil, serviceSubnet: String? = nil, vpcUuid: String? = nil, workerSubnetUuid: String? = nil, ipv4: String? = nil, endpoint: String? = nil, tags: [String]? = nil, maintenancePolicy: MaintenancePolicy? = nil, autoUpgrade: Bool? = nil, isolatedWorkers: Bool? = nil, gpuOperatorReady: Bool? = nil, status: ClusterStatus? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, surgeUpgrade: Bool? = nil, ha: Bool? = nil, registryEnabled: Bool? = nil, controlPlaneFirewall: ControlPlaneFirewall? = nil, clusterAutoscalerConfiguration: ClusterAutoscalerConfiguration? = nil, sso: Sso? = nil, routingAgent: RoutingAgent? = nil, p2pOciRegistryPlugin: P2pOciRegistryPlugin? = nil, nfsCsiPlugin: NfsCsiPlugin? = nil, amdGpuDevicePlugin: AmdGpuDevicePlugin? = nil, amdGpuDeviceMetricsExporterPlugin: AmdGpuDeviceMetricsExporterPlugin? = nil, nvidiaGpuDevicePlugin: NvidiaGpuDevicePlugin? = nil, nvidiaGpuDraDriver: NvidiaGpuDraDriver? = nil, amdGpuDraDriver: AmdGpuDraDriver? = nil, rdmaSharedDevPlugin: RdmaSharedDevPlugin? = nil, corednsAutoscaler: CorednsAutoscaler? = nil) throws {
+        (self.name, self.region) = (name, region)
+        (self.version, self.nodePools) = (version, nodePools)
+        (self.id, self.clusterSubnet) = (id, clusterSubnet)
+        (self.serviceSubnet, self.vpcUuid) = (serviceSubnet, vpcUuid)
+        (self.workerSubnetUuid, self.ipv4) = (workerSubnetUuid, ipv4)
+        (self.endpoint, self.tags) = (endpoint, tags)
+        (self.maintenancePolicy, self.autoUpgrade) = (maintenancePolicy, autoUpgrade)
+        (self.isolatedWorkers, self.gpuOperatorReady) = (isolatedWorkers, gpuOperatorReady)
+        (self.status, self.createdAt) = (status, createdAt)
+        (self.updatedAt, self.surgeUpgrade) = (updatedAt, surgeUpgrade)
+        (self.ha, self.registryEnabled) = (ha, registryEnabled)
+        self.controlPlaneFirewall = controlPlaneFirewall
+        (self.clusterAutoscalerConfiguration, self.sso) = (clusterAutoscalerConfiguration, sso)
+        (self.routingAgent, self.p2pOciRegistryPlugin) = (routingAgent, p2pOciRegistryPlugin)
+        (self.nfsCsiPlugin, self.amdGpuDevicePlugin) = (nfsCsiPlugin, amdGpuDevicePlugin)
+        self.amdGpuDeviceMetricsExporterPlugin = amdGpuDeviceMetricsExporterPlugin
+        (self.nvidiaGpuDevicePlugin, self.nvidiaGpuDraDriver) = (nvidiaGpuDevicePlugin, nvidiaGpuDraDriver)
+        (self.amdGpuDraDriver, self.rdmaSharedDevPlugin) = (amdGpuDraDriver, rdmaSharedDevPlugin)
+        self.corednsAutoscaler = corednsAutoscaler
+        if let value = self.id {
+            try sdkValidateUuid("id", value)
+        }
+        if let value = self.vpcUuid {
+            try sdkValidateUuid("vpc_uuid", value)
+        }
+        if let value = self.workerSubnetUuid {
+            try sdkValidateUuid("worker_subnet_uuid", value)
+        }
+        if let value = self.createdAt {
+            try sdkValidateDateTime("created_at", sdkWireString(value))
+        }
+        if let value = self.updatedAt {
+            try sdkValidateDateTime("updated_at", sdkWireString(value))
+        }
+    }
+}
+
+/// Typed representation of the `ClusterRegistries` API schema.
+public struct ClusterRegistries: Codable {
+    /// An array containing the UUIDs of Kubernetes clusters.
+    /// - Example: ["bd5f5959-5e1e-4205-a714-a914373942af","50c2f44c-011d-493e-aee5-361a4a0d1844"]
+    public var clusterUuids: [String]?
+    /// An array containing the registry names.
+    /// - Example: ["registry-a","registry-b"]
+    public var registries: [String]?
+
+    enum CodingKeys: String, CodingKey {
+        case clusterUuids = "cluster_uuids"
+        case registries
+    }
+
+    init() {
+        (self.clusterUuids, self.registries) = (nil, nil)
+    }
+}
+
+extension ClusterRegistries {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.clusterUuids = try container.sdkDecodeIfPresent(.clusterUuids)
+        self.registries = try container.sdkDecodeIfPresent(.registries)
+    }
+}
+
+extension ClusterRegistries {
+    public init(clusterUuids: [String]? = nil, registries: [String]? = nil) {
+        self.init()
+        (self.clusterUuids, self.registries) = (clusterUuids, registries)
+    }
+}
+
+/// An object specifying custom cluster autoscaler configuration.
+public struct ClusterAutoscalerConfiguration: Codable {
+    /// Used to customize when cluster autoscaler scales down non-empty nodes by setting the node utilization
+    /// threshold.
+    /// - Example: 0.65
+    public var scaleDownUtilizationThreshold: Double?
+    /// Used to customize how long a node is unneeded before being scaled down.
+    /// - Example: "1m0s"
+    public var scaleDownUnneededTime: String?
+    /// Customizes expanders used by cluster-autoscaler. The autoscaler will apply each expander from the provided
+    /// list to narrow down the selection of node types created to scale up, until either a single node type is
+    /// left, or the list of expanders is exhausted. If this flag is unset, autoscaler will use its default expander
+    /// `random`. Passing an empty list (_not_ `null`) will unset any previous expander customizations. Available
+    /// expanders: - `random`: Randomly selects a node group…
+    /// - Example: ["priority","random"]
+    public var expanders: [ClusterAutoscalerConfigurationExpandersItem]?
+
+    enum CodingKeys: String, CodingKey {
+        case scaleDownUtilizationThreshold = "scale_down_utilization_threshold"
+        case scaleDownUnneededTime = "scale_down_unneeded_time"
+        case expanders
+    }
+
+    init() {
+        (self.scaleDownUtilizationThreshold, self.scaleDownUnneededTime, self.expanders) = (nil, nil, nil)
+    }
+}
+
+extension ClusterAutoscalerConfiguration {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.scaleDownUtilizationThreshold = try container.sdkDecodeIfPresent(.scaleDownUtilizationThreshold)
+        self.scaleDownUnneededTime = try container.sdkDecodeIfPresent(.scaleDownUnneededTime)
+        self.expanders = try container.sdkDecodeIfPresent(.expanders)
+    }
+}
+
+extension ClusterAutoscalerConfiguration {
+    public init(scaleDownUtilizationThreshold: Double? = nil, scaleDownUnneededTime: String? = nil, expanders: [ClusterAutoscalerConfigurationExpandersItem]? = nil) {
+        self.init()
+        self.scaleDownUtilizationThreshold = scaleDownUtilizationThreshold
+        (self.scaleDownUnneededTime, self.expanders) = (scaleDownUnneededTime, expanders)
+    }
+}
+
 /// An object containing a `state` attribute whose value is set to a string indicating the current status of the
 /// cluster.
-public struct ClusterStatus: Codable {
+public struct ClusterReadStatus: Codable {
     /// A string indicating the current status of the cluster.
     /// - Example: "provisioning"
-    public var state: ClusterStatusState?
+    public var state: ClusterReadStatusState?
     /// An optional message providing additional information about the current cluster state.
     /// - Example: "provisioning"
     public var message: String?
@@ -24,7 +142,7 @@ public struct ClusterStatus: Codable {
     }
 }
 
-extension ClusterStatus {
+extension ClusterReadStatus {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.state = try container.sdkDecodeIfPresent(.state)
@@ -32,513 +150,106 @@ extension ClusterStatus {
     }
 }
 
-extension ClusterStatus {
-    public init(state: ClusterStatusState? = nil, message: String? = nil) {
+extension ClusterReadStatus {
+    public init(state: ClusterReadStatusState? = nil, message: String? = nil) {
         self.init()
         (self.state, self.message) = (state, message)
     }
 }
 
-/// Typed representation of the `ClusterRead` API schema.
-public struct ClusterRead: Codable {
-    /// A human-readable name for a Kubernetes cluster.
-    /// - Example: "prod-cluster-01"
-    public var name: String
-    /// The slug identifier for the region where the Kubernetes cluster is located.
-    /// - Example: "nyc1"
-    public var region: String
-    /// The slug identifier for the version of Kubernetes used for the cluster. If set to a minor version (e.g.
-    /// "1.14"), the latest version within it will be used (e.g. "1.14.6-do.1"); if set to "latest", the latest
-    /// published version will be used. See the `/v2/kubernetes/options` endpoint to find all currently available
-    /// versions.
-    /// - Example: "1.18.6-do.0"
-    public var version: String
-    /// An object specifying the details of the worker nodes available to the Kubernetes cluster.
-    public var nodePools: [KubernetesNodePool]
-    /// A unique ID that can be used to identify and reference a Kubernetes cluster.
-    /// - Example: "bd5f5959-5e1e-4205-a714-a914373942af"
-    public var id: String?
-    /// The range of IP addresses for the overlay network of the Kubernetes cluster in CIDR notation.
-    /// - Example: "192.168.0.0/20"
-    public var clusterSubnet: String?
-    /// The range of assignable IP addresses for services running in the Kubernetes cluster in CIDR notation.
-    /// - Example: "192.168.16.0/24"
-    public var serviceSubnet: String?
-    /// A string specifying the UUID of the VPC to which the Kubernetes cluster is assigned. Requires `vpc:read`
-    /// scope.
-    /// - Example: "c33931f2-a26a-4e61-b85c-4e95a2ec431b"
-    public var vpcUuid: String?
-    /// The UUID of the VPC subnet worker nodes are attached to. When unset, the default subnet for the VPC is used.
-    /// Requires `vpc:read` scope.
-    /// - Example: "cbd79771-23eb-49be-b5ea-59cc56222622"
-    public var workerSubnetUuid: String?
-    /// The public IPv4 address of the Kubernetes master node. This will not be set if high availability is
-    /// configured on the cluster (v1.21+)
-    /// - Example: "68.183.121.157"
-    public var ipv4: String?
-    /// The base URL of the API server on the Kubernetes master node.
-    /// - Example: "https://bd5f5959-5e1e-4205-a714-a914373942af.k8s.ondigitalocean.com"
-    public var endpoint: String?
-    /// An array of tags applied to the Kubernetes cluster. All clusters are automatically tagged `k8s` and
-    /// `k8s:$K8S_CLUSTER_ID`. Requires `tag:read` scope.
-    /// - Example: ["k8s","k8s:bd5f5959-5e1e-4205-a714-a914373942af","production","web-team"]
-    public var tags: [String]?
-    /// An object specifying the maintenance window policy for the Kubernetes cluster.
-    public var maintenancePolicy: MaintenancePolicy?
-    /// A boolean value indicating whether the cluster will be automatically upgraded to new patch releases during
-    /// its maintenance window.
-    /// - Example: true
-    public var autoUpgrade: Bool?
-    /// A boolean value indicating whether worker nodes in the cluster are not assigned public IP addresses. When
-    /// omitted on create, the default value is false. When enabled, a NAT gateway must exist in the VPC where the
-    /// cluster is created.
-    public var isolatedWorkers: Bool?
-    /// A boolean value indicating whether GPU nodes in the cluster are launched with images that do not include
-    /// pre-installed GPU drivers, allowing GPU drivers to be managed by a GPU operator instead. Mutually exclusive
-    /// with other GPU-related cluster options, such as `nvidia_gpu_dra_driver` and `amd_gpu_dra_driver`. When
-    /// omitted on create, the default value is false.
-    public var gpuOperatorReady: Bool?
-    /// An object containing a `state` attribute whose value is set to a string indicating the current status of the
-    /// cluster.
-    public var status: ClusterReadStatus?
-    /// A time value given in ISO8601 combined date and time format that represents when the Kubernetes cluster was
-    /// created.
-    /// - Example: "2018-11-15T16:00:11Z"
-    public var createdAt: Date?
-    /// A time value given in ISO8601 combined date and time format that represents when the Kubernetes cluster was
-    /// last updated.
-    /// - Example: "2018-11-15T16:00:11Z"
-    public var updatedAt: Date?
-    /// A boolean value indicating whether surge upgrade is enabled/disabled for the cluster. Surge upgrade makes
-    /// cluster upgrades fast and reliable by bringing up new nodes before destroying the outdated nodes.
-    /// - Example: true
-    public var surgeUpgrade: Bool?
-    /// A boolean value indicating whether the control plane is run in a highly available configuration in the
-    /// cluster. Highly available control planes incur less downtime. The property cannot be disabled. When omitted
-    /// on create, the default is version-dependent; for DOKS 1.36.0 and later, the default is true; for earlier
-    /// versions, the default is false.
-    /// - Example: true
-    public var ha: Bool?
-    /// A read-only boolean value indicating if a container registry is integrated with the cluster.
-    /// - Example: true
-    public var registryEnabled: Bool?
-    /// A boolean value indicating whether GPU nodes in the cluster are launched with images that do not include
-    /// pre-installed GPU drivers, allowing GPU drivers to be managed by a GPU operator instead. Mutually exclusive
-    /// with other GPU-related cluster options, such as `nvidia_gpu_dra_driver` and `amd_gpu_dra_driver`. When
-    /// omitted on create, the default value is false.
-    /// - Example: ["registry-a","registry-b"]
-    public var registries: [String]?
-    /// An object specifying the control plane firewall for the Kubernetes cluster. Control plane firewall is in
-    /// early availability (invite only).
-    public var controlPlaneFirewall: ControlPlaneFirewall?
-    /// An object specifying custom cluster autoscaler configuration.
-    public var clusterAutoscalerConfiguration: ClusterAutoscalerConfiguration?
-    /// An object specifying Single Sign-On (SSO) configuration for the Kubernetes cluster.
-    public var sso: Sso?
-    /// An object specifying whether the routing-agent component should be enabled for the Kubernetes cluster.
-    public var routingAgent: RoutingAgent?
-    /// An object specifying whether the AMD GPU Device Plugin should be enabled in the Kubernetes cluster. It's
-    /// enabled by default for clusters with an AMD GPU node pool.
-    public var amdGpuDevicePlugin: AmdGpuDevicePlugin?
-    /// An object specifying whether the AMD Device Metrics Exporter should be enabled in the Kubernetes cluster.
-    public var amdGpuDeviceMetricsExporterPlugin: AmdGpuDeviceMetricsExporterPlugin?
-    /// An object specifying whether the Nvidia GPU Device Plugin should be enabled in the Kubernetes cluster. It's
-    /// enabled by default for clusters with an Nvidia GPU node pool.
-    public var nvidiaGpuDevicePlugin: NvidiaGpuDevicePlugin?
-    /// An object specifying whether the NVIDIA GPU DRA Driver should be enabled in the Kubernetes cluster. Mutually
-    /// exclusive with `nvidia_gpu_device_plugin`.
-    public var nvidiaGpuDraDriver: NvidiaGpuDraDriver?
-    /// An object specifying whether the AMD GPU DRA Driver should be enabled in the Kubernetes cluster. Mutually
-    /// exclusive with `amd_gpu_device_plugin`.
-    public var amdGpuDraDriver: AmdGpuDraDriver?
-    /// An object specifying whether the RDMA shared device plugin should be enabled in the Kubernetes cluster.
-    public var rdmaSharedDevPlugin: RdmaSharedDevPlugin?
-    /// An object specifying whether the Cluster Proportional Autoscaler (CPA) add-on for CoreDNS should be enabled
-    /// for the Kubernetes cluster.
-    public var corednsAutoscaler: CorednsAutoscaler?
-    /// An object specifying whether the Peer-to-peer OCI registry component should be enabled for the Kubernetes
-    /// cluster.
-    public var p2pOciRegistryPlugin: P2pOciRegistryPlugin?
-    /// An object specifying whether the NFS CSI plugin should be enabled for the Kubernetes cluster.
-    public var nfsCsiPlugin: NfsCsiPlugin?
+/// Typed representation of the `ClusterRegistry` API schema.
+public struct ClusterRegistry: Codable {
+    /// An array containing the UUIDs of Kubernetes clusters.
+    /// - Example: ["bd5f5959-5e1e-4205-a714-a914373942af","50c2f44c-011d-493e-aee5-361a4a0d1844"]
+    public var clusterUuids: [String]?
 
     enum CodingKeys: String, CodingKey {
-        case name
-        case region
-        case version
-        case nodePools = "node_pools"
-        case id
-        case clusterSubnet = "cluster_subnet"
-        case serviceSubnet = "service_subnet"
-        case vpcUuid = "vpc_uuid"
-        case workerSubnetUuid = "worker_subnet_uuid"
-        case ipv4
-        case endpoint
-        case tags
-        case maintenancePolicy = "maintenance_policy"
-        case autoUpgrade = "auto_upgrade"
-        case isolatedWorkers = "isolated_workers"
-        case gpuOperatorReady = "gpu_operator_ready"
-        case status
-        case createdAt = "created_at"
-        case updatedAt = "updated_at"
-        case surgeUpgrade = "surge_upgrade"
-        case ha
-        case registryEnabled = "registry_enabled"
-        case registries
-        case controlPlaneFirewall = "control_plane_firewall"
-        case clusterAutoscalerConfiguration = "cluster_autoscaler_configuration"
-        case sso
-        case routingAgent = "routing_agent"
-        case amdGpuDevicePlugin = "amd_gpu_device_plugin"
-        case amdGpuDeviceMetricsExporterPlugin = "amd_gpu_device_metrics_exporter_plugin"
-        case nvidiaGpuDevicePlugin = "nvidia_gpu_device_plugin"
-        case nvidiaGpuDraDriver = "nvidia_gpu_dra_driver"
-        case amdGpuDraDriver = "amd_gpu_dra_driver"
-        case rdmaSharedDevPlugin = "rdma_shared_dev_plugin"
-        case corednsAutoscaler = "coredns_autoscaler"
-        case p2pOciRegistryPlugin = "p2p_oci_registry_plugin"
-        case nfsCsiPlugin = "nfs_csi_plugin"
+        case clusterUuids = "cluster_uuids"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    init() {
+        self.clusterUuids = nil
+    }
 }
 
-extension ClusterRead {
+extension ClusterRegistry {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.region) else {
-            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
-        }
-        guard container.contains(.version) else {
-            throw SdkValidationError(field: "version", code: "required", message: "Validation failed for 'version': value is required")
-        }
-        guard container.contains(.nodePools) else {
-            throw SdkValidationError(field: "node_pools", code: "required", message: "Validation failed for 'node_pools': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.region = try container.sdkDecodeRequired(.region)
-        self.version = try container.sdkDecodeRequired(.version)
-        self.nodePools = try container.sdkDecodeRequired(.nodePools)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.clusterSubnet = try container.sdkDecodeIfPresent(.clusterSubnet)
-        self.serviceSubnet = try container.sdkDecodeIfPresent(.serviceSubnet)
-        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        self.workerSubnetUuid = try container.sdkDecodeIfPresent(.workerSubnetUuid)
-        self.ipv4 = try container.sdkDecodeIfPresent(.ipv4)
-        self.endpoint = try container.sdkDecodeIfPresent(.endpoint)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.maintenancePolicy = try container.sdkDecodeIfPresent(.maintenancePolicy)
-        self.autoUpgrade = try container.sdkDecodeIfPresent(.autoUpgrade)
-        self.isolatedWorkers = try container.sdkDecodeIfPresent(.isolatedWorkers)
-        self.gpuOperatorReady = try container.sdkDecodeIfPresent(.gpuOperatorReady)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.surgeUpgrade = try container.sdkDecodeIfPresent(.surgeUpgrade)
-        self.ha = try container.sdkDecodeIfPresent(.ha)
-        self.registryEnabled = try container.sdkDecodeIfPresent(.registryEnabled)
-        self.registries = try container.sdkDecodeIfPresent(.registries)
-        self.controlPlaneFirewall = try container.sdkDecodeIfPresent(.controlPlaneFirewall)
-        self.clusterAutoscalerConfiguration = try container.sdkDecodeIfPresent(.clusterAutoscalerConfiguration)
-        self.sso = try container.sdkDecodeIfPresent(.sso)
-        self.routingAgent = try container.sdkDecodeIfPresent(.routingAgent)
-        self.amdGpuDevicePlugin = try container.sdkDecodeIfPresent(.amdGpuDevicePlugin)
-        self.amdGpuDeviceMetricsExporterPlugin = try container.sdkDecodeIfPresent(.amdGpuDeviceMetricsExporterPlugin)
-        self.nvidiaGpuDevicePlugin = try container.sdkDecodeIfPresent(.nvidiaGpuDevicePlugin)
-        self.nvidiaGpuDraDriver = try container.sdkDecodeIfPresent(.nvidiaGpuDraDriver)
-        self.amdGpuDraDriver = try container.sdkDecodeIfPresent(.amdGpuDraDriver)
-        self.rdmaSharedDevPlugin = try container.sdkDecodeIfPresent(.rdmaSharedDevPlugin)
-        self.corednsAutoscaler = try container.sdkDecodeIfPresent(.corednsAutoscaler)
-        self.p2pOciRegistryPlugin = try container.sdkDecodeIfPresent(.p2pOciRegistryPlugin)
-        self.nfsCsiPlugin = try container.sdkDecodeIfPresent(.nfsCsiPlugin)
-        if let value = self.id {
-            try sdkValidateUuid("id", value)
-        }
-        if let value = self.vpcUuid {
-            try sdkValidateUuid("vpc_uuid", value)
-        }
-        if let value = self.workerSubnetUuid {
-            try sdkValidateUuid("worker_subnet_uuid", value)
-        }
-        if let value = self.createdAt {
-            try sdkValidateDateTime("created_at", sdkWireString(value))
-        }
-        if let value = self.updatedAt {
-            try sdkValidateDateTime("updated_at", sdkWireString(value))
-        }
+        self.clusterUuids = try container.sdkDecodeIfPresent(.clusterUuids)
     }
 }
 
-extension ClusterRead {
-    public init(name: String, region: String, version: String, nodePools: [KubernetesNodePool], id: String? = nil, clusterSubnet: String? = nil, serviceSubnet: String? = nil, vpcUuid: String? = nil, workerSubnetUuid: String? = nil, ipv4: String? = nil, endpoint: String? = nil, tags: [String]? = nil, maintenancePolicy: MaintenancePolicy? = nil, autoUpgrade: Bool? = nil, isolatedWorkers: Bool? = nil, gpuOperatorReady: Bool? = nil, status: ClusterReadStatus? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, surgeUpgrade: Bool? = nil, ha: Bool? = nil, registryEnabled: Bool? = nil, registries: [String]? = nil, controlPlaneFirewall: ControlPlaneFirewall? = nil, clusterAutoscalerConfiguration: ClusterAutoscalerConfiguration? = nil, sso: Sso? = nil, routingAgent: RoutingAgent? = nil, amdGpuDevicePlugin: AmdGpuDevicePlugin? = nil, amdGpuDeviceMetricsExporterPlugin: AmdGpuDeviceMetricsExporterPlugin? = nil, nvidiaGpuDevicePlugin: NvidiaGpuDevicePlugin? = nil, nvidiaGpuDraDriver: NvidiaGpuDraDriver? = nil, amdGpuDraDriver: AmdGpuDraDriver? = nil, rdmaSharedDevPlugin: RdmaSharedDevPlugin? = nil, corednsAutoscaler: CorednsAutoscaler? = nil, p2pOciRegistryPlugin: P2pOciRegistryPlugin? = nil, nfsCsiPlugin: NfsCsiPlugin? = nil) throws {
-        (self.name, self.region) = (name, region)
-        (self.version, self.nodePools) = (version, nodePools)
-        (self.id, self.clusterSubnet) = (id, clusterSubnet)
-        (self.serviceSubnet, self.vpcUuid) = (serviceSubnet, vpcUuid)
-        (self.workerSubnetUuid, self.ipv4) = (workerSubnetUuid, ipv4)
-        (self.endpoint, self.tags) = (endpoint, tags)
-        (self.maintenancePolicy, self.autoUpgrade) = (maintenancePolicy, autoUpgrade)
-        (self.isolatedWorkers, self.gpuOperatorReady) = (isolatedWorkers, gpuOperatorReady)
-        (self.status, self.createdAt) = (status, createdAt)
-        (self.updatedAt, self.surgeUpgrade) = (updatedAt, surgeUpgrade)
-        (self.ha, self.registryEnabled) = (ha, registryEnabled)
-        (self.registries, self.controlPlaneFirewall) = (registries, controlPlaneFirewall)
-        (self.clusterAutoscalerConfiguration, self.sso) = (clusterAutoscalerConfiguration, sso)
-        (self.routingAgent, self.amdGpuDevicePlugin) = (routingAgent, amdGpuDevicePlugin)
-        self.amdGpuDeviceMetricsExporterPlugin = amdGpuDeviceMetricsExporterPlugin
-        (self.nvidiaGpuDevicePlugin, self.nvidiaGpuDraDriver) = (nvidiaGpuDevicePlugin, nvidiaGpuDraDriver)
-        (self.amdGpuDraDriver, self.rdmaSharedDevPlugin) = (amdGpuDraDriver, rdmaSharedDevPlugin)
-        (self.corednsAutoscaler, self.p2pOciRegistryPlugin) = (corednsAutoscaler, p2pOciRegistryPlugin)
-        self.nfsCsiPlugin = nfsCsiPlugin
-        if let value = self.id {
-            try sdkValidateUuid("id", value)
-        }
-        if let value = self.vpcUuid {
-            try sdkValidateUuid("vpc_uuid", value)
-        }
-        if let value = self.workerSubnetUuid {
-            try sdkValidateUuid("worker_subnet_uuid", value)
-        }
-        if let value = self.createdAt {
-            try sdkValidateDateTime("created_at", sdkWireString(value))
-        }
-        if let value = self.updatedAt {
-            try sdkValidateDateTime("updated_at", sdkWireString(value))
-        }
+extension ClusterRegistry {
+    public init(clusterUuids: [String]? = nil) {
+        self.init()
+        self.clusterUuids = clusterUuids
     }
 }
 
-/// Typed representation of the `Cluster` API schema.
-public struct Cluster: Codable {
-    /// A human-readable name for a Kubernetes cluster.
-    /// - Example: "prod-cluster-01"
-    public var name: String
-    /// The slug identifier for the region where the Kubernetes cluster is located.
-    /// - Example: "nyc1"
-    public var region: String
-    /// The slug identifier for the version of Kubernetes used for the cluster. If set to a minor version (e.g.
-    /// "1.14"), the latest version within it will be used (e.g. "1.14.6-do.1"); if set to "latest", the latest
-    /// published version will be used. See the `/v2/kubernetes/options` endpoint to find all currently available
-    /// versions.
-    /// - Example: "1.18.6-do.0"
-    public var version: String
-    /// An object specifying the details of the worker nodes available to the Kubernetes cluster.
-    public var nodePools: [KubernetesNodePool]
-    /// A unique ID that can be used to identify and reference a Kubernetes cluster.
-    /// - Example: "bd5f5959-5e1e-4205-a714-a914373942af"
-    public var id: String?
-    /// The range of IP addresses for the overlay network of the Kubernetes cluster in CIDR notation.
-    /// - Example: "192.168.0.0/20"
-    public var clusterSubnet: String?
-    /// The range of assignable IP addresses for services running in the Kubernetes cluster in CIDR notation.
-    /// - Example: "192.168.16.0/24"
-    public var serviceSubnet: String?
-    /// A string specifying the UUID of the VPC to which the Kubernetes cluster is assigned. Requires `vpc:read`
-    /// scope.
-    /// - Example: "c33931f2-a26a-4e61-b85c-4e95a2ec431b"
-    public var vpcUuid: String?
-    /// The UUID of the VPC subnet to attach worker nodes to. When omitted on create, the default subnet for the VPC
-    /// is used. This value cannot be changed after the cluster is created. `vpc_uuid` must also be set. Requires
-    /// `vpc:read` scope.
-    /// - Example: "cbd79771-23eb-49be-b5ea-59cc56222622"
-    public var workerSubnetUuid: String?
-    /// The public IPv4 address of the Kubernetes master node. This will not be set if high availability is
-    /// configured on the cluster (v1.21+)
-    /// - Example: "68.183.121.157"
-    public var ipv4: String?
-    /// The base URL of the API server on the Kubernetes master node.
-    /// - Example: "https://bd5f5959-5e1e-4205-a714-a914373942af.k8s.ondigitalocean.com"
-    public var endpoint: String?
-    /// An array of tags to apply to the Kubernetes cluster. All clusters are automatically tagged `k8s` and
-    /// `k8s:$K8S_CLUSTER_ID`. Requires `tag:read` and `tag:create` scope, as well as `tag:delete` if existing tags
-    /// are getting removed.
-    /// - Example: ["k8s","k8s:bd5f5959-5e1e-4205-a714-a914373942af","production","web-team"]
-    public var tags: [String]?
-    /// An object specifying the maintenance window policy for the Kubernetes cluster.
-    public var maintenancePolicy: MaintenancePolicy?
-    /// A boolean value indicating whether the cluster will be automatically upgraded to new patch releases during
-    /// its maintenance window.
-    /// - Example: true
-    public var autoUpgrade: Bool?
-    /// A boolean value indicating whether worker nodes in the cluster are not assigned public IP addresses. When
-    /// omitted on create, the default value is false. When enabled, a NAT gateway must exist in the VPC where the
-    /// cluster is created.
-    public var isolatedWorkers: Bool?
-    /// A boolean value indicating whether GPU nodes in the cluster are launched with images that do not include
-    /// pre-installed GPU drivers, allowing GPU drivers to be managed by a GPU operator instead. Mutually exclusive
-    /// with other GPU-related cluster options, such as `nvidia_gpu_dra_driver` and `amd_gpu_dra_driver`. When
-    /// omitted on create, the default value is false.
-    public var gpuOperatorReady: Bool?
-    /// An object containing a `state` attribute whose value is set to a string indicating the current status of the
-    /// cluster.
-    public var status: ClusterStatus?
-    /// A time value given in ISO8601 combined date and time format that represents when the Kubernetes cluster was
-    /// created.
-    /// - Example: "2018-11-15T16:00:11Z"
-    public var createdAt: Date?
-    /// A time value given in ISO8601 combined date and time format that represents when the Kubernetes cluster was
-    /// last updated.
-    /// - Example: "2018-11-15T16:00:11Z"
-    public var updatedAt: Date?
-    /// A boolean value indicating whether surge upgrade is enabled/disabled for the cluster. Surge upgrade makes
-    /// cluster upgrades fast and reliable by bringing up new nodes before destroying the outdated nodes.
-    /// - Example: true
-    public var surgeUpgrade: Bool?
-    /// A boolean value indicating whether the control plane is run in a highly available configuration in the
-    /// cluster. Highly available control planes incur less downtime. The property cannot be disabled. When omitted
-    /// on create, the default is version-dependent; for DOKS 1.36.0 and later, the default is true; for earlier
-    /// versions, the default is false.
-    /// - Example: true
-    public var ha: Bool?
-    /// A boolean value indicating whether GPU nodes in the cluster are launched with images that do not include
-    /// pre-installed GPU drivers, allowing GPU drivers to be managed by a GPU operator instead. Mutually exclusive
-    /// with other GPU-related cluster options, such as `nvidia_gpu_dra_driver` and `amd_gpu_dra_driver`. When
-    /// omitted on create, the default value is false.
-    /// - Example: true
-    public var registryEnabled: Bool?
-    /// An object specifying the control plane firewall for the Kubernetes cluster. Control plane firewall is in
-    /// early availability (invite only).
-    public var controlPlaneFirewall: ControlPlaneFirewall?
-    /// An object specifying custom cluster autoscaler configuration.
-    public var clusterAutoscalerConfiguration: ClusterAutoscalerConfiguration?
-    /// An object specifying Single Sign-On (SSO) configuration for the Kubernetes cluster.
-    public var sso: Sso?
-    /// An object specifying whether the routing-agent component should be enabled for the Kubernetes cluster.
-    public var routingAgent: RoutingAgent?
-    /// An object specifying whether the Peer-to-peer OCI registry component should be enabled for the Kubernetes
-    /// cluster.
-    public var p2pOciRegistryPlugin: P2pOciRegistryPlugin?
-    /// An object specifying whether the NFS CSI plugin should be enabled for the Kubernetes cluster.
-    public var nfsCsiPlugin: NfsCsiPlugin?
-    /// An object specifying whether the AMD GPU Device Plugin should be enabled in the Kubernetes cluster. It's
-    /// enabled by default for clusters with an AMD GPU node pool.
-    public var amdGpuDevicePlugin: AmdGpuDevicePlugin?
-    /// An object specifying whether the AMD Device Metrics Exporter should be enabled in the Kubernetes cluster.
-    public var amdGpuDeviceMetricsExporterPlugin: AmdGpuDeviceMetricsExporterPlugin?
-    /// An object specifying whether the Nvidia GPU Device Plugin should be enabled in the Kubernetes cluster. It's
-    /// enabled by default for clusters with an Nvidia GPU node pool.
-    public var nvidiaGpuDevicePlugin: NvidiaGpuDevicePlugin?
-    /// An object specifying whether the NVIDIA GPU DRA Driver should be enabled in the Kubernetes cluster. Mutually
-    /// exclusive with `nvidia_gpu_device_plugin`.
-    public var nvidiaGpuDraDriver: NvidiaGpuDraDriver?
-    /// An object specifying whether the AMD GPU DRA Driver should be enabled in the Kubernetes cluster. Mutually
-    /// exclusive with `amd_gpu_device_plugin`.
-    public var amdGpuDraDriver: AmdGpuDraDriver?
-    /// An object specifying whether the RDMA shared device plugin should be enabled in the Kubernetes cluster.
-    public var rdmaSharedDevPlugin: RdmaSharedDevPlugin?
-    /// An object specifying whether the Cluster Proportional Autoscaler (CPA) add-on for CoreDNS should be enabled
-    /// for the Kubernetes cluster.
-    public var corednsAutoscaler: CorednsAutoscaler?
+/// Required enumerated value serialized in the `expanders[]` wire field.
+public struct ClusterAutoscalerConfigurationExpandersItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+    public let rawValue: String
 
-    enum CodingKeys: String, CodingKey {
-        case name
-        case region
-        case version
-        case nodePools = "node_pools"
-        case id
-        case clusterSubnet = "cluster_subnet"
-        case serviceSubnet = "service_subnet"
-        case vpcUuid = "vpc_uuid"
-        case workerSubnetUuid = "worker_subnet_uuid"
-        case ipv4
-        case endpoint
-        case tags
-        case maintenancePolicy = "maintenance_policy"
-        case autoUpgrade = "auto_upgrade"
-        case isolatedWorkers = "isolated_workers"
-        case gpuOperatorReady = "gpu_operator_ready"
-        case status
-        case createdAt = "created_at"
-        case updatedAt = "updated_at"
-        case surgeUpgrade = "surge_upgrade"
-        case ha
-        case registryEnabled = "registry_enabled"
-        case controlPlaneFirewall = "control_plane_firewall"
-        case clusterAutoscalerConfiguration = "cluster_autoscaler_configuration"
-        case sso
-        case routingAgent = "routing_agent"
-        case p2pOciRegistryPlugin = "p2p_oci_registry_plugin"
-        case nfsCsiPlugin = "nfs_csi_plugin"
-        case amdGpuDevicePlugin = "amd_gpu_device_plugin"
-        case amdGpuDeviceMetricsExporterPlugin = "amd_gpu_device_metrics_exporter_plugin"
-        case nvidiaGpuDevicePlugin = "nvidia_gpu_device_plugin"
-        case nvidiaGpuDraDriver = "nvidia_gpu_dra_driver"
-        case amdGpuDraDriver = "amd_gpu_dra_driver"
-        case rdmaSharedDevPlugin = "rdma_shared_dev_plugin"
-        case corednsAutoscaler = "coredns_autoscaler"
-    }
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let random = ClusterAutoscalerConfigurationExpandersItem(rawValue: "random")
+    public static let priority = ClusterAutoscalerConfigurationExpandersItem(rawValue: "priority")
+    public static let leastWaste = ClusterAutoscalerConfigurationExpandersItem(rawValue: "least_waste")
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension Cluster {
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.region) else {
-            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
-        }
-        guard container.contains(.version) else {
-            throw SdkValidationError(field: "version", code: "required", message: "Validation failed for 'version': value is required")
-        }
-        guard container.contains(.nodePools) else {
-            throw SdkValidationError(field: "node_pools", code: "required", message: "Validation failed for 'node_pools': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.region = try container.sdkDecodeRequired(.region)
-        self.version = try container.sdkDecodeRequired(.version)
-        self.nodePools = try container.sdkDecodeRequired(.nodePools)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.clusterSubnet = try container.sdkDecodeIfPresent(.clusterSubnet)
-        self.serviceSubnet = try container.sdkDecodeIfPresent(.serviceSubnet)
-        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        self.workerSubnetUuid = try container.sdkDecodeIfPresent(.workerSubnetUuid)
-        self.ipv4 = try container.sdkDecodeIfPresent(.ipv4)
-        self.endpoint = try container.sdkDecodeIfPresent(.endpoint)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.maintenancePolicy = try container.sdkDecodeIfPresent(.maintenancePolicy)
-        self.autoUpgrade = try container.sdkDecodeIfPresent(.autoUpgrade)
-        self.isolatedWorkers = try container.sdkDecodeIfPresent(.isolatedWorkers)
-        self.gpuOperatorReady = try container.sdkDecodeIfPresent(.gpuOperatorReady)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.surgeUpgrade = try container.sdkDecodeIfPresent(.surgeUpgrade)
-        self.ha = try container.sdkDecodeIfPresent(.ha)
-        self.registryEnabled = try container.sdkDecodeIfPresent(.registryEnabled)
-        self.controlPlaneFirewall = try container.sdkDecodeIfPresent(.controlPlaneFirewall)
-        self.clusterAutoscalerConfiguration = try container.sdkDecodeIfPresent(.clusterAutoscalerConfiguration)
-        self.sso = try container.sdkDecodeIfPresent(.sso)
-        self.routingAgent = try container.sdkDecodeIfPresent(.routingAgent)
-        self.p2pOciRegistryPlugin = try container.sdkDecodeIfPresent(.p2pOciRegistryPlugin)
-        self.nfsCsiPlugin = try container.sdkDecodeIfPresent(.nfsCsiPlugin)
-        self.amdGpuDevicePlugin = try container.sdkDecodeIfPresent(.amdGpuDevicePlugin)
-        self.amdGpuDeviceMetricsExporterPlugin = try container.sdkDecodeIfPresent(.amdGpuDeviceMetricsExporterPlugin)
-        self.nvidiaGpuDevicePlugin = try container.sdkDecodeIfPresent(.nvidiaGpuDevicePlugin)
-        self.nvidiaGpuDraDriver = try container.sdkDecodeIfPresent(.nvidiaGpuDraDriver)
-        self.amdGpuDraDriver = try container.sdkDecodeIfPresent(.amdGpuDraDriver)
-        self.rdmaSharedDevPlugin = try container.sdkDecodeIfPresent(.rdmaSharedDevPlugin)
-        self.corednsAutoscaler = try container.sdkDecodeIfPresent(.corednsAutoscaler)
-        if let value = self.id {
-            try sdkValidateUuid("id", value)
-        }
-        if let value = self.vpcUuid {
-            try sdkValidateUuid("vpc_uuid", value)
-        }
-        if let value = self.workerSubnetUuid {
-            try sdkValidateUuid("worker_subnet_uuid", value)
-        }
-        if let value = self.createdAt {
-            try sdkValidateDateTime("created_at", sdkWireString(value))
-        }
-        if let value = self.updatedAt {
-            try sdkValidateDateTime("updated_at", sdkWireString(value))
-        }
+        let container = try decoder.singleValueContainer()
+        self.init(rawValue: try container.decode(String.self))
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(rawValue)
+    }
+}
+
+/// A string indicating the current status of the cluster.
+public struct ClusterReadStatusState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+    public let rawValue: String
+
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let running = ClusterReadStatusState(rawValue: "running")
+    public static let provisioning = ClusterReadStatusState(rawValue: "provisioning")
+    public static let degraded = ClusterReadStatusState(rawValue: "degraded")
+    public static let error = ClusterReadStatusState(rawValue: "error")
+    public static let deleted = ClusterReadStatusState(rawValue: "deleted")
+    public static let upgrading = ClusterReadStatusState(rawValue: "upgrading")
+    public static let deleting = ClusterReadStatusState(rawValue: "deleting")
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self.init(rawValue: try container.decode(String.self))
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(rawValue)
+    }
+}
+
+/// A string indicating the current status of the cluster.
+public struct ClusterStatusState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+    public let rawValue: String
+
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let running = ClusterStatusState(rawValue: "running")
+    public static let provisioning = ClusterStatusState(rawValue: "provisioning")
+    public static let degraded = ClusterStatusState(rawValue: "degraded")
+    public static let error = ClusterStatusState(rawValue: "error")
+    public static let deleted = ClusterStatusState(rawValue: "deleted")
+    public static let upgrading = ClusterStatusState(rawValue: "upgrading")
+    public static let deleting = ClusterStatusState(rawValue: "deleting")
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self.init(rawValue: try container.decode(String.self))
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(rawValue)
     }
 }

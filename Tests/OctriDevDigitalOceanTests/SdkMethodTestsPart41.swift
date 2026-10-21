@@ -6,50 +6,18 @@ import Foundation
 import XCTest
 
 extension SdkMethodTests {
-    func testInferenceCreateSpeechInferenceCreateSpeech401ReachesMockAndDecodesResponse() async throws {
-        guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
-            return
-        }
-        _ = client
-        let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture916Expected.utf8),
-            options: [.fragmentsAllowed]
-        )
-        do {
-            _ = try await client.serverlessInference.inferenceCreateSpeech(
-            model: decoded("\"qwen3-tts-voicedesign\""),
-            input: decoded("\"Hello, world!\""),
-            voice: decoded("\"alloy\""),
-            responseFormat: decoded("\"mp3\""),
-            instructions: decoded("\"Speak naturally.\"")
-        )
-            XCTFail("did not raise its declared error")
-        } catch let error as SdkHttpError {
-            XCTAssertEqual(error.statusCode, 401)
-            let data = try XCTUnwrap(
-                error.data as? any Encodable,
-                "decoded no error body"
-            )
-            XCTAssertNil(
-                try mismatch(jsonValue(data), expected),
-                "decoded an error body that differs from the mock"
-            )
-        }
-        XCTAssertTrue(true)
-    }
-
     func testInferenceCreateSystemoneInferenceCreateSystemoneReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
         _ = client
         let actual = try await client.serverlessInference.inferenceCreateSystemone(
-            state: decoded(sdkMethodFixture917Value1),
+            state: decoded(sdkMethodFixture915Value1),
             model: decoded("\"typesafe-jev-1.13.0\""),
-            questions: decoded(sdkMethodFixture917Value2)
+            questions: decoded(sdkMethodFixture915Value2)
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture917Expected.utf8),
+            with: Data(sdkMethodFixture915Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -64,14 +32,14 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture918Expected.utf8),
+            with: Data(sdkMethodFixture916Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
             _ = try await client.serverlessInference.inferenceCreateSystemone(
-            state: decoded(sdkMethodFixture918Value1),
+            state: decoded(sdkMethodFixture916Value1),
             model: decoded("\"typesafe-jev-1.13.0\""),
-            questions: decoded(sdkMethodFixture918Value2)
+            questions: decoded(sdkMethodFixture916Value2)
         )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
@@ -95,12 +63,12 @@ extension SdkMethodTests {
         _ = client
         let actual = try await client.serverlessInference.inferenceCreateVideo(
             model: decoded("\"wan2-2-t2v-a14b\""),
-            prompt: decoded(sdkMethodFixture919Value1),
+            prompt: decoded(sdkMethodFixture917Value1),
             size: decoded("\"1280x720\""),
             fps: decoded("16")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture919Expected.utf8),
+            with: Data(sdkMethodFixture917Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -115,13 +83,13 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture920Expected.utf8),
+            with: Data(sdkMethodFixture918Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
             _ = try await client.serverlessInference.inferenceCreateVideo(
             model: decoded("\"wan2-2-t2v-a14b\""),
-            prompt: decoded(sdkMethodFixture920Value1),
+            prompt: decoded(sdkMethodFixture918Value1),
             size: decoded("\"1280x720\""),
             fps: decoded("16")
         )
@@ -149,7 +117,7 @@ extension SdkMethodTests {
             batchId: decoded("\"0e9d1d35-3d1e-4d66-9a2f-8c7e0f6b3e21\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture921Expected.utf8),
+            with: Data(sdkMethodFixture919Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -164,7 +132,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture922Expected.utf8),
+            with: Data(sdkMethodFixture920Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -195,7 +163,7 @@ extension SdkMethodTests {
             batchId: decoded("\"0e9d1d35-3d1e-4d66-9a2f-8c7e0f6b3e21\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture923Expected.utf8),
+            with: Data(sdkMethodFixture921Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -210,7 +178,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture924Expected.utf8),
+            with: Data(sdkMethodFixture922Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -238,10 +206,10 @@ extension SdkMethodTests {
         }
         _ = client
         let actual = try await client.serverlessInference.inferenceGetVideo(
-            videoId: decoded(sdkMethodFixture925Value1)
+            videoId: decoded(sdkMethodFixture923Value1)
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture925Expected.utf8),
+            with: Data(sdkMethodFixture923Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -256,12 +224,12 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture926Expected.utf8),
+            with: Data(sdkMethodFixture924Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
             _ = try await client.serverlessInference.inferenceGetVideo(
-            videoId: decoded(sdkMethodFixture926Value1)
+            videoId: decoded(sdkMethodFixture924Value1)
         )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
@@ -284,7 +252,7 @@ extension SdkMethodTests {
         }
         _ = client
         let actual = try await client.serverlessInference.inferenceGetVideoContent(
-            videoId: decoded(sdkMethodFixture927Value1)
+            videoId: decoded(sdkMethodFixture925Value1)
         )
         XCTAssertEqual(actual.count, 12)
     }
@@ -295,12 +263,12 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture928Expected.utf8),
+            with: Data(sdkMethodFixture926Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
             _ = try await client.serverlessInference.inferenceGetVideoContent(
-            videoId: decoded(sdkMethodFixture928Value1)
+            videoId: decoded(sdkMethodFixture926Value1)
         )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
@@ -328,7 +296,7 @@ extension SdkMethodTests {
             status: decoded("\"in_progress\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture929Expected.utf8),
+            with: Data(sdkMethodFixture927Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -343,7 +311,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture930Expected.utf8),
+            with: Data(sdkMethodFixture928Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -374,7 +342,7 @@ extension SdkMethodTests {
         _ = client
         let actual = try await client.serverlessInference.inferenceListModels()
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture931Expected.utf8),
+            with: Data(sdkMethodFixture929Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -389,7 +357,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture932Expected.utf8),
+            with: Data(sdkMethodFixture930Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -426,7 +394,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture934Expected.utf8),
+            with: Data(sdkMethodFixture932Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -454,10 +422,10 @@ extension SdkMethodTests {
         }
         _ = client
         let actual = try await client.insights.createAlertRule(
-            body: decoded(sdkMethodFixture935Value1)
+            body: decoded(sdkMethodFixture933Value1)
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture935Expected.utf8),
+            with: Data(sdkMethodFixture933Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -472,12 +440,12 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture936Expected.utf8),
+            with: Data(sdkMethodFixture934Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
             _ = try await client.insights.createAlertRule(
-            body: decoded(sdkMethodFixture936Value1)
+            body: decoded(sdkMethodFixture934Value1)
         )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
@@ -502,11 +470,11 @@ extension SdkMethodTests {
         let actual = try await client.insights.createNotificationChannel(
             name: decoded("\"Platform alerts\""),
             email: decoded("null"),
-            slack: decoded(sdkMethodFixture937Value1),
+            slack: decoded(sdkMethodFixture935Value1),
             webhook: decoded("null")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture937Expected.utf8),
+            with: Data(sdkMethodFixture935Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -521,14 +489,14 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture938Expected.utf8),
+            with: Data(sdkMethodFixture936Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
             _ = try await client.insights.createNotificationChannel(
             name: decoded("\"Platform alerts\""),
             email: decoded("null"),
-            slack: decoded(sdkMethodFixture938Value1),
+            slack: decoded(sdkMethodFixture936Value1),
             webhook: decoded("null")
         )
             XCTFail("did not raise its declared error")
@@ -553,6 +521,45 @@ extension SdkMethodTests {
         _ = client
         _ = try await client.insights.deleteAlertRule(
             id: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"")
+        )
+        XCTAssertTrue(true)
+    }
+
+    func testInsightsDeleteAlertRuleInsightsDeleteAlertRule401ReachesMockAndDecodesResponse() async throws {
+        guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
+            return
+        }
+        _ = client
+        let expected = try JSONSerialization.jsonObject(
+            with: Data(sdkMethodFixture938Expected.utf8),
+            options: [.fragmentsAllowed]
+        )
+        do {
+            _ = try await client.insights.deleteAlertRule(
+            id: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"")
+        )
+            XCTFail("did not raise its declared error")
+        } catch let error as SdkHttpError {
+            XCTAssertEqual(error.statusCode, 401)
+            let data = try XCTUnwrap(
+                error.data as? any Encodable,
+                "decoded no error body"
+            )
+            XCTAssertNil(
+                try mismatch(jsonValue(data), expected),
+                "decoded an error body that differs from the mock"
+            )
+        }
+        XCTAssertTrue(true)
+    }
+
+    func testInsightsDeleteNotificationChannelInsightsDeleteNotificationChannelReachesMockAndDecodesResponse() async throws {
+        guard let client = configuredClient() else {
+            return
+        }
+        _ = client
+        _ = try await client.insights.deleteNotificationChannel(
+            id: decoded("\"550e8400-e29b-41d4-a716-446655440000\"")
         )
         XCTAssertTrue(true)
     }

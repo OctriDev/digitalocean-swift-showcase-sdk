@@ -73,10 +73,6 @@ extension PermissionFilesystem {
     }
 }
 
-
-
-
-
 /// Typed representation of the `PermissionRule` API schema.
 public struct PermissionRule: Codable {
     /// Tool taxonomy this rule matches (e.g. bash, file.read, file.write, web.fetch, git.*, mcp).

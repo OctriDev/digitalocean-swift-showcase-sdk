@@ -167,10 +167,6 @@ extension AllRepositoriesVariant0 {
     }
 }
 
-
-
-
-
 /// Typed representation of the `RegistryCreate` API schema.
 public struct RegistryCreate: Codable {
     /// A globally unique name for the container registry. Must be lowercase and be composed only of numbers,

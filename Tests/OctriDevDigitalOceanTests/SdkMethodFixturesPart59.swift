@@ -5,6 +5,27 @@ import Foundation
 @testable import OctriDevDigitalOcean
 import XCTest
 
+let sdkMethodFixture1653Value1 = String(
+    data: Data(base64Encoded: [
+    "W3sidnBjX3V1aWQiOiIwZWIxNzUyZi04MDdiLTQ1NjItYTA3Ny04MDE4ZTEzYWIxZmIiLCJzdWJuZXRf",
+    "dXVpZCI6ImNiZDc5NzcxLTIzZWItNDliZS1iNWVhLTU5Y2M1NjIyMjYyMiIsImRlZmF1bHRfZ2F0ZXdh",
+    "eSI6dHJ1ZX1d",
+    ].joined())!,
+    encoding: .utf8
+)!
+
+let sdkMethodFixture1653Expected = String(
+    data: Data(base64Encoded: [
+    "eyJ2cGNfbmF0X2dhdGV3YXkiOnsibmFtZSI6InRlc3QtdnBjLW5hdC1nYXRld2F5cyIsInR5cGUiOiJQ",
+    "VUJMSUMiLCJyZWdpb24iOiJ0b3IxIiwic2l6ZSI6MSwidnBjcyI6W3sidnBjX3V1aWQiOiIwZWIxNzUy",
+    "Zi04MDdiLTQ1NjItYTA3Ny04MDE4ZTEzYWIxZmIiLCJzdWJuZXRfdXVpZCI6ImNiZDc5NzcxLTIzZWIt",
+    "NDliZS1iNWVhLTU5Y2M1NjIyMjYyMiIsImRlZmF1bHRfZ2F0ZXdheSI6dHJ1ZX1dLCJlZ3Jlc3NlcyI6",
+    "e30sInVkcF90aW1lb3V0X3NlY29uZHMiOjMwLCJpY21wX3RpbWVvdXRfc2Vjb25kcyI6MzAsInRjcF90",
+    "aW1lb3V0X3NlY29uZHMiOjMwfX0=",
+    ].joined())!,
+    encoding: .utf8
+)!
+
 let sdkMethodFixture1654Value1 = String(
     data: Data(base64Encoded: [
     "W3sidnBjX3V1aWQiOiIwZWIxNzUyZi04MDdiLTQ1NjItYTA3Ny04MDE4ZTEzYWIxZmIiLCJzdWJuZXRf",
@@ -624,25 +645,6 @@ let sdkMethodFixture1712Expected = String(
 )!
 
 let sdkMethodFixture1713Value1 = String(
-    data: Data(base64Encoded: [
-    "eyJuYW1lIjoiZW52LnByb2QtdnBjIiwiZGVzY3JpcHRpb24iOiJWUEMgZm9yIHByb2R1Y3Rpb24gZW52",
-    "aXJvbm1lbnQiLCJkZWZhdWx0Ijp0cnVlfQ==",
-    ].joined())!,
-    encoding: .utf8
-)!
-
-let sdkMethodFixture1713Expected = String(
-    data: Data(base64Encoded: [
-    "eyJ2cGMiOnsibmFtZSI6ImVudi5wcm9kLXZwYyIsImRlc2NyaXB0aW9uIjoiVlBDIGZvciBwcm9kdWN0",
-    "aW9uIGVudmlyb25tZW50IiwicmVnaW9uIjoibnljMSIsImlwX3JhbmdlIjoiMTAuMTAuMTAuMC8yNCIs",
-    "ImRlZmF1bHQiOnRydWUsImlkIjoiNWE0OTgxYWEtOTY1My00YmQxLWJlZjUtZDZiZmY1MjA0MmU0Iiwi",
-    "dXJuIjoiZG86dnBjOjVhNDk4MWFhLTk2NTMtNGJkMS1iZWY1LWQ2YmZmNTIwNDJlNCIsImNyZWF0ZWRf",
-    "YXQiOiIyMDIwLTAzLTEzVDE5OjIwOjQ3LjQ0MjA0OTIyMloifX0=",
-    ].joined())!,
-    encoding: .utf8
-)!
-
-let sdkMethodFixture1714Value1 = String(
     data: Data(base64Encoded: [
     "eyJuYW1lIjoiZW52LnByb2QtdnBjIiwiZGVzY3JpcHRpb24iOiJWUEMgZm9yIHByb2R1Y3Rpb24gZW52",
     "aXJvbm1lbnQiLCJkZWZhdWx0Ijp0cnVlfQ==",

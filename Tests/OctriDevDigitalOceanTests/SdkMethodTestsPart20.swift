@@ -6,57 +6,13 @@ import Foundation
 import XCTest
 
 extension SdkMethodTests {
-    func testFunctionsCreateTriggerFunctionsCreateTrigger400ReachesMockAndDecodesResponse() async throws {
-        guard let client = configuredClient(statusPrefix: "/__mockStatus/400") else {
-            return
-        }
-        _ = client
-        let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture451Expected.utf8),
-            options: [.fragmentsAllowed]
-        )
-        do {
-            _ = try await client.functions.createTrigger(
-            namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\""),
-            name: decoded("\"my trigger\""),
-            function: decoded("\"hello\""),
-            type: decoded("\"SCHEDULED\""),
-            isEnabled: decoded("true"),
-            scheduledDetails: decoded("{\"cron\":\"* * * * *\",\"body\":{\"name\":\"Welcome to DO!\"}}")
-        )
-            XCTFail("did not raise its declared error")
-        } catch let error as SdkHttpError {
-            XCTAssertEqual(error.statusCode, 400)
-            let data = try XCTUnwrap(
-                error.data as? any Encodable,
-                "decoded no error body"
-            )
-            XCTAssertNil(
-                try mismatch(jsonValue(data), expected),
-                "decoded an error body that differs from the mock"
-            )
-        }
-        XCTAssertTrue(true)
-    }
-
-    func testFunctionsDeleteNamespaceFunctionsDeleteNamespaceReachesMockAndDecodesResponse() async throws {
-        guard let client = configuredClient() else {
-            return
-        }
-        _ = client
-        _ = try await client.functions.deleteNamespace(
-            namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"")
-        )
-        XCTAssertTrue(true)
-    }
-
     func testFunctionsDeleteNamespaceFunctionsDeleteNamespace401ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture453Expected.utf8),
+            with: Data(sdkMethodFixture451Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -96,7 +52,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture455Expected.utf8),
+            with: Data(sdkMethodFixture453Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -128,7 +84,7 @@ extension SdkMethodTests {
             namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture456Expected.utf8),
+            with: Data(sdkMethodFixture454Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -143,7 +99,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture457Expected.utf8),
+            with: Data(sdkMethodFixture455Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -175,7 +131,7 @@ extension SdkMethodTests {
             triggerName: decoded("\"my trigger\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture458Expected.utf8),
+            with: Data(sdkMethodFixture456Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -190,7 +146,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture459Expected.utf8),
+            with: Data(sdkMethodFixture457Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -220,7 +176,7 @@ extension SdkMethodTests {
         _ = client
         let actual = try await client.functions.listNamespaces()
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture460Expected.utf8),
+            with: Data(sdkMethodFixture458Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -235,7 +191,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture461Expected.utf8),
+            with: Data(sdkMethodFixture459Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -264,7 +220,7 @@ extension SdkMethodTests {
             namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture462Expected.utf8),
+            with: Data(sdkMethodFixture460Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -279,7 +235,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture463Expected.utf8),
+            with: Data(sdkMethodFixture461Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -313,7 +269,7 @@ extension SdkMethodTests {
             scheduledDetails: decoded("{\"cron\":\"* * * * *\",\"body\":{\"name\":\"Welcome to DO!\"}}")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture464Expected.utf8),
+            with: Data(sdkMethodFixture462Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -328,7 +284,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture465Expected.utf8),
+            with: Data(sdkMethodFixture463Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -364,7 +320,7 @@ extension SdkMethodTests {
             decision: decoded("\"deny\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture466Expected.utf8),
+            with: Data(sdkMethodFixture464Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -379,7 +335,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture467Expected.utf8),
+            with: Data(sdkMethodFixture465Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -413,7 +369,7 @@ extension SdkMethodTests {
             code: decoded("\"print(\\\"hello from Action Gateway\\\")\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture468Expected.utf8),
+            with: Data(sdkMethodFixture466Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -428,7 +384,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture469Expected.utf8),
+            with: Data(sdkMethodFixture467Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -462,7 +418,7 @@ extension SdkMethodTests {
             decision: decoded("\"approve\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture470Expected.utf8),
+            with: Data(sdkMethodFixture468Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -477,7 +433,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture471Expected.utf8),
+            with: Data(sdkMethodFixture469Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -509,11 +465,11 @@ extension SdkMethodTests {
         let actual = try await client.actionGatewayDataPlane.gatewayToolsList(
             xSessionId: decoded("\"2b3c9f0e-1a4d-4e5f-8a7b-6c5d4e3f2a1b\""),
             pageSize: decoded("20"),
-            pageToken: decoded(sdkMethodFixture472Value1),
+            pageToken: decoded(sdkMethodFixture470Value1),
             ifNoneMatch: decoded("\"\\\"3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c\\\"\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture472Expected.utf8),
+            with: Data(sdkMethodFixture470Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -528,14 +484,14 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture473Expected.utf8),
+            with: Data(sdkMethodFixture471Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
             _ = try await client.actionGatewayDataPlane.gatewayToolsList(
             xSessionId: decoded("\"2b3c9f0e-1a4d-4e5f-8a7b-6c5d4e3f2a1b\""),
             pageSize: decoded("20"),
-            pageToken: decoded(sdkMethodFixture473Value1),
+            pageToken: decoded(sdkMethodFixture471Value1),
             ifNoneMatch: decoded("\"\\\"3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c\\\"\"")
         )
             XCTFail("did not raise its declared error")
@@ -564,6 +520,58 @@ extension SdkMethodTests {
             providers: decoded("null"),
             tags: decoded("null"),
             limit: decoded("3")
+        )
+        let expected = try JSONSerialization.jsonObject(
+            with: Data(sdkMethodFixture472Expected.utf8),
+            options: [.fragmentsAllowed]
+        )
+        XCTAssertNil(
+            try mismatch(jsonValue(actual), expected),
+            "decoded a response that differs from the mock"
+        )
+    }
+
+    func testGatewayToolsListSearchGatewayToolsListSearch400ReachesMockAndDecodesResponse() async throws {
+        guard let client = configuredClient(statusPrefix: "/__mockStatus/400") else {
+            return
+        }
+        _ = client
+        let expected = try JSONSerialization.jsonObject(
+            with: Data(sdkMethodFixture473Expected.utf8),
+            options: [.fragmentsAllowed]
+        )
+        do {
+            _ = try await client.actionGatewayDataPlane.gatewayToolsListSearch(
+            xSessionId: decoded("\"2b3c9f0e-1a4d-4e5f-8a7b-6c5d4e3f2a1b\""),
+            queries: decoded("[{\"use_case\":\"search the public web for current information\"}]"),
+            providers: decoded("null"),
+            tags: decoded("null"),
+            limit: decoded("3")
+        )
+            XCTFail("did not raise its declared error")
+        } catch let error as SdkHttpError {
+            XCTAssertEqual(error.statusCode, 400)
+            let data = try XCTUnwrap(
+                error.data as? any Encodable,
+                "decoded no error body"
+            )
+            XCTAssertNil(
+                try mismatch(jsonValue(data), expected),
+                "decoded an error body that differs from the mock"
+            )
+        }
+        XCTAssertTrue(true)
+    }
+
+    func testGatewayToolsRunGatewayToolsRunReachesMockAndDecodesResponse() async throws {
+        guard let client = configuredClient() else {
+            return
+        }
+        _ = client
+        let actual = try await client.actionGatewayDataPlane.gatewayToolsRun(
+            xSessionId: decoded("\"2b3c9f0e-1a4d-4e5f-8a7b-6c5d4e3f2a1b\""),
+            tools: decoded(sdkMethodFixture474Value1),
+            rationale: decoded("\"Find current information about DigitalOcean.\"")
         )
         let expected = try JSONSerialization.jsonObject(
             with: Data(sdkMethodFixture474Expected.utf8),

@@ -7,3 +7,48 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum SpacesKeysMethods {}
+
+extension SpacesKeysMethods {
+    /// To list Spaces Access Key, send a GET request to `/v2/spaces/keys`. Sort parameter must be used with Sort Direction.
+    ///
+    /// - Parameters:
+    /// - perPage: Number of items returned per page
+    /// - page: Which 'page' of paginated results to return.
+    /// - sort: The field to sort by.
+    /// - sortDirection: The direction to sort by. Possible values are `asc` or
+    ///   `desc`.
+    /// - name: The access key's name.
+    /// - bucket: The bucket's name.
+    /// - permission: The permission of the access key. Possible values are `read`,
+    ///   `readwrite`, `fullaccess`, or an empty string.
+    public static func spacesKeyList(config: ClientConfig, perPage: Int? = nil, page: Int? = nil, sort: String? = nil, sortDirection: String? = nil, name: String? = nil, bucket: String? = nil, permission: String? = nil, requestOptions: RequestOptions? = nil) async throws -> KeyList {
+        if let perPage = perPage {
+            try validateRange("per_page", Double(perPage), min: 1, max: 200)
+        }
+
+        if let page = page {
+            try validateRange("page", Double(page), min: 1)
+        }
+
+        return try (await sdkRequest("GET", "/v2/spaces/keys", config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+            SdkQueryParameter("sort", value: sort),
+            SdkQueryParameter("sort_direction", value: sortDirection),
+            SdkQueryParameter("name", value: name),
+            SdkQueryParameter("bucket", value: bucket),
+            SdkQueryParameter("permission", value: permission),
+        ], decoder: .json, operationId: "spacesKey_list", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    }
+
+    /// To create a new Spaces Access Key, send a POST request to `/v2/spaces/keys`. At the moment, you cannot mix a fullaccess permission with scoped permissions. A fullaccess permission will be prioritized if fullaccess and scoped permissions are both added.
+    ///
+    /// - Parameters:
+    /// - name: The access key's name.
+    /// - grants: The list of permissions for the access key.
+    public static func spacesKeyCreate(config: ClientConfig, name: String? = nil, grants: [Grant]? = nil, requestOptions: RequestOptions? = nil) async throws -> KeyCreate {
+        let requestBody = SpacesKeyCreateRequestBody(name: name, grants: grants)
+
+        return try (await sdkRequest("POST", "/v2/spaces/keys", config: config, body: requestBody, decoder: .json, operationId: "spacesKey_create", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    }
+}

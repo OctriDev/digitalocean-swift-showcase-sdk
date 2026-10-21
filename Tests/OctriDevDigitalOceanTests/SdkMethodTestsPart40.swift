@@ -6,39 +6,6 @@ import Foundation
 import XCTest
 
 extension SdkMethodTests {
-    func testInferenceCreateBatchInferenceCreateBatch400ReachesMockAndDecodesResponse() async throws {
-        guard let client = configuredClient(statusPrefix: "/__mockStatus/400") else {
-            return
-        }
-        _ = client
-        let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture898Expected.utf8),
-            options: [.fragmentsAllowed]
-        )
-        do {
-            _ = try await client.batchInference.inferenceCreateBatch(
-            fileId: decoded("\"a1b2c3d4-e5f6-4789-90ab-cdef12345678\""),
-            provider: decoded("\"openai\""),
-            completionWindow: decoded("\"24h\""),
-            requestId: decoded("\"c7e3ad1e-20c3-4e47-9bf2-6f2a4d6a2f11\""),
-            endpoint: decoded("\"/v1/chat/completions\""),
-            metadata: decoded("null")
-        )
-            XCTFail("did not raise its declared error")
-        } catch let error as SdkHttpError {
-            XCTAssertEqual(error.statusCode, 400)
-            let data = try XCTUnwrap(
-                error.data as? any Encodable,
-                "decoded no error body"
-            )
-            XCTAssertNil(
-                try mismatch(jsonValue(data), expected),
-                "decoded an error body that differs from the mock"
-            )
-        }
-        XCTAssertTrue(true)
-    }
-
     func testInferenceCreateBatchFileInferenceCreateBatchFileReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
@@ -48,7 +15,7 @@ extension SdkMethodTests {
             fileName: decoded("\"batch_requests.jsonl\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture899Expected.utf8),
+            with: Data(sdkMethodFixture897Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -63,7 +30,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture900Expected.utf8),
+            with: Data(sdkMethodFixture898Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -90,13 +57,13 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try ServerlessInferenceMethods.InferenceCreateChatCompletionOptions(messages: decoded(sdkMethodFixture901Value1), model: decoded("\"llama3-8b-instruct\""))
+        var options = try ServerlessInferenceMethods.InferenceCreateChatCompletionOptions(messages: decoded(sdkMethodFixture899Value1), model: decoded("\"llama3-8b-instruct\""))
         options.maxTokens = try decoded("0")
         options.maxCompletionTokens = try decoded("256")
         options.frequencyPenalty = try decoded("0")
         options.presencePenalty = try decoded("0")
         options.topLogprobs = try decoded("0")
-        options.tools = try decoded(sdkMethodFixture901Value2)
+        options.tools = try decoded(sdkMethodFixture899Value2)
         options.toolChoice = try decoded("\"none\"")
         options.stream = try decoded("false")
         options.stop = try decoded("\"stop\"")
@@ -114,7 +81,7 @@ extension SdkMethodTests {
             options: options
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture901Expected.utf8),
+            with: Data(sdkMethodFixture899Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -128,13 +95,13 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try ServerlessInferenceMethods.InferenceCreateChatCompletionOptions(messages: decoded(sdkMethodFixture902Value1), model: decoded("\"llama3-8b-instruct\""))
+        var options = try ServerlessInferenceMethods.InferenceCreateChatCompletionOptions(messages: decoded(sdkMethodFixture900Value1), model: decoded("\"llama3-8b-instruct\""))
         options.maxTokens = try decoded("0")
         options.maxCompletionTokens = try decoded("256")
         options.frequencyPenalty = try decoded("0")
         options.presencePenalty = try decoded("0")
         options.topLogprobs = try decoded("0")
-        options.tools = try decoded(sdkMethodFixture902Value2)
+        options.tools = try decoded(sdkMethodFixture900Value2)
         options.toolChoice = try decoded("\"none\"")
         options.stream = try decoded("false")
         options.stop = try decoded("\"stop\"")
@@ -149,7 +116,7 @@ extension SdkMethodTests {
         options.topP = try decoded("1")
         options.user = try decoded("\"user-1234\"")
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture902Expected.utf8),
+            with: Data(sdkMethodFixture900Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -177,7 +144,7 @@ extension SdkMethodTests {
         }
         _ = client
         let stream = try await client.serverlessInference.inferenceCreateChatCompletionStream(
-            options: ServerlessInferenceMethods.InferenceCreateChatCompletionStreamOptions(messages: decoded(sdkMethodFixture903Value1), model: decoded("\"llama3-8b-instruct\""), stream: decoded("false"))
+            options: ServerlessInferenceMethods.InferenceCreateChatCompletionStreamOptions(messages: decoded(sdkMethodFixture901Value1), model: decoded("\"llama3-8b-instruct\""), stream: decoded("false"))
         )
         var events = stream.makeAsyncIterator()
         guard let actual = try await events.next() else {
@@ -185,7 +152,7 @@ extension SdkMethodTests {
             return
         }
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture903Expected.utf8),
+            with: Data(sdkMethodFixture901Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -206,7 +173,7 @@ extension SdkMethodTests {
             encodingFormat: decoded("\"float\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture904Expected.utf8),
+            with: Data(sdkMethodFixture902Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -221,7 +188,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture905Expected.utf8),
+            with: Data(sdkMethodFixture903Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -265,7 +232,7 @@ extension SdkMethodTests {
             options: options
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture906Expected.utf8),
+            with: Data(sdkMethodFixture904Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -290,7 +257,7 @@ extension SdkMethodTests {
         options.partialImages = try decoded("1")
         options.user = try decoded("\"user-1234\"")
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture907Expected.utf8),
+            with: Data(sdkMethodFixture905Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -326,7 +293,7 @@ extension SdkMethodTests {
             return
         }
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture908Expected.utf8),
+            with: Data(sdkMethodFixture906Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -347,7 +314,7 @@ extension SdkMethodTests {
         options.temperature = try decoded("0")
         options.topP = try decoded("1")
         options.topK = try decoded("0")
-        options.tools = try decoded(sdkMethodFixture909Value1)
+        options.tools = try decoded(sdkMethodFixture907Value1)
         options.toolChoice = try decoded("\"auto\"")
         options.metadata = try decoded("{\"user_id\":\"550e8400-e29b-41d4-a716-446655440000\"}")
         options.reasoningEffort = try decoded("\"none\"")
@@ -357,7 +324,7 @@ extension SdkMethodTests {
             options: options
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture909Expected.utf8),
+            with: Data(sdkMethodFixture907Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -378,14 +345,14 @@ extension SdkMethodTests {
         options.temperature = try decoded("0")
         options.topP = try decoded("1")
         options.topK = try decoded("0")
-        options.tools = try decoded(sdkMethodFixture910Value1)
+        options.tools = try decoded(sdkMethodFixture908Value1)
         options.toolChoice = try decoded("\"auto\"")
         options.metadata = try decoded("{\"user_id\":\"550e8400-e29b-41d4-a716-446655440000\"}")
         options.reasoningEffort = try decoded("\"none\"")
         options.speed = try decoded("\"standard\"")
         options.thinking = try decoded("{\"type\":\"enabled\"}")
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture910Expected.utf8),
+            with: Data(sdkMethodFixture908Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -421,7 +388,7 @@ extension SdkMethodTests {
             return
         }
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture911Expected.utf8),
+            with: Data(sdkMethodFixture909Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -442,7 +409,7 @@ extension SdkMethodTests {
         options.instructions = try decoded("\"You are a helpful assistant.\"")
         options.topP = try decoded("1")
         options.streamOptions = try decoded("null")
-        options.tools = try decoded(sdkMethodFixture912Value1)
+        options.tools = try decoded(sdkMethodFixture910Value1)
         options.toolChoice = try decoded("\"auto\"")
         options.stop = try decoded("null")
         options.metadata = try decoded("{\"session_id\":\"abc123\"}")
@@ -451,7 +418,7 @@ extension SdkMethodTests {
             options: options
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture912Expected.utf8),
+            with: Data(sdkMethodFixture910Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -472,13 +439,13 @@ extension SdkMethodTests {
         options.instructions = try decoded("\"You are a helpful assistant.\"")
         options.topP = try decoded("1")
         options.streamOptions = try decoded("null")
-        options.tools = try decoded(sdkMethodFixture913Value1)
+        options.tools = try decoded(sdkMethodFixture911Value1)
         options.toolChoice = try decoded("\"auto\"")
         options.stop = try decoded("null")
         options.metadata = try decoded("{\"session_id\":\"abc123\"}")
         options.user = try decoded("\"user-1234\"")
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture913Expected.utf8),
+            with: Data(sdkMethodFixture911Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -514,7 +481,7 @@ extension SdkMethodTests {
             return
         }
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture914Expected.utf8),
+            with: Data(sdkMethodFixture912Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -536,12 +503,44 @@ extension SdkMethodTests {
             instructions: decoded("\"Speak naturally.\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture915Expected.utf8),
+            with: Data(sdkMethodFixture913Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
             try mismatch(jsonValue(actual), expected),
             "decoded a response that differs from the mock"
         )
+    }
+
+    func testInferenceCreateSpeechInferenceCreateSpeech401ReachesMockAndDecodesResponse() async throws {
+        guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
+            return
+        }
+        _ = client
+        let expected = try JSONSerialization.jsonObject(
+            with: Data(sdkMethodFixture914Expected.utf8),
+            options: [.fragmentsAllowed]
+        )
+        do {
+            _ = try await client.serverlessInference.inferenceCreateSpeech(
+            model: decoded("\"qwen3-tts-voicedesign\""),
+            input: decoded("\"Hello, world!\""),
+            voice: decoded("\"alloy\""),
+            responseFormat: decoded("\"mp3\""),
+            instructions: decoded("\"Speak naturally.\"")
+        )
+            XCTFail("did not raise its declared error")
+        } catch let error as SdkHttpError {
+            XCTAssertEqual(error.statusCode, 401)
+            let data = try XCTUnwrap(
+                error.data as? any Encodable,
+                "decoded no error body"
+            )
+            XCTAssertNil(
+                try mismatch(jsonValue(data), expected),
+                "decoded an error body that differs from the mock"
+            )
+        }
+        XCTAssertTrue(true)
     }
 }

@@ -7,3 +7,39 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum SshKeysMethods {}
+
+extension SshKeysMethods {
+    /// To list all of the keys in your account, send a GET request to `/v2/account/keys`. The response will be a JSON object with a key set to `ssh_keys`. The value of this will be an array of ssh_key objects, each of which contains the standard ssh_key attributes.
+    ///
+    /// - Parameters:
+    /// - perPage: Number of items returned per page
+    /// - page: Which 'page' of paginated results to return.
+    public static func sshKeysList(config: ClientConfig, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> SshKeysAll {
+        if let perPage = perPage {
+            try validateRange("per_page", Double(perPage), min: 1, max: 200)
+        }
+
+        if let page = page {
+            try validateRange("page", Double(page), min: 1)
+        }
+
+        return try (await sdkRequest("GET", "/v2/account/keys", config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+        ], decoder: .json, operationId: "sshKeys_list", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    }
+
+    /// To add a new SSH public key to your DigitalOcean account, send a POST request to `/v2/account/keys`. Set the `name` attribute to the name you wish to use and the `public_key` attribute to the full public key you are adding.
+    ///
+    /// - Parameters:
+    /// - publicKey: The entire public key string that was uploaded. Embedded into
+    ///   the root user's `authorized_keys` file if you include this key during
+    ///   Droplet creation.
+    /// - name: A human-readable display name for this key, used to easily identify
+    ///   the SSH keys when they are displayed.
+    public static func sshKeysCreate(config: ClientConfig, publicKey: String, name: SshKeyName, requestOptions: RequestOptions? = nil) async throws -> SshKeysNew {
+        let requestBody = SshKeysCreateRequestBody(publicKey: publicKey, name: name)
+
+        return try (await sdkRequest("POST", "/v2/account/keys", config: config, body: requestBody, decoder: .json, operationId: "sshKeys_create", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    }
+}

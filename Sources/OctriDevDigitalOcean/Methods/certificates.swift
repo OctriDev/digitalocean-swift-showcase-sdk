@@ -7,3 +7,44 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum CertificatesMethods {}
+
+extension CertificatesMethods {
+    /// To list all of the certificates available on your account, send a GET request to `/v2/certificates`.
+    ///
+    /// - Parameters:
+    /// - perPage: Number of items returned per page
+    /// - page: Which 'page' of paginated results to return.
+    /// - name: Name of expected certificate
+    public static func certificatesList(config: ClientConfig, perPage: Int? = nil, page: Int? = nil, name: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AllCertificates {
+        if let perPage = perPage {
+            try validateRange("per_page", Double(perPage), min: 1, max: 200)
+        }
+
+        if let page = page {
+            try validateRange("page", Double(page), min: 1)
+        }
+
+        return try (await sdkRequest("GET", "/v2/certificates", config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("page", value: page),
+            SdkQueryParameter("name", value: name),
+        ], decoder: .json, operationId: "certificates_list", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    }
+
+    /// Creates a certificate from a user-generated certificate and private key or requests one from Let's Encrypt. Set `type` to `custom` and provide `private_key` and `leaf_certificate`, or set it to `lets_encrypt` and provide `dns_names`; both request types require `name`. A Let's Encrypt certificate starts in the `pending` state and transitions to `verified` when it is ready to use.
+    ///
+    /// To upload new SSL certificate which you have previously generated, send a POST request to `/v2/certificates`. When uploading a user-generated certificate, the `private_key`, `leaf_certificate`, and optionally the `certificate_chain` attributes should be provided. The type must be set to `custom`. When using Let's Encrypt to create a certificate, the `dns_names` attribute must be provided, and the type must be set to `lets_encrypt`.
+    public static func certificatesCreate(config: ClientConfig, body: CertificatesCreateRequestBody, requestOptions: RequestOptions? = nil) async throws -> NewCertificate {
+        return try (await sdkRequest("POST", "/v2/certificates", config: config, rawBody: (try sdkEncodeBody(body, contentType: "application/json")), decoder: .json, operationId: "certificates_create", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    }
+
+    /// To show information about an existing certificate, send a GET request to `/v2/certificates/$CERTIFICATE_ID`.
+    ///
+    /// - Parameters:
+    /// - certificateId: A unique identifier for a certificate.
+    public static func certificatesGet(config: ClientConfig, certificateId: String, requestOptions: RequestOptions? = nil) async throws -> ExistingCertificate {
+        try sdkValidateUuid("certificate_id", certificateId)
+
+        return try (await sdkRequest("GET", ["/v2/certificates/", sdkEncodePathSegment(sdkWireString(certificateId))].joined(), config: config, decoder: .json, operationId: "certificates_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    }
+}

@@ -6,60 +6,13 @@ import Foundation
 import XCTest
 
 extension SdkMethodTests {
-    func testKubernetesListAssociatedResourcesKubernetesListAssociatedResources401ReachesMockAndDecodesResponse() async throws {
-        guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
-            return
-        }
-        _ = client
-        let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1030Expected.utf8),
-            options: [.fragmentsAllowed]
-        )
-        do {
-            _ = try await client.kubernetes.listAssociatedResources(
-            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\"")
-        )
-            XCTFail("did not raise its declared error")
-        } catch let error as SdkHttpError {
-            XCTAssertEqual(error.statusCode, 401)
-            let data = try XCTUnwrap(
-                error.data as? any Encodable,
-                "decoded no error body"
-            )
-            XCTAssertNil(
-                try mismatch(jsonValue(data), expected),
-                "decoded an error body that differs from the mock"
-            )
-        }
-        XCTAssertTrue(true)
-    }
-
-    func testKubernetesListClustersKubernetesListClustersReachesMockAndDecodesResponse() async throws {
-        guard let client = configuredClient() else {
-            return
-        }
-        _ = client
-        let actual = try await client.kubernetes.listClusters(
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
-        let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1031Expected.utf8),
-            options: [.fragmentsAllowed]
-        )
-        XCTAssertNil(
-            try mismatch(jsonValue(actual), expected),
-            "decoded a response that differs from the mock"
-        )
-    }
-
     func testKubernetesListClustersKubernetesListClusters401ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1032Expected.utf8),
+            with: Data(sdkMethodFixture1030Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -91,7 +44,7 @@ extension SdkMethodTests {
             clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1033Expected.utf8),
+            with: Data(sdkMethodFixture1031Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -106,7 +59,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1034Expected.utf8),
+            with: Data(sdkMethodFixture1032Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -135,7 +88,7 @@ extension SdkMethodTests {
         _ = client
         let actual = try await client.kubernetes.listOptions()
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1035Expected.utf8),
+            with: Data(sdkMethodFixture1033Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -150,7 +103,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1036Expected.utf8),
+            with: Data(sdkMethodFixture1034Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -189,7 +142,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1038Expected.utf8),
+            with: Data(sdkMethodFixture1036Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -219,7 +172,7 @@ extension SdkMethodTests {
         }
         _ = client
         _ = try await client.kubernetes.removeRegistries(
-            clusterUuids: decoded(sdkMethodFixture1039Value1),
+            clusterUuids: decoded(sdkMethodFixture1037Value1),
             registries: decoded("[\"registry-a\",\"registry-b\"]")
         )
         XCTAssertTrue(true)
@@ -231,12 +184,12 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1040Expected.utf8),
+            with: Data(sdkMethodFixture1038Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
             _ = try await client.kubernetes.removeRegistries(
-            clusterUuids: decoded(sdkMethodFixture1040Value1),
+            clusterUuids: decoded(sdkMethodFixture1038Value1),
             registries: decoded("[\"registry-a\",\"registry-b\"]")
         )
             XCTFail("did not raise its declared error")
@@ -260,7 +213,7 @@ extension SdkMethodTests {
         }
         _ = client
         _ = try await client.kubernetes.removeRegistry(
-            clusterUuids: decoded(sdkMethodFixture1041Value1)
+            clusterUuids: decoded(sdkMethodFixture1039Value1)
         )
         XCTAssertTrue(true)
     }
@@ -271,12 +224,12 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1042Expected.utf8),
+            with: Data(sdkMethodFixture1040Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
             _ = try await client.kubernetes.removeRegistry(
-            clusterUuids: decoded(sdkMethodFixture1042Value1)
+            clusterUuids: decoded(sdkMethodFixture1040Value1)
         )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
@@ -306,7 +259,7 @@ extension SdkMethodTests {
             excludeChecks: decoded("[\"default-namespace\"]")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1043Expected.utf8),
+            with: Data(sdkMethodFixture1041Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -321,7 +274,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1044Expected.utf8),
+            with: Data(sdkMethodFixture1042Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -353,15 +306,15 @@ extension SdkMethodTests {
         }
         _ = client
         var options = try KubernetesMethods.KubernetesUpdateClusterOptions(clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""), name: decoded("\"prod-cluster-01\""))
-        options.tags = try decoded(sdkMethodFixture1045Value1)
+        options.tags = try decoded(sdkMethodFixture1043Value1)
         options.maintenancePolicy = try decoded("{\"start_time\":\"12:00\",\"day\":\"any\"}")
         options.autoUpgrade = try decoded("true")
         options.surgeUpgrade = try decoded("true")
         options.ha = try decoded("true")
         options.gpuOperatorReady = try decoded("false")
-        options.controlPlaneFirewall = try decoded(sdkMethodFixture1045Value2)
-        options.clusterAutoscalerConfiguration = try decoded(sdkMethodFixture1045Value3)
-        options.sso = try decoded(sdkMethodFixture1045Value4)
+        options.controlPlaneFirewall = try decoded(sdkMethodFixture1043Value2)
+        options.clusterAutoscalerConfiguration = try decoded(sdkMethodFixture1043Value3)
+        options.sso = try decoded(sdkMethodFixture1043Value4)
         options.routingAgent = try decoded("{\"enabled\":true}")
         options.p2pOciRegistryPlugin = try decoded("{\"enabled\":true}")
         options.nfsCsiPlugin = try decoded("{\"enabled\":true}")
@@ -376,7 +329,7 @@ extension SdkMethodTests {
             options: options
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1045Expected.utf8),
+            with: Data(sdkMethodFixture1043Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -391,15 +344,15 @@ extension SdkMethodTests {
         }
         _ = client
         var options = try KubernetesMethods.KubernetesUpdateClusterOptions(clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""), name: decoded("\"prod-cluster-01\""))
-        options.tags = try decoded(sdkMethodFixture1046Value1)
+        options.tags = try decoded(sdkMethodFixture1044Value1)
         options.maintenancePolicy = try decoded("{\"start_time\":\"12:00\",\"day\":\"any\"}")
         options.autoUpgrade = try decoded("true")
         options.surgeUpgrade = try decoded("true")
         options.ha = try decoded("true")
         options.gpuOperatorReady = try decoded("false")
-        options.controlPlaneFirewall = try decoded(sdkMethodFixture1046Value2)
-        options.clusterAutoscalerConfiguration = try decoded(sdkMethodFixture1046Value3)
-        options.sso = try decoded(sdkMethodFixture1046Value4)
+        options.controlPlaneFirewall = try decoded(sdkMethodFixture1044Value2)
+        options.clusterAutoscalerConfiguration = try decoded(sdkMethodFixture1044Value3)
+        options.sso = try decoded(sdkMethodFixture1044Value4)
         options.routingAgent = try decoded("{\"enabled\":true}")
         options.p2pOciRegistryPlugin = try decoded("{\"enabled\":true}")
         options.nfsCsiPlugin = try decoded("{\"enabled\":true}")
@@ -411,7 +364,7 @@ extension SdkMethodTests {
         options.rdmaSharedDevPlugin = try decoded("{\"enabled\":true}")
         options.corednsAutoscaler = try decoded("{\"enabled\":true}")
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1046Expected.utf8),
+            with: Data(sdkMethodFixture1044Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -439,7 +392,7 @@ extension SdkMethodTests {
         }
         _ = client
         var options = try KubernetesMethods.KubernetesUpdateNodePoolOptions(clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""), nodePoolId: decoded("\"cdda885e-7663-40c8-bc74-3a036c66545d\""), name: decoded("\"frontend-pool\""), count: decoded("3"))
-        options.tags = try decoded(sdkMethodFixture1047Value1)
+        options.tags = try decoded(sdkMethodFixture1045Value1)
         options.labels = try decoded("null")
         options.taints = try decoded("[{\"key\":\"priority\",\"value\":\"high\",\"effect\":\"NoSchedule\"}]")
         options.autoScale = try decoded("true")
@@ -449,7 +402,7 @@ extension SdkMethodTests {
             options: options
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1047Expected.utf8),
+            with: Data(sdkMethodFixture1045Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -464,14 +417,14 @@ extension SdkMethodTests {
         }
         _ = client
         var options = try KubernetesMethods.KubernetesUpdateNodePoolOptions(clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""), nodePoolId: decoded("\"cdda885e-7663-40c8-bc74-3a036c66545d\""), name: decoded("\"frontend-pool\""), count: decoded("3"))
-        options.tags = try decoded(sdkMethodFixture1048Value1)
+        options.tags = try decoded(sdkMethodFixture1046Value1)
         options.labels = try decoded("null")
         options.taints = try decoded("[{\"key\":\"priority\",\"value\":\"high\",\"effect\":\"NoSchedule\"}]")
         options.autoScale = try decoded("true")
         options.minNodes = try decoded("3")
         options.maxNodes = try decoded("6")
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1048Expected.utf8),
+            with: Data(sdkMethodFixture1046Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -511,13 +464,61 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1050Expected.utf8),
+            with: Data(sdkMethodFixture1048Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
             _ = try await client.kubernetes.upgradeCluster(
             clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
             version: decoded("\"1.16.13-do.0\"")
+        )
+            XCTFail("did not raise its declared error")
+        } catch let error as SdkHttpError {
+            XCTAssertEqual(error.statusCode, 401)
+            let data = try XCTUnwrap(
+                error.data as? any Encodable,
+                "decoded no error body"
+            )
+            XCTAssertNil(
+                try mismatch(jsonValue(data), expected),
+                "decoded an error body that differs from the mock"
+            )
+        }
+        XCTAssertTrue(true)
+    }
+
+    func testListAllBackupPoliciesListAllBackupPoliciesReachesMockAndDecodesResponse() async throws {
+        guard let client = configuredClient() else {
+            return
+        }
+        _ = client
+        let actual = try await client.droplets.listAllBackupPolicies(
+            perPage: decoded("2"),
+            page: decoded("1")
+        )
+        let expected = try JSONSerialization.jsonObject(
+            with: Data(sdkMethodFixture1049Expected.utf8),
+            options: [.fragmentsAllowed]
+        )
+        XCTAssertNil(
+            try mismatch(jsonValue(actual), expected),
+            "decoded a response that differs from the mock"
+        )
+    }
+
+    func testListAllBackupPoliciesListAllBackupPolicies401ReachesMockAndDecodesResponse() async throws {
+        guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
+            return
+        }
+        _ = client
+        let expected = try JSONSerialization.jsonObject(
+            with: Data(sdkMethodFixture1050Expected.utf8),
+            options: [.fragmentsAllowed]
+        )
+        do {
+            _ = try await client.droplets.listAllBackupPolicies(
+            perPage: decoded("2"),
+            page: decoded("1")
         )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {

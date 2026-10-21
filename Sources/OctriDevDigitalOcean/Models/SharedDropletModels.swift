@@ -160,10 +160,6 @@ extension Droplet {
     }
 }
 
-
-
-
-
 /// Typed representation of the `DropletBackupPolicy` API schema.
 public struct DropletBackupPolicy: Codable {
     /// The backup plan used for the Droplet. The plan can be either `daily` or `weekly`.
@@ -213,10 +209,6 @@ extension DropletBackupPolicy {
         self.retentionPeriodDays = retentionPeriodDays
     }
 }
-
-
-
-
 
 /// An object specifying the backup policy for the Droplet. If omitted and `backups` is `true`, the backup plan will
 /// default to daily.

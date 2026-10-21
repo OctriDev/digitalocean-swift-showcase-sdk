@@ -4,514 +4,336 @@
 import Foundation
 
 // AgentPlatformAPIApiModel domain models
-/// A configurable setting for a model in the playground
-public struct ApiModelSetting: Codable {
-    /// String default value (for type="dropdown", e.g. "medium")
-    /// - Example: "example string"
-    public var defaultString: String?
-    /// Numeric default value (for type="number")
-    /// - Example: 0.7
-    public var defaultValue: Double?
-    /// Maximum allowed value (for type="number")
-    /// - Example: 1
-    public var max: Double?
-    /// Minimum allowed value (for type="number")
-    public var min: Double?
-    /// Setting key name (e.g. "max_tokens", "temperature", "resolution")
-    /// - Example: "temperature"
-    public var name: String?
-    /// Allowed values for dropdown selections (for type="dropdown")
-    /// - Example: ["example string"]
-    public var options: [String]?
-    /// Step increment for numeric settings (for type="number")
-    /// - Example: 123
-    public var step: Double?
-    /// Setting value type: "number" or "dropdown"
-    /// - Example: "number"
-    public var type: String?
-
-    enum CodingKeys: String, CodingKey {
-        case defaultString = "default_string"
-        case defaultValue = "default_value"
-        case max
-        case min
-        case name
-        case options
-        case step
-        case type
-    }
-
-    init() {
-        (self.defaultString, self.defaultValue, self.max, self.min, self.name) = (nil, nil, nil, nil, nil)
-        (self.options, self.step, self.type) = (nil, nil, nil)
-    }
-}
-
-extension ApiModelSetting {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.defaultString = try container.sdkDecodeIfPresent(.defaultString)
-        self.defaultValue = try container.sdkDecodeIfPresent(.defaultValue)
-        self.max = try container.sdkDecodeIfPresent(.max)
-        self.min = try container.sdkDecodeIfPresent(.min)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.options = try container.sdkDecodeIfPresent(.options)
-        self.step = try container.sdkDecodeIfPresent(.step)
-        self.type = try container.sdkDecodeIfPresent(.type)
-    }
-}
-
-extension ApiModelSetting {
-    public init(defaultString: String? = nil, defaultValue: Double? = nil, max: Double? = nil, min: Double? = nil, name: String? = nil, options: [String]? = nil, step: Double? = nil, type: String? = nil) {
-        self.init()
-        (self.defaultString, self.defaultValue) = (defaultString, defaultValue)
-        (self.max, self.min) = (max, min)
-        (self.name, self.options) = (name, options)
-        (self.step, self.type) = (step, type)
-    }
-}
-
-/// Pricing that varies over time. When present, the rates move between the low and high bounds below across the
-/// intervals in the schedule.
-public struct ApiModelScaledPricing: Codable {
-    /// The pricing schedule as a series of consecutive time intervals, ordered by start time. Neighboring hours
-    /// with the same rates are combined, so each interval represents a distinct price.
-    public var intervals: [ApiModelPricingInterval]?
-    /// Pricing per million tokens (aligns with existing ModelPrice pattern)
-    public var maxPrices: ApiModelPricing?
-    /// Pricing per million tokens (aligns with existing ModelPrice pattern)
-    public var minPrices: ApiModelPricing?
-
-    enum CodingKeys: String, CodingKey {
-        case intervals
-        case maxPrices = "max_prices"
-        case minPrices = "min_prices"
-    }
-
-    init() {
-        (self.intervals, self.maxPrices, self.minPrices) = (nil, nil, nil)
-    }
-}
-
-extension ApiModelScaledPricing {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.intervals = try container.sdkDecodeIfPresent(.intervals)
-        self.maxPrices = try container.sdkDecodeIfPresent(.maxPrices)
-        self.minPrices = try container.sdkDecodeIfPresent(.minPrices)
-    }
-}
-
-extension ApiModelScaledPricing {
-    public init(intervals: [ApiModelPricingInterval]? = nil, maxPrices: ApiModelPricing? = nil, minPrices: ApiModelPricing? = nil) {
-        self.init()
-        (self.intervals, self.maxPrices) = (intervals, maxPrices)
-        self.minPrices = minPrices
-    }
-}
-
-/// Result for a single prompt in a model evaluation run.
-public struct ApiModelEvaluationResult: Codable {
-    /// Optional `string` value serialized in the `candidate_model_name` wire field.
-    /// - Example: "example name"
-    public var candidateModelName: String?
-    /// Optional `string` value serialized in the `candidate_model_uuid` wire field.
-    /// - Example: "123e4567-e89b-12d3-a456-426614174000"
-    public var candidateModelUuid: String?
-    /// Optional `string` value serialized in the `candidate_routed_task` wire field.
-    /// - Example: "Coding & brainstorming"
-    public var candidateRoutedTask: String?
-    /// Which pass over this dataset row produced this result, 1-indexed (1 = first pass). Always 0 (and omitted
-    /// from JSON) when the run's epochs is 1 (the default) — per-attempt epoch numbering doesn't apply to
-    /// single-pass runs. When epochs > 1, this always reflects epoch 1 (see epoch_results below).
-    /// - Example: 1
-    public var epoch: Int?
-    /// Present only when the run's epochs > 1: every pass over this row — including epoch 1, duplicated here for
-    /// convenience — keyed by 1-indexed "epoch1"/"epoch2"/"epoch3" labels. Mirrors the shape of the downloadable
-    /// results file's epochResults object. The top-level fields above (output, metric_results,
-    /// candidate_routed_task) always reflect epoch 1, so single-epoch clients reading only those fields see no
-    /// difference when epochs > 1.
-    public var epochResults: [String: ApiModelEvaluationEpochAttempt]?
-    /// Optional `string` value serialized in the `ground_truth` wire field.
-    /// - Example: "example string"
-    public var groundTruth: String?
-    /// The input query sent to the candidate model.
-    /// - Example: "example string"
-    public var input: String?
-    /// Per-metric scores and judge reasoning for this prompt.
-    public var metricResults: [ApiEvaluationMetricResult]?
-    /// The response from the candidate model.
-    /// - Example: "example string"
-    public var output: String?
-    /// Which dataset row this result came from. Multiple results share a row_number when epochs > 1: one per pass
-    /// over that row.
-    /// - Example: 1
-    public var rowNumber: Int?
-
-    enum CodingKeys: String, CodingKey {
-        case candidateModelName = "candidate_model_name"
-        case candidateModelUuid = "candidate_model_uuid"
-        case candidateRoutedTask = "candidate_routed_task"
-        case epoch
-        case epochResults = "epoch_results"
-        case groundTruth = "ground_truth"
-        case input
-        case metricResults = "metric_results"
-        case output
-        case rowNumber = "row_number"
-    }
-
-    init() {
-        (self.candidateModelName, self.candidateModelUuid, self.candidateRoutedTask, self.epoch, self.epochResults) = (nil, nil, nil, nil, nil)
-        (self.groundTruth, self.input, self.metricResults, self.output, self.rowNumber) = (nil, nil, nil, nil, nil)
-    }
-}
-
-extension ApiModelEvaluationResult {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.candidateModelName = try container.sdkDecodeIfPresent(.candidateModelName)
-        self.candidateModelUuid = try container.sdkDecodeIfPresent(.candidateModelUuid)
-        self.candidateRoutedTask = try container.sdkDecodeIfPresent(.candidateRoutedTask)
-        self.epoch = try container.sdkDecodeIfPresent(.epoch)
-        self.epochResults = try container.sdkDecodeIfPresent(.epochResults)
-        self.groundTruth = try container.sdkDecodeIfPresent(.groundTruth)
-        self.input = try container.sdkDecodeIfPresent(.input)
-        self.metricResults = try container.sdkDecodeIfPresent(.metricResults)
-        self.output = try container.sdkDecodeIfPresent(.output)
-        self.rowNumber = try container.sdkDecodeIfPresent(.rowNumber)
-    }
-}
-
-extension ApiModelEvaluationResult {
-    public init(candidateModelName: String? = nil, candidateModelUuid: String? = nil, candidateRoutedTask: String? = nil, epoch: Int? = nil, epochResults: [String: ApiModelEvaluationEpochAttempt]? = nil, groundTruth: String? = nil, input: String? = nil, metricResults: [ApiEvaluationMetricResult]? = nil, output: String? = nil, rowNumber: Int? = nil) {
-        self.init()
-        (self.candidateModelName, self.candidateModelUuid) = (candidateModelName, candidateModelUuid)
-        (self.candidateRoutedTask, self.epoch) = (candidateRoutedTask, epoch)
-        (self.epochResults, self.groundTruth) = (epochResults, groundTruth)
-        (self.input, self.metricResults) = (input, metricResults)
-        (self.output, self.rowNumber) = (output, rowNumber)
-    }
-}
-
-/// Task definition embedded in a model router config.
-public struct ApiModelRouterTaskDetails: Codable {
-    /// Short task description
-    /// - Example: "\"Summarize long-form text\""
-    public var description: String?
-    /// Task name
-    /// - Example: "\"Custom Summarization\""
-    public var name: String?
-
-    enum CodingKeys: String, CodingKey {
-        case description
-        case name
-    }
-
-    init() {
-        (self.description, self.name) = (nil, nil)
-    }
-}
-
-extension ApiModelRouterTaskDetails {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.name = try container.sdkDecodeIfPresent(.name)
-    }
-}
-
-extension ApiModelRouterTaskDetails {
-    public init(description: String? = nil, name: String? = nil) {
-        self.init()
-        (self.description, self.name) = (description, name)
-    }
-}
-
-/// List item for ListModelCatalog
-public struct ApiModelCatalogEntry: Codable {
-    /// Optional array value serialized in the `availability` wire field.
-    /// - Example: ["example string"]
-    public var availability: [String]?
-    /// Badges for models
-    /// - Example: ["example string"]
-    public var badges: [String]?
+/// Description of a Model
+public struct ApiModel: Codable {
+    /// Agreement Description
+    public var agreement: ApiAgreement?
     /// Benchmark scores for this model, stored as arbitrary JSON
     public var benchmarkScore: [String: JSONValue]?
-    /// Optional array value serialized in the `capabilities` wire field.
+    /// High-level capabilities (e.g. tool_calling, vision, streaming)
     /// - Example: ["example string"]
     public var capabilities: [String]?
-    /// Specs (flat)
-    /// - Example: "128000"
+    /// Context window size in tokens
+    /// - Example: "12345"
     public var contextWindow: String?
-    /// RFC 3339 timestamp indicating when the model was added to the catalog.
-    /// - Example: "2021-01-01T00:00:00Z"
+    /// Creation date / time
+    /// - Example: "2023-01-01T00:00:00Z"
     public var createdAt: Date?
-    /// Model creator/developer (e.g., "Meta", "Anthropic", "OpenAI")
-    /// - Example: "\"Meta\""
-    public var creator: String?
-    /// The Hugging Face repository ID (e.g. "meta-llama/Llama-3.3-70B-Instruct") the model is based on, when
-    /// applicable. Omitted for models not sourced from Hugging Face.
-    /// - Example: "\"meta-llama/Llama-3.3-70B-Instruct\""
-    public var huggingFaceId: String?
-    /// Identity
-    /// - Example: "\"506a3371-88d0-4047-9212-e2079497ac68\""
-    public var id: String?
-    /// The maximum number of output tokens the model can generate in a single response.
-    /// - Example: "65536"
-    public var maxOutputTokens: String?
-    /// Model identifier used for API calls (e.g., "llama3.1-70b-instruct")
-    /// - Example: "\"llama3.1-70b-instruct\""
-    public var modelId: String?
-    /// Optional `string` value serialized in the `name` wire field.
-    /// - Example: "\"Llama 3.1 70B\""
+    /// Available endpoints and their capabilities
+    public var endpoints: [ApiModelEndpoint]?
+    /// Internally used name
+    /// - Example: "example name"
+    public var inferenceName: String?
+    /// Internally used version
+    /// - Example: "example string"
+    public var inferenceVersion: String?
+    /// True if it is a foundational model provided by do
+    /// - Example: true
+    public var isFoundational: Bool?
+    /// Default chunking size limit to show in UI
+    /// - Example: 123
+    public var kbDefaultChunkSize: Int?
+    /// Maximum chunk size limit of model
+    /// - Example: 123
+    public var kbMaxChunkSize: Int?
+    /// Minimum chunking size token limits if model supports KNOWLEDGEBASE usecase
+    /// - Example: 123
+    public var kbMinChunkSize: Int?
+    /// Lifecycle status of the model (internal, public-preview, active, deprecated, end_of_life)
+    /// - Example: "example string"
+    public var lifecycleStatus: String?
+    /// Additional meta data
+    public var metadata: [String: JSONValue]?
+    /// Input/output modalities
+    public var modalities: ApiModelModalities?
+    /// Name of the model
+    /// - Example: "example name"
     public var name: String?
-    /// Optional `float`-formatted value serialized in the `parameter_count` wire field.
-    /// - Example: 70
+    /// Parameter count in billions
+    /// - Example: 123
     public var parameterCount: Double?
-    /// Pricing per million tokens (aligns with existing ModelPrice pattern)
-    public var pricing: ApiModelPricing?
+    /// Unique id of the model, this model is based on
+    /// - Example: "123e4567-e89b-12d3-a456-426614174000"
+    public var parentUuid: String?
     /// Optional enumerated value serialized in the `provider` wire field.
     /// - Example: "MODEL_PROVIDER_DIGITALOCEAN"
     public var provider: ApiModelProvider?
-    /// True when this model's pricing varies over time. Retrieve the model's details for the full pricing schedule.
-    /// False for models with fixed pricing.
+    /// Available reasoning efforts for this model
+    /// - Example: ["example string"]
+    public var reasoningEfforts: [String]?
+    /// Playground settings derived from model metadata
+    public var settings: [ApiModelSetting]?
+    /// Whether this model supports extended thinking (Anthropic models)
     /// - Example: true
-    public var scaledPricingEnabled: Bool?
-    /// Optional `string` value serialized in the `short_description` wire field.
-    /// - Example: "\"Fast, efficient model for general tasks\""
-    public var shortDescription: String?
-    /// Optional `string` value serialized in the `type` wire field.
-    /// - Example: "\"text-to-text\""
+    public var thinking: Bool?
+    /// Model type (chat, embedding, image, reasoning, coding)
+    /// - Example: "example string"
     public var type: String?
+    /// Last modified
+    /// - Example: "2023-01-01T00:00:00Z"
+    public var updatedAt: Date?
+    /// Model has been fully uploaded
+    /// - Example: true
+    public var uploadComplete: Bool?
+    /// Download url
+    /// - Example: "example string"
+    public var url: String?
+    /// Usecases of the model
+    /// - Example: ["MODEL_USECASE_AGENT","MODEL_USECASE_GUARDRAIL"]
+    public var usecases: [ApiModelUsecase]?
+    /// Unique id
+    /// - Example: "123e4567-e89b-12d3-a456-426614174000"
+    public var uuid: String?
+    /// Version Information about a Model
+    public var version: ApiModelVersion?
 
     enum CodingKeys: String, CodingKey {
-        case availability
-        case badges
+        case agreement
         case benchmarkScore = "benchmark_score"
         case capabilities
         case contextWindow = "context_window"
         case createdAt = "created_at"
-        case creator
-        case huggingFaceId = "hugging_face_id"
-        case id
-        case maxOutputTokens = "max_output_tokens"
-        case modelId = "model_id"
+        case endpoints
+        case inferenceName = "inference_name"
+        case inferenceVersion = "inference_version"
+        case isFoundational = "is_foundational"
+        case kbDefaultChunkSize = "kb_default_chunk_size"
+        case kbMaxChunkSize = "kb_max_chunk_size"
+        case kbMinChunkSize = "kb_min_chunk_size"
+        case lifecycleStatus = "lifecycle_status"
+        case metadata
+        case modalities
         case name
         case parameterCount = "parameter_count"
-        case pricing
+        case parentUuid = "parent_uuid"
         case provider
-        case scaledPricingEnabled = "scaled_pricing_enabled"
-        case shortDescription = "short_description"
+        case reasoningEfforts = "reasoning_efforts"
+        case settings
+        case thinking
         case type
+        case updatedAt = "updated_at"
+        case uploadComplete = "upload_complete"
+        case url
+        case usecases
+        case uuid
+        case version
     }
 
     init() {
-        (self.availability, self.badges, self.benchmarkScore, self.capabilities, self.contextWindow) = (nil, nil, nil, nil, nil)
-        (self.createdAt, self.creator, self.huggingFaceId, self.id, self.maxOutputTokens) = (nil, nil, nil, nil, nil)
-        (self.modelId, self.name, self.parameterCount, self.pricing, self.provider) = (nil, nil, nil, nil, nil)
-        (self.scaledPricingEnabled, self.shortDescription, self.type) = (nil, nil, nil)
+        (self.agreement, self.benchmarkScore, self.capabilities, self.contextWindow, self.createdAt) = (nil, nil, nil, nil, nil)
+        (self.endpoints, self.inferenceName, self.inferenceVersion, self.isFoundational, self.kbDefaultChunkSize) = (nil, nil, nil, nil, nil)
+        (self.kbMaxChunkSize, self.kbMinChunkSize, self.lifecycleStatus, self.metadata, self.modalities) = (nil, nil, nil, nil, nil)
+        (self.name, self.parameterCount, self.parentUuid, self.provider, self.reasoningEfforts) = (nil, nil, nil, nil, nil)
+        (self.settings, self.thinking, self.type, self.updatedAt, self.uploadComplete) = (nil, nil, nil, nil, nil)
+        (self.url, self.usecases, self.uuid, self.version) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiModelCatalogEntry {
+extension ApiModel {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.availability = try container.sdkDecodeIfPresent(.availability)
-        self.badges = try container.sdkDecodeIfPresent(.badges)
+        self.agreement = try container.sdkDecodeIfPresent(.agreement)
         self.benchmarkScore = try container.sdkDecodeIfPresent(.benchmarkScore)
         self.capabilities = try container.sdkDecodeIfPresent(.capabilities)
         self.contextWindow = try container.sdkDecodeIfPresent(.contextWindow)
         self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.creator = try container.sdkDecodeIfPresent(.creator)
-        self.huggingFaceId = try container.sdkDecodeIfPresent(.huggingFaceId)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.maxOutputTokens = try container.sdkDecodeIfPresent(.maxOutputTokens)
-        self.modelId = try container.sdkDecodeIfPresent(.modelId)
+        self.endpoints = try container.sdkDecodeIfPresent(.endpoints)
+        self.inferenceName = try container.sdkDecodeIfPresent(.inferenceName)
+        self.inferenceVersion = try container.sdkDecodeIfPresent(.inferenceVersion)
+        self.isFoundational = try container.sdkDecodeIfPresent(.isFoundational)
+        self.kbDefaultChunkSize = try container.sdkDecodeIfPresent(.kbDefaultChunkSize)
+        self.kbMaxChunkSize = try container.sdkDecodeIfPresent(.kbMaxChunkSize)
+        self.kbMinChunkSize = try container.sdkDecodeIfPresent(.kbMinChunkSize)
+        self.lifecycleStatus = try container.sdkDecodeIfPresent(.lifecycleStatus)
+        self.metadata = try container.sdkDecodeIfPresent(.metadata)
+        self.modalities = try container.sdkDecodeIfPresent(.modalities)
         self.name = try container.sdkDecodeIfPresent(.name)
         self.parameterCount = try container.sdkDecodeIfPresent(.parameterCount)
-        self.pricing = try container.sdkDecodeIfPresent(.pricing)
+        self.parentUuid = try container.sdkDecodeIfPresent(.parentUuid)
         self.provider = try container.sdkDecodeIfPresent(.provider)
-        self.scaledPricingEnabled = try container.sdkDecodeIfPresent(.scaledPricingEnabled)
-        self.shortDescription = try container.sdkDecodeIfPresent(.shortDescription)
+        self.reasoningEfforts = try container.sdkDecodeIfPresent(.reasoningEfforts)
+        self.settings = try container.sdkDecodeIfPresent(.settings)
+        self.thinking = try container.sdkDecodeIfPresent(.thinking)
         self.type = try container.sdkDecodeIfPresent(.type)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.uploadComplete = try container.sdkDecodeIfPresent(.uploadComplete)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.usecases = try container.sdkDecodeIfPresent(.usecases)
+        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        self.version = try container.sdkDecodeIfPresent(.version)
         if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
+        }
+        if let value = self.updatedAt {
+            try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiModelCatalogEntry {
-    public init(availability: [String]? = nil, badges: [String]? = nil, benchmarkScore: [String: JSONValue]? = nil, capabilities: [String]? = nil, contextWindow: String? = nil, createdAt: Date? = nil, creator: String? = nil, huggingFaceId: String? = nil, id: String? = nil, maxOutputTokens: String? = nil, modelId: String? = nil, name: String? = nil, parameterCount: Double? = nil, pricing: ApiModelPricing? = nil, provider: ApiModelProvider? = nil, scaledPricingEnabled: Bool? = nil, shortDescription: String? = nil, type: String? = nil) throws {
+extension ApiModel {
+    public init(agreement: ApiAgreement? = nil, benchmarkScore: [String: JSONValue]? = nil, capabilities: [String]? = nil, contextWindow: String? = nil, createdAt: Date? = nil, endpoints: [ApiModelEndpoint]? = nil, inferenceName: String? = nil, inferenceVersion: String? = nil, isFoundational: Bool? = nil, kbDefaultChunkSize: Int? = nil, kbMaxChunkSize: Int? = nil, kbMinChunkSize: Int? = nil, lifecycleStatus: String? = nil, metadata: [String: JSONValue]? = nil, modalities: ApiModelModalities? = nil, name: String? = nil, parameterCount: Double? = nil, parentUuid: String? = nil, provider: ApiModelProvider? = nil, reasoningEfforts: [String]? = nil, settings: [ApiModelSetting]? = nil, thinking: Bool? = nil, type: String? = nil, updatedAt: Date? = nil, uploadComplete: Bool? = nil, url: String? = nil, usecases: [ApiModelUsecase]? = nil, uuid: String? = nil, version: ApiModelVersion? = nil) throws {
         self.init()
-        (self.availability, self.badges) = (availability, badges)
-        (self.benchmarkScore, self.capabilities) = (benchmarkScore, capabilities)
-        (self.contextWindow, self.createdAt) = (contextWindow, createdAt)
-        (self.creator, self.huggingFaceId) = (creator, huggingFaceId)
-        (self.id, self.maxOutputTokens) = (id, maxOutputTokens)
-        (self.modelId, self.name) = (modelId, name)
-        (self.parameterCount, self.pricing) = (parameterCount, pricing)
-        (self.provider, self.scaledPricingEnabled) = (provider, scaledPricingEnabled)
-        (self.shortDescription, self.type) = (shortDescription, type)
+        (self.agreement, self.benchmarkScore) = (agreement, benchmarkScore)
+        (self.capabilities, self.contextWindow) = (capabilities, contextWindow)
+        (self.createdAt, self.endpoints) = (createdAt, endpoints)
+        (self.inferenceName, self.inferenceVersion) = (inferenceName, inferenceVersion)
+        (self.isFoundational, self.kbDefaultChunkSize) = (isFoundational, kbDefaultChunkSize)
+        (self.kbMaxChunkSize, self.kbMinChunkSize) = (kbMaxChunkSize, kbMinChunkSize)
+        (self.lifecycleStatus, self.metadata) = (lifecycleStatus, metadata)
+        (self.modalities, self.name) = (modalities, name)
+        (self.parameterCount, self.parentUuid) = (parameterCount, parentUuid)
+        (self.provider, self.reasoningEfforts) = (provider, reasoningEfforts)
+        (self.settings, self.thinking) = (settings, thinking)
+        (self.type, self.updatedAt) = (type, updatedAt)
+        (self.uploadComplete, self.url) = (uploadComplete, url)
+        (self.usecases, self.uuid) = (usecases, uuid)
+        self.version = version
         if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
+        }
+        if let value = self.updatedAt {
+            try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-/// An available endpoint for a model and its capabilities
-public struct ApiModelEndpoint: Codable {
-    /// Capabilities supported by this endpoint (e.g. input_text, output_text, input_image)
+/// Selection policy preference for choosing among assigned models.
+public struct ApiModelRouterSelectionPolicy: Codable {
+    /// One of: none, cheapest, fastest
+    /// - Example: "\"cheapest\""
+    public var prefer: String?
+
+    enum CodingKeys: String, CodingKey {
+        case prefer
+    }
+
+    init() {
+        self.prefer = nil
+    }
+}
+
+extension ApiModelRouterSelectionPolicy {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.prefer = try container.sdkDecodeIfPresent(.prefer)
+    }
+}
+
+extension ApiModelRouterSelectionPolicy {
+    public init(prefer: String? = nil) {
+        self.init()
+        self.prefer = prefer
+    }
+}
+
+/// Typed representation of the `ApiModelRouterConfig` API schema.
+public struct ApiModelRouterConfig: Codable {
+    /// Router-level fallback models
     /// - Example: ["example string"]
-    public var capabilities: [String]?
-    /// The endpoint path (e.g. /chat/responses)
-    /// - Example: "/chat/responses"
-    public var endpoint: String?
+    public var fallbackModels: [String]?
+    /// Task routing policies
+    public var policies: [ApiModelRouterTaskPolicy]?
 
     enum CodingKeys: String, CodingKey {
-        case capabilities
-        case endpoint
+        case fallbackModels = "fallback_models"
+        case policies
     }
 
     init() {
-        (self.capabilities, self.endpoint) = (nil, nil)
+        (self.fallbackModels, self.policies) = (nil, nil)
     }
 }
 
-extension ApiModelEndpoint {
+extension ApiModelRouterConfig {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.capabilities = try container.sdkDecodeIfPresent(.capabilities)
-        self.endpoint = try container.sdkDecodeIfPresent(.endpoint)
+        self.fallbackModels = try container.sdkDecodeIfPresent(.fallbackModels)
+        self.policies = try container.sdkDecodeIfPresent(.policies)
     }
 }
 
-extension ApiModelEndpoint {
-    public init(capabilities: [String]? = nil, endpoint: String? = nil) {
+extension ApiModelRouterConfig {
+    public init(fallbackModels: [String]? = nil, policies: [ApiModelRouterTaskPolicy]? = nil) {
         self.init()
-        (self.capabilities, self.endpoint) = (capabilities, endpoint)
+        (self.fallbackModels, self.policies) = (fallbackModels, policies)
     }
 }
 
-/// Aggregated result summary for a completed model evaluation run.
-public struct ApiModelEvaluationRunResultSummary: Codable {
-    /// Optional `date-time`-formatted value serialized in the `end_time` wire field.
-    /// - Example: "2023-01-01T00:00:00Z"
-    public var endTime: Date?
-    /// Aggregation across epochs when a run repeats each dataset row k times. Only populated when epochs > 1; at
-    /// epochs == 1 every number here would equal overall_score_percent, so it is omitted rather than duplicated.
-    public var epochSummary: ApiEpochResultSummary?
-    /// Number of times each dataset row was evaluated (n-pass/epochs). Mirrors ModelEvaluationRunDetail.epochs. 1
-    /// for every existing run.
-    /// - Example: 1
-    public var epochs: Int?
-    /// Per-metric aggregated pass/fail statistics.
-    public var metricSummaries: [ApiMetricResultSummary]?
-    /// Optional `double`-formatted value serialized in the `overall_score_percent` wire field.
-    /// - Example: 123
-    public var overallScorePercent: Double?
-    /// Per-model breakdown of an evaluation run. Set on router evaluations to show how each underlying model
-    /// performed across the prompts that were routed to it.
-    public var perModelSummaries: ApiPerModelResultSummaries?
-    /// Per-task breakdown of an evaluation run. Set on router evaluations to show how each routing task category
-    /// performed across the prompts that were classified into it.
-    public var perTaskSummaries: ApiPerTaskResultSummaries?
-    /// All performance metrics are for the candidate model unless noted otherwise.
-    public var performanceMetrics: ApiPerformanceMetrics?
-    /// Pricing breakdown for an evaluation run.
-    public var pricing: ApiEvaluationPricing?
-    /// Star metric summary with identifying details and threshold.
-    public var starMetricSummary: ApiStarMetricSummary?
-    /// Run timing.
-    /// - Example: "2023-01-01T00:00:00Z"
-    public var startTime: Date?
-    /// Total wall-clock duration in seconds.
-    /// - Example: 123
-    public var totalDurationSeconds: Int?
+/// Model Evaluation Run Statuses
+public struct ApiModelEvaluationRunStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+    public let rawValue: String
 
-    enum CodingKeys: String, CodingKey {
-        case endTime = "end_time"
-        case epochSummary = "epoch_summary"
-        case epochs
-        case metricSummaries = "metric_summaries"
-        case overallScorePercent = "overall_score_percent"
-        case perModelSummaries = "per_model_summaries"
-        case perTaskSummaries = "per_task_summaries"
-        case performanceMetrics = "performance_metrics"
-        case pricing
-        case starMetricSummary = "star_metric_summary"
-        case startTime = "start_time"
-        case totalDurationSeconds = "total_duration_seconds"
-    }
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let modelEvaluationRunStatusUnspecified = ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_STATUS_UNSPECIFIED")
+    public static let modelEvaluationRunQueued = ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_QUEUED")
+    public static let modelEvaluationRunRunningDataset = ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_RUNNING_DATASET")
+    public static let modelEvaluationRunEvaluatingResults = ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_EVALUATING_RESULTS")
+    public static let modelEvaluationRunCancelling = ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_CANCELLING")
+    public static let modelEvaluationRunCancelled = ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_CANCELLED")
+    public static let modelEvaluationRunSuccessful = ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_SUCCESSFUL")
+    public static let modelEvaluationRunPartiallySuccessful = ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_PARTIALLY_SUCCESSFUL")
+    public static let modelEvaluationRunFailed = ApiModelEvaluationRunStatus(rawValue: "MODEL_EVALUATION_RUN_FAILED")
 
-    init() {
-        (self.endTime, self.epochSummary, self.epochs, self.metricSummaries, self.overallScorePercent) = (nil, nil, nil, nil, nil)
-        (self.perModelSummaries, self.perTaskSummaries, self.performanceMetrics, self.pricing, self.starMetricSummary) = (nil, nil, nil, nil, nil)
-        (self.startTime, self.totalDurationSeconds) = (nil, nil)
-    }
-}
-
-extension ApiModelEvaluationRunResultSummary {
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.endTime = try container.sdkDecodeIfPresent(.endTime)
-        self.epochSummary = try container.sdkDecodeIfPresent(.epochSummary)
-        self.epochs = try container.sdkDecodeIfPresent(.epochs)
-        self.metricSummaries = try container.sdkDecodeIfPresent(.metricSummaries)
-        self.overallScorePercent = try container.sdkDecodeIfPresent(.overallScorePercent)
-        self.perModelSummaries = try container.sdkDecodeIfPresent(.perModelSummaries)
-        self.perTaskSummaries = try container.sdkDecodeIfPresent(.perTaskSummaries)
-        self.performanceMetrics = try container.sdkDecodeIfPresent(.performanceMetrics)
-        self.pricing = try container.sdkDecodeIfPresent(.pricing)
-        self.starMetricSummary = try container.sdkDecodeIfPresent(.starMetricSummary)
-        self.startTime = try container.sdkDecodeIfPresent(.startTime)
-        self.totalDurationSeconds = try container.sdkDecodeIfPresent(.totalDurationSeconds)
-        if let value = self.endTime {
-            try sdkValidateDateTime("end_time", sdkWireString(value))
-        }
-        if let value = self.startTime {
-            try sdkValidateDateTime("start_time", sdkWireString(value))
-        }
+        let container = try decoder.singleValueContainer()
+        self.init(rawValue: try container.decode(String.self))
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(rawValue)
     }
 }
 
-extension ApiModelEvaluationRunResultSummary {
-    public init(endTime: Date? = nil, epochSummary: ApiEpochResultSummary? = nil, epochs: Int? = nil, metricSummaries: [ApiMetricResultSummary]? = nil, overallScorePercent: Double? = nil, perModelSummaries: ApiPerModelResultSummaries? = nil, perTaskSummaries: ApiPerTaskResultSummaries? = nil, performanceMetrics: ApiPerformanceMetrics? = nil, pricing: ApiEvaluationPricing? = nil, starMetricSummary: ApiStarMetricSummary? = nil, startTime: Date? = nil, totalDurationSeconds: Int? = nil) throws {
-        self.init()
-        (self.endTime, self.epochSummary) = (endTime, epochSummary)
-        (self.epochs, self.metricSummaries) = (epochs, metricSummaries)
-        (self.overallScorePercent, self.perModelSummaries) = (overallScorePercent, perModelSummaries)
-        (self.perTaskSummaries, self.performanceMetrics) = (perTaskSummaries, performanceMetrics)
-        (self.pricing, self.starMetricSummary) = (pricing, starMetricSummary)
-        (self.startTime, self.totalDurationSeconds) = (startTime, totalDurationSeconds)
-        if let value = self.endTime {
-            try sdkValidateDateTime("end_time", sdkWireString(value))
-        }
-        if let value = self.startTime {
-            try sdkValidateDateTime("start_time", sdkWireString(value))
-        }
+/// - MODEL_USECASE_UNKNOWN: The use case of the model is unknown - MODEL_USECASE_AGENT: The model maybe used in
+/// an agent - MODEL_USECASE_FINETUNED: The model maybe used for fine tuning - MODEL_USECASE_KNOWLEDGEBASE: The
+/// model maybe used for knowledge bases (embedding models) - MODEL_USECASE_GUARDRAIL: The model maybe used for
+/// guardrails - MODEL_USECASE_REASONING: The model usecase for reasoning - MODEL_USECASE_SERVERLESS: The model
+/// usecase for serverless inference -…
+public struct ApiModelUsecase: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+    public let rawValue: String
+
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let modelUsecaseUnknown = ApiModelUsecase(rawValue: "MODEL_USECASE_UNKNOWN")
+    public static let modelUsecaseAgent = ApiModelUsecase(rawValue: "MODEL_USECASE_AGENT")
+    public static let modelUsecaseFinetuned = ApiModelUsecase(rawValue: "MODEL_USECASE_FINETUNED")
+    public static let modelUsecaseKnowledgebase = ApiModelUsecase(rawValue: "MODEL_USECASE_KNOWLEDGEBASE")
+    public static let modelUsecaseGuardrail = ApiModelUsecase(rawValue: "MODEL_USECASE_GUARDRAIL")
+    public static let modelUsecaseReasoning = ApiModelUsecase(rawValue: "MODEL_USECASE_REASONING")
+    public static let modelUsecaseServerless = ApiModelUsecase(rawValue: "MODEL_USECASE_SERVERLESS")
+    public static let modelUsecaseEvaluationJudge = ApiModelUsecase(rawValue: "MODEL_USECASE_EVALUATION_JUDGE")
+    public static let modelUsecaseCoding = ApiModelUsecase(rawValue: "MODEL_USECASE_CODING")
+    public static let modelUsecaseAudio = ApiModelUsecase(rawValue: "MODEL_USECASE_AUDIO")
+    public static let modelUsecaseReranking = ApiModelUsecase(rawValue: "MODEL_USECASE_RERANKING")
+    public static let modelUsecaseText = ApiModelUsecase(rawValue: "MODEL_USECASE_TEXT")
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self.init(rawValue: try container.decode(String.self))
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(rawValue)
     }
 }
 
-/// A time window during which the model's rates stay the same. Together these intervals show how pricing changes
-/// over the course of a day.
-public struct ApiModelPricingInterval: Codable {
-    /// End of the interval, exclusive. Always on the hour.
-    /// - Example: "2021-01-01T15:00:00Z"
-    public var endTime: Date?
-    /// Pricing per million tokens (aligns with existing ModelPrice pattern)
-    public var prices: ApiModelPricing?
-    /// Start of the interval, inclusive. Always on the hour.
-    /// - Example: "2021-01-01T13:00:00Z"
-    public var startTime: Date?
+/// Typed representation of the `ApiModelProvider` API schema.
+public struct ApiModelProvider: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+    public let rawValue: String
 
-    enum CodingKeys: String, CodingKey {
-        case endTime = "end_time"
-        case prices
-        case startTime = "start_time"
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let modelProviderDigitalocean = ApiModelProvider(rawValue: "MODEL_PROVIDER_DIGITALOCEAN")
+    public static let modelProviderAnthropic = ApiModelProvider(rawValue: "MODEL_PROVIDER_ANTHROPIC")
+    public static let modelProviderOpenai = ApiModelProvider(rawValue: "MODEL_PROVIDER_OPENAI")
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self.init(rawValue: try container.decode(String.self))
     }
 
-    init() {
-        (self.endTime, self.prices, self.startTime) = (nil, nil, nil)
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(rawValue)
     }
 }

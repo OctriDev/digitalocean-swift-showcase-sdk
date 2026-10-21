@@ -7,3 +7,32 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum NfsMethods {}
+
+extension NfsMethods {
+    /// To create a new NFS share, send a POST request to `/v2/nfs`.
+    ///
+    /// - Parameters:
+    /// - name: The human-readable name of the share.
+    /// - sizeGib: The desired/provisioned size of the share in GiB (Gibibytes).
+    ///   Must be >= 50.
+    /// - region: The DigitalOcean region slug (e.g., nyc2, atl1) where the NFS
+    ///   share resides.
+    /// - vpcIds: List of VPC IDs that should be able to access the share.
+    /// - performanceTier: The performance tier of the share.
+    public static func nfsCreate(config: ClientConfig, name: String, sizeGib: Int, region: String, vpcIds: [String], performanceTier: String? = nil, requestOptions: RequestOptions? = nil) async throws -> NfsCreateResponse {
+        let requestBody = NfsCreateRequestBody(name: name, sizeGib: sizeGib, region: region, vpcIds: vpcIds, performanceTier: performanceTier)
+
+        return try (await sdkRequest("POST", "/v2/nfs", config: config, body: requestBody, decoder: .json, operationId: "nfs_create", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    }
+
+    /// To list NFS shares, send a GET request to `/v2/nfs?region=${region}`. A successful request will return all NFS shares belonging to the authenticated user.
+    ///
+    /// - Parameters:
+    /// - region: The DigitalOcean region slug (e.g., nyc2, atl1) where the NFS
+    ///   share resides.
+    public static func nfsList(config: ClientConfig, region: String? = nil, requestOptions: RequestOptions? = nil) async throws -> NfsListResponse {
+        return try (await sdkRequest("GET", "/v2/nfs", config: config, query: [
+            SdkQueryParameter("region", value: region),
+        ], decoder: .json, operationId: "nfs_list", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    }
+}

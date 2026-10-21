@@ -47,8 +47,8 @@ public class DropletsNamespace {
     }
 
 /// To list information about the backup policies for all Droplets in the account, send a GET request to `/v2/droplets/backups/policies`.
-    public func listBackupPolicies(perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AllDropletBackupPolicies {
-        return try await DropletsMethods.dropletsListBackupPolicies(config: config, perPage: perPage, page: page, requestOptions: requestOptions)
+    public func listAllBackupPolicies(perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AllDropletBackupPolicies {
+        return try await DropletsMethods.listAllBackupPolicies(config: config, perPage: perPage, page: page, requestOptions: requestOptions)
     }
 }
 
