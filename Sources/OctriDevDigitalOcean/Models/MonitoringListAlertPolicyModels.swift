@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Monitoring domain models
+/// Monitoring domain models
 /// Typed representation of the `MonitoringListAlertPolicyResponse` API schema.
 public struct MonitoringListAlertPolicyResponse: Codable {
     /// Required array value serialized in the `policies` wire field.
@@ -19,26 +19,36 @@ public struct MonitoringListAlertPolicyResponse: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension MonitoringListAlertPolicyResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.policies) else {
-            throw SdkValidationError(field: "policies", code: "required", message: "Validation failed for 'policies': value is required")
-        }
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.policies = try container.sdkDecodeRequired(.policies)
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension MonitoringListAlertPolicyResponse {
-    public init(policies: [AlertPolicy], meta: MetaMeta, links: PageLinks? = nil) {
+public extension MonitoringListAlertPolicyResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.policies) else {
+            throw SdkValidationError(
+                field: "policies",
+                code: "required",
+                message: "Validation failed for 'policies': value is required"
+            )
+        }
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        policies = try container.sdkDecodeRequired(.policies)
+        meta = try container.sdkDecodeRequired(.meta)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension MonitoringListAlertPolicyResponse {
+    init(policies: [AlertPolicy], meta: MetaMeta, links: PageLinks? = nil) {
         (self.policies, self.meta) = (policies, meta)
         self.links = links
     }
@@ -53,21 +63,27 @@ public struct ListAlertPolicy: Codable {
         case policies
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ListAlertPolicy {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.policies) else {
-            throw SdkValidationError(field: "policies", code: "required", message: "Validation failed for 'policies': value is required")
-        }
-        self.policies = try container.sdkDecodeRequired(.policies)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ListAlertPolicy {
-    public init(policies: [AlertPolicy]) {
+public extension ListAlertPolicy {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.policies) else {
+            throw SdkValidationError(
+                field: "policies",
+                code: "required",
+                message: "Validation failed for 'policies': value is required"
+            )
+        }
+        policies = try container.sdkDecodeRequired(.policies)
+    }
+}
+
+public extension ListAlertPolicy {
+    init(policies: [AlertPolicy]) {
         self.policies = policies
     }
 }

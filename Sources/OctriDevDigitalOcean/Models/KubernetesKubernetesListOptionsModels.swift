@@ -3,7 +3,7 @@
 
 import Foundation
 
-// KubernetesKubernetes domain models
+/// KubernetesKubernetes domain models
 /// Typed representation of the `KubernetesSize` API schema.
 public struct KubernetesSize: Codable {
     /// A Droplet size available for use in a Kubernetes node pool.
@@ -19,20 +19,20 @@ public struct KubernetesSize: Codable {
     }
 
     init() {
-        (self.name, self.slug) = (nil, nil)
+        (name, slug) = (nil, nil)
     }
 }
 
-extension KubernetesSize {
-    public init(from decoder: Decoder) throws {
+public extension KubernetesSize {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.slug = try container.sdkDecodeIfPresent(.slug)
+        name = try container.sdkDecodeIfPresent(.name)
+        slug = try container.sdkDecodeIfPresent(.slug)
     }
 }
 
-extension KubernetesSize {
-    public init(name: String? = nil, slug: String? = nil) {
+public extension KubernetesSize {
+    init(name: String? = nil, slug: String? = nil) {
         self.init()
         (self.name, self.slug) = (name, slug)
     }
@@ -53,20 +53,20 @@ public struct KubernetesRegion: Codable {
     }
 
     init() {
-        (self.name, self.slug) = (nil, nil)
+        (name, slug) = (nil, nil)
     }
 }
 
-extension KubernetesRegion {
-    public init(from decoder: Decoder) throws {
+public extension KubernetesRegion {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.slug = try container.sdkDecodeIfPresent(.slug)
+        name = try container.sdkDecodeIfPresent(.name)
+        slug = try container.sdkDecodeIfPresent(.slug)
     }
 }
 
-extension KubernetesRegion {
-    public init(name: String? = nil, slug: String? = nil) {
+public extension KubernetesRegion {
+    init(name: String? = nil, slug: String? = nil) {
         self.init()
         (self.name, self.slug) = (name, slug)
     }
@@ -82,19 +82,19 @@ public struct KubernetesOptions: Codable {
     }
 
     init() {
-        self.options = nil
+        options = nil
     }
 }
 
-extension KubernetesOptions {
-    public init(from decoder: Decoder) throws {
+public extension KubernetesOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.options = try container.sdkDecodeIfPresent(.options)
+        options = try container.sdkDecodeIfPresent(.options)
     }
 }
 
-extension KubernetesOptions {
-    public init(options: KubernetesOptionsOptions? = nil) {
+public extension KubernetesOptions {
+    init(options: KubernetesOptionsOptions? = nil) {
         self.init()
         self.options = options
     }
@@ -116,21 +116,21 @@ public struct KubernetesOptionsOptions: Codable {
     }
 
     init() {
-        (self.regions, self.versions, self.sizes) = (nil, nil, nil)
+        (regions, versions, sizes) = (nil, nil, nil)
     }
 }
 
-extension KubernetesOptionsOptions {
-    public init(from decoder: Decoder) throws {
+public extension KubernetesOptionsOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.versions = try container.sdkDecodeIfPresent(.versions)
-        self.sizes = try container.sdkDecodeIfPresent(.sizes)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        versions = try container.sdkDecodeIfPresent(.versions)
+        sizes = try container.sdkDecodeIfPresent(.sizes)
     }
 }
 
-extension KubernetesOptionsOptions {
-    public init(regions: [KubernetesRegion]? = nil, versions: [KubernetesVersion]? = nil, sizes: [KubernetesSize]? = nil) {
+public extension KubernetesOptionsOptions {
+    init(regions: [KubernetesRegion]? = nil, versions: [KubernetesVersion]? = nil, sizes: [KubernetesSize]? = nil) {
         self.init()
         (self.regions, self.versions) = (regions, versions)
         self.sizes = sizes

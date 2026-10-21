@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DatabasesKafka domain models
+/// DatabasesKafka domain models
 /// Typed representation of the `KafkaTopicUpdate` API schema.
 public struct KafkaTopicUpdate: Codable {
     /// The number of nodes to replicate data across the cluster.
@@ -22,21 +22,21 @@ public struct KafkaTopicUpdate: Codable {
     }
 
     init() {
-        (self.replicationFactor, self.partitionCount, self.config) = (nil, nil, nil)
+        (replicationFactor, partitionCount, config) = (nil, nil, nil)
     }
 }
 
-extension KafkaTopicUpdate {
-    public init(from decoder: Decoder) throws {
+public extension KafkaTopicUpdate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.replicationFactor = try container.sdkDecodeIfPresent(.replicationFactor)
-        self.partitionCount = try container.sdkDecodeIfPresent(.partitionCount)
-        self.config = try container.sdkDecodeIfPresent(.config)
+        replicationFactor = try container.sdkDecodeIfPresent(.replicationFactor)
+        partitionCount = try container.sdkDecodeIfPresent(.partitionCount)
+        config = try container.sdkDecodeIfPresent(.config)
     }
 }
 
-extension KafkaTopicUpdate {
-    public init(replicationFactor: Int? = nil, partitionCount: Int? = nil, config: KafkaTopicConfig? = nil) {
+public extension KafkaTopicUpdate {
+    init(replicationFactor: Int? = nil, partitionCount: Int? = nil, config: KafkaTopicConfig? = nil) {
         self.init()
         (self.replicationFactor, self.partitionCount) = (replicationFactor, partitionCount)
         self.config = config

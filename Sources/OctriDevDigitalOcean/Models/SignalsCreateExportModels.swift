@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Signals domain models
+/// Signals domain models
 /// Request body to create a new signals data export.
 public struct CreateExportRequest: Codable {
     /// The scope of the export. `agent` exports Signals conversations for one Harness Runtime environment and
@@ -40,34 +40,41 @@ public struct CreateExportRequest: Codable {
     }
 
     init() {
-        (self.type, self.agentId, self.signalType, self.sessionIds, self.startTime) = (nil, nil, nil, nil, nil)
-        self.endTime = nil
+        (type, agentId, signalType, sessionIds, startTime) = (nil, nil, nil, nil, nil)
+        endTime = nil
     }
 }
 
-extension CreateExportRequest {
-    public init(from decoder: Decoder) throws {
+public extension CreateExportRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.agentId = try container.sdkDecodeIfPresent(.agentId)
-        self.signalType = try container.sdkDecodeIfPresent(.signalType)
-        self.sessionIds = try container.sdkDecodeIfPresent(.sessionIds)
-        self.startTime = try container.sdkDecodeIfPresent(.startTime)
-        self.endTime = try container.sdkDecodeIfPresent(.endTime)
-        if let value = self.agentId {
+        type = try container.sdkDecodeIfPresent(.type)
+        agentId = try container.sdkDecodeIfPresent(.agentId)
+        signalType = try container.sdkDecodeIfPresent(.signalType)
+        sessionIds = try container.sdkDecodeIfPresent(.sessionIds)
+        startTime = try container.sdkDecodeIfPresent(.startTime)
+        endTime = try container.sdkDecodeIfPresent(.endTime)
+        if let value = agentId {
             try sdkValidateUuid("agent_id", value)
         }
-        if let value = self.startTime {
+        if let value = startTime {
             try sdkValidateDateTime("start_time", sdkWireString(value))
         }
-        if let value = self.endTime {
+        if let value = endTime {
             try sdkValidateDateTime("end_time", sdkWireString(value))
         }
     }
 }
 
-extension CreateExportRequest {
-    public init(type: CreateExportRequestType? = nil, agentId: String? = nil, signalType: [String]? = nil, sessionIds: [String]? = nil, startTime: Date? = nil, endTime: Date? = nil) throws {
+public extension CreateExportRequest {
+    init(
+        type: CreateExportRequestType? = nil,
+        agentId: String? = nil,
+        signalType: [String]? = nil,
+        sessionIds: [String]? = nil,
+        startTime: Date? = nil,
+        endTime: Date? = nil
+    ) throws {
         self.init()
         (self.type, self.agentId) = (type, agentId)
         (self.signalType, self.sessionIds) = (signalType, sessionIds)
@@ -91,13 +98,16 @@ extension CreateExportRequest {
 public struct CreateExportRequestType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let agent = CreateExportRequestType(rawValue: "agent")
     public static let inference = CreateExportRequestType(rawValue: "inference")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

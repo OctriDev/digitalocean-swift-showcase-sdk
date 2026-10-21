@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiPer domain models
+/// AgentPlatformAPIApiPer domain models
 /// Aggregated evaluation results for a single routing task category in a router evaluation run.
 public struct ApiPerTaskResultSummary: Codable {
     /// Pass/fail rate for each metric, computed over only the prompts in this task category.
@@ -25,22 +25,27 @@ public struct ApiPerTaskResultSummary: Codable {
     }
 
     init() {
-        (self.metricSummaries, self.performanceMetrics, self.promptCount, self.taskName) = (nil, nil, nil, nil)
+        (metricSummaries, performanceMetrics, promptCount, taskName) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiPerTaskResultSummary {
-    public init(from decoder: Decoder) throws {
+public extension ApiPerTaskResultSummary {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.metricSummaries = try container.sdkDecodeIfPresent(.metricSummaries)
-        self.performanceMetrics = try container.sdkDecodeIfPresent(.performanceMetrics)
-        self.promptCount = try container.sdkDecodeIfPresent(.promptCount)
-        self.taskName = try container.sdkDecodeIfPresent(.taskName)
+        metricSummaries = try container.sdkDecodeIfPresent(.metricSummaries)
+        performanceMetrics = try container.sdkDecodeIfPresent(.performanceMetrics)
+        promptCount = try container.sdkDecodeIfPresent(.promptCount)
+        taskName = try container.sdkDecodeIfPresent(.taskName)
     }
 }
 
-extension ApiPerTaskResultSummary {
-    public init(metricSummaries: [ApiMetricResultSummary]? = nil, performanceMetrics: ApiPerformanceMetrics? = nil, promptCount: Int? = nil, taskName: String? = nil) {
+public extension ApiPerTaskResultSummary {
+    init(
+        metricSummaries: [ApiMetricResultSummary]? = nil,
+        performanceMetrics: ApiPerformanceMetrics? = nil,
+        promptCount: Int? = nil,
+        taskName: String? = nil
+    ) {
         self.init()
         (self.metricSummaries, self.performanceMetrics) = (metricSummaries, performanceMetrics)
         (self.promptCount, self.taskName) = (promptCount, taskName)
@@ -68,22 +73,27 @@ public struct ApiPerModelResultSummary: Codable {
     }
 
     init() {
-        (self.metricSummaries, self.modelName, self.performanceMetrics, self.promptCount) = (nil, nil, nil, nil)
+        (metricSummaries, modelName, performanceMetrics, promptCount) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiPerModelResultSummary {
-    public init(from decoder: Decoder) throws {
+public extension ApiPerModelResultSummary {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.metricSummaries = try container.sdkDecodeIfPresent(.metricSummaries)
-        self.modelName = try container.sdkDecodeIfPresent(.modelName)
-        self.performanceMetrics = try container.sdkDecodeIfPresent(.performanceMetrics)
-        self.promptCount = try container.sdkDecodeIfPresent(.promptCount)
+        metricSummaries = try container.sdkDecodeIfPresent(.metricSummaries)
+        modelName = try container.sdkDecodeIfPresent(.modelName)
+        performanceMetrics = try container.sdkDecodeIfPresent(.performanceMetrics)
+        promptCount = try container.sdkDecodeIfPresent(.promptCount)
     }
 }
 
-extension ApiPerModelResultSummary {
-    public init(metricSummaries: [ApiMetricResultSummary]? = nil, modelName: String? = nil, performanceMetrics: ApiPerformanceMetrics? = nil, promptCount: Int? = nil) {
+public extension ApiPerModelResultSummary {
+    init(
+        metricSummaries: [ApiMetricResultSummary]? = nil,
+        modelName: String? = nil,
+        performanceMetrics: ApiPerformanceMetrics? = nil,
+        promptCount: Int? = nil
+    ) {
         self.init()
         (self.metricSummaries, self.modelName) = (metricSummaries, modelName)
         (self.performanceMetrics, self.promptCount) = (performanceMetrics, promptCount)
@@ -101,19 +111,19 @@ public struct ApiPerTaskResultSummaries: Codable {
     }
 
     init() {
-        self.summaries = nil
+        summaries = nil
     }
 }
 
-extension ApiPerTaskResultSummaries {
-    public init(from decoder: Decoder) throws {
+public extension ApiPerTaskResultSummaries {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.summaries = try container.sdkDecodeIfPresent(.summaries)
+        summaries = try container.sdkDecodeIfPresent(.summaries)
     }
 }
 
-extension ApiPerTaskResultSummaries {
-    public init(summaries: [ApiPerTaskResultSummary]? = nil) {
+public extension ApiPerTaskResultSummaries {
+    init(summaries: [ApiPerTaskResultSummary]? = nil) {
         self.init()
         self.summaries = summaries
     }
@@ -130,19 +140,19 @@ public struct ApiPerModelResultSummaries: Codable {
     }
 
     init() {
-        self.summaries = nil
+        summaries = nil
     }
 }
 
-extension ApiPerModelResultSummaries {
-    public init(from decoder: Decoder) throws {
+public extension ApiPerModelResultSummaries {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.summaries = try container.sdkDecodeIfPresent(.summaries)
+        summaries = try container.sdkDecodeIfPresent(.summaries)
     }
 }
 
-extension ApiPerModelResultSummaries {
-    public init(summaries: [ApiPerModelResultSummary]? = nil) {
+public extension ApiPerModelResultSummaries {
+    init(summaries: [ApiPerModelResultSummary]? = nil) {
         self.init()
         self.summaries = summaries
     }
@@ -168,21 +178,21 @@ public struct ApiPerEpochResultSummary: Codable {
     }
 
     init() {
-        (self.epoch, self.overallScorePercent, self.rowsScored) = (nil, nil, nil)
+        (epoch, overallScorePercent, rowsScored) = (nil, nil, nil)
     }
 }
 
-extension ApiPerEpochResultSummary {
-    public init(from decoder: Decoder) throws {
+public extension ApiPerEpochResultSummary {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.epoch = try container.sdkDecodeIfPresent(.epoch)
-        self.overallScorePercent = try container.sdkDecodeIfPresent(.overallScorePercent)
-        self.rowsScored = try container.sdkDecodeIfPresent(.rowsScored)
+        epoch = try container.sdkDecodeIfPresent(.epoch)
+        overallScorePercent = try container.sdkDecodeIfPresent(.overallScorePercent)
+        rowsScored = try container.sdkDecodeIfPresent(.rowsScored)
     }
 }
 
-extension ApiPerEpochResultSummary {
-    public init(epoch: Int? = nil, overallScorePercent: Double? = nil, rowsScored: Int? = nil) {
+public extension ApiPerEpochResultSummary {
+    init(epoch: Int? = nil, overallScorePercent: Double? = nil, rowsScored: Int? = nil) {
         self.init()
         (self.epoch, self.overallScorePercent) = (epoch, overallScorePercent)
         self.rowsScored = rowsScored

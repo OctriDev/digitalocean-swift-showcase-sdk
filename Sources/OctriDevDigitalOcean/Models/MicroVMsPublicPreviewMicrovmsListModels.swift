@@ -3,7 +3,7 @@
 
 import Foundation
 
-// MicroVMsPublicPreview domain models
+/// MicroVMsPublicPreview domain models
 public struct AllMicrovmsVariant0: Codable {
     public var microvms: [Microvm]?
 
@@ -12,19 +12,19 @@ public struct AllMicrovmsVariant0: Codable {
     }
 
     init() {
-        self.microvms = nil
+        microvms = nil
     }
 }
 
-extension AllMicrovmsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AllMicrovmsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.microvms = try container.sdkDecodeIfPresent(.microvms)
+        microvms = try container.sdkDecodeIfPresent(.microvms)
     }
 }
 
-extension AllMicrovmsVariant0 {
-    public init(microvms: [Microvm]? = nil) {
+public extension AllMicrovmsVariant0 {
+    init(microvms: [Microvm]? = nil) {
         self.init()
         self.microvms = microvms
     }
@@ -44,23 +44,29 @@ public struct AllMicrovms: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllMicrovms {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.microvms = try container.sdkDecodeIfPresent(.microvms)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllMicrovms {
-    public init(meta: MetaMeta, microvms: [Microvm]? = nil, links: PageLinks? = nil) {
+public extension AllMicrovms {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        microvms = try container.sdkDecodeIfPresent(.microvms)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllMicrovms {
+    init(meta: MetaMeta, microvms: [Microvm]? = nil, links: PageLinks? = nil) {
         (self.meta, self.microvms) = (meta, microvms)
         self.links = links
     }

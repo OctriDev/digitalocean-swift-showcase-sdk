@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ActionGatewayToolbelt domain models
+/// ActionGatewayToolbelt domain models
 /// Returns a toolbelt after a change.
 public struct ToolbeltUpdateResponse: Codable {
     /// After adding or removing tools: the new version, or the current version when membership did not change.
@@ -15,19 +15,19 @@ public struct ToolbeltUpdateResponse: Codable {
     }
 
     init() {
-        self.toolbelt = nil
+        toolbelt = nil
     }
 }
 
-extension ToolbeltUpdateResponse {
-    public init(from decoder: Decoder) throws {
+public extension ToolbeltUpdateResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.toolbelt = try container.sdkDecodeIfPresent(.toolbelt)
+        toolbelt = try container.sdkDecodeIfPresent(.toolbelt)
     }
 }
 
-extension ToolbeltUpdateResponse {
-    public init(toolbelt: Toolbelt? = nil) {
+public extension ToolbeltUpdateResponse {
+    init(toolbelt: Toolbelt? = nil) {
         self.init()
         self.toolbelt = toolbelt
     }
@@ -72,29 +72,37 @@ public struct ToolbeltProviderSummary: Codable {
     }
 
     init() {
-        (self.provider, self.toolCount, self.id, self.name, self.description) = (nil, nil, nil, nil, nil)
-        (self.categories, self.createdAt) = (nil, nil)
+        (provider, toolCount, id, name, description) = (nil, nil, nil, nil, nil)
+        (categories, createdAt) = (nil, nil)
     }
 }
 
-extension ToolbeltProviderSummary {
-    public init(from decoder: Decoder) throws {
+public extension ToolbeltProviderSummary {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.provider = try container.sdkDecodeIfPresent(.provider)
-        self.toolCount = try container.sdkDecodeIfPresent(.toolCount)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.categories = try container.sdkDecodeIfPresent(.categories)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        if let value = self.createdAt {
+        provider = try container.sdkDecodeIfPresent(.provider)
+        toolCount = try container.sdkDecodeIfPresent(.toolCount)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        description = try container.sdkDecodeIfPresent(.description)
+        categories = try container.sdkDecodeIfPresent(.categories)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-extension ToolbeltProviderSummary {
-    public init(provider: String? = nil, toolCount: Int? = nil, id: String? = nil, name: String? = nil, description: String? = nil, categories: [String]? = nil, createdAt: Date? = nil) throws {
+public extension ToolbeltProviderSummary {
+    init(
+        provider: String? = nil,
+        toolCount: Int? = nil,
+        id: String? = nil,
+        name: String? = nil,
+        description: String? = nil,
+        categories: [String]? = nil,
+        createdAt: Date? = nil
+    ) throws {
         self.init()
         (self.provider, self.toolCount) = (provider, toolCount)
         (self.id, self.name) = (id, name)
@@ -144,26 +152,34 @@ public struct ToolbeltToolDetail: Codable {
     }
 
     init() {
-        (self.toolSlug, self.name, self.title, self.description, self.provider) = (nil, nil, nil, nil, nil)
-        (self.category, self.version) = (nil, nil)
+        (toolSlug, name, title, description, provider) = (nil, nil, nil, nil, nil)
+        (category, version) = (nil, nil)
     }
 }
 
-extension ToolbeltToolDetail {
-    public init(from decoder: Decoder) throws {
+public extension ToolbeltToolDetail {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.toolSlug = try container.sdkDecodeIfPresent(.toolSlug)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.title = try container.sdkDecodeIfPresent(.title)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.provider = try container.sdkDecodeIfPresent(.provider)
-        self.category = try container.sdkDecodeIfPresent(.category)
-        self.version = try container.sdkDecodeIfPresent(.version)
+        toolSlug = try container.sdkDecodeIfPresent(.toolSlug)
+        name = try container.sdkDecodeIfPresent(.name)
+        title = try container.sdkDecodeIfPresent(.title)
+        description = try container.sdkDecodeIfPresent(.description)
+        provider = try container.sdkDecodeIfPresent(.provider)
+        category = try container.sdkDecodeIfPresent(.category)
+        version = try container.sdkDecodeIfPresent(.version)
     }
 }
 
-extension ToolbeltToolDetail {
-    public init(toolSlug: String? = nil, name: String? = nil, title: String? = nil, description: String? = nil, provider: String? = nil, category: String? = nil, version: Int? = nil) {
+public extension ToolbeltToolDetail {
+    init(
+        toolSlug: String? = nil,
+        name: String? = nil,
+        title: String? = nil,
+        description: String? = nil,
+        provider: String? = nil,
+        category: String? = nil,
+        version: Int? = nil
+    ) {
         self.init()
         (self.toolSlug, self.name) = (toolSlug, name)
         (self.title, self.description) = (title, description)
@@ -216,31 +232,41 @@ public struct ToolbeltSummary: Codable {
     }
 
     init() {
-        (self.name, self.displayName, self.description, self.latestVersion, self.versionCount) = (nil, nil, nil, nil, nil)
-        (self.toolCount, self.status, self.referenceLatest, self.updatedAt) = (nil, nil, nil, nil)
+        (name, displayName, description, latestVersion, versionCount) = (nil, nil, nil, nil, nil)
+        (toolCount, status, referenceLatest, updatedAt) = (nil, nil, nil, nil)
     }
 }
 
-extension ToolbeltSummary {
-    public init(from decoder: Decoder) throws {
+public extension ToolbeltSummary {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.displayName = try container.sdkDecodeIfPresent(.displayName)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.latestVersion = try container.sdkDecodeIfPresent(.latestVersion)
-        self.versionCount = try container.sdkDecodeIfPresent(.versionCount)
-        self.toolCount = try container.sdkDecodeIfPresent(.toolCount)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.referenceLatest = try container.sdkDecodeIfPresent(.referenceLatest)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = self.updatedAt {
+        name = try container.sdkDecodeIfPresent(.name)
+        displayName = try container.sdkDecodeIfPresent(.displayName)
+        description = try container.sdkDecodeIfPresent(.description)
+        latestVersion = try container.sdkDecodeIfPresent(.latestVersion)
+        versionCount = try container.sdkDecodeIfPresent(.versionCount)
+        toolCount = try container.sdkDecodeIfPresent(.toolCount)
+        status = try container.sdkDecodeIfPresent(.status)
+        referenceLatest = try container.sdkDecodeIfPresent(.referenceLatest)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension ToolbeltSummary {
-    public init(name: String? = nil, displayName: String? = nil, description: String? = nil, latestVersion: String? = nil, versionCount: Int? = nil, toolCount: Int? = nil, status: ToolbeltSummaryStatus? = nil, referenceLatest: String? = nil, updatedAt: Date? = nil) throws {
+public extension ToolbeltSummary {
+    init(
+        name: String? = nil,
+        displayName: String? = nil,
+        description: String? = nil,
+        latestVersion: String? = nil,
+        versionCount: Int? = nil,
+        toolCount: Int? = nil,
+        status: ToolbeltSummaryStatus? = nil,
+        referenceLatest: String? = nil,
+        updatedAt: Date? = nil
+    ) throws {
         self.init()
         (self.name, self.displayName) = (name, displayName)
         (self.description, self.latestVersion) = (description, latestVersion)
@@ -304,49 +330,61 @@ public struct Toolbelt: Codable {
     }
 
     init() {
-        (self.name, self.version, self.displayName, self.description, self.tools) = (nil, nil, nil, nil, nil)
-        (self.status, self.reference, self.referenceLatest, self.toolCount, self.createdAt) = (nil, nil, nil, nil, nil)
-        self.updatedAt = nil
+        (name, version, displayName, description, tools) = (nil, nil, nil, nil, nil)
+        (status, reference, referenceLatest, toolCount, createdAt) = (nil, nil, nil, nil, nil)
+        updatedAt = nil
     }
 }
 
-extension Toolbelt {
-    public init(from decoder: Decoder) throws {
+public extension Toolbelt {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.version = try container.sdkDecodeIfPresent(.version)
-        self.displayName = try container.sdkDecodeIfPresent(.displayName)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.tools = try container.sdkDecodeIfPresent(.tools)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.reference = try container.sdkDecodeIfPresent(.reference)
-        self.referenceLatest = try container.sdkDecodeIfPresent(.referenceLatest)
-        self.toolCount = try container.sdkDecodeIfPresent(.toolCount)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = self.version {
+        name = try container.sdkDecodeIfPresent(.name)
+        version = try container.sdkDecodeIfPresent(.version)
+        displayName = try container.sdkDecodeIfPresent(.displayName)
+        description = try container.sdkDecodeIfPresent(.description)
+        tools = try container.sdkDecodeIfPresent(.tools)
+        status = try container.sdkDecodeIfPresent(.status)
+        reference = try container.sdkDecodeIfPresent(.reference)
+        referenceLatest = try container.sdkDecodeIfPresent(.referenceLatest)
+        toolCount = try container.sdkDecodeIfPresent(.toolCount)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = version {
             try sdkValidatePattern("version", value, sdkPatternb0b1c6a4b4f4)
         }
-        if let value = self.displayName {
+        if let value = displayName {
             try validateLength("display_name", value, min: nil, max: 128)
         }
-        if let value = self.description {
+        if let value = description {
             try validateLength("description", value, min: nil, max: 255)
         }
-        if let value = self.tools {
+        if let value = tools {
             try validateItems("tools", value, min: nil, max: 500)
         }
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension Toolbelt {
-    public init(name: String? = nil, version: String? = nil, displayName: String? = nil, description: String? = nil, tools: [String]? = nil, status: ToolbeltStatus? = nil, reference: String? = nil, referenceLatest: String? = nil, toolCount: Int? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) throws {
+public extension Toolbelt {
+    init(
+        name: String? = nil,
+        version: String? = nil,
+        displayName: String? = nil,
+        description: String? = nil,
+        tools: [String]? = nil,
+        status: ToolbeltStatus? = nil,
+        reference: String? = nil,
+        referenceLatest: String? = nil,
+        toolCount: Int? = nil,
+        createdAt: Date? = nil,
+        updatedAt: Date? = nil
+    ) throws {
         self.init()
         (self.name, self.version) = (name, version)
         (self.displayName, self.description) = (displayName, description)
@@ -385,19 +423,19 @@ public struct ToolbeltResponse: Codable {
     }
 
     init() {
-        self.toolbelt = nil
+        toolbelt = nil
     }
 }
 
-extension ToolbeltResponse {
-    public init(from decoder: Decoder) throws {
+public extension ToolbeltResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.toolbelt = try container.sdkDecodeIfPresent(.toolbelt)
+        toolbelt = try container.sdkDecodeIfPresent(.toolbelt)
     }
 }
 
-extension ToolbeltResponse {
-    public init(toolbelt: Toolbelt? = nil) {
+public extension ToolbeltResponse {
+    init(toolbelt: Toolbelt? = nil) {
         self.init()
         self.toolbelt = toolbelt
     }
@@ -414,24 +452,30 @@ public struct ToolbeltTools: Codable {
         case tools
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ToolbeltTools {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.tools) else {
-            throw SdkValidationError(field: "tools", code: "required", message: "Validation failed for 'tools': value is required")
-        }
-        self.tools = try container.sdkDecodeRequired(.tools)
-            try validateItems("tools", self.tools, min: 1, max: 500)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ToolbeltTools {
-    public init(tools: [String]) throws {
+public extension ToolbeltTools {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.tools) else {
+            throw SdkValidationError(
+                field: "tools",
+                code: "required",
+                message: "Validation failed for 'tools': value is required"
+            )
+        }
+        tools = try container.sdkDecodeRequired(.tools)
+        try validateItems("tools", tools, min: 1, max: 500)
+    }
+}
+
+public extension ToolbeltTools {
+    init(tools: [String]) throws {
         self.tools = tools
-            try validateItems("tools", self.tools, min: 1, max: 500)
+        try validateItems("tools", self.tools, min: 1, max: 500)
     }
 }
 
@@ -465,42 +509,54 @@ public struct ToolbeltCreate: Codable {
         case tools
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension ToolbeltCreate {
-    public init(from decoder: Decoder) throws {
+public extension ToolbeltCreate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
         }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.version = try container.sdkDecodeIfPresent(.version)
-        self.displayName = try container.sdkDecodeIfPresent(.displayName)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.tools = try container.sdkDecodeIfPresent(.tools)
-            try sdkValidatePattern("name", self.name, sdkPattern96f04f9d57bc)
-        if let value = self.version {
+        name = try container.sdkDecodeRequired(.name)
+        version = try container.sdkDecodeIfPresent(.version)
+        displayName = try container.sdkDecodeIfPresent(.displayName)
+        description = try container.sdkDecodeIfPresent(.description)
+        tools = try container.sdkDecodeIfPresent(.tools)
+        try sdkValidatePattern("name", name, sdkPattern96f04f9d57bc)
+        if let value = version {
             try sdkValidatePattern("version", value, sdkPatternb0b1c6a4b4f4)
         }
-        if let value = self.displayName {
+        if let value = displayName {
             try validateLength("display_name", value, min: nil, max: 128)
         }
-        if let value = self.description {
+        if let value = description {
             try validateLength("description", value, min: nil, max: 255)
         }
-        if let value = self.tools {
+        if let value = tools {
             try validateItems("tools", value, min: nil, max: 500)
         }
     }
 }
 
-extension ToolbeltCreate {
-    public init(name: String, version: String? = nil, displayName: String? = nil, description: String? = nil, tools: [String]? = nil) throws {
+public extension ToolbeltCreate {
+    init(
+        name: String,
+        version: String? = nil,
+        displayName: String? = nil,
+        description: String? = nil,
+        tools: [String]? = nil
+    ) throws {
         (self.name, self.version) = (name, version)
         (self.displayName, self.description) = (displayName, description)
         self.tools = tools
-            try sdkValidatePattern("name", self.name, sdkPattern96f04f9d57bc)
+        try sdkValidatePattern("name", self.name, sdkPattern96f04f9d57bc)
         if let value = self.version {
             try sdkValidatePattern("version", value, sdkPatternb0b1c6a4b4f4)
         }
@@ -520,13 +576,16 @@ extension ToolbeltCreate {
 public struct ToolbeltStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let active = ToolbeltStatus(rawValue: "active")
     public static let deprecated = ToolbeltStatus(rawValue: "deprecated")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -539,13 +598,16 @@ public struct ToolbeltStatus: RawRepresentable, Hashable, Codable, Sendable, Sdk
 public struct ToolbeltSummaryStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let active = ToolbeltSummaryStatus(rawValue: "active")
     public static let deprecated = ToolbeltSummaryStatus(rawValue: "deprecated")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

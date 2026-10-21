@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Signals domain models
+/// Signals domain models
 /// Required object value serialized in the `edges[]` wire field.
 public struct ListExportsResponseEdgesItem: Codable {
     /// An opaque cursor for pagination.
@@ -18,20 +18,20 @@ public struct ListExportsResponseEdgesItem: Codable {
     }
 
     init() {
-        (self.cursor, self.node) = (nil, nil)
+        (cursor, node) = (nil, nil)
     }
 }
 
-extension ListExportsResponseEdgesItem {
-    public init(from decoder: Decoder) throws {
+public extension ListExportsResponseEdgesItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.cursor = try container.sdkDecodeIfPresent(.cursor)
-        self.node = try container.sdkDecodeIfPresent(.node)
+        cursor = try container.sdkDecodeIfPresent(.cursor)
+        node = try container.sdkDecodeIfPresent(.node)
     }
 }
 
-extension ListExportsResponseEdgesItem {
-    public init(cursor: String? = nil, node: ExportJob? = nil) {
+public extension ListExportsResponseEdgesItem {
+    init(cursor: String? = nil, node: ExportJob? = nil) {
         self.init()
         (self.cursor, self.node) = (cursor, node)
     }
@@ -50,20 +50,20 @@ public struct ListExportsResponse: Codable {
     }
 
     init() {
-        (self.edges, self.pageInfo) = (nil, nil)
+        (edges, pageInfo) = (nil, nil)
     }
 }
 
-extension ListExportsResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListExportsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.edges = try container.sdkDecodeIfPresent(.edges)
-        self.pageInfo = try container.sdkDecodeIfPresent(.pageInfo)
+        edges = try container.sdkDecodeIfPresent(.edges)
+        pageInfo = try container.sdkDecodeIfPresent(.pageInfo)
     }
 }
 
-extension ListExportsResponse {
-    public init(edges: [ListExportsResponseEdgesItem]? = nil, pageInfo: ListExportsResponsePageInfo? = nil) {
+public extension ListExportsResponse {
+    init(edges: [ListExportsResponseEdgesItem]? = nil, pageInfo: ListExportsResponsePageInfo? = nil) {
         self.init()
         (self.edges, self.pageInfo) = (edges, pageInfo)
     }
@@ -79,19 +79,19 @@ public struct ListExportsResponsePageInfo: Codable {
     }
 
     init() {
-        self.hasNextPage = nil
+        hasNextPage = nil
     }
 }
 
-extension ListExportsResponsePageInfo {
-    public init(from decoder: Decoder) throws {
+public extension ListExportsResponsePageInfo {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.hasNextPage = try container.sdkDecodeIfPresent(.hasNextPage)
+        hasNextPage = try container.sdkDecodeIfPresent(.hasNextPage)
     }
 }
 
-extension ListExportsResponsePageInfo {
-    public init(hasNextPage: Bool? = nil) {
+public extension ListExportsResponsePageInfo {
+    init(hasNextPage: Bool? = nil) {
         self.init()
         self.hasNextPage = hasNextPage
     }

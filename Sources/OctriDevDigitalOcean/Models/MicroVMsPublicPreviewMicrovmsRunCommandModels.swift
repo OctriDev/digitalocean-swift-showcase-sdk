@@ -3,7 +3,7 @@
 
 import Foundation
 
-// MicroVMsPublicPreview domain models
+/// MicroVMsPublicPreview domain models
 /// A command to run in the MicroVM's workload container. The command runs directly, not through a shell. To use
 /// pipes, redirects, or environment variables, run it with `sh -c`. The request body can be up to 1 MiB.
 public struct ExecRequest: Codable {
@@ -19,25 +19,31 @@ public struct ExecRequest: Codable {
         case cwd
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ExecRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.argv) else {
-            throw SdkValidationError(field: "argv", code: "required", message: "Validation failed for 'argv': value is required")
-        }
-        self.argv = try container.sdkDecodeRequired(.argv)
-        self.cwd = try container.sdkDecodeIfPresent(.cwd)
-            try validateItems("argv", self.argv, min: 1, max: nil)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ExecRequest {
-    public init(argv: [String], cwd: String? = nil) throws {
+public extension ExecRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.argv) else {
+            throw SdkValidationError(
+                field: "argv",
+                code: "required",
+                message: "Validation failed for 'argv': value is required"
+            )
+        }
+        argv = try container.sdkDecodeRequired(.argv)
+        cwd = try container.sdkDecodeIfPresent(.cwd)
+        try validateItems("argv", argv, min: 1, max: nil)
+    }
+}
+
+public extension ExecRequest {
+    init(argv: [String], cwd: String? = nil) throws {
         (self.argv, self.cwd) = (argv, cwd)
-            try validateItems("argv", self.argv, min: 1, max: nil)
+        try validateItems("argv", self.argv, min: 1, max: nil)
     }
 }
 
@@ -62,22 +68,22 @@ public struct ExecResponse: Codable {
     }
 
     init() {
-        (self.stdout, self.stderr, self.exitCode, self.truncated) = (nil, nil, nil, nil)
+        (stdout, stderr, exitCode, truncated) = (nil, nil, nil, nil)
     }
 }
 
-extension ExecResponse {
-    public init(from decoder: Decoder) throws {
+public extension ExecResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.stdout = try container.sdkDecodeIfPresent(.stdout)
-        self.stderr = try container.sdkDecodeIfPresent(.stderr)
-        self.exitCode = try container.sdkDecodeIfPresent(.exitCode)
-        self.truncated = try container.sdkDecodeIfPresent(.truncated)
+        stdout = try container.sdkDecodeIfPresent(.stdout)
+        stderr = try container.sdkDecodeIfPresent(.stderr)
+        exitCode = try container.sdkDecodeIfPresent(.exitCode)
+        truncated = try container.sdkDecodeIfPresent(.truncated)
     }
 }
 
-extension ExecResponse {
-    public init(stdout: String? = nil, stderr: String? = nil, exitCode: Int? = nil, truncated: Bool? = nil) {
+public extension ExecResponse {
+    init(stdout: String? = nil, stderr: String? = nil, exitCode: Int? = nil, truncated: Bool? = nil) {
         self.init()
         (self.stdout, self.stderr) = (stdout, stderr)
         (self.exitCode, self.truncated) = (exitCode, truncated)

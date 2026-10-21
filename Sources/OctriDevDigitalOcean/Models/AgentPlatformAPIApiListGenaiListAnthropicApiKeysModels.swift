@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiList domain models
+/// AgentPlatformAPIApiList domain models
 /// ListAnthropicAPIKeysOutput is used to return the list of Anthropic API keys for a specific agent.
 public struct ApiListAnthropicAPIKeysOutput: Codable {
     /// Api key infos
@@ -20,21 +20,21 @@ public struct ApiListAnthropicAPIKeysOutput: Codable {
     }
 
     init() {
-        (self.apiKeyInfos, self.links, self.meta) = (nil, nil, nil)
+        (apiKeyInfos, links, meta) = (nil, nil, nil)
     }
 }
 
-extension ApiListAnthropicAPIKeysOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiListAnthropicAPIKeysOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKeyInfos = try container.sdkDecodeIfPresent(.apiKeyInfos)
-        self.links = try container.sdkDecodeIfPresent(.links)
-        self.meta = try container.sdkDecodeIfPresent(.meta)
+        apiKeyInfos = try container.sdkDecodeIfPresent(.apiKeyInfos)
+        links = try container.sdkDecodeIfPresent(.links)
+        meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-extension ApiListAnthropicAPIKeysOutput {
-    public init(apiKeyInfos: [ApiAnthropicAPIKeyInfo]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+public extension ApiListAnthropicAPIKeysOutput {
+    init(apiKeyInfos: [ApiAnthropicAPIKeyInfo]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.apiKeyInfos, self.links) = (apiKeyInfos, links)
         self.meta = meta

@@ -3,32 +3,40 @@
 
 import Foundation
 
-// ServerlessInferenceCreate domain models
+/// ServerlessInferenceCreate domain models
 public indirect enum CreateResponseRequestToolChoice {
     case stringValue(String)
     case createResponseRequestToolChoiceVariant1(CreateResponseRequestToolChoiceVariant1)
 }
 
 extension CreateResponseRequestToolChoice: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CreateResponseRequestToolChoice")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for CreateResponseRequestToolChoice"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension CreateResponseRequestToolChoice {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
         if let value = try? container.decode(
             CreateResponseRequestToolChoiceVariant1.self
         ) {
-            return             .createResponseRequestToolChoiceVariant1(value)
+            return .createResponseRequestToolChoiceVariant1(value)
         }
         return nil
     }
@@ -50,25 +58,33 @@ public indirect enum CreateResponseRequestInput {
 }
 
 extension CreateResponseRequestInput: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CreateResponseRequestInput")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for CreateResponseRequestInput"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension CreateResponseRequestInput {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
         if let value = try? container.decode(
             [CreateResponseRequestInputVariant1Item].self
         ) {
-            return             .createResponseRequestInputVariant1ItemList(value)
+            return .createResponseRequestInputVariant1ItemList(value)
         }
         return nil
     }
@@ -93,21 +109,27 @@ public struct CreateResponseStreamResponseChoicesItemLogprobs: Codable {
         case content
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateResponseStreamResponseChoicesItemLogprobs {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.content) else {
-            throw SdkValidationError(field: "content", code: "required", message: "Validation failed for 'content': value is required")
-        }
-        self.content = try container.sdkDecodeNullable(.content)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateResponseStreamResponseChoicesItemLogprobs {
-    public init(content: [ChatCompletionTokenLogprob]?) {
+public extension CreateResponseStreamResponseChoicesItemLogprobs {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.content) else {
+            throw SdkValidationError(
+                field: "content",
+                code: "required",
+                message: "Validation failed for 'content': value is required"
+            )
+        }
+        content = try container.sdkDecodeNullable(.content)
+    }
+}
+
+public extension CreateResponseStreamResponseChoicesItemLogprobs {
+    init(content: [ChatCompletionTokenLogprob]?) {
         self.content = content
     }
 }
@@ -122,21 +144,27 @@ public struct CreateResponseRequestToolChoiceVariant1Function: Codable {
         case name
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateResponseRequestToolChoiceVariant1Function {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateResponseRequestToolChoiceVariant1Function {
-    public init(name: String) {
+public extension CreateResponseRequestToolChoiceVariant1Function {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+    }
+}
+
+public extension CreateResponseRequestToolChoiceVariant1Function {
+    init(name: String) {
         self.name = name
     }
 }
@@ -162,24 +190,35 @@ public struct CreateResponseResponseToolsItem: Codable {
         case parameters
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateResponseResponseToolsItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.parameters = try container.sdkDecodeIfPresent(.parameters)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateResponseResponseToolsItem {
-    public init(type: CreateResponseResponseToolsItemType, name: String? = nil, description: String? = nil, parameters: [String: JSONValue]? = nil) {
+public extension CreateResponseResponseToolsItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        name = try container.sdkDecodeIfPresent(.name)
+        description = try container.sdkDecodeIfPresent(.description)
+        parameters = try container.sdkDecodeIfPresent(.parameters)
+    }
+}
+
+public extension CreateResponseResponseToolsItem {
+    init(
+        type: CreateResponseResponseToolsItemType,
+        name: String? = nil,
+        description: String? = nil,
+        parameters: [String: JSONValue]? = nil
+    ) {
         (self.type, self.name) = (type, name)
         (self.description, self.parameters) = (description, parameters)
     }
@@ -197,19 +236,19 @@ public struct CreateResponseRequestStreamOptions: Codable {
     }
 
     init() {
-        self.includeUsage = nil
+        includeUsage = nil
     }
 }
 
-extension CreateResponseRequestStreamOptions {
-    public init(from decoder: Decoder) throws {
+public extension CreateResponseRequestStreamOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.includeUsage = try container.sdkDecodeIfPresent(.includeUsage)
+        includeUsage = try container.sdkDecodeIfPresent(.includeUsage)
     }
 }
 
-extension CreateResponseRequestStreamOptions {
-    public init(includeUsage: Bool? = nil) {
+public extension CreateResponseRequestStreamOptions {
+    init(includeUsage: Bool? = nil) {
         self.init()
         self.includeUsage = includeUsage
     }
@@ -221,22 +260,32 @@ public indirect enum CreateResponseRequestStop {
 }
 
 extension CreateResponseRequestStop: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CreateResponseRequestStop")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for CreateResponseRequestStop"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension CreateResponseRequestStop {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode([String].self) { return .stringList(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode([String].self) {
+            return .stringList(value)
+        }
         return nil
     }
 }
@@ -311,49 +360,90 @@ public struct CreateResponseResponse: Codable {
         case user
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateResponseResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        guard container.contains(.object) else {
-            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
-        }
-        guard container.contains(.created) else {
-            throw SdkValidationError(field: "created", code: "required", message: "Validation failed for 'created': value is required")
-        }
-        guard container.contains(.model) else {
-            throw SdkValidationError(field: "model", code: "required", message: "Validation failed for 'model': value is required")
-        }
-        guard container.contains(.output) else {
-            throw SdkValidationError(field: "output", code: "required", message: "Validation failed for 'output': value is required")
-        }
-        guard container.contains(.usage) else {
-            throw SdkValidationError(field: "usage", code: "required", message: "Validation failed for 'usage': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
-        self.object = try container.sdkDecodeRequired(.object)
-        self.created = try container.sdkDecodeRequired(.created)
-        self.model = try container.sdkDecodeRequired(.model)
-        self.output = try container.sdkDecodeRequired(.output)
-        self.usage = try container.sdkDecodeRequired(.usage)
-        self.parallelToolCalls = try container.sdkDecodeIfPresent(.parallelToolCalls)
-        self.temperature = try container.sdkDecodeIfPresent(.temperature)
-        self.toolChoice = try container.sdkDecodeIfPresent(.toolChoice)
-        self.tools = try container.sdkDecodeIfPresent(.tools)
-        self.topP = try container.sdkDecodeIfPresent(.topP)
-        self.maxOutputTokens = try container.sdkDecodeIfPresent(.maxOutputTokens)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.user = try container.sdkDecodeIfPresent(.user)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateResponseResponse {
-    public init(id: String, object: CreateResponseResponseObject, created: Int, model: String, output: [CreateResponseResponseOutputItem], usage: ResponseUsage, parallelToolCalls: Bool? = nil, temperature: Double? = nil, toolChoice: String? = nil, tools: [CreateResponseResponseToolsItem]? = nil, topP: Double? = nil, maxOutputTokens: Int? = nil, status: String? = nil, user: String? = nil) {
+public extension CreateResponseResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        guard container.contains(.object) else {
+            throw SdkValidationError(
+                field: "object",
+                code: "required",
+                message: "Validation failed for 'object': value is required"
+            )
+        }
+        guard container.contains(.created) else {
+            throw SdkValidationError(
+                field: "created",
+                code: "required",
+                message: "Validation failed for 'created': value is required"
+            )
+        }
+        guard container.contains(.model) else {
+            throw SdkValidationError(
+                field: "model",
+                code: "required",
+                message: "Validation failed for 'model': value is required"
+            )
+        }
+        guard container.contains(.output) else {
+            throw SdkValidationError(
+                field: "output",
+                code: "required",
+                message: "Validation failed for 'output': value is required"
+            )
+        }
+        guard container.contains(.usage) else {
+            throw SdkValidationError(
+                field: "usage",
+                code: "required",
+                message: "Validation failed for 'usage': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+        object = try container.sdkDecodeRequired(.object)
+        created = try container.sdkDecodeRequired(.created)
+        model = try container.sdkDecodeRequired(.model)
+        output = try container.sdkDecodeRequired(.output)
+        usage = try container.sdkDecodeRequired(.usage)
+        parallelToolCalls = try container.sdkDecodeIfPresent(.parallelToolCalls)
+        temperature = try container.sdkDecodeIfPresent(.temperature)
+        toolChoice = try container.sdkDecodeIfPresent(.toolChoice)
+        tools = try container.sdkDecodeIfPresent(.tools)
+        topP = try container.sdkDecodeIfPresent(.topP)
+        maxOutputTokens = try container.sdkDecodeIfPresent(.maxOutputTokens)
+        status = try container.sdkDecodeIfPresent(.status)
+        user = try container.sdkDecodeIfPresent(.user)
+    }
+}
+
+public extension CreateResponseResponse {
+    init(
+        id: String,
+        object: CreateResponseResponseObject,
+        created: Int,
+        model: String,
+        output: [CreateResponseResponseOutputItem],
+        usage: ResponseUsage,
+        parallelToolCalls: Bool? = nil,
+        temperature: Double? = nil,
+        toolChoice: String? = nil,
+        tools: [CreateResponseResponseToolsItem]? = nil,
+        topP: Double? = nil,
+        maxOutputTokens: Int? = nil,
+        status: String? = nil,
+        user: String? = nil
+    ) {
         (self.id, self.object) = (id, object)
         (self.created, self.model) = (created, model)
         (self.output, self.usage) = (output, usage)
@@ -381,29 +471,47 @@ public struct CreateResponseStreamResponseChoicesItemDeltaToolCallsItem: Codable
         case function
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateResponseStreamResponseChoicesItemDeltaToolCallsItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.function) else {
-            throw SdkValidationError(field: "function", code: "required", message: "Validation failed for 'function': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.function = try container.sdkDecodeRequired(.function)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateResponseStreamResponseChoicesItemDeltaToolCallsItem {
-    public init(id: String, type: CreateResponseStreamResponseChoicesItemDeltaToolCallsItemType, function: CreateResponseStreamResponseChoicesItemDeltaToolCallsItemFunction) {
+public extension CreateResponseStreamResponseChoicesItemDeltaToolCallsItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.function) else {
+            throw SdkValidationError(
+                field: "function",
+                code: "required",
+                message: "Validation failed for 'function': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+        type = try container.sdkDecodeRequired(.type)
+        function = try container.sdkDecodeRequired(.function)
+    }
+}
+
+public extension CreateResponseStreamResponseChoicesItemDeltaToolCallsItem {
+    init(
+        id: String,
+        type: CreateResponseStreamResponseChoicesItemDeltaToolCallsItemType,
+        function: CreateResponseStreamResponseChoicesItemDeltaToolCallsItemFunction
+    ) {
         (self.id, self.type) = (id, type)
         self.function = function
     }
@@ -423,25 +531,35 @@ public struct CreateResponseResponseOutputItemContentItem: Codable {
         case text
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateResponseResponseOutputItemContentItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.text) else {
-            throw SdkValidationError(field: "text", code: "required", message: "Validation failed for 'text': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.text = try container.sdkDecodeRequired(.text)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateResponseResponseOutputItemContentItem {
-    public init(type: CreateResponseResponseOutputItemContentItemType, text: String) {
+public extension CreateResponseResponseOutputItemContentItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.text) else {
+            throw SdkValidationError(
+                field: "text",
+                code: "required",
+                message: "Validation failed for 'text': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        text = try container.sdkDecodeRequired(.text)
+    }
+}
+
+public extension CreateResponseResponseOutputItemContentItem {
+    init(type: CreateResponseResponseOutputItemContentItemType, text: String) {
         (self.type, self.text) = (type, text)
     }
 }
@@ -460,22 +578,28 @@ public struct CreateResponseRequestInputVariant1Item: Codable {
         case role
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateResponseRequestInputVariant1Item {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.content) else {
-            throw SdkValidationError(field: "content", code: "required", message: "Validation failed for 'content': value is required")
-        }
-        self.content = try container.sdkDecodeRequired(.content)
-        self.role = try container.sdkDecodeIfPresent(.role)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateResponseRequestInputVariant1Item {
-    public init(content: String, role: CreateResponseRequestInputVariant1ItemRole? = nil) {
+public extension CreateResponseRequestInputVariant1Item {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.content) else {
+            throw SdkValidationError(
+                field: "content",
+                code: "required",
+                message: "Validation failed for 'content': value is required"
+            )
+        }
+        content = try container.sdkDecodeRequired(.content)
+        role = try container.sdkDecodeIfPresent(.role)
+    }
+}
+
+public extension CreateResponseRequestInputVariant1Item {
+    init(content: String, role: CreateResponseRequestInputVariant1ItemRole? = nil) {
         (self.content, self.role) = (content, role)
     }
 }
@@ -499,5 +623,7 @@ public struct CreateResponseStreamResponseChoicesItem: Codable {
         case logprobs
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }

@@ -6,8 +6,11 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension BatchInferenceMethods {
-    /// Submits a batch job against a previously uploaded JSONL input file. The upload must have completed before this call; otherwise the request is rejected. Supply a unique `request_id` to make the submission idempotent — retries with the same value return the existing job. When `provider` is `openai`, the `url` on each JSONL line must match `endpoint`.
+public extension BatchInferenceMethods {
+    /// Submits a batch job against a previously uploaded JSONL input file. The upload must have completed before this
+    /// call; otherwise the request is rejected. Supply a unique `request_id` to make the submission idempotent —
+    /// retries with the same value return the existing job. When `provider` is `openai`, the `url` on each JSONL line
+    /// must match `endpoint`.
     ///
     /// - Parameters:
     /// - fileId: The `file_id` returned by `POST /v1/batches/files`.
@@ -23,11 +26,46 @@ extension BatchInferenceMethods {
     ///   when `provider` is `openai` and must match the `url` on every JSONL line.
     ///   Must be omitted when `provider` is `anthropic`.**
     /// - metadata: Optional string-valued metadata to attach to the job.
-    public static func inferenceCreateBatch(config: ClientConfig, fileId: String, provider: BatchCreateRequestProvider, completionWindow: BatchCreateRequestCompletionWindow, requestId: String, endpoint: BatchCreateRequestEndpoint? = nil, metadata: SdkOptional<[String: String]>? = nil, requestOptions: RequestOptions? = nil) async throws -> Batch {
+    static func inferenceCreateBatch(
+        config: ClientConfig,
+        fileId: String,
+        provider: BatchCreateRequestProvider,
+        completionWindow: BatchCreateRequestCompletionWindow,
+        requestId: String,
+        endpoint: BatchCreateRequestEndpoint? = nil,
+        metadata: SdkOptional<[String: String]>? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Batch {
         try sdkValidateUuid("file_id", fileId)
 
-        let requestBody = InferenceCreateBatchRequestBody(fileId: fileId, provider: provider, completionWindow: completionWindow, requestId: requestId, endpoint: endpoint, metadata: metadata)
+        let requestBody = InferenceCreateBatchRequestBody(
+            fileId: fileId,
+            provider: provider,
+            completionWindow: completionWindow,
+            requestId: requestId,
+            endpoint: endpoint,
+            metadata: metadata
+        )
 
-        return try (await sdkRequest("POST", "/v1/batches", config: config, body: requestBody, decoder: .json, operationId: "inference_create_batch", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "403": Error2.self, "404": Error2.self, "409": Error2.self, "422": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v1/batches",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "inference_create_batch",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "403": Error2.self,
+                "404": Error2.self,
+                "409": Error2.self,
+                "422": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

@@ -6,8 +6,19 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension HarnessRuntimeMethods {
-    /// Opens a `text/event-stream` of the session's canonical events, served by the MARS data plane (OHP). Each frame is `event: <type>` plus a `data:` line holding a JSON event envelope; comment lines (`: keepalive`) arrive about every 15s and must be ignored. Decode every `data:` with one envelope parser and dispatch on the envelope's `type`. Every stream opens with a `stream.state` control frame (its `data` is a `stream_state`). Delivery is at-least-once: clients MUST de-duplicate and order by `event_id` (a ULID), never by `seq`. The same path serves two modes: - live attach (default): recent context, then an open stream that stays live until the client disconnects. Pass `Last-Event-ID` (or `cursor`) to resume strictly after the last event the client already rendered, suppressing the last-N context floor. - finite replay (`replay_only=true`): writes a bounded slice of the stored transcript and closes. This is what `doctl agents logs` uses; paginate it with `replay_from`. OHP serves recent history only (bounded by Kafka retention and an event window); it is not an archive. OHP's own errors (404/429/500/503) use the DO-standard JSON `{id, message, request_id}` envelope (cthulhu#179797 / MARSOHS-2065); the 401 comes from the edge.
+public extension HarnessRuntimeMethods {
+    /// Opens a `text/event-stream` of the session's canonical events, served by the MARS data plane (OHP). Each frame
+    /// is `event: <type>` plus a `data:` line holding a JSON event envelope; comment lines (`: keepalive`) arrive about
+    /// every 15s and must be ignored. Decode every `data:` with one envelope parser and dispatch on the envelope's
+    /// `type`. Every stream opens with a `stream.state` control frame (its `data` is a `stream_state`). Delivery is
+    /// at-least-once: clients MUST de-duplicate and order by `event_id` (a ULID), never by `seq`. The same path serves
+    /// two modes: - live attach (default): recent context, then an open stream that stays live until the client
+    /// disconnects. Pass `Last-Event-ID` (or `cursor`) to resume strictly after the last event the client already
+    /// rendered, suppressing the last-N context floor. - finite replay (`replay_only=true`): writes a bounded slice of
+    /// the stored transcript and closes. This is what `doctl agents logs` uses; paginate it with `replay_from`. OHP
+    /// serves recent history only (bounded by Kafka retention and an event window); it is not an archive. OHP's own
+    /// errors (404/429/500/503) use the DO-standard JSON `{id, message, request_id}` envelope (cthulhu#179797 /
+    /// MARSOHS-2065); the 401 comes from the edge.
     ///
     /// - Parameters:
     /// - sessionId: The session UUID.
@@ -27,8 +38,17 @@ extension HarnessRuntimeMethods {
     ///   Its presence marks the request a reconnect, so OHP serves strictly what
     ///   follows it with no last-N floor. Persist it only after rendering.
     /// - xDeviceUuid: A stable per-install device id. See `device_id`.
-    public static func harnessGetSessionEvents(config: ClientConfig, sessionId: String, replayOnly: Bool? = nil, replayFrom: String? = nil, cursor: String? = nil, deviceId: String? = nil, lastEventId: String? = nil, xDeviceUuid: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AsyncThrowingStream<StreamEvent, Swift.Error> {
-
+    static func harnessGetSessionEvents(
+        config: ClientConfig,
+        sessionId: String,
+        replayOnly: Bool? = nil,
+        replayFrom: String? = nil,
+        cursor: String? = nil,
+        deviceId: String? = nil,
+        lastEventId: String? = nil,
+        xDeviceUuid: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AsyncThrowingStream<StreamEvent, Swift.Error> {
         let upstream = try await sdkStream(
             "GET",
             ["/v2/agents/sessions/", sdkEncodePathSegment(sdkWireString(sessionId)), "/events"].joined(),
@@ -43,7 +63,10 @@ extension HarnessRuntimeMethods {
             streamFormat: "sse",
             streamMediaType: "text/event-stream",
             chunkDomain: "bytes",
-            extraHeaders: sdkHeaders([("Last-Event-ID", sdkHeaderValue(lastEventId)), ("X-Device-UUID", sdkHeaderValue(xDeviceUuid))]),
+            extraHeaders: sdkHeaders([
+                ("Last-Event-ID", sdkHeaderValue(lastEventId)),
+                ("X-Device-UUID", sdkHeaderValue(xDeviceUuid)),
+            ]),
             options: requestOptions,
             errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "503": Error2.self]
         )
@@ -55,8 +78,11 @@ extension HarnessRuntimeMethods {
                             continuation.finish()
                             return
                         }
-                        let payload = try sdkDecodeBody(Data(event.data.utf8)) { try sdkJsonDecoder().decode(StreamEvent.self, from: Data(event.data.utf8)) }
-                        
+                        let payload = try sdkDecodeBody(Data(event.data.utf8)) { try sdkJsonDecoder().decode(
+                            StreamEvent.self,
+                            from: Data(event.data.utf8)
+                        ) }
+
                         continuation.yield(payload)
                     }
                     continuation.finish()

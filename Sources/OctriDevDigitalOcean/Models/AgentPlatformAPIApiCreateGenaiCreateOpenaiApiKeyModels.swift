@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiCreate domain models
+/// AgentPlatformAPIApiCreate domain models
 /// CreateOpenAIAPIKeyInputPublic is used to create a new OpenAI API key for a specific agent.
 public struct ApiCreateOpenAIAPIKeyInputPublic: Codable {
     /// OpenAI API key
@@ -19,20 +19,20 @@ public struct ApiCreateOpenAIAPIKeyInputPublic: Codable {
     }
 
     init() {
-        (self.apiKey, self.name) = (nil, nil)
+        (apiKey, name) = (nil, nil)
     }
 }
 
-extension ApiCreateOpenAIAPIKeyInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateOpenAIAPIKeyInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKey = try container.sdkDecodeIfPresent(.apiKey)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        apiKey = try container.sdkDecodeIfPresent(.apiKey)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ApiCreateOpenAIAPIKeyInputPublic {
-    public init(apiKey: String? = nil, name: String? = nil) {
+public extension ApiCreateOpenAIAPIKeyInputPublic {
+    init(apiKey: String? = nil, name: String? = nil) {
         self.init()
         (self.apiKey, self.name) = (apiKey, name)
     }
@@ -48,19 +48,19 @@ public struct ApiCreateOpenAIAPIKeyOutput: Codable {
     }
 
     init() {
-        self.apiKeyInfo = nil
+        apiKeyInfo = nil
     }
 }
 
-extension ApiCreateOpenAIAPIKeyOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateOpenAIAPIKeyOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-extension ApiCreateOpenAIAPIKeyOutput {
-    public init(apiKeyInfo: ApiOpenAIAPIKeyInfo? = nil) {
+public extension ApiCreateOpenAIAPIKeyOutput {
+    init(apiKeyInfo: ApiOpenAIAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }

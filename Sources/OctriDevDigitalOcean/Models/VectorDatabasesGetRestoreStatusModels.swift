@@ -3,7 +3,7 @@
 
 import Foundation
 
-// VectorDatabases domain models
+/// VectorDatabases domain models
 /// Typed representation of the `VectordbGetRestoreStatusResponse` API schema.
 public struct VectordbGetRestoreStatusResponse: Codable {
     /// The backup ID being restored.
@@ -23,21 +23,21 @@ public struct VectordbGetRestoreStatusResponse: Codable {
     }
 
     init() {
-        (self.backupId, self.error, self.status) = (nil, nil, nil)
+        (backupId, error, status) = (nil, nil, nil)
     }
 }
 
-extension VectordbGetRestoreStatusResponse {
-    public init(from decoder: Decoder) throws {
+public extension VectordbGetRestoreStatusResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.backupId = try container.sdkDecodeIfPresent(.backupId)
-        self.error = try container.sdkDecodeIfPresent(.error)
-        self.status = try container.sdkDecodeIfPresent(.status)
+        backupId = try container.sdkDecodeIfPresent(.backupId)
+        error = try container.sdkDecodeIfPresent(.error)
+        status = try container.sdkDecodeIfPresent(.status)
     }
 }
 
-extension VectordbGetRestoreStatusResponse {
-    public init(backupId: String? = nil, error: String? = nil, status: String? = nil) {
+public extension VectordbGetRestoreStatusResponse {
+    init(backupId: String? = nil, error: String? = nil, status: String? = nil) {
         self.init()
         (self.backupId, self.error) = (backupId, error)
         self.status = status

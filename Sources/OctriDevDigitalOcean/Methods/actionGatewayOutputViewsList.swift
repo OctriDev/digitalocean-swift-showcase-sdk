@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ActionGatewayMethods {
-    /// Returns the output views your team can use: views DigitalOcean publishes to every team, plus your team's own. Cursor-paged with `page_size` and `page_token`; no total is reported.
+public extension ActionGatewayMethods {
+    /// Returns the output views your team can use: views DigitalOcean publishes to every team, plus your team's own.
+    /// Cursor-paged with `page_size` and `page_token`; no total is reported.
     ///
     /// - Parameters:
     /// - tool: At most one of tool or `tool_id`, as on create. With one set, the
@@ -19,20 +20,44 @@ extension ActionGatewayMethods {
     ///   values are rejected with 400.
     /// - pageToken: `next_page_token` from the previous response. Valid only with
     ///   the same tool selection; otherwise the request is rejected with 400.
-    public static func outputViewsList(config: ClientConfig, tool: String? = nil, toolId: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListOutputViewsResponse {
-        if let pageSize = pageSize {
+    static func outputViewsList(
+        config: ClientConfig,
+        tool: String? = nil,
+        toolId: String? = nil,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListOutputViewsResponse {
+        if let pageSize {
             try validateRange("page_size", Double(pageSize), min: 1, max: 100)
         }
 
-        return try (await sdkRequest("GET", "/v2/action-gateway/output-views", config: config, query: [
-            SdkQueryParameter("tool", value: tool),
-            SdkQueryParameter("tool_id", value: toolId),
-            SdkQueryParameter("page_size", value: pageSize),
-            SdkQueryParameter("page_token", value: pageToken),
-        ], decoder: .json, operationId: "outputViews_list", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/v2/action-gateway/output-views",
+            config: config,
+            query: [
+                SdkQueryParameter("tool", value: tool),
+                SdkQueryParameter("tool_id", value: toolId),
+                SdkQueryParameter("page_size", value: pageSize),
+                SdkQueryParameter("page_token", value: pageToken),
+            ],
+            decoder: .json,
+            operationId: "outputViews_list",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Returns the output views your team can use: views DigitalOcean publishes to every team, plus your team's own. Cursor-paged with `page_size` and `page_token`; no total is reported.
+    /// Returns the output views your team can use: views DigitalOcean publishes to every team, plus your team's own.
+    /// Cursor-paged with `page_size` and `page_token`; no total is reported.
     ///
     /// - Parameters:
     /// - tool: At most one of tool or `tool_id`, as on create. With one set, the
@@ -44,17 +69,40 @@ extension ActionGatewayMethods {
     ///   values are rejected with 400.
     /// - pageToken: `next_page_token` from the previous response. Valid only with
     ///   the same tool selection; otherwise the request is rejected with 400.
-    public static func outputViewsListPaginated(config: ClientConfig, tool: String? = nil, toolId: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<OutputView, Swift.Error> {
-        return AsyncThrowingStream<OutputView, Swift.Error> { (continuation: AsyncThrowingStream<OutputView, Swift.Error>.Continuation) in
+    static func outputViewsListPaginated(
+        config: ClientConfig,
+        tool: String? = nil,
+        toolId: String? = nil,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<OutputView, Swift.Error> {
+        AsyncThrowingStream<OutputView, Swift.Error> { (continuation: AsyncThrowingStream<
+            OutputView,
+            Swift.Error
+        >.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await outputViewsList(config: config, tool: tool, toolId: toolId, pageSize: pageSize, pageToken: pageCursor, requestOptions: requestOptions)
+                        let pageResponse = try await outputViewsList(
+                            config: config,
+                            tool: tool,
+                            toolId: toolId,
+                            pageSize: pageSize,
+                            pageToken: pageCursor,
+                            requestOptions: requestOptions
+                        )
                         let pageItems = (pageResponse.views ?? [])
-                        if pageItems.isEmpty { break }
-                        for item in pageItems { continuation.yield(item) }
-                        guard let nextCursor = pageResponse.nextPageToken else { break }
+                        if pageItems.isEmpty {
+                            break
+                        }
+                        for item in pageItems {
+                            continuation.yield(item)
+                        }
+                        guard let nextCursor = pageResponse.nextPageToken else {
+                            break
+                        }
                         pageCursor = nextCursor
                     }
                 } catch {
@@ -67,25 +115,52 @@ extension ActionGatewayMethods {
         }
     }
 
-    public struct OutputViewsListPage {
+    struct OutputViewsListPage {
         public let data: ListOutputViewsResponse
         public let items: [OutputView]
         public let hasMore: Bool
     }
 
-    public static func outputViewsListPages(config: ClientConfig, tool: String? = nil, toolId: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<OutputViewsListPage, Swift.Error> {
-        return AsyncThrowingStream<OutputViewsListPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<OutputViewsListPage, Swift.Error>.Continuation) in
+    static func outputViewsListPages(
+        config: ClientConfig,
+        tool: String? = nil,
+        toolId: String? = nil,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<OutputViewsListPage, Swift.Error> {
+        AsyncThrowingStream<OutputViewsListPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<
+            OutputViewsListPage,
+            Swift.Error
+        >.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await outputViewsList(config: config, tool: tool, toolId: toolId, pageSize: pageSize, pageToken: pageCursor, requestOptions: requestOptions)
+                        let pageResponse = try await outputViewsList(
+                            config: config,
+                            tool: tool,
+                            toolId: toolId,
+                            pageSize: pageSize,
+                            pageToken: pageCursor,
+                            requestOptions: requestOptions
+                        )
                         let pageItems = (pageResponse.views ?? [])
-                        if pageItems.isEmpty { break }
+                        if pageItems.isEmpty {
+                            break
+                        }
                         let hasMore = pageResponse.nextPageToken != nil
-                        pageContinuation.yield(OutputViewsListPage(data: pageResponse, items: pageItems, hasMore: hasMore))
-                        if !hasMore { break }
-                        guard let nextCursor = pageResponse.nextPageToken else { break }
+                        pageContinuation.yield(OutputViewsListPage(
+                            data: pageResponse,
+                            items: pageItems,
+                            hasMore: hasMore
+                        ))
+                        if !hasMore {
+                            break
+                        }
+                        guard let nextCursor = pageResponse.nextPageToken else {
+                            break
+                        }
                         pageCursor = nextCursor
                     }
                 } catch {

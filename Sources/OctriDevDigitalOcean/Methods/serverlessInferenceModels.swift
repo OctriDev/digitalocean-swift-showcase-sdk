@@ -6,9 +6,21 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ServerlessInferenceMethods {
-    /// Lists the currently available models, and provides basic information about each one such as the owner and availability.
-    public static func inferenceListModels(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> ListModelsResponse {
-        return try (await sdkRequest("GET", "/v1/models", config: config, decoder: .json, operationId: "inference_list_models", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+public extension ServerlessInferenceMethods {
+    /// Lists the currently available models, and provides basic information about each one such as the owner and
+    /// availability.
+    static func inferenceListModels(
+        config: ClientConfig,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListModelsResponse {
+        try await (sdkRequest(
+            "GET",
+            "/v1/models",
+            config: config,
+            decoder: .json,
+            operationId: "inference_list_models",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

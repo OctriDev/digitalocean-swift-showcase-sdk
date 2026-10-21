@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-// Canonical domainRecords operation model declarations
+/// Canonical domainRecords operation model declarations
 public indirect enum DomainsCreateRecordRequestBody {
     case domainRecordARequest(DomainRecordARequest)
     case domainRecordAaaa(DomainRecordAaaa)
@@ -23,7 +23,6 @@ public indirect enum DomainsCreateRecordRequestBody {
 }
 
 extension DomainsCreateRecordRequestBody: Codable {
-
     private enum CodingKeys: String, CodingKey {
         case discriminator = "type"
     }
@@ -31,20 +30,29 @@ extension DomainsCreateRecordRequestBody: Codable {
     public init(from decoder: Decoder) throws {
         if let tagged = try? decoder.container(keyedBy: CodingKeys.self),
            let discriminator = try? tagged.decode(String.self, forKey: .discriminator) {
-            if let value = try Self.decodeGroup1(discriminator, from: decoder) { self = value; return }
+            if let value = try Self.decodeGroup1(discriminator, from: decoder) {
+                self = value; return
+            }
         }
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeUntaggedGroup1(from: container) { self = value; return }
+        if let value = Self.decodeUntaggedGroup1(from: container) {
+            self = value; return
+        }
         if let tagged = try? decoder.container(keyedBy: CodingKeys.self),
            let discriminator = try? tagged.decode(String.self, forKey: .discriminator) {
             self = try .unknown(tag: discriminator, raw: JSONValue(from: decoder))
             return
         }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for DomainsCreateRecordRequestBody")
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for DomainsCreateRecordRequestBody"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
         if case let .unknown(_, raw) = self {
             var container = encoder.singleValueContainer()
             try container.encode(raw)
@@ -55,22 +63,24 @@ extension DomainsCreateRecordRequestBody: Codable {
 extension DomainsCreateRecordRequestBody {
     static func decodeGroup1(_ discriminator: String, from decoder: Decoder) throws -> Self? {
         switch discriminator {
-        case "AAAA": return .domainRecordAaaa(try DomainRecordAaaa(from: decoder))
-        case "CAA": return .domainRecordCaa(try DomainRecordCaa(from: decoder))
-        case "CNAME": return .domainRecordCname(try DomainRecordCname(from: decoder))
-        case "MX": return .domainRecordMx(try DomainRecordMx(from: decoder))
-        case "NS": return .domainRecordNs(try DomainRecordNs(from: decoder))
-        case "SOA": return .domainRecordSoa(try DomainRecordSoa(from: decoder))
-        case "SRV": return .domainRecordSrv(try DomainRecordSrv(from: decoder))
-        case "TXT": return .domainRecordTxt(try DomainRecordTxt(from: decoder))
-        default: return nil
+        case "AAAA": try .domainRecordAaaa(DomainRecordAaaa(from: decoder))
+        case "CAA": try .domainRecordCaa(DomainRecordCaa(from: decoder))
+        case "CNAME": try .domainRecordCname(DomainRecordCname(from: decoder))
+        case "MX": try .domainRecordMx(DomainRecordMx(from: decoder))
+        case "NS": try .domainRecordNs(DomainRecordNs(from: decoder))
+        case "SOA": try .domainRecordSoa(DomainRecordSoa(from: decoder))
+        case "SRV": try .domainRecordSrv(DomainRecordSrv(from: decoder))
+        case "TXT": try .domainRecordTxt(DomainRecordTxt(from: decoder))
+        default: nil
         }
     }
 }
 
 extension DomainsCreateRecordRequestBody {
     static func decodeUntaggedGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(DomainRecordARequest.self) { return .domainRecordARequest(value) }
+        if let value = try? container.decode(DomainRecordARequest.self) {
+            return .domainRecordARequest(value)
+        }
         return nil
     }
 }

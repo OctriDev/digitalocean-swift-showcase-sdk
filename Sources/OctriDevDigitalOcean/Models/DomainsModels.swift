@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Domains domain models
+/// Domains domain models
 /// Typed representation of the `DomainRequest` API schema.
 public struct DomainRequest: Codable {
     /// The name of the domain itself. This should follow the standard domain format of domain.TLD. For instance,
@@ -21,20 +21,20 @@ public struct DomainRequest: Codable {
     }
 
     init() {
-        (self.name, self.ipAddress) = (nil, nil)
+        (name, ipAddress) = (nil, nil)
     }
 }
 
-extension DomainRequest {
-    public init(from decoder: Decoder) throws {
+public extension DomainRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.ipAddress = try container.sdkDecodeIfPresent(.ipAddress)
+        name = try container.sdkDecodeIfPresent(.name)
+        ipAddress = try container.sdkDecodeIfPresent(.ipAddress)
     }
 }
 
-extension DomainRequest {
-    public init(name: String? = nil, ipAddress: String? = nil) {
+public extension DomainRequest {
+    init(name: String? = nil, ipAddress: String? = nil) {
         self.init()
         (self.name, self.ipAddress) = (name, ipAddress)
     }
@@ -50,19 +50,19 @@ public struct ExistingDomain: Codable {
     }
 
     init() {
-        self.domain = nil
+        domain = nil
     }
 }
 
-extension ExistingDomain {
-    public init(from decoder: Decoder) throws {
+public extension ExistingDomain {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.domain = try container.sdkDecodeIfPresent(.domain)
+        domain = try container.sdkDecodeIfPresent(.domain)
     }
 }
 
-extension ExistingDomain {
-    public init(domain: Domain? = nil) {
+public extension ExistingDomain {
+    init(domain: Domain? = nil) {
         self.init()
         self.domain = domain
     }
@@ -83,26 +83,36 @@ public struct AllDomainsResponse: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllDomainsResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.domains) else {
-            throw SdkValidationError(field: "domains", code: "required", message: "Validation failed for 'domains': value is required")
-        }
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.domains = try container.sdkDecodeRequired(.domains)
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllDomainsResponse {
-    public init(domains: [Domain], meta: MetaMeta, links: PageLinks? = nil) {
+public extension AllDomainsResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.domains) else {
+            throw SdkValidationError(
+                field: "domains",
+                code: "required",
+                message: "Validation failed for 'domains': value is required"
+            )
+        }
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        domains = try container.sdkDecodeRequired(.domains)
+        meta = try container.sdkDecodeRequired(.meta)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllDomainsResponse {
+    init(domains: [Domain], meta: MetaMeta, links: PageLinks? = nil) {
         (self.domains, self.meta) = (domains, meta)
         self.links = links
     }
@@ -116,21 +126,27 @@ public struct AllDomainsResponseVariant0: Codable {
         case domains
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllDomainsResponseVariant0 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.domains) else {
-            throw SdkValidationError(field: "domains", code: "required", message: "Validation failed for 'domains': value is required")
-        }
-        self.domains = try container.sdkDecodeRequired(.domains)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllDomainsResponseVariant0 {
-    public init(domains: [Domain]) {
+public extension AllDomainsResponseVariant0 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.domains) else {
+            throw SdkValidationError(
+                field: "domains",
+                code: "required",
+                message: "Validation failed for 'domains': value is required"
+            )
+        }
+        domains = try container.sdkDecodeRequired(.domains)
+    }
+}
+
+public extension AllDomainsResponseVariant0 {
+    init(domains: [Domain]) {
         self.domains = domains
     }
 }
@@ -145,19 +161,19 @@ public struct CreateDomainResponse: Codable {
     }
 
     init() {
-        self.domain = nil
+        domain = nil
     }
 }
 
-extension CreateDomainResponse {
-    public init(from decoder: Decoder) throws {
+public extension CreateDomainResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.domain = try container.sdkDecodeIfPresent(.domain)
+        domain = try container.sdkDecodeIfPresent(.domain)
     }
 }
 
-extension CreateDomainResponse {
-    public init(domain: Domain? = nil) {
+public extension CreateDomainResponse {
+    init(domain: Domain? = nil) {
         self.init()
         self.domain = domain
     }
@@ -190,21 +206,21 @@ public struct Domain: Codable {
     }
 
     init() {
-        (self.name, self.ttl, self.zoneFile) = (nil, nil, nil)
+        (name, ttl, zoneFile) = (nil, nil, nil)
     }
 }
 
-extension Domain {
-    public init(from decoder: Decoder) throws {
+public extension Domain {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.ttl = try container.sdkDecodeIfPresent(.ttl)
-        self.zoneFile = try container.sdkDecodeIfPresent(.zoneFile)
+        name = try container.sdkDecodeIfPresent(.name)
+        ttl = try container.sdkDecodeIfPresent(.ttl)
+        zoneFile = try container.sdkDecodeIfPresent(.zoneFile)
     }
 }
 
-extension Domain {
-    public init(name: String? = nil, ttl: Int? = nil, zoneFile: String? = nil) {
+public extension Domain {
+    init(name: String? = nil, ttl: Int? = nil, zoneFile: String? = nil) {
         self.init()
         (self.name, self.ttl) = (name, ttl)
         self.zoneFile = zoneFile

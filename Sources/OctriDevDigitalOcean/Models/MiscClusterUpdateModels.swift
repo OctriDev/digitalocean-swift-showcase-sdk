@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Misc domain models
+/// Misc domain models
 /// Typed representation of the `ClusterUpdate` API schema.
 public struct ClusterUpdate: Codable {
     /// A human-readable name for a Kubernetes cluster.
@@ -91,40 +91,67 @@ public struct ClusterUpdate: Codable {
         case corednsAutoscaler = "coredns_autoscaler"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ClusterUpdate {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.maintenancePolicy = try container.sdkDecodeIfPresent(.maintenancePolicy)
-        self.autoUpgrade = try container.sdkDecodeIfPresent(.autoUpgrade)
-        self.surgeUpgrade = try container.sdkDecodeIfPresent(.surgeUpgrade)
-        self.ha = try container.sdkDecodeIfPresent(.ha)
-        self.gpuOperatorReady = try container.sdkDecodeIfPresent(.gpuOperatorReady)
-        self.controlPlaneFirewall = try container.sdkDecodeIfPresent(.controlPlaneFirewall)
-        self.clusterAutoscalerConfiguration = try container.sdkDecodeIfPresent(.clusterAutoscalerConfiguration)
-        self.sso = try container.sdkDecodeIfPresent(.sso)
-        self.routingAgent = try container.sdkDecodeIfPresent(.routingAgent)
-        self.p2pOciRegistryPlugin = try container.sdkDecodeIfPresent(.p2pOciRegistryPlugin)
-        self.nfsCsiPlugin = try container.sdkDecodeIfPresent(.nfsCsiPlugin)
-        self.amdGpuDevicePlugin = try container.sdkDecodeIfPresent(.amdGpuDevicePlugin)
-        self.amdGpuDeviceMetricsExporterPlugin = try container.sdkDecodeIfPresent(.amdGpuDeviceMetricsExporterPlugin)
-        self.nvidiaGpuDevicePlugin = try container.sdkDecodeIfPresent(.nvidiaGpuDevicePlugin)
-        self.nvidiaGpuDraDriver = try container.sdkDecodeIfPresent(.nvidiaGpuDraDriver)
-        self.amdGpuDraDriver = try container.sdkDecodeIfPresent(.amdGpuDraDriver)
-        self.rdmaSharedDevPlugin = try container.sdkDecodeIfPresent(.rdmaSharedDevPlugin)
-        self.corednsAutoscaler = try container.sdkDecodeIfPresent(.corednsAutoscaler)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ClusterUpdate {
-    public init(name: String, tags: [String]? = nil, maintenancePolicy: MaintenancePolicy? = nil, autoUpgrade: Bool? = nil, surgeUpgrade: Bool? = nil, ha: Bool? = nil, gpuOperatorReady: Bool? = nil, controlPlaneFirewall: ControlPlaneFirewall? = nil, clusterAutoscalerConfiguration: ClusterAutoscalerConfiguration? = nil, sso: Sso? = nil, routingAgent: RoutingAgent? = nil, p2pOciRegistryPlugin: P2pOciRegistryPlugin? = nil, nfsCsiPlugin: NfsCsiPlugin? = nil, amdGpuDevicePlugin: AmdGpuDevicePlugin? = nil, amdGpuDeviceMetricsExporterPlugin: AmdGpuDeviceMetricsExporterPlugin? = nil, nvidiaGpuDevicePlugin: NvidiaGpuDevicePlugin? = nil, nvidiaGpuDraDriver: NvidiaGpuDraDriver? = nil, amdGpuDraDriver: AmdGpuDraDriver? = nil, rdmaSharedDevPlugin: RdmaSharedDevPlugin? = nil, corednsAutoscaler: CorednsAutoscaler? = nil) {
+public extension ClusterUpdate {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        maintenancePolicy = try container.sdkDecodeIfPresent(.maintenancePolicy)
+        autoUpgrade = try container.sdkDecodeIfPresent(.autoUpgrade)
+        surgeUpgrade = try container.sdkDecodeIfPresent(.surgeUpgrade)
+        ha = try container.sdkDecodeIfPresent(.ha)
+        gpuOperatorReady = try container.sdkDecodeIfPresent(.gpuOperatorReady)
+        controlPlaneFirewall = try container.sdkDecodeIfPresent(.controlPlaneFirewall)
+        clusterAutoscalerConfiguration = try container.sdkDecodeIfPresent(.clusterAutoscalerConfiguration)
+        sso = try container.sdkDecodeIfPresent(.sso)
+        routingAgent = try container.sdkDecodeIfPresent(.routingAgent)
+        p2pOciRegistryPlugin = try container.sdkDecodeIfPresent(.p2pOciRegistryPlugin)
+        nfsCsiPlugin = try container.sdkDecodeIfPresent(.nfsCsiPlugin)
+        amdGpuDevicePlugin = try container.sdkDecodeIfPresent(.amdGpuDevicePlugin)
+        amdGpuDeviceMetricsExporterPlugin = try container.sdkDecodeIfPresent(.amdGpuDeviceMetricsExporterPlugin)
+        nvidiaGpuDevicePlugin = try container.sdkDecodeIfPresent(.nvidiaGpuDevicePlugin)
+        nvidiaGpuDraDriver = try container.sdkDecodeIfPresent(.nvidiaGpuDraDriver)
+        amdGpuDraDriver = try container.sdkDecodeIfPresent(.amdGpuDraDriver)
+        rdmaSharedDevPlugin = try container.sdkDecodeIfPresent(.rdmaSharedDevPlugin)
+        corednsAutoscaler = try container.sdkDecodeIfPresent(.corednsAutoscaler)
+    }
+}
+
+public extension ClusterUpdate {
+    init(
+        name: String,
+        tags: [String]? = nil,
+        maintenancePolicy: MaintenancePolicy? = nil,
+        autoUpgrade: Bool? = nil,
+        surgeUpgrade: Bool? = nil,
+        ha: Bool? = nil,
+        gpuOperatorReady: Bool? = nil,
+        controlPlaneFirewall: ControlPlaneFirewall? = nil,
+        clusterAutoscalerConfiguration: ClusterAutoscalerConfiguration? = nil,
+        sso: Sso? = nil,
+        routingAgent: RoutingAgent? = nil,
+        p2pOciRegistryPlugin: P2pOciRegistryPlugin? = nil,
+        nfsCsiPlugin: NfsCsiPlugin? = nil,
+        amdGpuDevicePlugin: AmdGpuDevicePlugin? = nil,
+        amdGpuDeviceMetricsExporterPlugin: AmdGpuDeviceMetricsExporterPlugin? = nil,
+        nvidiaGpuDevicePlugin: NvidiaGpuDevicePlugin? = nil,
+        nvidiaGpuDraDriver: NvidiaGpuDraDriver? = nil,
+        amdGpuDraDriver: AmdGpuDraDriver? = nil,
+        rdmaSharedDevPlugin: RdmaSharedDevPlugin? = nil,
+        corednsAutoscaler: CorednsAutoscaler? = nil
+    ) {
         (self.name, self.tags) = (name, tags)
         (self.maintenancePolicy, self.autoUpgrade) = (maintenancePolicy, autoUpgrade)
         (self.surgeUpgrade, self.ha) = (surgeUpgrade, ha)
@@ -194,45 +221,67 @@ public struct McpServerCreate: Codable {
         case oauthAuthorizationTtlSeconds = "oauth_authorization_ttl_seconds"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension McpServerCreate {
-    public init(from decoder: Decoder) throws {
+public extension McpServerCreate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.serverRef) else {
-            throw SdkValidationError(field: "serverRef", code: "required", message: "Validation failed for 'serverRef': value is required")
+            throw SdkValidationError(
+                field: "serverRef",
+                code: "required",
+                message: "Validation failed for 'serverRef': value is required"
+            )
         }
         guard container.contains(.endpoint) else {
-            throw SdkValidationError(field: "endpoint", code: "required", message: "Validation failed for 'endpoint': value is required")
+            throw SdkValidationError(
+                field: "endpoint",
+                code: "required",
+                message: "Validation failed for 'endpoint': value is required"
+            )
         }
-        self.serverRef = try container.sdkDecodeRequired(.serverRef)
-        self.endpoint = try container.sdkDecodeRequired(.endpoint)
-        self.transport = try container.sdkDecodeIfPresent(.transport)
-        self.credentialRefSource = try container.sdkDecodeIfPresent(.credentialRefSource)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.credentialRef = try container.sdkDecodeIfPresent(.credentialRef)
-        self.oauthClientId = try container.sdkDecodeIfPresent(.oauthClientId)
-        self.oauthAuthorizeUrl = try container.sdkDecodeIfPresent(.oauthAuthorizeUrl)
-        self.oauthTokenUrl = try container.sdkDecodeIfPresent(.oauthTokenUrl)
-        self.oauthScopes = try container.sdkDecodeIfPresent(.oauthScopes)
-        self.oauthAuthorizationTtlSeconds = try container.sdkDecodeIfPresent(.oauthAuthorizationTtlSeconds)
-            try sdkValidatePattern("serverRef", self.serverRef, sdkPatternc47f13327b4b)
-        if let value = self.description {
+        serverRef = try container.sdkDecodeRequired(.serverRef)
+        endpoint = try container.sdkDecodeRequired(.endpoint)
+        transport = try container.sdkDecodeIfPresent(.transport)
+        credentialRefSource = try container.sdkDecodeIfPresent(.credentialRefSource)
+        description = try container.sdkDecodeIfPresent(.description)
+        credentialRef = try container.sdkDecodeIfPresent(.credentialRef)
+        oauthClientId = try container.sdkDecodeIfPresent(.oauthClientId)
+        oauthAuthorizeUrl = try container.sdkDecodeIfPresent(.oauthAuthorizeUrl)
+        oauthTokenUrl = try container.sdkDecodeIfPresent(.oauthTokenUrl)
+        oauthScopes = try container.sdkDecodeIfPresent(.oauthScopes)
+        oauthAuthorizationTtlSeconds = try container.sdkDecodeIfPresent(.oauthAuthorizationTtlSeconds)
+        try sdkValidatePattern("serverRef", serverRef, sdkPatternc47f13327b4b)
+        if let value = description {
             try validateLength("description", value, min: nil, max: 1024)
         }
     }
 }
 
-extension McpServerCreate {
-    public init(serverRef: String, endpoint: String, transport: McpServerCreateTransport? = nil, credentialRefSource: McpServerCreateCredentialRefSource? = nil, description: String? = nil, credentialRef: String? = nil, oauthClientId: String? = nil, oauthAuthorizeUrl: String? = nil, oauthTokenUrl: String? = nil, oauthScopes: [String]? = nil, oauthAuthorizationTtlSeconds: String? = nil) throws {
+public extension McpServerCreate {
+    init(
+        serverRef: String,
+        endpoint: String,
+        transport: McpServerCreateTransport? = nil,
+        credentialRefSource: McpServerCreateCredentialRefSource? = nil,
+        description: String? = nil,
+        credentialRef: String? = nil,
+        oauthClientId: String? = nil,
+        oauthAuthorizeUrl: String? = nil,
+        oauthTokenUrl: String? = nil,
+        oauthScopes: [String]? = nil,
+        oauthAuthorizationTtlSeconds: String? = nil
+    ) throws {
         (self.serverRef, self.endpoint) = (serverRef, endpoint)
         (self.transport, self.credentialRefSource) = (transport, credentialRefSource)
         (self.description, self.credentialRef) = (description, credentialRef)
         (self.oauthClientId, self.oauthAuthorizeUrl) = (oauthClientId, oauthAuthorizeUrl)
         (self.oauthTokenUrl, self.oauthScopes) = (oauthTokenUrl, oauthScopes)
         self.oauthAuthorizationTtlSeconds = oauthAuthorizationTtlSeconds
-            try sdkValidatePattern("serverRef", self.serverRef, sdkPatternc47f13327b4b)
+        try sdkValidatePattern("serverRef", self.serverRef, sdkPatternc47f13327b4b)
         if let value = self.description {
             try validateLength("description", value, min: nil, max: 1024)
         }
@@ -303,43 +352,67 @@ public struct MicrovmCreate: Codable {
         case tags
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension MicrovmCreate {
-    public init(from decoder: Decoder) throws {
+public extension MicrovmCreate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
         }
         guard container.contains(.source) else {
-            throw SdkValidationError(field: "source", code: "required", message: "Validation failed for 'source': value is required")
+            throw SdkValidationError(
+                field: "source",
+                code: "required",
+                message: "Validation failed for 'source': value is required"
+            )
         }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.source = try container.sdkDecodeRequired(.source)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.size = try container.sdkDecodeIfPresent(.size)
-        self.networking = try container.sdkDecodeIfPresent(.networking)
-        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        self.autoPause = try container.sdkDecodeIfPresent(.autoPause)
-        self.autoResume = try container.sdkDecodeIfPresent(.autoResume)
-        self.httpPort = try container.sdkDecodeIfPresent(.httpPort)
-        self.httpProtocol = try container.sdkDecodeIfPresent(.httpProtocol)
-        self.ports = try container.sdkDecodeIfPresent(.ports)
-        self.environment = try container.sdkDecodeIfPresent(.environment)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-            try sdkValidatePattern("name", self.name, sdkPattern41dd286f4dc3)
-        if let value = self.vpcUuid {
+        name = try container.sdkDecodeRequired(.name)
+        source = try container.sdkDecodeRequired(.source)
+        region = try container.sdkDecodeIfPresent(.region)
+        size = try container.sdkDecodeIfPresent(.size)
+        networking = try container.sdkDecodeIfPresent(.networking)
+        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        autoPause = try container.sdkDecodeIfPresent(.autoPause)
+        autoResume = try container.sdkDecodeIfPresent(.autoResume)
+        httpPort = try container.sdkDecodeIfPresent(.httpPort)
+        httpProtocol = try container.sdkDecodeIfPresent(.httpProtocol)
+        ports = try container.sdkDecodeIfPresent(.ports)
+        environment = try container.sdkDecodeIfPresent(.environment)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        try sdkValidatePattern("name", name, sdkPattern41dd286f4dc3)
+        if let value = vpcUuid {
             try sdkValidateUuid("vpc_uuid", value)
         }
-        if let value = self.ports {
+        if let value = ports {
             try validateItems("ports", value, min: nil, max: 5)
         }
     }
 }
 
-extension MicrovmCreate {
-    public init(name: String, source: MicrovmSource, region: String? = nil, size: MicrovmSize? = nil, networking: MicrovmCreateNetworking? = nil, vpcUuid: String? = nil, autoPause: MicrovmAutoPause? = nil, autoResume: Bool? = nil, httpPort: Int? = nil, httpProtocol: MicrovmCreateHttpProtocol? = nil, ports: [Int]? = nil, environment: [String: String]? = nil, tags: [String]? = nil) throws {
+public extension MicrovmCreate {
+    init(
+        name: String,
+        source: MicrovmSource,
+        region: String? = nil,
+        size: MicrovmSize? = nil,
+        networking: MicrovmCreateNetworking? = nil,
+        vpcUuid: String? = nil,
+        autoPause: MicrovmAutoPause? = nil,
+        autoResume: Bool? = nil,
+        httpPort: Int? = nil,
+        httpProtocol: MicrovmCreateHttpProtocol? = nil,
+        ports: [Int]? = nil,
+        environment: [String: String]? = nil,
+        tags: [String]? = nil
+    ) throws {
         (self.name, self.source) = (name, source)
         (self.region, self.size) = (region, size)
         (self.networking, self.vpcUuid) = (networking, vpcUuid)
@@ -347,7 +420,7 @@ extension MicrovmCreate {
         (self.httpPort, self.httpProtocol) = (httpPort, httpProtocol)
         (self.ports, self.environment) = (ports, environment)
         self.tags = tags
-            try sdkValidatePattern("name", self.name, sdkPattern41dd286f4dc3)
+        try sdkValidatePattern("name", self.name, sdkPattern41dd286f4dc3)
         if let value = self.vpcUuid {
             try sdkValidateUuid("vpc_uuid", value)
         }
@@ -361,13 +434,16 @@ extension MicrovmCreate {
 public struct MicrovmCreateHttpProtocol: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let http = MicrovmCreateHttpProtocol(rawValue: "http")
     public static let http2 = MicrovmCreateHttpProtocol(rawValue: "http2")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -381,13 +457,16 @@ public struct MicrovmCreateHttpProtocol: RawRepresentable, Hashable, Codable, Se
 public struct MicrovmCreateNetworking: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let `public` = MicrovmCreateNetworking(rawValue: "public")
     public static let vpc = MicrovmCreateNetworking(rawValue: "vpc")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -401,13 +480,16 @@ public struct MicrovmCreateNetworking: RawRepresentable, Hashable, Codable, Send
 public struct FirewallRuleBaseAction: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let allow = FirewallRuleBaseAction(rawValue: "allow")
     public static let deny = FirewallRuleBaseAction(rawValue: "deny")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -420,12 +502,15 @@ public struct FirewallRuleBaseAction: RawRepresentable, Hashable, Codable, Senda
 public struct McpServerCreateTransport: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let streamableHttp = McpServerCreateTransport(rawValue: "streamable_http")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -438,14 +523,17 @@ public struct McpServerCreateTransport: RawRepresentable, Hashable, Codable, Sen
 public struct FirewallRuleBaseProtocol: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let tcp = FirewallRuleBaseProtocol(rawValue: "tcp")
     public static let udp = FirewallRuleBaseProtocol(rawValue: "udp")
     public static let icmp = FirewallRuleBaseProtocol(rawValue: "icmp")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -455,16 +543,21 @@ public struct FirewallRuleBaseProtocol: RawRepresentable, Hashable, Codable, Sen
 }
 
 /// Required enumerated value serialized in the `eligibility_reasons[]` wire field.
-public struct SubscriptionTierExtendedEligibilityReasonsItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct SubscriptionTierExtendedEligibilityReasonsItem: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
-    public static let overRepositoryLimit = SubscriptionTierExtendedEligibilityReasonsItem(rawValue: "OverRepositoryLimit")
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let overRepositoryLimit =
+        SubscriptionTierExtendedEligibilityReasonsItem(rawValue: "OverRepositoryLimit")
     public static let overStorageLimit = SubscriptionTierExtendedEligibilityReasonsItem(rawValue: "OverStorageLimit")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -479,14 +572,17 @@ public struct SubscriptionTierExtendedEligibilityReasonsItem: RawRepresentable, 
 public struct McpServerCreateCredentialRefSource: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let none = McpServerCreateCredentialRefSource(rawValue: "none")
     public static let secret = McpServerCreateCredentialRefSource(rawValue: "secret")
     public static let connection = McpServerCreateCredentialRefSource(rawValue: "connection")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DatabasesDatabase domain models
+/// DatabasesDatabase domain models
 public indirect enum DatabaseConfigConfig {
     case mysqlAdvancedConfig(MysqlAdvancedConfig)
     case postgresAdvancedConfig(PostgresAdvancedConfig)
@@ -15,18 +15,26 @@ public indirect enum DatabaseConfigConfig {
 }
 
 extension DatabaseConfigConfig: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
+            if let value = Self.decodeLossless1(from: container, raw) {
+                self = value; return
+            }
         }
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for DatabaseConfigConfig")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for DatabaseConfigConfig"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
@@ -59,13 +67,27 @@ extension DatabaseConfigConfig {
 
 extension DatabaseConfigConfig {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(MysqlAdvancedConfig.self) { return .mysqlAdvancedConfig(value) }
-        if let value = try? container.decode(PostgresAdvancedConfig.self) { return .postgresAdvancedConfig(value) }
-        if let value = try? container.decode(RedisAdvancedConfig.self) { return .redisAdvancedConfig(value) }
-        if let value = try? container.decode(ValkeyAdvancedConfig.self) { return .valkeyAdvancedConfig(value) }
-        if let value = try? container.decode(MongoAdvancedConfig.self) { return .mongoAdvancedConfig(value) }
-        if let value = try? container.decode(KafkaAdvancedConfig.self) { return .kafkaAdvancedConfig(value) }
-        if let value = try? container.decode(OpensearchAdvancedConfig.self) { return .opensearchAdvancedConfig(value) }
+        if let value = try? container.decode(MysqlAdvancedConfig.self) {
+            return .mysqlAdvancedConfig(value)
+        }
+        if let value = try? container.decode(PostgresAdvancedConfig.self) {
+            return .postgresAdvancedConfig(value)
+        }
+        if let value = try? container.decode(RedisAdvancedConfig.self) {
+            return .redisAdvancedConfig(value)
+        }
+        if let value = try? container.decode(ValkeyAdvancedConfig.self) {
+            return .valkeyAdvancedConfig(value)
+        }
+        if let value = try? container.decode(MongoAdvancedConfig.self) {
+            return .mongoAdvancedConfig(value)
+        }
+        if let value = try? container.decode(KafkaAdvancedConfig.self) {
+            return .kafkaAdvancedConfig(value)
+        }
+        if let value = try? container.decode(OpensearchAdvancedConfig.self) {
+            return .opensearchAdvancedConfig(value)
+        }
         return nil
     }
 }
@@ -95,19 +117,19 @@ public struct DatabaseConfig: Codable {
     }
 
     init() {
-        self.config = nil
+        config = nil
     }
 }
 
-extension DatabaseConfig {
-    public init(from decoder: Decoder) throws {
+public extension DatabaseConfig {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.config = try container.sdkDecodeIfPresent(.config)
+        config = try container.sdkDecodeIfPresent(.config)
     }
 }
 
-extension DatabaseConfig {
-    public init(config: DatabaseConfigConfig? = nil) {
+public extension DatabaseConfig {
+    init(config: DatabaseConfigConfig? = nil) {
         self.init()
         self.config = config
     }

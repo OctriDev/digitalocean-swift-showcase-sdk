@@ -3,7 +3,7 @@
 
 import Foundation
 
-// HarnessRuntime domain models
+/// HarnessRuntime domain models
 /// Typed representation of the `ResolveHitlRequest` API schema.
 public struct ResolveHitlRequest: Codable {
     /// HITLOutcome is the user's decision on a HITL request. DEFER backs off this attempt without treating it as a
@@ -23,23 +23,29 @@ public struct ResolveHitlRequest: Codable {
         case source
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ResolveHitlRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.outcome) else {
-            throw SdkValidationError(field: "outcome", code: "required", message: "Validation failed for 'outcome': value is required")
-        }
-        self.outcome = try container.sdkDecodeRequired(.outcome)
-        self.reason = try container.sdkDecodeIfPresent(.reason)
-        self.source = try container.sdkDecodeIfPresent(.source)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ResolveHitlRequest {
-    public init(outcome: HitlOutcome, reason: String? = nil, source: ResolutionSource? = nil) {
+public extension ResolveHitlRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.outcome) else {
+            throw SdkValidationError(
+                field: "outcome",
+                code: "required",
+                message: "Validation failed for 'outcome': value is required"
+            )
+        }
+        outcome = try container.sdkDecodeRequired(.outcome)
+        reason = try container.sdkDecodeIfPresent(.reason)
+        source = try container.sdkDecodeIfPresent(.source)
+    }
+}
+
+public extension ResolveHitlRequest {
+    init(outcome: HitlOutcome, reason: String? = nil, source: ResolutionSource? = nil) {
         (self.outcome, self.reason) = (outcome, reason)
         self.source = source
     }
@@ -50,7 +56,10 @@ extension ResolveHitlRequest {
 public struct HitlOutcome: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let hitlOutcomeUnspecified = HitlOutcome(rawValue: "HITL_OUTCOME_UNSPECIFIED")
     public static let hitlOutcomeApprove = HitlOutcome(rawValue: "HITL_OUTCOME_APPROVE")
     public static let hitlOutcomeReject = HitlOutcome(rawValue: "HITL_OUTCOME_REJECT")
@@ -58,7 +67,7 @@ public struct HitlOutcome: RawRepresentable, Hashable, Codable, Sendable, SdkWir
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -71,14 +80,17 @@ public struct HitlOutcome: RawRepresentable, Hashable, Codable, Sendable, SdkWir
 public struct ResolutionSource: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let resolutionSourceUnspecified = ResolutionSource(rawValue: "RESOLUTION_SOURCE_UNSPECIFIED")
     public static let resolutionSourceInlineKeystroke = ResolutionSource(rawValue: "RESOLUTION_SOURCE_INLINE_KEYSTROKE")
     public static let resolutionSourceOutOfBand = ResolutionSource(rawValue: "RESOLUTION_SOURCE_OUT_OF_BAND")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

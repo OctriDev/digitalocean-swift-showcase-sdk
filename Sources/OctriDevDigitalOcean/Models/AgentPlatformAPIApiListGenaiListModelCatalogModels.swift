@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiList domain models
+/// AgentPlatformAPIApiList domain models
 /// Typed representation of the `ApiListModelCatalogOutput` API schema.
 public struct ApiListModelCatalogOutput: Codable {
     /// All deployment availability values the client can offer in the availability filter UI.
@@ -39,27 +39,42 @@ public struct ApiListModelCatalogOutput: Codable {
     }
 
     init() {
-        (self.availableAvailability, self.availableBadges, self.availableModelTypes, self.availableProviders, self.availableSortBy) = (nil, nil, nil, nil, nil)
-        (self.availableSortDirections, self.data, self.meta) = (nil, nil, nil)
+        (availableAvailability, availableBadges, availableModelTypes, availableProviders, availableSortBy) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (availableSortDirections, data, meta) = (nil, nil, nil)
     }
 }
 
-extension ApiListModelCatalogOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiListModelCatalogOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.availableAvailability = try container.sdkDecodeIfPresent(.availableAvailability)
-        self.availableBadges = try container.sdkDecodeIfPresent(.availableBadges)
-        self.availableModelTypes = try container.sdkDecodeIfPresent(.availableModelTypes)
-        self.availableProviders = try container.sdkDecodeIfPresent(.availableProviders)
-        self.availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
-        self.availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.meta = try container.sdkDecodeIfPresent(.meta)
+        availableAvailability = try container.sdkDecodeIfPresent(.availableAvailability)
+        availableBadges = try container.sdkDecodeIfPresent(.availableBadges)
+        availableModelTypes = try container.sdkDecodeIfPresent(.availableModelTypes)
+        availableProviders = try container.sdkDecodeIfPresent(.availableProviders)
+        availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
+        availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
+        data = try container.sdkDecodeIfPresent(.data)
+        meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-extension ApiListModelCatalogOutput {
-    public init(availableAvailability: [String]? = nil, availableBadges: [String]? = nil, availableModelTypes: [String]? = nil, availableProviders: [String]? = nil, availableSortBy: [ApiModelCatalogSortBy]? = nil, availableSortDirections: [ApiSortDirection]? = nil, data: [ApiModelCatalogEntry]? = nil, meta: ApiMeta? = nil) {
+public extension ApiListModelCatalogOutput {
+    init(
+        availableAvailability: [String]? = nil,
+        availableBadges: [String]? = nil,
+        availableModelTypes: [String]? = nil,
+        availableProviders: [String]? = nil,
+        availableSortBy: [ApiModelCatalogSortBy]? = nil,
+        availableSortDirections: [ApiSortDirection]? = nil,
+        data: [ApiModelCatalogEntry]? = nil,
+        meta: ApiMeta? = nil
+    ) {
         self.init()
         (self.availableAvailability, self.availableBadges) = (availableAvailability, availableBadges)
         (self.availableModelTypes, self.availableProviders) = (availableModelTypes, availableProviders)

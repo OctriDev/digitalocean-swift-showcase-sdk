@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiGet domain models
+/// AgentPlatformAPIApiGet domain models
 /// One Agent
 public struct ApiGetAgentOutput: Codable {
     /// An Agent
@@ -14,19 +14,19 @@ public struct ApiGetAgentOutput: Codable {
     }
 
     init() {
-        self.agent = nil
+        agent = nil
     }
 }
 
-extension ApiGetAgentOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetAgentOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agent = try container.sdkDecodeIfPresent(.agent)
+        agent = try container.sdkDecodeIfPresent(.agent)
     }
 }
 
-extension ApiGetAgentOutput {
-    public init(agent: ApiAgent? = nil) {
+public extension ApiGetAgentOutput {
+    init(agent: ApiAgent? = nil) {
         self.init()
         self.agent = agent
     }

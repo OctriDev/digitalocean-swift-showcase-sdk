@@ -6,32 +6,64 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension MonitoringMethods {
-    /// To retrieve frontend UDP throughput in bytes per second for a given load balancer, send a GET request to `/v2/monitoring/metrics/load_balancer/frontend_network_throughput_udp`.
+public extension MonitoringMethods {
+    /// To retrieve frontend UDP throughput in bytes per second for a given load balancer, send a GET request to
+    /// `/v2/monitoring/metrics/load_balancer/frontend_network_throughput_udp`.
     ///
     /// - Parameters:
     /// - lbId: A unique identifier for a load balancer.
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    public static func monitoringGetLbFrontendNetworkThroughputUdp(config: ClientConfig, lbId: String, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
-        return try (await sdkRequest("GET", "/v2/monitoring/metrics/load_balancer/frontend_network_throughput_udp", config: config, query: [
-            SdkQueryParameter("lb_id", value: lbId),
-            SdkQueryParameter("start", value: start),
-            SdkQueryParameter("end", value: end),
-        ], decoder: .json, operationId: "monitoring_get_lb_frontend_network_throughput_udp", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func monitoringGetLbFrontendNetworkThroughputUdp(
+        config: ClientConfig,
+        lbId: String,
+        start: String,
+        end: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Metrics {
+        try await (sdkRequest(
+            "GET",
+            "/v2/monitoring/metrics/load_balancer/frontend_network_throughput_udp",
+            config: config,
+            query: [
+                SdkQueryParameter("lb_id", value: lbId),
+                SdkQueryParameter("start", value: start),
+                SdkQueryParameter("end", value: end),
+            ],
+            decoder: .json,
+            operationId: "monitoring_get_lb_frontend_network_throughput_udp",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 
-    /// To retrieve frontend TCP throughput in bytes per second for a given load balancer, send a GET request to `/v2/monitoring/metrics/load_balancer/frontend_network_throughput_tcp`.
+    /// To retrieve frontend TCP throughput in bytes per second for a given load balancer, send a GET request to
+    /// `/v2/monitoring/metrics/load_balancer/frontend_network_throughput_tcp`.
     ///
     /// - Parameters:
     /// - lbId: A unique identifier for a load balancer.
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    public static func monitoringGetLbFrontendNetworkThroughputTcp(config: ClientConfig, lbId: String, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
-        return try (await sdkRequest("GET", "/v2/monitoring/metrics/load_balancer/frontend_network_throughput_tcp", config: config, query: [
-            SdkQueryParameter("lb_id", value: lbId),
-            SdkQueryParameter("start", value: start),
-            SdkQueryParameter("end", value: end),
-        ], decoder: .json, operationId: "monitoring_get_lb_frontend_network_throughput_tcp", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func monitoringGetLbFrontendNetworkThroughputTcp(
+        config: ClientConfig,
+        lbId: String,
+        start: String,
+        end: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Metrics {
+        try await (sdkRequest(
+            "GET",
+            "/v2/monitoring/metrics/load_balancer/frontend_network_throughput_tcp",
+            config: config,
+            query: [
+                SdkQueryParameter("lb_id", value: lbId),
+                SdkQueryParameter("start", value: start),
+                SdkQueryParameter("end", value: end),
+            ],
+            decoder: .json,
+            operationId: "monitoring_get_lb_frontend_network_throughput_tcp",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

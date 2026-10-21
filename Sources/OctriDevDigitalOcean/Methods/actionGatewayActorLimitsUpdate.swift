@@ -6,20 +6,43 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ActionGatewayMethods {
-    /// Sets per-minute limits for the listed categories and leaves the others unchanged. A limit may not exceed your team's current limit for the category (400 otherwise), and 0 blocks every call in the category. The actor does not need to exist yet.
+public extension ActionGatewayMethods {
+    /// Sets per-minute limits for the listed categories and leaves the others unchanged. A limit may not exceed your
+    /// team's current limit for the category (400 otherwise), and 0 blocks every call in the category. The actor does
+    /// not need to exist yet.
     ///
     /// - Parameters:
     /// - actorId: Actor ID: a session `actor_id` or a connection `user_id`, 1 to 64
     ///   characters from `[A-Za-z0-9._-]`.
     /// - overrides: Required. Limits to set, at most one per category.
-    public static func actorLimitsUpdate(config: ClientConfig, actorId: String, overrides: [LimitOverride], requestOptions: RequestOptions? = nil) async throws -> EmptyResponse {
+    static func actorLimitsUpdate(
+        config: ClientConfig,
+        actorId: String,
+        overrides: [LimitOverride],
+        requestOptions: RequestOptions? = nil
+    ) async throws -> EmptyResponse {
         try sdkValidatePattern("actor_id", actorId, sdkPatternd665a9126795)
 
         try validateItems("overrides", overrides, min: 1)
 
         let requestBody = ActorLimitsUpdateRequestBody(overrides: overrides)
 
-        return try (await sdkRequest("POST", ["/v2/action-gateway/actors/", sdkEncodePathSegment(sdkWireString(actorId)), "/limits:set"].joined(), config: config, body: requestBody, decoder: .json, operationId: "actorLimits_update", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/v2/action-gateway/actors/", sdkEncodePathSegment(sdkWireString(actorId)), "/limits:set"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "actorLimits_update",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

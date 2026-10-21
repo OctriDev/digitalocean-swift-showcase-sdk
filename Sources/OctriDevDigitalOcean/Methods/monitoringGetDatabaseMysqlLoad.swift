@@ -6,8 +6,10 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension MonitoringMethods {
-    /// Retrieve load metrics for a MySQL cluster. Use **metric** for the window: **load1** (1-minute), **load5** (5-minute), or **load15** (15-minute). Use **aggregate** to get either the average (avg) or maximum (max) over that window over the time range.
+public extension MonitoringMethods {
+    /// Retrieve load metrics for a MySQL cluster. Use **metric** for the window: **load1** (1-minute), **load5**
+    /// (5-minute), or **load15** (15-minute). Use **aggregate** to get either the average (avg) or maximum (max) over
+    /// that window over the time range.
     ///
     /// - Parameters:
     /// - dbId: The DBaaS cluster UUID (database ID).
@@ -17,16 +19,39 @@ extension MonitoringMethods {
     /// - aggregate: Aggregation over the time range (avg or max).
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    public static func monitoringGetDatabaseMysqlLoad(config: ClientConfig, dbId: String, metric: MonitoringGetDatabaseMysqlLoadParameterX6ea042d4, aggregate: MonitoringGetDatabaseMysqlLoadParameter, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
+    static func monitoringGetDatabaseMysqlLoad(
+        config: ClientConfig,
+        dbId: String,
+        metric: MonitoringGetDatabaseMysqlLoadParameterX6ea042d4,
+        aggregate: MonitoringGetDatabaseMysqlLoadParameter,
+        start: String,
+        end: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Metrics {
         try sdkValidateUuid("db_id", dbId)
 
-        return try (await sdkRequest("GET", "/v2/monitoring/metrics/database/mysql/load", config: config, query: [
-            SdkQueryParameter("db_id", value: dbId),
-            SdkQueryParameter("metric", value: metric),
-            SdkQueryParameter("aggregate", value: aggregate),
-            SdkQueryParameter("start", value: start),
-            SdkQueryParameter("end", value: end),
-        ], decoder: .json, operationId: "monitoring_get_database_mysql_load", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/v2/monitoring/metrics/database/mysql/load",
+            config: config,
+            query: [
+                SdkQueryParameter("db_id", value: dbId),
+                SdkQueryParameter("metric", value: metric),
+                SdkQueryParameter("aggregate", value: aggregate),
+                SdkQueryParameter("start", value: start),
+                SdkQueryParameter("end", value: end),
+            ],
+            decoder: .json,
+            operationId: "monitoring_get_database_mysql_load",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
     /// Retrieve memory usage (percent) for a MySQL cluster. Use **aggregate** (avg, max, or min) over the time range.
@@ -36,14 +61,36 @@ extension MonitoringMethods {
     /// - aggregate: Aggregation over the time range (avg, max, or min).
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    public static func monitoringGetDatabaseMysqlMemoryUsage(config: ClientConfig, dbId: String, aggregate: MonitoringGetDatabaseMysqlCpuUsageParameter, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
+    static func monitoringGetDatabaseMysqlMemoryUsage(
+        config: ClientConfig,
+        dbId: String,
+        aggregate: MonitoringGetDatabaseMysqlCpuUsageParameter,
+        start: String,
+        end: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Metrics {
         try sdkValidateUuid("db_id", dbId)
 
-        return try (await sdkRequest("GET", "/v2/monitoring/metrics/database/mysql/memory_usage", config: config, query: [
-            SdkQueryParameter("db_id", value: dbId),
-            SdkQueryParameter("aggregate", value: aggregate),
-            SdkQueryParameter("start", value: start),
-            SdkQueryParameter("end", value: end),
-        ], decoder: .json, operationId: "monitoring_get_database_mysql_memory_usage", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/v2/monitoring/metrics/database/mysql/memory_usage",
+            config: config,
+            query: [
+                SdkQueryParameter("db_id", value: dbId),
+                SdkQueryParameter("aggregate", value: aggregate),
+                SdkQueryParameter("start", value: start),
+                SdkQueryParameter("end", value: end),
+            ],
+            decoder: .json,
+            operationId: "monitoring_get_database_mysql_memory_usage",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

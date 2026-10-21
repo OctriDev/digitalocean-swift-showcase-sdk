@@ -3,17 +3,20 @@
 
 import Foundation
 
-// InsightsProm domain models
+/// InsightsProm domain models
 /// Required enumerated value serialized in the `resultType` wire field.
 public struct PromMatrixDataResultType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let matrix = PromMatrixDataResultType(rawValue: "matrix")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -26,7 +29,10 @@ public struct PromMatrixDataResultType: RawRepresentable, Hashable, Codable, Sen
 public struct PromQueryDataResultType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let vector = PromQueryDataResultType(rawValue: "vector")
     public static let matrix = PromQueryDataResultType(rawValue: "matrix")
     public static let scalar = PromQueryDataResultType(rawValue: "scalar")
@@ -34,7 +40,7 @@ public struct PromQueryDataResultType: RawRepresentable, Hashable, Codable, Send
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -47,7 +53,10 @@ public struct PromQueryDataResultType: RawRepresentable, Hashable, Codable, Send
 public struct PromErrorErrorType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let badData = PromErrorErrorType(rawValue: "bad_data")
     public static let `internal` = PromErrorErrorType(rawValue: "internal")
     public static let timeout = PromErrorErrorType(rawValue: "timeout")
@@ -57,7 +66,7 @@ public struct PromErrorErrorType: RawRepresentable, Hashable, Codable, Sendable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

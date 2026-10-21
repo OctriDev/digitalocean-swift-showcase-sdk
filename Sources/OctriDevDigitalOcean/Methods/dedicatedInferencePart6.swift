@@ -6,38 +6,68 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DedicatedInferenceMethods {
-    /// List all access tokens for a Dedicated Inference instance. Token values are not returned; only id, name, created_at, and is_managed. Send a GET request to `/v2/dedicated-inferences/{dedicated_inference_id}/tokens`.
+public extension DedicatedInferenceMethods {
+    /// List all access tokens for a Dedicated Inference instance. Token values are not returned; only id, name,
+    /// created_at, and is_managed. Send a GET request to `/v2/dedicated-inferences/{dedicated_inference_id}/tokens`.
     ///
     /// - Parameters:
     /// - dedicatedInferenceId: A unique identifier for a Dedicated Inference
     ///   instance.
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    public static func dedicatedInferencesListTokens(config: ClientConfig, dedicatedInferenceId: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> TokensList {
+    static func dedicatedInferencesListTokens(
+        config: ClientConfig,
+        dedicatedInferenceId: String,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> TokensList {
         try sdkValidateUuid("dedicated_inference_id", dedicatedInferenceId)
 
-        if let perPage = perPage {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page = page {
+        if let page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try (await sdkRequest("GET", ["/v2/dedicated-inferences/", sdkEncodePathSegment(sdkWireString(dedicatedInferenceId)), "/tokens"].joined(), config: config, query: [
-            SdkQueryParameter("per_page", value: perPage),
-            SdkQueryParameter("page", value: page),
-        ], decoder: .json, operationId: "dedicatedInferences_list_tokens", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/dedicated-inferences/", sdkEncodePathSegment(sdkWireString(dedicatedInferenceId)), "/tokens"]
+                .joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("page", value: page),
+            ],
+            decoder: .json,
+            operationId: "dedicatedInferences_list_tokens",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Create a new access token for a Dedicated Inference instance. Send a POST request to `/v2/dedicated-inferences/{dedicated_inference_id}/tokens` with a `name`. The token value is returned only once in the response; store it securely.
+    /// Create a new access token for a Dedicated Inference instance. Send a POST request to
+    /// `/v2/dedicated-inferences/{dedicated_inference_id}/tokens` with a `name`. The token value is returned only once
+    /// in the response; store it securely.
     ///
     /// - Parameters:
     /// - dedicatedInferenceId: A unique identifier for a Dedicated Inference
     ///   instance.
     /// - name: Name for the new token.
-    public static func dedicatedInferencesCreateTokens(config: ClientConfig, dedicatedInferenceId: String, name: String, requestOptions: RequestOptions? = nil) async throws -> TokenCreated {
+    static func dedicatedInferencesCreateTokens(
+        config: ClientConfig,
+        dedicatedInferenceId: String,
+        name: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> TokenCreated {
         try sdkValidateUuid("dedicated_inference_id", dedicatedInferenceId)
 
         try validateLength("name", name, max: 255)
@@ -45,6 +75,22 @@ extension DedicatedInferenceMethods {
 
         let requestBody = DedicatedInferencesCreateTokensRequestBody(name: name)
 
-        return try (await sdkRequest("POST", ["/v2/dedicated-inferences/", sdkEncodePathSegment(sdkWireString(dedicatedInferenceId)), "/tokens"].joined(), config: config, body: requestBody, decoder: .json, operationId: "dedicatedInferences_create_tokens", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/v2/dedicated-inferences/", sdkEncodePathSegment(sdkWireString(dedicatedInferenceId)), "/tokens"]
+                .joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "dedicatedInferences_create_tokens",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

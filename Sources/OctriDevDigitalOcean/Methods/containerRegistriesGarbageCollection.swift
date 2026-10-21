@@ -6,33 +6,110 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ContainerRegistriesMethods {
-    /// To get information about the currently-active garbage collection for a registry, send a GET request to `/v2/registry/$REGISTRY_NAME/garbage-collection`.
+public extension ContainerRegistriesMethods {
+    /// To get information about the currently-active garbage collection for a registry, send a GET request to
+    /// `/v2/registry/$REGISTRY_NAME/garbage-collection`.
     ///
     /// - Parameters:
     /// - registryName: The name of a container registry.
-    public static func registriesGetGarbageCollection(config: ClientConfig, registryName: String, requestOptions: RequestOptions? = nil) async throws -> GarbageCollectionResponse {
-        return try (await sdkRequest("GET", ["/v2/registries/", sdkEncodePathSegment(sdkWireString(registryName)), "/garbage-collection"].joined(), config: config, decoder: .json, operationId: "registries_get_garbageCollection", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func registriesGetGarbageCollection(
+        config: ClientConfig,
+        registryName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GarbageCollectionResponse {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/registries/", sdkEncodePathSegment(sdkWireString(registryName)), "/garbage-collection"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "registries_get_garbageCollection",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Garbage collection enables users to clear out unreferenced blobs (layer & manifest data) after deleting one or more manifests from a repository. If there are no unreferenced blobs resulting from the deletion of one or more manifests, garbage collection is effectively a noop. [See here for more information](https://docs.digitalocean.com/products/container-registry/how-to/clean-up-container-registry/) about how and why you should clean up your container registry periodically. To request a garbage collection run on your registry, send a POST request to `/v2/registries/$REGISTRY_NAME/garbage-collection`. This will initiate the following sequence of events on your registry. * Set the registry to read-only mode, meaning no further write-scoped JWTs will be issued to registry clients. Existing write-scoped JWTs will continue to work until they expire which can take up to 15 minutes. * Wait until all existing write-scoped JWTs have expired. * Scan all registry manifests to determine which blobs are unreferenced. * Delete all unreferenced blobs from the registry. * Record the number of blobs deleted and bytes freed, mark the garbage collection status as `success`. * Remove the read-only mode restriction from the registry, meaning write-scoped JWTs will once again be issued to registry clients.
+    /// Garbage collection enables users to clear out unreferenced blobs (layer & manifest data) after deleting one or
+    /// more manifests from a repository. If there are no unreferenced blobs resulting from the deletion of one or more
+    /// manifests, garbage collection is effectively a noop. [See here for more
+    /// information](https://docs.digitalocean.com/products/container-registry/how-to/clean-up-container-registry/)
+    /// about how and why you should clean up your container registry periodically. To request a garbage collection run
+    /// on your registry, send a POST request to `/v2/registries/$REGISTRY_NAME/garbage-collection`. This will initiate
+    /// the following sequence of events on your registry. * Set the registry to read-only mode, meaning no further
+    /// write-scoped JWTs will be issued to registry clients. Existing write-scoped JWTs will continue to work until
+    /// they expire which can take up to 15 minutes. * Wait until all existing write-scoped JWTs have expired. * Scan
+    /// all registry manifests to determine which blobs are unreferenced. * Delete all unreferenced blobs from the
+    /// registry. * Record the number of blobs deleted and bytes freed, mark the garbage collection status as `success`.
+    /// * Remove the read-only mode restriction from the registry, meaning write-scoped JWTs will once again be issued
+    /// to registry clients.
     ///
     /// - Parameters:
     /// - registryName: The name of a container registry.
-    public static func registriesRunGarbageCollection(config: ClientConfig, registryName: String, requestOptions: RequestOptions? = nil) async throws -> GarbageCollectionResponse {
-        return try (await sdkRequest("POST", ["/v2/registries/", sdkEncodePathSegment(sdkWireString(registryName)), "/garbage-collection"].joined(), config: config, decoder: .json, operationId: "registries_run_garbageCollection", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func registriesRunGarbageCollection(
+        config: ClientConfig,
+        registryName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GarbageCollectionResponse {
+        try await (sdkRequest(
+            "POST",
+            ["/v2/registries/", sdkEncodePathSegment(sdkWireString(registryName)), "/garbage-collection"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "registries_run_garbageCollection",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To cancel the currently-active garbage collection for a registry, send a PUT request to `/v2/registries/$REGISTRY_NAME/garbage-collection/$GC_UUID` and specify one or more of the attributes below. It is similar to PUT `/v2/registries/$REGISTRY_NAME/garbage-collection/$GC_UUID`.
+    /// To cancel the currently-active garbage collection for a registry, send a PUT request to
+    /// `/v2/registries/$REGISTRY_NAME/garbage-collection/$GC_UUID` and specify one or more of the attributes below. It
+    /// is similar to PUT `/v2/registries/$REGISTRY_NAME/garbage-collection/$GC_UUID`.
     ///
     /// - Parameters:
     /// - registryName: The name of a container registry.
     /// - garbageCollectionUuid: The UUID of a garbage collection run.
     /// - cancel: A boolean value indicating that the garbage collection should be
     ///   cancelled.
-    public static func registriesUpdateGarbageCollection(config: ClientConfig, registryName: String, garbageCollectionUuid: String, cancel: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> GarbageCollectionResponse {
+    static func registriesUpdateGarbageCollection(
+        config: ClientConfig,
+        registryName: String,
+        garbageCollectionUuid: String,
+        cancel: Bool? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GarbageCollectionResponse {
         let requestBody = RegistriesUpdateGarbageCollectionRequestBody(cancel: cancel)
 
-        return try (await sdkRequest("PUT", ["/v2/registries/", sdkEncodePathSegment(sdkWireString(registryName)), "/garbage-collection/", sdkEncodePathSegment(sdkWireString(garbageCollectionUuid))].joined(), config: config, body: requestBody, decoder: .json, operationId: "registries_update_garbageCollection", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            [
+                "/v2/registries/",
+                sdkEncodePathSegment(sdkWireString(registryName)),
+                "/garbage-collection/",
+                sdkEncodePathSegment(sdkWireString(garbageCollectionUuid)),
+            ].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "registries_update_garbageCollection",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// BlockStorage domain models
+/// BlockStorage domain models
 public struct VolumesVariant0: Codable {
     /// Array of volumes.
     public var volumes: [VolumeFull]
@@ -12,21 +12,27 @@ public struct VolumesVariant0: Codable {
         case volumes
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension VolumesVariant0 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.volumes) else {
-            throw SdkValidationError(field: "volumes", code: "required", message: "Validation failed for 'volumes': value is required")
-        }
-        self.volumes = try container.sdkDecodeRequired(.volumes)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension VolumesVariant0 {
-    public init(volumes: [VolumeFull]) {
+public extension VolumesVariant0 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.volumes) else {
+            throw SdkValidationError(
+                field: "volumes",
+                code: "required",
+                message: "Validation failed for 'volumes': value is required"
+            )
+        }
+        volumes = try container.sdkDecodeRequired(.volumes)
+    }
+}
+
+public extension VolumesVariant0 {
+    init(volumes: [VolumeFull]) {
         self.volumes = volumes
     }
 }
@@ -46,26 +52,36 @@ public struct Volumes: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension Volumes {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.volumes) else {
-            throw SdkValidationError(field: "volumes", code: "required", message: "Validation failed for 'volumes': value is required")
-        }
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.volumes = try container.sdkDecodeRequired(.volumes)
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension Volumes {
-    public init(volumes: [VolumeFull], meta: MetaMeta, links: PageLinks? = nil) {
+public extension Volumes {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.volumes) else {
+            throw SdkValidationError(
+                field: "volumes",
+                code: "required",
+                message: "Validation failed for 'volumes': value is required"
+            )
+        }
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        volumes = try container.sdkDecodeRequired(.volumes)
+        meta = try container.sdkDecodeRequired(.meta)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension Volumes {
+    init(volumes: [VolumeFull], meta: MetaMeta, links: PageLinks? = nil) {
         (self.volumes, self.meta) = (volumes, meta)
         self.links = links
     }

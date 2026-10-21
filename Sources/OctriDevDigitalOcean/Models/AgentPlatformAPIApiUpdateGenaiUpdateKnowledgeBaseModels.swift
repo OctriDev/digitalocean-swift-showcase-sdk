@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiUpdate domain models
+/// AgentPlatformAPIApiUpdate domain models
 /// Information about an updated knowledge base
 public struct ApiUpdateKnowledgeBaseOutput: Codable {
     /// Knowledgebase Description
@@ -14,19 +14,19 @@ public struct ApiUpdateKnowledgeBaseOutput: Codable {
     }
 
     init() {
-        self.knowledgeBase = nil
+        knowledgeBase = nil
     }
 }
 
-extension ApiUpdateKnowledgeBaseOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateKnowledgeBaseOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.knowledgeBase = try container.sdkDecodeIfPresent(.knowledgeBase)
+        knowledgeBase = try container.sdkDecodeIfPresent(.knowledgeBase)
     }
 }
 
-extension ApiUpdateKnowledgeBaseOutput {
-    public init(knowledgeBase: ApiKnowledgeBase? = nil) {
+public extension ApiUpdateKnowledgeBaseOutput {
+    init(knowledgeBase: ApiKnowledgeBase? = nil) {
         self.init()
         self.knowledgeBase = knowledgeBase
     }
@@ -62,25 +62,32 @@ public struct ApiUpdateKnowledgeBaseInputPublic: Codable {
     }
 
     init() {
-        (self.databaseId, self.name, self.projectId, self.rerankingConfig, self.tags) = (nil, nil, nil, nil, nil)
-        self.uuid = nil
+        (databaseId, name, projectId, rerankingConfig, tags) = (nil, nil, nil, nil, nil)
+        uuid = nil
     }
 }
 
-extension ApiUpdateKnowledgeBaseInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateKnowledgeBaseInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.databaseId = try container.sdkDecodeIfPresent(.databaseId)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.projectId = try container.sdkDecodeIfPresent(.projectId)
-        self.rerankingConfig = try container.sdkDecodeIfPresent(.rerankingConfig)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        databaseId = try container.sdkDecodeIfPresent(.databaseId)
+        name = try container.sdkDecodeIfPresent(.name)
+        projectId = try container.sdkDecodeIfPresent(.projectId)
+        rerankingConfig = try container.sdkDecodeIfPresent(.rerankingConfig)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
     }
 }
 
-extension ApiUpdateKnowledgeBaseInputPublic {
-    public init(databaseId: String? = nil, name: String? = nil, projectId: String? = nil, rerankingConfig: ApiRerankingConfiguration? = nil, tags: [String]? = nil, uuid: String? = nil) {
+public extension ApiUpdateKnowledgeBaseInputPublic {
+    init(
+        databaseId: String? = nil,
+        name: String? = nil,
+        projectId: String? = nil,
+        rerankingConfig: ApiRerankingConfiguration? = nil,
+        tags: [String]? = nil,
+        uuid: String? = nil
+    ) {
         self.init()
         (self.databaseId, self.name) = (databaseId, name)
         (self.projectId, self.rerankingConfig) = (projectId, rerankingConfig)

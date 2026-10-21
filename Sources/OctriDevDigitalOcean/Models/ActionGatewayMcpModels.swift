@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ActionGatewayMcp domain models
+/// ActionGatewayMcp domain models
 /// One tool discovered on an MCP server.
 public struct McpServerTool: Codable {
     /// Tool name as the server reports it, normalized to the catalog's naming rules.
@@ -34,25 +34,32 @@ public struct McpServerTool: Codable {
     }
 
     init() {
-        (self.name, self.toolSlug, self.description, self.enabled, self.quarantined) = (nil, nil, nil, nil, nil)
-        self.quarantineReason = nil
+        (name, toolSlug, description, enabled, quarantined) = (nil, nil, nil, nil, nil)
+        quarantineReason = nil
     }
 }
 
-extension McpServerTool {
-    public init(from decoder: Decoder) throws {
+public extension McpServerTool {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.toolSlug = try container.sdkDecodeIfPresent(.toolSlug)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
-        self.quarantined = try container.sdkDecodeIfPresent(.quarantined)
-        self.quarantineReason = try container.sdkDecodeIfPresent(.quarantineReason)
+        name = try container.sdkDecodeIfPresent(.name)
+        toolSlug = try container.sdkDecodeIfPresent(.toolSlug)
+        description = try container.sdkDecodeIfPresent(.description)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
+        quarantined = try container.sdkDecodeIfPresent(.quarantined)
+        quarantineReason = try container.sdkDecodeIfPresent(.quarantineReason)
     }
 }
 
-extension McpServerTool {
-    public init(name: String? = nil, toolSlug: String? = nil, description: String? = nil, enabled: Bool? = nil, quarantined: Bool? = nil, quarantineReason: String? = nil) {
+public extension McpServerTool {
+    init(
+        name: String? = nil,
+        toolSlug: String? = nil,
+        description: String? = nil,
+        enabled: Bool? = nil,
+        quarantined: Bool? = nil,
+        quarantineReason: String? = nil
+    ) {
         self.init()
         (self.name, self.toolSlug) = (name, toolSlug)
         (self.description, self.enabled) = (description, enabled)
@@ -71,22 +78,22 @@ public struct McpServerUpdate: Codable {
     }
 
     init() {
-        self.description = nil
+        description = nil
     }
 }
 
-extension McpServerUpdate {
-    public init(from decoder: Decoder) throws {
+public extension McpServerUpdate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        if let value = self.description {
+        description = try container.sdkDecodeIfPresent(.description)
+        if let value = description {
             try validateLength("description", value, min: nil, max: 1024)
         }
     }
 }
 
-extension McpServerUpdate {
-    public init(description: String? = nil) throws {
+public extension McpServerUpdate {
+    init(description: String? = nil) throws {
         self.init()
         self.description = description
         if let value = self.description {
@@ -158,40 +165,64 @@ public struct McpServerCreateRequest: Codable {
         case oauthAuthorizationTtlSeconds = "oauth_authorization_ttl_seconds"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension McpServerCreateRequest {
-    public init(from decoder: Decoder) throws {
+public extension McpServerCreateRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.serverRef) else {
-            throw SdkValidationError(field: "serverRef", code: "required", message: "Validation failed for 'serverRef': value is required")
+            throw SdkValidationError(
+                field: "serverRef",
+                code: "required",
+                message: "Validation failed for 'serverRef': value is required"
+            )
         }
         guard container.contains(.endpoint) else {
-            throw SdkValidationError(field: "endpoint", code: "required", message: "Validation failed for 'endpoint': value is required")
+            throw SdkValidationError(
+                field: "endpoint",
+                code: "required",
+                message: "Validation failed for 'endpoint': value is required"
+            )
         }
-        self.serverRef = try container.sdkDecodeRequired(.serverRef)
-        self.endpoint = try container.sdkDecodeRequired(.endpoint)
-        self.transport = try container.sdkDecodeIfPresent(.transport)
-        self.credentialRefSource = try container.sdkDecodeIfPresent(.credentialRefSource)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.credentialRef = try container.sdkDecodeIfPresent(.credentialRef)
-        self.apiKey = try container.sdkDecodeIfPresent(.apiKey)
-        self.oauthClientId = try container.sdkDecodeIfPresent(.oauthClientId)
-        self.oauthClientSecret = try container.sdkDecodeIfPresent(.oauthClientSecret)
-        self.oauthAuthorizeUrl = try container.sdkDecodeIfPresent(.oauthAuthorizeUrl)
-        self.oauthTokenUrl = try container.sdkDecodeIfPresent(.oauthTokenUrl)
-        self.oauthScopes = try container.sdkDecodeIfPresent(.oauthScopes)
-        self.oauthAuthorizationTtlSeconds = try container.sdkDecodeIfPresent(.oauthAuthorizationTtlSeconds)
-            try sdkValidatePattern("serverRef", self.serverRef, sdkPatternc47f13327b4b)
-        if let value = self.description {
+        serverRef = try container.sdkDecodeRequired(.serverRef)
+        endpoint = try container.sdkDecodeRequired(.endpoint)
+        transport = try container.sdkDecodeIfPresent(.transport)
+        credentialRefSource = try container.sdkDecodeIfPresent(.credentialRefSource)
+        description = try container.sdkDecodeIfPresent(.description)
+        credentialRef = try container.sdkDecodeIfPresent(.credentialRef)
+        apiKey = try container.sdkDecodeIfPresent(.apiKey)
+        oauthClientId = try container.sdkDecodeIfPresent(.oauthClientId)
+        oauthClientSecret = try container.sdkDecodeIfPresent(.oauthClientSecret)
+        oauthAuthorizeUrl = try container.sdkDecodeIfPresent(.oauthAuthorizeUrl)
+        oauthTokenUrl = try container.sdkDecodeIfPresent(.oauthTokenUrl)
+        oauthScopes = try container.sdkDecodeIfPresent(.oauthScopes)
+        oauthAuthorizationTtlSeconds = try container.sdkDecodeIfPresent(.oauthAuthorizationTtlSeconds)
+        try sdkValidatePattern("serverRef", serverRef, sdkPatternc47f13327b4b)
+        if let value = description {
             try validateLength("description", value, min: nil, max: 1024)
         }
     }
 }
 
-extension McpServerCreateRequest {
-    public init(serverRef: String, endpoint: String, transport: McpServerCreateRequestTransport? = nil, credentialRefSource: McpServerCreateRequestCredentialRefSource? = nil, description: String? = nil, credentialRef: String? = nil, apiKey: String? = nil, oauthClientId: String? = nil, oauthClientSecret: String? = nil, oauthAuthorizeUrl: String? = nil, oauthTokenUrl: String? = nil, oauthScopes: [String]? = nil, oauthAuthorizationTtlSeconds: String? = nil) throws {
+public extension McpServerCreateRequest {
+    init(
+        serverRef: String,
+        endpoint: String,
+        transport: McpServerCreateRequestTransport? = nil,
+        credentialRefSource: McpServerCreateRequestCredentialRefSource? = nil,
+        description: String? = nil,
+        credentialRef: String? = nil,
+        apiKey: String? = nil,
+        oauthClientId: String? = nil,
+        oauthClientSecret: String? = nil,
+        oauthAuthorizeUrl: String? = nil,
+        oauthTokenUrl: String? = nil,
+        oauthScopes: [String]? = nil,
+        oauthAuthorizationTtlSeconds: String? = nil
+    ) throws {
         (self.serverRef, self.endpoint) = (serverRef, endpoint)
         (self.transport, self.credentialRefSource) = (transport, credentialRefSource)
         (self.description, self.credentialRef) = (description, credentialRef)
@@ -199,7 +230,7 @@ extension McpServerCreateRequest {
         (self.oauthClientSecret, self.oauthAuthorizeUrl) = (oauthClientSecret, oauthAuthorizeUrl)
         (self.oauthTokenUrl, self.oauthScopes) = (oauthTokenUrl, oauthScopes)
         self.oauthAuthorizationTtlSeconds = oauthAuthorizationTtlSeconds
-            try sdkValidatePattern("serverRef", self.serverRef, sdkPatternc47f13327b4b)
+        try sdkValidatePattern("serverRef", self.serverRef, sdkPatternc47f13327b4b)
         if let value = self.description {
             try validateLength("description", value, min: nil, max: 1024)
         }
@@ -281,40 +312,57 @@ public struct McpServer: Codable {
     }
 
     init() {
-        (self.serverRef, self.endpoint, self.transport, self.credentialRefSource, self.credentialRef) = (nil, nil, nil, nil, nil)
-        (self.syncStatus, self.syncError, self.lastSyncedAt, self.protocolVersion, self.toolCount) = (nil, nil, nil, nil, nil)
-        (self.createdAt, self.updatedAt, self.description, self.oauthAuthorizeUrl, self.oauthScopes) = (nil, nil, nil, nil, nil)
-        self.oauthAuthorizationTtlSeconds = nil
+        (serverRef, endpoint, transport, credentialRefSource, credentialRef) = (nil, nil, nil, nil, nil)
+        (syncStatus, syncError, lastSyncedAt, protocolVersion, toolCount) = (nil, nil, nil, nil, nil)
+        (createdAt, updatedAt, description, oauthAuthorizeUrl, oauthScopes) = (nil, nil, nil, nil, nil)
+        oauthAuthorizationTtlSeconds = nil
     }
 }
 
-extension McpServer {
-    public init(from decoder: Decoder) throws {
+public extension McpServer {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.serverRef = try container.sdkDecodeIfPresent(.serverRef)
-        self.endpoint = try container.sdkDecodeIfPresent(.endpoint)
-        self.transport = try container.sdkDecodeIfPresent(.transport)
-        self.credentialRefSource = try container.sdkDecodeIfPresent(.credentialRefSource)
-        self.credentialRef = try container.sdkDecodeIfPresent(.credentialRef)
-        self.syncStatus = try container.sdkDecodeIfPresent(.syncStatus)
-        self.syncError = try container.sdkDecodeIfPresent(.syncError)
-        self.lastSyncedAt = try container.sdkDecodeIfPresent(.lastSyncedAt)
-        self.protocolVersion = try container.sdkDecodeIfPresent(.protocolVersion)
-        self.toolCount = try container.sdkDecodeIfPresent(.toolCount)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.oauthAuthorizeUrl = try container.sdkDecodeIfPresent(.oauthAuthorizeUrl)
-        self.oauthScopes = try container.sdkDecodeIfPresent(.oauthScopes)
-        self.oauthAuthorizationTtlSeconds = try container.sdkDecodeIfPresent(.oauthAuthorizationTtlSeconds)
-        if let value = self.description {
+        serverRef = try container.sdkDecodeIfPresent(.serverRef)
+        endpoint = try container.sdkDecodeIfPresent(.endpoint)
+        transport = try container.sdkDecodeIfPresent(.transport)
+        credentialRefSource = try container.sdkDecodeIfPresent(.credentialRefSource)
+        credentialRef = try container.sdkDecodeIfPresent(.credentialRef)
+        syncStatus = try container.sdkDecodeIfPresent(.syncStatus)
+        syncError = try container.sdkDecodeIfPresent(.syncError)
+        lastSyncedAt = try container.sdkDecodeIfPresent(.lastSyncedAt)
+        protocolVersion = try container.sdkDecodeIfPresent(.protocolVersion)
+        toolCount = try container.sdkDecodeIfPresent(.toolCount)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        description = try container.sdkDecodeIfPresent(.description)
+        oauthAuthorizeUrl = try container.sdkDecodeIfPresent(.oauthAuthorizeUrl)
+        oauthScopes = try container.sdkDecodeIfPresent(.oauthScopes)
+        oauthAuthorizationTtlSeconds = try container.sdkDecodeIfPresent(.oauthAuthorizationTtlSeconds)
+        if let value = description {
             try validateLength("description", value, min: nil, max: 1024)
         }
     }
 }
 
-extension McpServer {
-    public init(serverRef: String? = nil, endpoint: String? = nil, transport: McpServerTransport? = nil, credentialRefSource: McpServerCredentialRefSource? = nil, credentialRef: String? = nil, syncStatus: McpServerSyncStatus? = nil, syncError: String? = nil, lastSyncedAt: String? = nil, protocolVersion: String? = nil, toolCount: Int? = nil, createdAt: String? = nil, updatedAt: String? = nil, description: String? = nil, oauthAuthorizeUrl: String? = nil, oauthScopes: [String]? = nil, oauthAuthorizationTtlSeconds: String? = nil) throws {
+public extension McpServer {
+    init(
+        serverRef: String? = nil,
+        endpoint: String? = nil,
+        transport: McpServerTransport? = nil,
+        credentialRefSource: McpServerCredentialRefSource? = nil,
+        credentialRef: String? = nil,
+        syncStatus: McpServerSyncStatus? = nil,
+        syncError: String? = nil,
+        lastSyncedAt: String? = nil,
+        protocolVersion: String? = nil,
+        toolCount: Int? = nil,
+        createdAt: String? = nil,
+        updatedAt: String? = nil,
+        description: String? = nil,
+        oauthAuthorizeUrl: String? = nil,
+        oauthScopes: [String]? = nil,
+        oauthAuthorizationTtlSeconds: String? = nil
+    ) throws {
         self.init()
         (self.serverRef, self.endpoint) = (serverRef, endpoint)
         (self.transport, self.credentialRefSource) = (transport, credentialRefSource)
@@ -340,19 +388,19 @@ public struct McpServerResponse: Codable {
     }
 
     init() {
-        self.mcpServer = nil
+        mcpServer = nil
     }
 }
 
-extension McpServerResponse {
-    public init(from decoder: Decoder) throws {
+public extension McpServerResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.mcpServer = try container.sdkDecodeIfPresent(.mcpServer)
+        mcpServer = try container.sdkDecodeIfPresent(.mcpServer)
     }
 }
 
-extension McpServerResponse {
-    public init(mcpServer: McpServer? = nil) {
+public extension McpServerResponse {
+    init(mcpServer: McpServer? = nil) {
         self.init()
         self.mcpServer = mcpServer
     }
@@ -373,22 +421,28 @@ public struct McpServerToolsUpdate: Codable {
         case userId = "user_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension McpServerToolsUpdate {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.enabledToolSlugs) else {
-            throw SdkValidationError(field: "enabledToolSlugs", code: "required", message: "Validation failed for 'enabledToolSlugs': value is required")
-        }
-        self.enabledToolSlugs = try container.sdkDecodeRequired(.enabledToolSlugs)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension McpServerToolsUpdate {
-    public init(enabledToolSlugs: [String], userId: String? = nil) {
+public extension McpServerToolsUpdate {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.enabledToolSlugs) else {
+            throw SdkValidationError(
+                field: "enabledToolSlugs",
+                code: "required",
+                message: "Validation failed for 'enabledToolSlugs': value is required"
+            )
+        }
+        enabledToolSlugs = try container.sdkDecodeRequired(.enabledToolSlugs)
+        userId = try container.sdkDecodeIfPresent(.userId)
+    }
+}
+
+public extension McpServerToolsUpdate {
+    init(enabledToolSlugs: [String], userId: String? = nil) {
         (self.enabledToolSlugs, self.userId) = (enabledToolSlugs, userId)
     }
 }
@@ -405,19 +459,19 @@ public struct McpServerResync: Codable {
     }
 
     init() {
-        self.userId = nil
+        userId = nil
     }
 }
 
-extension McpServerResync {
-    public init(from decoder: Decoder) throws {
+public extension McpServerResync {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
+        userId = try container.sdkDecodeIfPresent(.userId)
     }
 }
 
-extension McpServerResync {
-    public init(userId: String? = nil) {
+public extension McpServerResync {
+    init(userId: String? = nil) {
         self.init()
         self.userId = userId
     }
@@ -427,12 +481,15 @@ extension McpServerResync {
 public struct McpServerCreateRequestTransport: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let streamableHttp = McpServerCreateRequestTransport(rawValue: "streamable_http")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -446,7 +503,10 @@ public struct McpServerCreateRequestTransport: RawRepresentable, Hashable, Codab
 public struct McpServerSyncStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pending = McpServerSyncStatus(rawValue: "pending")
     public static let ok = McpServerSyncStatus(rawValue: "ok")
     public static let failed = McpServerSyncStatus(rawValue: "failed")
@@ -454,7 +514,7 @@ public struct McpServerSyncStatus: RawRepresentable, Hashable, Codable, Sendable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -466,17 +526,21 @@ public struct McpServerSyncStatus: RawRepresentable, Hashable, Codable, Sendable
 /// How requests to the server authenticate: none (the default), secret, or connection. With secret, the value
 /// from `credentialRef` or `api_key` is sent in the Authorization header, prefixed with "Bearer " unless it
 /// already contains a space.
-public struct McpServerCreateRequestCredentialRefSource: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct McpServerCreateRequestCredentialRefSource: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let none = McpServerCreateRequestCredentialRefSource(rawValue: "none")
     public static let secret = McpServerCreateRequestCredentialRefSource(rawValue: "secret")
     public static let connection = McpServerCreateRequestCredentialRefSource(rawValue: "connection")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -489,12 +553,15 @@ public struct McpServerCreateRequestCredentialRefSource: RawRepresentable, Hasha
 public struct McpServerTransport: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let streamableHttp = McpServerTransport(rawValue: "streamable_http")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -508,14 +575,17 @@ public struct McpServerTransport: RawRepresentable, Hashable, Codable, Sendable,
 public struct McpServerCredentialRefSource: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let none = McpServerCredentialRefSource(rawValue: "none")
     public static let secret = McpServerCredentialRefSource(rawValue: "secret")
     public static let connection = McpServerCredentialRefSource(rawValue: "connection")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

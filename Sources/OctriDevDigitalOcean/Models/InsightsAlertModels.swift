@@ -3,7 +3,7 @@
 
 import Foundation
 
-// InsightsAlert domain models
+/// InsightsAlert domain models
 public struct AlertRuleCreateRequestVariant1Spec: Codable {
     /// A human-readable name for the alert rule.
     /// - Example: "High CPU"
@@ -35,36 +35,57 @@ public struct AlertRuleCreateRequestVariant1Spec: Codable {
         case reAlertDuration = "re_alert_duration"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension AlertRuleCreateRequestVariant1Spec {
-    public init(from decoder: Decoder) throws {
+public extension AlertRuleCreateRequestVariant1Spec {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
         }
         guard container.contains(.query) else {
-            throw SdkValidationError(field: "query", code: "required", message: "Validation failed for 'query': value is required")
+            throw SdkValidationError(
+                field: "query",
+                code: "required",
+                message: "Validation failed for 'query': value is required"
+            )
         }
         guard container.contains(.thresholds) else {
-            throw SdkValidationError(field: "thresholds", code: "required", message: "Validation failed for 'thresholds': value is required")
+            throw SdkValidationError(
+                field: "thresholds",
+                code: "required",
+                message: "Validation failed for 'thresholds': value is required"
+            )
         }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.query = try container.sdkDecodeRequired(.query)
-        self.thresholds = try container.sdkDecodeRequired(.thresholds)
-        self.condition = try container.sdkDecodeIfPresent(.condition)
-        self.notificationChannels = try container.sdkDecodeIfPresent(.notificationChannels)
-        self.reAlertDuration = try container.sdkDecodeIfPresent(.reAlertDuration)
+        name = try container.sdkDecodeRequired(.name)
+        query = try container.sdkDecodeRequired(.query)
+        thresholds = try container.sdkDecodeRequired(.thresholds)
+        condition = try container.sdkDecodeIfPresent(.condition)
+        notificationChannels = try container.sdkDecodeIfPresent(.notificationChannels)
+        reAlertDuration = try container.sdkDecodeIfPresent(.reAlertDuration)
         additionalProperties = try decoder.sdkAdditionalProperties(besides: CodingKeys.self)
-        if let value = self.notificationChannels {
+        if let value = notificationChannels {
             try validateItems("notification_channels", value, min: 1, max: nil)
         }
     }
 }
 
-extension AlertRuleCreateRequestVariant1Spec {
-    public init(name: String, query: MetricsQuery, thresholds: AlertThresholds, condition: AlertCondition? = nil, notificationChannels: [NotificationChannelBinding]? = nil, reAlertDuration: AlertRuleSpecReAlertDuration? = nil) throws {
+public extension AlertRuleCreateRequestVariant1Spec {
+    init(
+        name: String,
+        query: MetricsQuery,
+        thresholds: AlertThresholds,
+        condition: AlertCondition? = nil,
+        notificationChannels: [NotificationChannelBinding]? = nil,
+        reAlertDuration: AlertRuleSpecReAlertDuration? = nil
+    ) throws {
         (self.name, self.query) = (name, query)
         (self.thresholds, self.condition) = (thresholds, condition)
         (self.notificationChannels, self.reAlertDuration) = (notificationChannels, reAlertDuration)
@@ -74,8 +95,8 @@ extension AlertRuleCreateRequestVariant1Spec {
     }
 }
 
-extension AlertRuleCreateRequestVariant1Spec {
-    public func encode(to encoder: Encoder) throws {
+public extension AlertRuleCreateRequestVariant1Spec {
+    func encode(to encoder: Encoder) throws {
         try encoder.sdkEncodeAdditionalProperties(additionalProperties)
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(name, forKey: .name)
@@ -104,22 +125,28 @@ public struct AlertRuleRequest: Codable {
         case status
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AlertRuleRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.spec) else {
-            throw SdkValidationError(field: "spec", code: "required", message: "Validation failed for 'spec': value is required")
-        }
-        self.spec = try container.sdkDecodeRequired(.spec)
-        self.status = try container.sdkDecodeIfPresent(.status)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AlertRuleRequest {
-    public init(spec: AlertRuleSpec, status: AlertRuleRequestStatus? = nil) {
+public extension AlertRuleRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.spec) else {
+            throw SdkValidationError(
+                field: "spec",
+                code: "required",
+                message: "Validation failed for 'spec': value is required"
+            )
+        }
+        spec = try container.sdkDecodeRequired(.spec)
+        status = try container.sdkDecodeIfPresent(.status)
+    }
+}
+
+public extension AlertRuleRequest {
+    init(spec: AlertRuleSpec, status: AlertRuleRequestStatus? = nil) {
         (self.spec, self.status) = (spec, status)
     }
 }
@@ -137,19 +164,19 @@ public struct AlertCondition: Codable {
     }
 
     init() {
-        self.window = nil
+        window = nil
     }
 }
 
-extension AlertCondition {
-    public init(from decoder: Decoder) throws {
+public extension AlertCondition {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.window = try container.sdkDecodeIfPresent(.window)
+        window = try container.sdkDecodeIfPresent(.window)
     }
 }
 
-extension AlertCondition {
-    public init(window: AlertConditionWindow? = nil) {
+public extension AlertCondition {
+    init(window: AlertConditionWindow? = nil) {
         self.init()
         self.window = window
     }
@@ -163,19 +190,19 @@ public struct AlertRuleCreateRequestVariant1: Codable {
     }
 
     init() {
-        self.spec = nil
+        spec = nil
     }
 }
 
-extension AlertRuleCreateRequestVariant1 {
-    public init(from decoder: Decoder) throws {
+public extension AlertRuleCreateRequestVariant1 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.spec = try container.sdkDecodeIfPresent(.spec)
+        spec = try container.sdkDecodeIfPresent(.spec)
     }
 }
 
-extension AlertRuleCreateRequestVariant1 {
-    public init(spec: AlertRuleCreateRequestVariant1Spec? = nil) {
+public extension AlertRuleCreateRequestVariant1 {
+    init(spec: AlertRuleCreateRequestVariant1Spec? = nil) {
         self.init()
         self.spec = spec
     }
@@ -190,21 +217,27 @@ public struct AlertRuleResponse: Codable {
         case alertRule = "alert_rule"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AlertRuleResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.alertRule) else {
-            throw SdkValidationError(field: "alert_rule", code: "required", message: "Validation failed for 'alert_rule': value is required")
-        }
-        self.alertRule = try container.sdkDecodeRequired(.alertRule)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AlertRuleResponse {
-    public init(alertRule: AlertRule) {
+public extension AlertRuleResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.alertRule) else {
+            throw SdkValidationError(
+                field: "alert_rule",
+                code: "required",
+                message: "Validation failed for 'alert_rule': value is required"
+            )
+        }
+        alertRule = try container.sdkDecodeRequired(.alertRule)
+    }
+}
+
+public extension AlertRuleResponse {
+    init(alertRule: AlertRule) {
         self.alertRule = alertRule
     }
 }
@@ -241,35 +274,56 @@ public struct AlertRuleSpec: Codable {
         case reAlertDuration = "re_alert_duration"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension AlertRuleSpec {
-    public init(from decoder: Decoder) throws {
+public extension AlertRuleSpec {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
         }
         guard container.contains(.query) else {
-            throw SdkValidationError(field: "query", code: "required", message: "Validation failed for 'query': value is required")
+            throw SdkValidationError(
+                field: "query",
+                code: "required",
+                message: "Validation failed for 'query': value is required"
+            )
         }
         guard container.contains(.thresholds) else {
-            throw SdkValidationError(field: "thresholds", code: "required", message: "Validation failed for 'thresholds': value is required")
+            throw SdkValidationError(
+                field: "thresholds",
+                code: "required",
+                message: "Validation failed for 'thresholds': value is required"
+            )
         }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.query = try container.sdkDecodeRequired(.query)
-        self.thresholds = try container.sdkDecodeRequired(.thresholds)
-        self.condition = try container.sdkDecodeIfPresent(.condition)
-        self.notificationChannels = try container.sdkDecodeIfPresent(.notificationChannels)
-        self.reAlertDuration = try container.sdkDecodeIfPresent(.reAlertDuration)
-        if let value = self.notificationChannels {
+        name = try container.sdkDecodeRequired(.name)
+        query = try container.sdkDecodeRequired(.query)
+        thresholds = try container.sdkDecodeRequired(.thresholds)
+        condition = try container.sdkDecodeIfPresent(.condition)
+        notificationChannels = try container.sdkDecodeIfPresent(.notificationChannels)
+        reAlertDuration = try container.sdkDecodeIfPresent(.reAlertDuration)
+        if let value = notificationChannels {
             try validateItems("notification_channels", value, min: 1, max: nil)
         }
     }
 }
 
-extension AlertRuleSpec {
-    public init(name: String, query: MetricsQuery, thresholds: AlertThresholds, condition: AlertCondition? = nil, notificationChannels: [NotificationChannelBinding]? = nil, reAlertDuration: AlertRuleSpecReAlertDuration? = nil) throws {
+public extension AlertRuleSpec {
+    init(
+        name: String,
+        query: MetricsQuery,
+        thresholds: AlertThresholds,
+        condition: AlertCondition? = nil,
+        notificationChannels: [NotificationChannelBinding]? = nil,
+        reAlertDuration: AlertRuleSpecReAlertDuration? = nil
+    ) throws {
         (self.name, self.query) = (name, query)
         (self.thresholds, self.condition) = (thresholds, condition)
         (self.notificationChannels, self.reAlertDuration) = (notificationChannels, reAlertDuration)
@@ -307,46 +361,68 @@ public struct AlertRule: Codable {
         case updatedAt = "updated_at"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AlertRule {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        guard container.contains(.spec) else {
-            throw SdkValidationError(field: "spec", code: "required", message: "Validation failed for 'spec': value is required")
-        }
-        guard container.contains(.status) else {
-            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
-        }
-        guard container.contains(.createdAt) else {
-            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
-        }
-        guard container.contains(.updatedAt) else {
-            throw SdkValidationError(field: "updated_at", code: "required", message: "Validation failed for 'updated_at': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
-        self.spec = try container.sdkDecodeRequired(.spec)
-        self.status = try container.sdkDecodeRequired(.status)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
-            try sdkValidateUuid("id", self.id)
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AlertRule {
-    public init(id: String, spec: AlertRuleSpec, status: AlertRuleStatus, createdAt: Date, updatedAt: Date) throws {
+public extension AlertRule {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        guard container.contains(.spec) else {
+            throw SdkValidationError(
+                field: "spec",
+                code: "required",
+                message: "Validation failed for 'spec': value is required"
+            )
+        }
+        guard container.contains(.status) else {
+            throw SdkValidationError(
+                field: "status",
+                code: "required",
+                message: "Validation failed for 'status': value is required"
+            )
+        }
+        guard container.contains(.createdAt) else {
+            throw SdkValidationError(
+                field: "created_at",
+                code: "required",
+                message: "Validation failed for 'created_at': value is required"
+            )
+        }
+        guard container.contains(.updatedAt) else {
+            throw SdkValidationError(
+                field: "updated_at",
+                code: "required",
+                message: "Validation failed for 'updated_at': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+        spec = try container.sdkDecodeRequired(.spec)
+        status = try container.sdkDecodeRequired(.status)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        updatedAt = try container.sdkDecodeRequired(.updatedAt)
+        try sdkValidateUuid("id", id)
+        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        try sdkValidateDateTime("updated_at", sdkWireString(updatedAt))
+    }
+}
+
+public extension AlertRule {
+    init(id: String, spec: AlertRuleSpec, status: AlertRuleStatus, createdAt: Date, updatedAt: Date) throws {
         (self.id, self.spec) = (id, spec)
         (self.status, self.createdAt) = (status, createdAt)
         self.updatedAt = updatedAt
-            try sdkValidateUuid("id", self.id)
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+        try sdkValidateUuid("id", self.id)
+        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+        try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
@@ -397,67 +473,108 @@ public struct AlertInstance: Codable {
         case lastNotifiedAt = "last_notified_at"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension AlertInstance {
-    public init(from decoder: Decoder) throws {
+public extension AlertInstance {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
         }
         guard container.contains(.ruleId) else {
-            throw SdkValidationError(field: "rule_id", code: "required", message: "Validation failed for 'rule_id': value is required")
+            throw SdkValidationError(
+                field: "rule_id",
+                code: "required",
+                message: "Validation failed for 'rule_id': value is required"
+            )
         }
         guard container.contains(.severity) else {
-            throw SdkValidationError(field: "severity", code: "required", message: "Validation failed for 'severity': value is required")
+            throw SdkValidationError(
+                field: "severity",
+                code: "required",
+                message: "Validation failed for 'severity': value is required"
+            )
         }
         guard container.contains(.status) else {
-            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
+            throw SdkValidationError(
+                field: "status",
+                code: "required",
+                message: "Validation failed for 'status': value is required"
+            )
         }
         guard container.contains(.value) else {
-            throw SdkValidationError(field: "value", code: "required", message: "Validation failed for 'value': value is required")
+            throw SdkValidationError(
+                field: "value",
+                code: "required",
+                message: "Validation failed for 'value': value is required"
+            )
         }
         guard container.contains(.triggeredAt) else {
-            throw SdkValidationError(field: "triggered_at", code: "required", message: "Validation failed for 'triggered_at': value is required")
+            throw SdkValidationError(
+                field: "triggered_at",
+                code: "required",
+                message: "Validation failed for 'triggered_at': value is required"
+            )
         }
         guard container.contains(.lastTriggeredAt) else {
-            throw SdkValidationError(field: "last_triggered_at", code: "required", message: "Validation failed for 'last_triggered_at': value is required")
+            throw SdkValidationError(
+                field: "last_triggered_at",
+                code: "required",
+                message: "Validation failed for 'last_triggered_at': value is required"
+            )
         }
-        self.id = try container.sdkDecodeRequired(.id)
-        self.ruleId = try container.sdkDecodeRequired(.ruleId)
-        self.severity = try container.sdkDecodeRequired(.severity)
-        self.status = try container.sdkDecodeRequired(.status)
-        self.value = try container.sdkDecodeRequired(.value)
-        self.triggeredAt = try container.sdkDecodeRequired(.triggeredAt)
-        self.lastTriggeredAt = try container.sdkDecodeRequired(.lastTriggeredAt)
-        self.resourceUrn = try container.sdkDecodeIfPresent(.resourceUrn)
-        self.resolvedAt = try container.sdkDecodeIfPresent(.resolvedAt)
-        self.lastNotifiedAt = try container.sdkDecodeIfPresent(.lastNotifiedAt)
-            try sdkValidateUuid("id", self.id)
-            try sdkValidateUuid("rule_id", self.ruleId)
-            try sdkValidateDateTime("triggered_at", sdkWireString(self.triggeredAt))
-            try sdkValidateDateTime("last_triggered_at", sdkWireString(self.lastTriggeredAt))
-        if let value = self.resolvedAt {
+        id = try container.sdkDecodeRequired(.id)
+        ruleId = try container.sdkDecodeRequired(.ruleId)
+        severity = try container.sdkDecodeRequired(.severity)
+        status = try container.sdkDecodeRequired(.status)
+        value = try container.sdkDecodeRequired(.value)
+        triggeredAt = try container.sdkDecodeRequired(.triggeredAt)
+        lastTriggeredAt = try container.sdkDecodeRequired(.lastTriggeredAt)
+        resourceUrn = try container.sdkDecodeIfPresent(.resourceUrn)
+        resolvedAt = try container.sdkDecodeIfPresent(.resolvedAt)
+        lastNotifiedAt = try container.sdkDecodeIfPresent(.lastNotifiedAt)
+        try sdkValidateUuid("id", id)
+        try sdkValidateUuid("rule_id", ruleId)
+        try sdkValidateDateTime("triggered_at", sdkWireString(triggeredAt))
+        try sdkValidateDateTime("last_triggered_at", sdkWireString(lastTriggeredAt))
+        if let value = resolvedAt {
             try sdkValidateDateTime("resolved_at", sdkWireString(value))
         }
-        if let value = self.lastNotifiedAt {
+        if let value = lastNotifiedAt {
             try sdkValidateDateTime("last_notified_at", sdkWireString(value))
         }
     }
 }
 
-extension AlertInstance {
-    public init(id: String, ruleId: String, severity: AlertInstanceSeverity, status: AlertInstanceStatus, value: Double, triggeredAt: Date, lastTriggeredAt: Date, resourceUrn: String? = nil, resolvedAt: Date? = nil, lastNotifiedAt: Date? = nil) throws {
+public extension AlertInstance {
+    init(
+        id: String,
+        ruleId: String,
+        severity: AlertInstanceSeverity,
+        status: AlertInstanceStatus,
+        value: Double,
+        triggeredAt: Date,
+        lastTriggeredAt: Date,
+        resourceUrn: String? = nil,
+        resolvedAt: Date? = nil,
+        lastNotifiedAt: Date? = nil
+    ) throws {
         (self.id, self.ruleId) = (id, ruleId)
         (self.severity, self.status) = (severity, status)
         (self.value, self.triggeredAt) = (value, triggeredAt)
         (self.lastTriggeredAt, self.resourceUrn) = (lastTriggeredAt, resourceUrn)
         (self.resolvedAt, self.lastNotifiedAt) = (resolvedAt, lastNotifiedAt)
-            try sdkValidateUuid("id", self.id)
-            try sdkValidateUuid("rule_id", self.ruleId)
-            try sdkValidateDateTime("triggered_at", sdkWireString(self.triggeredAt))
-            try sdkValidateDateTime("last_triggered_at", sdkWireString(self.lastTriggeredAt))
+        try sdkValidateUuid("id", self.id)
+        try sdkValidateUuid("rule_id", self.ruleId)
+        try sdkValidateDateTime("triggered_at", sdkWireString(self.triggeredAt))
+        try sdkValidateDateTime("last_triggered_at", sdkWireString(self.lastTriggeredAt))
         if let value = self.resolvedAt {
             try sdkValidateDateTime("resolved_at", sdkWireString(value))
         }
@@ -480,22 +597,28 @@ public struct AlertRuleCreateRequest: Codable {
         case status
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AlertRuleCreateRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.spec) else {
-            throw SdkValidationError(field: "spec", code: "required", message: "Validation failed for 'spec': value is required")
-        }
-        self.spec = try container.sdkDecodeRequired(.spec)
-        self.status = try container.sdkDecodeIfPresent(.status)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AlertRuleCreateRequest {
-    public init(spec: AlertRuleCreateRequestVariant1Spec, status: AlertRuleRequestStatus? = nil) {
+public extension AlertRuleCreateRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.spec) else {
+            throw SdkValidationError(
+                field: "spec",
+                code: "required",
+                message: "Validation failed for 'spec': value is required"
+            )
+        }
+        spec = try container.sdkDecodeRequired(.spec)
+        status = try container.sdkDecodeIfPresent(.status)
+    }
+}
+
+public extension AlertRuleCreateRequest {
+    init(spec: AlertRuleCreateRequestVariant1Spec, status: AlertRuleRequestStatus? = nil) {
         (self.spec, self.status) = (spec, status)
     }
 }
@@ -509,5 +632,7 @@ public struct AlertInstanceResponse: Codable {
         case alertInstance = "alert_instance"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }

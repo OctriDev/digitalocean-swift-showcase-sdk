@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiUpdate domain models
+/// AgentPlatformAPIApiUpdate domain models
 /// Public parameters for updating a simulation run.
 public struct ApiUpdateSimulationRunInputPublic: Codable {
     /// The new name of the run.
@@ -19,20 +19,20 @@ public struct ApiUpdateSimulationRunInputPublic: Codable {
     }
 
     init() {
-        (self.name, self.runUuid) = (nil, nil)
+        (name, runUuid) = (nil, nil)
     }
 }
 
-extension ApiUpdateSimulationRunInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateSimulationRunInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.runUuid = try container.sdkDecodeIfPresent(.runUuid)
+        name = try container.sdkDecodeIfPresent(.name)
+        runUuid = try container.sdkDecodeIfPresent(.runUuid)
     }
 }
 
-extension ApiUpdateSimulationRunInputPublic {
-    public init(name: String? = nil, runUuid: String? = nil) {
+public extension ApiUpdateSimulationRunInputPublic {
+    init(name: String? = nil, runUuid: String? = nil) {
         self.init()
         (self.name, self.runUuid) = (name, runUuid)
     }
@@ -48,19 +48,19 @@ public struct ApiUpdateSimulationRunOutput: Codable {
     }
 
     init() {
-        self.simulationRun = nil
+        simulationRun = nil
     }
 }
 
-extension ApiUpdateSimulationRunOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateSimulationRunOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.simulationRun = try container.sdkDecodeIfPresent(.simulationRun)
+        simulationRun = try container.sdkDecodeIfPresent(.simulationRun)
     }
 }
 
-extension ApiUpdateSimulationRunOutput {
-    public init(simulationRun: ApiSimulationRun? = nil) {
+public extension ApiUpdateSimulationRunOutput {
+    init(simulationRun: ApiSimulationRun? = nil) {
         self.init()
         self.simulationRun = simulationRun
     }

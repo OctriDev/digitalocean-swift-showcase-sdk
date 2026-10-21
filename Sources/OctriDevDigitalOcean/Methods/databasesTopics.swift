@@ -6,20 +6,42 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DatabasesMethods {
-    /// To list all of a Kafka cluster's topics, send a GET request to `/v2/databases/$DATABASE_ID/topics`. The result will be a JSON object with a `topics` key.
+public extension DatabasesMethods {
+    /// To list all of a Kafka cluster's topics, send a GET request to `/v2/databases/$DATABASE_ID/topics`. The result
+    /// will be a JSON object with a `topics` key.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    public static func databasesListKafkaTopics(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> KafkaTopics {
+    static func databasesListKafkaTopics(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> KafkaTopics {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/topics"].joined(), config: config, decoder: .json, operationId: "databases_list_kafka_topics", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/topics"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "databases_list_kafka_topics",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Creates a Kafka topic attached to a database cluster. Provide `name` in the request body, and optionally configure its replication factor, partition count, and topic settings. A 201 response contains the created topic in a `topic` field.
+    /// Creates a Kafka topic attached to a database cluster. Provide `name` in the request body, and optionally
+    /// configure its replication factor, partition count, and topic settings. A 201 response contains the created topic
+    /// in a `topic` field.
     ///
-    /// To create a topic attached to a Kafka cluster, send a POST request to `/v2/databases/$DATABASE_ID/topics`. The result will be a JSON object with a `topic` key.
+    /// To create a topic attached to a Kafka cluster, send a POST request to `/v2/databases/$DATABASE_ID/topics`. The
+    /// result will be a JSON object with a `topic` key.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
@@ -28,11 +50,39 @@ extension DatabasesMethods {
     ///   cluster.
     /// - partitionCount: The number of partitions available for the topic. On
     ///   update, this value can only be increased.
-    public static func databasesCreateKafkaTopic(config: ClientConfig, databaseClusterUuid: String, name: String, replicationFactor: Int? = nil, partitionCount: Int? = nil, config2: KafkaTopicConfig? = nil, requestOptions: RequestOptions? = nil) async throws -> KafkaTopicResponse {
+    static func databasesCreateKafkaTopic(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        name: String,
+        replicationFactor: Int? = nil,
+        partitionCount: Int? = nil,
+        config2: KafkaTopicConfig? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> KafkaTopicResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        let requestBody = DatabasesCreateKafkaTopicRequestBody(name: name, replicationFactor: replicationFactor, partitionCount: partitionCount, config2: config2)
+        let requestBody = DatabasesCreateKafkaTopicRequestBody(
+            name: name,
+            replicationFactor: replicationFactor,
+            partitionCount: partitionCount,
+            config2: config2
+        )
 
-        return try (await sdkRequest("POST", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/topics"].joined(), config: config, body: requestBody, decoder: .json, operationId: "databases_create_kafka_topic", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/topics"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "databases_create_kafka_topic",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

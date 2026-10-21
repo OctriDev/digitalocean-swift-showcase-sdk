@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DedicatedInference domain models
+/// DedicatedInference domain models
 /// Provider tokens for model access (e.g. gated Hugging Face models).
 public struct DedicatedInferenceUpdateRequestRequestAccessTokens: Codable {
     /// Hugging Face token required for gated models.
@@ -15,19 +15,19 @@ public struct DedicatedInferenceUpdateRequestRequestAccessTokens: Codable {
     }
 
     init() {
-        self.huggingFaceToken = nil
+        huggingFaceToken = nil
     }
 }
 
-extension DedicatedInferenceUpdateRequestRequestAccessTokens {
-    public init(from decoder: Decoder) throws {
+public extension DedicatedInferenceUpdateRequestRequestAccessTokens {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.huggingFaceToken = try container.sdkDecodeIfPresent(.huggingFaceToken)
+        huggingFaceToken = try container.sdkDecodeIfPresent(.huggingFaceToken)
     }
 }
 
-extension DedicatedInferenceUpdateRequestRequestAccessTokens {
-    public init(huggingFaceToken: String? = nil) {
+public extension DedicatedInferenceUpdateRequestRequestAccessTokens {
+    init(huggingFaceToken: String? = nil) {
         self.init()
         self.huggingFaceToken = huggingFaceToken
     }
@@ -46,20 +46,23 @@ public struct DedicatedInferenceUpdateRequestRequest: Codable {
     }
 
     init() {
-        (self.spec, self.accessTokens) = (nil, nil)
+        (spec, accessTokens) = (nil, nil)
     }
 }
 
-extension DedicatedInferenceUpdateRequestRequest {
-    public init(from decoder: Decoder) throws {
+public extension DedicatedInferenceUpdateRequestRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.spec = try container.sdkDecodeIfPresent(.spec)
-        self.accessTokens = try container.sdkDecodeIfPresent(.accessTokens)
+        spec = try container.sdkDecodeIfPresent(.spec)
+        accessTokens = try container.sdkDecodeIfPresent(.accessTokens)
     }
 }
 
-extension DedicatedInferenceUpdateRequestRequest {
-    public init(spec: DedicatedInferenceSpecRequest? = nil, accessTokens: DedicatedInferenceUpdateRequestRequestAccessTokens? = nil) {
+public extension DedicatedInferenceUpdateRequestRequest {
+    init(
+        spec: DedicatedInferenceSpecRequest? = nil,
+        accessTokens: DedicatedInferenceUpdateRequestRequestAccessTokens? = nil
+    ) {
         self.init()
         (self.spec, self.accessTokens) = (spec, accessTokens)
     }
@@ -75,19 +78,19 @@ public struct DedicatedInferenceUpdateAccepted: Codable {
     }
 
     init() {
-        self.dedicatedInference = nil
+        dedicatedInference = nil
     }
 }
 
-extension DedicatedInferenceUpdateAccepted {
-    public init(from decoder: Decoder) throws {
+public extension DedicatedInferenceUpdateAccepted {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.dedicatedInference = try container.sdkDecodeIfPresent(.dedicatedInference)
+        dedicatedInference = try container.sdkDecodeIfPresent(.dedicatedInference)
     }
 }
 
-extension DedicatedInferenceUpdateAccepted {
-    public init(dedicatedInference: DedicatedInference? = nil) {
+public extension DedicatedInferenceUpdateAccepted {
+    init(dedicatedInference: DedicatedInference? = nil) {
         self.init()
         self.dedicatedInference = dedicatedInference
     }

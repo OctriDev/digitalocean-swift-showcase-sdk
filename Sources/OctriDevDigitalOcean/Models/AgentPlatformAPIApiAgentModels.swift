@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiAgent domain models
+/// AgentPlatformAPIApiAgent domain models
 /// Agent Chatbot Identifier
 public struct ApiAgentChatbotIdentifier: Codable {
     /// Agent chatbot identifier
@@ -15,19 +15,19 @@ public struct ApiAgentChatbotIdentifier: Codable {
     }
 
     init() {
-        self.agentChatbotIdentifier = nil
+        agentChatbotIdentifier = nil
     }
 }
 
-extension ApiAgentChatbotIdentifier {
-    public init(from decoder: Decoder) throws {
+public extension ApiAgentChatbotIdentifier {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agentChatbotIdentifier = try container.sdkDecodeIfPresent(.agentChatbotIdentifier)
+        agentChatbotIdentifier = try container.sdkDecodeIfPresent(.agentChatbotIdentifier)
     }
 }
 
-extension ApiAgentChatbotIdentifier {
-    public init(agentChatbotIdentifier: String? = nil) {
+public extension ApiAgentChatbotIdentifier {
+    init(agentChatbotIdentifier: String? = nil) {
         self.init()
         self.agentChatbotIdentifier = agentChatbotIdentifier
     }
@@ -64,31 +64,38 @@ public struct ApiAgentAPIKeyInfo: Codable {
     }
 
     init() {
-        (self.createdAt, self.createdBy, self.deletedAt, self.name, self.secretKey) = (nil, nil, nil, nil, nil)
-        self.uuid = nil
+        (createdAt, createdBy, deletedAt, name, secretKey) = (nil, nil, nil, nil, nil)
+        uuid = nil
     }
 }
 
-extension ApiAgentAPIKeyInfo {
-    public init(from decoder: Decoder) throws {
+public extension ApiAgentAPIKeyInfo {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.createdBy = try container.sdkDecodeIfPresent(.createdBy)
-        self.deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.secretKey = try container.sdkDecodeIfPresent(.secretKey)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
-        if let value = self.createdAt {
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        createdBy = try container.sdkDecodeIfPresent(.createdBy)
+        deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
+        name = try container.sdkDecodeIfPresent(.name)
+        secretKey = try container.sdkDecodeIfPresent(.secretKey)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.deletedAt {
+        if let value = deletedAt {
             try sdkValidateDateTime("deleted_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiAgentAPIKeyInfo {
-    public init(createdAt: Date? = nil, createdBy: String? = nil, deletedAt: Date? = nil, name: String? = nil, secretKey: String? = nil, uuid: String? = nil) throws {
+public extension ApiAgentAPIKeyInfo {
+    init(
+        createdAt: Date? = nil,
+        createdBy: String? = nil,
+        deletedAt: Date? = nil,
+        name: String? = nil,
+        secretKey: String? = nil,
+        uuid: String? = nil
+    ) throws {
         self.init()
         (self.createdAt, self.createdBy) = (createdAt, createdBy)
         (self.deletedAt, self.name) = (deletedAt, name)
@@ -117,20 +124,20 @@ public struct ApiAgentGuardrailInput: Codable {
     }
 
     init() {
-        (self.guardrailUuid, self.priority) = (nil, nil)
+        (guardrailUuid, priority) = (nil, nil)
     }
 }
 
-extension ApiAgentGuardrailInput {
-    public init(from decoder: Decoder) throws {
+public extension ApiAgentGuardrailInput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.guardrailUuid = try container.sdkDecodeIfPresent(.guardrailUuid)
-        self.priority = try container.sdkDecodeIfPresent(.priority)
+        guardrailUuid = try container.sdkDecodeIfPresent(.guardrailUuid)
+        priority = try container.sdkDecodeIfPresent(.priority)
     }
 }
 
-extension ApiAgentGuardrailInput {
-    public init(guardrailUuid: String? = nil, priority: Int? = nil) {
+public extension ApiAgentGuardrailInput {
+    init(guardrailUuid: String? = nil, priority: Int? = nil) {
         self.init()
         (self.guardrailUuid, self.priority) = (guardrailUuid, priority)
     }
@@ -278,67 +285,102 @@ public struct ApiAgentPublic: Codable {
     }
 
     init() {
-        (self.chatbot, self.chatbotIdentifiers, self.createdAt, self.deployment, self.description) = (nil, nil, nil, nil, nil)
-        (self.ifCase, self.instruction, self.k, self.maxTokens, self.mcpServers) = (nil, nil, nil, nil, nil)
-        (self.model, self.modelRouter, self.name, self.projectId, self.provideCitations) = (nil, nil, nil, nil, nil)
-        (self.reasoningEffort, self.region, self.retrievalMethod, self.routeCreatedAt, self.routeCreatedBy) = (nil, nil, nil, nil, nil)
-        (self.routeName, self.routeUuid, self.tags, self.temperature, self.template) = (nil, nil, nil, nil, nil)
-        (self.thinkingTokenBudget, self.topP, self.updatedAt, self.url, self.userId) = (nil, nil, nil, nil, nil)
-        (self.uuid, self.versionHash, self.webFetchEnabled, self.webSearchEnabled) = (nil, nil, nil, nil)
+        (chatbot, chatbotIdentifiers, createdAt, deployment, description) = (nil, nil, nil, nil, nil)
+        (ifCase, instruction, k, maxTokens, mcpServers) = (nil, nil, nil, nil, nil)
+        (model, modelRouter, name, projectId, provideCitations) = (nil, nil, nil, nil, nil)
+        (reasoningEffort, region, retrievalMethod, routeCreatedAt, routeCreatedBy) = (nil, nil, nil, nil, nil)
+        (routeName, routeUuid, tags, temperature, template) = (nil, nil, nil, nil, nil)
+        (thinkingTokenBudget, topP, updatedAt, url, userId) = (nil, nil, nil, nil, nil)
+        (uuid, versionHash, webFetchEnabled, webSearchEnabled) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiAgentPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiAgentPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.chatbot = try container.sdkDecodeIfPresent(.chatbot)
-        self.chatbotIdentifiers = try container.sdkDecodeIfPresent(.chatbotIdentifiers)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.deployment = try container.sdkDecodeIfPresent(.deployment)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.ifCase = try container.sdkDecodeIfPresent(.ifCase)
-        self.instruction = try container.sdkDecodeIfPresent(.instruction)
-        self.k = try container.sdkDecodeIfPresent(.k)
-        self.maxTokens = try container.sdkDecodeIfPresent(.maxTokens)
-        self.mcpServers = try container.sdkDecodeIfPresent(.mcpServers)
-        self.model = try container.sdkDecodeIfPresent(.model)
-        self.modelRouter = try container.sdkDecodeIfPresent(.modelRouter)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.projectId = try container.sdkDecodeIfPresent(.projectId)
-        self.provideCitations = try container.sdkDecodeIfPresent(.provideCitations)
-        self.reasoningEffort = try container.sdkDecodeIfPresent(.reasoningEffort)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.retrievalMethod = try container.sdkDecodeIfPresent(.retrievalMethod)
-        self.routeCreatedAt = try container.sdkDecodeIfPresent(.routeCreatedAt)
-        self.routeCreatedBy = try container.sdkDecodeIfPresent(.routeCreatedBy)
-        self.routeName = try container.sdkDecodeIfPresent(.routeName)
-        self.routeUuid = try container.sdkDecodeIfPresent(.routeUuid)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.temperature = try container.sdkDecodeIfPresent(.temperature)
-        self.template = try container.sdkDecodeIfPresent(.template)
-        self.thinkingTokenBudget = try container.sdkDecodeIfPresent(.thinkingTokenBudget)
-        self.topP = try container.sdkDecodeIfPresent(.topP)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.url = try container.sdkDecodeIfPresent(.url)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
-        self.versionHash = try container.sdkDecodeIfPresent(.versionHash)
-        self.webFetchEnabled = try container.sdkDecodeIfPresent(.webFetchEnabled)
-        self.webSearchEnabled = try container.sdkDecodeIfPresent(.webSearchEnabled)
-        if let value = self.createdAt {
+        chatbot = try container.sdkDecodeIfPresent(.chatbot)
+        chatbotIdentifiers = try container.sdkDecodeIfPresent(.chatbotIdentifiers)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        deployment = try container.sdkDecodeIfPresent(.deployment)
+        description = try container.sdkDecodeIfPresent(.description)
+        ifCase = try container.sdkDecodeIfPresent(.ifCase)
+        instruction = try container.sdkDecodeIfPresent(.instruction)
+        k = try container.sdkDecodeIfPresent(.k)
+        maxTokens = try container.sdkDecodeIfPresent(.maxTokens)
+        mcpServers = try container.sdkDecodeIfPresent(.mcpServers)
+        model = try container.sdkDecodeIfPresent(.model)
+        modelRouter = try container.sdkDecodeIfPresent(.modelRouter)
+        name = try container.sdkDecodeIfPresent(.name)
+        projectId = try container.sdkDecodeIfPresent(.projectId)
+        provideCitations = try container.sdkDecodeIfPresent(.provideCitations)
+        reasoningEffort = try container.sdkDecodeIfPresent(.reasoningEffort)
+        region = try container.sdkDecodeIfPresent(.region)
+        retrievalMethod = try container.sdkDecodeIfPresent(.retrievalMethod)
+        routeCreatedAt = try container.sdkDecodeIfPresent(.routeCreatedAt)
+        routeCreatedBy = try container.sdkDecodeIfPresent(.routeCreatedBy)
+        routeName = try container.sdkDecodeIfPresent(.routeName)
+        routeUuid = try container.sdkDecodeIfPresent(.routeUuid)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        temperature = try container.sdkDecodeIfPresent(.temperature)
+        template = try container.sdkDecodeIfPresent(.template)
+        thinkingTokenBudget = try container.sdkDecodeIfPresent(.thinkingTokenBudget)
+        topP = try container.sdkDecodeIfPresent(.topP)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        url = try container.sdkDecodeIfPresent(.url)
+        userId = try container.sdkDecodeIfPresent(.userId)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
+        versionHash = try container.sdkDecodeIfPresent(.versionHash)
+        webFetchEnabled = try container.sdkDecodeIfPresent(.webFetchEnabled)
+        webSearchEnabled = try container.sdkDecodeIfPresent(.webSearchEnabled)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.routeCreatedAt {
+        if let value = routeCreatedAt {
             try sdkValidateDateTime("route_created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiAgentPublic {
-    public init(chatbot: ApiChatbot? = nil, chatbotIdentifiers: [ApiAgentChatbotIdentifier]? = nil, createdAt: Date? = nil, deployment: ApiDeployment? = nil, description: String? = nil, ifCase: String? = nil, instruction: String? = nil, k: Int? = nil, maxTokens: Int? = nil, mcpServers: [ApiMcpServer]? = nil, model: ApiModel? = nil, modelRouter: ApiModelRouter? = nil, name: String? = nil, projectId: String? = nil, provideCitations: Bool? = nil, reasoningEffort: String? = nil, region: String? = nil, retrievalMethod: ApiRetrievalMethod? = nil, routeCreatedAt: Date? = nil, routeCreatedBy: String? = nil, routeName: String? = nil, routeUuid: String? = nil, tags: [String]? = nil, temperature: Double? = nil, template: ApiAgentTemplate? = nil, thinkingTokenBudget: Int? = nil, topP: Double? = nil, updatedAt: Date? = nil, url: String? = nil, userId: String? = nil, uuid: String? = nil, versionHash: String? = nil, webFetchEnabled: Bool? = nil, webSearchEnabled: Bool? = nil) throws {
+public extension ApiAgentPublic {
+    init(
+        chatbot: ApiChatbot? = nil,
+        chatbotIdentifiers: [ApiAgentChatbotIdentifier]? = nil,
+        createdAt: Date? = nil,
+        deployment: ApiDeployment? = nil,
+        description: String? = nil,
+        ifCase: String? = nil,
+        instruction: String? = nil,
+        k: Int? = nil,
+        maxTokens: Int? = nil,
+        mcpServers: [ApiMcpServer]? = nil,
+        model: ApiModel? = nil,
+        modelRouter: ApiModelRouter? = nil,
+        name: String? = nil,
+        projectId: String? = nil,
+        provideCitations: Bool? = nil,
+        reasoningEffort: String? = nil,
+        region: String? = nil,
+        retrievalMethod: ApiRetrievalMethod? = nil,
+        routeCreatedAt: Date? = nil,
+        routeCreatedBy: String? = nil,
+        routeName: String? = nil,
+        routeUuid: String? = nil,
+        tags: [String]? = nil,
+        temperature: Double? = nil,
+        template: ApiAgentTemplate? = nil,
+        thinkingTokenBudget: Int? = nil,
+        topP: Double? = nil,
+        updatedAt: Date? = nil,
+        url: String? = nil,
+        userId: String? = nil,
+        uuid: String? = nil,
+        versionHash: String? = nil,
+        webFetchEnabled: Bool? = nil,
+        webSearchEnabled: Bool? = nil
+    ) throws {
         self.init()
         (self.chatbot, self.chatbotIdentifiers) = (chatbot, chatbotIdentifiers)
         (self.createdAt, self.deployment) = (createdAt, deployment)
@@ -380,19 +422,19 @@ public struct ApiAgentAPIKey: Codable {
     }
 
     init() {
-        self.apiKey = nil
+        apiKey = nil
     }
 }
 
-extension ApiAgentAPIKey {
-    public init(from decoder: Decoder) throws {
+public extension ApiAgentAPIKey {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKey = try container.sdkDecodeIfPresent(.apiKey)
+        apiKey = try container.sdkDecodeIfPresent(.apiKey)
     }
 }
 
-extension ApiAgentAPIKey {
-    public init(apiKey: String? = nil) {
+public extension ApiAgentAPIKey {
+    init(apiKey: String? = nil) {
         self.init()
         self.apiKey = apiKey
     }
@@ -417,21 +459,21 @@ public struct ApiAgentKnowledgeBaseVersion: Codable {
     }
 
     init() {
-        (self.isDeleted, self.name, self.uuid) = (nil, nil, nil)
+        (isDeleted, name, uuid) = (nil, nil, nil)
     }
 }
 
-extension ApiAgentKnowledgeBaseVersion {
-    public init(from decoder: Decoder) throws {
+public extension ApiAgentKnowledgeBaseVersion {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.isDeleted = try container.sdkDecodeIfPresent(.isDeleted)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        isDeleted = try container.sdkDecodeIfPresent(.isDeleted)
+        name = try container.sdkDecodeIfPresent(.name)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
     }
 }
 
-extension ApiAgentKnowledgeBaseVersion {
-    public init(isDeleted: Bool? = nil, name: String? = nil, uuid: String? = nil) {
+public extension ApiAgentKnowledgeBaseVersion {
+    init(isDeleted: Bool? = nil, name: String? = nil, uuid: String? = nil) {
         self.init()
         (self.isDeleted, self.name) = (isDeleted, name)
         self.uuid = uuid
@@ -461,22 +503,22 @@ public struct ApiAgentGuardrailVersion: Codable {
     }
 
     init() {
-        (self.isDeleted, self.name, self.priority, self.uuid) = (nil, nil, nil, nil)
+        (isDeleted, name, priority, uuid) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiAgentGuardrailVersion {
-    public init(from decoder: Decoder) throws {
+public extension ApiAgentGuardrailVersion {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.isDeleted = try container.sdkDecodeIfPresent(.isDeleted)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.priority = try container.sdkDecodeIfPresent(.priority)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        isDeleted = try container.sdkDecodeIfPresent(.isDeleted)
+        name = try container.sdkDecodeIfPresent(.name)
+        priority = try container.sdkDecodeIfPresent(.priority)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
     }
 }
 
-extension ApiAgentGuardrailVersion {
-    public init(isDeleted: Bool? = nil, name: String? = nil, priority: Int? = nil, uuid: String? = nil) {
+public extension ApiAgentGuardrailVersion {
+    init(isDeleted: Bool? = nil, name: String? = nil, priority: Int? = nil, uuid: String? = nil) {
         self.init()
         (self.isDeleted, self.name) = (isDeleted, name)
         (self.priority, self.uuid) = (priority, uuid)
@@ -541,8 +583,8 @@ public struct ApiAgentGuardrail: Codable {
     }
 
     init() {
-        (self.agentUuid, self.createdAt, self.defaultResponse, self.description, self.guardrailUuid) = (nil, nil, nil, nil, nil)
-        (self.isAttached, self.isDefault, self.metadata, self.name, self.priority) = (nil, nil, nil, nil, nil)
-        (self.type, self.updatedAt, self.uuid) = (nil, nil, nil)
+        (agentUuid, createdAt, defaultResponse, description, guardrailUuid) = (nil, nil, nil, nil, nil)
+        (isAttached, isDefault, metadata, name, priority) = (nil, nil, nil, nil, nil)
+        (type, updatedAt, uuid) = (nil, nil, nil)
     }
 }

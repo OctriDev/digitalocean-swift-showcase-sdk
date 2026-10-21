@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AppsApps domain models
+/// AppsApps domain models
 /// Typed representation of the `AppsValidateRollback` API schema.
 public struct AppsValidateRollback: Codable {
     /// Indicates whether the app can be rolled back to the specified deployment.
@@ -20,21 +20,25 @@ public struct AppsValidateRollback: Codable {
     }
 
     init() {
-        (self.valid, self.error, self.warnings) = (nil, nil, nil)
+        (valid, error, warnings) = (nil, nil, nil)
     }
 }
 
-extension AppsValidateRollback {
-    public init(from decoder: Decoder) throws {
+public extension AppsValidateRollback {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.valid = try container.sdkDecodeIfPresent(.valid)
-        self.error = try container.sdkDecodeIfPresent(.error)
-        self.warnings = try container.sdkDecodeIfPresent(.warnings)
+        valid = try container.sdkDecodeIfPresent(.valid)
+        error = try container.sdkDecodeIfPresent(.error)
+        warnings = try container.sdkDecodeIfPresent(.warnings)
     }
 }
 
-extension AppsValidateRollback {
-    public init(valid: Bool? = nil, error: AppRollbackValidationCondition? = nil, warnings: [AppRollbackValidationCondition]? = nil) {
+public extension AppsValidateRollback {
+    init(
+        valid: Bool? = nil,
+        error: AppRollbackValidationCondition? = nil,
+        warnings: [AppRollbackValidationCondition]? = nil
+    ) {
         self.init()
         (self.valid, self.error) = (valid, error)
         self.warnings = warnings

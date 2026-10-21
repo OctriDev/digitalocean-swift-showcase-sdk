@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiUpdate domain models
+/// AgentPlatformAPIApiUpdate domain models
 /// The updated agent
 public struct ApiUpdateAgentFunctionOutput: Codable {
     /// An Agent
@@ -14,19 +14,19 @@ public struct ApiUpdateAgentFunctionOutput: Codable {
     }
 
     init() {
-        self.agent = nil
+        agent = nil
     }
 }
 
-extension ApiUpdateAgentFunctionOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateAgentFunctionOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agent = try container.sdkDecodeIfPresent(.agent)
+        agent = try container.sdkDecodeIfPresent(.agent)
     }
 }
 
-extension ApiUpdateAgentFunctionOutput {
-    public init(agent: ApiAgent? = nil) {
+public extension ApiUpdateAgentFunctionOutput {
+    init(agent: ApiAgent? = nil) {
         self.init()
         self.agent = agent
     }
@@ -69,27 +69,36 @@ public struct ApiUpdateAgentFunctionInputPublic: Codable {
     }
 
     init() {
-        (self.agentUuid, self.description, self.faasName, self.faasNamespace, self.functionName) = (nil, nil, nil, nil, nil)
-        (self.functionUuid, self.inputSchema, self.outputSchema) = (nil, nil, nil)
+        (agentUuid, description, faasName, faasNamespace, functionName) = (nil, nil, nil, nil, nil)
+        (functionUuid, inputSchema, outputSchema) = (nil, nil, nil)
     }
 }
 
-extension ApiUpdateAgentFunctionInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateAgentFunctionInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.faasName = try container.sdkDecodeIfPresent(.faasName)
-        self.faasNamespace = try container.sdkDecodeIfPresent(.faasNamespace)
-        self.functionName = try container.sdkDecodeIfPresent(.functionName)
-        self.functionUuid = try container.sdkDecodeIfPresent(.functionUuid)
-        self.inputSchema = try container.sdkDecodeIfPresent(.inputSchema)
-        self.outputSchema = try container.sdkDecodeIfPresent(.outputSchema)
+        agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
+        description = try container.sdkDecodeIfPresent(.description)
+        faasName = try container.sdkDecodeIfPresent(.faasName)
+        faasNamespace = try container.sdkDecodeIfPresent(.faasNamespace)
+        functionName = try container.sdkDecodeIfPresent(.functionName)
+        functionUuid = try container.sdkDecodeIfPresent(.functionUuid)
+        inputSchema = try container.sdkDecodeIfPresent(.inputSchema)
+        outputSchema = try container.sdkDecodeIfPresent(.outputSchema)
     }
 }
 
-extension ApiUpdateAgentFunctionInputPublic {
-    public init(agentUuid: String? = nil, description: String? = nil, faasName: String? = nil, faasNamespace: String? = nil, functionName: String? = nil, functionUuid: String? = nil, inputSchema: [String: JSONValue]? = nil, outputSchema: [String: JSONValue]? = nil) {
+public extension ApiUpdateAgentFunctionInputPublic {
+    init(
+        agentUuid: String? = nil,
+        description: String? = nil,
+        faasName: String? = nil,
+        faasNamespace: String? = nil,
+        functionName: String? = nil,
+        functionUuid: String? = nil,
+        inputSchema: [String: JSONValue]? = nil,
+        outputSchema: [String: JSONValue]? = nil
+    ) {
         self.init()
         (self.agentUuid, self.description) = (agentUuid, description)
         (self.faasName, self.faasNamespace) = (faasName, faasNamespace)

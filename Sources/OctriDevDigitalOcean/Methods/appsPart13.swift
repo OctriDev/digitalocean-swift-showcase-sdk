@@ -6,8 +6,11 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AppsMethods {
-    /// Retrieve the logs of the active deployment if one exists. The response will include links to either real-time logs of an in-progress or active deployment or archived logs of a past deployment. Note log_type=BUILD logs will return logs associated with the current active deployment (being served). To view build logs associated with in-progress build, the query must explicitly reference the deployment id.
+public extension AppsMethods {
+    /// Retrieve the logs of the active deployment if one exists. The response will include links to either real-time
+    /// logs of an in-progress or active deployment or archived logs of a past deployment. Note log_type=BUILD logs will
+    /// return logs associated with the current active deployment (being served). To view build logs associated with
+    /// in-progress build, the query must explicitly reference the deployment id.
     ///
     /// - Parameters:
     /// - appId: The app ID
@@ -18,11 +21,33 @@ extension AppsMethods {
     /// - follow: Whether the logs should follow live updates.
     /// - podConnectionTimeout: An optional time duration to wait if the underlying
     ///   component instance is not immediately available. Default: `3m`.
-    public static func appsGetLogsActiveDeploymentAggregate(config: ClientConfig, appId: String, type: AppsGetLogsActiveDeploymentParameter, follow: Bool? = nil, podConnectionTimeout: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsGetLogsResponse {
-        return try (await sdkRequest("GET", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/logs"].joined(), config: config, query: [
-            SdkQueryParameter("type", value: type),
-            SdkQueryParameter("follow", value: follow),
-            SdkQueryParameter("pod_connection_timeout", value: podConnectionTimeout),
-        ], decoder: .json, operationId: "apps_get_logs_active_deployment_aggregate", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func appsGetLogsActiveDeploymentAggregate(
+        config: ClientConfig,
+        appId: String,
+        type: AppsGetLogsActiveDeploymentParameter,
+        follow: Bool? = nil,
+        podConnectionTimeout: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppsGetLogsResponse {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/logs"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("type", value: type),
+                SdkQueryParameter("follow", value: follow),
+                SdkQueryParameter("pod_connection_timeout", value: podConnectionTimeout),
+            ],
+            decoder: .json,
+            operationId: "apps_get_logs_active_deployment_aggregate",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

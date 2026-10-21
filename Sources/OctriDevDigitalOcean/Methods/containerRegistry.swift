@@ -8,15 +8,34 @@ import Foundation
 #endif
 public enum ContainerRegistryMethods {}
 
-extension ContainerRegistryMethods {
-    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To get information about your container registry, send a GET request to `/v2/registry`. This operation is not compatible with multiple registries in a DO account. You should use `/v2/registries/{registry_name}` instead.
+public extension ContainerRegistryMethods {
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To get information
+    /// about your container registry, send a GET request to `/v2/registry`. This operation is not compatible with
+    /// multiple registries in a DO account. You should use `/v2/registries/{registry_name}` instead.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    public static func registryGet(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> RegistryInfo {
-        return try (await sdkRequest("GET", "/v2/registry", config: config, decoder: .json, operationId: "registry_get", options: requestOptions, errors: ["401": Error2.self, "412": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func registryGet(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> RegistryInfo {
+        try await (sdkRequest(
+            "GET",
+            "/v2/registry",
+            config: config,
+            decoder: .json,
+            operationId: "registry_get",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "412": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To create your container registry, send a POST request to `/v2/registry`. The `name` becomes part of the URL for images stored in the registry. For example, if your registry is called `example`, an image in it will have the URL `registry.digitalocean.com/example/image:tag`.
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To create your
+    /// container registry, send a POST request to `/v2/registry`. The `name` becomes part of the URL for images stored
+    /// in the registry. For example, if your registry is called `example`, an image in it will have the URL
+    /// `registry.digitalocean.com/example/image:tag`.
     ///
     /// - Parameters:
     /// - name: A globally unique name for the container registry. Must be lowercase
@@ -28,12 +47,31 @@ extension ContainerRegistryMethods {
     ///   provided, a region will be selected.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    public static func registryCreate(config: ClientConfig, name: String, subscriptionTierSlug: RegistryCreateSubscriptionTierSlug, region: RegistryCreateRegion? = nil, requestOptions: RequestOptions? = nil) async throws -> RegistryInfo {
+    static func registryCreate(
+        config: ClientConfig,
+        name: String,
+        subscriptionTierSlug: RegistryCreateSubscriptionTierSlug,
+        region: RegistryCreateRegion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RegistryInfo {
         try validateLength("name", name, max: 63)
         try sdkValidatePattern("name", name, sdkPattern41dd286f4dc3)
 
-        let requestBody = RegistryCreateRequestBody(name: name, subscriptionTierSlug: subscriptionTierSlug, region: region)
+        let requestBody = RegistryCreateRequestBody(
+            name: name,
+            subscriptionTierSlug: subscriptionTierSlug,
+            region: region
+        )
 
-        return try (await sdkRequest("POST", "/v2/registry", config: config, body: requestBody, decoder: .json, operationId: "registry_create", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/registry",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "registry_create",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

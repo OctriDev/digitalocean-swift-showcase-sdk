@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension HarnessRuntimeMethods {
-    public struct HarnessUpdateTriggerOptions: Codable {
+public extension HarnessRuntimeMethods {
+    struct HarnessUpdateTriggerOptions: Codable {
         public var triggerId: String
         public var name: String?
         public var status: TriggerStatus?
@@ -22,9 +22,16 @@ extension HarnessRuntimeMethods {
         }
     }
 
-    /// Updates a trigger's mutable settings, including its name, status, prompt template, output configuration, session configuration, and schedule. Supply only the fields you want to change; `kind` and `webhook.provider` cannot be changed, and updating `session_template` replaces the stored template. Re-enabling a trigger does not produce a catch-up run, and schedule changes recompute `next_run_at`.
+    /// Updates a trigger's mutable settings, including its name, status, prompt template, output configuration, session
+    /// configuration, and schedule. Supply only the fields you want to change; `kind` and `webhook.provider` cannot be
+    /// changed, and updating `session_template` replaces the stored template. Re-enabling a trigger does not produce a
+    /// catch-up run, and schedule changes recompute `next_run_at`.
     ///
-    /// Partial update: only the supplied fields change. `kind` and `webhook.provider` are immutable (409 on change). Mutable: `name` (409 on duplicate), `status` (active<->paused), `prompt_template`, `output`, `session_template` (fresh), `bound_session_id` (reuse), `cron.cron_expr` / `cron.timezone` (recomputes next_run_at). Re-enabling never produces a catch-up run. PATCHing session_template is a full replacement, so every spec.secrets slot value the new manifest declares must be resupplied (secret values are never echoed back), or the request is a 400.
+    /// Partial update: only the supplied fields change. `kind` and `webhook.provider` are immutable (409 on change).
+    /// Mutable: `name` (409 on duplicate), `status` (active<->paused), `prompt_template`, `output`, `session_template`
+    /// (fresh), `bound_session_id` (reuse), `cron.cron_expr` / `cron.timezone` (recomputes next_run_at). Re-enabling
+    /// never produces a catch-up run. PATCHing session_template is a full replacement, so every spec.secrets slot value
+    /// the new manifest declares must be resupplied (secret values are never echoed back), or the request is a 400.
     ///
     /// - Parameters:
     /// - triggerId: The trigger UUID.
@@ -42,7 +49,11 @@ extension HarnessRuntimeMethods {
     /// - boundSessionId: reuse triggers only. UUID of an existing session owned by
     ///   the team.
     /// - cron: cron block on create.
-    public static func harnessUpdateTrigger(config: ClientConfig, options: HarnessUpdateTriggerOptions, requestOptions: RequestOptions? = nil) async throws -> GetTriggerResponse {
+    static func harnessUpdateTrigger(
+        config: ClientConfig,
+        options: HarnessUpdateTriggerOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetTriggerResponse {
         if let name = options.name {
             try validateLength("name", name, min: 1, max: 64)
             try sdkValidatePattern("name", name, sdkPatternd6415432f58a)
@@ -54,6 +65,27 @@ extension HarnessRuntimeMethods {
 
         let requestBody = HarnessUpdateTriggerRequestBody(options: options)
 
-        return try (await sdkRequest("PATCH", ["/v2/agents/triggers/", sdkEncodePathSegment(sdkWireString(options.triggerId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "harness_update_trigger", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "403": Error2.self, "404": Error2.self, "409": Error2.self, "422": Error2.self, "429": Error2.self, "500": Error2.self, "502": Error2.self, "503": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PATCH",
+            ["/v2/agents/triggers/", sdkEncodePathSegment(sdkWireString(options.triggerId))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "harness_update_trigger",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "403": Error2.self,
+                "404": Error2.self,
+                "409": Error2.self,
+                "422": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "502": Error2.self,
+                "503": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

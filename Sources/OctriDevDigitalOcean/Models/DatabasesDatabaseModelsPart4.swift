@@ -3,16 +3,16 @@
 
 import Foundation
 
-// DatabasesDatabase domain models
+/// DatabasesDatabase domain models
 /// Typed representation of the `DatabaseConnectionRequest` API schema.
 public struct DatabaseConnectionRequest: Codable {
-
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension DatabaseConnectionRequest {
-    public init() {
-    }
+public extension DatabaseConnectionRequest {
+    init() {}
 }
 
 /// Typed representation of the `DatabaseClusterResize` API schema.
@@ -35,26 +35,36 @@ public struct DatabaseClusterResize: Codable {
         case storageSizeMib = "storage_size_mib"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DatabaseClusterResize {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.size) else {
-            throw SdkValidationError(field: "size", code: "required", message: "Validation failed for 'size': value is required")
-        }
-        guard container.contains(.numNodes) else {
-            throw SdkValidationError(field: "num_nodes", code: "required", message: "Validation failed for 'num_nodes': value is required")
-        }
-        self.size = try container.sdkDecodeRequired(.size)
-        self.numNodes = try container.sdkDecodeRequired(.numNodes)
-        self.storageSizeMib = try container.sdkDecodeIfPresent(.storageSizeMib)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DatabaseClusterResize {
-    public init(size: String, numNodes: Int, storageSizeMib: Int? = nil) {
+public extension DatabaseClusterResize {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.size) else {
+            throw SdkValidationError(
+                field: "size",
+                code: "required",
+                message: "Validation failed for 'size': value is required"
+            )
+        }
+        guard container.contains(.numNodes) else {
+            throw SdkValidationError(
+                field: "num_nodes",
+                code: "required",
+                message: "Validation failed for 'num_nodes': value is required"
+            )
+        }
+        size = try container.sdkDecodeRequired(.size)
+        numNodes = try container.sdkDecodeRequired(.numNodes)
+        storageSizeMib = try container.sdkDecodeIfPresent(.storageSizeMib)
+    }
+}
+
+public extension DatabaseClusterResize {
+    init(size: String, numNodes: Int, storageSizeMib: Int? = nil) {
         (self.size, self.numNodes) = (size, numNodes)
         self.storageSizeMib = storageSizeMib
     }
@@ -82,27 +92,37 @@ public struct DatabaseMaintenanceWindow: Codable {
         case description
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DatabaseMaintenanceWindow {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.day) else {
-            throw SdkValidationError(field: "day", code: "required", message: "Validation failed for 'day': value is required")
-        }
-        guard container.contains(.hour) else {
-            throw SdkValidationError(field: "hour", code: "required", message: "Validation failed for 'hour': value is required")
-        }
-        self.day = try container.sdkDecodeRequired(.day)
-        self.hour = try container.sdkDecodeRequired(.hour)
-        self.pending = try container.sdkDecodeIfPresent(.pending)
-        self.description = try container.sdkDecodeIfPresent(.description)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DatabaseMaintenanceWindow {
-    public init(day: String, hour: String, pending: Bool? = nil, description: [String]? = nil) {
+public extension DatabaseMaintenanceWindow {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.day) else {
+            throw SdkValidationError(
+                field: "day",
+                code: "required",
+                message: "Validation failed for 'day': value is required"
+            )
+        }
+        guard container.contains(.hour) else {
+            throw SdkValidationError(
+                field: "hour",
+                code: "required",
+                message: "Validation failed for 'hour': value is required"
+            )
+        }
+        day = try container.sdkDecodeRequired(.day)
+        hour = try container.sdkDecodeRequired(.hour)
+        pending = try container.sdkDecodeIfPresent(.pending)
+        description = try container.sdkDecodeIfPresent(.description)
+    }
+}
+
+public extension DatabaseMaintenanceWindow {
+    init(day: String, hour: String, pending: Bool? = nil, description: [String]? = nil) {
         (self.day, self.hour) = (day, hour)
         (self.pending, self.description) = (pending, description)
     }
@@ -130,27 +150,37 @@ public struct DatabaseClusterReadMaintenanceWindow: Codable {
         case description
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DatabaseClusterReadMaintenanceWindow {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.day) else {
-            throw SdkValidationError(field: "day", code: "required", message: "Validation failed for 'day': value is required")
-        }
-        guard container.contains(.hour) else {
-            throw SdkValidationError(field: "hour", code: "required", message: "Validation failed for 'hour': value is required")
-        }
-        self.day = try container.sdkDecodeRequired(.day)
-        self.hour = try container.sdkDecodeRequired(.hour)
-        self.pending = try container.sdkDecodeIfPresent(.pending)
-        self.description = try container.sdkDecodeIfPresent(.description)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DatabaseClusterReadMaintenanceWindow {
-    public init(day: String, hour: String, pending: Bool? = nil, description: [String]? = nil) {
+public extension DatabaseClusterReadMaintenanceWindow {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.day) else {
+            throw SdkValidationError(
+                field: "day",
+                code: "required",
+                message: "Validation failed for 'day': value is required"
+            )
+        }
+        guard container.contains(.hour) else {
+            throw SdkValidationError(
+                field: "hour",
+                code: "required",
+                message: "Validation failed for 'hour': value is required"
+            )
+        }
+        day = try container.sdkDecodeRequired(.day)
+        hour = try container.sdkDecodeRequired(.hour)
+        pending = try container.sdkDecodeIfPresent(.pending)
+        description = try container.sdkDecodeIfPresent(.description)
+    }
+}
+
+public extension DatabaseClusterReadMaintenanceWindow {
+    init(day: String, hour: String, pending: Bool? = nil, description: [String]? = nil) {
         (self.day, self.hour) = (day, hour)
         (self.pending, self.description) = (pending, description)
     }
@@ -166,19 +196,19 @@ public struct DatabaseMetricsCredentials: Codable {
     }
 
     init() {
-        self.credentials = nil
+        credentials = nil
     }
 }
 
-extension DatabaseMetricsCredentials {
-    public init(from decoder: Decoder) throws {
+public extension DatabaseMetricsCredentials {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.credentials = try container.sdkDecodeIfPresent(.credentials)
+        credentials = try container.sdkDecodeIfPresent(.credentials)
     }
 }
 
-extension DatabaseMetricsCredentials {
-    public init(credentials: DatabasesBasicAuthCredentials? = nil) {
+public extension DatabaseMetricsCredentials {
+    init(credentials: DatabasesBasicAuthCredentials? = nil) {
         self.init()
         self.credentials = credentials
     }
@@ -201,23 +231,33 @@ public struct DatabaseBackups: Codable {
         case backupProgress = "backup_progress"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DatabaseBackups {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.backups) else {
-            throw SdkValidationError(field: "backups", code: "required", message: "Validation failed for 'backups': value is required")
-        }
-        self.backups = try container.sdkDecodeRequired(.backups)
-        self.scheduledBackupTime = try container.sdkDecodeIfPresent(.scheduledBackupTime)
-        self.backupProgress = try container.sdkDecodeIfPresent(.backupProgress)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DatabaseBackups {
-    public init(backups: [Backup], scheduledBackupTime: DatabaseBackupsScheduledBackupTime? = nil, backupProgress: String? = nil) {
+public extension DatabaseBackups {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.backups) else {
+            throw SdkValidationError(
+                field: "backups",
+                code: "required",
+                message: "Validation failed for 'backups': value is required"
+            )
+        }
+        backups = try container.sdkDecodeRequired(.backups)
+        scheduledBackupTime = try container.sdkDecodeIfPresent(.scheduledBackupTime)
+        backupProgress = try container.sdkDecodeIfPresent(.backupProgress)
+    }
+}
+
+public extension DatabaseBackups {
+    init(
+        backups: [Backup],
+        scheduledBackupTime: DatabaseBackupsScheduledBackupTime? = nil,
+        backupProgress: String? = nil
+    ) {
         (self.backups, self.scheduledBackupTime) = (backups, scheduledBackupTime)
         self.backupProgress = backupProgress
     }
@@ -244,21 +284,21 @@ public struct DatabaseVersionAvailability: Codable {
     }
 
     init() {
-        (self.endOfLife, self.endOfAvailability, self.version) = (nil, nil, nil)
+        (endOfLife, endOfAvailability, version) = (nil, nil, nil)
     }
 }
 
-extension DatabaseVersionAvailability {
-    public init(from decoder: Decoder) throws {
+public extension DatabaseVersionAvailability {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.endOfLife = try container.sdkDecodeIfPresent(.endOfLife)
-        self.endOfAvailability = try container.sdkDecodeIfPresent(.endOfAvailability)
-        self.version = try container.sdkDecodeIfPresent(.version)
+        endOfLife = try container.sdkDecodeIfPresent(.endOfLife)
+        endOfAvailability = try container.sdkDecodeIfPresent(.endOfAvailability)
+        version = try container.sdkDecodeIfPresent(.version)
     }
 }
 
-extension DatabaseVersionAvailability {
-    public init(endOfLife: String? = nil, endOfAvailability: String? = nil, version: String? = nil) {
+public extension DatabaseVersionAvailability {
+    init(endOfLife: String? = nil, endOfAvailability: String? = nil, version: String? = nil) {
         self.init()
         (self.endOfLife, self.endOfAvailability) = (endOfLife, endOfAvailability)
         self.version = version
@@ -279,25 +319,35 @@ public struct DatabaseMaintenanceWindowRequest: Codable {
         case hour
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DatabaseMaintenanceWindowRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.day) else {
-            throw SdkValidationError(field: "day", code: "required", message: "Validation failed for 'day': value is required")
-        }
-        guard container.contains(.hour) else {
-            throw SdkValidationError(field: "hour", code: "required", message: "Validation failed for 'hour': value is required")
-        }
-        self.day = try container.sdkDecodeRequired(.day)
-        self.hour = try container.sdkDecodeRequired(.hour)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DatabaseMaintenanceWindowRequest {
-    public init(day: String, hour: String) {
+public extension DatabaseMaintenanceWindowRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.day) else {
+            throw SdkValidationError(
+                field: "day",
+                code: "required",
+                message: "Validation failed for 'day': value is required"
+            )
+        }
+        guard container.contains(.hour) else {
+            throw SdkValidationError(
+                field: "hour",
+                code: "required",
+                message: "Validation failed for 'hour': value is required"
+            )
+        }
+        day = try container.sdkDecodeRequired(.day)
+        hour = try container.sdkDecodeRequired(.hour)
+    }
+}
+
+public extension DatabaseMaintenanceWindowRequest {
+    init(day: String, hour: String) {
         (self.day, self.hour) = (day, hour)
     }
 }
@@ -311,21 +361,27 @@ public struct DatabaseSchemaRegistryConfig: Codable {
         case compatibilityLevel = "compatibility_level"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DatabaseSchemaRegistryConfig {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.compatibilityLevel) else {
-            throw SdkValidationError(field: "compatibility_level", code: "required", message: "Validation failed for 'compatibility_level': value is required")
-        }
-        self.compatibilityLevel = try container.sdkDecodeRequired(.compatibilityLevel)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DatabaseSchemaRegistryConfig {
-    public init(compatibilityLevel: DatabaseSchemaRegistryConfigCompatibilityLevel) {
+public extension DatabaseSchemaRegistryConfig {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.compatibilityLevel) else {
+            throw SdkValidationError(
+                field: "compatibility_level",
+                code: "required",
+                message: "Validation failed for 'compatibility_level': value is required"
+            )
+        }
+        compatibilityLevel = try container.sdkDecodeRequired(.compatibilityLevel)
+    }
+}
+
+public extension DatabaseSchemaRegistryConfig {
+    init(compatibilityLevel: DatabaseSchemaRegistryConfigCompatibilityLevel) {
         self.compatibilityLevel = compatibilityLevel
     }
 }
@@ -414,58 +470,101 @@ public struct DatabaseClusterRequest: Codable {
         case doSettings = "do_settings"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension DatabaseClusterRequest {
-    public init(from decoder: Decoder) throws {
+public extension DatabaseClusterRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
         }
         guard container.contains(.engine) else {
-            throw SdkValidationError(field: "engine", code: "required", message: "Validation failed for 'engine': value is required")
+            throw SdkValidationError(
+                field: "engine",
+                code: "required",
+                message: "Validation failed for 'engine': value is required"
+            )
         }
         guard container.contains(.numNodes) else {
-            throw SdkValidationError(field: "num_nodes", code: "required", message: "Validation failed for 'num_nodes': value is required")
+            throw SdkValidationError(
+                field: "num_nodes",
+                code: "required",
+                message: "Validation failed for 'num_nodes': value is required"
+            )
         }
         guard container.contains(.size) else {
-            throw SdkValidationError(field: "size", code: "required", message: "Validation failed for 'size': value is required")
+            throw SdkValidationError(
+                field: "size",
+                code: "required",
+                message: "Validation failed for 'size': value is required"
+            )
         }
         guard container.contains(.region) else {
-            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
+            throw SdkValidationError(
+                field: "region",
+                code: "required",
+                message: "Validation failed for 'region': value is required"
+            )
         }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.engine = try container.sdkDecodeRequired(.engine)
-        self.numNodes = try container.sdkDecodeRequired(.numNodes)
-        self.size = try container.sdkDecodeRequired(.size)
-        self.region = try container.sdkDecodeRequired(.region)
-        self.version = try container.sdkDecodeIfPresent(.version)
-        self.privateNetworkUuid = try container.sdkDecodeIfPresent(.privateNetworkUuid)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.uiConnection = try container.sdkDecodeIfPresent(.uiConnection)
-        self.schemaRegistryConnection = try container.sdkDecodeIfPresent(.schemaRegistryConnection)
-        self.connection = try container.sdkDecodeIfPresent(.connection)
-        self.privateConnection = try container.sdkDecodeIfPresent(.privateConnection)
-        self.standbyConnection = try container.sdkDecodeIfPresent(.standbyConnection)
-        self.standbyPrivateConnection = try container.sdkDecodeIfPresent(.standbyPrivateConnection)
-        self.maintenanceWindow = try container.sdkDecodeIfPresent(.maintenanceWindow)
-        self.projectId = try container.sdkDecodeIfPresent(.projectId)
-        self.rules = try container.sdkDecodeIfPresent(.rules)
-        self.storageSizeMib = try container.sdkDecodeIfPresent(.storageSizeMib)
-        self.autoscale = try container.sdkDecodeIfPresent(.autoscale)
-        self.doSettings = try container.sdkDecodeIfPresent(.doSettings)
-        if let value = self.privateNetworkUuid {
+        name = try container.sdkDecodeRequired(.name)
+        engine = try container.sdkDecodeRequired(.engine)
+        numNodes = try container.sdkDecodeRequired(.numNodes)
+        size = try container.sdkDecodeRequired(.size)
+        region = try container.sdkDecodeRequired(.region)
+        version = try container.sdkDecodeIfPresent(.version)
+        privateNetworkUuid = try container.sdkDecodeIfPresent(.privateNetworkUuid)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        uiConnection = try container.sdkDecodeIfPresent(.uiConnection)
+        schemaRegistryConnection = try container.sdkDecodeIfPresent(.schemaRegistryConnection)
+        connection = try container.sdkDecodeIfPresent(.connection)
+        privateConnection = try container.sdkDecodeIfPresent(.privateConnection)
+        standbyConnection = try container.sdkDecodeIfPresent(.standbyConnection)
+        standbyPrivateConnection = try container.sdkDecodeIfPresent(.standbyPrivateConnection)
+        maintenanceWindow = try container.sdkDecodeIfPresent(.maintenanceWindow)
+        projectId = try container.sdkDecodeIfPresent(.projectId)
+        rules = try container.sdkDecodeIfPresent(.rules)
+        storageSizeMib = try container.sdkDecodeIfPresent(.storageSizeMib)
+        autoscale = try container.sdkDecodeIfPresent(.autoscale)
+        doSettings = try container.sdkDecodeIfPresent(.doSettings)
+        if let value = privateNetworkUuid {
             try sdkValidatePattern("private_network_uuid", value, sdkPattern6ef5a9518225)
         }
-        if let value = self.projectId {
+        if let value = projectId {
             try sdkValidateUuid("project_id", value)
         }
     }
 }
 
-extension DatabaseClusterRequest {
-    public init(name: String, engine: DatabaseClusterRequestEngine, numNodes: Int, size: String, region: String, version: String? = nil, privateNetworkUuid: String? = nil, tags: [String]? = nil, uiConnection: DatabaseClusterRequestUiConnection? = nil, schemaRegistryConnection: DatabaseClusterRequestSchemaRegistryConnection? = nil, connection: DatabaseClusterRequestConnection? = nil, privateConnection: DatabaseClusterRequestPrivateConnection? = nil, standbyConnection: DatabaseClusterRequestStandbyConnection? = nil, standbyPrivateConnection: DatabaseClusterRequestStandbyPrivateConnection? = nil, maintenanceWindow: DatabaseClusterRequestMaintenanceWindow? = nil, projectId: String? = nil, rules: [FirewallRuleRequest]? = nil, storageSizeMib: Int? = nil, autoscale: DatabaseAutoscaleParams? = nil, doSettings: DoSettings? = nil) throws {
+public extension DatabaseClusterRequest {
+    init(
+        name: String,
+        engine: DatabaseClusterRequestEngine,
+        numNodes: Int,
+        size: String,
+        region: String,
+        version: String? = nil,
+        privateNetworkUuid: String? = nil,
+        tags: [String]? = nil,
+        uiConnection: DatabaseClusterRequestUiConnection? = nil,
+        schemaRegistryConnection: DatabaseClusterRequestSchemaRegistryConnection? = nil,
+        connection: DatabaseClusterRequestConnection? = nil,
+        privateConnection: DatabaseClusterRequestPrivateConnection? = nil,
+        standbyConnection: DatabaseClusterRequestStandbyConnection? = nil,
+        standbyPrivateConnection: DatabaseClusterRequestStandbyPrivateConnection? = nil,
+        maintenanceWindow: DatabaseClusterRequestMaintenanceWindow? = nil,
+        projectId: String? = nil,
+        rules: [FirewallRuleRequest]? = nil,
+        storageSizeMib: Int? = nil,
+        autoscale: DatabaseAutoscaleParams? = nil,
+        doSettings: DoSettings? = nil
+    ) throws {
         (self.name, self.engine) = (name, engine)
         (self.numNodes, self.size) = (numNodes, size)
         (self.region, self.version) = (region, version)
@@ -496,19 +595,19 @@ public struct DatabaseConfig: Codable {
     }
 
     init() {
-        self.config = nil
+        config = nil
     }
 }
 
-extension DatabaseConfig {
-    public init(from decoder: Decoder) throws {
+public extension DatabaseConfig {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.config = try container.sdkDecodeIfPresent(.config)
+        config = try container.sdkDecodeIfPresent(.config)
     }
 }
 
-extension DatabaseConfig {
-    public init(config: DatabaseConfigConfig? = nil) {
+public extension DatabaseConfig {
+    init(config: DatabaseConfigConfig? = nil) {
         self.init()
         self.config = config
     }
@@ -529,5 +628,7 @@ public struct DatabaseBackup: Codable {
         case backupCreatedAt = "backup_created_at"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }

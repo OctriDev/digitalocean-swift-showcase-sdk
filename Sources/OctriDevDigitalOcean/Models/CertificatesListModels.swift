@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Certificates domain models
+/// Certificates domain models
 /// Typed representation of the `AllCertificates` API schema.
 public struct AllCertificates: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,23 +18,29 @@ public struct AllCertificates: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllCertificates {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.certificates = try container.sdkDecodeIfPresent(.certificates)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllCertificates {
-    public init(meta: MetaMeta, certificates: [Certificate]? = nil, links: PageLinks? = nil) {
+public extension AllCertificates {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        certificates = try container.sdkDecodeIfPresent(.certificates)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllCertificates {
+    init(meta: MetaMeta, certificates: [Certificate]? = nil, links: PageLinks? = nil) {
         (self.meta, self.certificates) = (meta, certificates)
         self.links = links
     }
@@ -48,19 +54,19 @@ public struct AllCertificatesVariant0: Codable {
     }
 
     init() {
-        self.certificates = nil
+        certificates = nil
     }
 }
 
-extension AllCertificatesVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AllCertificatesVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.certificates = try container.sdkDecodeIfPresent(.certificates)
+        certificates = try container.sdkDecodeIfPresent(.certificates)
     }
 }
 
-extension AllCertificatesVariant0 {
-    public init(certificates: [Certificate]? = nil) {
+public extension AllCertificatesVariant0 {
+    init(certificates: [Certificate]? = nil) {
         self.init()
         self.certificates = certificates
     }

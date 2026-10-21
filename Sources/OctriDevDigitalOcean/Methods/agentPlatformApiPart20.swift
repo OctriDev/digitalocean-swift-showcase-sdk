@@ -6,12 +6,30 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
+public extension AgentPlatformApiMethods {
     /// To delete a custom model, send a DELETE request to `/v2/genai/custom_models/{uuid}`.
     ///
     /// - Parameters:
     /// - uuid: UUID of the custom model to delete
-    public static func genaiDeleteCustomModel(config: ClientConfig, uuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiDeleteCustomModelOutputPublic {
-        return try (await sdkRequest("DELETE", ["/v2/gen-ai/custom_models/", sdkEncodePathSegment(sdkWireString(uuid))].joined(), config: config, decoder: .json, operationId: "genai_delete_custom_model", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiDeleteCustomModel(
+        config: ClientConfig,
+        uuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiDeleteCustomModelOutputPublic {
+        try await (sdkRequest(
+            "DELETE",
+            ["/v2/gen-ai/custom_models/", sdkEncodePathSegment(sdkWireString(uuid))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "genai_delete_custom_model",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

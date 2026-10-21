@@ -6,7 +6,7 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
+public extension AgentPlatformApiMethods {
     /// To list all agents by a Workspace, send a GET request to `/v2/gen-ai/workspaces/{workspace_uuid}/agents`.
     ///
     /// - Parameters:
@@ -14,23 +14,67 @@ extension AgentPlatformApiMethods {
     /// - onlyDeployed: Only list agents that are deployed.
     /// - page: Page number.
     /// - perPage: Items per page.
-    public static func genaiListAgentsByWorkspace(config: ClientConfig, workspaceUuid: String, onlyDeployed: Bool? = nil, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListAgentsByWorkspaceOutput {
-        return try (await sdkRequest("GET", ["/v2/gen-ai/workspaces/", sdkEncodePathSegment(sdkWireString(workspaceUuid)), "/agents"].joined(), config: config, query: [
-            SdkQueryParameter("only_deployed", value: onlyDeployed),
-            SdkQueryParameter("page", value: page),
-            SdkQueryParameter("per_page", value: perPage),
-        ], decoder: .json, operationId: "genai_list_agents_by_workspace", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiListAgentsByWorkspace(
+        config: ClientConfig,
+        workspaceUuid: String,
+        onlyDeployed: Bool? = nil,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiListAgentsByWorkspaceOutput {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/gen-ai/workspaces/", sdkEncodePathSegment(sdkWireString(workspaceUuid)), "/agents"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("only_deployed", value: onlyDeployed),
+                SdkQueryParameter("page", value: page),
+                SdkQueryParameter("per_page", value: perPage),
+            ],
+            decoder: .json,
+            operationId: "genai_list_agents_by_workspace",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To move all listed agents a given workspace, send a PUT request to `/v2/gen-ai/workspaces/{workspace_uuid}/agents`.
+    /// To move all listed agents a given workspace, send a PUT request to
+    /// `/v2/gen-ai/workspaces/{workspace_uuid}/agents`.
     ///
     /// - Parameters:
     /// - workspaceUuid: Workspace uuid to move agents to
     /// - agentUuids: Agent uuids
     /// - workspaceUuid2: Workspace uuid to move agents to
-    public static func genaiUpdateAgentsWorkspace(config: ClientConfig, workspaceUuid: String, agentUuids: [String]? = nil, workspaceUuid2: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiMoveAgentsToWorkspaceOutput {
+    static func genaiUpdateAgentsWorkspace(
+        config: ClientConfig,
+        workspaceUuid: String,
+        agentUuids: [String]? = nil,
+        workspaceUuid2: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiMoveAgentsToWorkspaceOutput {
         let requestBody = GenaiUpdateAgentsWorkspaceRequestBody(agentUuids: agentUuids, workspaceUuid2: workspaceUuid2)
 
-        return try (await sdkRequest("PUT", ["/v2/gen-ai/workspaces/", sdkEncodePathSegment(sdkWireString(workspaceUuid)), "/agents"].joined(), config: config, body: requestBody, decoder: .json, operationId: "genai_update_agents_workspace", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/v2/gen-ai/workspaces/", sdkEncodePathSegment(sdkWireString(workspaceUuid)), "/agents"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "genai_update_agents_workspace",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

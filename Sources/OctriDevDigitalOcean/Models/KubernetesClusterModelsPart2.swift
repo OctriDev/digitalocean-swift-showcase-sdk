@@ -3,9 +3,45 @@
 
 import Foundation
 
-// KubernetesCluster domain models
-extension Cluster {
-    public init(name: String, region: String, version: String, nodePools: [KubernetesNodePool], id: String? = nil, clusterSubnet: String? = nil, serviceSubnet: String? = nil, vpcUuid: String? = nil, workerSubnetUuid: String? = nil, ipv4: String? = nil, endpoint: String? = nil, tags: [String]? = nil, maintenancePolicy: MaintenancePolicy? = nil, autoUpgrade: Bool? = nil, isolatedWorkers: Bool? = nil, gpuOperatorReady: Bool? = nil, status: ClusterStatus? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, surgeUpgrade: Bool? = nil, ha: Bool? = nil, registryEnabled: Bool? = nil, controlPlaneFirewall: ControlPlaneFirewall? = nil, clusterAutoscalerConfiguration: ClusterAutoscalerConfiguration? = nil, sso: Sso? = nil, routingAgent: RoutingAgent? = nil, p2pOciRegistryPlugin: P2pOciRegistryPlugin? = nil, nfsCsiPlugin: NfsCsiPlugin? = nil, amdGpuDevicePlugin: AmdGpuDevicePlugin? = nil, amdGpuDeviceMetricsExporterPlugin: AmdGpuDeviceMetricsExporterPlugin? = nil, nvidiaGpuDevicePlugin: NvidiaGpuDevicePlugin? = nil, nvidiaGpuDraDriver: NvidiaGpuDraDriver? = nil, amdGpuDraDriver: AmdGpuDraDriver? = nil, rdmaSharedDevPlugin: RdmaSharedDevPlugin? = nil, corednsAutoscaler: CorednsAutoscaler? = nil) throws {
+/// KubernetesCluster domain models
+public extension Cluster {
+    init(
+        name: String,
+        region: String,
+        version: String,
+        nodePools: [KubernetesNodePool],
+        id: String? = nil,
+        clusterSubnet: String? = nil,
+        serviceSubnet: String? = nil,
+        vpcUuid: String? = nil,
+        workerSubnetUuid: String? = nil,
+        ipv4: String? = nil,
+        endpoint: String? = nil,
+        tags: [String]? = nil,
+        maintenancePolicy: MaintenancePolicy? = nil,
+        autoUpgrade: Bool? = nil,
+        isolatedWorkers: Bool? = nil,
+        gpuOperatorReady: Bool? = nil,
+        status: ClusterStatus? = nil,
+        createdAt: Date? = nil,
+        updatedAt: Date? = nil,
+        surgeUpgrade: Bool? = nil,
+        ha: Bool? = nil,
+        registryEnabled: Bool? = nil,
+        controlPlaneFirewall: ControlPlaneFirewall? = nil,
+        clusterAutoscalerConfiguration: ClusterAutoscalerConfiguration? = nil,
+        sso: Sso? = nil,
+        routingAgent: RoutingAgent? = nil,
+        p2pOciRegistryPlugin: P2pOciRegistryPlugin? = nil,
+        nfsCsiPlugin: NfsCsiPlugin? = nil,
+        amdGpuDevicePlugin: AmdGpuDevicePlugin? = nil,
+        amdGpuDeviceMetricsExporterPlugin: AmdGpuDeviceMetricsExporterPlugin? = nil,
+        nvidiaGpuDevicePlugin: NvidiaGpuDevicePlugin? = nil,
+        nvidiaGpuDraDriver: NvidiaGpuDraDriver? = nil,
+        amdGpuDraDriver: AmdGpuDraDriver? = nil,
+        rdmaSharedDevPlugin: RdmaSharedDevPlugin? = nil,
+        corednsAutoscaler: CorednsAutoscaler? = nil
+    ) throws {
         (self.name, self.region) = (name, region)
         (self.version, self.nodePools) = (version, nodePools)
         (self.id, self.clusterSubnet) = (id, clusterSubnet)
@@ -58,20 +94,20 @@ public struct ClusterRegistries: Codable {
     }
 
     init() {
-        (self.clusterUuids, self.registries) = (nil, nil)
+        (clusterUuids, registries) = (nil, nil)
     }
 }
 
-extension ClusterRegistries {
-    public init(from decoder: Decoder) throws {
+public extension ClusterRegistries {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.clusterUuids = try container.sdkDecodeIfPresent(.clusterUuids)
-        self.registries = try container.sdkDecodeIfPresent(.registries)
+        clusterUuids = try container.sdkDecodeIfPresent(.clusterUuids)
+        registries = try container.sdkDecodeIfPresent(.registries)
     }
 }
 
-extension ClusterRegistries {
-    public init(clusterUuids: [String]? = nil, registries: [String]? = nil) {
+public extension ClusterRegistries {
+    init(clusterUuids: [String]? = nil, registries: [String]? = nil) {
         self.init()
         (self.clusterUuids, self.registries) = (clusterUuids, registries)
     }
@@ -101,21 +137,25 @@ public struct ClusterAutoscalerConfiguration: Codable {
     }
 
     init() {
-        (self.scaleDownUtilizationThreshold, self.scaleDownUnneededTime, self.expanders) = (nil, nil, nil)
+        (scaleDownUtilizationThreshold, scaleDownUnneededTime, expanders) = (nil, nil, nil)
     }
 }
 
-extension ClusterAutoscalerConfiguration {
-    public init(from decoder: Decoder) throws {
+public extension ClusterAutoscalerConfiguration {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.scaleDownUtilizationThreshold = try container.sdkDecodeIfPresent(.scaleDownUtilizationThreshold)
-        self.scaleDownUnneededTime = try container.sdkDecodeIfPresent(.scaleDownUnneededTime)
-        self.expanders = try container.sdkDecodeIfPresent(.expanders)
+        scaleDownUtilizationThreshold = try container.sdkDecodeIfPresent(.scaleDownUtilizationThreshold)
+        scaleDownUnneededTime = try container.sdkDecodeIfPresent(.scaleDownUnneededTime)
+        expanders = try container.sdkDecodeIfPresent(.expanders)
     }
 }
 
-extension ClusterAutoscalerConfiguration {
-    public init(scaleDownUtilizationThreshold: Double? = nil, scaleDownUnneededTime: String? = nil, expanders: [ClusterAutoscalerConfigurationExpandersItem]? = nil) {
+public extension ClusterAutoscalerConfiguration {
+    init(
+        scaleDownUtilizationThreshold: Double? = nil,
+        scaleDownUnneededTime: String? = nil,
+        expanders: [ClusterAutoscalerConfigurationExpandersItem]? = nil
+    ) {
         self.init()
         self.scaleDownUtilizationThreshold = scaleDownUtilizationThreshold
         (self.scaleDownUnneededTime, self.expanders) = (scaleDownUnneededTime, expanders)
@@ -138,20 +178,20 @@ public struct ClusterReadStatus: Codable {
     }
 
     init() {
-        (self.state, self.message) = (nil, nil)
+        (state, message) = (nil, nil)
     }
 }
 
-extension ClusterReadStatus {
-    public init(from decoder: Decoder) throws {
+public extension ClusterReadStatus {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.message = try container.sdkDecodeIfPresent(.message)
+        state = try container.sdkDecodeIfPresent(.state)
+        message = try container.sdkDecodeIfPresent(.message)
     }
 }
 
-extension ClusterReadStatus {
-    public init(state: ClusterReadStatusState? = nil, message: String? = nil) {
+public extension ClusterReadStatus {
+    init(state: ClusterReadStatusState? = nil, message: String? = nil) {
         self.init()
         (self.state, self.message) = (state, message)
     }
@@ -167,19 +207,19 @@ public struct ClusterCreate: Codable {
     }
 
     init() {
-        self.kubernetesCluster = nil
+        kubernetesCluster = nil
     }
 }
 
-extension ClusterCreate {
-    public init(from decoder: Decoder) throws {
+public extension ClusterCreate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.kubernetesCluster = try container.sdkDecodeIfPresent(.kubernetesCluster)
+        kubernetesCluster = try container.sdkDecodeIfPresent(.kubernetesCluster)
     }
 }
 
-extension ClusterCreate {
-    public init(kubernetesCluster: Cluster? = nil) {
+public extension ClusterCreate {
+    init(kubernetesCluster: Cluster? = nil) {
         self.init()
         self.kubernetesCluster = kubernetesCluster
     }
@@ -272,40 +312,67 @@ public struct ClusterUpdateRequest: Codable {
         case corednsAutoscaler = "coredns_autoscaler"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ClusterUpdateRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.maintenancePolicy = try container.sdkDecodeIfPresent(.maintenancePolicy)
-        self.autoUpgrade = try container.sdkDecodeIfPresent(.autoUpgrade)
-        self.surgeUpgrade = try container.sdkDecodeIfPresent(.surgeUpgrade)
-        self.ha = try container.sdkDecodeIfPresent(.ha)
-        self.gpuOperatorReady = try container.sdkDecodeIfPresent(.gpuOperatorReady)
-        self.controlPlaneFirewall = try container.sdkDecodeIfPresent(.controlPlaneFirewall)
-        self.clusterAutoscalerConfiguration = try container.sdkDecodeIfPresent(.clusterAutoscalerConfiguration)
-        self.sso = try container.sdkDecodeIfPresent(.sso)
-        self.routingAgent = try container.sdkDecodeIfPresent(.routingAgent)
-        self.p2pOciRegistryPlugin = try container.sdkDecodeIfPresent(.p2pOciRegistryPlugin)
-        self.nfsCsiPlugin = try container.sdkDecodeIfPresent(.nfsCsiPlugin)
-        self.amdGpuDevicePlugin = try container.sdkDecodeIfPresent(.amdGpuDevicePlugin)
-        self.amdGpuDeviceMetricsExporterPlugin = try container.sdkDecodeIfPresent(.amdGpuDeviceMetricsExporterPlugin)
-        self.nvidiaGpuDevicePlugin = try container.sdkDecodeIfPresent(.nvidiaGpuDevicePlugin)
-        self.nvidiaGpuDraDriver = try container.sdkDecodeIfPresent(.nvidiaGpuDraDriver)
-        self.amdGpuDraDriver = try container.sdkDecodeIfPresent(.amdGpuDraDriver)
-        self.rdmaSharedDevPlugin = try container.sdkDecodeIfPresent(.rdmaSharedDevPlugin)
-        self.corednsAutoscaler = try container.sdkDecodeIfPresent(.corednsAutoscaler)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ClusterUpdateRequest {
-    public init(name: String, tags: [String]? = nil, maintenancePolicy: MaintenancePolicyRequest? = nil, autoUpgrade: Bool? = nil, surgeUpgrade: Bool? = nil, ha: Bool? = nil, gpuOperatorReady: Bool? = nil, controlPlaneFirewall: ControlPlaneFirewall? = nil, clusterAutoscalerConfiguration: ClusterAutoscalerConfiguration? = nil, sso: Sso? = nil, routingAgent: RoutingAgent? = nil, p2pOciRegistryPlugin: P2pOciRegistryPlugin? = nil, nfsCsiPlugin: NfsCsiPlugin? = nil, amdGpuDevicePlugin: AmdGpuDevicePlugin? = nil, amdGpuDeviceMetricsExporterPlugin: AmdGpuDeviceMetricsExporterPlugin? = nil, nvidiaGpuDevicePlugin: NvidiaGpuDevicePlugin? = nil, nvidiaGpuDraDriver: NvidiaGpuDraDriver? = nil, amdGpuDraDriver: AmdGpuDraDriver? = nil, rdmaSharedDevPlugin: RdmaSharedDevPlugin? = nil, corednsAutoscaler: CorednsAutoscaler? = nil) {
+public extension ClusterUpdateRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        maintenancePolicy = try container.sdkDecodeIfPresent(.maintenancePolicy)
+        autoUpgrade = try container.sdkDecodeIfPresent(.autoUpgrade)
+        surgeUpgrade = try container.sdkDecodeIfPresent(.surgeUpgrade)
+        ha = try container.sdkDecodeIfPresent(.ha)
+        gpuOperatorReady = try container.sdkDecodeIfPresent(.gpuOperatorReady)
+        controlPlaneFirewall = try container.sdkDecodeIfPresent(.controlPlaneFirewall)
+        clusterAutoscalerConfiguration = try container.sdkDecodeIfPresent(.clusterAutoscalerConfiguration)
+        sso = try container.sdkDecodeIfPresent(.sso)
+        routingAgent = try container.sdkDecodeIfPresent(.routingAgent)
+        p2pOciRegistryPlugin = try container.sdkDecodeIfPresent(.p2pOciRegistryPlugin)
+        nfsCsiPlugin = try container.sdkDecodeIfPresent(.nfsCsiPlugin)
+        amdGpuDevicePlugin = try container.sdkDecodeIfPresent(.amdGpuDevicePlugin)
+        amdGpuDeviceMetricsExporterPlugin = try container.sdkDecodeIfPresent(.amdGpuDeviceMetricsExporterPlugin)
+        nvidiaGpuDevicePlugin = try container.sdkDecodeIfPresent(.nvidiaGpuDevicePlugin)
+        nvidiaGpuDraDriver = try container.sdkDecodeIfPresent(.nvidiaGpuDraDriver)
+        amdGpuDraDriver = try container.sdkDecodeIfPresent(.amdGpuDraDriver)
+        rdmaSharedDevPlugin = try container.sdkDecodeIfPresent(.rdmaSharedDevPlugin)
+        corednsAutoscaler = try container.sdkDecodeIfPresent(.corednsAutoscaler)
+    }
+}
+
+public extension ClusterUpdateRequest {
+    init(
+        name: String,
+        tags: [String]? = nil,
+        maintenancePolicy: MaintenancePolicyRequest? = nil,
+        autoUpgrade: Bool? = nil,
+        surgeUpgrade: Bool? = nil,
+        ha: Bool? = nil,
+        gpuOperatorReady: Bool? = nil,
+        controlPlaneFirewall: ControlPlaneFirewall? = nil,
+        clusterAutoscalerConfiguration: ClusterAutoscalerConfiguration? = nil,
+        sso: Sso? = nil,
+        routingAgent: RoutingAgent? = nil,
+        p2pOciRegistryPlugin: P2pOciRegistryPlugin? = nil,
+        nfsCsiPlugin: NfsCsiPlugin? = nil,
+        amdGpuDevicePlugin: AmdGpuDevicePlugin? = nil,
+        amdGpuDeviceMetricsExporterPlugin: AmdGpuDeviceMetricsExporterPlugin? = nil,
+        nvidiaGpuDevicePlugin: NvidiaGpuDevicePlugin? = nil,
+        nvidiaGpuDraDriver: NvidiaGpuDraDriver? = nil,
+        amdGpuDraDriver: AmdGpuDraDriver? = nil,
+        rdmaSharedDevPlugin: RdmaSharedDevPlugin? = nil,
+        corednsAutoscaler: CorednsAutoscaler? = nil
+    ) {
         (self.name, self.tags) = (name, tags)
         (self.maintenancePolicy, self.autoUpgrade) = (maintenancePolicy, autoUpgrade)
         (self.surgeUpgrade, self.ha) = (surgeUpgrade, ha)
@@ -331,19 +398,19 @@ public struct ClusterRegistry: Codable {
     }
 
     init() {
-        self.clusterUuids = nil
+        clusterUuids = nil
     }
 }
 
-extension ClusterRegistry {
-    public init(from decoder: Decoder) throws {
+public extension ClusterRegistry {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.clusterUuids = try container.sdkDecodeIfPresent(.clusterUuids)
+        clusterUuids = try container.sdkDecodeIfPresent(.clusterUuids)
     }
 }
 
-extension ClusterRegistry {
-    public init(clusterUuids: [String]? = nil) {
+public extension ClusterRegistry {
+    init(clusterUuids: [String]? = nil) {
         self.init()
         self.clusterUuids = clusterUuids
     }
@@ -475,56 +542,74 @@ public struct ClusterRequest: Codable {
         case corednsAutoscaler = "coredns_autoscaler"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension ClusterRequest {
-    public init(from decoder: Decoder) throws {
+public extension ClusterRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
         }
         guard container.contains(.region) else {
-            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
+            throw SdkValidationError(
+                field: "region",
+                code: "required",
+                message: "Validation failed for 'region': value is required"
+            )
         }
         guard container.contains(.version) else {
-            throw SdkValidationError(field: "version", code: "required", message: "Validation failed for 'version': value is required")
+            throw SdkValidationError(
+                field: "version",
+                code: "required",
+                message: "Validation failed for 'version': value is required"
+            )
         }
         guard container.contains(.nodePools) else {
-            throw SdkValidationError(field: "node_pools", code: "required", message: "Validation failed for 'node_pools': value is required")
+            throw SdkValidationError(
+                field: "node_pools",
+                code: "required",
+                message: "Validation failed for 'node_pools': value is required"
+            )
         }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.region = try container.sdkDecodeRequired(.region)
-        self.version = try container.sdkDecodeRequired(.version)
-        self.nodePools = try container.sdkDecodeRequired(.nodePools)
-        self.clusterSubnet = try container.sdkDecodeIfPresent(.clusterSubnet)
-        self.serviceSubnet = try container.sdkDecodeIfPresent(.serviceSubnet)
-        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        self.workerSubnetUuid = try container.sdkDecodeIfPresent(.workerSubnetUuid)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.maintenancePolicy = try container.sdkDecodeIfPresent(.maintenancePolicy)
-        self.autoUpgrade = try container.sdkDecodeIfPresent(.autoUpgrade)
-        self.isolatedWorkers = try container.sdkDecodeIfPresent(.isolatedWorkers)
-        self.gpuOperatorReady = try container.sdkDecodeIfPresent(.gpuOperatorReady)
-        self.surgeUpgrade = try container.sdkDecodeIfPresent(.surgeUpgrade)
-        self.ha = try container.sdkDecodeIfPresent(.ha)
-        self.controlPlaneFirewall = try container.sdkDecodeIfPresent(.controlPlaneFirewall)
-        self.clusterAutoscalerConfiguration = try container.sdkDecodeIfPresent(.clusterAutoscalerConfiguration)
-        self.sso = try container.sdkDecodeIfPresent(.sso)
-        self.routingAgent = try container.sdkDecodeIfPresent(.routingAgent)
-        self.p2pOciRegistryPlugin = try container.sdkDecodeIfPresent(.p2pOciRegistryPlugin)
-        self.nfsCsiPlugin = try container.sdkDecodeIfPresent(.nfsCsiPlugin)
-        self.amdGpuDevicePlugin = try container.sdkDecodeIfPresent(.amdGpuDevicePlugin)
-        self.amdGpuDeviceMetricsExporterPlugin = try container.sdkDecodeIfPresent(.amdGpuDeviceMetricsExporterPlugin)
-        self.nvidiaGpuDevicePlugin = try container.sdkDecodeIfPresent(.nvidiaGpuDevicePlugin)
-        self.nvidiaGpuDraDriver = try container.sdkDecodeIfPresent(.nvidiaGpuDraDriver)
-        self.amdGpuDraDriver = try container.sdkDecodeIfPresent(.amdGpuDraDriver)
-        self.rdmaSharedDevPlugin = try container.sdkDecodeIfPresent(.rdmaSharedDevPlugin)
-        self.corednsAutoscaler = try container.sdkDecodeIfPresent(.corednsAutoscaler)
-        if let value = self.vpcUuid {
+        name = try container.sdkDecodeRequired(.name)
+        region = try container.sdkDecodeRequired(.region)
+        version = try container.sdkDecodeRequired(.version)
+        nodePools = try container.sdkDecodeRequired(.nodePools)
+        clusterSubnet = try container.sdkDecodeIfPresent(.clusterSubnet)
+        serviceSubnet = try container.sdkDecodeIfPresent(.serviceSubnet)
+        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        workerSubnetUuid = try container.sdkDecodeIfPresent(.workerSubnetUuid)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        maintenancePolicy = try container.sdkDecodeIfPresent(.maintenancePolicy)
+        autoUpgrade = try container.sdkDecodeIfPresent(.autoUpgrade)
+        isolatedWorkers = try container.sdkDecodeIfPresent(.isolatedWorkers)
+        gpuOperatorReady = try container.sdkDecodeIfPresent(.gpuOperatorReady)
+        surgeUpgrade = try container.sdkDecodeIfPresent(.surgeUpgrade)
+        ha = try container.sdkDecodeIfPresent(.ha)
+        controlPlaneFirewall = try container.sdkDecodeIfPresent(.controlPlaneFirewall)
+        clusterAutoscalerConfiguration = try container.sdkDecodeIfPresent(.clusterAutoscalerConfiguration)
+        sso = try container.sdkDecodeIfPresent(.sso)
+        routingAgent = try container.sdkDecodeIfPresent(.routingAgent)
+        p2pOciRegistryPlugin = try container.sdkDecodeIfPresent(.p2pOciRegistryPlugin)
+        nfsCsiPlugin = try container.sdkDecodeIfPresent(.nfsCsiPlugin)
+        amdGpuDevicePlugin = try container.sdkDecodeIfPresent(.amdGpuDevicePlugin)
+        amdGpuDeviceMetricsExporterPlugin = try container.sdkDecodeIfPresent(.amdGpuDeviceMetricsExporterPlugin)
+        nvidiaGpuDevicePlugin = try container.sdkDecodeIfPresent(.nvidiaGpuDevicePlugin)
+        nvidiaGpuDraDriver = try container.sdkDecodeIfPresent(.nvidiaGpuDraDriver)
+        amdGpuDraDriver = try container.sdkDecodeIfPresent(.amdGpuDraDriver)
+        rdmaSharedDevPlugin = try container.sdkDecodeIfPresent(.rdmaSharedDevPlugin)
+        corednsAutoscaler = try container.sdkDecodeIfPresent(.corednsAutoscaler)
+        if let value = vpcUuid {
             try sdkValidateUuid("vpc_uuid", value)
         }
-        if let value = self.workerSubnetUuid {
+        if let value = workerSubnetUuid {
             try sdkValidateUuid("worker_subnet_uuid", value)
         }
     }

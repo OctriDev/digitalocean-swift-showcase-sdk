@@ -6,19 +6,46 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ContainerRegistriesMethods {
-    /// A subscription is automatically created when you configure your container registry. To get information about your subscription, send a GET request to `/v2/registries/subscription`. It is similar to GET `/v2/registry/subscription`.
-    public static func registriesGetSubscription(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> SubscriptionResponse {
-        return try (await sdkRequest("GET", "/v2/registries/subscription", config: config, decoder: .json, operationId: "registries_get_subscription", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+public extension ContainerRegistriesMethods {
+    /// A subscription is automatically created when you configure your container registry. To get information about
+    /// your subscription, send a GET request to `/v2/registries/subscription`. It is similar to GET
+    /// `/v2/registry/subscription`.
+    static func registriesGetSubscription(
+        config: ClientConfig,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SubscriptionResponse {
+        try await (sdkRequest(
+            "GET",
+            "/v2/registries/subscription",
+            config: config,
+            decoder: .json,
+            operationId: "registries_get_subscription",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 
-    /// After creating your registry, you can switch to a different subscription tier to better suit your needs. To do this, send a POST request to `/v2/registries/subscription`. It is similar to POST `/v2/registry/subscription`.
+    /// After creating your registry, you can switch to a different subscription tier to better suit your needs. To do
+    /// this, send a POST request to `/v2/registries/subscription`. It is similar to POST `/v2/registry/subscription`.
     ///
     /// - Parameters:
     /// - tierSlug: The slug of the subscription tier to sign up for.
-    public static func registriesUpdateSubscription(config: ClientConfig, tierSlug: RegistriesUpdateSubscriptionRequestBodyTierSlug? = nil, requestOptions: RequestOptions? = nil) async throws -> SubscriptionResponse {
+    static func registriesUpdateSubscription(
+        config: ClientConfig,
+        tierSlug: RegistriesUpdateSubscriptionRequestBodyTierSlug? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SubscriptionResponse {
         let requestBody = RegistriesUpdateSubscriptionRequestBody(tierSlug: tierSlug)
 
-        return try (await sdkRequest("POST", "/v2/registries/subscription", config: config, body: requestBody, decoder: .json, operationId: "registries_update_subscription", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/registries/subscription",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "registries_update_subscription",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

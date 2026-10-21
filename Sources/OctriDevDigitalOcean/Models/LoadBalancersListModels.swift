@@ -3,7 +3,7 @@
 
 import Foundation
 
-// LoadBalancers domain models
+/// LoadBalancers domain models
 public struct AllLoadBalancersVariant0: Codable {
     public var loadBalancers: [LoadBalancer]?
 
@@ -12,19 +12,19 @@ public struct AllLoadBalancersVariant0: Codable {
     }
 
     init() {
-        self.loadBalancers = nil
+        loadBalancers = nil
     }
 }
 
-extension AllLoadBalancersVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AllLoadBalancersVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.loadBalancers = try container.sdkDecodeIfPresent(.loadBalancers)
+        loadBalancers = try container.sdkDecodeIfPresent(.loadBalancers)
     }
 }
 
-extension AllLoadBalancersVariant0 {
-    public init(loadBalancers: [LoadBalancer]? = nil) {
+public extension AllLoadBalancersVariant0 {
+    init(loadBalancers: [LoadBalancer]? = nil) {
         self.init()
         self.loadBalancers = loadBalancers
     }
@@ -44,23 +44,29 @@ public struct AllLoadBalancers: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllLoadBalancers {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.loadBalancers = try container.sdkDecodeIfPresent(.loadBalancers)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllLoadBalancers {
-    public init(meta: MetaMeta, loadBalancers: [LoadBalancer]? = nil, links: PageLinks? = nil) {
+public extension AllLoadBalancers {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        loadBalancers = try container.sdkDecodeIfPresent(.loadBalancers)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllLoadBalancers {
+    init(meta: MetaMeta, loadBalancers: [LoadBalancer]? = nil, links: PageLinks? = nil) {
         (self.meta, self.loadBalancers) = (meta, loadBalancers)
         self.links = links
     }

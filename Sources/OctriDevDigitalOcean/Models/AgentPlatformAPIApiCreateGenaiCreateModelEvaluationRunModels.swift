@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiCreate domain models
+/// AgentPlatformAPIApiCreate domain models
 /// Typed representation of the `ApiCreateModelEvaluationRunOutput` API schema.
 public struct ApiCreateModelEvaluationRunOutput: Codable {
     /// UUID of the created evaluation run.
@@ -15,19 +15,19 @@ public struct ApiCreateModelEvaluationRunOutput: Codable {
     }
 
     init() {
-        self.evalRunUuid = nil
+        evalRunUuid = nil
     }
 }
 
-extension ApiCreateModelEvaluationRunOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateModelEvaluationRunOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.evalRunUuid = try container.sdkDecodeIfPresent(.evalRunUuid)
+        evalRunUuid = try container.sdkDecodeIfPresent(.evalRunUuid)
     }
 }
 
-extension ApiCreateModelEvaluationRunOutput {
-    public init(evalRunUuid: String? = nil) {
+public extension ApiCreateModelEvaluationRunOutput {
+    init(evalRunUuid: String? = nil) {
         self.init()
         self.evalRunUuid = evalRunUuid
     }
@@ -108,35 +108,57 @@ public struct ApiCreateModelEvaluationRunInputPublic: Codable {
     }
 
     init() {
-        (self.candidateInferenceConfig, self.candidateModelName, self.candidateModelSource, self.candidateModelUuid, self.datasetUuid) = (nil, nil, nil, nil, nil)
-        (self.epochs, self.evalPresetUuid, self.judgeModelUuid, self.metricUuids, self.name) = (nil, nil, nil, nil, nil)
-        (self.presetName, self.presetSaveSections, self.saveAsPreset, self.source, self.starMetric) = (nil, nil, nil, nil, nil)
+        (candidateInferenceConfig, candidateModelName, candidateModelSource, candidateModelUuid, datasetUuid) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (epochs, evalPresetUuid, judgeModelUuid, metricUuids, name) = (nil, nil, nil, nil, nil)
+        (presetName, presetSaveSections, saveAsPreset, source, starMetric) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiCreateModelEvaluationRunInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateModelEvaluationRunInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.candidateInferenceConfig = try container.sdkDecodeIfPresent(.candidateInferenceConfig)
-        self.candidateModelName = try container.sdkDecodeIfPresent(.candidateModelName)
-        self.candidateModelSource = try container.sdkDecodeIfPresent(.candidateModelSource)
-        self.candidateModelUuid = try container.sdkDecodeIfPresent(.candidateModelUuid)
-        self.datasetUuid = try container.sdkDecodeIfPresent(.datasetUuid)
-        self.epochs = try container.sdkDecodeIfPresent(.epochs)
-        self.evalPresetUuid = try container.sdkDecodeIfPresent(.evalPresetUuid)
-        self.judgeModelUuid = try container.sdkDecodeIfPresent(.judgeModelUuid)
-        self.metricUuids = try container.sdkDecodeIfPresent(.metricUuids)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.presetName = try container.sdkDecodeIfPresent(.presetName)
-        self.presetSaveSections = try container.sdkDecodeIfPresent(.presetSaveSections)
-        self.saveAsPreset = try container.sdkDecodeIfPresent(.saveAsPreset)
-        self.source = try container.sdkDecodeIfPresent(.source)
-        self.starMetric = try container.sdkDecodeIfPresent(.starMetric)
+        candidateInferenceConfig = try container.sdkDecodeIfPresent(.candidateInferenceConfig)
+        candidateModelName = try container.sdkDecodeIfPresent(.candidateModelName)
+        candidateModelSource = try container.sdkDecodeIfPresent(.candidateModelSource)
+        candidateModelUuid = try container.sdkDecodeIfPresent(.candidateModelUuid)
+        datasetUuid = try container.sdkDecodeIfPresent(.datasetUuid)
+        epochs = try container.sdkDecodeIfPresent(.epochs)
+        evalPresetUuid = try container.sdkDecodeIfPresent(.evalPresetUuid)
+        judgeModelUuid = try container.sdkDecodeIfPresent(.judgeModelUuid)
+        metricUuids = try container.sdkDecodeIfPresent(.metricUuids)
+        name = try container.sdkDecodeIfPresent(.name)
+        presetName = try container.sdkDecodeIfPresent(.presetName)
+        presetSaveSections = try container.sdkDecodeIfPresent(.presetSaveSections)
+        saveAsPreset = try container.sdkDecodeIfPresent(.saveAsPreset)
+        source = try container.sdkDecodeIfPresent(.source)
+        starMetric = try container.sdkDecodeIfPresent(.starMetric)
     }
 }
 
-extension ApiCreateModelEvaluationRunInputPublic {
-    public init(candidateInferenceConfig: ApiCandidateInferenceConfig? = nil, candidateModelName: String? = nil, candidateModelSource: ApiCandidateModelSource? = nil, candidateModelUuid: String? = nil, datasetUuid: String? = nil, epochs: Int? = nil, evalPresetUuid: String? = nil, judgeModelUuid: String? = nil, metricUuids: [String]? = nil, name: String? = nil, presetName: String? = nil, presetSaveSections: [ApiPresetSaveSection]? = nil, saveAsPreset: Bool? = nil, source: String? = nil, starMetric: ApiStarMetric? = nil) {
+public extension ApiCreateModelEvaluationRunInputPublic {
+    init(
+        candidateInferenceConfig: ApiCandidateInferenceConfig? = nil,
+        candidateModelName: String? = nil,
+        candidateModelSource: ApiCandidateModelSource? = nil,
+        candidateModelUuid: String? = nil,
+        datasetUuid: String? = nil,
+        epochs: Int? = nil,
+        evalPresetUuid: String? = nil,
+        judgeModelUuid: String? = nil,
+        metricUuids: [String]? = nil,
+        name: String? = nil,
+        presetName: String? = nil,
+        presetSaveSections: [ApiPresetSaveSection]? = nil,
+        saveAsPreset: Bool? = nil,
+        source: String? = nil,
+        starMetric: ApiStarMetric? = nil
+    ) {
         self.init()
         self.candidateInferenceConfig = candidateInferenceConfig
         (self.candidateModelName, self.candidateModelSource) = (candidateModelName, candidateModelSource)

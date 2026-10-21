@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AppsApps domain models
+/// AppsApps domain models
 /// Typed representation of the `AppsAssignAppAlertDestinationsRequest` API schema.
 public struct AppsAssignAppAlertDestinationsRequest: Codable {
     /// Optional array value serialized in the `emails` wire field.
@@ -18,20 +18,20 @@ public struct AppsAssignAppAlertDestinationsRequest: Codable {
     }
 
     init() {
-        (self.emails, self.slackWebhooks) = (nil, nil)
+        (emails, slackWebhooks) = (nil, nil)
     }
 }
 
-extension AppsAssignAppAlertDestinationsRequest {
-    public init(from decoder: Decoder) throws {
+public extension AppsAssignAppAlertDestinationsRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.emails = try container.sdkDecodeIfPresent(.emails)
-        self.slackWebhooks = try container.sdkDecodeIfPresent(.slackWebhooks)
+        emails = try container.sdkDecodeIfPresent(.emails)
+        slackWebhooks = try container.sdkDecodeIfPresent(.slackWebhooks)
     }
 }
 
-extension AppsAssignAppAlertDestinationsRequest {
-    public init(emails: [AppAlertEmail]? = nil, slackWebhooks: [AppAlertSlackWebhook]? = nil) {
+public extension AppsAssignAppAlertDestinationsRequest {
+    init(emails: [AppAlertEmail]? = nil, slackWebhooks: [AppAlertSlackWebhook]? = nil) {
         self.init()
         (self.emails, self.slackWebhooks) = (emails, slackWebhooks)
     }
@@ -47,19 +47,19 @@ public struct AppsAlertResponse: Codable {
     }
 
     init() {
-        self.alert = nil
+        alert = nil
     }
 }
 
-extension AppsAlertResponse {
-    public init(from decoder: Decoder) throws {
+public extension AppsAlertResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.alert = try container.sdkDecodeIfPresent(.alert)
+        alert = try container.sdkDecodeIfPresent(.alert)
     }
 }
 
-extension AppsAlertResponse {
-    public init(alert: AppAlert? = nil) {
+public extension AppsAlertResponse {
+    init(alert: AppAlert? = nil) {
         self.init()
         self.alert = alert
     }

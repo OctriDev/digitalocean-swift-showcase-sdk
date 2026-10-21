@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ServerlessInference domain models
+/// ServerlessInference domain models
 /// Represents the content of a generated image.
 public struct GeneratedImage: Codable {
     /// The base64-encoded JSON of the generated image.
@@ -19,22 +19,28 @@ public struct GeneratedImage: Codable {
         case revisedPrompt = "revised_prompt"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension GeneratedImage {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.b64Json) else {
-            throw SdkValidationError(field: "b64_json", code: "required", message: "Validation failed for 'b64_json': value is required")
-        }
-        self.b64Json = try container.sdkDecodeRequired(.b64Json)
-        self.revisedPrompt = try container.sdkDecodeIfPresent(.revisedPrompt)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension GeneratedImage {
-    public init(b64Json: String, revisedPrompt: String? = nil) {
+public extension GeneratedImage {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.b64Json) else {
+            throw SdkValidationError(
+                field: "b64_json",
+                code: "required",
+                message: "Validation failed for 'b64_json': value is required"
+            )
+        }
+        b64Json = try container.sdkDecodeRequired(.b64Json)
+        revisedPrompt = try container.sdkDecodeIfPresent(.revisedPrompt)
+    }
+}
+
+public extension GeneratedImage {
+    init(b64Json: String, revisedPrompt: String? = nil) {
         (self.b64Json, self.revisedPrompt) = (b64Json, revisedPrompt)
     }
 }
@@ -76,25 +82,36 @@ public struct ImageGenPartialImageEvent: Codable {
         case partialImageIndex = "partial_image_index"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ImageGenPartialImageEvent {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.b64Json = try container.sdkDecodeRequired(.b64Json)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.size = try container.sdkDecodeRequired(.size)
-        self.quality = try container.sdkDecodeRequired(.quality)
-        self.background = try container.sdkDecodeRequired(.background)
-        self.outputFormat = try container.sdkDecodeRequired(.outputFormat)
-        self.partialImageIndex = try container.sdkDecodeRequired(.partialImageIndex)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ImageGenPartialImageEvent {
-    public init(type: ImageGenPartialImageEventType, b64Json: String, createdAt: Int, size: ImageGenPartialImageEventSize, quality: ImageGenPartialImageEventQuality, background: ImageGenPartialImageEventBackground, outputFormat: ImageGenPartialImageEventOutputFormat, partialImageIndex: Int) {
+public extension ImageGenPartialImageEvent {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        type = try container.sdkDecodeRequired(.type)
+        b64Json = try container.sdkDecodeRequired(.b64Json)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        size = try container.sdkDecodeRequired(.size)
+        quality = try container.sdkDecodeRequired(.quality)
+        background = try container.sdkDecodeRequired(.background)
+        outputFormat = try container.sdkDecodeRequired(.outputFormat)
+        partialImageIndex = try container.sdkDecodeRequired(.partialImageIndex)
+    }
+}
+
+public extension ImageGenPartialImageEvent {
+    init(
+        type: ImageGenPartialImageEventType,
+        b64Json: String,
+        createdAt: Int,
+        size: ImageGenPartialImageEventSize,
+        quality: ImageGenPartialImageEventQuality,
+        background: ImageGenPartialImageEventBackground,
+        outputFormat: ImageGenPartialImageEventOutputFormat,
+        partialImageIndex: Int
+    ) {
         (self.type, self.b64Json) = (type, b64Json)
         (self.createdAt, self.size) = (createdAt, size)
         (self.quality, self.background) = (quality, background)
@@ -106,12 +123,16 @@ extension ImageGenPartialImageEvent {
 public struct ImageGenPartialImageEventType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
-    public static let imageGenerationPartialImage = ImageGenPartialImageEventType(rawValue: "image_generation.partial_image")
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let imageGenerationPartialImage =
+        ImageGenPartialImageEventType(rawValue: "image_generation.partial_image")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -124,14 +145,17 @@ public struct ImageGenPartialImageEventType: RawRepresentable, Hashable, Codable
 public struct ImageGenPartialImageEventOutputFormat: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let png = ImageGenPartialImageEventOutputFormat(rawValue: "png")
     public static let webp = ImageGenPartialImageEventOutputFormat(rawValue: "webp")
     public static let jpeg = ImageGenPartialImageEventOutputFormat(rawValue: "jpeg")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -144,7 +168,10 @@ public struct ImageGenPartialImageEventOutputFormat: RawRepresentable, Hashable,
 public struct ImageGenPartialImageEventQuality: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let low = ImageGenPartialImageEventQuality(rawValue: "low")
     public static let medium = ImageGenPartialImageEventQuality(rawValue: "medium")
     public static let high = ImageGenPartialImageEventQuality(rawValue: "high")
@@ -152,7 +179,7 @@ public struct ImageGenPartialImageEventQuality: RawRepresentable, Hashable, Coda
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -165,7 +192,10 @@ public struct ImageGenPartialImageEventQuality: RawRepresentable, Hashable, Coda
 public struct ImageGenPartialImageEventSize: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let value1024x1024 = ImageGenPartialImageEventSize(rawValue: "1024x1024")
     public static let value1024x1536 = ImageGenPartialImageEventSize(rawValue: "1024x1536")
     public static let value1536x1024 = ImageGenPartialImageEventSize(rawValue: "1536x1024")
@@ -173,7 +203,7 @@ public struct ImageGenPartialImageEventSize: RawRepresentable, Hashable, Codable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -186,14 +216,17 @@ public struct ImageGenPartialImageEventSize: RawRepresentable, Hashable, Codable
 public struct ImageGenPartialImageEventBackground: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let transparent = ImageGenPartialImageEventBackground(rawValue: "transparent")
     public static let opaque = ImageGenPartialImageEventBackground(rawValue: "opaque")
     public static let auto = ImageGenPartialImageEventBackground(rawValue: "auto")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

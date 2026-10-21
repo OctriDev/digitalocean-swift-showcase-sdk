@@ -9,7 +9,10 @@ import Foundation
 public struct UsersListParameterX8be7391e: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let createdAt = UsersListParameterX8be7391e(rawValue: "created_at")
     public static let userId = UsersListParameterX8be7391e(rawValue: "user_id")
     public static let sessionCount = UsersListParameterX8be7391e(rawValue: "session_count")
@@ -17,7 +20,7 @@ public struct UsersListParameterX8be7391e: RawRepresentable, Hashable, Codable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -29,19 +32,30 @@ public struct UsersListParameterX8be7391e: RawRepresentable, Hashable, Codable, 
 public struct GenaiListSimulationRunsParameterItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
-    public static let simulationRunStatusUnspecified = GenaiListSimulationRunsParameterItem(rawValue: "SIMULATION_RUN_STATUS_UNSPECIFIED")
-    public static let simulationRunStatusPending = GenaiListSimulationRunsParameterItem(rawValue: "SIMULATION_RUN_STATUS_PENDING")
-    public static let simulationRunStatusRunning = GenaiListSimulationRunsParameterItem(rawValue: "SIMULATION_RUN_STATUS_RUNNING")
-    public static let simulationRunStatusSucceeded = GenaiListSimulationRunsParameterItem(rawValue: "SIMULATION_RUN_STATUS_SUCCEEDED")
-    public static let simulationRunStatusFailed = GenaiListSimulationRunsParameterItem(rawValue: "SIMULATION_RUN_STATUS_FAILED")
-    public static let simulationRunStatusCancelled = GenaiListSimulationRunsParameterItem(rawValue: "SIMULATION_RUN_STATUS_CANCELLED")
-    public static let simulationRunStatusEvaluating = GenaiListSimulationRunsParameterItem(rawValue: "SIMULATION_RUN_STATUS_EVALUATING")
-    public static let simulationRunStatusPartiallySuccessful = GenaiListSimulationRunsParameterItem(rawValue: "SIMULATION_RUN_STATUS_PARTIALLY_SUCCESSFUL")
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let simulationRunStatusUnspecified =
+        GenaiListSimulationRunsParameterItem(rawValue: "SIMULATION_RUN_STATUS_UNSPECIFIED")
+    public static let simulationRunStatusPending =
+        GenaiListSimulationRunsParameterItem(rawValue: "SIMULATION_RUN_STATUS_PENDING")
+    public static let simulationRunStatusRunning =
+        GenaiListSimulationRunsParameterItem(rawValue: "SIMULATION_RUN_STATUS_RUNNING")
+    public static let simulationRunStatusSucceeded =
+        GenaiListSimulationRunsParameterItem(rawValue: "SIMULATION_RUN_STATUS_SUCCEEDED")
+    public static let simulationRunStatusFailed =
+        GenaiListSimulationRunsParameterItem(rawValue: "SIMULATION_RUN_STATUS_FAILED")
+    public static let simulationRunStatusCancelled =
+        GenaiListSimulationRunsParameterItem(rawValue: "SIMULATION_RUN_STATUS_CANCELLED")
+    public static let simulationRunStatusEvaluating =
+        GenaiListSimulationRunsParameterItem(rawValue: "SIMULATION_RUN_STATUS_EVALUATING")
+    public static let simulationRunStatusPartiallySuccessful =
+        GenaiListSimulationRunsParameterItem(rawValue: "SIMULATION_RUN_STATUS_PARTIALLY_SUCCESSFUL")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -54,14 +68,17 @@ public struct GenaiListSimulationRunsParameterItem: RawRepresentable, Hashable, 
 public struct ProjectsUpdateRequestBodyEnvironment: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let development = ProjectsUpdateRequestBodyEnvironment(rawValue: "Development")
     public static let staging = ProjectsUpdateRequestBodyEnvironment(rawValue: "Staging")
     public static let production = ProjectsUpdateRequestBodyEnvironment(rawValue: "Production")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -70,17 +87,23 @@ public struct ProjectsUpdateRequestBodyEnvironment: RawRepresentable, Hashable, 
     }
 }
 
-public struct GenaiListModelEvaluationRunsParameterXfa71ca6e: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct GenaiListModelEvaluationRunsParameterXfa71ca6e: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
-    public static let sortDirectionUnspecified = GenaiListModelEvaluationRunsParameterXfa71ca6e(rawValue: "SORT_DIRECTION_UNSPECIFIED")
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let sortDirectionUnspecified =
+        GenaiListModelEvaluationRunsParameterXfa71ca6e(rawValue: "SORT_DIRECTION_UNSPECIFIED")
     public static let sortDirectionAsc = GenaiListModelEvaluationRunsParameterXfa71ca6e(rawValue: "SORT_DIRECTION_ASC")
-    public static let sortDirectionDesc = GenaiListModelEvaluationRunsParameterXfa71ca6e(rawValue: "SORT_DIRECTION_DESC")
+    public static let sortDirectionDesc =
+        GenaiListModelEvaluationRunsParameterXfa71ca6e(rawValue: "SORT_DIRECTION_DESC")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -92,13 +115,16 @@ public struct GenaiListModelEvaluationRunsParameterXfa71ca6e: RawRepresentable, 
 public struct KubernetesGetKubeconfigParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let token = KubernetesGetKubeconfigParameter(rawValue: "token")
     public static let sso = KubernetesGetKubeconfigParameter(rawValue: "sso")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -110,13 +136,16 @@ public struct KubernetesGetKubeconfigParameter: RawRepresentable, Hashable, Coda
 public struct SignalsListConsentsParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let agent = SignalsListConsentsParameter(rawValue: "agent")
     public static let inference = SignalsListConsentsParameter(rawValue: "inference")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -125,17 +154,22 @@ public struct SignalsListConsentsParameter: RawRepresentable, Hashable, Codable,
     }
 }
 
-public struct GenaiListSimulationRunsParameterX72e27cd6: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct GenaiListSimulationRunsParameterX72e27cd6: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
-    public static let sortDirectionUnspecified = GenaiListSimulationRunsParameterX72e27cd6(rawValue: "SORT_DIRECTION_UNSPECIFIED")
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let sortDirectionUnspecified =
+        GenaiListSimulationRunsParameterX72e27cd6(rawValue: "SORT_DIRECTION_UNSPECIFIED")
     public static let sortDirectionAsc = GenaiListSimulationRunsParameterX72e27cd6(rawValue: "SORT_DIRECTION_ASC")
     public static let sortDirectionDesc = GenaiListSimulationRunsParameterX72e27cd6(rawValue: "SORT_DIRECTION_DESC")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -148,7 +182,10 @@ public struct GenaiListSimulationRunsParameterX72e27cd6: RawRepresentable, Hasha
 public struct UptimeCreateAlertRequestBodyPeriod: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let value2m = UptimeCreateAlertRequestBodyPeriod(rawValue: "2m")
     public static let value3m = UptimeCreateAlertRequestBodyPeriod(rawValue: "3m")
     public static let value5m = UptimeCreateAlertRequestBodyPeriod(rawValue: "5m")
@@ -159,7 +196,7 @@ public struct UptimeCreateAlertRequestBodyPeriod: RawRepresentable, Hashable, Co
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -172,7 +209,10 @@ public struct UptimeCreateAlertRequestBodyPeriod: RawRepresentable, Hashable, Co
 public struct UptimeUpdateAlertRequestBodyType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let latency = UptimeUpdateAlertRequestBodyType(rawValue: "latency")
     public static let down = UptimeUpdateAlertRequestBodyType(rawValue: "down")
     public static let downGlobal = UptimeUpdateAlertRequestBodyType(rawValue: "down_global")
@@ -180,7 +220,7 @@ public struct UptimeUpdateAlertRequestBodyType: RawRepresentable, Hashable, Coda
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -190,10 +230,14 @@ public struct UptimeUpdateAlertRequestBodyType: RawRepresentable, Hashable, Coda
 }
 
 /// Required enumerated value serialized in the `regions[]` wire field.
-public struct UptimeCreateCheckRequestBodyRegionsItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct UptimeCreateCheckRequestBodyRegionsItem: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let usEast = UptimeCreateCheckRequestBodyRegionsItem(rawValue: "us_east")
     public static let usWest = UptimeCreateCheckRequestBodyRegionsItem(rawValue: "us_west")
     public static let euWest = UptimeCreateCheckRequestBodyRegionsItem(rawValue: "eu_west")
@@ -201,7 +245,7 @@ public struct UptimeCreateCheckRequestBodyRegionsItem: RawRepresentable, Hashabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

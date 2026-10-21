@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiList domain models
+/// AgentPlatformAPIApiList domain models
 /// List of Agents
 public struct ApiListAgentsOutputPublic: Codable {
     /// Agents
@@ -20,21 +20,21 @@ public struct ApiListAgentsOutputPublic: Codable {
     }
 
     init() {
-        (self.agents, self.links, self.meta) = (nil, nil, nil)
+        (agents, links, meta) = (nil, nil, nil)
     }
 }
 
-extension ApiListAgentsOutputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiListAgentsOutputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agents = try container.sdkDecodeIfPresent(.agents)
-        self.links = try container.sdkDecodeIfPresent(.links)
-        self.meta = try container.sdkDecodeIfPresent(.meta)
+        agents = try container.sdkDecodeIfPresent(.agents)
+        links = try container.sdkDecodeIfPresent(.links)
+        meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-extension ApiListAgentsOutputPublic {
-    public init(agents: [ApiAgentPublic]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+public extension ApiListAgentsOutputPublic {
+    init(agents: [ApiAgentPublic]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.agents, self.links) = (agents, links)
         self.meta = meta

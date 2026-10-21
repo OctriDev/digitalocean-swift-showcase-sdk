@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AppsAppsList domain models
+/// AppsAppsList domain models
 /// Typed representation of the `AppsListAlertsResponse` API schema.
 public struct AppsListAlertsResponse: Codable {
     /// Optional array value serialized in the `alerts` wire field.
@@ -14,19 +14,19 @@ public struct AppsListAlertsResponse: Codable {
     }
 
     init() {
-        self.alerts = nil
+        alerts = nil
     }
 }
 
-extension AppsListAlertsResponse {
-    public init(from decoder: Decoder) throws {
+public extension AppsListAlertsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.alerts = try container.sdkDecodeIfPresent(.alerts)
+        alerts = try container.sdkDecodeIfPresent(.alerts)
     }
 }
 
-extension AppsListAlertsResponse {
-    public init(alerts: [AppAlert]? = nil) {
+public extension AppsListAlertsResponse {
+    init(alerts: [AppAlert]? = nil) {
         self.init()
         self.alerts = alerts
     }
@@ -42,19 +42,19 @@ public struct AppsListRegionsResponse: Codable {
     }
 
     init() {
-        self.regions = nil
+        regions = nil
     }
 }
 
-extension AppsListRegionsResponse {
-    public init(from decoder: Decoder) throws {
+public extension AppsListRegionsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
+        regions = try container.sdkDecodeIfPresent(.regions)
     }
 }
 
-extension AppsListRegionsResponse {
-    public init(regions: [AppsRegion]? = nil) {
+public extension AppsListRegionsResponse {
+    init(regions: [AppsRegion]? = nil) {
         self.init()
         self.regions = regions
     }
@@ -74,20 +74,20 @@ public struct AppsListInstanceSizesResponse: Codable {
     }
 
     init() {
-        (self.discountPercent, self.instanceSizes) = (nil, nil)
+        (discountPercent, instanceSizes) = (nil, nil)
     }
 }
 
-extension AppsListInstanceSizesResponse {
-    public init(from decoder: Decoder) throws {
+public extension AppsListInstanceSizesResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.discountPercent = try container.sdkDecodeIfPresent(.discountPercent)
-        self.instanceSizes = try container.sdkDecodeIfPresent(.instanceSizes)
+        discountPercent = try container.sdkDecodeIfPresent(.discountPercent)
+        instanceSizes = try container.sdkDecodeIfPresent(.instanceSizes)
     }
 }
 
-extension AppsListInstanceSizesResponse {
-    public init(discountPercent: Double? = nil, instanceSizes: [AppsInstanceSize]? = nil) {
+public extension AppsListInstanceSizesResponse {
+    init(discountPercent: Double? = nil, instanceSizes: [AppsInstanceSize]? = nil) {
         self.init()
         (self.discountPercent, self.instanceSizes) = (discountPercent, instanceSizes)
     }

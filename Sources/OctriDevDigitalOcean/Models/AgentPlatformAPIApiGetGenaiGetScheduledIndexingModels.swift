@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiGet domain models
+/// AgentPlatformAPIApiGet domain models
 /// Typed representation of the `ApiGetScheduledIndexingOutput` API schema.
 public struct ApiGetScheduledIndexingOutput: Codable {
     /// Metadata for scheduled indexing entries
@@ -14,19 +14,19 @@ public struct ApiGetScheduledIndexingOutput: Codable {
     }
 
     init() {
-        self.indexingInfo = nil
+        indexingInfo = nil
     }
 }
 
-extension ApiGetScheduledIndexingOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetScheduledIndexingOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.indexingInfo = try container.sdkDecodeIfPresent(.indexingInfo)
+        indexingInfo = try container.sdkDecodeIfPresent(.indexingInfo)
     }
 }
 
-extension ApiGetScheduledIndexingOutput {
-    public init(indexingInfo: ApiScheduledIndexingInfo? = nil) {
+public extension ApiGetScheduledIndexingOutput {
+    init(indexingInfo: ApiScheduledIndexingInfo? = nil) {
         self.init()
         self.indexingInfo = indexingInfo
     }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// NFS domain models
+/// NFS domain models
 /// Typed representation of the `NfsGetResponse` API schema.
 public struct NfsGetResponse: Codable {
     /// Optional object value serialized in the `share` wire field.
@@ -14,19 +14,19 @@ public struct NfsGetResponse: Codable {
     }
 
     init() {
-        self.share = nil
+        share = nil
     }
 }
 
-extension NfsGetResponse {
-    public init(from decoder: Decoder) throws {
+public extension NfsGetResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.share = try container.sdkDecodeIfPresent(.share)
+        share = try container.sdkDecodeIfPresent(.share)
     }
 }
 
-extension NfsGetResponse {
-    public init(share: NfsResponse? = nil) {
+public extension NfsGetResponse {
+    init(share: NfsResponse? = nil) {
         self.init()
         self.share = share
     }

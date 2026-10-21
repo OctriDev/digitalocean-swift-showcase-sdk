@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ServerlessInferenceCreate domain models
+/// ServerlessInferenceCreate domain models
 /// Request body for text-to-speech generation.
 public struct CreateSpeechRequest: Codable {
     /// The text-to-speech model to use.
@@ -31,32 +31,48 @@ public struct CreateSpeechRequest: Codable {
         case instructions
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateSpeechRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.model) else {
-            throw SdkValidationError(field: "model", code: "required", message: "Validation failed for 'model': value is required")
-        }
-        guard container.contains(.input) else {
-            throw SdkValidationError(field: "input", code: "required", message: "Validation failed for 'input': value is required")
-        }
-        self.model = try container.sdkDecodeRequired(.model)
-        self.input = try container.sdkDecodeRequired(.input)
-        self.voice = try container.sdkDecodeIfPresent(.voice)
-        self.responseFormat = try container.sdkDecodeIfPresent(.responseFormat)
-        self.instructions = try container.sdkDecodeIfPresent(.instructions)
-            try validateLength("input", self.input, min: 1, max: nil)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateSpeechRequest {
-    public init(model: String, input: String, voice: String? = nil, responseFormat: String? = nil, instructions: String? = nil) throws {
+public extension CreateSpeechRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.model) else {
+            throw SdkValidationError(
+                field: "model",
+                code: "required",
+                message: "Validation failed for 'model': value is required"
+            )
+        }
+        guard container.contains(.input) else {
+            throw SdkValidationError(
+                field: "input",
+                code: "required",
+                message: "Validation failed for 'input': value is required"
+            )
+        }
+        model = try container.sdkDecodeRequired(.model)
+        input = try container.sdkDecodeRequired(.input)
+        voice = try container.sdkDecodeIfPresent(.voice)
+        responseFormat = try container.sdkDecodeIfPresent(.responseFormat)
+        instructions = try container.sdkDecodeIfPresent(.instructions)
+        try validateLength("input", input, min: 1, max: nil)
+    }
+}
+
+public extension CreateSpeechRequest {
+    init(
+        model: String,
+        input: String,
+        voice: String? = nil,
+        responseFormat: String? = nil,
+        instructions: String? = nil
+    ) throws {
         (self.model, self.input) = (model, input)
         (self.voice, self.responseFormat) = (voice, responseFormat)
         self.instructions = instructions
-            try validateLength("input", self.input, min: 1, max: nil)
+        try validateLength("input", self.input, min: 1, max: nil)
     }
 }

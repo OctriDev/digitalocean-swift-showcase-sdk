@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiModel domain models
+/// AgentPlatformAPIApiModel domain models
 /// Pricing that varies over time. When present, the rates move between the low and high bounds below across the
 /// intervals in the schedule.
 public struct ApiModelScaledPricing: Codable {
@@ -22,21 +22,25 @@ public struct ApiModelScaledPricing: Codable {
     }
 
     init() {
-        (self.intervals, self.maxPrices, self.minPrices) = (nil, nil, nil)
+        (intervals, maxPrices, minPrices) = (nil, nil, nil)
     }
 }
 
-extension ApiModelScaledPricing {
-    public init(from decoder: Decoder) throws {
+public extension ApiModelScaledPricing {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.intervals = try container.sdkDecodeIfPresent(.intervals)
-        self.maxPrices = try container.sdkDecodeIfPresent(.maxPrices)
-        self.minPrices = try container.sdkDecodeIfPresent(.minPrices)
+        intervals = try container.sdkDecodeIfPresent(.intervals)
+        maxPrices = try container.sdkDecodeIfPresent(.maxPrices)
+        minPrices = try container.sdkDecodeIfPresent(.minPrices)
     }
 }
 
-extension ApiModelScaledPricing {
-    public init(intervals: [ApiModelPricingInterval]? = nil, maxPrices: ApiModelPricing? = nil, minPrices: ApiModelPricing? = nil) {
+public extension ApiModelScaledPricing {
+    init(
+        intervals: [ApiModelPricingInterval]? = nil,
+        maxPrices: ApiModelPricing? = nil,
+        minPrices: ApiModelPricing? = nil
+    ) {
         self.init()
         (self.intervals, self.maxPrices) = (intervals, maxPrices)
         self.minPrices = minPrices
@@ -62,27 +66,27 @@ public struct ApiModelPricingInterval: Codable {
     }
 
     init() {
-        (self.endTime, self.prices, self.startTime) = (nil, nil, nil)
+        (endTime, prices, startTime) = (nil, nil, nil)
     }
 }
 
-extension ApiModelPricingInterval {
-    public init(from decoder: Decoder) throws {
+public extension ApiModelPricingInterval {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.endTime = try container.sdkDecodeIfPresent(.endTime)
-        self.prices = try container.sdkDecodeIfPresent(.prices)
-        self.startTime = try container.sdkDecodeIfPresent(.startTime)
-        if let value = self.endTime {
+        endTime = try container.sdkDecodeIfPresent(.endTime)
+        prices = try container.sdkDecodeIfPresent(.prices)
+        startTime = try container.sdkDecodeIfPresent(.startTime)
+        if let value = endTime {
             try sdkValidateDateTime("end_time", sdkWireString(value))
         }
-        if let value = self.startTime {
+        if let value = startTime {
             try sdkValidateDateTime("start_time", sdkWireString(value))
         }
     }
 }
 
-extension ApiModelPricingInterval {
-    public init(endTime: Date? = nil, prices: ApiModelPricing? = nil, startTime: Date? = nil) throws {
+public extension ApiModelPricingInterval {
+    init(endTime: Date? = nil, prices: ApiModelPricing? = nil, startTime: Date? = nil) throws {
         self.init()
         (self.endTime, self.prices) = (endTime, prices)
         self.startTime = startTime
@@ -130,25 +134,32 @@ public struct ApiModelPricingVariant: Codable {
     }
 
     init() {
-        (self.currency, self.label, self.mode, self.prices, self.scaledPricing) = (nil, nil, nil, nil, nil)
-        self.tier = nil
+        (currency, label, mode, prices, scaledPricing) = (nil, nil, nil, nil, nil)
+        tier = nil
     }
 }
 
-extension ApiModelPricingVariant {
-    public init(from decoder: Decoder) throws {
+public extension ApiModelPricingVariant {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.currency = try container.sdkDecodeIfPresent(.currency)
-        self.label = try container.sdkDecodeIfPresent(.label)
-        self.mode = try container.sdkDecodeIfPresent(.mode)
-        self.prices = try container.sdkDecodeIfPresent(.prices)
-        self.scaledPricing = try container.sdkDecodeIfPresent(.scaledPricing)
-        self.tier = try container.sdkDecodeIfPresent(.tier)
+        currency = try container.sdkDecodeIfPresent(.currency)
+        label = try container.sdkDecodeIfPresent(.label)
+        mode = try container.sdkDecodeIfPresent(.mode)
+        prices = try container.sdkDecodeIfPresent(.prices)
+        scaledPricing = try container.sdkDecodeIfPresent(.scaledPricing)
+        tier = try container.sdkDecodeIfPresent(.tier)
     }
 }
 
-extension ApiModelPricingVariant {
-    public init(currency: String? = nil, label: String? = nil, mode: ApiModelBillingMode? = nil, prices: ApiModelPricing? = nil, scaledPricing: ApiModelScaledPricing? = nil, tier: ApiModelPricingTier? = nil) {
+public extension ApiModelPricingVariant {
+    init(
+        currency: String? = nil,
+        label: String? = nil,
+        mode: ApiModelBillingMode? = nil,
+        prices: ApiModelPricing? = nil,
+        scaledPricing: ApiModelScaledPricing? = nil,
+        tier: ApiModelPricingTier? = nil
+    ) {
         self.init()
         (self.currency, self.label) = (currency, label)
         (self.mode, self.prices) = (mode, prices)
@@ -166,19 +177,19 @@ public struct ApiModelPricingDetail: Codable {
     }
 
     init() {
-        self.variants = nil
+        variants = nil
     }
 }
 
-extension ApiModelPricingDetail {
-    public init(from decoder: Decoder) throws {
+public extension ApiModelPricingDetail {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.variants = try container.sdkDecodeIfPresent(.variants)
+        variants = try container.sdkDecodeIfPresent(.variants)
     }
 }
 
-extension ApiModelPricingDetail {
-    public init(variants: [ApiModelPricingVariant]? = nil) {
+public extension ApiModelPricingDetail {
+    init(variants: [ApiModelPricingVariant]? = nil) {
         self.init()
         self.variants = variants
     }
@@ -267,41 +278,62 @@ public struct ApiModelCatalogCard: Codable {
     }
 
     init() {
-        (self.availability, self.badges, self.benchmarkScore, self.capabilities, self.codeSnippets) = (nil, nil, nil, nil, nil)
-        (self.contextWindow, self.creator, self.description, self.huggingFaceId, self.id) = (nil, nil, nil, nil, nil)
-        (self.maxOutputTokens, self.modalities, self.modelId, self.name, self.parameterCount) = (nil, nil, nil, nil, nil)
-        (self.pricing, self.pricingDetail, self.provider, self.shortDescription, self.type) = (nil, nil, nil, nil, nil)
+        (availability, badges, benchmarkScore, capabilities, codeSnippets) = (nil, nil, nil, nil, nil)
+        (contextWindow, creator, description, huggingFaceId, id) = (nil, nil, nil, nil, nil)
+        (maxOutputTokens, modalities, modelId, name, parameterCount) = (nil, nil, nil, nil, nil)
+        (pricing, pricingDetail, provider, shortDescription, type) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiModelCatalogCard {
-    public init(from decoder: Decoder) throws {
+public extension ApiModelCatalogCard {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.availability = try container.sdkDecodeIfPresent(.availability)
-        self.badges = try container.sdkDecodeIfPresent(.badges)
-        self.benchmarkScore = try container.sdkDecodeIfPresent(.benchmarkScore)
-        self.capabilities = try container.sdkDecodeIfPresent(.capabilities)
-        self.codeSnippets = try container.sdkDecodeIfPresent(.codeSnippets)
-        self.contextWindow = try container.sdkDecodeIfPresent(.contextWindow)
-        self.creator = try container.sdkDecodeIfPresent(.creator)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.huggingFaceId = try container.sdkDecodeIfPresent(.huggingFaceId)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.maxOutputTokens = try container.sdkDecodeIfPresent(.maxOutputTokens)
-        self.modalities = try container.sdkDecodeIfPresent(.modalities)
-        self.modelId = try container.sdkDecodeIfPresent(.modelId)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.parameterCount = try container.sdkDecodeIfPresent(.parameterCount)
-        self.pricing = try container.sdkDecodeIfPresent(.pricing)
-        self.pricingDetail = try container.sdkDecodeIfPresent(.pricingDetail)
-        self.provider = try container.sdkDecodeIfPresent(.provider)
-        self.shortDescription = try container.sdkDecodeIfPresent(.shortDescription)
-        self.type = try container.sdkDecodeIfPresent(.type)
+        availability = try container.sdkDecodeIfPresent(.availability)
+        badges = try container.sdkDecodeIfPresent(.badges)
+        benchmarkScore = try container.sdkDecodeIfPresent(.benchmarkScore)
+        capabilities = try container.sdkDecodeIfPresent(.capabilities)
+        codeSnippets = try container.sdkDecodeIfPresent(.codeSnippets)
+        contextWindow = try container.sdkDecodeIfPresent(.contextWindow)
+        creator = try container.sdkDecodeIfPresent(.creator)
+        description = try container.sdkDecodeIfPresent(.description)
+        huggingFaceId = try container.sdkDecodeIfPresent(.huggingFaceId)
+        id = try container.sdkDecodeIfPresent(.id)
+        maxOutputTokens = try container.sdkDecodeIfPresent(.maxOutputTokens)
+        modalities = try container.sdkDecodeIfPresent(.modalities)
+        modelId = try container.sdkDecodeIfPresent(.modelId)
+        name = try container.sdkDecodeIfPresent(.name)
+        parameterCount = try container.sdkDecodeIfPresent(.parameterCount)
+        pricing = try container.sdkDecodeIfPresent(.pricing)
+        pricingDetail = try container.sdkDecodeIfPresent(.pricingDetail)
+        provider = try container.sdkDecodeIfPresent(.provider)
+        shortDescription = try container.sdkDecodeIfPresent(.shortDescription)
+        type = try container.sdkDecodeIfPresent(.type)
     }
 }
 
-extension ApiModelCatalogCard {
-    public init(availability: [String]? = nil, badges: [String]? = nil, benchmarkScore: [String: JSONValue]? = nil, capabilities: [String]? = nil, codeSnippets: ApiCodeSnippets? = nil, contextWindow: String? = nil, creator: String? = nil, description: String? = nil, huggingFaceId: String? = nil, id: String? = nil, maxOutputTokens: String? = nil, modalities: ApiModelModalities? = nil, modelId: String? = nil, name: String? = nil, parameterCount: Double? = nil, pricing: ApiModelPricing? = nil, pricingDetail: ApiModelPricingDetail? = nil, provider: ApiModelProvider? = nil, shortDescription: String? = nil, type: String? = nil) {
+public extension ApiModelCatalogCard {
+    init(
+        availability: [String]? = nil,
+        badges: [String]? = nil,
+        benchmarkScore: [String: JSONValue]? = nil,
+        capabilities: [String]? = nil,
+        codeSnippets: ApiCodeSnippets? = nil,
+        contextWindow: String? = nil,
+        creator: String? = nil,
+        description: String? = nil,
+        huggingFaceId: String? = nil,
+        id: String? = nil,
+        maxOutputTokens: String? = nil,
+        modalities: ApiModelModalities? = nil,
+        modelId: String? = nil,
+        name: String? = nil,
+        parameterCount: Double? = nil,
+        pricing: ApiModelPricing? = nil,
+        pricingDetail: ApiModelPricingDetail? = nil,
+        provider: ApiModelProvider? = nil,
+        shortDescription: String? = nil,
+        type: String? = nil
+    ) {
         self.init()
         (self.availability, self.badges) = (availability, badges)
         (self.benchmarkScore, self.capabilities) = (benchmarkScore, capabilities)
@@ -321,14 +353,17 @@ extension ApiModelCatalogCard {
 public struct ApiModelBillingMode: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let modelBillingModeUnspecified = ApiModelBillingMode(rawValue: "MODEL_BILLING_MODE_UNSPECIFIED")
     public static let modelBillingModeInteractive = ApiModelBillingMode(rawValue: "MODEL_BILLING_MODE_INTERACTIVE")
     public static let modelBillingModeBatch = ApiModelBillingMode(rawValue: "MODEL_BILLING_MODE_BATCH")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -345,7 +380,10 @@ public struct ApiModelBillingMode: RawRepresentable, Hashable, Codable, Sendable
 public struct ApiModelPricingTier: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let modelPricingTierUnspecified = ApiModelPricingTier(rawValue: "MODEL_PRICING_TIER_UNSPECIFIED")
     public static let modelPricingTierStandard = ApiModelPricingTier(rawValue: "MODEL_PRICING_TIER_STANDARD")
     public static let modelPricingTierFastMode = ApiModelPricingTier(rawValue: "MODEL_PRICING_TIER_FAST_MODE")
@@ -355,7 +393,7 @@ public struct ApiModelPricingTier: RawRepresentable, Hashable, Codable, Sendable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

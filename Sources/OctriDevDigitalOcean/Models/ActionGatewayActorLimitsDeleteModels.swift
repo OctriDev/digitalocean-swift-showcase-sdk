@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ActionGateway domain models
+/// ActionGateway domain models
 /// Removes an actor's overrides.
 public struct ClearActorLimits: Codable {
     /// Required. Categories to clear, each at most once.
@@ -14,23 +14,29 @@ public struct ClearActorLimits: Codable {
         case categories
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ClearActorLimits {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.categories) else {
-            throw SdkValidationError(field: "categories", code: "required", message: "Validation failed for 'categories': value is required")
-        }
-        self.categories = try container.sdkDecodeRequired(.categories)
-            try validateItems("categories", self.categories, min: 1, max: nil)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ClearActorLimits {
-    public init(categories: [LimitCategory]) throws {
+public extension ClearActorLimits {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.categories) else {
+            throw SdkValidationError(
+                field: "categories",
+                code: "required",
+                message: "Validation failed for 'categories': value is required"
+            )
+        }
+        categories = try container.sdkDecodeRequired(.categories)
+        try validateItems("categories", categories, min: 1, max: nil)
+    }
+}
+
+public extension ClearActorLimits {
+    init(categories: [LimitCategory]) throws {
         self.categories = categories
-            try validateItems("categories", self.categories, min: 1, max: nil)
+        try validateItems("categories", self.categories, min: 1, max: nil)
     }
 }

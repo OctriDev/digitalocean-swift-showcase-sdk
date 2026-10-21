@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiList domain models
+/// AgentPlatformAPIApiList domain models
 /// ListOpenAIAPIKeysOutput is used to return the list of OpenAI API keys for a specific agent.
 public struct ApiListOpenAIAPIKeysOutput: Codable {
     /// Api key infos
@@ -20,21 +20,21 @@ public struct ApiListOpenAIAPIKeysOutput: Codable {
     }
 
     init() {
-        (self.apiKeyInfos, self.links, self.meta) = (nil, nil, nil)
+        (apiKeyInfos, links, meta) = (nil, nil, nil)
     }
 }
 
-extension ApiListOpenAIAPIKeysOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiListOpenAIAPIKeysOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKeyInfos = try container.sdkDecodeIfPresent(.apiKeyInfos)
-        self.links = try container.sdkDecodeIfPresent(.links)
-        self.meta = try container.sdkDecodeIfPresent(.meta)
+        apiKeyInfos = try container.sdkDecodeIfPresent(.apiKeyInfos)
+        links = try container.sdkDecodeIfPresent(.links)
+        meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-extension ApiListOpenAIAPIKeysOutput {
-    public init(apiKeyInfos: [ApiOpenAIAPIKeyInfo]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+public extension ApiListOpenAIAPIKeysOutput {
+    init(apiKeyInfos: [ApiOpenAIAPIKeyInfo]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.apiKeyInfos, self.links) = (apiKeyInfos, links)
         self.meta = meta

@@ -6,9 +6,27 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DatabasesMethods {
-    /// To list all of the options available for the offered database engines, send a GET request to `/v2/databases/options`. The result will be a JSON object with an `options` key.
-    public static func databasesListOptions(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> Options {
-        return try (await sdkRequest("GET", "/v2/databases/options", config: config, decoder: .json, operationId: "databases_list_options", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+public extension DatabasesMethods {
+    /// To list all of the options available for the offered database engines, send a GET request to
+    /// `/v2/databases/options`. The result will be a JSON object with an `options` key.
+    static func databasesListOptions(
+        config: ClientConfig,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Options {
+        try await (sdkRequest(
+            "GET",
+            "/v2/databases/options",
+            config: config,
+            decoder: .json,
+            operationId: "databases_list_options",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DatabasesMethods {
-    public struct DatabasesCreateReplicaOptions: Codable {
+public extension DatabasesMethods {
+    struct DatabasesCreateReplicaOptions: Codable {
         public var databaseClusterUuid: String
         public var name: String
         public var size: String
@@ -26,9 +26,17 @@ extension DatabasesMethods {
         }
     }
 
-    /// Creates a read-only replica for a PostgreSQL or MySQL database cluster. Supply `name` and `size`; `size` must be at least as large as the source cluster's node size, and `region` defaults to the cluster's region when omitted. The replica starts with a `status` of `forking` and transitions to `active` when it is ready to receive traffic.
+    /// Creates a read-only replica for a PostgreSQL or MySQL database cluster. Supply `name` and `size`; `size` must be
+    /// at least as large as the source cluster's node size, and `region` defaults to the cluster's region when omitted.
+    /// The replica starts with a `status` of `forking` and transitions to `active` when it is ready to receive traffic.
     ///
-    /// To create a read-only replica for a PostgreSQL or MySQL database cluster, send a POST request to `/v2/databases/$DATABASE_ID/replicas` specifying the name it should be given, the size of the node to be used, and the region where it will be located. **Note**: Read-only replicas are not supported for Caching or Valkey clusters. The response will be a JSON object with a key called `replica`. The value of this will be an object that contains the standard attributes associated with a database replica. The initial value of the read-only replica's `status` attribute will be `forking`. When the replica is ready to receive traffic, this will transition to `active`.
+    /// To create a read-only replica for a PostgreSQL or MySQL database cluster, send a POST request to
+    /// `/v2/databases/$DATABASE_ID/replicas` specifying the name it should be given, the size of the node to be used,
+    /// and the region where it will be located. **Note**: Read-only replicas are not supported for Caching or Valkey
+    /// clusters. The response will be a JSON object with a key called `replica`. The value of this will be an object
+    /// that contains the standard attributes associated with a database replica. The initial value of the read-only
+    /// replica's `status` attribute will be `forking`. When the replica is ready to receive traffic, this will
+    /// transition to `active`.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
@@ -51,11 +59,30 @@ extension DatabasesMethods {
     ///   base amount from the 'size' and any previously added additional storage.
     /// - doSettings: DigitalOcean-specific settings for the read-only replica,
     ///   including custom service CNAMEs.
-    public static func databasesCreateReplica(config: ClientConfig, options: DatabasesCreateReplicaOptions, requestOptions: RequestOptions? = nil) async throws -> DatabaseReplicaResponse {
+    static func databasesCreateReplica(
+        config: ClientConfig,
+        options: DatabasesCreateReplicaOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DatabaseReplicaResponse {
         try sdkValidateUuid("database_cluster_uuid", options.databaseClusterUuid)
 
         let requestBody = DatabasesCreateReplicaRequestBody(options: options)
 
-        return try (await sdkRequest("POST", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(options.databaseClusterUuid)), "/replicas"].joined(), config: config, body: requestBody, decoder: .json, operationId: "databases_create_replica", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(options.databaseClusterUuid)), "/replicas"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "databases_create_replica",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

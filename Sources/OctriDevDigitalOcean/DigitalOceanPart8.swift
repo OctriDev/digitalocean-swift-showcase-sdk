@@ -9,183 +9,584 @@ public class DatabasesNamespace {
         self.config = config
     }
 
-/// To list all of the options available for the offered database engines, send a GET request to `/v2/databases/options`. The result will be a JSON object with an `options` key.
+    /// To list all of the options available for the offered database engines, send a GET request to
+    /// `/v2/databases/options`. The result will be a JSON object with an `options` key.
     public func listOptions(requestOptions: RequestOptions? = nil) async throws -> Options {
-        return try await DatabasesMethods.databasesListOptions(config: config, requestOptions: requestOptions)
+        try await DatabasesMethods.databasesListOptions(config: config, requestOptions: requestOptions)
     }
 
-/// To list all of the database clusters available on your account, send a GET request to `/v2/databases`. To limit the results to database clusters with a specific tag, include the `tag_name` query parameter set to the name of the tag. For example, `/v2/databases?tag_name=$TAG_NAME`. The result will be a JSON object with a `databases` key. This will be set to an array of database objects, each of which will contain the standard database attributes. The embedded `connection` and `private_connection` objects will contain the information needed to access the database cluster. For multi-node clusters, the `standby_connection` and `standby_private_connection` objects will contain the information needed to connect to the cluster's standby node(s). The embedded `maintenance_window` object will contain information about any scheduled maintenance for the database cluster.
-    public func listClusters(tagName: String? = nil, requestOptions: RequestOptions? = nil) async throws -> DatabaseClusters {
-        return try await DatabasesMethods.databasesListClusters(config: config, tagName: tagName, requestOptions: requestOptions)
+    /// To list all of the database clusters available on your account, send a GET request to `/v2/databases`. To limit
+    /// the results to database clusters with a specific tag, include the `tag_name` query parameter set to the name of
+    /// the tag. For example, `/v2/databases?tag_name=$TAG_NAME`. The result will be a JSON object with a `databases`
+    /// key. This will be set to an array of database objects, each of which will contain the standard database
+    /// attributes. The embedded `connection` and `private_connection` objects will contain the information needed to
+    /// access the database cluster. For multi-node clusters, the `standby_connection` and `standby_private_connection`
+    /// objects will contain the information needed to connect to the cluster's standby node(s). The embedded
+    /// `maintenance_window` object will contain information about any scheduled maintenance for the database cluster.
+    public func listClusters(
+        tagName: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DatabaseClusters {
+        try await DatabasesMethods.databasesListClusters(
+            config: config,
+            tagName: tagName,
+            requestOptions: requestOptions
+        )
     }
 
-/// Creates a database cluster with the selected engine, size, region, and node count. Supply `name`, `engine`, `num_nodes`, `size`, and `region`; use `backup_restore` to create a cluster from an existing backup. The new cluster starts with a `creating` status and changes to `online` when ready to receive traffic.
+    /// Creates a database cluster with the selected engine, size, region, and node count. Supply `name`, `engine`,
+    /// `num_nodes`, `size`, and `region`; use `backup_restore` to create a cluster from an existing backup. The new
+    /// cluster starts with a `creating` status and changes to `online` when ready to receive traffic.
     ///
-    /// To create a database cluster, send a POST request to `/v2/databases`. To see a list of options for each engine, such as available regions, size slugs, and versions, send a GET request to the `/v2/databases/options` endpoint. The available sizes for the `storage_size_mib` field depends on the cluster's size. To see a list of available sizes, see [Managed Database Pricing](https://www.digitalocean.com/pricing/managed-databases). The create response returns a JSON object with a key called `database`. The value of this is an object that contains the standard attributes associated with a database cluster. The initial value of the database cluster's `status` attribute is `creating`. When the cluster is ready to receive traffic, this changes to `online`. The embedded `connection` and `private_connection` objects contains the information needed to access the database cluster. For multi-node clusters, the `standby_connection` and `standby_private_connection` objects contain the information needed to connect to the cluster's standby node(s). DigitalOcean managed PostgreSQL and MySQL database clusters take automated daily backups. To create a new database cluster based on a backup of an existing cluster, send a POST request to `/v2/databases`. In addition to the standard database cluster attributes, the JSON body must include a key named `backup_restore` with the name of the original database cluster and the timestamp of the backup to be restored. Creating a database from a backup is the same as forking a database in the control panel. PostgreSQL and MySQL Advanced Edition clusters can be provisioned by setting `engine` to `advanced_pg` or `advanced_mysql`. Advanced Edition clusters are currently in public preview and target highly available workloads. `advanced_pg` supports 1-, 2-, and 3-node deployments; `advanced_mysql` only supports 1- and 3-node deployments. See the [PostgreSQL Advanced…
-    public func createCluster(body: DatabasesCreateClusterRequestBody, requestOptions: RequestOptions? = nil) async throws -> DatabaseClusterResponse {
-        return try await DatabasesMethods.databasesCreateCluster(config: config, body: body, requestOptions: requestOptions)
+    /// To create a database cluster, send a POST request to `/v2/databases`. To see a list of options for each engine,
+    /// such as available regions, size slugs, and versions, send a GET request to the `/v2/databases/options` endpoint.
+    /// The available sizes for the `storage_size_mib` field depends on the cluster's size. To see a list of available
+    /// sizes, see [Managed Database Pricing](https://www.digitalocean.com/pricing/managed-databases). The create
+    /// response returns a JSON object with a key called `database`. The value of this is an object that contains the
+    /// standard attributes associated with a database cluster. The initial value of the database cluster's `status`
+    /// attribute is `creating`. When the cluster is ready to receive traffic, this changes to `online`. The embedded
+    /// `connection` and `private_connection` objects contains the information needed to access the database cluster.
+    /// For multi-node clusters, the `standby_connection` and `standby_private_connection` objects contain the
+    /// information needed to connect to the cluster's standby node(s). DigitalOcean managed PostgreSQL and MySQL
+    /// database clusters take automated daily backups. To create a new database cluster based on a backup of an
+    /// existing cluster, send a POST request to `/v2/databases`. In addition to the standard database cluster
+    /// attributes, the JSON body must include a key named `backup_restore` with the name of the original database
+    /// cluster and the timestamp of the backup to be restored. Creating a database from a backup is the same as forking
+    /// a database in the control panel. PostgreSQL and MySQL Advanced Edition clusters can be provisioned by setting
+    /// `engine` to `advanced_pg` or `advanced_mysql`. Advanced Edition clusters are currently in public preview and
+    /// target highly available workloads. `advanced_pg` supports 1-, 2-, and 3-node deployments; `advanced_mysql` only
+    /// supports 1- and 3-node deployments. See the [PostgreSQL Advanced…
+    public func createCluster(
+        body: DatabasesCreateClusterRequestBody,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DatabaseClusterResponse {
+        try await DatabasesMethods.databasesCreateCluster(config: config, body: body, requestOptions: requestOptions)
     }
 
-/// To show information about an existing database cluster, send a GET request to `/v2/databases/$DATABASE_ID`. The response will be a JSON object with a database key. This will be set to an object containing the standard database cluster attributes. The embedded `connection` and `private_connection` objects will contain the information needed to access the database cluster. For multi-node clusters, the `standby_connection` and `standby_private_connection` objects contain the information needed to connect to the cluster's standby node(s). The embedded maintenance_window object will contain information about any scheduled maintenance for the database cluster.
-    public func getCluster(databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> DatabaseClusterResponse {
-        return try await DatabasesMethods.databasesGetCluster(config: config, databaseClusterUuid: databaseClusterUuid, requestOptions: requestOptions)
+    /// To show information about an existing database cluster, send a GET request to `/v2/databases/$DATABASE_ID`. The
+    /// response will be a JSON object with a database key. This will be set to an object containing the standard
+    /// database cluster attributes. The embedded `connection` and `private_connection` objects will contain the
+    /// information needed to access the database cluster. For multi-node clusters, the `standby_connection` and
+    /// `standby_private_connection` objects contain the information needed to connect to the cluster's standby node(s).
+    /// The embedded maintenance_window object will contain information about any scheduled maintenance for the database
+    /// cluster.
+    public func getCluster(
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DatabaseClusterResponse {
+        try await DatabasesMethods.databasesGetCluster(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            requestOptions: requestOptions
+        )
     }
 
-/// To destroy a specific database, send a DELETE request to `/v2/databases/$DATABASE_ID`. A status of 204 will be given. This indicates that the request was processed successfully, but that no response body is needed.
-    public func destroyCluster(databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await DatabasesMethods.databasesDestroyCluster(config: config, databaseClusterUuid: databaseClusterUuid, requestOptions: requestOptions)
+    /// To destroy a specific database, send a DELETE request to `/v2/databases/$DATABASE_ID`. A status of 204 will be
+    /// given. This indicates that the request was processed successfully, but that no response body is needed.
+    public func destroyCluster(
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await DatabasesMethods.databasesDestroyCluster(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            requestOptions: requestOptions
+        )
     }
 
-/// Shows configuration parameters for an existing database cluster by sending a GET request to `/v2/databases/$DATABASE_ID/config`. The response is a JSON object with a `config` key, which is set to an object containing any database configuration parameters.
-    public func getConfig(databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> DatabaseConfigResponse {
-        return try await DatabasesMethods.databasesGetConfig(config: config, databaseClusterUuid: databaseClusterUuid, requestOptions: requestOptions)
+    /// Shows configuration parameters for an existing database cluster by sending a GET request to
+    /// `/v2/databases/$DATABASE_ID/config`. The response is a JSON object with a `config` key, which is set to an
+    /// object containing any database configuration parameters.
+    public func getConfig(
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DatabaseConfigResponse {
+        try await DatabasesMethods.databasesGetConfig(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            requestOptions: requestOptions
+        )
     }
 
-/// Updates configuration settings for an existing database cluster. Supply `config` with the settings you want to change; the available settings depend on the cluster's database engine. Use the cluster's UUID to target the configuration.
+    /// Updates configuration settings for an existing database cluster. Supply `config` with the settings you want to
+    /// change; the available settings depend on the cluster's database engine. Use the cluster's UUID to target the
+    /// configuration.
     ///
-    /// To update the configuration for an existing database cluster, send a PATCH request to `/v2/databases/$DATABASE_ID/config`.
-    public func patchConfig(databaseClusterUuid: String, config: DatabaseConfigConfig? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await DatabasesMethods.databasesPatchConfig(config: self.config, databaseClusterUuid: databaseClusterUuid, config2: config, requestOptions: requestOptions)
+    /// To update the configuration for an existing database cluster, send a PATCH request to
+    /// `/v2/databases/$DATABASE_ID/config`.
+    public func patchConfig(
+        databaseClusterUuid: String,
+        config: DatabaseConfigConfig? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await DatabasesMethods.databasesPatchConfig(
+            config: self.config,
+            databaseClusterUuid: databaseClusterUuid,
+            config2: config,
+            requestOptions: requestOptions
+        )
     }
 
-/// To retrieve the public certificate used to secure the connection to the database cluster send a GET request to `/v2/databases/$DATABASE_ID/ca`. The response will be a JSON object with a `ca` key. This will be set to an object containing the base64 encoding of the public key certificate.
+    /// To retrieve the public certificate used to secure the connection to the database cluster send a GET request to
+    /// `/v2/databases/$DATABASE_ID/ca`. The response will be a JSON object with a `ca` key. This will be set to an
+    /// object containing the base64 encoding of the public key certificate.
     public func getCa(databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> CaResponse {
-        return try await DatabasesMethods.databasesGetCa(config: config, databaseClusterUuid: databaseClusterUuid, requestOptions: requestOptions)
+        try await DatabasesMethods.databasesGetCa(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            requestOptions: requestOptions
+        )
     }
 }
 
-extension DatabasesNamespace {
-/// To retrieve the status of the most recent online migration, send a GET request to `/v2/databases/$DATABASE_ID/online-migration`.
-    public func getMigrationStatus(databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> OnlineMigration {
-        return try await DatabasesMethods.databasesGetMigrationStatus(config: config, databaseClusterUuid: databaseClusterUuid, requestOptions: requestOptions)
+public extension DatabasesNamespace {
+    /// To retrieve the status of the most recent online migration, send a GET request to
+    /// `/v2/databases/$DATABASE_ID/online-migration`.
+    func getMigrationStatus(
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> OnlineMigration {
+        try await DatabasesMethods.databasesGetMigrationStatus(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            requestOptions: requestOptions
+        )
     }
 
-/// Submits an online migration that connects a database cluster to an existing source cluster and replicates its contents. Supply the source connection details in `source`; online migration is available for MySQL, PostgreSQL, Caching, and Valkey clusters. If the source database continues to receive writes, migration can continue for up to two weeks unless you stop it manually.
+    /// Submits an online migration that connects a database cluster to an existing source cluster and replicates its
+    /// contents. Supply the source connection details in `source`; online migration is available for MySQL, PostgreSQL,
+    /// Caching, and Valkey clusters. If the source database continues to receive writes, migration can continue for up
+    /// to two weeks unless you stop it manually.
     ///
-    /// To start an online migration, send a PUT request to `/v2/databases/$DATABASE_ID/online-migration` endpoint. Migrating a cluster establishes a connection with an existing cluster and replicates its contents to the target cluster. Online migration is only available for MySQL, PostgreSQL, Caching, and Valkey clusters. If the existing database is continuously being written to, the migration process will continue for up to two weeks unless it is manually stopped. Online migration is only available for [MySQL](https://docs.digitalocean.com/products/databases/mysql/how-to/migrate/#:~:text=To%20migrate%20a%20MySQL%20database,then%20select%20Set%20Up%20Migration), [PostgreSQL](https://docs.digitalocean.com/products/databases/postgresql/how-to/migrate/), [Caching](https://docs.digitalocean.com/products/databases/redis/how-to/migrate/), and [Valkey](https://docs.digitalocean.com/products/databases/valkey/how-to/migrate/) clusters.
-    public func updateOnlineMigration(databaseClusterUuid: String, source: SourceDatabaseSource, disableSsl: Bool? = nil, ignoreDbs: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> OnlineMigration {
-        return try await DatabasesMethods.databasesUpdateOnlineMigration(config: config, databaseClusterUuid: databaseClusterUuid, source: source, disableSsl: disableSsl, ignoreDbs: ignoreDbs, requestOptions: requestOptions)
+    /// To start an online migration, send a PUT request to `/v2/databases/$DATABASE_ID/online-migration` endpoint.
+    /// Migrating a cluster establishes a connection with an existing cluster and replicates its contents to the target
+    /// cluster. Online migration is only available for MySQL, PostgreSQL, Caching, and Valkey clusters. If the existing
+    /// database is continuously being written to, the migration process will continue for up to two weeks unless it is
+    /// manually stopped. Online migration is only available for [MySQL](https://docs.digitalocean.com/products/databases/mysql/how-to/migrate/#:~:text=To%20migrate%20a%20MySQL%20database,then%20select%20Set%20Up%20Migration),
+    /// [PostgreSQL](https://docs.digitalocean.com/products/databases/postgresql/how-to/migrate/),
+    /// [Caching](https://docs.digitalocean.com/products/databases/redis/how-to/migrate/), and
+    /// [Valkey](https://docs.digitalocean.com/products/databases/valkey/how-to/migrate/) clusters.
+    func updateOnlineMigration(
+        databaseClusterUuid: String,
+        source: SourceDatabaseSource,
+        disableSsl: Bool? = nil,
+        ignoreDbs: [String]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> OnlineMigration {
+        try await DatabasesMethods.databasesUpdateOnlineMigration(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            source: source,
+            disableSsl: disableSsl,
+            ignoreDbs: ignoreDbs,
+            requestOptions: requestOptions
+        )
     }
 
-/// To stop an online migration, send a DELETE request to `/v2/databases/$DATABASE_ID/online-migration/$MIGRATION_ID`. A status of 204 will be given. This indicates that the request was processed successfully, but that no response body is needed.
-    public func deleteOnlineMigration(databaseClusterUuid: String, migrationId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await DatabasesMethods.databasesDeleteOnlineMigration(config: config, databaseClusterUuid: databaseClusterUuid, migrationId: migrationId, requestOptions: requestOptions)
+    /// To stop an online migration, send a DELETE request to
+    /// `/v2/databases/$DATABASE_ID/online-migration/$MIGRATION_ID`. A status of 204 will be given. This indicates that
+    /// the request was processed successfully, but that no response body is needed.
+    func deleteOnlineMigration(
+        databaseClusterUuid: String,
+        migrationId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await DatabasesMethods.databasesDeleteOnlineMigration(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            migrationId: migrationId,
+            requestOptions: requestOptions
+        )
     }
 
-/// To migrate a database cluster to a new region, send a `PUT` request to `/v2/databases/$DATABASE_ID/migrate`. The body of the request must specify a `region` attribute. A successful request will receive a 202 Accepted status code with no body in response. Querying the database cluster will show that its `status` attribute will now be set to `migrating`. This will transition back to `online` when the migration has completed.
-    public func updateRegion(databaseClusterUuid: String, region: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await DatabasesMethods.databasesUpdateRegion(config: config, databaseClusterUuid: databaseClusterUuid, region: region, requestOptions: requestOptions)
+    /// To migrate a database cluster to a new region, send a `PUT` request to `/v2/databases/$DATABASE_ID/migrate`. The
+    /// body of the request must specify a `region` attribute. A successful request will receive a 202 Accepted status
+    /// code with no body in response. Querying the database cluster will show that its `status` attribute will now be
+    /// set to `migrating`. This will transition back to `online` when the migration has completed.
+    func updateRegion(
+        databaseClusterUuid: String,
+        region: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await DatabasesMethods.databasesUpdateRegion(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            region: region,
+            requestOptions: requestOptions
+        )
     }
 
-/// To resize a database cluster, send a PUT request to `/v2/databases/$DATABASE_ID/resize`. The body of the request must specify both the size and num_nodes attributes. A successful request will receive a 202 Accepted status code with no body in response. Querying the database cluster will show that its status attribute will now be set to resizing. This will transition back to online when the resize operation has completed.
-    public func updateClusterSize(databaseClusterUuid: String, size: String, numNodes: Int, storageSizeMib: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await DatabasesMethods.databasesUpdateClusterSize(config: config, databaseClusterUuid: databaseClusterUuid, size: size, numNodes: numNodes, storageSizeMib: storageSizeMib, requestOptions: requestOptions)
+    /// To resize a database cluster, send a PUT request to `/v2/databases/$DATABASE_ID/resize`. The body of the request
+    /// must specify both the size and num_nodes attributes. A successful request will receive a 202 Accepted status
+    /// code with no body in response. Querying the database cluster will show that its status attribute will now be set
+    /// to resizing. This will transition back to online when the resize operation has completed.
+    func updateClusterSize(
+        databaseClusterUuid: String,
+        size: String,
+        numNodes: Int,
+        storageSizeMib: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await DatabasesMethods.databasesUpdateClusterSize(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            size: size,
+            numNodes: numNodes,
+            storageSizeMib: storageSizeMib,
+            requestOptions: requestOptions
+        )
     }
 
-/// To list all of a database cluster's firewall rules (known as "trusted sources" in the control panel), send a GET request to `/v2/databases/$DATABASE_ID/firewall`. The result will be a JSON object with a `rules` key.
-    public func listFirewallRules(databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> FirewallRulesResponse {
-        return try await DatabasesMethods.databasesListFirewallRules(config: config, databaseClusterUuid: databaseClusterUuid, requestOptions: requestOptions)
+    /// To list all of a database cluster's firewall rules (known as "trusted sources" in the control panel), send a GET
+    /// request to `/v2/databases/$DATABASE_ID/firewall`. The result will be a JSON object with a `rules` key.
+    func listFirewallRules(
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> FirewallRulesResponse {
+        try await DatabasesMethods.databasesListFirewallRules(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            requestOptions: requestOptions
+        )
     }
 
-/// Replaces the trusted-source firewall rules for a database cluster. Send the `rules` array to specify which Droplets, Kubernetes clusters, IP addresses, tags, or apps can connect. The firewall accepts at most 100 rules and does not support IPv6 addresses; consider using a VPC network to limit database access instead.
+    /// Replaces the trusted-source firewall rules for a database cluster. Send the `rules` array to specify which
+    /// Droplets, Kubernetes clusters, IP addresses, tags, or apps can connect. The firewall accepts at most 100 rules
+    /// and does not support IPv6 addresses; consider using a VPC network to limit database access instead.
     ///
-    /// To update a database cluster's firewall rules (known as "trusted sources" in the control panel), send a PUT request to `/v2/databases/$DATABASE_ID/firewall` specifying which resources should be able to open connections to the database. You may limit connections to specific Droplets, Kubernetes clusters, or IP addresses. When a tag is provided, any Droplet or Kubernetes node with that tag applied to it will have access. The firewall is limited to 100 rules (or trusted sources). You cannot add IPv6 addresses as trusted sources. For additional limits, see your database engine's limits page. When possible, we recommend [placing your databases into a VPC network](https://docs.digitalocean.com/products/networking/vpc/) to limit access to them instead of using a firewall. A successful request returns a 204 status code with no content.
-    public func updateFirewallRules(databaseClusterUuid: String, rules: [FirewallRuleRequest]? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await DatabasesMethods.databasesUpdateFirewallRules(config: config, databaseClusterUuid: databaseClusterUuid, rules: rules, requestOptions: requestOptions)
+    /// To update a database cluster's firewall rules (known as "trusted sources" in the control panel), send a PUT
+    /// request to `/v2/databases/$DATABASE_ID/firewall` specifying which resources should be able to open connections
+    /// to the database. You may limit connections to specific Droplets, Kubernetes clusters, or IP addresses. When a
+    /// tag is provided, any Droplet or Kubernetes node with that tag applied to it will have access. The firewall is
+    /// limited to 100 rules (or trusted sources). You cannot add IPv6 addresses as trusted sources. For additional
+    /// limits, see your database engine's limits page. When possible, we recommend [placing your databases into a VPC
+    /// network](https://docs.digitalocean.com/products/networking/vpc/) to limit access to them instead of using a
+    /// firewall. A successful request returns a 204 status code with no content.
+    func updateFirewallRules(
+        databaseClusterUuid: String,
+        rules: [FirewallRuleRequest]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await DatabasesMethods.databasesUpdateFirewallRules(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            rules: rules,
+            requestOptions: requestOptions
+        )
     }
 
-/// To retrieve the DigitalOcean-specific settings for a database cluster, send a GET request to `/v2/databases/$DATABASE_ID/do_settings`. The response will include the current `service_cnames` configuration.
-    public func getDoSettings(databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> DoSettingsResponse {
-        return try await DatabasesMethods.databasesGetDoSettings(config: config, databaseClusterUuid: databaseClusterUuid, requestOptions: requestOptions)
+    /// To retrieve the DigitalOcean-specific settings for a database cluster, send a GET request to
+    /// `/v2/databases/$DATABASE_ID/do_settings`. The response will include the current `service_cnames` configuration.
+    func getDoSettings(
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DoSettingsResponse {
+        try await DatabasesMethods.databasesGetDoSettings(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            requestOptions: requestOptions
+        )
     }
 }
 
-extension DatabasesNamespace {
-/// To update the DigitalOcean-specific settings for a database cluster, send a PUT request to `/v2/databases/$DATABASE_ID/do_settings`. Currently, the only supported setting is `service_cnames`, which allows you to specify custom DNS names (CNAMEs) to be included in the TLS certificate Subject Alternative Names (SANs) for the database cluster nodes. This enables TLS verification when connecting via a custom hostname. After updating, the database nodes will be replaced to apply the new certificate. This process is performed as a rolling replacement and does not cause downtime. To clear all custom CNAMEs, send an empty array or omit the field.
-    public func updateDoSettings(databaseClusterUuid: String, doSettings: DoSettings, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await DatabasesMethods.databasesUpdateDoSettings(config: config, databaseClusterUuid: databaseClusterUuid, doSettings: doSettings, requestOptions: requestOptions)
+public extension DatabasesNamespace {
+    /// To update the DigitalOcean-specific settings for a database cluster, send a PUT request to
+    /// `/v2/databases/$DATABASE_ID/do_settings`. Currently, the only supported setting is `service_cnames`, which
+    /// allows you to specify custom DNS names (CNAMEs) to be included in the TLS certificate Subject Alternative Names
+    /// (SANs) for the database cluster nodes. This enables TLS verification when connecting via a custom hostname.
+    /// After updating, the database nodes will be replaced to apply the new certificate. This process is performed as a
+    /// rolling replacement and does not cause downtime. To clear all custom CNAMEs, send an empty array or omit the
+    /// field.
+    func updateDoSettings(
+        databaseClusterUuid: String,
+        doSettings: DoSettings,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await DatabasesMethods.databasesUpdateDoSettings(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            doSettings: doSettings,
+            requestOptions: requestOptions
+        )
     }
 
-/// To configure the window when automatic maintenance should be performed for a database cluster, send a PUT request to `/v2/databases/$DATABASE_ID/maintenance`. A successful request will receive a 204 No Content status code with no body in response.
-    public func updateMaintenanceWindow(databaseClusterUuid: String, day: String, hour: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await DatabasesMethods.databasesUpdateMaintenanceWindow(config: config, databaseClusterUuid: databaseClusterUuid, day: day, hour: hour, requestOptions: requestOptions)
+    /// To configure the window when automatic maintenance should be performed for a database cluster, send a PUT
+    /// request to `/v2/databases/$DATABASE_ID/maintenance`. A successful request will receive a 204 No Content status
+    /// code with no body in response.
+    func updateMaintenanceWindow(
+        databaseClusterUuid: String,
+        day: String,
+        hour: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await DatabasesMethods.databasesUpdateMaintenanceWindow(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            day: day,
+            hour: hour,
+            requestOptions: requestOptions
+        )
     }
 
-/// To start the installation of updates for a database cluster, send a PUT request to `/v2/databases/$DATABASE_ID/install_update`. A successful request will receive a 204 No Content status code with no body in response.
-    public func installUpdate(databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await DatabasesMethods.databasesInstallUpdate(config: config, databaseClusterUuid: databaseClusterUuid, requestOptions: requestOptions)
+    /// To start the installation of updates for a database cluster, send a PUT request to
+    /// `/v2/databases/$DATABASE_ID/install_update`. A successful request will receive a 204 No Content status code with
+    /// no body in response.
+    func installUpdate(
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await DatabasesMethods.databasesInstallUpdate(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            requestOptions: requestOptions
+        )
     }
 
-/// To list all of the available backups of a PostgreSQL or MySQL database cluster, send a GET request to `/v2/databases/$DATABASE_ID/backups`. **Note**: Backups are not supported for Caching or Valkey clusters. The result will be a JSON object with a `backups key`. This will be set to an array of backup objects, each of which will contain the size of the backup and the timestamp at which it was created.
-    public func listBackups(databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> DatabaseBackups {
-        return try await DatabasesMethods.databasesListBackups(config: config, databaseClusterUuid: databaseClusterUuid, requestOptions: requestOptions)
+    /// To list all of the available backups of a PostgreSQL or MySQL database cluster, send a GET request to
+    /// `/v2/databases/$DATABASE_ID/backups`. **Note**: Backups are not supported for Caching or Valkey clusters. The
+    /// result will be a JSON object with a `backups key`. This will be set to an array of backup objects, each of which
+    /// will contain the size of the backup and the timestamp at which it was created.
+    func listBackups(
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DatabaseBackups {
+        try await DatabasesMethods.databasesListBackups(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            requestOptions: requestOptions
+        )
     }
 
-/// To list all of the read-only replicas associated with a database cluster, send a GET request to `/v2/databases/$DATABASE_ID/replicas`. **Note**: Read-only replicas are not supported for Caching or Valkey clusters. The result will be a JSON object with a `replicas` key. This will be set to an array of database replica objects, each of which will contain the standard database replica attributes.
-    public func listReplicas(databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> DatabaseReplicas {
-        return try await DatabasesMethods.databasesListReplicas(config: config, databaseClusterUuid: databaseClusterUuid, requestOptions: requestOptions)
+    /// To list all of the read-only replicas associated with a database cluster, send a GET request to
+    /// `/v2/databases/$DATABASE_ID/replicas`. **Note**: Read-only replicas are not supported for Caching or Valkey
+    /// clusters. The result will be a JSON object with a `replicas` key. This will be set to an array of database
+    /// replica objects, each of which will contain the standard database replica attributes.
+    func listReplicas(
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DatabaseReplicas {
+        try await DatabasesMethods.databasesListReplicas(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            requestOptions: requestOptions
+        )
     }
 
-/// Creates a read-only replica for a PostgreSQL or MySQL database cluster. Supply `name` and `size`; `size` must be at least as large as the source cluster's node size, and `region` defaults to the cluster's region when omitted. The replica starts with a `status` of `forking` and transitions to `active` when it is ready to receive traffic.
+    /// Creates a read-only replica for a PostgreSQL or MySQL database cluster. Supply `name` and `size`; `size` must be
+    /// at least as large as the source cluster's node size, and `region` defaults to the cluster's region when omitted.
+    /// The replica starts with a `status` of `forking` and transitions to `active` when it is ready to receive traffic.
     ///
-    /// To create a read-only replica for a PostgreSQL or MySQL database cluster, send a POST request to `/v2/databases/$DATABASE_ID/replicas` specifying the name it should be given, the size of the node to be used, and the region where it will be located. **Note**: Read-only replicas are not supported for Caching or Valkey clusters. The response will be a JSON object with a key called `replica`. The value of this will be an object that contains the standard attributes associated with a database replica. The initial value of the read-only replica's `status` attribute will be `forking`. When the replica is ready to receive traffic, this will transition to `active`.
-    public func createReplica(options: DatabasesMethods.DatabasesCreateReplicaOptions, requestOptions: RequestOptions? = nil) async throws -> DatabaseReplicaResponse {
-        return try await DatabasesMethods.databasesCreateReplica(config: config, options: options, requestOptions: requestOptions)
+    /// To create a read-only replica for a PostgreSQL or MySQL database cluster, send a POST request to
+    /// `/v2/databases/$DATABASE_ID/replicas` specifying the name it should be given, the size of the node to be used,
+    /// and the region where it will be located. **Note**: Read-only replicas are not supported for Caching or Valkey
+    /// clusters. The response will be a JSON object with a key called `replica`. The value of this will be an object
+    /// that contains the standard attributes associated with a database replica. The initial value of the read-only
+    /// replica's `status` attribute will be `forking`. When the replica is ready to receive traffic, this will
+    /// transition to `active`.
+    func createReplica(
+        options: DatabasesMethods.DatabasesCreateReplicaOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DatabaseReplicaResponse {
+        try await DatabasesMethods.databasesCreateReplica(
+            config: config,
+            options: options,
+            requestOptions: requestOptions
+        )
     }
 
-/// To list all of the cluster events, send a GET request to `/v2/databases/$DATABASE_ID/events`. The result will be a JSON object with a `events` key.
-    public func listEventsLogs(databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> EventsLogsResponse {
-        return try await DatabasesMethods.databasesListEventsLogs(config: config, databaseClusterUuid: databaseClusterUuid, requestOptions: requestOptions)
+    /// To list all of the cluster events, send a GET request to `/v2/databases/$DATABASE_ID/events`. The result will be
+    /// a JSON object with a `events` key.
+    func listEventsLogs(
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> EventsLogsResponse {
+        try await DatabasesMethods.databasesListEventsLogs(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            requestOptions: requestOptions
+        )
     }
 
-/// To show information about an existing database replica, send a GET request to `/v2/databases/$DATABASE_ID/replicas/$REPLICA_NAME`. **Note**: Read-only replicas are not supported for Caching or Valkey clusters. The response will be a JSON object with a `replica key`. This will be set to an object containing the standard database replica attributes.
-    public func getReplica(databaseClusterUuid: String, replicaName: String, requestOptions: RequestOptions? = nil) async throws -> DatabaseReplicaResponse {
-        return try await DatabasesMethods.databasesGetReplica(config: config, databaseClusterUuid: databaseClusterUuid, replicaName: replicaName, requestOptions: requestOptions)
+    /// To show information about an existing database replica, send a GET request to
+    /// `/v2/databases/$DATABASE_ID/replicas/$REPLICA_NAME`. **Note**: Read-only replicas are not supported for Caching
+    /// or Valkey clusters. The response will be a JSON object with a `replica key`. This will be set to an object
+    /// containing the standard database replica attributes.
+    func getReplica(
+        databaseClusterUuid: String,
+        replicaName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DatabaseReplicaResponse {
+        try await DatabasesMethods.databasesGetReplica(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            replicaName: replicaName,
+            requestOptions: requestOptions
+        )
     }
 }
 
-extension DatabasesNamespace {
-/// To destroy a specific read-only replica, send a DELETE request to `/v2/databases/$DATABASE_ID/replicas/$REPLICA_NAME`. **Note**: Read-only replicas are not supported for Caching or Valkey clusters. A status of 204 will be given. This indicates that the request was processed successfully, but that no response body is needed.
-    public func destroyReplica(databaseClusterUuid: String, replicaName: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await DatabasesMethods.databasesDestroyReplica(config: config, databaseClusterUuid: databaseClusterUuid, replicaName: replicaName, requestOptions: requestOptions)
+public extension DatabasesNamespace {
+    /// To destroy a specific read-only replica, send a DELETE request to
+    /// `/v2/databases/$DATABASE_ID/replicas/$REPLICA_NAME`. **Note**: Read-only replicas are not supported for Caching
+    /// or Valkey clusters. A status of 204 will be given. This indicates that the request was processed successfully,
+    /// but that no response body is needed.
+    func destroyReplica(
+        databaseClusterUuid: String,
+        replicaName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await DatabasesMethods.databasesDestroyReplica(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            replicaName: replicaName,
+            requestOptions: requestOptions
+        )
     }
 
-/// To promote a specific read-only replica, send a PUT request to `/v2/databases/$DATABASE_ID/replicas/$REPLICA_NAME/promote`. **Note**: Read-only replicas are not supported for Caching or Valkey clusters. A status of 204 will be given. This indicates that the request was processed successfully, but that no response body is needed.
-    public func promoteReplica(databaseClusterUuid: String, replicaName: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await DatabasesMethods.databasesPromoteReplica(config: config, databaseClusterUuid: databaseClusterUuid, replicaName: replicaName, requestOptions: requestOptions)
+    /// To promote a specific read-only replica, send a PUT request to
+    /// `/v2/databases/$DATABASE_ID/replicas/$REPLICA_NAME/promote`. **Note**: Read-only replicas are not supported for
+    /// Caching or Valkey clusters. A status of 204 will be given. This indicates that the request was processed
+    /// successfully, but that no response body is needed.
+    func promoteReplica(
+        databaseClusterUuid: String,
+        replicaName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await DatabasesMethods.databasesPromoteReplica(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            replicaName: replicaName,
+            requestOptions: requestOptions
+        )
     }
 
-/// To list all of the users for your database cluster, send a GET request to `/v2/databases/$DATABASE_ID/users`. Note: User management is not supported for Caching or Valkey clusters. The result will be a JSON object with a `users` key. This will be set to an array of database user objects, each of which will contain the standard database user attributes. User passwords will not show without the `database:view_credentials` scope. For MySQL clusters, additional options will be contained in the mysql_settings object. For PostgreSQL clusters, additional options will be contained in the `settings` object (for example, `pg_allow_replication`). For Kafka clusters, additional options will be contained in the `settings` object. For MongoDB clusters, additional information will be contained in the mongo_user_settings object
-    public func listUsers(databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> Users {
-        return try await DatabasesMethods.databasesListUsers(config: config, databaseClusterUuid: databaseClusterUuid, requestOptions: requestOptions)
+    /// To list all of the users for your database cluster, send a GET request to `/v2/databases/$DATABASE_ID/users`.
+    /// Note: User management is not supported for Caching or Valkey clusters. The result will be a JSON object with a
+    /// `users` key. This will be set to an array of database user objects, each of which will contain the standard
+    /// database user attributes. User passwords will not show without the `database:view_credentials` scope. For MySQL
+    /// clusters, additional options will be contained in the mysql_settings object. For PostgreSQL clusters, additional
+    /// options will be contained in the `settings` object (for example, `pg_allow_replication`). For Kafka clusters,
+    /// additional options will be contained in the `settings` object. For MongoDB clusters, additional information will
+    /// be contained in the mongo_user_settings object
+    func listUsers(databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> Users {
+        try await DatabasesMethods.databasesListUsers(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            requestOptions: requestOptions
+        )
     }
 
-/// Creates a database user for a database cluster. Supply the required `name` and, where applicable, engine-specific options in `mysql_settings` or `settings`; PostgreSQL `pg_allow_replication` defaults to `false` when omitted. The response includes the new user and its randomly generated password, and user management is not supported for Caching or Valkey clusters.
+    /// Creates a database user for a database cluster. Supply the required `name` and, where applicable,
+    /// engine-specific options in `mysql_settings` or `settings`; PostgreSQL `pg_allow_replication` defaults to `false`
+    /// when omitted. The response includes the new user and its randomly generated password, and user management is not
+    /// supported for Caching or Valkey clusters.
     ///
-    /// To add a new database user, send a POST request to `/v2/databases/$DATABASE_ID/users` with the desired username. Note: User management is not supported for Caching or Valkey clusters. When adding a user to a MySQL cluster, additional options can be configured in the `mysql_settings` object. When adding a user to a PostgreSQL cluster, additional options can be configured in the `settings` object (for example, `pg_allow_replication`). When `pg_allow_replication` is omitted, it defaults to `false`. When adding a user to a Kafka cluster, additional options can be configured in the `settings` object. When adding a user to a MongoDB cluster, additional options can be configured in the `settings.mongo_user_settings` object. The response will be a JSON object with a key called `user`. The value of this will be an object that contains the standard attributes associated with a database user including its randomly generated password.
-    public func addUser(databaseClusterUuid: String, body: DatabasesAddUserRequestBody, requestOptions: RequestOptions? = nil) async throws -> UserResponse {
-        return try await DatabasesMethods.databasesAddUser(config: config, databaseClusterUuid: databaseClusterUuid, body: body, requestOptions: requestOptions)
+    /// To add a new database user, send a POST request to `/v2/databases/$DATABASE_ID/users` with the desired username.
+    /// Note: User management is not supported for Caching or Valkey clusters. When adding a user to a MySQL cluster,
+    /// additional options can be configured in the `mysql_settings` object. When adding a user to a PostgreSQL cluster,
+    /// additional options can be configured in the `settings` object (for example, `pg_allow_replication`). When
+    /// `pg_allow_replication` is omitted, it defaults to `false`. When adding a user to a Kafka cluster, additional
+    /// options can be configured in the `settings` object. When adding a user to a MongoDB cluster, additional options
+    /// can be configured in the `settings.mongo_user_settings` object. The response will be a JSON object with a key
+    /// called `user`. The value of this will be an object that contains the standard attributes associated with a
+    /// database user including its randomly generated password.
+    func addUser(
+        databaseClusterUuid: String,
+        body: DatabasesAddUserRequestBody,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UserResponse {
+        try await DatabasesMethods.databasesAddUser(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            body: body,
+            requestOptions: requestOptions
+        )
     }
 
-/// To show information about an existing database user, send a GET request to `/v2/databases/$DATABASE_ID/users/$USERNAME`. Note: User management is not supported for Caching or Valkey clusters. The response will be a JSON object with a `user` key. This will be set to an object containing the standard database user attributes. The user's password will not show up unless the `database:view_credentials` scope is present. For MySQL clusters, additional options will be contained in the `mysql_settings` object. For PostgreSQL clusters, additional options will be contained in the `settings` object (for example, `pg_allow_replication`). For Kafka clusters, additional options will be contained in the `settings` object. For MongoDB clusters, additional information will be contained in the mongo_user_settings object
-    public func getUser(databaseClusterUuid: String, username: String, requestOptions: RequestOptions? = nil) async throws -> UserResponse {
-        return try await DatabasesMethods.databasesGetUser(config: config, databaseClusterUuid: databaseClusterUuid, username: username, requestOptions: requestOptions)
+    /// To show information about an existing database user, send a GET request to
+    /// `/v2/databases/$DATABASE_ID/users/$USERNAME`. Note: User management is not supported for Caching or Valkey
+    /// clusters. The response will be a JSON object with a `user` key. This will be set to an object containing the
+    /// standard database user attributes. The user's password will not show up unless the `database:view_credentials`
+    /// scope is present. For MySQL clusters, additional options will be contained in the `mysql_settings` object. For
+    /// PostgreSQL clusters, additional options will be contained in the `settings` object (for example,
+    /// `pg_allow_replication`). For Kafka clusters, additional options will be contained in the `settings` object. For
+    /// MongoDB clusters, additional information will be contained in the mongo_user_settings object
+    func getUser(
+        databaseClusterUuid: String,
+        username: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UserResponse {
+        try await DatabasesMethods.databasesGetUser(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            username: username,
+            requestOptions: requestOptions
+        )
     }
 
-/// To remove a specific database user, send a DELETE request to `/v2/databases/$DATABASE_ID/users/$USERNAME`. A status of 204 will be given. This indicates that the request was processed successfully, but that no response body is needed. Note: User management is not supported for Caching or Valkey clusters.
-    public func deleteUser(databaseClusterUuid: String, username: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await DatabasesMethods.databasesDeleteUser(config: config, databaseClusterUuid: databaseClusterUuid, username: username, requestOptions: requestOptions)
+    /// To remove a specific database user, send a DELETE request to `/v2/databases/$DATABASE_ID/users/$USERNAME`. A
+    /// status of 204 will be given. This indicates that the request was processed successfully, but that no response
+    /// body is needed. Note: User management is not supported for Caching or Valkey clusters.
+    func deleteUser(
+        databaseClusterUuid: String,
+        username: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await DatabasesMethods.databasesDeleteUser(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            username: username,
+            requestOptions: requestOptions
+        )
     }
 
-/// To update an existing database user, send a PUT request to `/v2/databases/$DATABASE_ID/users/$USERNAME` with the desired settings. **Note**: only `settings` can be updated via this type of request. If you wish to change the name of a user, you must recreate a new user. For PostgreSQL clusters, you can update `settings.pg_allow_replication` to enable or disable replication privileges for the user. When omitted, the value defaults to `false`. For Kafka and OpenSearch clusters, additional options can be configured in the `settings` object (for example, topic or index ACLs). Updating users is supported for PostgreSQL, Kafka, and OpenSearch clusters. For other engines, the request returns a 422. MongoDB roles and database access are set with `settings.mongo_user_settings` when creating a user and cannot be changed afterward; recreate the user to apply different roles or databases. The response will be a JSON object with a key called `user`. The value of this will be an object that contains the name of the updated database user, along with the `settings` object that has been updated.
-    public func updateUser(databaseClusterUuid: String, username: String, body: DatabasesUpdateUserRequestBody, requestOptions: RequestOptions? = nil) async throws -> UserResponse {
-        return try await DatabasesMethods.databasesUpdateUser(config: config, databaseClusterUuid: databaseClusterUuid, username: username, body: body, requestOptions: requestOptions)
+    /// To update an existing database user, send a PUT request to `/v2/databases/$DATABASE_ID/users/$USERNAME` with the
+    /// desired settings. **Note**: only `settings` can be updated via this type of request. If you wish to change the
+    /// name of a user, you must recreate a new user. For PostgreSQL clusters, you can update
+    /// `settings.pg_allow_replication` to enable or disable replication privileges for the user. When omitted, the
+    /// value defaults to `false`. For Kafka and OpenSearch clusters, additional options can be configured in the
+    /// `settings` object (for example, topic or index ACLs). Updating users is supported for PostgreSQL, Kafka, and
+    /// OpenSearch clusters. For other engines, the request returns a 422. MongoDB roles and database access are set
+    /// with `settings.mongo_user_settings` when creating a user and cannot be changed afterward; recreate the user to
+    /// apply different roles or databases. The response will be a JSON object with a key called `user`. The value of
+    /// this will be an object that contains the name of the updated database user, along with the `settings` object
+    /// that has been updated.
+    func updateUser(
+        databaseClusterUuid: String,
+        username: String,
+        body: DatabasesUpdateUserRequestBody,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UserResponse {
+        try await DatabasesMethods.databasesUpdateUser(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            username: username,
+            body: body,
+            requestOptions: requestOptions
+        )
     }
 
-/// Resets the password or authentication method for a user in a database cluster. For MySQL users, supply `mysql_settings.auth_plugin` to choose the authentication method. The response includes the updated user object and its standard database user attributes.
+    /// Resets the password or authentication method for a user in a database cluster. For MySQL users, supply
+    /// `mysql_settings.auth_plugin` to choose the authentication method. The response includes the updated user object
+    /// and its standard database user attributes.
     ///
-    /// To reset the password for a database user, send a POST request to `/v2/databases/$DATABASE_ID/users/$USERNAME/reset_auth`. For `mysql` databases, the authentication method can be specifying by including a key in the JSON body called `mysql_settings` with the `auth_plugin` value specified. The response will be a JSON object with a `user` key. This will be set to an object containing the standard database user attributes.
-    public func resetAuth(databaseClusterUuid: String, username: String, mysqlSettings: MysqlSettings? = nil, requestOptions: RequestOptions? = nil) async throws -> UserResponse {
-        return try await DatabasesMethods.databasesResetAuth(config: config, databaseClusterUuid: databaseClusterUuid, username: username, mysqlSettings: mysqlSettings, requestOptions: requestOptions)
+    /// To reset the password for a database user, send a POST request to
+    /// `/v2/databases/$DATABASE_ID/users/$USERNAME/reset_auth`. For `mysql` databases, the authentication method can be
+    /// specifying by including a key in the JSON body called `mysql_settings` with the `auth_plugin` value specified.
+    /// The response will be a JSON object with a `user` key. This will be set to an object containing the standard
+    /// database user attributes.
+    func resetAuth(
+        databaseClusterUuid: String,
+        username: String,
+        mysqlSettings: MysqlSettings? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UserResponse {
+        try await DatabasesMethods.databasesResetAuth(
+            config: config,
+            databaseClusterUuid: databaseClusterUuid,
+            username: username,
+            mysqlSettings: mysqlSettings,
+            requestOptions: requestOptions
+        )
     }
 }

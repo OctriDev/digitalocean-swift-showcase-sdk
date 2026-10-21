@@ -3,7 +3,7 @@
 
 import Foundation
 
-// BatchInference domain models
+/// BatchInference domain models
 /// Cursor-paginated list of batch inference jobs.
 public struct BatchListResponse: Codable {
     /// The object type, always `list`.
@@ -28,37 +28,57 @@ public struct BatchListResponse: Codable {
         case lastId = "last_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension BatchListResponse {
-    public init(from decoder: Decoder) throws {
+public extension BatchListResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.object) else {
-            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
+            throw SdkValidationError(
+                field: "object",
+                code: "required",
+                message: "Validation failed for 'object': value is required"
+            )
         }
         guard container.contains(.data) else {
-            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
+            throw SdkValidationError(
+                field: "data",
+                code: "required",
+                message: "Validation failed for 'data': value is required"
+            )
         }
         guard container.contains(.hasMore) else {
-            throw SdkValidationError(field: "has_more", code: "required", message: "Validation failed for 'has_more': value is required")
+            throw SdkValidationError(
+                field: "has_more",
+                code: "required",
+                message: "Validation failed for 'has_more': value is required"
+            )
         }
-        self.object = try container.sdkDecodeRequired(.object)
-        self.data = try container.sdkDecodeRequired(.data)
-        self.hasMore = try container.sdkDecodeRequired(.hasMore)
-        self.firstId = try container.sdkDecodeIfPresent(.firstId)
-        self.lastId = try container.sdkDecodeIfPresent(.lastId)
-        if let value = self.firstId {
+        object = try container.sdkDecodeRequired(.object)
+        data = try container.sdkDecodeRequired(.data)
+        hasMore = try container.sdkDecodeRequired(.hasMore)
+        firstId = try container.sdkDecodeIfPresent(.firstId)
+        lastId = try container.sdkDecodeIfPresent(.lastId)
+        if let value = firstId {
             try sdkValidateUuid("first_id", value)
         }
-        if let value = self.lastId {
+        if let value = lastId {
             try sdkValidateUuid("last_id", value)
         }
     }
 }
 
-extension BatchListResponse {
-    public init(object: BatchListResponseObject, data: [Batch], hasMore: Bool, firstId: String? = nil, lastId: String? = nil) throws {
+public extension BatchListResponse {
+    init(
+        object: BatchListResponseObject,
+        data: [Batch],
+        hasMore: Bool,
+        firstId: String? = nil,
+        lastId: String? = nil
+    ) throws {
         (self.object, self.data) = (object, data)
         (self.hasMore, self.firstId) = (hasMore, firstId)
         self.lastId = lastId
@@ -75,12 +95,15 @@ extension BatchListResponse {
 public struct BatchListResponseObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = BatchListResponseObject(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

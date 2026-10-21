@@ -6,8 +6,10 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AddOnsMethods {
-    /// To create an add-on resource, send a POST request to `/v2/add-ons/saas` with required parameters. Some add-ons require additional metadata to be provided in the request body. To find out what metadata is required for a specific add-on, send a GET request to `/v2/add-ons/apps/{app_slug}/metadata`.
+public extension AddOnsMethods {
+    /// To create an add-on resource, send a POST request to `/v2/add-ons/saas` with required parameters. Some add-ons
+    /// require additional metadata to be provided in the request body. To find out what metadata is required for a
+    /// specific add-on, send a GET request to `/v2/add-ons/apps/{app_slug}/metadata`.
     ///
     /// - Parameters:
     /// - appSlug: The slug identifier for the application associated with the
@@ -20,17 +22,61 @@ extension AddOnsMethods {
     /// - linkedDropletId: ID of the droplet to be linked to this resource, if
     ///   applicable.
     /// - fleetUuid: UUID of the fleet/project to which this resource will belong.
-    public static func addonsCreate(config: ClientConfig, appSlug: String, planSlug: String, name: String, metadata: [AddonsResourceMetadata], linkedDropletId: Int? = nil, fleetUuid: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AddonsCreate {
-        let requestBody = AddonsCreateRequestBody(appSlug: appSlug, planSlug: planSlug, name: name, metadata: metadata, linkedDropletId: linkedDropletId, fleetUuid: fleetUuid)
+    static func addonsCreate(
+        config: ClientConfig,
+        appSlug: String,
+        planSlug: String,
+        name: String,
+        metadata: [AddonsResourceMetadata],
+        linkedDropletId: Int? = nil,
+        fleetUuid: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AddonsCreate {
+        let requestBody = AddonsCreateRequestBody(
+            appSlug: appSlug,
+            planSlug: planSlug,
+            name: name,
+            metadata: metadata,
+            linkedDropletId: linkedDropletId,
+            fleetUuid: fleetUuid
+        )
 
-        return try (await sdkRequest("POST", "/v2/add-ons/saas", config: config, body: requestBody, decoder: .json, operationId: "addons_create", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/add-ons/saas",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "addons_create",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 
-    /// To fetch details of a specific Add-On Resource, send a GET request to `/v2/add-ons/saas/{resource_uuid}`. Replace `{resource_uuid}` with the UUID of the resource you want to retrieve.
+    /// To fetch details of a specific Add-On Resource, send a GET request to `/v2/add-ons/saas/{resource_uuid}`.
+    /// Replace `{resource_uuid}` with the UUID of the resource you want to retrieve.
     ///
     /// - Parameters:
     /// - resourceUuid: The UUID of the add-on resource to retrieve.
-    public static func addonsGet(config: ClientConfig, resourceUuid: String, requestOptions: RequestOptions? = nil) async throws -> AddonsGet {
-        return try (await sdkRequest("GET", ["/v2/add-ons/saas/", sdkEncodePathSegment(sdkWireString(resourceUuid))].joined(), config: config, decoder: .json, operationId: "addons_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func addonsGet(
+        config: ClientConfig,
+        resourceUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AddonsGet {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/add-ons/saas/", sdkEncodePathSegment(sdkWireString(resourceUuid))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "addons_get",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

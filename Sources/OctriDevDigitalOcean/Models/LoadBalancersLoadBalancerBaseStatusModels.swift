@@ -3,20 +3,23 @@
 
 import Foundation
 
-// LoadBalancers domain models
+/// LoadBalancers domain models
 /// A status string indicating the current state of the load balancer. This can be `new`, `active`, or
 /// `errored`.
 public struct LoadBalancerBaseStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let new = LoadBalancerBaseStatus(rawValue: "new")
     public static let active = LoadBalancerBaseStatus(rawValue: "active")
     public static let errored = LoadBalancerBaseStatus(rawValue: "errored")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Databases domain models
+/// Databases domain models
 /// Optional object value serialized in the `version_availability` wire field.
 public struct OptionsVersionAvailability: Codable {
     /// An array of objects, each indicating the version end-of-life, end-of-availability for various database
@@ -47,28 +47,38 @@ public struct OptionsVersionAvailability: Codable {
     }
 
     init() {
-        (self.kafka, self.pg, self.mysql, self.redis, self.valkey) = (nil, nil, nil, nil, nil)
-        (self.mongodb, self.opensearch, self.advancedPg, self.advancedMysql) = (nil, nil, nil, nil)
+        (kafka, pg, mysql, redis, valkey) = (nil, nil, nil, nil, nil)
+        (mongodb, opensearch, advancedPg, advancedMysql) = (nil, nil, nil, nil)
     }
 }
 
-extension OptionsVersionAvailability {
-    public init(from decoder: Decoder) throws {
+public extension OptionsVersionAvailability {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.kafka = try container.sdkDecodeIfPresent(.kafka)
-        self.pg = try container.sdkDecodeIfPresent(.pg)
-        self.mysql = try container.sdkDecodeIfPresent(.mysql)
-        self.redis = try container.sdkDecodeIfPresent(.redis)
-        self.valkey = try container.sdkDecodeIfPresent(.valkey)
-        self.mongodb = try container.sdkDecodeIfPresent(.mongodb)
-        self.opensearch = try container.sdkDecodeIfPresent(.opensearch)
-        self.advancedPg = try container.sdkDecodeIfPresent(.advancedPg)
-        self.advancedMysql = try container.sdkDecodeIfPresent(.advancedMysql)
+        kafka = try container.sdkDecodeIfPresent(.kafka)
+        pg = try container.sdkDecodeIfPresent(.pg)
+        mysql = try container.sdkDecodeIfPresent(.mysql)
+        redis = try container.sdkDecodeIfPresent(.redis)
+        valkey = try container.sdkDecodeIfPresent(.valkey)
+        mongodb = try container.sdkDecodeIfPresent(.mongodb)
+        opensearch = try container.sdkDecodeIfPresent(.opensearch)
+        advancedPg = try container.sdkDecodeIfPresent(.advancedPg)
+        advancedMysql = try container.sdkDecodeIfPresent(.advancedMysql)
     }
 }
 
-extension OptionsVersionAvailability {
-    public init(kafka: DatabaseVersionAvailabilities? = nil, pg: DatabaseVersionAvailabilities? = nil, mysql: DatabaseVersionAvailabilities? = nil, redis: DatabaseVersionAvailabilities? = nil, valkey: DatabaseVersionAvailabilities? = nil, mongodb: DatabaseVersionAvailabilities? = nil, opensearch: DatabaseVersionAvailabilities? = nil, advancedPg: DatabaseVersionAvailabilities? = nil, advancedMysql: DatabaseVersionAvailabilities? = nil) {
+public extension OptionsVersionAvailability {
+    init(
+        kafka: DatabaseVersionAvailabilities? = nil,
+        pg: DatabaseVersionAvailabilities? = nil,
+        mysql: DatabaseVersionAvailabilities? = nil,
+        redis: DatabaseVersionAvailabilities? = nil,
+        valkey: DatabaseVersionAvailabilities? = nil,
+        mongodb: DatabaseVersionAvailabilities? = nil,
+        opensearch: DatabaseVersionAvailabilities? = nil,
+        advancedPg: DatabaseVersionAvailabilities? = nil,
+        advancedMysql: DatabaseVersionAvailabilities? = nil
+    ) {
         self.init()
         (self.kafka, self.pg) = (kafka, pg)
         (self.mysql, self.redis) = (mysql, redis)
@@ -98,21 +108,21 @@ public struct OptionsOptionsAdvancedPg: Codable {
     }
 
     init() {
-        (self.regions, self.versions, self.layouts) = (nil, nil, nil)
+        (regions, versions, layouts) = (nil, nil, nil)
     }
 }
 
-extension OptionsOptionsAdvancedPg {
-    public init(from decoder: Decoder) throws {
+public extension OptionsOptionsAdvancedPg {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.versions = try container.sdkDecodeIfPresent(.versions)
-        self.layouts = try container.sdkDecodeIfPresent(.layouts)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        versions = try container.sdkDecodeIfPresent(.versions)
+        layouts = try container.sdkDecodeIfPresent(.layouts)
     }
 }
 
-extension OptionsOptionsAdvancedPg {
-    public init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
+public extension OptionsOptionsAdvancedPg {
+    init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
         self.init()
         (self.regions, self.versions) = (regions, versions)
         self.layouts = layouts
@@ -139,21 +149,21 @@ public struct OptionsOptionsValkey: Codable {
     }
 
     init() {
-        (self.regions, self.versions, self.layouts) = (nil, nil, nil)
+        (regions, versions, layouts) = (nil, nil, nil)
     }
 }
 
-extension OptionsOptionsValkey {
-    public init(from decoder: Decoder) throws {
+public extension OptionsOptionsValkey {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.versions = try container.sdkDecodeIfPresent(.versions)
-        self.layouts = try container.sdkDecodeIfPresent(.layouts)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        versions = try container.sdkDecodeIfPresent(.versions)
+        layouts = try container.sdkDecodeIfPresent(.layouts)
     }
 }
 
-extension OptionsOptionsValkey {
-    public init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
+public extension OptionsOptionsValkey {
+    init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
         self.init()
         (self.regions, self.versions) = (regions, versions)
         self.layouts = layouts
@@ -180,21 +190,21 @@ public struct OptionsOptionsMysql: Codable {
     }
 
     init() {
-        (self.regions, self.versions, self.layouts) = (nil, nil, nil)
+        (regions, versions, layouts) = (nil, nil, nil)
     }
 }
 
-extension OptionsOptionsMysql {
-    public init(from decoder: Decoder) throws {
+public extension OptionsOptionsMysql {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.versions = try container.sdkDecodeIfPresent(.versions)
-        self.layouts = try container.sdkDecodeIfPresent(.layouts)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        versions = try container.sdkDecodeIfPresent(.versions)
+        layouts = try container.sdkDecodeIfPresent(.layouts)
     }
 }
 
-extension OptionsOptionsMysql {
-    public init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
+public extension OptionsOptionsMysql {
+    init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
         self.init()
         (self.regions, self.versions) = (regions, versions)
         self.layouts = layouts
@@ -235,28 +245,38 @@ public struct OptionsOptions: Codable {
     }
 
     init() {
-        (self.kafka, self.mongodb, self.pg, self.mysql, self.redis) = (nil, nil, nil, nil, nil)
-        (self.valkey, self.opensearch, self.advancedPg, self.advancedMysql) = (nil, nil, nil, nil)
+        (kafka, mongodb, pg, mysql, redis) = (nil, nil, nil, nil, nil)
+        (valkey, opensearch, advancedPg, advancedMysql) = (nil, nil, nil, nil)
     }
 }
 
-extension OptionsOptions {
-    public init(from decoder: Decoder) throws {
+public extension OptionsOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.kafka = try container.sdkDecodeIfPresent(.kafka)
-        self.mongodb = try container.sdkDecodeIfPresent(.mongodb)
-        self.pg = try container.sdkDecodeIfPresent(.pg)
-        self.mysql = try container.sdkDecodeIfPresent(.mysql)
-        self.redis = try container.sdkDecodeIfPresent(.redis)
-        self.valkey = try container.sdkDecodeIfPresent(.valkey)
-        self.opensearch = try container.sdkDecodeIfPresent(.opensearch)
-        self.advancedPg = try container.sdkDecodeIfPresent(.advancedPg)
-        self.advancedMysql = try container.sdkDecodeIfPresent(.advancedMysql)
+        kafka = try container.sdkDecodeIfPresent(.kafka)
+        mongodb = try container.sdkDecodeIfPresent(.mongodb)
+        pg = try container.sdkDecodeIfPresent(.pg)
+        mysql = try container.sdkDecodeIfPresent(.mysql)
+        redis = try container.sdkDecodeIfPresent(.redis)
+        valkey = try container.sdkDecodeIfPresent(.valkey)
+        opensearch = try container.sdkDecodeIfPresent(.opensearch)
+        advancedPg = try container.sdkDecodeIfPresent(.advancedPg)
+        advancedMysql = try container.sdkDecodeIfPresent(.advancedMysql)
     }
 }
 
-extension OptionsOptions {
-    public init(kafka: OptionsOptionsKafka? = nil, mongodb: OptionsOptionsMongodb? = nil, pg: OptionsOptionsPg? = nil, mysql: OptionsOptionsMysql? = nil, redis: OptionsOptionsRedis? = nil, valkey: OptionsOptionsValkey? = nil, opensearch: OptionsOptionsOpensearch? = nil, advancedPg: OptionsOptionsAdvancedPg? = nil, advancedMysql: OptionsOptionsAdvancedMysql? = nil) {
+public extension OptionsOptions {
+    init(
+        kafka: OptionsOptionsKafka? = nil,
+        mongodb: OptionsOptionsMongodb? = nil,
+        pg: OptionsOptionsPg? = nil,
+        mysql: OptionsOptionsMysql? = nil,
+        redis: OptionsOptionsRedis? = nil,
+        valkey: OptionsOptionsValkey? = nil,
+        opensearch: OptionsOptionsOpensearch? = nil,
+        advancedPg: OptionsOptionsAdvancedPg? = nil,
+        advancedMysql: OptionsOptionsAdvancedMysql? = nil
+    ) {
         self.init()
         (self.kafka, self.mongodb) = (kafka, mongodb)
         (self.pg, self.mysql) = (pg, mysql)
@@ -286,21 +306,21 @@ public struct OptionsOptionsOpensearch: Codable {
     }
 
     init() {
-        (self.regions, self.versions, self.layouts) = (nil, nil, nil)
+        (regions, versions, layouts) = (nil, nil, nil)
     }
 }
 
-extension OptionsOptionsOpensearch {
-    public init(from decoder: Decoder) throws {
+public extension OptionsOptionsOpensearch {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.versions = try container.sdkDecodeIfPresent(.versions)
-        self.layouts = try container.sdkDecodeIfPresent(.layouts)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        versions = try container.sdkDecodeIfPresent(.versions)
+        layouts = try container.sdkDecodeIfPresent(.layouts)
     }
 }
 
-extension OptionsOptionsOpensearch {
-    public init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
+public extension OptionsOptionsOpensearch {
+    init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
         self.init()
         (self.regions, self.versions) = (regions, versions)
         self.layouts = layouts
@@ -327,21 +347,21 @@ public struct OptionsOptionsKafka: Codable {
     }
 
     init() {
-        (self.regions, self.versions, self.layouts) = (nil, nil, nil)
+        (regions, versions, layouts) = (nil, nil, nil)
     }
 }
 
-extension OptionsOptionsKafka {
-    public init(from decoder: Decoder) throws {
+public extension OptionsOptionsKafka {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.versions = try container.sdkDecodeIfPresent(.versions)
-        self.layouts = try container.sdkDecodeIfPresent(.layouts)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        versions = try container.sdkDecodeIfPresent(.versions)
+        layouts = try container.sdkDecodeIfPresent(.layouts)
     }
 }
 
-extension OptionsOptionsKafka {
-    public init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
+public extension OptionsOptionsKafka {
+    init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
         self.init()
         (self.regions, self.versions) = (regions, versions)
         self.layouts = layouts
@@ -368,21 +388,21 @@ public struct OptionsOptionsPg: Codable {
     }
 
     init() {
-        (self.regions, self.versions, self.layouts) = (nil, nil, nil)
+        (regions, versions, layouts) = (nil, nil, nil)
     }
 }
 
-extension OptionsOptionsPg {
-    public init(from decoder: Decoder) throws {
+public extension OptionsOptionsPg {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.versions = try container.sdkDecodeIfPresent(.versions)
-        self.layouts = try container.sdkDecodeIfPresent(.layouts)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        versions = try container.sdkDecodeIfPresent(.versions)
+        layouts = try container.sdkDecodeIfPresent(.layouts)
     }
 }
 
-extension OptionsOptionsPg {
-    public init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
+public extension OptionsOptionsPg {
+    init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
         self.init()
         (self.regions, self.versions) = (regions, versions)
         self.layouts = layouts
@@ -409,21 +429,21 @@ public struct OptionsOptionsAdvancedMysql: Codable {
     }
 
     init() {
-        (self.regions, self.versions, self.layouts) = (nil, nil, nil)
+        (regions, versions, layouts) = (nil, nil, nil)
     }
 }
 
-extension OptionsOptionsAdvancedMysql {
-    public init(from decoder: Decoder) throws {
+public extension OptionsOptionsAdvancedMysql {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.versions = try container.sdkDecodeIfPresent(.versions)
-        self.layouts = try container.sdkDecodeIfPresent(.layouts)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        versions = try container.sdkDecodeIfPresent(.versions)
+        layouts = try container.sdkDecodeIfPresent(.layouts)
     }
 }
 
-extension OptionsOptionsAdvancedMysql {
-    public init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
+public extension OptionsOptionsAdvancedMysql {
+    init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
         self.init()
         (self.regions, self.versions) = (regions, versions)
         self.layouts = layouts
@@ -450,21 +470,21 @@ public struct OptionsOptionsRedis: Codable {
     }
 
     init() {
-        (self.regions, self.versions, self.layouts) = (nil, nil, nil)
+        (regions, versions, layouts) = (nil, nil, nil)
     }
 }
 
-extension OptionsOptionsRedis {
-    public init(from decoder: Decoder) throws {
+public extension OptionsOptionsRedis {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.versions = try container.sdkDecodeIfPresent(.versions)
-        self.layouts = try container.sdkDecodeIfPresent(.layouts)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        versions = try container.sdkDecodeIfPresent(.versions)
+        layouts = try container.sdkDecodeIfPresent(.layouts)
     }
 }
 
-extension OptionsOptionsRedis {
-    public init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
+public extension OptionsOptionsRedis {
+    init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
         self.init()
         (self.regions, self.versions) = (regions, versions)
         self.layouts = layouts
@@ -484,20 +504,20 @@ public struct Options: Codable {
     }
 
     init() {
-        (self.options, self.versionAvailability) = (nil, nil)
+        (options, versionAvailability) = (nil, nil)
     }
 }
 
-extension Options {
-    public init(from decoder: Decoder) throws {
+public extension Options {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.options = try container.sdkDecodeIfPresent(.options)
-        self.versionAvailability = try container.sdkDecodeIfPresent(.versionAvailability)
+        options = try container.sdkDecodeIfPresent(.options)
+        versionAvailability = try container.sdkDecodeIfPresent(.versionAvailability)
     }
 }
 
-extension Options {
-    public init(options: OptionsOptions? = nil, versionAvailability: OptionsVersionAvailability? = nil) {
+public extension Options {
+    init(options: OptionsOptions? = nil, versionAvailability: OptionsVersionAvailability? = nil) {
         self.init()
         (self.options, self.versionAvailability) = (options, versionAvailability)
     }
@@ -523,21 +543,21 @@ public struct OptionsOptionsMongodb: Codable {
     }
 
     init() {
-        (self.regions, self.versions, self.layouts) = (nil, nil, nil)
+        (regions, versions, layouts) = (nil, nil, nil)
     }
 }
 
-extension OptionsOptionsMongodb {
-    public init(from decoder: Decoder) throws {
+public extension OptionsOptionsMongodb {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.versions = try container.sdkDecodeIfPresent(.versions)
-        self.layouts = try container.sdkDecodeIfPresent(.layouts)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        versions = try container.sdkDecodeIfPresent(.versions)
+        layouts = try container.sdkDecodeIfPresent(.layouts)
     }
 }
 
-extension OptionsOptionsMongodb {
-    public init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
+public extension OptionsOptionsMongodb {
+    init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
         self.init()
         (self.regions, self.versions) = (regions, versions)
         self.layouts = layouts

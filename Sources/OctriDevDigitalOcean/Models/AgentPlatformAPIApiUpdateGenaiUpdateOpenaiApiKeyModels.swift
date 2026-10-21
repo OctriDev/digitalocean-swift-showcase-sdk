@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiUpdate domain models
+/// AgentPlatformAPIApiUpdate domain models
 /// UpdateOpenAIAPIKeyInputPublic is used to update an existing OpenAI API key for a specific agent.
 public struct ApiUpdateOpenAIAPIKeyInputPublic: Codable {
     /// OpenAI API key
@@ -23,21 +23,21 @@ public struct ApiUpdateOpenAIAPIKeyInputPublic: Codable {
     }
 
     init() {
-        (self.apiKey, self.apiKeyUuid, self.name) = (nil, nil, nil)
+        (apiKey, apiKeyUuid, name) = (nil, nil, nil)
     }
 }
 
-extension ApiUpdateOpenAIAPIKeyInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateOpenAIAPIKeyInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKey = try container.sdkDecodeIfPresent(.apiKey)
-        self.apiKeyUuid = try container.sdkDecodeIfPresent(.apiKeyUuid)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        apiKey = try container.sdkDecodeIfPresent(.apiKey)
+        apiKeyUuid = try container.sdkDecodeIfPresent(.apiKeyUuid)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ApiUpdateOpenAIAPIKeyInputPublic {
-    public init(apiKey: String? = nil, apiKeyUuid: String? = nil, name: String? = nil) {
+public extension ApiUpdateOpenAIAPIKeyInputPublic {
+    init(apiKey: String? = nil, apiKeyUuid: String? = nil, name: String? = nil) {
         self.init()
         (self.apiKey, self.apiKeyUuid) = (apiKey, apiKeyUuid)
         self.name = name
@@ -54,19 +54,19 @@ public struct ApiUpdateOpenAIAPIKeyOutput: Codable {
     }
 
     init() {
-        self.apiKeyInfo = nil
+        apiKeyInfo = nil
     }
 }
 
-extension ApiUpdateOpenAIAPIKeyOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateOpenAIAPIKeyOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-extension ApiUpdateOpenAIAPIKeyOutput {
-    public init(apiKeyInfo: ApiOpenAIAPIKeyInfo? = nil) {
+public extension ApiUpdateOpenAIAPIKeyOutput {
+    init(apiKeyInfo: ApiOpenAIAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }

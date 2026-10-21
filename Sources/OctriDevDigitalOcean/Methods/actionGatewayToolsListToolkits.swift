@@ -6,9 +6,21 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ActionGatewayMethods {
-    /// Returns the providers (toolkits) whose tools your team can use: catalog providers with at least one released tool, plus your team's registered MCP servers.
-    public static func toolsListToolkits(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> ListToolkitsResponse {
-        return try (await sdkRequest("GET", "/v2/action-gateway/tools/toolkits", config: config, decoder: .json, operationId: "tools_list_toolkits", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+public extension ActionGatewayMethods {
+    /// Returns the providers (toolkits) whose tools your team can use: catalog providers with at least one released
+    /// tool, plus your team's registered MCP servers.
+    static func toolsListToolkits(
+        config: ClientConfig,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListToolkitsResponse {
+        try await (sdkRequest(
+            "GET",
+            "/v2/action-gateway/tools/toolkits",
+            config: config,
+            decoder: .json,
+            operationId: "tools_list_toolkits",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

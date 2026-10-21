@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Uptime domain models
+/// Uptime domain models
 /// Typed representation of the `AllChecks` API schema.
 public struct AllChecks: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,23 +18,29 @@ public struct AllChecks: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllChecks {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.checks = try container.sdkDecodeIfPresent(.checks)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllChecks {
-    public init(meta: MetaMeta, checks: [Check]? = nil, links: PageLinks? = nil) {
+public extension AllChecks {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        checks = try container.sdkDecodeIfPresent(.checks)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllChecks {
+    init(meta: MetaMeta, checks: [Check]? = nil, links: PageLinks? = nil) {
         (self.meta, self.checks) = (meta, checks)
         self.links = links
     }
@@ -48,19 +54,19 @@ public struct AllChecksVariant0: Codable {
     }
 
     init() {
-        self.checks = nil
+        checks = nil
     }
 }
 
-extension AllChecksVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AllChecksVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.checks = try container.sdkDecodeIfPresent(.checks)
+        checks = try container.sdkDecodeIfPresent(.checks)
     }
 }
 
-extension AllChecksVariant0 {
-    public init(checks: [Check]? = nil) {
+public extension AllChecksVariant0 {
+    init(checks: [Check]? = nil) {
         self.init()
         self.checks = checks
     }

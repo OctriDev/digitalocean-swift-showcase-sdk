@@ -6,12 +6,30 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension MonitoringMethods {
+public extension MonitoringMethods {
     /// To retrieve a given alert policy, send a GET request to `/v2/monitoring/alerts/{alert_uuid}`
     ///
     /// - Parameters:
     /// - alertUuid: A unique identifier for an alert policy.
-    public static func monitoringGetAlertPolicy(config: ClientConfig, alertUuid: String, requestOptions: RequestOptions? = nil) async throws -> AlertPolicyResponse {
-        return try (await sdkRequest("GET", ["/v2/monitoring/alerts/", sdkEncodePathSegment(sdkWireString(alertUuid))].joined(), config: config, decoder: .json, operationId: "monitoring_get_alertPolicy", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func monitoringGetAlertPolicy(
+        config: ClientConfig,
+        alertUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AlertPolicyResponse {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/monitoring/alerts/", sdkEncodePathSegment(sdkWireString(alertUuid))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "monitoring_get_alertPolicy",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

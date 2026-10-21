@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Droplets domain models
+/// Droplets domain models
 /// An object containing information about a resource to be scheduled for deletion.
 public struct SelectiveDestroyAssociatedResource: Codable {
     /// An array of unique identifiers for the floating IPs to be scheduled for deletion.
@@ -31,23 +31,29 @@ public struct SelectiveDestroyAssociatedResource: Codable {
     }
 
     init() {
-        (self.floatingIps, self.reservedIps, self.snapshots, self.volumes, self.volumeSnapshots) = (nil, nil, nil, nil, nil)
+        (floatingIps, reservedIps, snapshots, volumes, volumeSnapshots) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension SelectiveDestroyAssociatedResource {
-    public init(from decoder: Decoder) throws {
+public extension SelectiveDestroyAssociatedResource {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.floatingIps = try container.sdkDecodeIfPresent(.floatingIps)
-        self.reservedIps = try container.sdkDecodeIfPresent(.reservedIps)
-        self.snapshots = try container.sdkDecodeIfPresent(.snapshots)
-        self.volumes = try container.sdkDecodeIfPresent(.volumes)
-        self.volumeSnapshots = try container.sdkDecodeIfPresent(.volumeSnapshots)
+        floatingIps = try container.sdkDecodeIfPresent(.floatingIps)
+        reservedIps = try container.sdkDecodeIfPresent(.reservedIps)
+        snapshots = try container.sdkDecodeIfPresent(.snapshots)
+        volumes = try container.sdkDecodeIfPresent(.volumes)
+        volumeSnapshots = try container.sdkDecodeIfPresent(.volumeSnapshots)
     }
 }
 
-extension SelectiveDestroyAssociatedResource {
-    public init(floatingIps: [String]? = nil, reservedIps: [String]? = nil, snapshots: [String]? = nil, volumes: [String]? = nil, volumeSnapshots: [String]? = nil) {
+public extension SelectiveDestroyAssociatedResource {
+    init(
+        floatingIps: [String]? = nil,
+        reservedIps: [String]? = nil,
+        snapshots: [String]? = nil,
+        volumes: [String]? = nil,
+        volumeSnapshots: [String]? = nil
+    ) {
         self.init()
         (self.floatingIps, self.reservedIps) = (floatingIps, reservedIps)
         (self.snapshots, self.volumes) = (snapshots, volumes)

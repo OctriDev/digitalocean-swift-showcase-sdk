@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Droplets domain models
+/// Droplets domain models
 /// Typed representation of the `DropletBackupPolicyResponse` API schema.
 public struct DropletBackupPolicyResponse: Codable {
     /// Optional object value serialized in the `policy` wire field.
@@ -14,19 +14,19 @@ public struct DropletBackupPolicyResponse: Codable {
     }
 
     init() {
-        self.policy = nil
+        policy = nil
     }
 }
 
-extension DropletBackupPolicyResponse {
-    public init(from decoder: Decoder) throws {
+public extension DropletBackupPolicyResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.policy = try container.sdkDecodeIfPresent(.policy)
+        policy = try container.sdkDecodeIfPresent(.policy)
     }
 }
 
-extension DropletBackupPolicyResponse {
-    public init(policy: DropletBackupPolicyRecord? = nil) {
+public extension DropletBackupPolicyResponse {
+    init(policy: DropletBackupPolicyRecord? = nil) {
         self.init()
         self.policy = policy
     }

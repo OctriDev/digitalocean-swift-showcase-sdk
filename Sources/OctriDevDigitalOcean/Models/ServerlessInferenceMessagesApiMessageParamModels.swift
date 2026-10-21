@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ServerlessInferenceMessages domain models
+/// ServerlessInferenceMessages domain models
 /// One turn in the conversation. Roles are `user` or `assistant` (no `system` role; use the top-level `system`
 /// field). Content may be a string (equivalent to a single text block) or an array of content blocks.
 public struct MessagesApiMessageParam: Codable {
@@ -19,25 +19,35 @@ public struct MessagesApiMessageParam: Codable {
         case content
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension MessagesApiMessageParam {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.role) else {
-            throw SdkValidationError(field: "role", code: "required", message: "Validation failed for 'role': value is required")
-        }
-        guard container.contains(.content) else {
-            throw SdkValidationError(field: "content", code: "required", message: "Validation failed for 'content': value is required")
-        }
-        self.role = try container.sdkDecodeRequired(.role)
-        self.content = try container.sdkDecodeRequired(.content)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension MessagesApiMessageParam {
-    public init(role: MessagesApiMessageParamRole, content: MessagesApiMessageParamContent) {
+public extension MessagesApiMessageParam {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.role) else {
+            throw SdkValidationError(
+                field: "role",
+                code: "required",
+                message: "Validation failed for 'role': value is required"
+            )
+        }
+        guard container.contains(.content) else {
+            throw SdkValidationError(
+                field: "content",
+                code: "required",
+                message: "Validation failed for 'content': value is required"
+            )
+        }
+        role = try container.sdkDecodeRequired(.role)
+        content = try container.sdkDecodeRequired(.content)
+    }
+}
+
+public extension MessagesApiMessageParam {
+    init(role: MessagesApiMessageParamRole, content: MessagesApiMessageParamContent) {
         (self.role, self.content) = (role, content)
     }
 }
@@ -60,33 +70,51 @@ public struct MessagesToolResultBlockParam: Codable {
         case content
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension MessagesToolResultBlockParam {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.toolUseId) else {
-            throw SdkValidationError(field: "tool_use_id", code: "required", message: "Validation failed for 'tool_use_id': value is required")
-        }
-        guard container.contains(.content) else {
-            throw SdkValidationError(field: "content", code: "required", message: "Validation failed for 'content': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.toolUseId = try container.sdkDecodeRequired(.toolUseId)
-        self.content = try container.sdkDecodeRequired(.content)
-            try sdkValidateRawEnum("type", self.type, MessagesToolResultBlockParamType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension MessagesToolResultBlockParam {
-    public init(type: MessagesToolResultBlockParamType, toolUseId: String, content: MessagesToolResultBlockParamContent) throws {
+public extension MessagesToolResultBlockParam {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.toolUseId) else {
+            throw SdkValidationError(
+                field: "tool_use_id",
+                code: "required",
+                message: "Validation failed for 'tool_use_id': value is required"
+            )
+        }
+        guard container.contains(.content) else {
+            throw SdkValidationError(
+                field: "content",
+                code: "required",
+                message: "Validation failed for 'content': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        toolUseId = try container.sdkDecodeRequired(.toolUseId)
+        content = try container.sdkDecodeRequired(.content)
+        try sdkValidateRawEnum("type", type, MessagesToolResultBlockParamType.allCases.map(\.rawValue))
+    }
+}
+
+public extension MessagesToolResultBlockParam {
+    init(
+        type: MessagesToolResultBlockParamType,
+        toolUseId: String,
+        content: MessagesToolResultBlockParamContent
+    ) throws {
         (self.type, self.toolUseId) = (type, toolUseId)
         self.content = content
-            try sdkValidateRawEnum("type", self.type, MessagesToolResultBlockParamType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, MessagesToolResultBlockParamType.allCases.map(\.rawValue))
     }
 }
 
@@ -96,22 +124,32 @@ public indirect enum MessagesToolResultBlockParamContent {
 }
 
 extension MessagesToolResultBlockParamContent: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for MessagesToolResultBlockParamContent")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for MessagesToolResultBlockParamContent"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension MessagesToolResultBlockParamContent {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode([[String: JSONValue]].self) { return .dictionary(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode([[String: JSONValue]].self) {
+            return .dictionary(value)
+        }
         return nil
     }
 }
@@ -150,28 +188,44 @@ public struct MessagesUsage: Codable {
         case speed
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension MessagesUsage {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.inputTokens) else {
-            throw SdkValidationError(field: "input_tokens", code: "required", message: "Validation failed for 'input_tokens': value is required")
-        }
-        guard container.contains(.outputTokens) else {
-            throw SdkValidationError(field: "output_tokens", code: "required", message: "Validation failed for 'output_tokens': value is required")
-        }
-        self.inputTokens = try container.sdkDecodeRequired(.inputTokens)
-        self.outputTokens = try container.sdkDecodeRequired(.outputTokens)
-        self.cacheCreationInputTokens = try container.sdkDecodeIfPresent(.cacheCreationInputTokens)
-        self.cacheReadInputTokens = try container.sdkDecodeIfPresent(.cacheReadInputTokens)
-        self.speed = try container.sdkDecodeIfPresent(.speed)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension MessagesUsage {
-    public init(inputTokens: Int, outputTokens: Int, cacheCreationInputTokens: Int? = nil, cacheReadInputTokens: Int? = nil, speed: MessagesUsageSpeed? = nil) {
+public extension MessagesUsage {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.inputTokens) else {
+            throw SdkValidationError(
+                field: "input_tokens",
+                code: "required",
+                message: "Validation failed for 'input_tokens': value is required"
+            )
+        }
+        guard container.contains(.outputTokens) else {
+            throw SdkValidationError(
+                field: "output_tokens",
+                code: "required",
+                message: "Validation failed for 'output_tokens': value is required"
+            )
+        }
+        inputTokens = try container.sdkDecodeRequired(.inputTokens)
+        outputTokens = try container.sdkDecodeRequired(.outputTokens)
+        cacheCreationInputTokens = try container.sdkDecodeIfPresent(.cacheCreationInputTokens)
+        cacheReadInputTokens = try container.sdkDecodeIfPresent(.cacheReadInputTokens)
+        speed = try container.sdkDecodeIfPresent(.speed)
+    }
+}
+
+public extension MessagesUsage {
+    init(
+        inputTokens: Int,
+        outputTokens: Int,
+        cacheCreationInputTokens: Int? = nil,
+        cacheReadInputTokens: Int? = nil,
+        speed: MessagesUsageSpeed? = nil
+    ) {
         (self.inputTokens, self.outputTokens) = (inputTokens, outputTokens)
         self.cacheCreationInputTokens = cacheCreationInputTokens
         (self.cacheReadInputTokens, self.speed) = (cacheReadInputTokens, speed)
@@ -232,49 +286,103 @@ public struct MessagesCreateRequest: Codable {
         case thinking
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension MessagesCreateRequest {
-    public init(from decoder: Decoder) throws {
+public extension MessagesCreateRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.model) else {
-            throw SdkValidationError(field: "model", code: "required", message: "Validation failed for 'model': value is required")
+            throw SdkValidationError(
+                field: "model",
+                code: "required",
+                message: "Validation failed for 'model': value is required"
+            )
         }
         guard container.contains(.maxTokens) else {
-            throw SdkValidationError(field: "max_tokens", code: "required", message: "Validation failed for 'max_tokens': value is required")
+            throw SdkValidationError(
+                field: "max_tokens",
+                code: "required",
+                message: "Validation failed for 'max_tokens': value is required"
+            )
         }
         guard container.contains(.messages) else {
-            throw SdkValidationError(field: "messages", code: "required", message: "Validation failed for 'messages': value is required")
+            throw SdkValidationError(
+                field: "messages",
+                code: "required",
+                message: "Validation failed for 'messages': value is required"
+            )
         }
-        self.model = try container.sdkDecodeRequired(.model)
-        self.maxTokens = try container.sdkDecodeRequired(.maxTokens)
-        self.messages = try container.sdkDecodeRequired(.messages)
-        self.system = try container.sdkDecodeIfPresent(.system)
-        self.stopSequences = try container.sdkDecodeIfPresent(.stopSequences)
-        self.stream = try container.sdkDecodeIfPresent(.stream)
-        self.temperature = try container.sdkDecodeIfPresent(.temperature)
-        self.topP = try container.sdkDecodeIfPresent(.topP)
-        self.topK = try container.sdkDecodeIfPresent(.topK)
-        self.tools = try container.sdkDecodeIfPresent(.tools)
-        self.toolChoice = try container.sdkDecodeIfPresent(.toolChoice)
-        self.metadata = try container.sdkDecodeIfPresent(.metadata)
-        self.reasoningEffort = try container.sdkDecodeIfPresent(.reasoningEffort)
-        self.speed = try container.sdkDecodeIfPresent(.speed)
-        self.thinking = try container.sdkDecodeIfPresent(.thinking)
-            try validateRange("max_tokens", Double(self.maxTokens), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
-            try validateItems("messages", self.messages, min: 1, max: nil)
-        if let value = self.temperature {
-            try validateRange("temperature", Double(value), min: 0, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        model = try container.sdkDecodeRequired(.model)
+        maxTokens = try container.sdkDecodeRequired(.maxTokens)
+        messages = try container.sdkDecodeRequired(.messages)
+        system = try container.sdkDecodeIfPresent(.system)
+        stopSequences = try container.sdkDecodeIfPresent(.stopSequences)
+        stream = try container.sdkDecodeIfPresent(.stream)
+        temperature = try container.sdkDecodeIfPresent(.temperature)
+        topP = try container.sdkDecodeIfPresent(.topP)
+        topK = try container.sdkDecodeIfPresent(.topK)
+        tools = try container.sdkDecodeIfPresent(.tools)
+        toolChoice = try container.sdkDecodeIfPresent(.toolChoice)
+        metadata = try container.sdkDecodeIfPresent(.metadata)
+        reasoningEffort = try container.sdkDecodeIfPresent(.reasoningEffort)
+        speed = try container.sdkDecodeIfPresent(.speed)
+        thinking = try container.sdkDecodeIfPresent(.thinking)
+        try validateRange(
+            "max_tokens",
+            Double(maxTokens),
+            min: 1,
+            max: nil,
+            exclusiveMin: nil,
+            exclusiveMax: nil,
+            multipleOf: nil
+        )
+        try validateItems("messages", messages, min: 1, max: nil)
+        if let value = temperature {
+            try validateRange(
+                "temperature",
+                Double(value),
+                min: 0,
+                max: 1,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.topK {
-            try validateRange("top_k", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = topK {
+            try validateRange(
+                "top_k",
+                Double(value),
+                min: 0,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
-extension MessagesCreateRequest {
-    public init(model: String, maxTokens: Int, messages: [MessagesApiMessageParam], system: MessagesCreateRequestSystem? = nil, stopSequences: [String]? = nil, stream: Bool? = nil, temperature: Double? = nil, topP: Double? = nil, topK: Int? = nil, tools: [MessagesToolDefinitionParam]? = nil, toolChoice: MessagesToolChoiceParam? = nil, metadata: MessagesCreateRequestMetadata? = nil, reasoningEffort: MessagesCreateRequestReasoningEffort? = nil, speed: MessagesCreateRequestSpeed? = nil, thinking: MessagesThinkingConfigParam? = nil) throws {
+public extension MessagesCreateRequest {
+    init(
+        model: String,
+        maxTokens: Int,
+        messages: [MessagesApiMessageParam],
+        system: MessagesCreateRequestSystem? = nil,
+        stopSequences: [String]? = nil,
+        stream: Bool? = nil,
+        temperature: Double? = nil,
+        topP: Double? = nil,
+        topK: Int? = nil,
+        tools: [MessagesToolDefinitionParam]? = nil,
+        toolChoice: MessagesToolChoiceParam? = nil,
+        metadata: MessagesCreateRequestMetadata? = nil,
+        reasoningEffort: MessagesCreateRequestReasoningEffort? = nil,
+        speed: MessagesCreateRequestSpeed? = nil,
+        thinking: MessagesThinkingConfigParam? = nil
+    ) throws {
         (self.model, self.maxTokens) = (model, maxTokens)
         (self.messages, self.system) = (messages, system)
         (self.stopSequences, self.stream) = (stopSequences, stream)
@@ -283,13 +391,37 @@ extension MessagesCreateRequest {
         (self.toolChoice, self.metadata) = (toolChoice, metadata)
         (self.reasoningEffort, self.speed) = (reasoningEffort, speed)
         self.thinking = thinking
-            try validateRange("max_tokens", Double(self.maxTokens), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
-            try validateItems("messages", self.messages, min: 1, max: nil)
+        try validateRange(
+            "max_tokens",
+            Double(self.maxTokens),
+            min: 1,
+            max: nil,
+            exclusiveMin: nil,
+            exclusiveMax: nil,
+            multipleOf: nil
+        )
+        try validateItems("messages", self.messages, min: 1, max: nil)
         if let value = self.temperature {
-            try validateRange("temperature", Double(value), min: 0, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "temperature",
+                Double(value),
+                min: 0,
+                max: 1,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
         if let value = self.topK {
-            try validateRange("top_k", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "top_k",
+                Double(value),
+                min: 0,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
@@ -315,37 +447,55 @@ public struct MessagesToolUseBlockParam: Codable {
         case input
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension MessagesToolUseBlockParam {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.input) else {
-            throw SdkValidationError(field: "input", code: "required", message: "Validation failed for 'input': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.id = try container.sdkDecodeRequired(.id)
-        self.name = try container.sdkDecodeRequired(.name)
-        self.input = try container.sdkDecodeRequired(.input)
-            try sdkValidateRawEnum("type", self.type, MessagesToolUseBlockParamType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension MessagesToolUseBlockParam {
-    public init(type: MessagesToolUseBlockParamType, id: String, name: String, input: [String: JSONValue]) throws {
+public extension MessagesToolUseBlockParam {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.input) else {
+            throw SdkValidationError(
+                field: "input",
+                code: "required",
+                message: "Validation failed for 'input': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        id = try container.sdkDecodeRequired(.id)
+        name = try container.sdkDecodeRequired(.name)
+        input = try container.sdkDecodeRequired(.input)
+        try sdkValidateRawEnum("type", type, MessagesToolUseBlockParamType.allCases.map(\.rawValue))
+    }
+}
+
+public extension MessagesToolUseBlockParam {
+    init(type: MessagesToolUseBlockParamType, id: String, name: String, input: [String: JSONValue]) throws {
         (self.type, self.id) = (type, id)
         (self.name, self.input) = (name, input)
-            try sdkValidateRawEnum("type", self.type, MessagesToolUseBlockParamType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, MessagesToolUseBlockParamType.allCases.map(\.rawValue))
     }
 }
 
@@ -363,28 +513,38 @@ public struct MessagesResponseTextBlock: Codable {
         case text
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension MessagesResponseTextBlock {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.text) else {
-            throw SdkValidationError(field: "text", code: "required", message: "Validation failed for 'text': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.text = try container.sdkDecodeRequired(.text)
-            try sdkValidateRawEnum("type", self.type, MessagesResponseTextBlockType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension MessagesResponseTextBlock {
-    public init(type: MessagesResponseTextBlockType, text: String) throws {
+public extension MessagesResponseTextBlock {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.text) else {
+            throw SdkValidationError(
+                field: "text",
+                code: "required",
+                message: "Validation failed for 'text': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        text = try container.sdkDecodeRequired(.text)
+        try sdkValidateRawEnum("type", type, MessagesResponseTextBlockType.allCases.map(\.rawValue))
+    }
+}
+
+public extension MessagesResponseTextBlock {
+    init(type: MessagesResponseTextBlockType, text: String) throws {
         (self.type, self.text) = (type, text)
-            try sdkValidateRawEnum("type", self.type, MessagesResponseTextBlockType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, MessagesResponseTextBlockType.allCases.map(\.rawValue))
     }
 }
 
@@ -406,29 +566,43 @@ public struct MessagesImageSourceParam: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension MessagesImageSourceParam {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.mediaType) else {
-            throw SdkValidationError(field: "media_type", code: "required", message: "Validation failed for 'media_type': value is required")
-        }
-        guard container.contains(.data) else {
-            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.mediaType = try container.sdkDecodeRequired(.mediaType)
-        self.data = try container.sdkDecodeRequired(.data)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension MessagesImageSourceParam {
-    public init(type: String, mediaType: String, data: String) {
+public extension MessagesImageSourceParam {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.mediaType) else {
+            throw SdkValidationError(
+                field: "media_type",
+                code: "required",
+                message: "Validation failed for 'media_type': value is required"
+            )
+        }
+        guard container.contains(.data) else {
+            throw SdkValidationError(
+                field: "data",
+                code: "required",
+                message: "Validation failed for 'data': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        mediaType = try container.sdkDecodeRequired(.mediaType)
+        data = try container.sdkDecodeRequired(.data)
+    }
+}
+
+public extension MessagesImageSourceParam {
+    init(type: String, mediaType: String, data: String) {
         (self.type, self.mediaType) = (type, mediaType)
         self.data = data
     }
@@ -455,5 +629,7 @@ public struct MessagesResponseToolUseBlock: Codable {
         case input
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }

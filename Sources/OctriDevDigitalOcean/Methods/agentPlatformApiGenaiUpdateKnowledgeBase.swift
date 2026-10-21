@@ -6,7 +6,7 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
+public extension AgentPlatformApiMethods {
     /// To update a knowledge base, send a PUT request to `/v2/gen-ai/knowledge_bases/{uuid}`.
     ///
     /// - Parameters:
@@ -20,17 +20,67 @@ extension AgentPlatformApiMethods {
     ///   retrieval.
     /// - tags: Tags to organize your knowledge base.
     /// - uuid2: Knowledge base id
-    public static func genaiUpdateKnowledgeBase(config: ClientConfig, uuid: String, databaseId: String? = nil, name: String? = nil, projectId: String? = nil, rerankingConfig: ApiRerankingConfiguration? = nil, tags: [String]? = nil, uuid2: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiUpdateKnowledgeBaseOutput {
-        let requestBody = GenaiUpdateKnowledgeBaseRequestBody(databaseId: databaseId, name: name, projectId: projectId, rerankingConfig: rerankingConfig, tags: tags, uuid2: uuid2)
+    static func genaiUpdateKnowledgeBase(
+        config: ClientConfig,
+        uuid: String,
+        databaseId: String? = nil,
+        name: String? = nil,
+        projectId: String? = nil,
+        rerankingConfig: ApiRerankingConfiguration? = nil,
+        tags: [String]? = nil,
+        uuid2: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiUpdateKnowledgeBaseOutput {
+        let requestBody = GenaiUpdateKnowledgeBaseRequestBody(
+            databaseId: databaseId,
+            name: name,
+            projectId: projectId,
+            rerankingConfig: rerankingConfig,
+            tags: tags,
+            uuid2: uuid2
+        )
 
-        return try (await sdkRequest("PUT", ["/v2/gen-ai/knowledge_bases/", sdkEncodePathSegment(sdkWireString(uuid))].joined(), config: config, body: requestBody, decoder: .json, operationId: "genai_update_knowledge_base", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/v2/gen-ai/knowledge_bases/", sdkEncodePathSegment(sdkWireString(uuid))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "genai_update_knowledge_base",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
     /// To delete a knowledge base, send a DELETE request to `/v2/gen-ai/knowledge_bases/{uuid}`.
     ///
     /// - Parameters:
     /// - uuid: Knowledge base id
-    public static func genaiDeleteKnowledgeBase(config: ClientConfig, uuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiDeleteKnowledgeBaseOutput {
-        return try (await sdkRequest("DELETE", ["/v2/gen-ai/knowledge_bases/", sdkEncodePathSegment(sdkWireString(uuid))].joined(), config: config, decoder: .json, operationId: "genai_delete_knowledge_base", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiDeleteKnowledgeBase(
+        config: ClientConfig,
+        uuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiDeleteKnowledgeBaseOutput {
+        try await (sdkRequest(
+            "DELETE",
+            ["/v2/gen-ai/knowledge_bases/", sdkEncodePathSegment(sdkWireString(uuid))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "genai_delete_knowledge_base",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

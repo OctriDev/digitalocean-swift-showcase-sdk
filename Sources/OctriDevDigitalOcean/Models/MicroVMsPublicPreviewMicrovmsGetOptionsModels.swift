@@ -3,7 +3,7 @@
 
 import Foundation
 
-// MicroVMsPublicPreview domain models
+/// MicroVMsPublicPreview domain models
 /// The default region, sizes, prices, account limits, and features available to your team.
 public struct MicrovmOptions: Codable {
     /// The slug of the region MicroVMs are created in by default.
@@ -27,23 +27,29 @@ public struct MicrovmOptions: Codable {
     }
 
     init() {
-        (self.defaultRegion, self.sizes, self.resourcePricing, self.accountLimits, self.features) = (nil, nil, nil, nil, nil)
+        (defaultRegion, sizes, resourcePricing, accountLimits, features) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension MicrovmOptions {
-    public init(from decoder: Decoder) throws {
+public extension MicrovmOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.defaultRegion = try container.sdkDecodeIfPresent(.defaultRegion)
-        self.sizes = try container.sdkDecodeIfPresent(.sizes)
-        self.resourcePricing = try container.sdkDecodeIfPresent(.resourcePricing)
-        self.accountLimits = try container.sdkDecodeIfPresent(.accountLimits)
-        self.features = try container.sdkDecodeIfPresent(.features)
+        defaultRegion = try container.sdkDecodeIfPresent(.defaultRegion)
+        sizes = try container.sdkDecodeIfPresent(.sizes)
+        resourcePricing = try container.sdkDecodeIfPresent(.resourcePricing)
+        accountLimits = try container.sdkDecodeIfPresent(.accountLimits)
+        features = try container.sdkDecodeIfPresent(.features)
     }
 }
 
-extension MicrovmOptions {
-    public init(defaultRegion: String? = nil, sizes: [MicrovmOptionsSizesItem]? = nil, resourcePricing: MicrovmOptionsResourcePricing? = nil, accountLimits: MicrovmOptionsAccountLimits? = nil, features: [MicrovmOptionsFeaturesItem]? = nil) {
+public extension MicrovmOptions {
+    init(
+        defaultRegion: String? = nil,
+        sizes: [MicrovmOptionsSizesItem]? = nil,
+        resourcePricing: MicrovmOptionsResourcePricing? = nil,
+        accountLimits: MicrovmOptionsAccountLimits? = nil,
+        features: [MicrovmOptionsFeaturesItem]? = nil
+    ) {
         self.init()
         (self.defaultRegion, self.sizes) = (defaultRegion, sizes)
         (self.resourcePricing, self.accountLimits) = (resourcePricing, accountLimits)
@@ -66,20 +72,20 @@ public struct MicrovmOptionsSizesItemPricing: Codable {
     }
 
     init() {
-        (self.pricePerHour, self.pricePerMonth) = (nil, nil)
+        (pricePerHour, pricePerMonth) = (nil, nil)
     }
 }
 
-extension MicrovmOptionsSizesItemPricing {
-    public init(from decoder: Decoder) throws {
+public extension MicrovmOptionsSizesItemPricing {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.pricePerHour = try container.sdkDecodeIfPresent(.pricePerHour)
-        self.pricePerMonth = try container.sdkDecodeIfPresent(.pricePerMonth)
+        pricePerHour = try container.sdkDecodeIfPresent(.pricePerHour)
+        pricePerMonth = try container.sdkDecodeIfPresent(.pricePerMonth)
     }
 }
 
-extension MicrovmOptionsSizesItemPricing {
-    public init(pricePerHour: Double? = nil, pricePerMonth: Double? = nil) {
+public extension MicrovmOptionsSizesItemPricing {
+    init(pricePerHour: Double? = nil, pricePerMonth: Double? = nil) {
         self.init()
         (self.pricePerHour, self.pricePerMonth) = (pricePerHour, pricePerMonth)
     }
@@ -115,25 +121,32 @@ public struct MicrovmOptionsSizesItem: Codable {
     }
 
     init() {
-        (self.cpu, self.memory, self.disk, self.available, self.regions) = (nil, nil, nil, nil, nil)
-        self.pricing = nil
+        (cpu, memory, disk, available, regions) = (nil, nil, nil, nil, nil)
+        pricing = nil
     }
 }
 
-extension MicrovmOptionsSizesItem {
-    public init(from decoder: Decoder) throws {
+public extension MicrovmOptionsSizesItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.cpu = try container.sdkDecodeIfPresent(.cpu)
-        self.memory = try container.sdkDecodeIfPresent(.memory)
-        self.disk = try container.sdkDecodeIfPresent(.disk)
-        self.available = try container.sdkDecodeIfPresent(.available)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.pricing = try container.sdkDecodeIfPresent(.pricing)
+        cpu = try container.sdkDecodeIfPresent(.cpu)
+        memory = try container.sdkDecodeIfPresent(.memory)
+        disk = try container.sdkDecodeIfPresent(.disk)
+        available = try container.sdkDecodeIfPresent(.available)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        pricing = try container.sdkDecodeIfPresent(.pricing)
     }
 }
 
-extension MicrovmOptionsSizesItem {
-    public init(cpu: Int? = nil, memory: Int? = nil, disk: Int? = nil, available: Bool? = nil, regions: [String]? = nil, pricing: MicrovmOptionsSizesItemPricing? = nil) {
+public extension MicrovmOptionsSizesItem {
+    init(
+        cpu: Int? = nil,
+        memory: Int? = nil,
+        disk: Int? = nil,
+        available: Bool? = nil,
+        regions: [String]? = nil,
+        pricing: MicrovmOptionsSizesItemPricing? = nil
+    ) {
         self.init()
         (self.cpu, self.memory) = (cpu, memory)
         (self.disk, self.available) = (disk, available)
@@ -156,20 +169,20 @@ public struct MicrovmOptionsFeaturesItem: Codable {
     }
 
     init() {
-        (self.name, self.enabled) = (nil, nil)
+        (name, enabled) = (nil, nil)
     }
 }
 
-extension MicrovmOptionsFeaturesItem {
-    public init(from decoder: Decoder) throws {
+public extension MicrovmOptionsFeaturesItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
+        name = try container.sdkDecodeIfPresent(.name)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
     }
 }
 
-extension MicrovmOptionsFeaturesItem {
-    public init(name: String? = nil, enabled: Bool? = nil) {
+public extension MicrovmOptionsFeaturesItem {
+    init(name: String? = nil, enabled: Bool? = nil) {
         self.init()
         (self.name, self.enabled) = (name, enabled)
     }
@@ -198,22 +211,27 @@ public struct MicrovmOptionsResourcePricing: Codable {
     }
 
     init() {
-        (self.pricePerVcpuHour, self.pricePerGibMemoryHour, self.pricePerGibStorageMonth, self.pricePerGibBandwidth) = (nil, nil, nil, nil)
+        (pricePerVcpuHour, pricePerGibMemoryHour, pricePerGibStorageMonth, pricePerGibBandwidth) = (nil, nil, nil, nil)
     }
 }
 
-extension MicrovmOptionsResourcePricing {
-    public init(from decoder: Decoder) throws {
+public extension MicrovmOptionsResourcePricing {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.pricePerVcpuHour = try container.sdkDecodeIfPresent(.pricePerVcpuHour)
-        self.pricePerGibMemoryHour = try container.sdkDecodeIfPresent(.pricePerGibMemoryHour)
-        self.pricePerGibStorageMonth = try container.sdkDecodeIfPresent(.pricePerGibStorageMonth)
-        self.pricePerGibBandwidth = try container.sdkDecodeIfPresent(.pricePerGibBandwidth)
+        pricePerVcpuHour = try container.sdkDecodeIfPresent(.pricePerVcpuHour)
+        pricePerGibMemoryHour = try container.sdkDecodeIfPresent(.pricePerGibMemoryHour)
+        pricePerGibStorageMonth = try container.sdkDecodeIfPresent(.pricePerGibStorageMonth)
+        pricePerGibBandwidth = try container.sdkDecodeIfPresent(.pricePerGibBandwidth)
     }
 }
 
-extension MicrovmOptionsResourcePricing {
-    public init(pricePerVcpuHour: Double? = nil, pricePerGibMemoryHour: Double? = nil, pricePerGibStorageMonth: Double? = nil, pricePerGibBandwidth: Double? = nil) {
+public extension MicrovmOptionsResourcePricing {
+    init(
+        pricePerVcpuHour: Double? = nil,
+        pricePerGibMemoryHour: Double? = nil,
+        pricePerGibStorageMonth: Double? = nil,
+        pricePerGibBandwidth: Double? = nil
+    ) {
         self.init()
         (self.pricePerVcpuHour, self.pricePerGibMemoryHour) = (pricePerVcpuHour, pricePerGibMemoryHour)
         self.pricePerGibStorageMonth = pricePerGibStorageMonth
@@ -244,22 +262,27 @@ public struct MicrovmOptionsAccountLimits: Codable {
     }
 
     init() {
-        (self.maxTotalCount, self.maxMemoryBytes, self.maxDiskBytes, self.maxIdleTimeoutSeconds) = (nil, nil, nil, nil)
+        (maxTotalCount, maxMemoryBytes, maxDiskBytes, maxIdleTimeoutSeconds) = (nil, nil, nil, nil)
     }
 }
 
-extension MicrovmOptionsAccountLimits {
-    public init(from decoder: Decoder) throws {
+public extension MicrovmOptionsAccountLimits {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.maxTotalCount = try container.sdkDecodeIfPresent(.maxTotalCount)
-        self.maxMemoryBytes = try container.sdkDecodeIfPresent(.maxMemoryBytes)
-        self.maxDiskBytes = try container.sdkDecodeIfPresent(.maxDiskBytes)
-        self.maxIdleTimeoutSeconds = try container.sdkDecodeIfPresent(.maxIdleTimeoutSeconds)
+        maxTotalCount = try container.sdkDecodeIfPresent(.maxTotalCount)
+        maxMemoryBytes = try container.sdkDecodeIfPresent(.maxMemoryBytes)
+        maxDiskBytes = try container.sdkDecodeIfPresent(.maxDiskBytes)
+        maxIdleTimeoutSeconds = try container.sdkDecodeIfPresent(.maxIdleTimeoutSeconds)
     }
 }
 
-extension MicrovmOptionsAccountLimits {
-    public init(maxTotalCount: Int? = nil, maxMemoryBytes: Int? = nil, maxDiskBytes: Int? = nil, maxIdleTimeoutSeconds: Int? = nil) {
+public extension MicrovmOptionsAccountLimits {
+    init(
+        maxTotalCount: Int? = nil,
+        maxMemoryBytes: Int? = nil,
+        maxDiskBytes: Int? = nil,
+        maxIdleTimeoutSeconds: Int? = nil
+    ) {
         self.init()
         (self.maxTotalCount, self.maxMemoryBytes) = (maxTotalCount, maxMemoryBytes)
         (self.maxDiskBytes, self.maxIdleTimeoutSeconds) = (maxDiskBytes, maxIdleTimeoutSeconds)

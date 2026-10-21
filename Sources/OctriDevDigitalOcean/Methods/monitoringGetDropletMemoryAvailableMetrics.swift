@@ -6,34 +6,67 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension MonitoringMethods {
-    /// To retrieve available memory metrics for a given droplet, send a GET request to `/v2/monitoring/metrics/droplet/memory_available`.
+public extension MonitoringMethods {
+    /// To retrieve available memory metrics for a given droplet, send a GET request to
+    /// `/v2/monitoring/metrics/droplet/memory_available`.
     ///
     /// - Parameters:
     /// - hostId: The droplet ID.
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    public static func monitoringGetDropletMemoryAvailableMetrics(config: ClientConfig, hostId: String, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
-        return try (await sdkRequest("GET", "/v2/monitoring/metrics/droplet/memory_available", config: config, query: [
-            SdkQueryParameter("host_id", value: hostId),
-            SdkQueryParameter("start", value: start),
-            SdkQueryParameter("end", value: end),
-        ], decoder: .json, operationId: "monitoring_get_dropletMemoryAvailableMetrics", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func monitoringGetDropletMemoryAvailableMetrics(
+        config: ClientConfig,
+        hostId: String,
+        start: String,
+        end: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Metrics {
+        try await (sdkRequest(
+            "GET",
+            "/v2/monitoring/metrics/droplet/memory_available",
+            config: config,
+            query: [
+                SdkQueryParameter("host_id", value: hostId),
+                SdkQueryParameter("start", value: start),
+                SdkQueryParameter("end", value: end),
+            ],
+            decoder: .json,
+            operationId: "monitoring_get_dropletMemoryAvailableMetrics",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 
-    /// To retrieve memory percentage metrics for a given app, send a GET request to `/v2/monitoring/metrics/apps/memory_percentage`.
+    /// To retrieve memory percentage metrics for a given app, send a GET request to
+    /// `/v2/monitoring/metrics/apps/memory_percentage`.
     ///
     /// - Parameters:
     /// - appId: The app UUID.
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
     /// - appComponent: The app component name.
-    public static func monitoringGetAppMemoryPercentageMetrics(config: ClientConfig, appId: String, start: String, end: String, appComponent: String? = nil, requestOptions: RequestOptions? = nil) async throws -> Metrics {
-        return try (await sdkRequest("GET", "/v2/monitoring/metrics/apps/memory_percentage", config: config, query: [
-            SdkQueryParameter("app_id", value: appId),
-            SdkQueryParameter("start", value: start),
-            SdkQueryParameter("end", value: end),
-            SdkQueryParameter("app_component", value: appComponent),
-        ], decoder: .json, operationId: "monitoring_get_appMemoryPercentageMetrics", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func monitoringGetAppMemoryPercentageMetrics(
+        config: ClientConfig,
+        appId: String,
+        start: String,
+        end: String,
+        appComponent: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Metrics {
+        try await (sdkRequest(
+            "GET",
+            "/v2/monitoring/metrics/apps/memory_percentage",
+            config: config,
+            query: [
+                SdkQueryParameter("app_id", value: appId),
+                SdkQueryParameter("start", value: start),
+                SdkQueryParameter("end", value: end),
+                SdkQueryParameter("app_component", value: appComponent),
+            ],
+            decoder: .json,
+            operationId: "monitoring_get_appMemoryPercentageMetrics",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

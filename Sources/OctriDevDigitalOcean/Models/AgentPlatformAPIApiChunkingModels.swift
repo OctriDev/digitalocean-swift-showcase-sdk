@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiChunking domain models
+/// AgentPlatformAPIApiChunking domain models
 /// Typed representation of the `ApiChunkingOptions` API schema.
 public struct ApiChunkingOptions: Codable {
     /// Optional `int64`-formatted value serialized in the `child_chunk_size` wire field.
@@ -27,22 +27,27 @@ public struct ApiChunkingOptions: Codable {
     }
 
     init() {
-        (self.childChunkSize, self.maxChunkSize, self.parentChunkSize, self.semanticThreshold) = (nil, nil, nil, nil)
+        (childChunkSize, maxChunkSize, parentChunkSize, semanticThreshold) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiChunkingOptions {
-    public init(from decoder: Decoder) throws {
+public extension ApiChunkingOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.childChunkSize = try container.sdkDecodeIfPresent(.childChunkSize)
-        self.maxChunkSize = try container.sdkDecodeIfPresent(.maxChunkSize)
-        self.parentChunkSize = try container.sdkDecodeIfPresent(.parentChunkSize)
-        self.semanticThreshold = try container.sdkDecodeIfPresent(.semanticThreshold)
+        childChunkSize = try container.sdkDecodeIfPresent(.childChunkSize)
+        maxChunkSize = try container.sdkDecodeIfPresent(.maxChunkSize)
+        parentChunkSize = try container.sdkDecodeIfPresent(.parentChunkSize)
+        semanticThreshold = try container.sdkDecodeIfPresent(.semanticThreshold)
     }
 }
 
-extension ApiChunkingOptions {
-    public init(childChunkSize: Int? = nil, maxChunkSize: Int? = nil, parentChunkSize: Int? = nil, semanticThreshold: Double? = nil) {
+public extension ApiChunkingOptions {
+    init(
+        childChunkSize: Int? = nil,
+        maxChunkSize: Int? = nil,
+        parentChunkSize: Int? = nil,
+        semanticThreshold: Double? = nil
+    ) {
         self.init()
         (self.childChunkSize, self.maxChunkSize) = (childChunkSize, maxChunkSize)
         (self.parentChunkSize, self.semanticThreshold) = (parentChunkSize, semanticThreshold)
@@ -53,7 +58,10 @@ extension ApiChunkingOptions {
 public struct ApiChunkingAlgorithm: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let chunkingAlgorithmUnknown = ApiChunkingAlgorithm(rawValue: "CHUNKING_ALGORITHM_UNKNOWN")
     public static let chunkingAlgorithmSectionBased = ApiChunkingAlgorithm(rawValue: "CHUNKING_ALGORITHM_SECTION_BASED")
     public static let chunkingAlgorithmHierarchical = ApiChunkingAlgorithm(rawValue: "CHUNKING_ALGORITHM_HIERARCHICAL")
@@ -62,7 +70,7 @@ public struct ApiChunkingAlgorithm: RawRepresentable, Hashable, Codable, Sendabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

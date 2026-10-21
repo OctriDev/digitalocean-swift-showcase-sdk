@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiList domain models
+/// AgentPlatformAPIApiList domain models
 /// Typed representation of the `ApiListModelEvaluationPresetsOutput` API schema.
 public struct ApiListModelEvaluationPresetsOutput: Codable {
     /// List of explicitly saved evaluation presets (reusable configs).
@@ -14,19 +14,19 @@ public struct ApiListModelEvaluationPresetsOutput: Codable {
     }
 
     init() {
-        self.presets = nil
+        presets = nil
     }
 }
 
-extension ApiListModelEvaluationPresetsOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiListModelEvaluationPresetsOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.presets = try container.sdkDecodeIfPresent(.presets)
+        presets = try container.sdkDecodeIfPresent(.presets)
     }
 }
 
-extension ApiListModelEvaluationPresetsOutput {
-    public init(presets: [ApiModelEvaluationPreset]? = nil) {
+public extension ApiListModelEvaluationPresetsOutput {
+    init(presets: [ApiModelEvaluationPreset]? = nil) {
         self.init()
         self.presets = presets
     }

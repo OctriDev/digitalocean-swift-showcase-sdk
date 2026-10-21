@@ -6,26 +6,42 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ActionGatewayMethods {
-    /// Returns the sessions you can see, newest first. Offset-paged with page and `per_page`; `end_user_id` filters to one actor.
+public extension ActionGatewayMethods {
+    /// Returns the sessions you can see, newest first. Offset-paged with page and `per_page`; `end_user_id` filters to
+    /// one actor.
     ///
     /// - Parameters:
     /// - endUserId: Optional `actor_id`, matched exactly.
     /// - page: 1-based page number. Values below 1 are treated as 1.
     /// - perPage: Page size. Defaults to 20; values above 100 are capped at 100.
-    public static func sessionsList(config: ClientConfig, endUserId: String? = nil, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ListSessionsResponse {
-        if let page = page {
+    static func sessionsList(
+        config: ClientConfig,
+        endUserId: String? = nil,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListSessionsResponse {
+        if let page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        if let perPage = perPage {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 100)
         }
 
-        return try (await sdkRequest("GET", "/v2/action-gateway/sessions", config: config, query: [
-            SdkQueryParameter("end_user_id", value: endUserId),
-            SdkQueryParameter("page", value: page),
-            SdkQueryParameter("per_page", value: perPage),
-        ], decoder: .json, operationId: "sessions_list", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/v2/action-gateway/sessions",
+            config: config,
+            query: [
+                SdkQueryParameter("end_user_id", value: endUserId),
+                SdkQueryParameter("page", value: page),
+                SdkQueryParameter("per_page", value: perPage),
+            ],
+            decoder: .json,
+            operationId: "sessions_list",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

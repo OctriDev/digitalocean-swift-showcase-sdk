@@ -6,12 +6,32 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension LoadBalancersMethods {
-    /// To delete a Global load balancer CDN cache, send a DELETE request to `/v2/load_balancers/$LOAD_BALANCER_ID/cache`. A successful request will receive a 204 status code with no body in response. This indicates that the request was processed successfully.
+public extension LoadBalancersMethods {
+    /// To delete a Global load balancer CDN cache, send a DELETE request to
+    /// `/v2/load_balancers/$LOAD_BALANCER_ID/cache`. A successful request will receive a 204 status code with no body
+    /// in response. This indicates that the request was processed successfully.
     ///
     /// - Parameters:
     /// - lbId: A unique identifier for a load balancer.
-    public static func loadBalancersDeleteCache(config: ClientConfig, lbId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try (await sdkRequest("DELETE", ["/v2/load_balancers/", sdkEncodePathSegment(sdkWireString(lbId)), "/cache"].joined(), config: config, decoder: .empty, operationId: "loadBalancers_delete_cache", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func loadBalancersDeleteCache(
+        config: ClientConfig,
+        lbId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await (sdkRequest(
+            "DELETE",
+            ["/v2/load_balancers/", sdkEncodePathSegment(sdkWireString(lbId)), "/cache"].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "loadBalancers_delete_cache",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

@@ -6,26 +6,89 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DatabasesMethods {
-    /// To remove a specific database user, send a DELETE request to `/v2/databases/$DATABASE_ID/users/$USERNAME`. A status of 204 will be given. This indicates that the request was processed successfully, but that no response body is needed. Note: User management is not supported for Caching or Valkey clusters.
+public extension DatabasesMethods {
+    /// To remove a specific database user, send a DELETE request to `/v2/databases/$DATABASE_ID/users/$USERNAME`. A
+    /// status of 204 will be given. This indicates that the request was processed successfully, but that no response
+    /// body is needed. Note: User management is not supported for Caching or Valkey clusters.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - username: The name of the database user.
-    public static func databasesDeleteUser(config: ClientConfig, databaseClusterUuid: String, username: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func databasesDeleteUser(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        username: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("DELETE", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/users/", sdkEncodePathSegment(sdkWireString(username))].joined(), config: config, decoder: .empty, operationId: "databases_delete_user", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "DELETE",
+            [
+                "/v2/databases/",
+                sdkEncodePathSegment(sdkWireString(databaseClusterUuid)),
+                "/users/",
+                sdkEncodePathSegment(sdkWireString(username)),
+            ].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "databases_delete_user",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To update an existing database user, send a PUT request to `/v2/databases/$DATABASE_ID/users/$USERNAME` with the desired settings. **Note**: only `settings` can be updated via this type of request. If you wish to change the name of a user, you must recreate a new user. For PostgreSQL clusters, you can update `settings.pg_allow_replication` to enable or disable replication privileges for the user. When omitted, the value defaults to `false`. For Kafka and OpenSearch clusters, additional options can be configured in the `settings` object (for example, topic or index ACLs). Updating users is supported for PostgreSQL, Kafka, and OpenSearch clusters. For other engines, the request returns a 422. MongoDB roles and database access are set with `settings.mongo_user_settings` when creating a user and cannot be changed afterward; recreate the user to apply different roles or databases. The response will be a JSON object with a key called `user`. The value of this will be an object that contains the name of the updated database user, along with the `settings` object that has been updated.
+    /// To update an existing database user, send a PUT request to `/v2/databases/$DATABASE_ID/users/$USERNAME` with the
+    /// desired settings. **Note**: only `settings` can be updated via this type of request. If you wish to change the
+    /// name of a user, you must recreate a new user. For PostgreSQL clusters, you can update
+    /// `settings.pg_allow_replication` to enable or disable replication privileges for the user. When omitted, the
+    /// value defaults to `false`. For Kafka and OpenSearch clusters, additional options can be configured in the
+    /// `settings` object (for example, topic or index ACLs). Updating users is supported for PostgreSQL, Kafka, and
+    /// OpenSearch clusters. For other engines, the request returns a 422. MongoDB roles and database access are set
+    /// with `settings.mongo_user_settings` when creating a user and cannot be changed afterward; recreate the user to
+    /// apply different roles or databases. The response will be a JSON object with a key called `user`. The value of
+    /// this will be an object that contains the name of the updated database user, along with the `settings` object
+    /// that has been updated.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - username: The name of the database user.
-    public static func databasesUpdateUser(config: ClientConfig, databaseClusterUuid: String, username: String, body: DatabasesUpdateUserRequestBody, requestOptions: RequestOptions? = nil) async throws -> UserResponse {
+    static func databasesUpdateUser(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        username: String,
+        body: DatabasesUpdateUserRequestBody,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UserResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("PUT", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/users/", sdkEncodePathSegment(sdkWireString(username))].joined(), config: config, rawBody: (try sdkEncodeBody(body, contentType: "application/json")), decoder: .json, operationId: "databases_update_user", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            [
+                "/v2/databases/",
+                sdkEncodePathSegment(sdkWireString(databaseClusterUuid)),
+                "/users/",
+                sdkEncodePathSegment(sdkWireString(username)),
+            ].joined(),
+            config: config,
+            rawBody: sdkEncodeBody(body, contentType: "application/json"),
+            decoder: .json,
+            operationId: "databases_update_user",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "422": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

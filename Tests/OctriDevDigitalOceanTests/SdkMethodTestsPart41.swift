@@ -37,10 +37,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.serverlessInference.inferenceCreateSystemone(
-            state: decoded(sdkMethodFixture916Value1),
-            model: decoded("\"typesafe-jev-1.13.0\""),
-            questions: decoded(sdkMethodFixture916Value2)
-        )
+                state: decoded(sdkMethodFixture916Value1),
+                model: decoded("\"typesafe-jev-1.13.0\""),
+                questions: decoded(sdkMethodFixture916Value2)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -88,11 +88,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.serverlessInference.inferenceCreateVideo(
-            model: decoded("\"wan2-2-t2v-a14b\""),
-            prompt: decoded(sdkMethodFixture918Value1),
-            size: decoded("\"1280x720\""),
-            fps: decoded("16")
-        )
+                model: decoded("\"wan2-2-t2v-a14b\""),
+                prompt: decoded(sdkMethodFixture918Value1),
+                size: decoded("\"1280x720\""),
+                fps: decoded("16")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -137,8 +137,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.batchInference.inferenceGetBatch(
-            batchId: decoded("\"0e9d1d35-3d1e-4d66-9a2f-8c7e0f6b3e21\"")
-        )
+                batchId: decoded("\"0e9d1d35-3d1e-4d66-9a2f-8c7e0f6b3e21\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -183,8 +183,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.batchInference.inferenceGetBatchResults(
-            batchId: decoded("\"0e9d1d35-3d1e-4d66-9a2f-8c7e0f6b3e21\"")
-        )
+                batchId: decoded("\"0e9d1d35-3d1e-4d66-9a2f-8c7e0f6b3e21\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -229,8 +229,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.serverlessInference.inferenceGetVideo(
-            videoId: decoded(sdkMethodFixture924Value1)
-        )
+                videoId: decoded(sdkMethodFixture924Value1)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -268,8 +268,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.serverlessInference.inferenceGetVideoContent(
-            videoId: decoded(sdkMethodFixture926Value1)
-        )
+                videoId: decoded(sdkMethodFixture926Value1)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -316,10 +316,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.batchInference.inferenceListBatches(
-            after: decoded("\"7b2e9c1a-6f4d-4d9b-a0f1-5c4b7e2f8a12\""),
-            limit: decoded("20"),
-            status: decoded("\"in_progress\"")
-        )
+                after: decoded("\"7b2e9c1a-6f4d-4d9b-a0f1-5c4b7e2f8a12\""),
+                limit: decoded("20"),
+                status: decoded("\"in_progress\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -383,7 +383,7 @@ extension SdkMethodTests {
         }
         _ = client
         _ = try await client.batchInference.inferenceUploadBatchFile(
-            body: Data(base64Encoded: "ZXhhbXBsZQ==")!
+            body: XCTUnwrap(Data(base64Encoded: "ZXhhbXBsZQ=="))
         )
         XCTAssertTrue(true)
     }
@@ -399,8 +399,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.batchInference.inferenceUploadBatchFile(
-            body: Data(base64Encoded: "ZXhhbXBsZQ==")!
-        )
+                body: XCTUnwrap(Data(base64Encoded: "ZXhhbXBsZQ=="))
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -445,8 +445,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.createAlertRule(
-            body: decoded(sdkMethodFixture934Value1)
-        )
+                body: decoded(sdkMethodFixture934Value1)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -462,7 +462,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testInsightsCreateNotificationChannelInsightsCreateNotificationChannelReachesMockAndDecodesResponse() async throws {
+    func testInsightsCreateNotificationChannelInsightsCreateNotificationChannelReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -483,7 +484,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testInsightsCreateNotificationChannelInsightsCreateNotificationChannel400ReachesMockAndDecodesResponse() async throws {
+    func testInsightsCreateNotificationChannelInsightsCreateNotificationChannel400ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/400") else {
             return
         }
@@ -494,11 +496,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.createNotificationChannel(
-            name: decoded("\"Platform alerts\""),
-            email: decoded("null"),
-            slack: decoded(sdkMethodFixture936Value1),
-            webhook: decoded("null")
-        )
+                name: decoded("\"Platform alerts\""),
+                email: decoded("null"),
+                slack: decoded(sdkMethodFixture936Value1),
+                webhook: decoded("null")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -536,8 +538,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.insights.deleteAlertRule(
-            id: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"")
-        )
+                id: decoded("\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -553,7 +555,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testInsightsDeleteNotificationChannelInsightsDeleteNotificationChannelReachesMockAndDecodesResponse() async throws {
+    func testInsightsDeleteNotificationChannelInsightsDeleteNotificationChannelReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }

@@ -6,18 +6,32 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension HarnessRuntimeMethods {
+public extension HarnessRuntimeMethods {
     /// team_id is stamped from the authenticated principal; never accepted from the client.
     ///
     /// - Parameters:
     /// - pageSize: Page size. Defaults to 50 when omitted or non-positive.
     /// - pageToken: Optional pagination cursor (opaque). Empty starts from the
     ///   beginning.
-    public static func harnessListTemplates(config: ClientConfig, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListTemplatesResponse {
-        return try (await sdkRequest("GET", "/v2/agents/templates", config: config, query: [
-            SdkQueryParameter("page_size", value: pageSize),
-            SdkQueryParameter("page_token", value: pageToken),
-        ], decoder: .json, operationId: "harness_list_templates", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func harnessListTemplates(
+        config: ClientConfig,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListTemplatesResponse {
+        try await (sdkRequest(
+            "GET",
+            "/v2/agents/templates",
+            config: config,
+            query: [
+                SdkQueryParameter("page_size", value: pageSize),
+                SdkQueryParameter("page_token", value: pageToken),
+            ],
+            decoder: .json,
+            operationId: "harness_list_templates",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 
     /// team_id is stamped from the authenticated principal; never accepted from the client.
@@ -26,17 +40,36 @@ extension HarnessRuntimeMethods {
     /// - pageSize: Page size. Defaults to 50 when omitted or non-positive.
     /// - pageToken: Optional pagination cursor (opaque). Empty starts from the
     ///   beginning.
-    public static func harnessListTemplatesPaginated(config: ClientConfig, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<SandboxTemplate, Swift.Error> {
-        return AsyncThrowingStream<SandboxTemplate, Swift.Error> { (continuation: AsyncThrowingStream<SandboxTemplate, Swift.Error>.Continuation) in
+    static func harnessListTemplatesPaginated(
+        config: ClientConfig,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<SandboxTemplate, Swift.Error> {
+        AsyncThrowingStream<SandboxTemplate, Swift.Error> { (continuation: AsyncThrowingStream<
+            SandboxTemplate,
+            Swift.Error
+        >.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await harnessListTemplates(config: config, pageSize: pageSize, pageToken: pageCursor, requestOptions: requestOptions)
+                        let pageResponse = try await harnessListTemplates(
+                            config: config,
+                            pageSize: pageSize,
+                            pageToken: pageCursor,
+                            requestOptions: requestOptions
+                        )
                         let pageItems = (pageResponse.templates ?? [])
-                        if pageItems.isEmpty { break }
-                        for item in pageItems { continuation.yield(item) }
-                        guard let nextCursor = pageResponse.nextPageToken else { break }
+                        if pageItems.isEmpty {
+                            break
+                        }
+                        for item in pageItems {
+                            continuation.yield(item)
+                        }
+                        guard let nextCursor = pageResponse.nextPageToken else {
+                            break
+                        }
                         pageCursor = nextCursor
                     }
                 } catch {
@@ -49,25 +82,48 @@ extension HarnessRuntimeMethods {
         }
     }
 
-    public struct HarnessListTemplatesPage {
+    struct HarnessListTemplatesPage {
         public let data: ListTemplatesResponse
         public let items: [SandboxTemplate]
         public let hasMore: Bool
     }
 
-    public static func harnessListTemplatesPages(config: ClientConfig, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<HarnessListTemplatesPage, Swift.Error> {
-        return AsyncThrowingStream<HarnessListTemplatesPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<HarnessListTemplatesPage, Swift.Error>.Continuation) in
+    static func harnessListTemplatesPages(
+        config: ClientConfig,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<HarnessListTemplatesPage, Swift.Error> {
+        AsyncThrowingStream<HarnessListTemplatesPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<
+            HarnessListTemplatesPage,
+            Swift.Error
+        >.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await harnessListTemplates(config: config, pageSize: pageSize, pageToken: pageCursor, requestOptions: requestOptions)
+                        let pageResponse = try await harnessListTemplates(
+                            config: config,
+                            pageSize: pageSize,
+                            pageToken: pageCursor,
+                            requestOptions: requestOptions
+                        )
                         let pageItems = (pageResponse.templates ?? [])
-                        if pageItems.isEmpty { break }
+                        if pageItems.isEmpty {
+                            break
+                        }
                         let hasMore = pageResponse.nextPageToken != nil
-                        pageContinuation.yield(HarnessListTemplatesPage(data: pageResponse, items: pageItems, hasMore: hasMore))
-                        if !hasMore { break }
-                        guard let nextCursor = pageResponse.nextPageToken else { break }
+                        pageContinuation.yield(HarnessListTemplatesPage(
+                            data: pageResponse,
+                            items: pageItems,
+                            hasMore: hasMore
+                        ))
+                        if !hasMore {
+                            break
+                        }
+                        guard let nextCursor = pageResponse.nextPageToken else {
+                            break
+                        }
                         pageCursor = nextCursor
                     }
                 } catch {

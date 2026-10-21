@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiUpdate domain models
+/// AgentPlatformAPIApiUpdate domain models
 /// Update a data source of a knowledge base with change in chunking algorithm/options
 public struct ApiUpdateKnowledgeBaseDataSourceInputPublic: Codable {
     /// Optional enumerated value serialized in the `chunking_algorithm` wire field.
@@ -26,22 +26,27 @@ public struct ApiUpdateKnowledgeBaseDataSourceInputPublic: Codable {
     }
 
     init() {
-        (self.chunkingAlgorithm, self.chunkingOptions, self.dataSourceUuid, self.knowledgeBaseUuid) = (nil, nil, nil, nil)
+        (chunkingAlgorithm, chunkingOptions, dataSourceUuid, knowledgeBaseUuid) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiUpdateKnowledgeBaseDataSourceInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateKnowledgeBaseDataSourceInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.chunkingAlgorithm = try container.sdkDecodeIfPresent(.chunkingAlgorithm)
-        self.chunkingOptions = try container.sdkDecodeIfPresent(.chunkingOptions)
-        self.dataSourceUuid = try container.sdkDecodeIfPresent(.dataSourceUuid)
-        self.knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
+        chunkingAlgorithm = try container.sdkDecodeIfPresent(.chunkingAlgorithm)
+        chunkingOptions = try container.sdkDecodeIfPresent(.chunkingOptions)
+        dataSourceUuid = try container.sdkDecodeIfPresent(.dataSourceUuid)
+        knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
     }
 }
 
-extension ApiUpdateKnowledgeBaseDataSourceInputPublic {
-    public init(chunkingAlgorithm: ApiChunkingAlgorithm? = nil, chunkingOptions: ApiChunkingOptions? = nil, dataSourceUuid: String? = nil, knowledgeBaseUuid: String? = nil) {
+public extension ApiUpdateKnowledgeBaseDataSourceInputPublic {
+    init(
+        chunkingAlgorithm: ApiChunkingAlgorithm? = nil,
+        chunkingOptions: ApiChunkingOptions? = nil,
+        dataSourceUuid: String? = nil,
+        knowledgeBaseUuid: String? = nil
+    ) {
         self.init()
         (self.chunkingAlgorithm, self.chunkingOptions) = (chunkingAlgorithm, chunkingOptions)
         (self.dataSourceUuid, self.knowledgeBaseUuid) = (dataSourceUuid, knowledgeBaseUuid)
@@ -58,19 +63,19 @@ public struct ApiUpdateKnowledgeBaseDataSourceOutput: Codable {
     }
 
     init() {
-        self.knowledgeBaseDataSource = nil
+        knowledgeBaseDataSource = nil
     }
 }
 
-extension ApiUpdateKnowledgeBaseDataSourceOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateKnowledgeBaseDataSourceOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.knowledgeBaseDataSource = try container.sdkDecodeIfPresent(.knowledgeBaseDataSource)
+        knowledgeBaseDataSource = try container.sdkDecodeIfPresent(.knowledgeBaseDataSource)
     }
 }
 
-extension ApiUpdateKnowledgeBaseDataSourceOutput {
-    public init(knowledgeBaseDataSource: ApiKnowledgeBaseDataSource? = nil) {
+public extension ApiUpdateKnowledgeBaseDataSourceOutput {
+    init(knowledgeBaseDataSource: ApiKnowledgeBaseDataSource? = nil) {
         self.init()
         self.knowledgeBaseDataSource = knowledgeBaseDataSource
     }

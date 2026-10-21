@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Uptime domain models
+/// Uptime domain models
 /// Typed representation of the `ExistingCheckState` API schema.
 public struct ExistingCheckState: Codable {
     /// Optional object value serialized in the `state` wire field.
@@ -14,19 +14,19 @@ public struct ExistingCheckState: Codable {
     }
 
     init() {
-        self.state = nil
+        state = nil
     }
 }
 
-extension ExistingCheckState {
-    public init(from decoder: Decoder) throws {
+public extension ExistingCheckState {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.state = try container.sdkDecodeIfPresent(.state)
+        state = try container.sdkDecodeIfPresent(.state)
     }
 }
 
-extension ExistingCheckState {
-    public init(state: State? = nil) {
+public extension ExistingCheckState {
+    init(state: State? = nil) {
         self.init()
         self.state = state
     }
@@ -42,19 +42,19 @@ public struct ExistingAlert: Codable {
     }
 
     init() {
-        self.alert = nil
+        alert = nil
     }
 }
 
-extension ExistingAlert {
-    public init(from decoder: Decoder) throws {
+public extension ExistingAlert {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.alert = try container.sdkDecodeIfPresent(.alert)
+        alert = try container.sdkDecodeIfPresent(.alert)
     }
 }
 
-extension ExistingAlert {
-    public init(alert: Alert? = nil) {
+public extension ExistingAlert {
+    init(alert: Alert? = nil) {
         self.init()
         self.alert = alert
     }
@@ -87,23 +87,29 @@ public struct CheckUpdatable: Codable {
     }
 
     init() {
-        (self.name, self.type, self.target, self.regions, self.enabled) = (nil, nil, nil, nil, nil)
+        (name, type, target, regions, enabled) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension CheckUpdatable {
-    public init(from decoder: Decoder) throws {
+public extension CheckUpdatable {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.target = try container.sdkDecodeIfPresent(.target)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
+        name = try container.sdkDecodeIfPresent(.name)
+        type = try container.sdkDecodeIfPresent(.type)
+        target = try container.sdkDecodeIfPresent(.target)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
     }
 }
 
-extension CheckUpdatable {
-    public init(name: String? = nil, type: CheckUpdatableType? = nil, target: String? = nil, regions: [CheckUpdatableRegionsItem]? = nil, enabled: Bool? = nil) {
+public extension CheckUpdatable {
+    init(
+        name: String? = nil,
+        type: CheckUpdatableType? = nil,
+        target: String? = nil,
+        regions: [CheckUpdatableRegionsItem]? = nil,
+        enabled: Bool? = nil
+    ) {
         self.init()
         (self.name, self.type) = (name, type)
         (self.target, self.regions) = (target, regions)
@@ -122,22 +128,22 @@ public struct AlertBase: Codable {
     }
 
     init() {
-        self.id = nil
+        id = nil
     }
 }
 
-extension AlertBase {
-    public init(from decoder: Decoder) throws {
+public extension AlertBase {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension AlertBase {
-    public init(id: String? = nil) throws {
+public extension AlertBase {
+    init(id: String? = nil) throws {
         self.init()
         self.id = id
         if let value = self.id {
@@ -159,20 +165,20 @@ public struct RegionalState: Codable {
     }
 
     init() {
-        (self.usEast, self.euWest) = (nil, nil)
+        (usEast, euWest) = (nil, nil)
     }
 }
 
-extension RegionalState {
-    public init(from decoder: Decoder) throws {
+public extension RegionalState {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.usEast = try container.sdkDecodeIfPresent(.usEast)
-        self.euWest = try container.sdkDecodeIfPresent(.euWest)
+        usEast = try container.sdkDecodeIfPresent(.usEast)
+        euWest = try container.sdkDecodeIfPresent(.euWest)
     }
 }
 
-extension RegionalState {
-    public init(usEast: RegionState? = nil, euWest: RegionState? = nil) {
+public extension RegionalState {
+    init(usEast: RegionState? = nil, euWest: RegionState? = nil) {
         self.init()
         (self.usEast, self.euWest) = (usEast, euWest)
     }
@@ -192,25 +198,35 @@ public struct Notification: Codable {
         case slack
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension Notification {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.email) else {
-            throw SdkValidationError(field: "email", code: "required", message: "Validation failed for 'email': value is required")
-        }
-        guard container.contains(.slack) else {
-            throw SdkValidationError(field: "slack", code: "required", message: "Validation failed for 'slack': value is required")
-        }
-        self.email = try container.sdkDecodeRequired(.email)
-        self.slack = try container.sdkDecodeRequired(.slack)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension Notification {
-    public init(email: [String], slack: [NotificationSlackItem]) {
+public extension Notification {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.email) else {
+            throw SdkValidationError(
+                field: "email",
+                code: "required",
+                message: "Validation failed for 'email': value is required"
+            )
+        }
+        guard container.contains(.slack) else {
+            throw SdkValidationError(
+                field: "slack",
+                code: "required",
+                message: "Validation failed for 'slack': value is required"
+            )
+        }
+        email = try container.sdkDecodeRequired(.email)
+        slack = try container.sdkDecodeRequired(.slack)
+    }
+}
+
+public extension Notification {
+    init(email: [String], slack: [NotificationSlackItem]) {
         (self.email, self.slack) = (email, slack)
     }
 }
@@ -250,29 +266,37 @@ public struct Alert: Codable {
     }
 
     init() {
-        (self.id, self.name, self.type, self.threshold, self.comparison) = (nil, nil, nil, nil, nil)
-        (self.notifications, self.period) = (nil, nil)
+        (id, name, type, threshold, comparison) = (nil, nil, nil, nil, nil)
+        (notifications, period) = (nil, nil)
     }
 }
 
-extension Alert {
-    public init(from decoder: Decoder) throws {
+public extension Alert {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.threshold = try container.sdkDecodeIfPresent(.threshold)
-        self.comparison = try container.sdkDecodeIfPresent(.comparison)
-        self.notifications = try container.sdkDecodeIfPresent(.notifications)
-        self.period = try container.sdkDecodeIfPresent(.period)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        type = try container.sdkDecodeIfPresent(.type)
+        threshold = try container.sdkDecodeIfPresent(.threshold)
+        comparison = try container.sdkDecodeIfPresent(.comparison)
+        notifications = try container.sdkDecodeIfPresent(.notifications)
+        period = try container.sdkDecodeIfPresent(.period)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension Alert {
-    public init(id: String? = nil, name: String? = nil, type: AlertUpdatableType? = nil, threshold: Int? = nil, comparison: AlertUpdatableComparison? = nil, notifications: Notification? = nil, period: AlertUpdatablePeriod? = nil) throws {
+public extension Alert {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        type: AlertUpdatableType? = nil,
+        threshold: Int? = nil,
+        comparison: AlertUpdatableComparison? = nil,
+        notifications: Notification? = nil,
+        period: AlertUpdatablePeriod? = nil
+    ) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.type, self.threshold) = (type, threshold)
@@ -298,23 +322,29 @@ public struct AllAlerts: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllAlerts {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.alerts = try container.sdkDecodeIfPresent(.alerts)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllAlerts {
-    public init(meta: MetaMeta, alerts: [Alert]? = nil, links: PageLinks? = nil) {
+public extension AllAlerts {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        alerts = try container.sdkDecodeIfPresent(.alerts)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllAlerts {
+    init(meta: MetaMeta, alerts: [Alert]? = nil, links: PageLinks? = nil) {
         (self.meta, self.alerts) = (meta, alerts)
         self.links = links
     }
@@ -343,22 +373,22 @@ public struct PreviousOutage: Codable {
     }
 
     init() {
-        (self.region, self.startedAt, self.endedAt, self.durationSeconds) = (nil, nil, nil, nil)
+        (region, startedAt, endedAt, durationSeconds) = (nil, nil, nil, nil)
     }
 }
 
-extension PreviousOutage {
-    public init(from decoder: Decoder) throws {
+public extension PreviousOutage {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        self.endedAt = try container.sdkDecodeIfPresent(.endedAt)
-        self.durationSeconds = try container.sdkDecodeIfPresent(.durationSeconds)
+        region = try container.sdkDecodeIfPresent(.region)
+        startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        endedAt = try container.sdkDecodeIfPresent(.endedAt)
+        durationSeconds = try container.sdkDecodeIfPresent(.durationSeconds)
     }
 }
 
-extension PreviousOutage {
-    public init(region: String? = nil, startedAt: String? = nil, endedAt: String? = nil, durationSeconds: Int? = nil) {
+public extension PreviousOutage {
+    init(region: String? = nil, startedAt: String? = nil, endedAt: String? = nil, durationSeconds: Int? = nil) {
         self.init()
         (self.region, self.startedAt) = (region, startedAt)
         (self.endedAt, self.durationSeconds) = (endedAt, durationSeconds)
@@ -375,19 +405,19 @@ public struct ExistingCheck: Codable {
     }
 
     init() {
-        self.check = nil
+        check = nil
     }
 }
 
-extension ExistingCheck {
-    public init(from decoder: Decoder) throws {
+public extension ExistingCheck {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.check = try container.sdkDecodeIfPresent(.check)
+        check = try container.sdkDecodeIfPresent(.check)
     }
 }
 
-extension ExistingCheck {
-    public init(check: Check? = nil) {
+public extension ExistingCheck {
+    init(check: Check? = nil) {
         self.init()
         self.check = check
     }
@@ -407,23 +437,29 @@ public struct AllChecks: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllChecks {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.checks = try container.sdkDecodeIfPresent(.checks)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllChecks {
-    public init(meta: MetaMeta, checks: [Check]? = nil, links: PageLinks? = nil) {
+public extension AllChecks {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        checks = try container.sdkDecodeIfPresent(.checks)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllChecks {
+    init(meta: MetaMeta, checks: [Check]? = nil, links: PageLinks? = nil) {
         (self.meta, self.checks) = (meta, checks)
         self.links = links
     }
@@ -442,20 +478,20 @@ public struct State: Codable {
     }
 
     init() {
-        (self.regions, self.previousOutage) = (nil, nil)
+        (regions, previousOutage) = (nil, nil)
     }
 }
 
-extension State {
-    public init(from decoder: Decoder) throws {
+public extension State {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.previousOutage = try container.sdkDecodeIfPresent(.previousOutage)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        previousOutage = try container.sdkDecodeIfPresent(.previousOutage)
     }
 }
 
-extension State {
-    public init(regions: RegionalState? = nil, previousOutage: PreviousOutage? = nil) {
+public extension State {
+    init(regions: RegionalState? = nil, previousOutage: PreviousOutage? = nil) {
         self.init()
         (self.regions, self.previousOutage) = (regions, previousOutage)
     }
@@ -472,22 +508,22 @@ public struct CheckBase: Codable {
     }
 
     init() {
-        self.id = nil
+        id = nil
     }
 }
 
-extension CheckBase {
-    public init(from decoder: Decoder) throws {
+public extension CheckBase {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension CheckBase {
-    public init(id: String? = nil) throws {
+public extension CheckBase {
+    init(id: String? = nil) throws {
         self.init()
         self.id = id
         if let value = self.id {
@@ -515,21 +551,21 @@ public struct RegionState: Codable {
     }
 
     init() {
-        (self.status, self.statusChangedAt, self.thirtyDayUptimePercentage) = (nil, nil, nil)
+        (status, statusChangedAt, thirtyDayUptimePercentage) = (nil, nil, nil)
     }
 }
 
-extension RegionState {
-    public init(from decoder: Decoder) throws {
+public extension RegionState {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.statusChangedAt = try container.sdkDecodeIfPresent(.statusChangedAt)
-        self.thirtyDayUptimePercentage = try container.sdkDecodeIfPresent(.thirtyDayUptimePercentage)
+        status = try container.sdkDecodeIfPresent(.status)
+        statusChangedAt = try container.sdkDecodeIfPresent(.statusChangedAt)
+        thirtyDayUptimePercentage = try container.sdkDecodeIfPresent(.thirtyDayUptimePercentage)
     }
 }
 
-extension RegionState {
-    public init(status: RegionStateStatus? = nil, statusChangedAt: String? = nil, thirtyDayUptimePercentage: Double? = nil) {
+public extension RegionState {
+    init(status: RegionStateStatus? = nil, statusChangedAt: String? = nil, thirtyDayUptimePercentage: Double? = nil) {
         self.init()
         (self.status, self.statusChangedAt) = (status, statusChangedAt)
         self.thirtyDayUptimePercentage = thirtyDayUptimePercentage
@@ -567,21 +603,21 @@ public struct Check: Codable {
     }
 
     init() {
-        (self.id, self.name, self.type, self.target, self.regions) = (nil, nil, nil, nil, nil)
-        self.enabled = nil
+        (id, name, type, target, regions) = (nil, nil, nil, nil, nil)
+        enabled = nil
     }
 }
 
-extension Check {
-    public init(from decoder: Decoder) throws {
+public extension Check {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.target = try container.sdkDecodeIfPresent(.target)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        type = try container.sdkDecodeIfPresent(.type)
+        target = try container.sdkDecodeIfPresent(.target)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }

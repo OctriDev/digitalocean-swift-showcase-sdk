@@ -3,13 +3,16 @@
 
 import Foundation
 
-// SharedChat domain models
+/// SharedChat domain models
 /// Constrains effort on reasoning for reasoning models. Reducing reasoning effort can result in faster
 /// responses and fewer tokens used on reasoning in a response.
 public struct ChatCompletionRequestReasoningEffort: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let none = ChatCompletionRequestReasoningEffort(rawValue: "none")
     public static let minimal = ChatCompletionRequestReasoningEffort(rawValue: "minimal")
     public static let low = ChatCompletionRequestReasoningEffort(rawValue: "low")
@@ -19,7 +22,7 @@ public struct ChatCompletionRequestReasoningEffort: RawRepresentable, Hashable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -6,28 +6,77 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DedicatedInferenceMethods {
-    /// Revoke (delete) an access token for a Dedicated Inference instance. Send a DELETE request to `/v2/dedicated-inferences/{dedicated_inference_id}/tokens/{token_id}`.
+public extension DedicatedInferenceMethods {
+    /// Revoke (delete) an access token for a Dedicated Inference instance. Send a DELETE request to
+    /// `/v2/dedicated-inferences/{dedicated_inference_id}/tokens/{token_id}`.
     ///
     /// - Parameters:
     /// - dedicatedInferenceId: A unique identifier for a Dedicated Inference
     ///   instance.
     /// - tokenId: A unique identifier for a Dedicated Inference access token.
-    public static func dedicatedInferencesDeleteTokens(config: ClientConfig, dedicatedInferenceId: String, tokenId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func dedicatedInferencesDeleteTokens(
+        config: ClientConfig,
+        dedicatedInferenceId: String,
+        tokenId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("dedicated_inference_id", dedicatedInferenceId)
 
         try sdkValidateUuid("token_id", tokenId)
 
-        return try (await sdkRequest("DELETE", ["/v2/dedicated-inferences/", sdkEncodePathSegment(sdkWireString(dedicatedInferenceId)), "/tokens/", sdkEncodePathSegment(sdkWireString(tokenId))].joined(), config: config, decoder: .empty, operationId: "dedicatedInferences_delete_tokens", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "DELETE",
+            [
+                "/v2/dedicated-inferences/",
+                sdkEncodePathSegment(sdkWireString(dedicatedInferenceId)),
+                "/tokens/",
+                sdkEncodePathSegment(sdkWireString(tokenId)),
+            ].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "dedicatedInferences_delete_tokens",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Get available Dedicated Inference sizes and pricing for supported GPUs. Send a GET request to `/v2/dedicated-inferences/sizes`.
-    public static func dedicatedInferencesListSizes(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> DedicatedInferenceSizesResponse {
-        return try (await sdkRequest("GET", "/v2/dedicated-inferences/sizes", config: config, decoder: .json, operationId: "dedicatedInferences_list_sizes", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    /// Get available Dedicated Inference sizes and pricing for supported GPUs. Send a GET request to
+    /// `/v2/dedicated-inferences/sizes`.
+    static func dedicatedInferencesListSizes(
+        config: ClientConfig,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DedicatedInferenceSizesResponse {
+        try await (sdkRequest(
+            "GET",
+            "/v2/dedicated-inferences/sizes",
+            config: config,
+            decoder: .json,
+            operationId: "dedicatedInferences_list_sizes",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 
-    /// Get supported GPU and model configurations for Dedicated Inference. Use this to discover supported GPU slugs and model slugs (e.g. Hugging Face). Send a GET request to `/v2/dedicated-inferences/gpu-model-config`.
-    public static func dedicatedInferencesGetGpuModelConfig(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> DedicatedInferenceGpuModelConfigsResponse {
-        return try (await sdkRequest("GET", "/v2/dedicated-inferences/gpu-model-config", config: config, decoder: .json, operationId: "dedicatedInferences_get_gpu_model_config", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    /// Get supported GPU and model configurations for Dedicated Inference. Use this to discover supported GPU slugs and
+    /// model slugs (e.g. Hugging Face). Send a GET request to `/v2/dedicated-inferences/gpu-model-config`.
+    static func dedicatedInferencesGetGpuModelConfig(
+        config: ClientConfig,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DedicatedInferenceGpuModelConfigsResponse {
+        try await (sdkRequest(
+            "GET",
+            "/v2/dedicated-inferences/gpu-model-config",
+            config: config,
+            decoder: .json,
+            operationId: "dedicatedInferences_get_gpu_model_config",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

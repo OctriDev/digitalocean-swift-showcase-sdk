@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiCustom domain models
+/// AgentPlatformAPIApiCustom domain models
 /// Configuration for a custom model-evaluation metric scored by an LLM judge. Prompt and model response are always
 /// included in the judge context.
 public struct ApiCustomEvaluationMetricConfig: Codable {
@@ -33,32 +33,38 @@ public struct ApiCustomEvaluationMetricConfig: Codable {
     }
 
     init() {
-        (self.createdAt, self.deletedAt, self.requiresGroundTruth, self.scoringPrompt, self.updatedAt) = (nil, nil, nil, nil, nil)
+        (createdAt, deletedAt, requiresGroundTruth, scoringPrompt, updatedAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiCustomEvaluationMetricConfig {
-    public init(from decoder: Decoder) throws {
+public extension ApiCustomEvaluationMetricConfig {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
-        self.requiresGroundTruth = try container.sdkDecodeIfPresent(.requiresGroundTruth)
-        self.scoringPrompt = try container.sdkDecodeIfPresent(.scoringPrompt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = self.createdAt {
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
+        requiresGroundTruth = try container.sdkDecodeIfPresent(.requiresGroundTruth)
+        scoringPrompt = try container.sdkDecodeIfPresent(.scoringPrompt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.deletedAt {
+        if let value = deletedAt {
             try sdkValidateDateTime("deleted_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiCustomEvaluationMetricConfig {
-    public init(createdAt: Date? = nil, deletedAt: Date? = nil, requiresGroundTruth: Bool? = nil, scoringPrompt: String? = nil, updatedAt: Date? = nil) throws {
+public extension ApiCustomEvaluationMetricConfig {
+    init(
+        createdAt: Date? = nil,
+        deletedAt: Date? = nil,
+        requiresGroundTruth: Bool? = nil,
+        scoringPrompt: String? = nil,
+        updatedAt: Date? = nil
+    ) throws {
         self.init()
         (self.createdAt, self.deletedAt) = (createdAt, deletedAt)
         (self.requiresGroundTruth, self.scoringPrompt) = (requiresGroundTruth, scoringPrompt)
@@ -170,51 +176,75 @@ public struct ApiCustomModel: Codable {
     }
 
     init() {
-        (self.activeDeployments, self.architecture, self.configJson, self.contextLength, self.costEstimatePerMonth) = (nil, nil, nil, nil, nil)
-        (self.createdAt, self.description, self.errorMessage, self.fileCount, self.inputModalities) = (nil, nil, nil, nil, nil)
-        (self.license, self.name, self.outputModalities, self.parameters, self.sourceRef) = (nil, nil, nil, nil, nil)
-        (self.sourceType, self.status, self.storageRegion, self.tags, self.teamId) = (nil, nil, nil, nil, nil)
-        (self.totalSizeBytes, self.updatedAt, self.uuid) = (nil, nil, nil)
+        (activeDeployments, architecture, configJson, contextLength, costEstimatePerMonth) = (nil, nil, nil, nil, nil)
+        (createdAt, description, errorMessage, fileCount, inputModalities) = (nil, nil, nil, nil, nil)
+        (license, name, outputModalities, parameters, sourceRef) = (nil, nil, nil, nil, nil)
+        (sourceType, status, storageRegion, tags, teamId) = (nil, nil, nil, nil, nil)
+        (totalSizeBytes, updatedAt, uuid) = (nil, nil, nil)
     }
 }
 
-extension ApiCustomModel {
-    public init(from decoder: Decoder) throws {
+public extension ApiCustomModel {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.activeDeployments = try container.sdkDecodeIfPresent(.activeDeployments)
-        self.architecture = try container.sdkDecodeIfPresent(.architecture)
-        self.configJson = try container.sdkDecodeIfPresent(.configJson)
-        self.contextLength = try container.sdkDecodeIfPresent(.contextLength)
-        self.costEstimatePerMonth = try container.sdkDecodeIfPresent(.costEstimatePerMonth)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.errorMessage = try container.sdkDecodeIfPresent(.errorMessage)
-        self.fileCount = try container.sdkDecodeIfPresent(.fileCount)
-        self.inputModalities = try container.sdkDecodeIfPresent(.inputModalities)
-        self.license = try container.sdkDecodeIfPresent(.license)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.outputModalities = try container.sdkDecodeIfPresent(.outputModalities)
-        self.parameters = try container.sdkDecodeIfPresent(.parameters)
-        self.sourceRef = try container.sdkDecodeIfPresent(.sourceRef)
-        self.sourceType = try container.sdkDecodeIfPresent(.sourceType)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.storageRegion = try container.sdkDecodeIfPresent(.storageRegion)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.teamId = try container.sdkDecodeIfPresent(.teamId)
-        self.totalSizeBytes = try container.sdkDecodeIfPresent(.totalSizeBytes)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
-        if let value = self.createdAt {
+        activeDeployments = try container.sdkDecodeIfPresent(.activeDeployments)
+        architecture = try container.sdkDecodeIfPresent(.architecture)
+        configJson = try container.sdkDecodeIfPresent(.configJson)
+        contextLength = try container.sdkDecodeIfPresent(.contextLength)
+        costEstimatePerMonth = try container.sdkDecodeIfPresent(.costEstimatePerMonth)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        description = try container.sdkDecodeIfPresent(.description)
+        errorMessage = try container.sdkDecodeIfPresent(.errorMessage)
+        fileCount = try container.sdkDecodeIfPresent(.fileCount)
+        inputModalities = try container.sdkDecodeIfPresent(.inputModalities)
+        license = try container.sdkDecodeIfPresent(.license)
+        name = try container.sdkDecodeIfPresent(.name)
+        outputModalities = try container.sdkDecodeIfPresent(.outputModalities)
+        parameters = try container.sdkDecodeIfPresent(.parameters)
+        sourceRef = try container.sdkDecodeIfPresent(.sourceRef)
+        sourceType = try container.sdkDecodeIfPresent(.sourceType)
+        status = try container.sdkDecodeIfPresent(.status)
+        storageRegion = try container.sdkDecodeIfPresent(.storageRegion)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        teamId = try container.sdkDecodeIfPresent(.teamId)
+        totalSizeBytes = try container.sdkDecodeIfPresent(.totalSizeBytes)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiCustomModel {
-    public init(activeDeployments: [CustomModelActiveDeployment]? = nil, architecture: String? = nil, configJson: [String: JSONValue]? = nil, contextLength: Int? = nil, costEstimatePerMonth: Int? = nil, createdAt: Date? = nil, description: String? = nil, errorMessage: String? = nil, fileCount: Int? = nil, inputModalities: [String]? = nil, license: String? = nil, name: String? = nil, outputModalities: [String]? = nil, parameters: String? = nil, sourceRef: CustomModelSourceRef? = nil, sourceType: CustomModelSourceType? = nil, status: ApiCustomModelStatus? = nil, storageRegion: String? = nil, tags: CustomModelTags? = nil, teamId: String? = nil, totalSizeBytes: String? = nil, updatedAt: Date? = nil, uuid: String? = nil) throws {
+public extension ApiCustomModel {
+    init(
+        activeDeployments: [CustomModelActiveDeployment]? = nil,
+        architecture: String? = nil,
+        configJson: [String: JSONValue]? = nil,
+        contextLength: Int? = nil,
+        costEstimatePerMonth: Int? = nil,
+        createdAt: Date? = nil,
+        description: String? = nil,
+        errorMessage: String? = nil,
+        fileCount: Int? = nil,
+        inputModalities: [String]? = nil,
+        license: String? = nil,
+        name: String? = nil,
+        outputModalities: [String]? = nil,
+        parameters: String? = nil,
+        sourceRef: CustomModelSourceRef? = nil,
+        sourceType: CustomModelSourceType? = nil,
+        status: ApiCustomModelStatus? = nil,
+        storageRegion: String? = nil,
+        tags: CustomModelTags? = nil,
+        teamId: String? = nil,
+        totalSizeBytes: String? = nil,
+        updatedAt: Date? = nil,
+        uuid: String? = nil
+    ) throws {
         self.init()
         (self.activeDeployments, self.architecture) = (activeDeployments, architecture)
         (self.configJson, self.contextLength) = (configJson, contextLength)
@@ -288,40 +318,52 @@ public struct ApiCustomModelImportJob: Codable {
     }
 
     init() {
-        (self.bytesDone, self.bytesTotal, self.completedAt, self.createdAt, self.errorMessage) = (nil, nil, nil, nil, nil)
-        (self.errorStep, self.filesDone, self.filesTotal, self.startedAt, self.status) = (nil, nil, nil, nil, nil)
-        self.uuid = nil
+        (bytesDone, bytesTotal, completedAt, createdAt, errorMessage) = (nil, nil, nil, nil, nil)
+        (errorStep, filesDone, filesTotal, startedAt, status) = (nil, nil, nil, nil, nil)
+        uuid = nil
     }
 }
 
-extension ApiCustomModelImportJob {
-    public init(from decoder: Decoder) throws {
+public extension ApiCustomModelImportJob {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.bytesDone = try container.sdkDecodeIfPresent(.bytesDone)
-        self.bytesTotal = try container.sdkDecodeIfPresent(.bytesTotal)
-        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.errorMessage = try container.sdkDecodeIfPresent(.errorMessage)
-        self.errorStep = try container.sdkDecodeIfPresent(.errorStep)
-        self.filesDone = try container.sdkDecodeIfPresent(.filesDone)
-        self.filesTotal = try container.sdkDecodeIfPresent(.filesTotal)
-        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
-        if let value = self.completedAt {
+        bytesDone = try container.sdkDecodeIfPresent(.bytesDone)
+        bytesTotal = try container.sdkDecodeIfPresent(.bytesTotal)
+        completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        errorMessage = try container.sdkDecodeIfPresent(.errorMessage)
+        errorStep = try container.sdkDecodeIfPresent(.errorStep)
+        filesDone = try container.sdkDecodeIfPresent(.filesDone)
+        filesTotal = try container.sdkDecodeIfPresent(.filesTotal)
+        startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        status = try container.sdkDecodeIfPresent(.status)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
+        if let value = completedAt {
             try sdkValidateDateTime("completed_at", sdkWireString(value))
         }
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.startedAt {
+        if let value = startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiCustomModelImportJob {
-    public init(bytesDone: String? = nil, bytesTotal: String? = nil, completedAt: Date? = nil, createdAt: Date? = nil, errorMessage: String? = nil, errorStep: String? = nil, filesDone: Int? = nil, filesTotal: Int? = nil, startedAt: Date? = nil, status: String? = nil, uuid: String? = nil) throws {
+public extension ApiCustomModelImportJob {
+    init(
+        bytesDone: String? = nil,
+        bytesTotal: String? = nil,
+        completedAt: Date? = nil,
+        createdAt: Date? = nil,
+        errorMessage: String? = nil,
+        errorStep: String? = nil,
+        filesDone: Int? = nil,
+        filesTotal: Int? = nil,
+        startedAt: Date? = nil,
+        status: String? = nil,
+        uuid: String? = nil
+    ) throws {
         self.init()
         (self.bytesDone, self.bytesTotal) = (bytesDone, bytesTotal)
         (self.completedAt, self.createdAt) = (completedAt, createdAt)
@@ -345,7 +387,10 @@ extension ApiCustomModelImportJob {
 public struct ApiCustomModelStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let statusUnspecified = ApiCustomModelStatus(rawValue: "STATUS_UNSPECIFIED")
     public static let statusImporting = ApiCustomModelStatus(rawValue: "STATUS_IMPORTING")
     public static let statusReady = ApiCustomModelStatus(rawValue: "STATUS_READY")
@@ -354,7 +399,7 @@ public struct ApiCustomModelStatus: RawRepresentable, Hashable, Codable, Sendabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

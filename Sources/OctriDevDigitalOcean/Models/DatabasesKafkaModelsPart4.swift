@@ -3,18 +3,22 @@
 
 import Foundation
 
-// DatabasesKafka domain models
+/// DatabasesKafka domain models
 /// Define whether the timestamp in the message is message create time or log append time.
-public struct KafkaAdvancedConfigLogMessageTimestampType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct KafkaAdvancedConfigLogMessageTimestampType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let createTime = KafkaAdvancedConfigLogMessageTimestampType(rawValue: "CreateTime")
     public static let logAppendTime = KafkaAdvancedConfigLogMessageTimestampType(rawValue: "LogAppendTime")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -27,14 +31,17 @@ public struct KafkaAdvancedConfigLogMessageTimestampType: RawRepresentable, Hash
 public struct KafkaSchemaSchemaType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let avro = KafkaSchemaSchemaType(rawValue: "AVRO")
     public static let json = KafkaSchemaSchemaType(rawValue: "JSON")
     public static let protobuf = KafkaSchemaSchemaType(rawValue: "PROTOBUF")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -49,7 +56,10 @@ public struct KafkaSchemaSchemaType: RawRepresentable, Hashable, Codable, Sendab
 public struct KafkaAdvancedConfigCompressionType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let gzip = KafkaAdvancedConfigCompressionType(rawValue: "gzip")
     public static let snappy = KafkaAdvancedConfigCompressionType(rawValue: "snappy")
     public static let lz4 = KafkaAdvancedConfigCompressionType(rawValue: "lz4")
@@ -59,7 +69,7 @@ public struct KafkaAdvancedConfigCompressionType: RawRepresentable, Hashable, Co
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -73,13 +83,16 @@ public struct KafkaAdvancedConfigCompressionType: RawRepresentable, Hashable, Co
 public struct KafkaTopicConfigMessageTimestampType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let createTime = KafkaTopicConfigMessageTimestampType(rawValue: "create_time")
     public static let logAppendTime = KafkaTopicConfigMessageTimestampType(rawValue: "log_append_time")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -94,14 +107,17 @@ public struct KafkaTopicConfigMessageTimestampType: RawRepresentable, Hashable, 
 public struct KafkaTopicConfigCleanupPolicy: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let delete = KafkaTopicConfigCleanupPolicy(rawValue: "delete")
     public static let compact = KafkaTopicConfigCleanupPolicy(rawValue: "compact")
     public static let compactDelete = KafkaTopicConfigCleanupPolicy(rawValue: "compact_delete")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -114,14 +130,17 @@ public struct KafkaTopicConfigCleanupPolicy: RawRepresentable, Hashable, Codable
 public struct KafkaAdvancedConfigLogCleanupPolicy: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let delete = KafkaAdvancedConfigLogCleanupPolicy(rawValue: "delete")
     public static let compact = KafkaAdvancedConfigLogCleanupPolicy(rawValue: "compact")
     public static let compactDelete = KafkaAdvancedConfigLogCleanupPolicy(rawValue: "compact,delete")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -134,7 +153,10 @@ public struct KafkaAdvancedConfigLogCleanupPolicy: RawRepresentable, Hashable, C
 public struct KafkaTopicConfigCompressionType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let producer = KafkaTopicConfigCompressionType(rawValue: "producer")
     public static let gzip = KafkaTopicConfigCompressionType(rawValue: "gzip")
     public static let snappy = KafkaTopicConfigCompressionType(rawValue: "snappy")
@@ -144,7 +166,7 @@ public struct KafkaTopicConfigCompressionType: RawRepresentable, Hashable, Codab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -157,7 +179,10 @@ public struct KafkaTopicConfigCompressionType: RawRepresentable, Hashable, Codab
 public struct KafkaTopicVariant1State: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let active = KafkaTopicVariant1State(rawValue: "active")
     public static let configuring = KafkaTopicVariant1State(rawValue: "configuring")
     public static let deleting = KafkaTopicVariant1State(rawValue: "deleting")
@@ -165,7 +190,7 @@ public struct KafkaTopicVariant1State: RawRepresentable, Hashable, Codable, Send
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -178,14 +203,17 @@ public struct KafkaTopicVariant1State: RawRepresentable, Hashable, Codable, Send
 public struct KafkaSchemaVerboseSchemaType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let avro = KafkaSchemaVerboseSchemaType(rawValue: "AVRO")
     public static let json = KafkaSchemaVerboseSchemaType(rawValue: "JSON")
     public static let protobuf = KafkaSchemaVerboseSchemaType(rawValue: "PROTOBUF")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -198,14 +226,17 @@ public struct KafkaSchemaVerboseSchemaType: RawRepresentable, Hashable, Codable,
 public struct KafkaSchemaVersionSchemaType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let avro = KafkaSchemaVersionSchemaType(rawValue: "AVRO")
     public static let json = KafkaSchemaVersionSchemaType(rawValue: "JSON")
     public static let protobuf = KafkaSchemaVersionSchemaType(rawValue: "PROTOBUF")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -218,7 +249,10 @@ public struct KafkaSchemaVersionSchemaType: RawRepresentable, Hashable, Codable,
 public struct KafkaTopicVerboseState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let active = KafkaTopicVerboseState(rawValue: "active")
     public static let configuring = KafkaTopicVerboseState(rawValue: "configuring")
     public static let deleting = KafkaTopicVerboseState(rawValue: "deleting")
@@ -226,7 +260,7 @@ public struct KafkaTopicVerboseState: RawRepresentable, Hashable, Codable, Senda
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

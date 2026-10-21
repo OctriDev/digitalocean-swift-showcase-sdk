@@ -3,14 +3,14 @@
 
 import Foundation
 
-// DatabasesOpensearch domain models
+/// DatabasesOpensearch domain models
 /// Typed representation of the `OpensearchConnectionRequest` API schema.
 public struct OpensearchConnectionRequest: Codable {
-
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension OpensearchConnectionRequest {
-    public init() {
-    }
+public extension OpensearchConnectionRequest {
+    init() {}
 }

@@ -6,20 +6,56 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DomainsMethods {
+public extension DomainsMethods {
     /// To get details about a specific domain, send a GET request to `/v2/domains/$DOMAIN_NAME`.
     ///
     /// - Parameters:
     /// - domainName: The name of the domain itself.
-    public static func domainsGet(config: ClientConfig, domainName: String, requestOptions: RequestOptions? = nil) async throws -> ExistingDomain {
-        return try (await sdkRequest("GET", ["/v2/domains/", sdkEncodePathSegment(sdkWireString(domainName))].joined(), config: config, decoder: .json, operationId: "domains_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func domainsGet(
+        config: ClientConfig,
+        domainName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExistingDomain {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/domains/", sdkEncodePathSegment(sdkWireString(domainName))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "domains_get",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
     /// To delete a domain, send a DELETE request to `/v2/domains/$DOMAIN_NAME`.
     ///
     /// - Parameters:
     /// - domainName: The name of the domain itself.
-    public static func domainsDelete(config: ClientConfig, domainName: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try (await sdkRequest("DELETE", ["/v2/domains/", sdkEncodePathSegment(sdkWireString(domainName))].joined(), config: config, decoder: .empty, operationId: "domains_delete", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func domainsDelete(
+        config: ClientConfig,
+        domainName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await (sdkRequest(
+            "DELETE",
+            ["/v2/domains/", sdkEncodePathSegment(sdkWireString(domainName))].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "domains_delete",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

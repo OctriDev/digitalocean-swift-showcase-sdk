@@ -3,7 +3,7 @@
 
 import Foundation
 
-// PartnerNetworkConnect domain models
+/// PartnerNetworkConnect domain models
 public struct SinglePartnerAttachmentServiceKeyVariant0: Codable {
     public var serviceKey: [String: JSONValue]?
 
@@ -12,19 +12,19 @@ public struct SinglePartnerAttachmentServiceKeyVariant0: Codable {
     }
 
     init() {
-        self.serviceKey = nil
+        serviceKey = nil
     }
 }
 
-extension SinglePartnerAttachmentServiceKeyVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension SinglePartnerAttachmentServiceKeyVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.serviceKey = try container.sdkDecodeIfPresent(.serviceKey)
+        serviceKey = try container.sdkDecodeIfPresent(.serviceKey)
     }
 }
 
-extension SinglePartnerAttachmentServiceKeyVariant0 {
-    public init(serviceKey: [String: JSONValue]? = nil) {
+public extension SinglePartnerAttachmentServiceKeyVariant0 {
+    init(serviceKey: [String: JSONValue]? = nil) {
         self.init()
         self.serviceKey = serviceKey
     }
@@ -39,19 +39,19 @@ public struct SinglePartnerAttachmentServiceKey: Codable {
     }
 
     init() {
-        self.serviceKey = nil
+        serviceKey = nil
     }
 }
 
-extension SinglePartnerAttachmentServiceKey {
-    public init(from decoder: Decoder) throws {
+public extension SinglePartnerAttachmentServiceKey {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.serviceKey = try container.sdkDecodeIfPresent(.serviceKey)
+        serviceKey = try container.sdkDecodeIfPresent(.serviceKey)
     }
 }
 
-extension SinglePartnerAttachmentServiceKey {
-    public init(serviceKey: [String: JSONValue]? = nil) {
+public extension SinglePartnerAttachmentServiceKey {
+    init(serviceKey: [String: JSONValue]? = nil) {
         self.init()
         self.serviceKey = serviceKey
     }

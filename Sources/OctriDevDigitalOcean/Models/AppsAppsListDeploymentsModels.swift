@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AppsApps domain models
+/// AppsApps domain models
 /// Typed representation of the `AppsDeploymentsResponse` API schema.
 public struct AppsDeploymentsResponse: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -19,23 +19,29 @@ public struct AppsDeploymentsResponse: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AppsDeploymentsResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.deployments = try container.sdkDecodeIfPresent(.deployments)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AppsDeploymentsResponse {
-    public init(meta: MetaMeta, deployments: [AppsDeployment]? = nil, links: PageLinks? = nil) {
+public extension AppsDeploymentsResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        deployments = try container.sdkDecodeIfPresent(.deployments)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AppsDeploymentsResponse {
+    init(meta: MetaMeta, deployments: [AppsDeployment]? = nil, links: PageLinks? = nil) {
         (self.meta, self.deployments) = (meta, deployments)
         self.links = links
     }
@@ -50,19 +56,19 @@ public struct AppsDeploymentsResponseVariant0: Codable {
     }
 
     init() {
-        self.deployments = nil
+        deployments = nil
     }
 }
 
-extension AppsDeploymentsResponseVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AppsDeploymentsResponseVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.deployments = try container.sdkDecodeIfPresent(.deployments)
+        deployments = try container.sdkDecodeIfPresent(.deployments)
     }
 }
 
-extension AppsDeploymentsResponseVariant0 {
-    public init(deployments: [AppsDeployment]? = nil) {
+public extension AppsDeploymentsResponseVariant0 {
+    init(deployments: [AppsDeployment]? = nil) {
         self.init()
         self.deployments = deployments
     }

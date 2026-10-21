@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiCreate domain models
+/// AgentPlatformAPIApiCreate domain models
 /// Request for pre-signed URL's to upload files for KB Data Sources
 public struct ApiCreateDataSourceFileUploadPresignedUrlsInputPublic: Codable {
     /// A list of files to generate presigned URLs for.
@@ -14,19 +14,19 @@ public struct ApiCreateDataSourceFileUploadPresignedUrlsInputPublic: Codable {
     }
 
     init() {
-        self.files = nil
+        files = nil
     }
 }
 
-extension ApiCreateDataSourceFileUploadPresignedUrlsInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateDataSourceFileUploadPresignedUrlsInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.files = try container.sdkDecodeIfPresent(.files)
+        files = try container.sdkDecodeIfPresent(.files)
     }
 }
 
-extension ApiCreateDataSourceFileUploadPresignedUrlsInputPublic {
-    public init(files: [ApiPresignedUrlFile]? = nil) {
+public extension ApiCreateDataSourceFileUploadPresignedUrlsInputPublic {
+    init(files: [ApiPresignedUrlFile]? = nil) {
         self.init()
         self.files = files
     }
@@ -46,20 +46,20 @@ public struct ApiCreateDataSourceFileUploadPresignedUrlsOutput: Codable {
     }
 
     init() {
-        (self.requestId, self.uploads) = (nil, nil)
+        (requestId, uploads) = (nil, nil)
     }
 }
 
-extension ApiCreateDataSourceFileUploadPresignedUrlsOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateDataSourceFileUploadPresignedUrlsOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.requestId = try container.sdkDecodeIfPresent(.requestId)
-        self.uploads = try container.sdkDecodeIfPresent(.uploads)
+        requestId = try container.sdkDecodeIfPresent(.requestId)
+        uploads = try container.sdkDecodeIfPresent(.uploads)
     }
 }
 
-extension ApiCreateDataSourceFileUploadPresignedUrlsOutput {
-    public init(requestId: String? = nil, uploads: [ApiFilePresignedUrlResponse]? = nil) {
+public extension ApiCreateDataSourceFileUploadPresignedUrlsOutput {
+    init(requestId: String? = nil, uploads: [ApiFilePresignedUrlResponse]? = nil) {
         self.init()
         (self.requestId, self.uploads) = (requestId, uploads)
     }

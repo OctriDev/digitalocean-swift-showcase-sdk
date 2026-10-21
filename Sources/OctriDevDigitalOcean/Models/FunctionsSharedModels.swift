@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Functions domain models
+/// Functions domain models
 /// Typed representation of the `TriggerResponse` API schema.
 public struct TriggerResponse: Codable {
     /// Optional object value serialized in the `trigger` wire field.
@@ -14,19 +14,19 @@ public struct TriggerResponse: Codable {
     }
 
     init() {
-        self.trigger = nil
+        trigger = nil
     }
 }
 
-extension TriggerResponse {
-    public init(from decoder: Decoder) throws {
+public extension TriggerResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.trigger = try container.sdkDecodeIfPresent(.trigger)
+        trigger = try container.sdkDecodeIfPresent(.trigger)
     }
 }
 
-extension TriggerResponse {
-    public init(trigger: TriggerInfo? = nil) {
+public extension TriggerResponse {
+    init(trigger: TriggerInfo? = nil) {
         self.init()
         self.trigger = trigger
     }
@@ -42,19 +42,19 @@ public struct NamespaceCreated: Codable {
     }
 
     init() {
-        self.namespace = nil
+        namespace = nil
     }
 }
 
-extension NamespaceCreated {
-    public init(from decoder: Decoder) throws {
+public extension NamespaceCreated {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.namespace = try container.sdkDecodeIfPresent(.namespace)
+        namespace = try container.sdkDecodeIfPresent(.namespace)
     }
 }
 
-extension NamespaceCreated {
-    public init(namespace: NamespaceInfo? = nil) {
+public extension NamespaceCreated {
+    init(namespace: NamespaceInfo? = nil) {
         self.init()
         self.namespace = namespace
     }
@@ -87,32 +87,38 @@ public struct AccessKey: Codable {
     }
 
     init() {
-        (self.id, self.name, self.expiresAt, self.createdAt, self.updatedAt) = (nil, nil, nil, nil, nil)
+        (id, name, expiresAt, createdAt, updatedAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension AccessKey {
-    public init(from decoder: Decoder) throws {
+public extension AccessKey {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = self.expiresAt {
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension AccessKey {
-    public init(id: String? = nil, name: String? = nil, expiresAt: Date? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) throws {
+public extension AccessKey {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        expiresAt: Date? = nil,
+        createdAt: Date? = nil,
+        updatedAt: Date? = nil
+    ) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.expiresAt, self.createdAt) = (expiresAt, createdAt)
@@ -170,27 +176,36 @@ public struct NamespaceInfo: Codable {
     }
 
     init() {
-        (self.apiHost, self.namespace, self.createdAt, self.updatedAt, self.label) = (nil, nil, nil, nil, nil)
-        (self.region, self.uuid, self.key) = (nil, nil, nil)
+        (apiHost, namespace, createdAt, updatedAt, label) = (nil, nil, nil, nil, nil)
+        (region, uuid, key) = (nil, nil, nil)
     }
 }
 
-extension NamespaceInfo {
-    public init(from decoder: Decoder) throws {
+public extension NamespaceInfo {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiHost = try container.sdkDecodeIfPresent(.apiHost)
-        self.namespace = try container.sdkDecodeIfPresent(.namespace)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.label = try container.sdkDecodeIfPresent(.label)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
-        self.key = try container.sdkDecodeIfPresent(.key)
+        apiHost = try container.sdkDecodeIfPresent(.apiHost)
+        namespace = try container.sdkDecodeIfPresent(.namespace)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        label = try container.sdkDecodeIfPresent(.label)
+        region = try container.sdkDecodeIfPresent(.region)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
+        key = try container.sdkDecodeIfPresent(.key)
     }
 }
 
-extension NamespaceInfo {
-    public init(apiHost: String? = nil, namespace: String? = nil, createdAt: String? = nil, updatedAt: String? = nil, label: String? = nil, region: String? = nil, uuid: String? = nil, key: String? = nil) {
+public extension NamespaceInfo {
+    init(
+        apiHost: String? = nil,
+        namespace: String? = nil,
+        createdAt: String? = nil,
+        updatedAt: String? = nil,
+        label: String? = nil,
+        region: String? = nil,
+        uuid: String? = nil,
+        key: String? = nil
+    ) {
         self.init()
         (self.apiHost, self.namespace) = (apiHost, namespace)
         (self.createdAt, self.updatedAt) = (createdAt, updatedAt)
@@ -210,19 +225,19 @@ public struct ScheduledDetailsBody: Codable {
     }
 
     init() {
-        self.name = nil
+        name = nil
     }
 }
 
-extension ScheduledDetailsBody {
-    public init(from decoder: Decoder) throws {
+public extension ScheduledDetailsBody {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ScheduledDetailsBody {
-    public init(name: String? = nil) {
+public extension ScheduledDetailsBody {
+    init(name: String? = nil) {
         self.init()
         self.name = name
     }
@@ -243,20 +258,20 @@ public struct TriggerInfoScheduledRuns: Codable {
     }
 
     init() {
-        (self.lastRunAt, self.nextRunAt) = (nil, nil)
+        (lastRunAt, nextRunAt) = (nil, nil)
     }
 }
 
-extension TriggerInfoScheduledRuns {
-    public init(from decoder: Decoder) throws {
+public extension TriggerInfoScheduledRuns {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.lastRunAt = try container.sdkDecodeIfPresent(.lastRunAt)
-        self.nextRunAt = try container.sdkDecodeIfPresent(.nextRunAt)
+        lastRunAt = try container.sdkDecodeIfPresent(.lastRunAt)
+        nextRunAt = try container.sdkDecodeIfPresent(.nextRunAt)
     }
 }
 
-extension TriggerInfoScheduledRuns {
-    public init(lastRunAt: String? = nil, nextRunAt: String? = nil) {
+public extension TriggerInfoScheduledRuns {
+    init(lastRunAt: String? = nil, nextRunAt: String? = nil) {
         self.init()
         (self.lastRunAt, self.nextRunAt) = (lastRunAt, nextRunAt)
     }
@@ -303,28 +318,38 @@ public struct TriggerInfo: Codable {
     }
 
     init() {
-        (self.namespace, self.name, self.function, self.type, self.isEnabled) = (nil, nil, nil, nil, nil)
-        (self.createdAt, self.updatedAt, self.scheduledDetails, self.scheduledRuns) = (nil, nil, nil, nil)
+        (namespace, name, function, type, isEnabled) = (nil, nil, nil, nil, nil)
+        (createdAt, updatedAt, scheduledDetails, scheduledRuns) = (nil, nil, nil, nil)
     }
 }
 
-extension TriggerInfo {
-    public init(from decoder: Decoder) throws {
+public extension TriggerInfo {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.namespace = try container.sdkDecodeIfPresent(.namespace)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.function = try container.sdkDecodeIfPresent(.function)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.isEnabled = try container.sdkDecodeIfPresent(.isEnabled)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.scheduledDetails = try container.sdkDecodeIfPresent(.scheduledDetails)
-        self.scheduledRuns = try container.sdkDecodeIfPresent(.scheduledRuns)
+        namespace = try container.sdkDecodeIfPresent(.namespace)
+        name = try container.sdkDecodeIfPresent(.name)
+        function = try container.sdkDecodeIfPresent(.function)
+        type = try container.sdkDecodeIfPresent(.type)
+        isEnabled = try container.sdkDecodeIfPresent(.isEnabled)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        scheduledDetails = try container.sdkDecodeIfPresent(.scheduledDetails)
+        scheduledRuns = try container.sdkDecodeIfPresent(.scheduledRuns)
     }
 }
 
-extension TriggerInfo {
-    public init(namespace: String? = nil, name: String? = nil, function: String? = nil, type: String? = nil, isEnabled: Bool? = nil, createdAt: String? = nil, updatedAt: String? = nil, scheduledDetails: ScheduledDetails? = nil, scheduledRuns: TriggerInfoScheduledRuns? = nil) {
+public extension TriggerInfo {
+    init(
+        namespace: String? = nil,
+        name: String? = nil,
+        function: String? = nil,
+        type: String? = nil,
+        isEnabled: Bool? = nil,
+        createdAt: String? = nil,
+        updatedAt: String? = nil,
+        scheduledDetails: ScheduledDetails? = nil,
+        scheduledRuns: TriggerInfoScheduledRuns? = nil
+    ) {
         self.init()
         (self.namespace, self.name) = (namespace, name)
         (self.function, self.type) = (function, type)
@@ -347,22 +372,28 @@ public struct ScheduledDetails: Codable {
         case body
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ScheduledDetails {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.cron) else {
-            throw SdkValidationError(field: "cron", code: "required", message: "Validation failed for 'cron': value is required")
-        }
-        self.cron = try container.sdkDecodeRequired(.cron)
-        self.body = try container.sdkDecodeIfPresent(.body)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ScheduledDetails {
-    public init(cron: String, body: ScheduledDetailsBody? = nil) {
+public extension ScheduledDetails {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.cron) else {
+            throw SdkValidationError(
+                field: "cron",
+                code: "required",
+                message: "Validation failed for 'cron': value is required"
+            )
+        }
+        cron = try container.sdkDecodeRequired(.cron)
+        body = try container.sdkDecodeIfPresent(.body)
+    }
+}
+
+public extension ScheduledDetails {
+    init(cron: String, body: ScheduledDetailsBody? = nil) {
         (self.cron, self.body) = (cron, body)
     }
 }

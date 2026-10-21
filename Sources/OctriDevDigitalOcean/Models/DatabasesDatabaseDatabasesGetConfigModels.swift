@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DatabasesDatabase domain models
+/// DatabasesDatabase domain models
 public indirect enum DatabaseConfigResponseConfig {
     case mysqlAdvancedConfig(MysqlAdvancedConfig)
     case postgresAdvancedConfig(PostgresAdvancedConfig)
@@ -15,18 +15,26 @@ public indirect enum DatabaseConfigResponseConfig {
 }
 
 extension DatabaseConfigResponseConfig: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
+            if let value = Self.decodeLossless1(from: container, raw) {
+                self = value; return
+            }
         }
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for DatabaseConfigResponseConfig")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for DatabaseConfigResponseConfig"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
@@ -59,13 +67,27 @@ extension DatabaseConfigResponseConfig {
 
 extension DatabaseConfigResponseConfig {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(MysqlAdvancedConfig.self) { return .mysqlAdvancedConfig(value) }
-        if let value = try? container.decode(PostgresAdvancedConfig.self) { return .postgresAdvancedConfig(value) }
-        if let value = try? container.decode(RedisAdvancedConfig.self) { return .redisAdvancedConfig(value) }
-        if let value = try? container.decode(ValkeyAdvancedConfig.self) { return .valkeyAdvancedConfig(value) }
-        if let value = try? container.decode(KafkaAdvancedConfig.self) { return .kafkaAdvancedConfig(value) }
-        if let value = try? container.decode(OpensearchAdvancedConfig.self) { return .opensearchAdvancedConfig(value) }
-        if let value = try? container.decode(MongoAdvancedConfig.self) { return .mongoAdvancedConfig(value) }
+        if let value = try? container.decode(MysqlAdvancedConfig.self) {
+            return .mysqlAdvancedConfig(value)
+        }
+        if let value = try? container.decode(PostgresAdvancedConfig.self) {
+            return .postgresAdvancedConfig(value)
+        }
+        if let value = try? container.decode(RedisAdvancedConfig.self) {
+            return .redisAdvancedConfig(value)
+        }
+        if let value = try? container.decode(ValkeyAdvancedConfig.self) {
+            return .valkeyAdvancedConfig(value)
+        }
+        if let value = try? container.decode(KafkaAdvancedConfig.self) {
+            return .kafkaAdvancedConfig(value)
+        }
+        if let value = try? container.decode(OpensearchAdvancedConfig.self) {
+            return .opensearchAdvancedConfig(value)
+        }
+        if let value = try? container.decode(MongoAdvancedConfig.self) {
+            return .mongoAdvancedConfig(value)
+        }
         return nil
     }
 }
@@ -94,21 +116,27 @@ public struct DatabaseConfigResponse: Codable {
         case config
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DatabaseConfigResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.config) else {
-            throw SdkValidationError(field: "config", code: "required", message: "Validation failed for 'config': value is required")
-        }
-        self.config = try container.sdkDecodeRequired(.config)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DatabaseConfigResponse {
-    public init(config: DatabaseConfigResponseConfig) {
+public extension DatabaseConfigResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.config) else {
+            throw SdkValidationError(
+                field: "config",
+                code: "required",
+                message: "Validation failed for 'config': value is required"
+            )
+        }
+        config = try container.sdkDecodeRequired(.config)
+    }
+}
+
+public extension DatabaseConfigResponse {
+    init(config: DatabaseConfigResponseConfig) {
         self.config = config
     }
 }

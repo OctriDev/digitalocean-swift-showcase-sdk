@@ -6,8 +6,11 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension HarnessRuntimeMethods {
-    /// Keyset-paginated on an opaque cursor. Results are scoped to the authenticated team. Destroyed and failed sessions are omitted by default (matching the Cloud Console); pass `status=SESSION_STATUS_ALL` to list every session regardless of status, or an explicit status such as `status=SESSION_STATUS_FAILED` or `status=SESSION_STATUS_DESTROYED` to list only those.
+public extension HarnessRuntimeMethods {
+    /// Keyset-paginated on an opaque cursor. Results are scoped to the authenticated team. Destroyed and failed
+    /// sessions are omitted by default (matching the Cloud Console); pass `status=SESSION_STATUS_ALL` to list every
+    /// session regardless of status, or an explicit status such as `status=SESSION_STATUS_FAILED` or
+    /// `status=SESSION_STATUS_DESTROYED` to list only those.
     ///
     /// - Parameters:
     /// - pageSize: Page size. Defaults to 50 when omitted or non-positive; values
@@ -31,25 +34,52 @@ extension HarnessRuntimeMethods {
     ///   (contains), for callers that don't know the exact name (e.g. a UI search
     ///   box). Unlike `name`, this may return zero, one, or many sessions, including
     ///   terminal ones. Independent of `name`; at most 64 characters.
-    public static func harnessListSessions(config: ClientConfig, pageSize: Int? = nil, pageToken: String? = nil, status: SessionStatus? = nil, name: String? = nil, search: String? = nil, requestOptions: RequestOptions? = nil) async throws -> DefinitionsListSessionsResponse {
-        if let pageSize = pageSize {
+    static func harnessListSessions(
+        config: ClientConfig,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        status: SessionStatus? = nil,
+        name: String? = nil,
+        search: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DefinitionsListSessionsResponse {
+        if let pageSize {
             try validateRange("page_size", Double(pageSize), min: 1, max: 200)
         }
 
-        if let search = search {
+        if let search {
             try validateLength("search", search, max: 64)
         }
 
-        return try (await sdkRequest("GET", "/v2/agents/sessions", config: config, query: [
-            SdkQueryParameter("page_size", value: pageSize),
-            SdkQueryParameter("page_token", value: pageToken),
-            SdkQueryParameter("status", value: status),
-            SdkQueryParameter("name", value: name),
-            SdkQueryParameter("search", value: search),
-        ], decoder: .json, operationId: "harness_list_sessions", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/v2/agents/sessions",
+            config: config,
+            query: [
+                SdkQueryParameter("page_size", value: pageSize),
+                SdkQueryParameter("page_token", value: pageToken),
+                SdkQueryParameter("status", value: status),
+                SdkQueryParameter("name", value: name),
+                SdkQueryParameter("search", value: search),
+            ],
+            decoder: .json,
+            operationId: "harness_list_sessions",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Keyset-paginated on an opaque cursor. Results are scoped to the authenticated team. Destroyed and failed sessions are omitted by default (matching the Cloud Console); pass `status=SESSION_STATUS_ALL` to list every session regardless of status, or an explicit status such as `status=SESSION_STATUS_FAILED` or `status=SESSION_STATUS_DESTROYED` to list only those.
+    /// Keyset-paginated on an opaque cursor. Results are scoped to the authenticated team. Destroyed and failed
+    /// sessions are omitted by default (matching the Cloud Console); pass `status=SESSION_STATUS_ALL` to list every
+    /// session regardless of status, or an explicit status such as `status=SESSION_STATUS_FAILED` or
+    /// `status=SESSION_STATUS_DESTROYED` to list only those.
     ///
     /// - Parameters:
     /// - pageSize: Page size. Defaults to 50 when omitted or non-positive; values
@@ -73,17 +103,42 @@ extension HarnessRuntimeMethods {
     ///   (contains), for callers that don't know the exact name (e.g. a UI search
     ///   box). Unlike `name`, this may return zero, one, or many sessions, including
     ///   terminal ones. Independent of `name`; at most 64 characters.
-    public static func harnessListSessionsPaginated(config: ClientConfig, pageSize: Int? = nil, pageToken: String? = nil, status: SessionStatus? = nil, name: String? = nil, search: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<DefinitionsSession, Swift.Error> {
-        return AsyncThrowingStream<DefinitionsSession, Swift.Error> { (continuation: AsyncThrowingStream<DefinitionsSession, Swift.Error>.Continuation) in
+    static func harnessListSessionsPaginated(
+        config: ClientConfig,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        status: SessionStatus? = nil,
+        name: String? = nil,
+        search: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<DefinitionsSession, Swift.Error> {
+        AsyncThrowingStream<DefinitionsSession, Swift.Error> { (continuation: AsyncThrowingStream<
+            DefinitionsSession,
+            Swift.Error
+        >.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await harnessListSessions(config: config, pageSize: pageSize, pageToken: pageCursor, status: status, name: name, search: search, requestOptions: requestOptions)
+                        let pageResponse = try await harnessListSessions(
+                            config: config,
+                            pageSize: pageSize,
+                            pageToken: pageCursor,
+                            status: status,
+                            name: name,
+                            search: search,
+                            requestOptions: requestOptions
+                        )
                         let pageItems = (pageResponse.sessions ?? [])
-                        if pageItems.isEmpty { break }
-                        for item in pageItems { continuation.yield(item) }
-                        guard let nextCursor = pageResponse.nextPageToken else { break }
+                        if pageItems.isEmpty {
+                            break
+                        }
+                        for item in pageItems {
+                            continuation.yield(item)
+                        }
+                        guard let nextCursor = pageResponse.nextPageToken else {
+                            break
+                        }
                         pageCursor = nextCursor
                     }
                 } catch {
@@ -96,25 +151,54 @@ extension HarnessRuntimeMethods {
         }
     }
 
-    public struct HarnessListSessionsPage {
+    struct HarnessListSessionsPage {
         public let data: DefinitionsListSessionsResponse
         public let items: [DefinitionsSession]
         public let hasMore: Bool
     }
 
-    public static func harnessListSessionsPages(config: ClientConfig, pageSize: Int? = nil, pageToken: String? = nil, status: SessionStatus? = nil, name: String? = nil, search: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<HarnessListSessionsPage, Swift.Error> {
-        return AsyncThrowingStream<HarnessListSessionsPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<HarnessListSessionsPage, Swift.Error>.Continuation) in
+    static func harnessListSessionsPages(
+        config: ClientConfig,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        status: SessionStatus? = nil,
+        name: String? = nil,
+        search: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<HarnessListSessionsPage, Swift.Error> {
+        AsyncThrowingStream<HarnessListSessionsPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<
+            HarnessListSessionsPage,
+            Swift.Error
+        >.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await harnessListSessions(config: config, pageSize: pageSize, pageToken: pageCursor, status: status, name: name, search: search, requestOptions: requestOptions)
+                        let pageResponse = try await harnessListSessions(
+                            config: config,
+                            pageSize: pageSize,
+                            pageToken: pageCursor,
+                            status: status,
+                            name: name,
+                            search: search,
+                            requestOptions: requestOptions
+                        )
                         let pageItems = (pageResponse.sessions ?? [])
-                        if pageItems.isEmpty { break }
+                        if pageItems.isEmpty {
+                            break
+                        }
                         let hasMore = pageResponse.nextPageToken != nil
-                        pageContinuation.yield(HarnessListSessionsPage(data: pageResponse, items: pageItems, hasMore: hasMore))
-                        if !hasMore { break }
-                        guard let nextCursor = pageResponse.nextPageToken else { break }
+                        pageContinuation.yield(HarnessListSessionsPage(
+                            data: pageResponse,
+                            items: pageItems,
+                            hasMore: hasMore
+                        ))
+                        if !hasMore {
+                            break
+                        }
+                        guard let nextCursor = pageResponse.nextPageToken else {
+                            break
+                        }
                         pageCursor = nextCursor
                     }
                 } catch {

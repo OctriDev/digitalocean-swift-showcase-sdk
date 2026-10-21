@@ -3,7 +3,7 @@
 
 import Foundation
 
-// BlockStorage domain models
+/// BlockStorage domain models
 /// Typed representation of the `VolumeSnapshots` API schema.
 public struct VolumeSnapshots: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,23 +18,29 @@ public struct VolumeSnapshots: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension VolumeSnapshots {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.snapshots = try container.sdkDecodeIfPresent(.snapshots)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension VolumeSnapshots {
-    public init(meta: MetaMeta, snapshots: [Snapshots]? = nil, links: PageLinks? = nil) {
+public extension VolumeSnapshots {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        snapshots = try container.sdkDecodeIfPresent(.snapshots)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension VolumeSnapshots {
+    init(meta: MetaMeta, snapshots: [Snapshots]? = nil, links: PageLinks? = nil) {
         (self.meta, self.snapshots) = (meta, snapshots)
         self.links = links
     }
@@ -48,19 +54,19 @@ public struct VolumeSnapshotsVariant0: Codable {
     }
 
     init() {
-        self.snapshots = nil
+        snapshots = nil
     }
 }
 
-extension VolumeSnapshotsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension VolumeSnapshotsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.snapshots = try container.sdkDecodeIfPresent(.snapshots)
+        snapshots = try container.sdkDecodeIfPresent(.snapshots)
     }
 }
 
-extension VolumeSnapshotsVariant0 {
-    public init(snapshots: [Snapshots]? = nil) {
+public extension VolumeSnapshotsVariant0 {
+    init(snapshots: [Snapshots]? = nil) {
         self.init()
         self.snapshots = snapshots
     }

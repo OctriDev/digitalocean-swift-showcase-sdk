@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiCreate domain models
+/// AgentPlatformAPIApiCreate domain models
 /// Parameters for Agent Creation
 public struct ApiCreateAgentInputPublic: Codable {
     /// Optional Anthropic API key ID to use with Anthropic models
@@ -87,40 +87,60 @@ public struct ApiCreateAgentInputPublic: Codable {
     }
 
     init() {
-        (self.anthropicKeyUuid, self.description, self.instruction, self.knowledgeBaseUuid, self.mcpServers) = (nil, nil, nil, nil, nil)
-        (self.modelProviderKeyUuid, self.modelRouterUuid, self.modelUuid, self.name, self.openAiKeyUuid) = (nil, nil, nil, nil, nil)
-        (self.projectId, self.reasoningEffort, self.region, self.routerPresetSlug, self.tags) = (nil, nil, nil, nil, nil)
-        (self.thinkingTokenBudget, self.webFetchEnabled, self.webSearchEnabled, self.workspaceUuid) = (nil, nil, nil, nil)
+        (anthropicKeyUuid, description, instruction, knowledgeBaseUuid, mcpServers) = (nil, nil, nil, nil, nil)
+        (modelProviderKeyUuid, modelRouterUuid, modelUuid, name, openAiKeyUuid) = (nil, nil, nil, nil, nil)
+        (projectId, reasoningEffort, region, routerPresetSlug, tags) = (nil, nil, nil, nil, nil)
+        (thinkingTokenBudget, webFetchEnabled, webSearchEnabled, workspaceUuid) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiCreateAgentInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateAgentInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.anthropicKeyUuid = try container.sdkDecodeIfPresent(.anthropicKeyUuid)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.instruction = try container.sdkDecodeIfPresent(.instruction)
-        self.knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
-        self.mcpServers = try container.sdkDecodeIfPresent(.mcpServers)
-        self.modelProviderKeyUuid = try container.sdkDecodeIfPresent(.modelProviderKeyUuid)
-        self.modelRouterUuid = try container.sdkDecodeIfPresent(.modelRouterUuid)
-        self.modelUuid = try container.sdkDecodeIfPresent(.modelUuid)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.openAiKeyUuid = try container.sdkDecodeIfPresent(.openAiKeyUuid)
-        self.projectId = try container.sdkDecodeIfPresent(.projectId)
-        self.reasoningEffort = try container.sdkDecodeIfPresent(.reasoningEffort)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.routerPresetSlug = try container.sdkDecodeIfPresent(.routerPresetSlug)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.thinkingTokenBudget = try container.sdkDecodeIfPresent(.thinkingTokenBudget)
-        self.webFetchEnabled = try container.sdkDecodeIfPresent(.webFetchEnabled)
-        self.webSearchEnabled = try container.sdkDecodeIfPresent(.webSearchEnabled)
-        self.workspaceUuid = try container.sdkDecodeIfPresent(.workspaceUuid)
+        anthropicKeyUuid = try container.sdkDecodeIfPresent(.anthropicKeyUuid)
+        description = try container.sdkDecodeIfPresent(.description)
+        instruction = try container.sdkDecodeIfPresent(.instruction)
+        knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
+        mcpServers = try container.sdkDecodeIfPresent(.mcpServers)
+        modelProviderKeyUuid = try container.sdkDecodeIfPresent(.modelProviderKeyUuid)
+        modelRouterUuid = try container.sdkDecodeIfPresent(.modelRouterUuid)
+        modelUuid = try container.sdkDecodeIfPresent(.modelUuid)
+        name = try container.sdkDecodeIfPresent(.name)
+        openAiKeyUuid = try container.sdkDecodeIfPresent(.openAiKeyUuid)
+        projectId = try container.sdkDecodeIfPresent(.projectId)
+        reasoningEffort = try container.sdkDecodeIfPresent(.reasoningEffort)
+        region = try container.sdkDecodeIfPresent(.region)
+        routerPresetSlug = try container.sdkDecodeIfPresent(.routerPresetSlug)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        thinkingTokenBudget = try container.sdkDecodeIfPresent(.thinkingTokenBudget)
+        webFetchEnabled = try container.sdkDecodeIfPresent(.webFetchEnabled)
+        webSearchEnabled = try container.sdkDecodeIfPresent(.webSearchEnabled)
+        workspaceUuid = try container.sdkDecodeIfPresent(.workspaceUuid)
     }
 }
 
-extension ApiCreateAgentInputPublic {
-    public init(anthropicKeyUuid: String? = nil, description: String? = nil, instruction: String? = nil, knowledgeBaseUuid: [String]? = nil, mcpServers: [ApiMcpServer]? = nil, modelProviderKeyUuid: String? = nil, modelRouterUuid: String? = nil, modelUuid: String? = nil, name: String? = nil, openAiKeyUuid: String? = nil, projectId: String? = nil, reasoningEffort: String? = nil, region: String? = nil, routerPresetSlug: String? = nil, tags: [String]? = nil, thinkingTokenBudget: Int? = nil, webFetchEnabled: Bool? = nil, webSearchEnabled: Bool? = nil, workspaceUuid: String? = nil) {
+public extension ApiCreateAgentInputPublic {
+    init(
+        anthropicKeyUuid: String? = nil,
+        description: String? = nil,
+        instruction: String? = nil,
+        knowledgeBaseUuid: [String]? = nil,
+        mcpServers: [ApiMcpServer]? = nil,
+        modelProviderKeyUuid: String? = nil,
+        modelRouterUuid: String? = nil,
+        modelUuid: String? = nil,
+        name: String? = nil,
+        openAiKeyUuid: String? = nil,
+        projectId: String? = nil,
+        reasoningEffort: String? = nil,
+        region: String? = nil,
+        routerPresetSlug: String? = nil,
+        tags: [String]? = nil,
+        thinkingTokenBudget: Int? = nil,
+        webFetchEnabled: Bool? = nil,
+        webSearchEnabled: Bool? = nil,
+        workspaceUuid: String? = nil
+    ) {
         self.init()
         (self.anthropicKeyUuid, self.description) = (anthropicKeyUuid, description)
         (self.instruction, self.knowledgeBaseUuid) = (instruction, knowledgeBaseUuid)
@@ -145,19 +165,19 @@ public struct ApiCreateAgentOutput: Codable {
     }
 
     init() {
-        self.agent = nil
+        agent = nil
     }
 }
 
-extension ApiCreateAgentOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateAgentOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agent = try container.sdkDecodeIfPresent(.agent)
+        agent = try container.sdkDecodeIfPresent(.agent)
     }
 }
 
-extension ApiCreateAgentOutput {
-    public init(agent: ApiAgent? = nil) {
+public extension ApiCreateAgentOutput {
+    init(agent: ApiAgent? = nil) {
         self.init()
         self.agent = agent
     }

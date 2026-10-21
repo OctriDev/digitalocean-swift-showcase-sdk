@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiList domain models
+/// AgentPlatformAPIApiList domain models
 /// Output for listing the episodes within a simulation run.
 public struct ApiListSimulationEpisodesOutput: Codable {
     /// Sort-by values available for this list request.
@@ -32,26 +32,40 @@ public struct ApiListSimulationEpisodesOutput: Codable {
     }
 
     init() {
-        (self.availableSortBy, self.availableSortDirections, self.availableStatuses, self.availableVerdicts, self.episodes) = (nil, nil, nil, nil, nil)
-        (self.links, self.meta) = (nil, nil)
+        (availableSortBy, availableSortDirections, availableStatuses, availableVerdicts, episodes) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (links, meta) = (nil, nil)
     }
 }
 
-extension ApiListSimulationEpisodesOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiListSimulationEpisodesOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
-        self.availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
-        self.availableStatuses = try container.sdkDecodeIfPresent(.availableStatuses)
-        self.availableVerdicts = try container.sdkDecodeIfPresent(.availableVerdicts)
-        self.episodes = try container.sdkDecodeIfPresent(.episodes)
-        self.links = try container.sdkDecodeIfPresent(.links)
-        self.meta = try container.sdkDecodeIfPresent(.meta)
+        availableSortBy = try container.sdkDecodeIfPresent(.availableSortBy)
+        availableSortDirections = try container.sdkDecodeIfPresent(.availableSortDirections)
+        availableStatuses = try container.sdkDecodeIfPresent(.availableStatuses)
+        availableVerdicts = try container.sdkDecodeIfPresent(.availableVerdicts)
+        episodes = try container.sdkDecodeIfPresent(.episodes)
+        links = try container.sdkDecodeIfPresent(.links)
+        meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-extension ApiListSimulationEpisodesOutput {
-    public init(availableSortBy: [ApiSimulationEpisodeSortField]? = nil, availableSortDirections: [ApiSortDirection]? = nil, availableStatuses: [ApiSimulationEpisodeStatus]? = nil, availableVerdicts: [ApiSimulationEpisodeVerdict]? = nil, episodes: [ApiSimulationEpisode]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+public extension ApiListSimulationEpisodesOutput {
+    init(
+        availableSortBy: [ApiSimulationEpisodeSortField]? = nil,
+        availableSortDirections: [ApiSortDirection]? = nil,
+        availableStatuses: [ApiSimulationEpisodeStatus]? = nil,
+        availableVerdicts: [ApiSimulationEpisodeVerdict]? = nil,
+        episodes: [ApiSimulationEpisode]? = nil,
+        links: ApiLinks? = nil,
+        meta: ApiMeta? = nil
+    ) {
         self.init()
         (self.availableSortBy, self.availableSortDirections) = (availableSortBy, availableSortDirections)
         (self.availableStatuses, self.availableVerdicts) = (availableStatuses, availableVerdicts)

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DatabasesKafka domain models
+/// DatabasesKafka domain models
 /// Typed representation of the `KafkaSchemaVersion` API schema.
 public struct KafkaSchemaVersion: Codable {
     /// The id for schema.
@@ -31,37 +31,65 @@ public struct KafkaSchemaVersion: Codable {
         case schema
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension KafkaSchemaVersion {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.schemaId) else {
-            throw SdkValidationError(field: "schema_id", code: "required", message: "Validation failed for 'schema_id': value is required")
-        }
-        guard container.contains(.version) else {
-            throw SdkValidationError(field: "version", code: "required", message: "Validation failed for 'version': value is required")
-        }
-        guard container.contains(.subjectName) else {
-            throw SdkValidationError(field: "subject_name", code: "required", message: "Validation failed for 'subject_name': value is required")
-        }
-        guard container.contains(.schemaType) else {
-            throw SdkValidationError(field: "schema_type", code: "required", message: "Validation failed for 'schema_type': value is required")
-        }
-        guard container.contains(.schema) else {
-            throw SdkValidationError(field: "schema", code: "required", message: "Validation failed for 'schema': value is required")
-        }
-        self.schemaId = try container.sdkDecodeRequired(.schemaId)
-        self.version = try container.sdkDecodeRequired(.version)
-        self.subjectName = try container.sdkDecodeRequired(.subjectName)
-        self.schemaType = try container.sdkDecodeRequired(.schemaType)
-        self.schema = try container.sdkDecodeRequired(.schema)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension KafkaSchemaVersion {
-    public init(schemaId: Int, version: String, subjectName: String, schemaType: KafkaSchemaVersionSchemaType, schema: String) {
+public extension KafkaSchemaVersion {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.schemaId) else {
+            throw SdkValidationError(
+                field: "schema_id",
+                code: "required",
+                message: "Validation failed for 'schema_id': value is required"
+            )
+        }
+        guard container.contains(.version) else {
+            throw SdkValidationError(
+                field: "version",
+                code: "required",
+                message: "Validation failed for 'version': value is required"
+            )
+        }
+        guard container.contains(.subjectName) else {
+            throw SdkValidationError(
+                field: "subject_name",
+                code: "required",
+                message: "Validation failed for 'subject_name': value is required"
+            )
+        }
+        guard container.contains(.schemaType) else {
+            throw SdkValidationError(
+                field: "schema_type",
+                code: "required",
+                message: "Validation failed for 'schema_type': value is required"
+            )
+        }
+        guard container.contains(.schema) else {
+            throw SdkValidationError(
+                field: "schema",
+                code: "required",
+                message: "Validation failed for 'schema': value is required"
+            )
+        }
+        schemaId = try container.sdkDecodeRequired(.schemaId)
+        version = try container.sdkDecodeRequired(.version)
+        subjectName = try container.sdkDecodeRequired(.subjectName)
+        schemaType = try container.sdkDecodeRequired(.schemaType)
+        schema = try container.sdkDecodeRequired(.schema)
+    }
+}
+
+public extension KafkaSchemaVersion {
+    init(
+        schemaId: Int,
+        version: String,
+        subjectName: String,
+        schemaType: KafkaSchemaVersionSchemaType,
+        schema: String
+    ) {
         (self.schemaId, self.version) = (schemaId, version)
         (self.subjectName, self.schemaType) = (subjectName, schemaType)
         self.schema = schema
@@ -78,19 +106,19 @@ public struct KafkaTopicResponse: Codable {
     }
 
     init() {
-        self.topic = nil
+        topic = nil
     }
 }
 
-extension KafkaTopicResponse {
-    public init(from decoder: Decoder) throws {
+public extension KafkaTopicResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.topic = try container.sdkDecodeIfPresent(.topic)
+        topic = try container.sdkDecodeIfPresent(.topic)
     }
 }
 
-extension KafkaTopicResponse {
-    public init(topic: KafkaTopicVerbose? = nil) {
+public extension KafkaTopicResponse {
+    init(topic: KafkaTopicVerbose? = nil) {
         self.init()
         self.topic = topic
     }
@@ -288,68 +316,159 @@ public struct KafkaAdvancedConfig: Codable {
     }
 
     init() {
-        (self.compressionType, self.groupInitialRebalanceDelayMs, self.groupMinSessionTimeoutMs, self.groupMaxSessionTimeoutMs, self.connectionsMaxIdleMs) = (nil, nil, nil, nil, nil)
-        (self.maxIncrementalFetchSessionCacheSlots, self.messageMaxBytes, self.offsetsRetentionMinutes, self.logCleanerDeleteRetentionMs, self.logCleanerMinCleanableRatio) = (nil, nil, nil, nil, nil)
-        (self.logCleanerMaxCompactionLagMs, self.logCleanerMinCompactionLagMs, self.logCleanupPolicy, self.logFlushIntervalMessages, self.logFlushIntervalMs) = (nil, nil, nil, nil, nil)
-        (self.logIndexIntervalBytes, self.logIndexSizeMaxBytes, self.logMessageDownconversionEnable, self.logMessageTimestampType, self.logMessageTimestampDifferenceMaxMs) = (nil, nil, nil, nil, nil)
-        (self.logPreallocate, self.logRetentionBytes, self.logRetentionHours, self.logRetentionMs, self.logRollJitterMs) = (nil, nil, nil, nil, nil)
-        (self.logRollMs, self.logSegmentBytes, self.logSegmentDeleteDelayMs, self.autoCreateTopicsEnable, self.minInsyncReplicas) = (nil, nil, nil, nil, nil)
-        (self.numPartitions, self.defaultReplicationFactor, self.replicaFetchMaxBytes, self.replicaFetchResponseMaxBytes, self.maxConnectionsPerIp) = (nil, nil, nil, nil, nil)
-        (self.producerPurgatoryPurgeIntervalRequests, self.socketRequestMaxBytes, self.transactionStateLogSegmentBytes, self.transactionRemoveExpiredTransactionCleanupIntervalMs, self.schemaRegistry) = (nil, nil, nil, nil, nil)
+        (
+            compressionType,
+            groupInitialRebalanceDelayMs,
+            groupMinSessionTimeoutMs,
+            groupMaxSessionTimeoutMs,
+            connectionsMaxIdleMs
+        ) = (nil, nil, nil, nil, nil)
+        (
+            maxIncrementalFetchSessionCacheSlots,
+            messageMaxBytes,
+            offsetsRetentionMinutes,
+            logCleanerDeleteRetentionMs,
+            logCleanerMinCleanableRatio
+        ) = (nil, nil, nil, nil, nil)
+        (
+            logCleanerMaxCompactionLagMs,
+            logCleanerMinCompactionLagMs,
+            logCleanupPolicy,
+            logFlushIntervalMessages,
+            logFlushIntervalMs
+        ) = (nil, nil, nil, nil, nil)
+        (
+            logIndexIntervalBytes,
+            logIndexSizeMaxBytes,
+            logMessageDownconversionEnable,
+            logMessageTimestampType,
+            logMessageTimestampDifferenceMaxMs
+        ) = (nil, nil, nil, nil, nil)
+        (logPreallocate, logRetentionBytes, logRetentionHours, logRetentionMs, logRollJitterMs) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (logRollMs, logSegmentBytes, logSegmentDeleteDelayMs, autoCreateTopicsEnable, minInsyncReplicas) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (
+            numPartitions,
+            defaultReplicationFactor,
+            replicaFetchMaxBytes,
+            replicaFetchResponseMaxBytes,
+            maxConnectionsPerIp
+        ) = (nil, nil, nil, nil, nil)
+        (
+            producerPurgatoryPurgeIntervalRequests,
+            socketRequestMaxBytes,
+            transactionStateLogSegmentBytes,
+            transactionRemoveExpiredTransactionCleanupIntervalMs,
+            schemaRegistry
+        ) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension KafkaAdvancedConfig {
-    public init(from decoder: Decoder) throws {
+public extension KafkaAdvancedConfig {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.compressionType = try container.sdkDecodeIfPresent(.compressionType)
-        self.groupInitialRebalanceDelayMs = try container.sdkDecodeIfPresent(.groupInitialRebalanceDelayMs)
-        self.groupMinSessionTimeoutMs = try container.sdkDecodeIfPresent(.groupMinSessionTimeoutMs)
-        self.groupMaxSessionTimeoutMs = try container.sdkDecodeIfPresent(.groupMaxSessionTimeoutMs)
-        self.connectionsMaxIdleMs = try container.sdkDecodeIfPresent(.connectionsMaxIdleMs)
-        self.maxIncrementalFetchSessionCacheSlots = try container.sdkDecodeIfPresent(.maxIncrementalFetchSessionCacheSlots)
-        self.messageMaxBytes = try container.sdkDecodeIfPresent(.messageMaxBytes)
-        self.offsetsRetentionMinutes = try container.sdkDecodeIfPresent(.offsetsRetentionMinutes)
-        self.logCleanerDeleteRetentionMs = try container.sdkDecodeIfPresent(.logCleanerDeleteRetentionMs)
-        self.logCleanerMinCleanableRatio = try container.sdkDecodeIfPresent(.logCleanerMinCleanableRatio)
-        self.logCleanerMaxCompactionLagMs = try container.sdkDecodeIfPresent(.logCleanerMaxCompactionLagMs)
-        self.logCleanerMinCompactionLagMs = try container.sdkDecodeIfPresent(.logCleanerMinCompactionLagMs)
-        self.logCleanupPolicy = try container.sdkDecodeIfPresent(.logCleanupPolicy)
-        self.logFlushIntervalMessages = try container.sdkDecodeIfPresent(.logFlushIntervalMessages)
-        self.logFlushIntervalMs = try container.sdkDecodeIfPresent(.logFlushIntervalMs)
-        self.logIndexIntervalBytes = try container.sdkDecodeIfPresent(.logIndexIntervalBytes)
-        self.logIndexSizeMaxBytes = try container.sdkDecodeIfPresent(.logIndexSizeMaxBytes)
-        self.logMessageDownconversionEnable = try container.sdkDecodeIfPresent(.logMessageDownconversionEnable)
-        self.logMessageTimestampType = try container.sdkDecodeIfPresent(.logMessageTimestampType)
-        self.logMessageTimestampDifferenceMaxMs = try container.sdkDecodeIfPresent(.logMessageTimestampDifferenceMaxMs)
-        self.logPreallocate = try container.sdkDecodeIfPresent(.logPreallocate)
-        self.logRetentionBytes = try container.sdkDecodeIfPresent(.logRetentionBytes)
-        self.logRetentionHours = try container.sdkDecodeIfPresent(.logRetentionHours)
-        self.logRetentionMs = try container.sdkDecodeIfPresent(.logRetentionMs)
-        self.logRollJitterMs = try container.sdkDecodeIfPresent(.logRollJitterMs)
-        self.logRollMs = try container.sdkDecodeIfPresent(.logRollMs)
-        self.logSegmentBytes = try container.sdkDecodeIfPresent(.logSegmentBytes)
-        self.logSegmentDeleteDelayMs = try container.sdkDecodeIfPresent(.logSegmentDeleteDelayMs)
-        self.autoCreateTopicsEnable = try container.sdkDecodeIfPresent(.autoCreateTopicsEnable)
-        self.minInsyncReplicas = try container.sdkDecodeIfPresent(.minInsyncReplicas)
-        self.numPartitions = try container.sdkDecodeIfPresent(.numPartitions)
-        self.defaultReplicationFactor = try container.sdkDecodeIfPresent(.defaultReplicationFactor)
-        self.replicaFetchMaxBytes = try container.sdkDecodeIfPresent(.replicaFetchMaxBytes)
-        self.replicaFetchResponseMaxBytes = try container.sdkDecodeIfPresent(.replicaFetchResponseMaxBytes)
-        self.maxConnectionsPerIp = try container.sdkDecodeIfPresent(.maxConnectionsPerIp)
-        self.producerPurgatoryPurgeIntervalRequests = try container.sdkDecodeIfPresent(.producerPurgatoryPurgeIntervalRequests)
-        self.socketRequestMaxBytes = try container.sdkDecodeIfPresent(.socketRequestMaxBytes)
-        self.transactionStateLogSegmentBytes = try container.sdkDecodeIfPresent(.transactionStateLogSegmentBytes)
-        self.transactionRemoveExpiredTransactionCleanupIntervalMs = try container.sdkDecodeIfPresent(.transactionRemoveExpiredTransactionCleanupIntervalMs)
-        self.schemaRegistry = try container.sdkDecodeIfPresent(.schemaRegistry)
+        compressionType = try container.sdkDecodeIfPresent(.compressionType)
+        groupInitialRebalanceDelayMs = try container.sdkDecodeIfPresent(.groupInitialRebalanceDelayMs)
+        groupMinSessionTimeoutMs = try container.sdkDecodeIfPresent(.groupMinSessionTimeoutMs)
+        groupMaxSessionTimeoutMs = try container.sdkDecodeIfPresent(.groupMaxSessionTimeoutMs)
+        connectionsMaxIdleMs = try container.sdkDecodeIfPresent(.connectionsMaxIdleMs)
+        maxIncrementalFetchSessionCacheSlots = try container.sdkDecodeIfPresent(.maxIncrementalFetchSessionCacheSlots)
+        messageMaxBytes = try container.sdkDecodeIfPresent(.messageMaxBytes)
+        offsetsRetentionMinutes = try container.sdkDecodeIfPresent(.offsetsRetentionMinutes)
+        logCleanerDeleteRetentionMs = try container.sdkDecodeIfPresent(.logCleanerDeleteRetentionMs)
+        logCleanerMinCleanableRatio = try container.sdkDecodeIfPresent(.logCleanerMinCleanableRatio)
+        logCleanerMaxCompactionLagMs = try container.sdkDecodeIfPresent(.logCleanerMaxCompactionLagMs)
+        logCleanerMinCompactionLagMs = try container.sdkDecodeIfPresent(.logCleanerMinCompactionLagMs)
+        logCleanupPolicy = try container.sdkDecodeIfPresent(.logCleanupPolicy)
+        logFlushIntervalMessages = try container.sdkDecodeIfPresent(.logFlushIntervalMessages)
+        logFlushIntervalMs = try container.sdkDecodeIfPresent(.logFlushIntervalMs)
+        logIndexIntervalBytes = try container.sdkDecodeIfPresent(.logIndexIntervalBytes)
+        logIndexSizeMaxBytes = try container.sdkDecodeIfPresent(.logIndexSizeMaxBytes)
+        logMessageDownconversionEnable = try container.sdkDecodeIfPresent(.logMessageDownconversionEnable)
+        logMessageTimestampType = try container.sdkDecodeIfPresent(.logMessageTimestampType)
+        logMessageTimestampDifferenceMaxMs = try container.sdkDecodeIfPresent(.logMessageTimestampDifferenceMaxMs)
+        logPreallocate = try container.sdkDecodeIfPresent(.logPreallocate)
+        logRetentionBytes = try container.sdkDecodeIfPresent(.logRetentionBytes)
+        logRetentionHours = try container.sdkDecodeIfPresent(.logRetentionHours)
+        logRetentionMs = try container.sdkDecodeIfPresent(.logRetentionMs)
+        logRollJitterMs = try container.sdkDecodeIfPresent(.logRollJitterMs)
+        logRollMs = try container.sdkDecodeIfPresent(.logRollMs)
+        logSegmentBytes = try container.sdkDecodeIfPresent(.logSegmentBytes)
+        logSegmentDeleteDelayMs = try container.sdkDecodeIfPresent(.logSegmentDeleteDelayMs)
+        autoCreateTopicsEnable = try container.sdkDecodeIfPresent(.autoCreateTopicsEnable)
+        minInsyncReplicas = try container.sdkDecodeIfPresent(.minInsyncReplicas)
+        numPartitions = try container.sdkDecodeIfPresent(.numPartitions)
+        defaultReplicationFactor = try container.sdkDecodeIfPresent(.defaultReplicationFactor)
+        replicaFetchMaxBytes = try container.sdkDecodeIfPresent(.replicaFetchMaxBytes)
+        replicaFetchResponseMaxBytes = try container.sdkDecodeIfPresent(.replicaFetchResponseMaxBytes)
+        maxConnectionsPerIp = try container.sdkDecodeIfPresent(.maxConnectionsPerIp)
+        producerPurgatoryPurgeIntervalRequests = try container
+            .sdkDecodeIfPresent(.producerPurgatoryPurgeIntervalRequests)
+        socketRequestMaxBytes = try container.sdkDecodeIfPresent(.socketRequestMaxBytes)
+        transactionStateLogSegmentBytes = try container.sdkDecodeIfPresent(.transactionStateLogSegmentBytes)
+        transactionRemoveExpiredTransactionCleanupIntervalMs = try container
+            .sdkDecodeIfPresent(.transactionRemoveExpiredTransactionCleanupIntervalMs)
+        schemaRegistry = try container.sdkDecodeIfPresent(.schemaRegistry)
         try sdkValidateConstraintsPart1()
         try sdkValidateConstraintsPart2()
         try sdkValidateConstraintsPart3()
     }
 }
 
-extension KafkaAdvancedConfig {
-    public init(compressionType: KafkaAdvancedConfigCompressionType? = nil, groupInitialRebalanceDelayMs: Int? = nil, groupMinSessionTimeoutMs: Int? = nil, groupMaxSessionTimeoutMs: Int? = nil, connectionsMaxIdleMs: Int? = nil, maxIncrementalFetchSessionCacheSlots: Int? = nil, messageMaxBytes: Int? = nil, offsetsRetentionMinutes: Int? = nil, logCleanerDeleteRetentionMs: Int? = nil, logCleanerMinCleanableRatio: Double? = nil, logCleanerMaxCompactionLagMs: Int? = nil, logCleanerMinCompactionLagMs: Int? = nil, logCleanupPolicy: KafkaAdvancedConfigLogCleanupPolicy? = nil, logFlushIntervalMessages: Int? = nil, logFlushIntervalMs: Int? = nil, logIndexIntervalBytes: Int? = nil, logIndexSizeMaxBytes: Int? = nil, logMessageDownconversionEnable: Bool? = nil, logMessageTimestampType: KafkaAdvancedConfigLogMessageTimestampType? = nil, logMessageTimestampDifferenceMaxMs: Int? = nil, logPreallocate: Bool? = nil, logRetentionBytes: Int? = nil, logRetentionHours: Int? = nil, logRetentionMs: Int? = nil, logRollJitterMs: Int? = nil, logRollMs: Int? = nil, logSegmentBytes: Int? = nil, logSegmentDeleteDelayMs: Int? = nil, autoCreateTopicsEnable: Bool? = nil, minInsyncReplicas: Int? = nil, numPartitions: Int? = nil, defaultReplicationFactor: Int? = nil, replicaFetchMaxBytes: Int? = nil, replicaFetchResponseMaxBytes: Int? = nil, maxConnectionsPerIp: Int? = nil, producerPurgatoryPurgeIntervalRequests: Int? = nil, socketRequestMaxBytes: Int? = nil, transactionStateLogSegmentBytes: Int? = nil, transactionRemoveExpiredTransactionCleanupIntervalMs: Int? = nil, schemaRegistry: Bool? = nil) throws {
+public extension KafkaAdvancedConfig {
+    init(
+        compressionType: KafkaAdvancedConfigCompressionType? = nil,
+        groupInitialRebalanceDelayMs: Int? = nil,
+        groupMinSessionTimeoutMs: Int? = nil,
+        groupMaxSessionTimeoutMs: Int? = nil,
+        connectionsMaxIdleMs: Int? = nil,
+        maxIncrementalFetchSessionCacheSlots: Int? = nil,
+        messageMaxBytes: Int? = nil,
+        offsetsRetentionMinutes: Int? = nil,
+        logCleanerDeleteRetentionMs: Int? = nil,
+        logCleanerMinCleanableRatio: Double? = nil,
+        logCleanerMaxCompactionLagMs: Int? = nil,
+        logCleanerMinCompactionLagMs: Int? = nil,
+        logCleanupPolicy: KafkaAdvancedConfigLogCleanupPolicy? = nil,
+        logFlushIntervalMessages: Int? = nil,
+        logFlushIntervalMs: Int? = nil,
+        logIndexIntervalBytes: Int? = nil,
+        logIndexSizeMaxBytes: Int? = nil,
+        logMessageDownconversionEnable: Bool? = nil,
+        logMessageTimestampType: KafkaAdvancedConfigLogMessageTimestampType? = nil,
+        logMessageTimestampDifferenceMaxMs: Int? = nil,
+        logPreallocate: Bool? = nil,
+        logRetentionBytes: Int? = nil,
+        logRetentionHours: Int? = nil,
+        logRetentionMs: Int? = nil,
+        logRollJitterMs: Int? = nil,
+        logRollMs: Int? = nil,
+        logSegmentBytes: Int? = nil,
+        logSegmentDeleteDelayMs: Int? = nil,
+        autoCreateTopicsEnable: Bool? = nil,
+        minInsyncReplicas: Int? = nil,
+        numPartitions: Int? = nil,
+        defaultReplicationFactor: Int? = nil,
+        replicaFetchMaxBytes: Int? = nil,
+        replicaFetchResponseMaxBytes: Int? = nil,
+        maxConnectionsPerIp: Int? = nil,
+        producerPurgatoryPurgeIntervalRequests: Int? = nil,
+        socketRequestMaxBytes: Int? = nil,
+        transactionStateLogSegmentBytes: Int? = nil,
+        transactionRemoveExpiredTransactionCleanupIntervalMs: Int? = nil,
+        schemaRegistry: Bool? = nil
+    ) throws {
         self.init()
         self.compressionType = compressionType
         self.groupInitialRebalanceDelayMs = groupInitialRebalanceDelayMs

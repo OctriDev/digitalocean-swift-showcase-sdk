@@ -6,24 +6,39 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InsightsMethods {
-    /// To list all notification channels for your account, send a GET request to `/v2/insights/notification-channels`. Results are paginated with `page` and `per_page` (default `20`, maximum `200`).
+public extension InsightsMethods {
+    /// To list all notification channels for your account, send a GET request to `/v2/insights/notification-channels`.
+    /// Results are paginated with `page` and `per_page` (default `20`, maximum `200`).
     ///
     /// - Parameters:
     /// - page: Which 'page' of paginated results to return.
     /// - perPage: Number of items returned per page
-    public static func insightsListNotificationChannels(config: ClientConfig, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> InsightsListNotificationChannelsResponse {
-        if let page = page {
+    static func insightsListNotificationChannels(
+        config: ClientConfig,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> InsightsListNotificationChannelsResponse {
+        if let page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        if let perPage = perPage {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        return try (await sdkRequest("GET", "/v2/insights/notification-channels", config: config, query: [
-            SdkQueryParameter("page", value: page),
-            SdkQueryParameter("per_page", value: perPage),
-        ], decoder: .json, operationId: "insights_list_notificationChannels", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/v2/insights/notification-channels",
+            config: config,
+            query: [
+                SdkQueryParameter("page", value: page),
+                SdkQueryParameter("per_page", value: perPage),
+            ],
+            decoder: .json,
+            operationId: "insights_list_notificationChannels",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiCreate domain models
+/// AgentPlatformAPIApiCreate domain models
 /// Output for creating a scenario set from a Common Scenario & Goal Library entry.
 public struct ApiCreateScenarioSetFromLibraryOutput: Codable {
     /// A team-owned collection of scenarios.
@@ -14,19 +14,19 @@ public struct ApiCreateScenarioSetFromLibraryOutput: Codable {
     }
 
     init() {
-        self.scenarioSet = nil
+        scenarioSet = nil
     }
 }
 
-extension ApiCreateScenarioSetFromLibraryOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateScenarioSetFromLibraryOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.scenarioSet = try container.sdkDecodeIfPresent(.scenarioSet)
+        scenarioSet = try container.sdkDecodeIfPresent(.scenarioSet)
     }
 }
 
-extension ApiCreateScenarioSetFromLibraryOutput {
-    public init(scenarioSet: ApiScenarioSet? = nil) {
+public extension ApiCreateScenarioSetFromLibraryOutput {
+    init(scenarioSet: ApiScenarioSet? = nil) {
         self.init()
         self.scenarioSet = scenarioSet
     }
@@ -47,20 +47,20 @@ public struct ApiCreateScenarioSetFromLibraryInputPublic: Codable {
     }
 
     init() {
-        (self.libraryScenarioUuid, self.name) = (nil, nil)
+        (libraryScenarioUuid, name) = (nil, nil)
     }
 }
 
-extension ApiCreateScenarioSetFromLibraryInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateScenarioSetFromLibraryInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.libraryScenarioUuid = try container.sdkDecodeIfPresent(.libraryScenarioUuid)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        libraryScenarioUuid = try container.sdkDecodeIfPresent(.libraryScenarioUuid)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ApiCreateScenarioSetFromLibraryInputPublic {
-    public init(libraryScenarioUuid: String? = nil, name: String? = nil) {
+public extension ApiCreateScenarioSetFromLibraryInputPublic {
+    init(libraryScenarioUuid: String? = nil, name: String? = nil) {
         self.init()
         (self.libraryScenarioUuid, self.name) = (libraryScenarioUuid, name)
     }

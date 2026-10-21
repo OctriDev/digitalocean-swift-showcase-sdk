@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Monitoring domain models
+/// Monitoring domain models
 /// Typed representation of the `ListSinks` API schema.
 public struct ListSinks: Codable {
     /// List of sinks identified by their URNs.
@@ -14,19 +14,19 @@ public struct ListSinks: Codable {
     }
 
     init() {
-        self.sinks = nil
+        sinks = nil
     }
 }
 
-extension ListSinks {
-    public init(from decoder: Decoder) throws {
+public extension ListSinks {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.sinks = try container.sdkDecodeIfPresent(.sinks)
+        sinks = try container.sdkDecodeIfPresent(.sinks)
     }
 }
 
-extension ListSinks {
-    public init(sinks: [SinksResponse]? = nil) {
+public extension ListSinks {
+    init(sinks: [SinksResponse]? = nil) {
         self.init()
         self.sinks = sinks
     }

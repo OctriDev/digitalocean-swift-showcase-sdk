@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AppsMethods {
-    /// Lists deployments for a specific app. Filter by deployment type and use `page` and `per_page` to paginate the results.
+public extension AppsMethods {
+    /// Lists deployments for a specific app. Filter by deployment type and use `page` and `per_page` to paginate the
+    /// results.
     ///
     /// List all deployments of an app.
     ///
@@ -22,19 +23,41 @@ extension AppsMethods {
     ///   automatic revert to a previous deployment - UPDATE_DATABASE_TRUSTED_SOURCES:
     ///   update database trusted sources - AUTOSCALED: deployment that has been
     ///   autoscaled
-    public static func appsListDeployments(config: ClientConfig, appId: String, page: Int? = nil, perPage: Int? = nil, deploymentTypes: [AppsListDeploymentsParameterItem]? = nil, requestOptions: RequestOptions? = nil) async throws -> AppsDeploymentsResponse {
-        if let page = page {
+    static func appsListDeployments(
+        config: ClientConfig,
+        appId: String,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        deploymentTypes: [AppsListDeploymentsParameterItem]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppsDeploymentsResponse {
+        if let page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        if let perPage = perPage {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        return try (await sdkRequest("GET", ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/deployments"].joined(), config: config, query: [
-            SdkQueryParameter("page", value: page),
-            SdkQueryParameter("per_page", value: perPage),
-            SdkQueryParameter("deployment_types", values: deploymentTypes, style: "form", explode: true),
-        ], decoder: .json, operationId: "apps_list_deployments", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/apps/", sdkEncodePathSegment(sdkWireString(appId)), "/deployments"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("page", value: page),
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("deployment_types", values: deploymentTypes, style: "form", explode: true),
+            ],
+            decoder: .json,
+            operationId: "apps_list_deployments",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

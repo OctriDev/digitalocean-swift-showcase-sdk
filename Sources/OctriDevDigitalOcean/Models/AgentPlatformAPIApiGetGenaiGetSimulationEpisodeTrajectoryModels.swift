@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiGet domain models
+/// AgentPlatformAPIApiGet domain models
 /// Output containing the parsed trajectory JSON.
 public struct ApiGetSimulationEpisodeTrajectoryOutput: Codable {
     /// Turn-by-turn trajectory for one episode. Poll this resource while the episode is running to watch live
@@ -15,19 +15,19 @@ public struct ApiGetSimulationEpisodeTrajectoryOutput: Codable {
     }
 
     init() {
-        self.trajectory = nil
+        trajectory = nil
     }
 }
 
-extension ApiGetSimulationEpisodeTrajectoryOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetSimulationEpisodeTrajectoryOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.trajectory = try container.sdkDecodeIfPresent(.trajectory)
+        trajectory = try container.sdkDecodeIfPresent(.trajectory)
     }
 }
 
-extension ApiGetSimulationEpisodeTrajectoryOutput {
-    public init(trajectory: ApiSimulationTrajectory? = nil) {
+public extension ApiGetSimulationEpisodeTrajectoryOutput {
+    init(trajectory: ApiSimulationTrajectory? = nil) {
         self.init()
         self.trajectory = trajectory
     }

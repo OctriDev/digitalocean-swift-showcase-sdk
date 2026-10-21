@@ -6,8 +6,13 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ContainerRegistryMethods {
-    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To list all tags in your container registry repository, send a GET request to `/v2/registry/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/tags`. Note that if your repository name contains `/` characters, it must be URL-encoded in the request URL. For example, to list tags for `registry.digitalocean.com/example/my/repo`, the path would be `/v2/registry/example/repositories/my%2Frepo/tags`.
+public extension ContainerRegistryMethods {
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To list all tags in
+    /// your container registry repository, send a GET request to
+    /// `/v2/registry/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/tags`. Note that if your repository name contains `/`
+    /// characters, it must be URL-encoded in the request URL. For example, to list tags for
+    /// `registry.digitalocean.com/example/my/repo`, the path would be
+    /// `/v2/registry/example/repositories/my%2Frepo/tags`.
     ///
     /// - Parameters:
     /// - registryName: The name of a container registry.
@@ -17,18 +22,46 @@ extension ContainerRegistryMethods {
     /// - page: Which 'page' of paginated results to return.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    public static func registryListRepositoryTags(config: ClientConfig, registryName: String, repositoryName: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> RepositoryTags {
-        if let perPage = perPage {
+    static func registryListRepositoryTags(
+        config: ClientConfig,
+        registryName: String,
+        repositoryName: String,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RepositoryTags {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page = page {
+        if let page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try (await sdkRequest("GET", ["/v2/registry/", sdkEncodePathSegment(sdkWireString(registryName)), "/repositories/", sdkEncodePathSegment(sdkWireString(repositoryName)), "/tags"].joined(), config: config, query: [
-            SdkQueryParameter("per_page", value: perPage),
-            SdkQueryParameter("page", value: page),
-        ], decoder: .json, operationId: "registry_list_repositoryTags", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            [
+                "/v2/registry/",
+                sdkEncodePathSegment(sdkWireString(registryName)),
+                "/repositories/",
+                sdkEncodePathSegment(sdkWireString(repositoryName)),
+                "/tags",
+            ].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("page", value: page),
+            ],
+            decoder: .json,
+            operationId: "registry_list_repositoryTags",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

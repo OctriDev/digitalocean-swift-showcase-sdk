@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApi domain models
+/// AgentPlatformAPIApi domain models
 /// Metadata for scheduled indexing entries
 public struct ApiScheduledIndexingInfo: Codable {
     /// Created at timestamp
@@ -50,44 +50,55 @@ public struct ApiScheduledIndexingInfo: Codable {
     }
 
     init() {
-        (self.createdAt, self.days, self.deletedAt, self.isActive, self.knowledgeBaseUuid) = (nil, nil, nil, nil, nil)
-        (self.lastRanAt, self.nextRunAt, self.time, self.updatedAt, self.uuid) = (nil, nil, nil, nil, nil)
+        (createdAt, days, deletedAt, isActive, knowledgeBaseUuid) = (nil, nil, nil, nil, nil)
+        (lastRanAt, nextRunAt, time, updatedAt, uuid) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiScheduledIndexingInfo {
-    public init(from decoder: Decoder) throws {
+public extension ApiScheduledIndexingInfo {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.days = try container.sdkDecodeIfPresent(.days)
-        self.deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
-        self.isActive = try container.sdkDecodeIfPresent(.isActive)
-        self.knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
-        self.lastRanAt = try container.sdkDecodeIfPresent(.lastRanAt)
-        self.nextRunAt = try container.sdkDecodeIfPresent(.nextRunAt)
-        self.time = try container.sdkDecodeIfPresent(.time)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
-        if let value = self.createdAt {
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        days = try container.sdkDecodeIfPresent(.days)
+        deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
+        isActive = try container.sdkDecodeIfPresent(.isActive)
+        knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
+        lastRanAt = try container.sdkDecodeIfPresent(.lastRanAt)
+        nextRunAt = try container.sdkDecodeIfPresent(.nextRunAt)
+        time = try container.sdkDecodeIfPresent(.time)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.deletedAt {
+        if let value = deletedAt {
             try sdkValidateDateTime("deleted_at", sdkWireString(value))
         }
-        if let value = self.lastRanAt {
+        if let value = lastRanAt {
             try sdkValidateDateTime("last_ran_at", sdkWireString(value))
         }
-        if let value = self.nextRunAt {
+        if let value = nextRunAt {
             try sdkValidateDateTime("next_run_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiScheduledIndexingInfo {
-    public init(createdAt: Date? = nil, days: [Int]? = nil, deletedAt: Date? = nil, isActive: Bool? = nil, knowledgeBaseUuid: String? = nil, lastRanAt: Date? = nil, nextRunAt: Date? = nil, time: String? = nil, updatedAt: Date? = nil, uuid: String? = nil) throws {
+public extension ApiScheduledIndexingInfo {
+    init(
+        createdAt: Date? = nil,
+        days: [Int]? = nil,
+        deletedAt: Date? = nil,
+        isActive: Bool? = nil,
+        knowledgeBaseUuid: String? = nil,
+        lastRanAt: Date? = nil,
+        nextRunAt: Date? = nil,
+        time: String? = nil,
+        updatedAt: Date? = nil,
+        uuid: String? = nil
+    ) throws {
         self.init()
         (self.createdAt, self.days) = (createdAt, days)
         (self.deletedAt, self.isActive) = (deletedAt, isActive)
@@ -127,20 +138,20 @@ public struct ApiPresignedUrlFile: Codable {
     }
 
     init() {
-        (self.fileName, self.fileSize) = (nil, nil)
+        (fileName, fileSize) = (nil, nil)
     }
 }
 
-extension ApiPresignedUrlFile {
-    public init(from decoder: Decoder) throws {
+public extension ApiPresignedUrlFile {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.fileName = try container.sdkDecodeIfPresent(.fileName)
-        self.fileSize = try container.sdkDecodeIfPresent(.fileSize)
+        fileName = try container.sdkDecodeIfPresent(.fileName)
+        fileSize = try container.sdkDecodeIfPresent(.fileSize)
     }
 }
 
-extension ApiPresignedUrlFile {
-    public init(fileName: String? = nil, fileSize: String? = nil) {
+public extension ApiPresignedUrlFile {
+    init(fileName: String? = nil, fileSize: String? = nil) {
         self.init()
         (self.fileName, self.fileSize) = (fileName, fileSize)
     }
@@ -181,26 +192,34 @@ public struct ApiChatbot: Codable {
     }
 
     init() {
-        (self.allowedDomains, self.buttonBackgroundColor, self.logo, self.name, self.primaryColor) = (nil, nil, nil, nil, nil)
-        (self.secondaryColor, self.startingMessage) = (nil, nil)
+        (allowedDomains, buttonBackgroundColor, logo, name, primaryColor) = (nil, nil, nil, nil, nil)
+        (secondaryColor, startingMessage) = (nil, nil)
     }
 }
 
-extension ApiChatbot {
-    public init(from decoder: Decoder) throws {
+public extension ApiChatbot {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.allowedDomains = try container.sdkDecodeIfPresent(.allowedDomains)
-        self.buttonBackgroundColor = try container.sdkDecodeIfPresent(.buttonBackgroundColor)
-        self.logo = try container.sdkDecodeIfPresent(.logo)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.primaryColor = try container.sdkDecodeIfPresent(.primaryColor)
-        self.secondaryColor = try container.sdkDecodeIfPresent(.secondaryColor)
-        self.startingMessage = try container.sdkDecodeIfPresent(.startingMessage)
+        allowedDomains = try container.sdkDecodeIfPresent(.allowedDomains)
+        buttonBackgroundColor = try container.sdkDecodeIfPresent(.buttonBackgroundColor)
+        logo = try container.sdkDecodeIfPresent(.logo)
+        name = try container.sdkDecodeIfPresent(.name)
+        primaryColor = try container.sdkDecodeIfPresent(.primaryColor)
+        secondaryColor = try container.sdkDecodeIfPresent(.secondaryColor)
+        startingMessage = try container.sdkDecodeIfPresent(.startingMessage)
     }
 }
 
-extension ApiChatbot {
-    public init(allowedDomains: [String]? = nil, buttonBackgroundColor: String? = nil, logo: String? = nil, name: String? = nil, primaryColor: String? = nil, secondaryColor: String? = nil, startingMessage: String? = nil) {
+public extension ApiChatbot {
+    init(
+        allowedDomains: [String]? = nil,
+        buttonBackgroundColor: String? = nil,
+        logo: String? = nil,
+        name: String? = nil,
+        primaryColor: String? = nil,
+        secondaryColor: String? = nil,
+        startingMessage: String? = nil
+    ) {
         self.init()
         (self.allowedDomains, self.buttonBackgroundColor) = (allowedDomains, buttonBackgroundColor)
         (self.logo, self.name) = (logo, name)
@@ -254,38 +273,49 @@ public struct ApiWorkspace: Codable {
     }
 
     init() {
-        (self.agents, self.createdAt, self.createdBy, self.createdByEmail, self.deletedAt) = (nil, nil, nil, nil, nil)
-        (self.description, self.evaluationTestCases, self.name, self.updatedAt, self.uuid) = (nil, nil, nil, nil, nil)
+        (agents, createdAt, createdBy, createdByEmail, deletedAt) = (nil, nil, nil, nil, nil)
+        (description, evaluationTestCases, name, updatedAt, uuid) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiWorkspace {
-    public init(from decoder: Decoder) throws {
+public extension ApiWorkspace {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agents = try container.sdkDecodeIfPresent(.agents)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.createdBy = try container.sdkDecodeIfPresent(.createdBy)
-        self.createdByEmail = try container.sdkDecodeIfPresent(.createdByEmail)
-        self.deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.evaluationTestCases = try container.sdkDecodeIfPresent(.evaluationTestCases)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
-        if let value = self.createdAt {
+        agents = try container.sdkDecodeIfPresent(.agents)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        createdBy = try container.sdkDecodeIfPresent(.createdBy)
+        createdByEmail = try container.sdkDecodeIfPresent(.createdByEmail)
+        deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
+        description = try container.sdkDecodeIfPresent(.description)
+        evaluationTestCases = try container.sdkDecodeIfPresent(.evaluationTestCases)
+        name = try container.sdkDecodeIfPresent(.name)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.deletedAt {
+        if let value = deletedAt {
             try sdkValidateDateTime("deleted_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiWorkspace {
-    public init(agents: [ApiAgent]? = nil, createdAt: Date? = nil, createdBy: String? = nil, createdByEmail: String? = nil, deletedAt: Date? = nil, description: String? = nil, evaluationTestCases: [ApiEvaluationTestCase]? = nil, name: String? = nil, updatedAt: Date? = nil, uuid: String? = nil) throws {
+public extension ApiWorkspace {
+    init(
+        agents: [ApiAgent]? = nil,
+        createdAt: Date? = nil,
+        createdBy: String? = nil,
+        createdByEmail: String? = nil,
+        deletedAt: Date? = nil,
+        description: String? = nil,
+        evaluationTestCases: [ApiEvaluationTestCase]? = nil,
+        name: String? = nil,
+        updatedAt: Date? = nil,
+        uuid: String? = nil
+    ) throws {
         self.init()
         (self.agents, self.createdAt) = (agents, createdAt)
         (self.createdBy, self.createdByEmail) = (createdBy, createdByEmail)
@@ -320,20 +350,20 @@ public struct ApiAssociatedModelEvaluationPreset: Codable {
     }
 
     init() {
-        (self.evalPresetUuid, self.name) = (nil, nil)
+        (evalPresetUuid, name) = (nil, nil)
     }
 }
 
-extension ApiAssociatedModelEvaluationPreset {
-    public init(from decoder: Decoder) throws {
+public extension ApiAssociatedModelEvaluationPreset {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.evalPresetUuid = try container.sdkDecodeIfPresent(.evalPresetUuid)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        evalPresetUuid = try container.sdkDecodeIfPresent(.evalPresetUuid)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ApiAssociatedModelEvaluationPreset {
-    public init(evalPresetUuid: String? = nil, name: String? = nil) {
+public extension ApiAssociatedModelEvaluationPreset {
+    init(evalPresetUuid: String? = nil, name: String? = nil) {
         self.init()
         (self.evalPresetUuid, self.name) = (evalPresetUuid, name)
     }
@@ -379,32 +409,43 @@ public struct ApiTraceSpan: Codable {
     }
 
     init() {
-        (self.agent, self.createdAt, self.input, self.llm, self.name) = (nil, nil, nil, nil, nil)
-        (self.output, self.retriever, self.tool, self.type, self.workflow) = (nil, nil, nil, nil, nil)
+        (agent, createdAt, input, llm, name) = (nil, nil, nil, nil, nil)
+        (output, retriever, tool, type, workflow) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiTraceSpan {
-    public init(from decoder: Decoder) throws {
+public extension ApiTraceSpan {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agent = try container.sdkDecodeIfPresent(.agent)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.input = try container.sdkDecodeIfPresent(.input)
-        self.llm = try container.sdkDecodeIfPresent(.llm)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.output = try container.sdkDecodeIfPresent(.output)
-        self.retriever = try container.sdkDecodeIfPresent(.retriever)
-        self.tool = try container.sdkDecodeIfPresent(.tool)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.workflow = try container.sdkDecodeIfPresent(.workflow)
-        if let value = self.createdAt {
+        agent = try container.sdkDecodeIfPresent(.agent)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        input = try container.sdkDecodeIfPresent(.input)
+        llm = try container.sdkDecodeIfPresent(.llm)
+        name = try container.sdkDecodeIfPresent(.name)
+        output = try container.sdkDecodeIfPresent(.output)
+        retriever = try container.sdkDecodeIfPresent(.retriever)
+        tool = try container.sdkDecodeIfPresent(.tool)
+        type = try container.sdkDecodeIfPresent(.type)
+        workflow = try container.sdkDecodeIfPresent(.workflow)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiTraceSpan {
-    public init(agent: ApiAgentSpan? = nil, createdAt: Date? = nil, input: [String: JSONValue]? = nil, llm: ApiLLMSpan? = nil, name: String? = nil, output: [String: JSONValue]? = nil, retriever: ApiRetrieverSpan? = nil, tool: ApiToolSpan? = nil, type: ApiTraceSpanType? = nil, workflow: ApiWorkflowSpan? = nil) throws {
+public extension ApiTraceSpan {
+    init(
+        agent: ApiAgentSpan? = nil,
+        createdAt: Date? = nil,
+        input: [String: JSONValue]? = nil,
+        llm: ApiLLMSpan? = nil,
+        name: String? = nil,
+        output: [String: JSONValue]? = nil,
+        retriever: ApiRetrieverSpan? = nil,
+        tool: ApiToolSpan? = nil,
+        type: ApiTraceSpanType? = nil,
+        workflow: ApiWorkflowSpan? = nil
+    ) throws {
         self.init()
         (self.agent, self.createdAt) = (agent, createdAt)
         (self.input, self.llm) = (input, llm)
@@ -436,21 +477,21 @@ public struct ApiMeta: Codable {
     }
 
     init() {
-        (self.page, self.pages, self.total) = (nil, nil, nil)
+        (page, pages, total) = (nil, nil, nil)
     }
 }
 
-extension ApiMeta {
-    public init(from decoder: Decoder) throws {
+public extension ApiMeta {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.page = try container.sdkDecodeIfPresent(.page)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
-        self.total = try container.sdkDecodeIfPresent(.total)
+        page = try container.sdkDecodeIfPresent(.page)
+        pages = try container.sdkDecodeIfPresent(.pages)
+        total = try container.sdkDecodeIfPresent(.total)
     }
 }
 
-extension ApiMeta {
-    public init(page: Int? = nil, pages: Int? = nil, total: Int? = nil) {
+public extension ApiMeta {
+    init(page: Int? = nil, pages: Int? = nil, total: Int? = nil) {
         self.init()
         (self.page, self.pages) = (page, pages)
         self.total = total
@@ -476,21 +517,21 @@ public struct ApiSpacesDataSource: Codable {
     }
 
     init() {
-        (self.bucketName, self.itemPath, self.region) = (nil, nil, nil)
+        (bucketName, itemPath, region) = (nil, nil, nil)
     }
 }
 
-extension ApiSpacesDataSource {
-    public init(from decoder: Decoder) throws {
+public extension ApiSpacesDataSource {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.bucketName = try container.sdkDecodeIfPresent(.bucketName)
-        self.itemPath = try container.sdkDecodeIfPresent(.itemPath)
-        self.region = try container.sdkDecodeIfPresent(.region)
+        bucketName = try container.sdkDecodeIfPresent(.bucketName)
+        itemPath = try container.sdkDecodeIfPresent(.itemPath)
+        region = try container.sdkDecodeIfPresent(.region)
     }
 }
 
-extension ApiSpacesDataSource {
-    public init(bucketName: String? = nil, itemPath: String? = nil, region: String? = nil) {
+public extension ApiSpacesDataSource {
+    init(bucketName: String? = nil, itemPath: String? = nil, region: String? = nil) {
         self.init()
         (self.bucketName, self.itemPath) = (bucketName, itemPath)
         self.region = region
@@ -523,23 +564,29 @@ public struct ApiMcpServer: Codable {
     }
 
     init() {
-        (self.allowedTools, self.authorization, self.headers, self.serverLabel, self.serverUrl) = (nil, nil, nil, nil, nil)
+        (allowedTools, authorization, headers, serverLabel, serverUrl) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiMcpServer {
-    public init(from decoder: Decoder) throws {
+public extension ApiMcpServer {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.allowedTools = try container.sdkDecodeIfPresent(.allowedTools)
-        self.authorization = try container.sdkDecodeIfPresent(.authorization)
-        self.headers = try container.sdkDecodeIfPresent(.headers)
-        self.serverLabel = try container.sdkDecodeIfPresent(.serverLabel)
-        self.serverUrl = try container.sdkDecodeIfPresent(.serverUrl)
+        allowedTools = try container.sdkDecodeIfPresent(.allowedTools)
+        authorization = try container.sdkDecodeIfPresent(.authorization)
+        headers = try container.sdkDecodeIfPresent(.headers)
+        serverLabel = try container.sdkDecodeIfPresent(.serverLabel)
+        serverUrl = try container.sdkDecodeIfPresent(.serverUrl)
     }
 }
 
-extension ApiMcpServer {
-    public init(allowedTools: [String]? = nil, authorization: String? = nil, headers: [String: String]? = nil, serverLabel: String? = nil, serverUrl: String? = nil) {
+public extension ApiMcpServer {
+    init(
+        allowedTools: [String]? = nil,
+        authorization: String? = nil,
+        headers: [String: String]? = nil,
+        serverLabel: String? = nil,
+        serverUrl: String? = nil
+    ) {
         self.init()
         (self.allowedTools, self.authorization) = (allowedTools, authorization)
         (self.headers, self.serverLabel) = (headers, serverLabel)

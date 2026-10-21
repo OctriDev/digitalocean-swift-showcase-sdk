@@ -6,8 +6,10 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ActionGatewayMethods {
-    /// Returns the user IDs known for your team: session `actor_id` values, the `user_id` of connections that are not revoked, and actors with limit overrides. Only sessions and connections you can see count. Offset-paged with page and `per_page`.
+public extension ActionGatewayMethods {
+    /// Returns the user IDs known for your team: session `actor_id` values, the `user_id` of connections that are not
+    /// revoked, and actors with limit overrides. Only sessions and connections you can see count. Offset-paged with
+    /// page and `per_page`.
     ///
     /// - Parameters:
     /// - userId: User ID prefix to return. An empty value returns all users.
@@ -17,29 +19,71 @@ extension ActionGatewayMethods {
     /// - sortDirection: asc|desc. Defaults to desc.
     /// - page: 1-based page number. Values below 1 are treated as 1.
     /// - perPage: Page size. Defaults to 20; values above 100 are capped at 100.
-    public static func usersList(config: ClientConfig, userId: String? = nil, sort: UsersListParameterX8be7391e? = nil, sortDirection: UsersListParameter? = nil, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersResponse {
-        if let page = page {
+    static func usersList(
+        config: ClientConfig,
+        userId: String? = nil,
+        sort: UsersListParameterX8be7391e? = nil,
+        sortDirection: UsersListParameter? = nil,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListUsersResponse {
+        if let page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        if let perPage = perPage {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 100)
         }
 
-        return try (await sdkRequest("GET", "/v2/action-gateway/users", config: config, query: [
-            SdkQueryParameter("user_id", value: userId),
-            SdkQueryParameter("sort", value: sort),
-            SdkQueryParameter("sort_direction", value: sortDirection),
-            SdkQueryParameter("page", value: page),
-            SdkQueryParameter("per_page", value: perPage),
-        ], decoder: .json, operationId: "users_list", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/v2/action-gateway/users",
+            config: config,
+            query: [
+                SdkQueryParameter("user_id", value: userId),
+                SdkQueryParameter("sort", value: sort),
+                SdkQueryParameter("sort_direction", value: sortDirection),
+                SdkQueryParameter("page", value: page),
+                SdkQueryParameter("per_page", value: perPage),
+            ],
+            decoder: .json,
+            operationId: "users_list",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Returns the sessions and non-revoked connections of one user ID. Returns 404 when the user has none you can see and no limit overrides.
+    /// Returns the sessions and non-revoked connections of one user ID. Returns 404 when the user has none you can see
+    /// and no limit overrides.
     ///
     /// - Parameters:
     /// - userId: User ID.
-    public static func usersGet(config: ClientConfig, userId: String, requestOptions: RequestOptions? = nil) async throws -> GetUserResponse {
-        return try (await sdkRequest("GET", ["/v2/action-gateway/users/", sdkEncodePathSegment(sdkWireString(userId))].joined(), config: config, decoder: .json, operationId: "users_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func usersGet(
+        config: ClientConfig,
+        userId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetUserResponse {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/action-gateway/users/", sdkEncodePathSegment(sdkWireString(userId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "users_get",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

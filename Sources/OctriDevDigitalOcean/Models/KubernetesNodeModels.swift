@@ -3,7 +3,7 @@
 
 import Foundation
 
-// KubernetesNode domain models
+/// KubernetesNode domain models
 /// Typed representation of the `NodePoolCreate` API schema.
 public struct NodePoolCreate: Codable {
     /// Optional object value serialized in the `node_pool` wire field.
@@ -14,19 +14,19 @@ public struct NodePoolCreate: Codable {
     }
 
     init() {
-        self.nodePool = nil
+        nodePool = nil
     }
 }
 
-extension NodePoolCreate {
-    public init(from decoder: Decoder) throws {
+public extension NodePoolCreate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.nodePool = try container.sdkDecodeIfPresent(.nodePool)
+        nodePool = try container.sdkDecodeIfPresent(.nodePool)
     }
 }
 
-extension NodePoolCreate {
-    public init(nodePool: KubernetesNodePool? = nil) {
+public extension NodePoolCreate {
+    init(nodePool: KubernetesNodePool? = nil) {
         self.init()
         self.nodePool = nodePool
     }
@@ -42,19 +42,19 @@ public struct NodePoolUpdate: Codable {
     }
 
     init() {
-        self.nodePool = nil
+        nodePool = nil
     }
 }
 
-extension NodePoolUpdate {
-    public init(from decoder: Decoder) throws {
+public extension NodePoolUpdate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.nodePool = try container.sdkDecodeIfPresent(.nodePool)
+        nodePool = try container.sdkDecodeIfPresent(.nodePool)
     }
 }
 
-extension NodePoolUpdate {
-    public init(nodePool: KubernetesNodePool? = nil) {
+public extension NodePoolUpdate {
+    init(nodePool: KubernetesNodePool? = nil) {
         self.init()
         self.nodePool = nodePool
     }
@@ -72,19 +72,19 @@ public struct NodeStatus: Codable {
     }
 
     init() {
-        self.state = nil
+        state = nil
     }
 }
 
-extension NodeStatus {
-    public init(from decoder: Decoder) throws {
+public extension NodeStatus {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.state = try container.sdkDecodeIfPresent(.state)
+        state = try container.sdkDecodeIfPresent(.state)
     }
 }
 
-extension NodeStatus {
-    public init(state: NodeStatusState? = nil) {
+public extension NodeStatus {
+    init(state: NodeStatusState? = nil) {
         self.init()
         self.state = state
     }
@@ -121,34 +121,41 @@ public struct Node: Codable {
     }
 
     init() {
-        (self.id, self.name, self.status, self.dropletId, self.createdAt) = (nil, nil, nil, nil, nil)
-        self.updatedAt = nil
+        (id, name, status, dropletId, createdAt) = (nil, nil, nil, nil, nil)
+        updatedAt = nil
     }
 }
 
-extension Node {
-    public init(from decoder: Decoder) throws {
+public extension Node {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.dropletId = try container.sdkDecodeIfPresent(.dropletId)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        status = try container.sdkDecodeIfPresent(.status)
+        dropletId = try container.sdkDecodeIfPresent(.dropletId)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension Node {
-    public init(id: String? = nil, name: String? = nil, status: NodeStatus? = nil, dropletId: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) throws {
+public extension Node {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        status: NodeStatus? = nil,
+        dropletId: String? = nil,
+        createdAt: Date? = nil,
+        updatedAt: Date? = nil
+    ) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.status, self.dropletId) = (status, dropletId)
@@ -169,7 +176,10 @@ extension Node {
 public struct NodeStatusState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let provisioning = NodeStatusState(rawValue: "provisioning")
     public static let running = NodeStatusState(rawValue: "running")
     public static let draining = NodeStatusState(rawValue: "draining")
@@ -177,7 +187,7 @@ public struct NodeStatusState: RawRepresentable, Hashable, Codable, Sendable, Sd
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// HarnessRuntimeFork domain models
+/// HarnessRuntimeFork domain models
 /// Typed representation of the `ForkSessionResponse` API schema.
 public struct ForkSessionResponse: Codable {
     /// The created child sessions, each a full Session with parent_session_id and fork_id set (PROVISIONING ->
@@ -15,19 +15,19 @@ public struct ForkSessionResponse: Codable {
     }
 
     init() {
-        self.sessions = nil
+        sessions = nil
     }
 }
 
-extension ForkSessionResponse {
-    public init(from decoder: Decoder) throws {
+public extension ForkSessionResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.sessions = try container.sdkDecodeIfPresent(.sessions)
+        sessions = try container.sdkDecodeIfPresent(.sessions)
     }
 }
 
-extension ForkSessionResponse {
-    public init(sessions: [DefinitionsSession]? = nil) {
+public extension ForkSessionResponse {
+    init(sessions: [DefinitionsSession]? = nil) {
         self.init()
         self.sessions = sessions
     }
@@ -48,27 +48,43 @@ public struct ForkSessionRequest: Codable {
     }
 
     init() {
-        (self.fromCheckpointId, self.count) = (nil, nil)
+        (fromCheckpointId, count) = (nil, nil)
     }
 }
 
-extension ForkSessionRequest {
-    public init(from decoder: Decoder) throws {
+public extension ForkSessionRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.fromCheckpointId = try container.sdkDecodeIfPresent(.fromCheckpointId)
-        self.count = try container.sdkDecodeIfPresent(.count)
-        if let value = self.count {
-            try validateRange("count", Double(value), min: 1, max: 4, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        fromCheckpointId = try container.sdkDecodeIfPresent(.fromCheckpointId)
+        count = try container.sdkDecodeIfPresent(.count)
+        if let value = count {
+            try validateRange(
+                "count",
+                Double(value),
+                min: 1,
+                max: 4,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
-extension ForkSessionRequest {
-    public init(fromCheckpointId: String? = nil, count: Int? = nil) throws {
+public extension ForkSessionRequest {
+    init(fromCheckpointId: String? = nil, count: Int? = nil) throws {
         self.init()
         (self.fromCheckpointId, self.count) = (fromCheckpointId, count)
         if let value = self.count {
-            try validateRange("count", Double(value), min: 1, max: 4, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "count",
+                Double(value),
+                min: 1,
+                max: 4,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }

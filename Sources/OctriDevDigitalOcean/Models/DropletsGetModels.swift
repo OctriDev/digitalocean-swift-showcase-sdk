@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Droplets domain models
+/// Droplets domain models
 /// Typed representation of the `ExistingDroplet` API schema.
 public struct ExistingDroplet: Codable {
     /// Optional object value serialized in the `droplet` wire field.
@@ -14,19 +14,19 @@ public struct ExistingDroplet: Codable {
     }
 
     init() {
-        self.droplet = nil
+        droplet = nil
     }
 }
 
-extension ExistingDroplet {
-    public init(from decoder: Decoder) throws {
+public extension ExistingDroplet {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.droplet = try container.sdkDecodeIfPresent(.droplet)
+        droplet = try container.sdkDecodeIfPresent(.droplet)
     }
 }
 
-extension ExistingDroplet {
-    public init(droplet: Droplet? = nil) {
+public extension ExistingDroplet {
+    init(droplet: Droplet? = nil) {
         self.init()
         self.droplet = droplet
     }

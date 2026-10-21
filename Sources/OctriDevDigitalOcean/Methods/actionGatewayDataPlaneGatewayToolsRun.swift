@@ -6,8 +6,15 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ActionGatewayDataPlaneMethods {
-    /// Runs 1 to 10 tool calls in parallel and returns one result per call, in request order. This is the REST form of the `action_invoke` MCP tool. Each call is checked against the session's tool selection and policy, uses the session actor's connections, and applies any output view bound to the tool in the session. A well-formed request returns `200` even when some calls fail. Check each item's `result.status`, and use `success_count` and `error_count` to branch without scanning every item. A call whose policy requires approval fails with `_meta.status` set to `requires_approval`. Have the session's owner approve it, then repeat the call with the same arguments. A call that needs the end user to connect a provider fails with `_meta.status` set to `requires_authorization` or `requires_connection_configuration`.
+public extension ActionGatewayDataPlaneMethods {
+    /// Runs 1 to 10 tool calls in parallel and returns one result per call, in request order. This is the REST form of
+    /// the `action_invoke` MCP tool. Each call is checked against the session's tool selection and policy, uses the
+    /// session actor's connections, and applies any output view bound to the tool in the session. A well-formed request
+    /// returns `200` even when some calls fail. Check each item's `result.status`, and use `success_count` and
+    /// `error_count` to branch without scanning every item. A call whose policy requires approval fails with
+    /// `_meta.status` set to `requires_approval`. Have the session's owner approve it, then repeat the call with the
+    /// same arguments. A call that needs the end user to connect a provider fails with `_meta.status` set to
+    /// `requires_authorization` or `requires_connection_configuration`.
     ///
     /// - Parameters:
     /// - xSessionId: The session to act in: the UUID at the end of the session's
@@ -16,15 +23,41 @@ extension ActionGatewayDataPlaneMethods {
     /// - tools: The tool calls to run in parallel.
     /// - rationale: One sentence explaining why the tools are being called. Values
     ///   longer than 512 characters are truncated.
-    public static func gatewayToolsRun(config: ClientConfig, xSessionId: String, tools: [ToolCall], rationale: String? = nil, requestOptions: RequestOptions? = nil) async throws -> InvokeToolsResponse {
+    static func gatewayToolsRun(
+        config: ClientConfig,
+        xSessionId: String,
+        tools: [ToolCall],
+        rationale: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> InvokeToolsResponse {
         try sdkValidateUuid("X-Session-Id", xSessionId)
 
         try validateItems("tools", tools, min: 1, max: 10)
 
         let requestBody = GatewayToolsRunRequestBody(tools: tools, rationale: rationale)
 
-        return try (await sdkRequest("POST", "/tools/invoke", config: config, body: requestBody, decoder: .json, operationId: "gatewayTools_run", extraHeaders: sdkHeaders([
-            ("X-Session-Id", sdkHeaderValue(xSessionId)),
-        ]), options: requestOptions, errors: ["400": ToolResultError.self, "401": Error2.self, "402": ToolResultError.self, "403": Forbidden.self, "412": ToolResultError.self, "413": ToolResultError.self, "429": ToolResultError.self, "500": ToolResultError.self, "503": ToolResultError.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/tools/invoke",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "gatewayTools_run",
+            extraHeaders: sdkHeaders([
+                ("X-Session-Id", sdkHeaderValue(xSessionId)),
+            ]),
+            options: requestOptions,
+            errors: [
+                "400": ToolResultError.self,
+                "401": Error2.self,
+                "402": ToolResultError.self,
+                "403": Forbidden.self,
+                "412": ToolResultError.self,
+                "413": ToolResultError.self,
+                "429": ToolResultError.self,
+                "500": ToolResultError.self,
+                "503": ToolResultError.self,
+            ]
+        )).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiCreate domain models
+/// AgentPlatformAPIApiCreate domain models
 /// Create a model router
 public struct ApiCreateModelRouterInputPublic: Codable {
     /// Model router description
@@ -31,23 +31,29 @@ public struct ApiCreateModelRouterInputPublic: Codable {
     }
 
     init() {
-        (self.description, self.fallbackModels, self.name, self.policies, self.regions) = (nil, nil, nil, nil, nil)
+        (description, fallbackModels, name, policies, regions) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiCreateModelRouterInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateModelRouterInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.fallbackModels = try container.sdkDecodeIfPresent(.fallbackModels)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.policies = try container.sdkDecodeIfPresent(.policies)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
+        description = try container.sdkDecodeIfPresent(.description)
+        fallbackModels = try container.sdkDecodeIfPresent(.fallbackModels)
+        name = try container.sdkDecodeIfPresent(.name)
+        policies = try container.sdkDecodeIfPresent(.policies)
+        regions = try container.sdkDecodeIfPresent(.regions)
     }
 }
 
-extension ApiCreateModelRouterInputPublic {
-    public init(description: String? = nil, fallbackModels: [String]? = nil, name: String? = nil, policies: [ApiModelRouterTaskPolicy]? = nil, regions: [String]? = nil) {
+public extension ApiCreateModelRouterInputPublic {
+    init(
+        description: String? = nil,
+        fallbackModels: [String]? = nil,
+        name: String? = nil,
+        policies: [ApiModelRouterTaskPolicy]? = nil,
+        regions: [String]? = nil
+    ) {
         self.init()
         (self.description, self.fallbackModels) = (description, fallbackModels)
         (self.name, self.policies) = (name, policies)
@@ -65,19 +71,19 @@ public struct ApiCreateModelRouterOutput: Codable {
     }
 
     init() {
-        self.modelRouter = nil
+        modelRouter = nil
     }
 }
 
-extension ApiCreateModelRouterOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateModelRouterOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.modelRouter = try container.sdkDecodeIfPresent(.modelRouter)
+        modelRouter = try container.sdkDecodeIfPresent(.modelRouter)
     }
 }
 
-extension ApiCreateModelRouterOutput {
-    public init(modelRouter: ApiModelRouter? = nil) {
+public extension ApiCreateModelRouterOutput {
+    init(modelRouter: ApiModelRouter? = nil) {
         self.init()
         self.modelRouter = modelRouter
     }

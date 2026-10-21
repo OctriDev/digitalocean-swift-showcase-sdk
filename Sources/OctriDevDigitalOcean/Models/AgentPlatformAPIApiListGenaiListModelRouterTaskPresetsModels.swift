@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiList domain models
+/// AgentPlatformAPIApiList domain models
 /// List of model router task presets
 public struct ApiListModelRouterTaskPresetsOutput: Codable {
     /// Links to other pages
@@ -20,21 +20,21 @@ public struct ApiListModelRouterTaskPresetsOutput: Codable {
     }
 
     init() {
-        (self.links, self.meta, self.tasks) = (nil, nil, nil)
+        (links, meta, tasks) = (nil, nil, nil)
     }
 }
 
-extension ApiListModelRouterTaskPresetsOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiListModelRouterTaskPresetsOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.links = try container.sdkDecodeIfPresent(.links)
-        self.meta = try container.sdkDecodeIfPresent(.meta)
-        self.tasks = try container.sdkDecodeIfPresent(.tasks)
+        links = try container.sdkDecodeIfPresent(.links)
+        meta = try container.sdkDecodeIfPresent(.meta)
+        tasks = try container.sdkDecodeIfPresent(.tasks)
     }
 }
 
-extension ApiListModelRouterTaskPresetsOutput {
-    public init(links: ApiLinks? = nil, meta: ApiMeta? = nil, tasks: [ApiModelRouterTaskPreset]? = nil) {
+public extension ApiListModelRouterTaskPresetsOutput {
+    init(links: ApiLinks? = nil, meta: ApiMeta? = nil, tasks: [ApiModelRouterTaskPreset]? = nil) {
         self.init()
         (self.links, self.meta) = (links, meta)
         self.tasks = tasks

@@ -3,34 +3,48 @@
 
 import Foundation
 
-// Images domain models
+/// Images domain models
 public indirect enum ImagesPostAccountTransferCreate {
     case imagesPostAccountTransferCreateVariant0(ImagesPostAccountTransferCreateVariant0)
     case imagesPostAccountTransferCreateVariant1(ImagesPostAccountTransferCreateVariant1)
 }
 
 extension ImagesPostAccountTransferCreate: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
+            if let value = Self.decodeLossless1(from: container, raw) {
+                self = value; return
+            }
         }
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ImagesPostAccountTransferCreate")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for ImagesPostAccountTransferCreate"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension ImagesPostAccountTransferCreate {
     static func decodeLossless1(from container: SingleValueDecodingContainer, _ raw: JSONValue) -> Self? {
-        if let value = try? container.decode(ImagesPostAccountTransferCreateVariant0.self), sdkKeepsEveryKey(value, of: raw) {
+        if let value = try? container.decode(ImagesPostAccountTransferCreateVariant0.self), sdkKeepsEveryKey(
+            value,
+            of: raw
+        ) {
             return .imagesPostAccountTransferCreateVariant0(value)
         }
-        if let value = try? container.decode(ImagesPostAccountTransferCreateVariant1.self), sdkKeepsEveryKey(value, of: raw) {
+        if let value = try? container.decode(ImagesPostAccountTransferCreateVariant1.self), sdkKeepsEveryKey(
+            value,
+            of: raw
+        ) {
             return .imagesPostAccountTransferCreateVariant1(value)
         }
         return nil
@@ -42,12 +56,12 @@ extension ImagesPostAccountTransferCreate {
         if let value = try? container.decode(
             ImagesPostAccountTransferCreateVariant0.self
         ) {
-            return             .imagesPostAccountTransferCreateVariant0(value)
+            return .imagesPostAccountTransferCreateVariant0(value)
         }
         if let value = try? container.decode(
             ImagesPostAccountTransferCreateVariant1.self
         ) {
-            return             .imagesPostAccountTransferCreateVariant1(value)
+            return .imagesPostAccountTransferCreateVariant1(value)
         }
         return nil
     }
@@ -74,21 +88,27 @@ public struct ImagesPostAccountTransferCreateVariant0: Codable {
         case recipientEmail = "recipient_email"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ImagesPostAccountTransferCreateVariant0 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.recipientEmail) else {
-            throw SdkValidationError(field: "recipient_email", code: "required", message: "Validation failed for 'recipient_email': value is required")
-        }
-        self.recipientEmail = try container.sdkDecodeRequired(.recipientEmail)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ImagesPostAccountTransferCreateVariant0 {
-    public init(recipientEmail: String) {
+public extension ImagesPostAccountTransferCreateVariant0 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.recipientEmail) else {
+            throw SdkValidationError(
+                field: "recipient_email",
+                code: "required",
+                message: "Validation failed for 'recipient_email': value is required"
+            )
+        }
+        recipientEmail = try container.sdkDecodeRequired(.recipientEmail)
+    }
+}
+
+public extension ImagesPostAccountTransferCreateVariant0 {
+    init(recipientEmail: String) {
         self.recipientEmail = recipientEmail
     }
 }
@@ -104,19 +124,19 @@ public struct ImagesPostAccountTransferCreated: Codable {
     }
 
     init() {
-        self.transferId = nil
+        transferId = nil
     }
 }
 
-extension ImagesPostAccountTransferCreated {
-    public init(from decoder: Decoder) throws {
+public extension ImagesPostAccountTransferCreated {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.transferId = try container.sdkDecodeIfPresent(.transferId)
+        transferId = try container.sdkDecodeIfPresent(.transferId)
     }
 }
 
-extension ImagesPostAccountTransferCreated {
-    public init(transferId: TransferId? = nil) {
+public extension ImagesPostAccountTransferCreated {
+    init(transferId: TransferId? = nil) {
         self.init()
         self.transferId = transferId
     }
@@ -131,21 +151,27 @@ public struct ImagesPostAccountTransferCreateVariant1: Codable {
         case recipientUuid = "recipient_uuid"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ImagesPostAccountTransferCreateVariant1 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.recipientUuid) else {
-            throw SdkValidationError(field: "recipient_uuid", code: "required", message: "Validation failed for 'recipient_uuid': value is required")
-        }
-        self.recipientUuid = try container.sdkDecodeRequired(.recipientUuid)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ImagesPostAccountTransferCreateVariant1 {
-    public init(recipientUuid: String) {
+public extension ImagesPostAccountTransferCreateVariant1 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.recipientUuid) else {
+            throw SdkValidationError(
+                field: "recipient_uuid",
+                code: "required",
+                message: "Validation failed for 'recipient_uuid': value is required"
+            )
+        }
+        recipientUuid = try container.sdkDecodeRequired(.recipientUuid)
+    }
+}
+
+public extension ImagesPostAccountTransferCreateVariant1 {
+    init(recipientUuid: String) {
         self.recipientUuid = recipientUuid
     }
 }

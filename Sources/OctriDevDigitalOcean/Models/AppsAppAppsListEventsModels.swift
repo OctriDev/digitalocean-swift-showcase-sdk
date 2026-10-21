@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AppsApp domain models
+/// AppsApp domain models
 /// Typed representation of the `AppEvents` API schema.
 public struct AppEvents: Codable {
     /// A list of events
@@ -17,20 +17,20 @@ public struct AppEvents: Codable {
     }
 
     init() {
-        (self.events, self.links) = (nil, nil)
+        (events, links) = (nil, nil)
     }
 }
 
-extension AppEvents {
-    public init(from decoder: Decoder) throws {
+public extension AppEvents {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.events = try container.sdkDecodeIfPresent(.events)
-        self.links = try container.sdkDecodeIfPresent(.links)
+        events = try container.sdkDecodeIfPresent(.events)
+        links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-extension AppEvents {
-    public init(events: [AppEvent]? = nil, links: PageLinks? = nil) {
+public extension AppEvents {
+    init(events: [AppEvent]? = nil, links: PageLinks? = nil) {
         self.init()
         (self.events, self.links) = (events, links)
     }
@@ -45,19 +45,19 @@ public struct AppEventsVariant0: Codable {
     }
 
     init() {
-        self.events = nil
+        events = nil
     }
 }
 
-extension AppEventsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AppEventsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.events = try container.sdkDecodeIfPresent(.events)
+        events = try container.sdkDecodeIfPresent(.events)
     }
 }
 
-extension AppEventsVariant0 {
-    public init(events: [AppEvent]? = nil) {
+public extension AppEventsVariant0 {
+    init(events: [AppEvent]? = nil) {
         self.init()
         self.events = events
     }

@@ -6,7 +6,8 @@ import Foundation
 import XCTest
 
 extension SdkMethodTests {
-    func testGenaiGetSimulationEpisodeTrajectoryUrlGenaiGetSimulationEpisoX16d68d9486ReachesMockAndDecodesResponse() async throws {
+    func testGenaiGetSimulationEpisodeTrajectoryUrlGenaiGetSimulationEpisoX16d68d9486ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -25,7 +26,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testGenaiGetSimulationEpisodeTrajectoryUrlGenaiGetSimulationEpisoX2543e4941aReachesMockAndDecodesResponse() async throws {
+    func testGenaiGetSimulationEpisodeTrajectoryUrlGenaiGetSimulationEpisoX2543e4941aReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -36,9 +38,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiGetSimulationEpisodeTrajectoryUrl(
-            runUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
-            episodeUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
-        )
+                runUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
+                episodeUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -83,8 +85,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiGetSimulationRun(
-            runUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
-        )
+                runUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -129,8 +131,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiGetWorkspace(
-            workspaceUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
-        )
+                workspaceUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -193,8 +195,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiImportCustomModel(
-            options: options
-        )
+                options: options
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -241,10 +243,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListAgentApiKeys(
-            agentUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
-            page: decoded("1"),
-            perPage: decoded("1")
-        )
+                agentUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
+                page: decoded("1"),
+                perPage: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -291,10 +293,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListAgents(
-            onlyDeployed: decoded("true"),
-            page: decoded("1"),
-            perPage: decoded("1")
-        )
+                onlyDeployed: decoded("true"),
+                page: decoded("1"),
+                perPage: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -341,10 +343,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListAgentsByAnthropicKey(
-            uuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
-            page: decoded("1"),
-            perPage: decoded("1")
-        )
+                uuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
+                page: decoded("1"),
+                perPage: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -391,10 +393,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListAgentsByOpenaiKey(
-            uuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
-            page: decoded("1"),
-            perPage: decoded("1")
-        )
+                uuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
+                page: decoded("1"),
+                perPage: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -442,11 +444,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListAgentsByWorkspace(
-            workspaceUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
-            onlyDeployed: decoded("true"),
-            page: decoded("1"),
-            perPage: decoded("1")
-        )
+                workspaceUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
+                onlyDeployed: decoded("true"),
+                page: decoded("1"),
+                perPage: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -493,10 +495,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListAgentVersions(
-            uuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
-            page: decoded("1"),
-            perPage: decoded("1")
-        )
+                uuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
+                page: decoded("1"),
+                perPage: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -542,9 +544,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiListAnthropicApiKeys(
-            page: decoded("1"),
-            perPage: decoded("1")
-        )
+                page: decoded("1"),
+                perPage: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

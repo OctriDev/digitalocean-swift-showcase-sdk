@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DatabasesEvents domain models
+/// DatabasesEvents domain models
 /// Typed representation of the `EventsLogsResponse` API schema.
 public struct EventsLogsResponse: Codable {
     /// Optional array value serialized in the `events` wire field.
@@ -14,19 +14,19 @@ public struct EventsLogsResponse: Codable {
     }
 
     init() {
-        self.events = nil
+        events = nil
     }
 }
 
-extension EventsLogsResponse {
-    public init(from decoder: Decoder) throws {
+public extension EventsLogsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.events = try container.sdkDecodeIfPresent(.events)
+        events = try container.sdkDecodeIfPresent(.events)
     }
 }
 
-extension EventsLogsResponse {
-    public init(events: [EventsLogs]? = nil) {
+public extension EventsLogsResponse {
+    init(events: [EventsLogs]? = nil) {
         self.init()
         self.events = events
     }
@@ -55,22 +55,27 @@ public struct EventsLogs: Codable {
     }
 
     init() {
-        (self.id, self.clusterName, self.eventType, self.createTime) = (nil, nil, nil, nil)
+        (id, clusterName, eventType, createTime) = (nil, nil, nil, nil)
     }
 }
 
-extension EventsLogs {
-    public init(from decoder: Decoder) throws {
+public extension EventsLogs {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.clusterName = try container.sdkDecodeIfPresent(.clusterName)
-        self.eventType = try container.sdkDecodeIfPresent(.eventType)
-        self.createTime = try container.sdkDecodeIfPresent(.createTime)
+        id = try container.sdkDecodeIfPresent(.id)
+        clusterName = try container.sdkDecodeIfPresent(.clusterName)
+        eventType = try container.sdkDecodeIfPresent(.eventType)
+        createTime = try container.sdkDecodeIfPresent(.createTime)
     }
 }
 
-extension EventsLogs {
-    public init(id: String? = nil, clusterName: String? = nil, eventType: EventsLogsEventType? = nil, createTime: String? = nil) {
+public extension EventsLogs {
+    init(
+        id: String? = nil,
+        clusterName: String? = nil,
+        eventType: EventsLogsEventType? = nil,
+        createTime: String? = nil
+    ) {
         self.init()
         (self.id, self.clusterName) = (id, clusterName)
         (self.eventType, self.createTime) = (eventType, createTime)
@@ -81,7 +86,10 @@ extension EventsLogs {
 public struct EventsLogsEventType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let clusterMaintenancePerform = EventsLogsEventType(rawValue: "cluster_maintenance_perform")
     public static let clusterPrimaryPromotion = EventsLogsEventType(rawValue: "cluster_master_promotion")
     public static let clusterCreate = EventsLogsEventType(rawValue: "cluster_create")
@@ -92,7 +100,7 @@ public struct EventsLogsEventType: RawRepresentable, Hashable, Codable, Sendable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

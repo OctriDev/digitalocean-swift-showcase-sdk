@@ -17,8 +17,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.snapshots.delete(
-            snapshotId: decoded("6372321")
-        )
+                snapshotId: decoded("6372321")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -63,8 +63,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.snapshots.get(
-            snapshotId: decoded("6372321")
-        )
+                snapshotId: decoded("6372321")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -111,10 +111,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.snapshots.list(
-            perPage: decoded("2"),
-            page: decoded("1"),
-            resourceType: decoded("\"droplet\"")
-        )
+                perPage: decoded("2"),
+                page: decoded("1"),
+                resourceType: decoded("\"droplet\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -160,9 +160,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.spacesKeys.create(
-            name: decoded("\"read-only-key\""),
-            grants: decoded("[{\"bucket\":\"my-bucket\",\"permission\":\"read\"}]")
-        )
+                name: decoded("\"read-only-key\""),
+                grants: decoded("[{\"bucket\":\"my-bucket\",\"permission\":\"read\"}]")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -200,8 +200,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.spacesKeys.delete(
-            accessKey: decoded("\"DOACCESSKEYEXAMPLE\"")
-        )
+                accessKey: decoded("\"DOACCESSKEYEXAMPLE\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -246,8 +246,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.spacesKeys.get(
-            accessKey: decoded("\"DOACCESSKEYEXAMPLE\"")
-        )
+                accessKey: decoded("\"DOACCESSKEYEXAMPLE\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -298,14 +298,14 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.spacesKeys.list(
-            perPage: decoded("2"),
-            page: decoded("1"),
-            sort: decoded("\"created_at\""),
-            sortDirection: decoded("\"desc\""),
-            name: decoded("\"my-access-key\""),
-            bucket: decoded("\"my-bucket\""),
-            permission: decoded("\"read\"")
-        )
+                perPage: decoded("2"),
+                page: decoded("1"),
+                sort: decoded("\"created_at\""),
+                sortDirection: decoded("\"desc\""),
+                name: decoded("\"my-access-key\""),
+                bucket: decoded("\"my-bucket\""),
+                permission: decoded("\"read\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -352,10 +352,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.spacesKeys.patch(
-            accessKey: decoded("\"DOACCESSKEYEXAMPLE\""),
-            name: decoded("\"new-key-name\""),
-            grants: decoded("null")
-        )
+                accessKey: decoded("\"DOACCESSKEYEXAMPLE\""),
+                name: decoded("\"new-key-name\""),
+                grants: decoded("null")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -402,10 +402,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.spacesKeys.update(
-            accessKey: decoded("\"DOACCESSKEYEXAMPLE\""),
-            name: decoded("\"new-key-name\""),
-            grants: decoded("null")
-        )
+                accessKey: decoded("\"DOACCESSKEYEXAMPLE\""),
+                name: decoded("\"new-key-name\""),
+                grants: decoded("null")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -451,9 +451,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.sshKeys.create(
-            publicKey: decoded(sdkMethodFixture1524Value1),
-            name: decoded("\"My SSH Public Key\"")
-        )
+                publicKey: decoded(sdkMethodFixture1524Value1),
+                name: decoded("\"My SSH Public Key\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -491,8 +491,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.sshKeys.delete(
-            sshKeyIdentifier: decoded("512189")
-        )
+                sshKeyIdentifier: decoded("512189")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -537,8 +537,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.sshKeys.get(
-            sshKeyIdentifier: decoded("512189")
-        )
+                sshKeyIdentifier: decoded("512189")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

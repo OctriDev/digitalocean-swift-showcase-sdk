@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DomainRecordsMethods {
-    public struct DomainsPatchRecordOptions: Codable {
+public extension DomainRecordsMethods {
+    struct DomainsPatchRecordOptions: Codable {
         public var domainName: String
         public var domainRecordId: Int
         public var type: String
@@ -27,7 +27,9 @@ extension DomainRecordsMethods {
         }
     }
 
-    /// To update an existing record, send a PATCH request to `/v2/domains/$DOMAIN_NAME/records/$DOMAIN_RECORD_ID`. Any attribute valid for the record type can be set to a new value for the record. See the attribute table for details regarding record types and their respective attributes.
+    /// To update an existing record, send a PATCH request to `/v2/domains/$DOMAIN_NAME/records/$DOMAIN_RECORD_ID`. Any
+    /// attribute valid for the record type can be set to a new value for the record. See the attribute table for
+    /// details regarding record types and their respective attributes.
     ///
     /// - Parameters:
     /// - domainName: The name of the domain itself.
@@ -47,9 +49,33 @@ extension DomainRecordsMethods {
     /// - flags: An unsigned integer between 0-255 used for CAA records.
     /// - tag: The parameter tag for CAA records. Valid values are "issue",
     ///   "issuewild", or "iodef"
-    public static func domainsPatchRecord(config: ClientConfig, options: DomainsPatchRecordOptions, requestOptions: RequestOptions? = nil) async throws -> DomainRecordResponse {
+    static func domainsPatchRecord(
+        config: ClientConfig,
+        options: DomainsPatchRecordOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DomainRecordResponse {
         let requestBody = DomainsPatchRecordRequestBody(options: options)
 
-        return try (await sdkRequest("PATCH", ["/v2/domains/", sdkEncodePathSegment(sdkWireString(options.domainName)), "/records/", sdkEncodePathSegment(sdkWireString(options.domainRecordId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "domains_patch_record", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PATCH",
+            [
+                "/v2/domains/",
+                sdkEncodePathSegment(sdkWireString(options.domainName)),
+                "/records/",
+                sdkEncodePathSegment(sdkWireString(options.domainRecordId)),
+            ].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "domains_patch_record",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

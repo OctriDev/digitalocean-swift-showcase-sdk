@@ -6,12 +6,31 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ContainerRegistriesMethods {
-    /// To delete your container registry, destroying all container image data stored in it, send a DELETE request to `/v2/registries/{registry_name}`.
+public extension ContainerRegistriesMethods {
+    /// To delete your container registry, destroying all container image data stored in it, send a DELETE request to
+    /// `/v2/registries/{registry_name}`.
     ///
     /// - Parameters:
     /// - registryName: The name of a container registry.
-    public static func registriesDelete(config: ClientConfig, registryName: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try (await sdkRequest("DELETE", ["/v2/registries/", sdkEncodePathSegment(sdkWireString(registryName))].joined(), config: config, decoder: .empty, operationId: "registries_delete", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func registriesDelete(
+        config: ClientConfig,
+        registryName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await (sdkRequest(
+            "DELETE",
+            ["/v2/registries/", sdkEncodePathSegment(sdkWireString(registryName))].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "registries_delete",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

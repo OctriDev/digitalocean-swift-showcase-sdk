@@ -3,7 +3,7 @@
 
 import Foundation
 
-// HarnessRuntimeDelete domain models
+/// HarnessRuntimeDelete domain models
 /// Typed representation of the `DeleteTemplateResponse` API schema.
 public struct DeleteTemplateResponse: Codable {
     /// Optional `uuid`-formatted value serialized in the `template_id` wire field.
@@ -17,23 +17,23 @@ public struct DeleteTemplateResponse: Codable {
     }
 
     init() {
-        (self.templateId, self.deleted) = (nil, nil)
+        (templateId, deleted) = (nil, nil)
     }
 }
 
-extension DeleteTemplateResponse {
-    public init(from decoder: Decoder) throws {
+public extension DeleteTemplateResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.templateId = try container.sdkDecodeIfPresent(.templateId)
-        self.deleted = try container.sdkDecodeIfPresent(.deleted)
-        if let value = self.templateId {
+        templateId = try container.sdkDecodeIfPresent(.templateId)
+        deleted = try container.sdkDecodeIfPresent(.deleted)
+        if let value = templateId {
             try sdkValidateUuid("template_id", value)
         }
     }
 }
 
-extension DeleteTemplateResponse {
-    public init(templateId: String? = nil, deleted: Bool? = nil) throws {
+public extension DeleteTemplateResponse {
+    init(templateId: String? = nil, deleted: Bool? = nil) throws {
         self.init()
         (self.templateId, self.deleted) = (templateId, deleted)
         if let value = self.templateId {
@@ -55,20 +55,20 @@ public struct DeleteCheckpointResponse: Codable {
     }
 
     init() {
-        (self.checkpointId, self.deleted) = (nil, nil)
+        (checkpointId, deleted) = (nil, nil)
     }
 }
 
-extension DeleteCheckpointResponse {
-    public init(from decoder: Decoder) throws {
+public extension DeleteCheckpointResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.checkpointId = try container.sdkDecodeIfPresent(.checkpointId)
-        self.deleted = try container.sdkDecodeIfPresent(.deleted)
+        checkpointId = try container.sdkDecodeIfPresent(.checkpointId)
+        deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-extension DeleteCheckpointResponse {
-    public init(checkpointId: String? = nil, deleted: Bool? = nil) {
+public extension DeleteCheckpointResponse {
+    init(checkpointId: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.checkpointId, self.deleted) = (checkpointId, deleted)
     }

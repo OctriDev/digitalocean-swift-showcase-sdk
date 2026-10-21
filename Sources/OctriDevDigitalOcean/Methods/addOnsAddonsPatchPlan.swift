@@ -6,16 +6,38 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AddOnsMethods {
-    /// To change the plan associated with an Add-On Resource, send a PATCH request to `/v2/add-ons/saas/{resource_uuid}/plan`. Replace `{resource_uuid}` with the UUID of the resource for which you want to change the plan.
+public extension AddOnsMethods {
+    /// To change the plan associated with an Add-On Resource, send a PATCH request to
+    /// `/v2/add-ons/saas/{resource_uuid}/plan`. Replace `{resource_uuid}` with the UUID of the resource for which you
+    /// want to change the plan.
     ///
     /// - Parameters:
     /// - resourceUuid: The UUID of the add-on resource to update.
     /// - planSlug: The slug identifier for the new plan to apply to the add-on
     ///   resource.
-    public static func addonsPatchPlan(config: ClientConfig, resourceUuid: String, planSlug: String, requestOptions: RequestOptions? = nil) async throws -> AddonsUpdate {
+    static func addonsPatchPlan(
+        config: ClientConfig,
+        resourceUuid: String,
+        planSlug: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AddonsUpdate {
         let requestBody = AddonsPatchPlanRequestBody(planSlug: planSlug)
 
-        return try (await sdkRequest("PATCH", ["/v2/add-ons/saas/", sdkEncodePathSegment(sdkWireString(resourceUuid)), "/plan"].joined(), config: config, body: requestBody, decoder: .json, operationId: "addons_patch_plan", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PATCH",
+            ["/v2/add-ons/saas/", sdkEncodePathSegment(sdkWireString(resourceUuid)), "/plan"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "addons_patch_plan",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

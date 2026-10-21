@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiUpdate domain models
+/// AgentPlatformAPIApiUpdate domain models
 /// Information about an updated linkage
 public struct ApiUpdateLinkedAgentOutput: Codable {
     /// Routed agent id
@@ -27,22 +27,22 @@ public struct ApiUpdateLinkedAgentOutput: Codable {
     }
 
     init() {
-        (self.childAgentUuid, self.parentAgentUuid, self.rollback, self.uuid) = (nil, nil, nil, nil)
+        (childAgentUuid, parentAgentUuid, rollback, uuid) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiUpdateLinkedAgentOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateLinkedAgentOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.childAgentUuid = try container.sdkDecodeIfPresent(.childAgentUuid)
-        self.parentAgentUuid = try container.sdkDecodeIfPresent(.parentAgentUuid)
-        self.rollback = try container.sdkDecodeIfPresent(.rollback)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        childAgentUuid = try container.sdkDecodeIfPresent(.childAgentUuid)
+        parentAgentUuid = try container.sdkDecodeIfPresent(.parentAgentUuid)
+        rollback = try container.sdkDecodeIfPresent(.rollback)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
     }
 }
 
-extension ApiUpdateLinkedAgentOutput {
-    public init(childAgentUuid: String? = nil, parentAgentUuid: String? = nil, rollback: Bool? = nil, uuid: String? = nil) {
+public extension ApiUpdateLinkedAgentOutput {
+    init(childAgentUuid: String? = nil, parentAgentUuid: String? = nil, rollback: Bool? = nil, uuid: String? = nil) {
         self.init()
         (self.childAgentUuid, self.parentAgentUuid) = (childAgentUuid, parentAgentUuid)
         (self.rollback, self.uuid) = (rollback, uuid)
@@ -76,23 +76,29 @@ public struct ApiUpdateLinkedAgentInputPublic: Codable {
     }
 
     init() {
-        (self.childAgentUuid, self.ifCase, self.parentAgentUuid, self.routeName, self.uuid) = (nil, nil, nil, nil, nil)
+        (childAgentUuid, ifCase, parentAgentUuid, routeName, uuid) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiUpdateLinkedAgentInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateLinkedAgentInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.childAgentUuid = try container.sdkDecodeIfPresent(.childAgentUuid)
-        self.ifCase = try container.sdkDecodeIfPresent(.ifCase)
-        self.parentAgentUuid = try container.sdkDecodeIfPresent(.parentAgentUuid)
-        self.routeName = try container.sdkDecodeIfPresent(.routeName)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        childAgentUuid = try container.sdkDecodeIfPresent(.childAgentUuid)
+        ifCase = try container.sdkDecodeIfPresent(.ifCase)
+        parentAgentUuid = try container.sdkDecodeIfPresent(.parentAgentUuid)
+        routeName = try container.sdkDecodeIfPresent(.routeName)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
     }
 }
 
-extension ApiUpdateLinkedAgentInputPublic {
-    public init(childAgentUuid: String? = nil, ifCase: String? = nil, parentAgentUuid: String? = nil, routeName: String? = nil, uuid: String? = nil) {
+public extension ApiUpdateLinkedAgentInputPublic {
+    init(
+        childAgentUuid: String? = nil,
+        ifCase: String? = nil,
+        parentAgentUuid: String? = nil,
+        routeName: String? = nil,
+        uuid: String? = nil
+    ) {
         self.init()
         (self.childAgentUuid, self.ifCase) = (childAgentUuid, ifCase)
         (self.parentAgentUuid, self.routeName) = (parentAgentUuid, routeName)

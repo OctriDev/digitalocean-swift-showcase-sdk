@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiModel domain models
+/// AgentPlatformAPIApiModel domain models
 /// Result for a single prompt in a model evaluation run.
 public struct ApiModelEvaluationResult: Codable {
     /// Optional `string` value serialized in the `candidate_model_name` wire field.
@@ -56,29 +56,40 @@ public struct ApiModelEvaluationResult: Codable {
     }
 
     init() {
-        (self.candidateModelName, self.candidateModelUuid, self.candidateRoutedTask, self.epoch, self.epochResults) = (nil, nil, nil, nil, nil)
-        (self.groundTruth, self.input, self.metricResults, self.output, self.rowNumber) = (nil, nil, nil, nil, nil)
+        (candidateModelName, candidateModelUuid, candidateRoutedTask, epoch, epochResults) = (nil, nil, nil, nil, nil)
+        (groundTruth, input, metricResults, output, rowNumber) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiModelEvaluationResult {
-    public init(from decoder: Decoder) throws {
+public extension ApiModelEvaluationResult {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.candidateModelName = try container.sdkDecodeIfPresent(.candidateModelName)
-        self.candidateModelUuid = try container.sdkDecodeIfPresent(.candidateModelUuid)
-        self.candidateRoutedTask = try container.sdkDecodeIfPresent(.candidateRoutedTask)
-        self.epoch = try container.sdkDecodeIfPresent(.epoch)
-        self.epochResults = try container.sdkDecodeIfPresent(.epochResults)
-        self.groundTruth = try container.sdkDecodeIfPresent(.groundTruth)
-        self.input = try container.sdkDecodeIfPresent(.input)
-        self.metricResults = try container.sdkDecodeIfPresent(.metricResults)
-        self.output = try container.sdkDecodeIfPresent(.output)
-        self.rowNumber = try container.sdkDecodeIfPresent(.rowNumber)
+        candidateModelName = try container.sdkDecodeIfPresent(.candidateModelName)
+        candidateModelUuid = try container.sdkDecodeIfPresent(.candidateModelUuid)
+        candidateRoutedTask = try container.sdkDecodeIfPresent(.candidateRoutedTask)
+        epoch = try container.sdkDecodeIfPresent(.epoch)
+        epochResults = try container.sdkDecodeIfPresent(.epochResults)
+        groundTruth = try container.sdkDecodeIfPresent(.groundTruth)
+        input = try container.sdkDecodeIfPresent(.input)
+        metricResults = try container.sdkDecodeIfPresent(.metricResults)
+        output = try container.sdkDecodeIfPresent(.output)
+        rowNumber = try container.sdkDecodeIfPresent(.rowNumber)
     }
 }
 
-extension ApiModelEvaluationResult {
-    public init(candidateModelName: String? = nil, candidateModelUuid: String? = nil, candidateRoutedTask: String? = nil, epoch: Int? = nil, epochResults: [String: ApiModelEvaluationEpochAttempt]? = nil, groundTruth: String? = nil, input: String? = nil, metricResults: [ApiEvaluationMetricResult]? = nil, output: String? = nil, rowNumber: Int? = nil) {
+public extension ApiModelEvaluationResult {
+    init(
+        candidateModelName: String? = nil,
+        candidateModelUuid: String? = nil,
+        candidateRoutedTask: String? = nil,
+        epoch: Int? = nil,
+        epochResults: [String: ApiModelEvaluationEpochAttempt]? = nil,
+        groundTruth: String? = nil,
+        input: String? = nil,
+        metricResults: [ApiEvaluationMetricResult]? = nil,
+        output: String? = nil,
+        rowNumber: Int? = nil
+    ) {
         self.init()
         (self.candidateModelName, self.candidateModelUuid) = (candidateModelName, candidateModelUuid)
         (self.candidateRoutedTask, self.epoch) = (candidateRoutedTask, epoch)
@@ -140,38 +151,57 @@ public struct ApiModelEvaluationRunResultSummary: Codable {
     }
 
     init() {
-        (self.endTime, self.epochSummary, self.epochs, self.metricSummaries, self.overallScorePercent) = (nil, nil, nil, nil, nil)
-        (self.perModelSummaries, self.perTaskSummaries, self.performanceMetrics, self.pricing, self.starMetricSummary) = (nil, nil, nil, nil, nil)
-        (self.startTime, self.totalDurationSeconds) = (nil, nil)
+        (endTime, epochSummary, epochs, metricSummaries, overallScorePercent) = (nil, nil, nil, nil, nil)
+        (perModelSummaries, perTaskSummaries, performanceMetrics, pricing, starMetricSummary) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (startTime, totalDurationSeconds) = (nil, nil)
     }
 }
 
-extension ApiModelEvaluationRunResultSummary {
-    public init(from decoder: Decoder) throws {
+public extension ApiModelEvaluationRunResultSummary {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.endTime = try container.sdkDecodeIfPresent(.endTime)
-        self.epochSummary = try container.sdkDecodeIfPresent(.epochSummary)
-        self.epochs = try container.sdkDecodeIfPresent(.epochs)
-        self.metricSummaries = try container.sdkDecodeIfPresent(.metricSummaries)
-        self.overallScorePercent = try container.sdkDecodeIfPresent(.overallScorePercent)
-        self.perModelSummaries = try container.sdkDecodeIfPresent(.perModelSummaries)
-        self.perTaskSummaries = try container.sdkDecodeIfPresent(.perTaskSummaries)
-        self.performanceMetrics = try container.sdkDecodeIfPresent(.performanceMetrics)
-        self.pricing = try container.sdkDecodeIfPresent(.pricing)
-        self.starMetricSummary = try container.sdkDecodeIfPresent(.starMetricSummary)
-        self.startTime = try container.sdkDecodeIfPresent(.startTime)
-        self.totalDurationSeconds = try container.sdkDecodeIfPresent(.totalDurationSeconds)
-        if let value = self.endTime {
+        endTime = try container.sdkDecodeIfPresent(.endTime)
+        epochSummary = try container.sdkDecodeIfPresent(.epochSummary)
+        epochs = try container.sdkDecodeIfPresent(.epochs)
+        metricSummaries = try container.sdkDecodeIfPresent(.metricSummaries)
+        overallScorePercent = try container.sdkDecodeIfPresent(.overallScorePercent)
+        perModelSummaries = try container.sdkDecodeIfPresent(.perModelSummaries)
+        perTaskSummaries = try container.sdkDecodeIfPresent(.perTaskSummaries)
+        performanceMetrics = try container.sdkDecodeIfPresent(.performanceMetrics)
+        pricing = try container.sdkDecodeIfPresent(.pricing)
+        starMetricSummary = try container.sdkDecodeIfPresent(.starMetricSummary)
+        startTime = try container.sdkDecodeIfPresent(.startTime)
+        totalDurationSeconds = try container.sdkDecodeIfPresent(.totalDurationSeconds)
+        if let value = endTime {
             try sdkValidateDateTime("end_time", sdkWireString(value))
         }
-        if let value = self.startTime {
+        if let value = startTime {
             try sdkValidateDateTime("start_time", sdkWireString(value))
         }
     }
 }
 
-extension ApiModelEvaluationRunResultSummary {
-    public init(endTime: Date? = nil, epochSummary: ApiEpochResultSummary? = nil, epochs: Int? = nil, metricSummaries: [ApiMetricResultSummary]? = nil, overallScorePercent: Double? = nil, perModelSummaries: ApiPerModelResultSummaries? = nil, perTaskSummaries: ApiPerTaskResultSummaries? = nil, performanceMetrics: ApiPerformanceMetrics? = nil, pricing: ApiEvaluationPricing? = nil, starMetricSummary: ApiStarMetricSummary? = nil, startTime: Date? = nil, totalDurationSeconds: Int? = nil) throws {
+public extension ApiModelEvaluationRunResultSummary {
+    init(
+        endTime: Date? = nil,
+        epochSummary: ApiEpochResultSummary? = nil,
+        epochs: Int? = nil,
+        metricSummaries: [ApiMetricResultSummary]? = nil,
+        overallScorePercent: Double? = nil,
+        perModelSummaries: ApiPerModelResultSummaries? = nil,
+        perTaskSummaries: ApiPerTaskResultSummaries? = nil,
+        performanceMetrics: ApiPerformanceMetrics? = nil,
+        pricing: ApiEvaluationPricing? = nil,
+        starMetricSummary: ApiStarMetricSummary? = nil,
+        startTime: Date? = nil,
+        totalDurationSeconds: Int? = nil
+    ) throws {
         self.init()
         (self.endTime, self.epochSummary) = (endTime, epochSummary)
         (self.epochs, self.metricSummaries) = (epochs, metricSummaries)
@@ -209,21 +239,21 @@ public struct ApiModelEvaluationEpochAttempt: Codable {
     }
 
     init() {
-        (self.candidateRoutedTask, self.metricResults, self.output) = (nil, nil, nil)
+        (candidateRoutedTask, metricResults, output) = (nil, nil, nil)
     }
 }
 
-extension ApiModelEvaluationEpochAttempt {
-    public init(from decoder: Decoder) throws {
+public extension ApiModelEvaluationEpochAttempt {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.candidateRoutedTask = try container.sdkDecodeIfPresent(.candidateRoutedTask)
-        self.metricResults = try container.sdkDecodeIfPresent(.metricResults)
-        self.output = try container.sdkDecodeIfPresent(.output)
+        candidateRoutedTask = try container.sdkDecodeIfPresent(.candidateRoutedTask)
+        metricResults = try container.sdkDecodeIfPresent(.metricResults)
+        output = try container.sdkDecodeIfPresent(.output)
     }
 }
 
-extension ApiModelEvaluationEpochAttempt {
-    public init(candidateRoutedTask: String? = nil, metricResults: [ApiEvaluationMetricResult]? = nil, output: String? = nil) {
+public extension ApiModelEvaluationEpochAttempt {
+    init(candidateRoutedTask: String? = nil, metricResults: [ApiEvaluationMetricResult]? = nil, output: String? = nil) {
         self.init()
         (self.candidateRoutedTask, self.metricResults) = (candidateRoutedTask, metricResults)
         self.output = output
@@ -324,53 +354,82 @@ public struct ApiModelEvaluationRunDetail: Codable {
     }
 
     init() {
-        (self.candidateInferenceConfig, self.candidateModelName, self.candidateModelSource, self.candidateModelUuid, self.completedAt) = (nil, nil, nil, nil, nil)
-        (self.createdAt, self.datasetName, self.datasetUuid, self.epochs, self.errorDescription) = (nil, nil, nil, nil, nil)
-        (self.evalPresetName, self.evalPresetUuid, self.evalRunUuid, self.judgeModelName, self.judgeModelUuid) = (nil, nil, nil, nil, nil)
-        (self.metrics, self.name, self.progress, self.resultSummary, self.starMetric) = (nil, nil, nil, nil, nil)
-        (self.startedAt, self.status) = (nil, nil)
+        (candidateInferenceConfig, candidateModelName, candidateModelSource, candidateModelUuid, completedAt) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (createdAt, datasetName, datasetUuid, epochs, errorDescription) = (nil, nil, nil, nil, nil)
+        (evalPresetName, evalPresetUuid, evalRunUuid, judgeModelName, judgeModelUuid) = (nil, nil, nil, nil, nil)
+        (metrics, name, progress, resultSummary, starMetric) = (nil, nil, nil, nil, nil)
+        (startedAt, status) = (nil, nil)
     }
 }
 
-extension ApiModelEvaluationRunDetail {
-    public init(from decoder: Decoder) throws {
+public extension ApiModelEvaluationRunDetail {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.candidateInferenceConfig = try container.sdkDecodeIfPresent(.candidateInferenceConfig)
-        self.candidateModelName = try container.sdkDecodeIfPresent(.candidateModelName)
-        self.candidateModelSource = try container.sdkDecodeIfPresent(.candidateModelSource)
-        self.candidateModelUuid = try container.sdkDecodeIfPresent(.candidateModelUuid)
-        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.datasetName = try container.sdkDecodeIfPresent(.datasetName)
-        self.datasetUuid = try container.sdkDecodeIfPresent(.datasetUuid)
-        self.epochs = try container.sdkDecodeIfPresent(.epochs)
-        self.errorDescription = try container.sdkDecodeIfPresent(.errorDescription)
-        self.evalPresetName = try container.sdkDecodeIfPresent(.evalPresetName)
-        self.evalPresetUuid = try container.sdkDecodeIfPresent(.evalPresetUuid)
-        self.evalRunUuid = try container.sdkDecodeIfPresent(.evalRunUuid)
-        self.judgeModelName = try container.sdkDecodeIfPresent(.judgeModelName)
-        self.judgeModelUuid = try container.sdkDecodeIfPresent(.judgeModelUuid)
-        self.metrics = try container.sdkDecodeIfPresent(.metrics)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.progress = try container.sdkDecodeIfPresent(.progress)
-        self.resultSummary = try container.sdkDecodeIfPresent(.resultSummary)
-        self.starMetric = try container.sdkDecodeIfPresent(.starMetric)
-        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        if let value = self.completedAt {
+        candidateInferenceConfig = try container.sdkDecodeIfPresent(.candidateInferenceConfig)
+        candidateModelName = try container.sdkDecodeIfPresent(.candidateModelName)
+        candidateModelSource = try container.sdkDecodeIfPresent(.candidateModelSource)
+        candidateModelUuid = try container.sdkDecodeIfPresent(.candidateModelUuid)
+        completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        datasetName = try container.sdkDecodeIfPresent(.datasetName)
+        datasetUuid = try container.sdkDecodeIfPresent(.datasetUuid)
+        epochs = try container.sdkDecodeIfPresent(.epochs)
+        errorDescription = try container.sdkDecodeIfPresent(.errorDescription)
+        evalPresetName = try container.sdkDecodeIfPresent(.evalPresetName)
+        evalPresetUuid = try container.sdkDecodeIfPresent(.evalPresetUuid)
+        evalRunUuid = try container.sdkDecodeIfPresent(.evalRunUuid)
+        judgeModelName = try container.sdkDecodeIfPresent(.judgeModelName)
+        judgeModelUuid = try container.sdkDecodeIfPresent(.judgeModelUuid)
+        metrics = try container.sdkDecodeIfPresent(.metrics)
+        name = try container.sdkDecodeIfPresent(.name)
+        progress = try container.sdkDecodeIfPresent(.progress)
+        resultSummary = try container.sdkDecodeIfPresent(.resultSummary)
+        starMetric = try container.sdkDecodeIfPresent(.starMetric)
+        startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        status = try container.sdkDecodeIfPresent(.status)
+        if let value = completedAt {
             try sdkValidateDateTime("completed_at", sdkWireString(value))
         }
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.startedAt {
+        if let value = startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiModelEvaluationRunDetail {
-    public init(candidateInferenceConfig: ApiCandidateInferenceConfig? = nil, candidateModelName: String? = nil, candidateModelSource: ApiCandidateModelSource? = nil, candidateModelUuid: String? = nil, completedAt: Date? = nil, createdAt: Date? = nil, datasetName: String? = nil, datasetUuid: String? = nil, epochs: Int? = nil, errorDescription: String? = nil, evalPresetName: String? = nil, evalPresetUuid: String? = nil, evalRunUuid: String? = nil, judgeModelName: String? = nil, judgeModelUuid: String? = nil, metrics: [ApiEvaluationMetric]? = nil, name: String? = nil, progress: ApiModelEvaluationRunProgress? = nil, resultSummary: ApiModelEvaluationRunResultSummary? = nil, starMetric: ApiStarMetric? = nil, startedAt: Date? = nil, status: ApiModelEvaluationRunStatus? = nil) throws {
+public extension ApiModelEvaluationRunDetail {
+    init(
+        candidateInferenceConfig: ApiCandidateInferenceConfig? = nil,
+        candidateModelName: String? = nil,
+        candidateModelSource: ApiCandidateModelSource? = nil,
+        candidateModelUuid: String? = nil,
+        completedAt: Date? = nil,
+        createdAt: Date? = nil,
+        datasetName: String? = nil,
+        datasetUuid: String? = nil,
+        epochs: Int? = nil,
+        errorDescription: String? = nil,
+        evalPresetName: String? = nil,
+        evalPresetUuid: String? = nil,
+        evalRunUuid: String? = nil,
+        judgeModelName: String? = nil,
+        judgeModelUuid: String? = nil,
+        metrics: [ApiEvaluationMetric]? = nil,
+        name: String? = nil,
+        progress: ApiModelEvaluationRunProgress? = nil,
+        resultSummary: ApiModelEvaluationRunResultSummary? = nil,
+        starMetric: ApiStarMetric? = nil,
+        startedAt: Date? = nil,
+        status: ApiModelEvaluationRunStatus? = nil
+    ) throws {
         self.init()
         self.candidateInferenceConfig = candidateInferenceConfig
         (self.candidateModelName, self.candidateModelSource) = (candidateModelName, candidateModelSource)
@@ -418,22 +477,22 @@ public struct ApiModelPricingEntry: Codable {
     }
 
     init() {
-        (self.modelName, self.modelUuid, self.pricing, self.promptCount) = (nil, nil, nil, nil)
+        (modelName, modelUuid, pricing, promptCount) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiModelPricingEntry {
-    public init(from decoder: Decoder) throws {
+public extension ApiModelPricingEntry {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.modelName = try container.sdkDecodeIfPresent(.modelName)
-        self.modelUuid = try container.sdkDecodeIfPresent(.modelUuid)
-        self.pricing = try container.sdkDecodeIfPresent(.pricing)
-        self.promptCount = try container.sdkDecodeIfPresent(.promptCount)
+        modelName = try container.sdkDecodeIfPresent(.modelName)
+        modelUuid = try container.sdkDecodeIfPresent(.modelUuid)
+        pricing = try container.sdkDecodeIfPresent(.pricing)
+        promptCount = try container.sdkDecodeIfPresent(.promptCount)
     }
 }
 
-extension ApiModelPricingEntry {
-    public init(modelName: String? = nil, modelUuid: String? = nil, pricing: ApiTokenPricing? = nil, promptCount: Int? = nil) {
+public extension ApiModelPricingEntry {
+    init(modelName: String? = nil, modelUuid: String? = nil, pricing: ApiTokenPricing? = nil, promptCount: Int? = nil) {
         self.init()
         (self.modelName, self.modelUuid) = (modelName, modelUuid)
         (self.pricing, self.promptCount) = (pricing, promptCount)

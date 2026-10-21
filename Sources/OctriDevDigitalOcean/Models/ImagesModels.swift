@@ -3,34 +3,48 @@
 
 import Foundation
 
-// Images domain models
+/// Images domain models
 public indirect enum ImagesPostAccountTransferCreate {
     case imagesPostAccountTransferCreateVariant0(ImagesPostAccountTransferCreateVariant0)
     case imagesPostAccountTransferCreateVariant1(ImagesPostAccountTransferCreateVariant1)
 }
 
 extension ImagesPostAccountTransferCreate: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
+            if let value = Self.decodeLossless1(from: container, raw) {
+                self = value; return
+            }
         }
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ImagesPostAccountTransferCreate")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for ImagesPostAccountTransferCreate"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension ImagesPostAccountTransferCreate {
     static func decodeLossless1(from container: SingleValueDecodingContainer, _ raw: JSONValue) -> Self? {
-        if let value = try? container.decode(ImagesPostAccountTransferCreateVariant0.self), sdkKeepsEveryKey(value, of: raw) {
+        if let value = try? container.decode(ImagesPostAccountTransferCreateVariant0.self), sdkKeepsEveryKey(
+            value,
+            of: raw
+        ) {
             return .imagesPostAccountTransferCreateVariant0(value)
         }
-        if let value = try? container.decode(ImagesPostAccountTransferCreateVariant1.self), sdkKeepsEveryKey(value, of: raw) {
+        if let value = try? container.decode(ImagesPostAccountTransferCreateVariant1.self), sdkKeepsEveryKey(
+            value,
+            of: raw
+        ) {
             return .imagesPostAccountTransferCreateVariant1(value)
         }
         return nil
@@ -42,12 +56,12 @@ extension ImagesPostAccountTransferCreate {
         if let value = try? container.decode(
             ImagesPostAccountTransferCreateVariant0.self
         ) {
-            return             .imagesPostAccountTransferCreateVariant0(value)
+            return .imagesPostAccountTransferCreateVariant0(value)
         }
         if let value = try? container.decode(
             ImagesPostAccountTransferCreateVariant1.self
         ) {
-            return             .imagesPostAccountTransferCreateVariant1(value)
+            return .imagesPostAccountTransferCreateVariant1(value)
         }
         return nil
     }
@@ -102,32 +116,53 @@ public struct ImageNewCustom: Codable {
         case tags
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ImageNewCustom {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.url) else {
-            throw SdkValidationError(field: "url", code: "required", message: "Validation failed for 'url': value is required")
-        }
-        guard container.contains(.region) else {
-            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.url = try container.sdkDecodeRequired(.url)
-        self.region = try container.sdkDecodeRequired(.region)
-        self.distribution = try container.sdkDecodeIfPresent(.distribution)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ImageNewCustom {
-    public init(name: ImageName, url: String, region: RegionSlug, distribution: Distribution? = nil, description: ImageDescription? = nil, tags: TagsArray? = nil) {
+public extension ImageNewCustom {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.url) else {
+            throw SdkValidationError(
+                field: "url",
+                code: "required",
+                message: "Validation failed for 'url': value is required"
+            )
+        }
+        guard container.contains(.region) else {
+            throw SdkValidationError(
+                field: "region",
+                code: "required",
+                message: "Validation failed for 'region': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        url = try container.sdkDecodeRequired(.url)
+        region = try container.sdkDecodeRequired(.region)
+        distribution = try container.sdkDecodeIfPresent(.distribution)
+        description = try container.sdkDecodeIfPresent(.description)
+        tags = try container.sdkDecodeIfPresent(.tags)
+    }
+}
+
+public extension ImageNewCustom {
+    init(
+        name: ImageName,
+        url: String,
+        region: RegionSlug,
+        distribution: Distribution? = nil,
+        description: ImageDescription? = nil,
+        tags: TagsArray? = nil
+    ) {
         (self.name, self.url) = (name, url)
         (self.region, self.distribution) = (region, distribution)
         (self.description, self.tags) = (description, tags)
@@ -148,25 +183,35 @@ public struct ImagesPostAccountTransferAccept: Codable {
         case recipientUuid = "recipient_uuid"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ImagesPostAccountTransferAccept {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.transferId) else {
-            throw SdkValidationError(field: "transfer_id", code: "required", message: "Validation failed for 'transfer_id': value is required")
-        }
-        guard container.contains(.recipientUuid) else {
-            throw SdkValidationError(field: "recipient_uuid", code: "required", message: "Validation failed for 'recipient_uuid': value is required")
-        }
-        self.transferId = try container.sdkDecodeRequired(.transferId)
-        self.recipientUuid = try container.sdkDecodeRequired(.recipientUuid)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ImagesPostAccountTransferAccept {
-    public init(transferId: Int, recipientUuid: String) {
+public extension ImagesPostAccountTransferAccept {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.transferId) else {
+            throw SdkValidationError(
+                field: "transfer_id",
+                code: "required",
+                message: "Validation failed for 'transfer_id': value is required"
+            )
+        }
+        guard container.contains(.recipientUuid) else {
+            throw SdkValidationError(
+                field: "recipient_uuid",
+                code: "required",
+                message: "Validation failed for 'recipient_uuid': value is required"
+            )
+        }
+        transferId = try container.sdkDecodeRequired(.transferId)
+        recipientUuid = try container.sdkDecodeRequired(.recipientUuid)
+    }
+}
+
+public extension ImagesPostAccountTransferAccept {
+    init(transferId: Int, recipientUuid: String) {
         (self.transferId, self.recipientUuid) = (transferId, recipientUuid)
     }
 }
@@ -181,19 +226,19 @@ public struct NewCustomImage: Codable {
     }
 
     init() {
-        self.image = nil
+        image = nil
     }
 }
 
-extension NewCustomImage {
-    public init(from decoder: Decoder) throws {
+public extension NewCustomImage {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.image = try container.sdkDecodeIfPresent(.image)
+        image = try container.sdkDecodeIfPresent(.image)
     }
 }
 
-extension NewCustomImage {
-    public init(image: Image? = nil) {
+public extension NewCustomImage {
+    init(image: Image? = nil) {
         self.init()
         self.image = image
     }
@@ -221,21 +266,21 @@ public struct ImageUpdate: Codable {
     }
 
     init() {
-        (self.name, self.distribution, self.description) = (nil, nil, nil)
+        (name, distribution, description) = (nil, nil, nil)
     }
 }
 
-extension ImageUpdate {
-    public init(from decoder: Decoder) throws {
+public extension ImageUpdate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.distribution = try container.sdkDecodeIfPresent(.distribution)
-        self.description = try container.sdkDecodeIfPresent(.description)
+        name = try container.sdkDecodeIfPresent(.name)
+        distribution = try container.sdkDecodeIfPresent(.distribution)
+        description = try container.sdkDecodeIfPresent(.description)
     }
 }
 
-extension ImageUpdate {
-    public init(name: ImageName? = nil, distribution: Distribution? = nil, description: ImageDescription? = nil) {
+public extension ImageUpdate {
+    init(name: ImageName? = nil, distribution: Distribution? = nil, description: ImageDescription? = nil) {
         self.init()
         (self.name, self.distribution) = (name, distribution)
         self.description = description
@@ -256,26 +301,36 @@ public struct AllImages: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllImages {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.images) else {
-            throw SdkValidationError(field: "images", code: "required", message: "Validation failed for 'images': value is required")
-        }
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.images = try container.sdkDecodeRequired(.images)
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllImages {
-    public init(images: [Image], meta: MetaMeta, links: PageLinks? = nil) {
+public extension AllImages {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.images) else {
+            throw SdkValidationError(
+                field: "images",
+                code: "required",
+                message: "Validation failed for 'images': value is required"
+            )
+        }
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        images = try container.sdkDecodeRequired(.images)
+        meta = try container.sdkDecodeRequired(.meta)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllImages {
+    init(images: [Image], meta: MetaMeta, links: PageLinks? = nil) {
         (self.images, self.meta) = (images, meta)
         self.links = links
     }
@@ -290,21 +345,27 @@ public struct ImagesPostAccountTransferAcceptVariant1: Codable {
         case recipientUuid = "recipient_uuid"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ImagesPostAccountTransferAcceptVariant1 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.recipientUuid) else {
-            throw SdkValidationError(field: "recipient_uuid", code: "required", message: "Validation failed for 'recipient_uuid': value is required")
-        }
-        self.recipientUuid = try container.sdkDecodeRequired(.recipientUuid)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ImagesPostAccountTransferAcceptVariant1 {
-    public init(recipientUuid: String) {
+public extension ImagesPostAccountTransferAcceptVariant1 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.recipientUuid) else {
+            throw SdkValidationError(
+                field: "recipient_uuid",
+                code: "required",
+                message: "Validation failed for 'recipient_uuid': value is required"
+            )
+        }
+        recipientUuid = try container.sdkDecodeRequired(.recipientUuid)
+    }
+}
+
+public extension ImagesPostAccountTransferAcceptVariant1 {
+    init(recipientUuid: String) {
         self.recipientUuid = recipientUuid
     }
 }
@@ -319,21 +380,27 @@ public struct ImagesPostAccountTransferCancel: Codable {
         case transferId = "transfer_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ImagesPostAccountTransferCancel {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.transferId) else {
-            throw SdkValidationError(field: "transfer_id", code: "required", message: "Validation failed for 'transfer_id': value is required")
-        }
-        self.transferId = try container.sdkDecodeRequired(.transferId)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ImagesPostAccountTransferCancel {
-    public init(transferId: Int) {
+public extension ImagesPostAccountTransferCancel {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.transferId) else {
+            throw SdkValidationError(
+                field: "transfer_id",
+                code: "required",
+                message: "Validation failed for 'transfer_id': value is required"
+            )
+        }
+        transferId = try container.sdkDecodeRequired(.transferId)
+    }
+}
+
+public extension ImagesPostAccountTransferCancel {
+    init(transferId: Int) {
         self.transferId = transferId
     }
 }
@@ -347,21 +414,27 @@ public struct ImagesPostAccountTransferCreateVariant0: Codable {
         case recipientEmail = "recipient_email"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ImagesPostAccountTransferCreateVariant0 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.recipientEmail) else {
-            throw SdkValidationError(field: "recipient_email", code: "required", message: "Validation failed for 'recipient_email': value is required")
-        }
-        self.recipientEmail = try container.sdkDecodeRequired(.recipientEmail)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ImagesPostAccountTransferCreateVariant0 {
-    public init(recipientEmail: String) {
+public extension ImagesPostAccountTransferCreateVariant0 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.recipientEmail) else {
+            throw SdkValidationError(
+                field: "recipient_email",
+                code: "required",
+                message: "Validation failed for 'recipient_email': value is required"
+            )
+        }
+        recipientEmail = try container.sdkDecodeRequired(.recipientEmail)
+    }
+}
+
+public extension ImagesPostAccountTransferCreateVariant0 {
+    init(recipientEmail: String) {
         self.recipientEmail = recipientEmail
     }
 }
@@ -377,19 +450,19 @@ public struct ImagesPostAccountTransferCreated: Codable {
     }
 
     init() {
-        self.transferId = nil
+        transferId = nil
     }
 }
 
-extension ImagesPostAccountTransferCreated {
-    public init(from decoder: Decoder) throws {
+public extension ImagesPostAccountTransferCreated {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.transferId = try container.sdkDecodeIfPresent(.transferId)
+        transferId = try container.sdkDecodeIfPresent(.transferId)
     }
 }
 
-extension ImagesPostAccountTransferCreated {
-    public init(transferId: TransferId? = nil) {
+public extension ImagesPostAccountTransferCreated {
+    init(transferId: TransferId? = nil) {
         self.init()
         self.transferId = transferId
     }
@@ -402,21 +475,27 @@ public struct AllImagesVariant0: Codable {
         case images
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllImagesVariant0 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.images) else {
-            throw SdkValidationError(field: "images", code: "required", message: "Validation failed for 'images': value is required")
-        }
-        self.images = try container.sdkDecodeRequired(.images)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllImagesVariant0 {
-    public init(images: [Image]) {
+public extension AllImagesVariant0 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.images) else {
+            throw SdkValidationError(
+                field: "images",
+                code: "required",
+                message: "Validation failed for 'images': value is required"
+            )
+        }
+        images = try container.sdkDecodeRequired(.images)
+    }
+}
+
+public extension AllImagesVariant0 {
+    init(images: [Image]) {
         self.images = images
     }
 }
@@ -430,21 +509,27 @@ public struct ImagesPostAccountTransferCreateVariant1: Codable {
         case recipientUuid = "recipient_uuid"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ImagesPostAccountTransferCreateVariant1 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.recipientUuid) else {
-            throw SdkValidationError(field: "recipient_uuid", code: "required", message: "Validation failed for 'recipient_uuid': value is required")
-        }
-        self.recipientUuid = try container.sdkDecodeRequired(.recipientUuid)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ImagesPostAccountTransferCreateVariant1 {
-    public init(recipientUuid: String) {
+public extension ImagesPostAccountTransferCreateVariant1 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.recipientUuid) else {
+            throw SdkValidationError(
+                field: "recipient_uuid",
+                code: "required",
+                message: "Validation failed for 'recipient_uuid': value is required"
+            )
+        }
+        recipientUuid = try container.sdkDecodeRequired(.recipientUuid)
+    }
+}
+
+public extension ImagesPostAccountTransferCreateVariant1 {
+    init(recipientUuid: String) {
         self.recipientUuid = recipientUuid
     }
 }
@@ -459,21 +544,27 @@ public struct ImagesPostAccountTransferDecline: Codable {
         case transferId = "transfer_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ImagesPostAccountTransferDecline {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.transferId) else {
-            throw SdkValidationError(field: "transfer_id", code: "required", message: "Validation failed for 'transfer_id': value is required")
-        }
-        self.transferId = try container.sdkDecodeRequired(.transferId)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ImagesPostAccountTransferDecline {
-    public init(transferId: Int) {
+public extension ImagesPostAccountTransferDecline {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.transferId) else {
+            throw SdkValidationError(
+                field: "transfer_id",
+                code: "required",
+                message: "Validation failed for 'transfer_id': value is required"
+            )
+        }
+        transferId = try container.sdkDecodeRequired(.transferId)
+    }
+}
+
+public extension ImagesPostAccountTransferDecline {
+    init(transferId: Int) {
         self.transferId = transferId
     }
 }
@@ -487,21 +578,27 @@ public struct UpdatedImage: Codable {
         case image
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension UpdatedImage {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.image) else {
-            throw SdkValidationError(field: "image", code: "required", message: "Validation failed for 'image': value is required")
-        }
-        self.image = try container.sdkDecodeRequired(.image)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension UpdatedImage {
-    public init(image: Image) {
+public extension UpdatedImage {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.image) else {
+            throw SdkValidationError(
+                field: "image",
+                code: "required",
+                message: "Validation failed for 'image': value is required"
+            )
+        }
+        image = try container.sdkDecodeRequired(.image)
+    }
+}
+
+public extension UpdatedImage {
+    init(image: Image) {
         self.image = image
     }
 }
@@ -515,21 +612,27 @@ public struct ExistingImage: Codable {
         case image
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ExistingImage {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.image) else {
-            throw SdkValidationError(field: "image", code: "required", message: "Validation failed for 'image': value is required")
-        }
-        self.image = try container.sdkDecodeRequired(.image)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ExistingImage {
-    public init(image: Image) {
+public extension ExistingImage {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.image) else {
+            throw SdkValidationError(
+                field: "image",
+                code: "required",
+                message: "Validation failed for 'image': value is required"
+            )
+        }
+        image = try container.sdkDecodeRequired(.image)
+    }
+}
+
+public extension ExistingImage {
+    init(image: Image) {
         self.image = image
     }
 }

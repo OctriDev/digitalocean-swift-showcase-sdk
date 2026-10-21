@@ -3,7 +3,7 @@
 
 import Foundation
 
-// InsightsSlack domain models
+/// InsightsSlack domain models
 /// Slack notification channel configuration as returned in API responses. The webhook URL is never returned;
 /// `webhook_url_status` indicates whether it is configured.
 public struct SlackNotificationConfigResponse: Codable {
@@ -18,22 +18,28 @@ public struct SlackNotificationConfigResponse: Codable {
         case webhookUrlStatus = "webhook_url_status"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SlackNotificationConfigResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.channel) else {
-            throw SdkValidationError(field: "channel", code: "required", message: "Validation failed for 'channel': value is required")
-        }
-        self.channel = try container.sdkDecodeRequired(.channel)
-        self.webhookUrlStatus = try container.sdkDecodeIfPresent(.webhookUrlStatus)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SlackNotificationConfigResponse {
-    public init(channel: String, webhookUrlStatus: SecretStatus? = nil) {
+public extension SlackNotificationConfigResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.channel) else {
+            throw SdkValidationError(
+                field: "channel",
+                code: "required",
+                message: "Validation failed for 'channel': value is required"
+            )
+        }
+        channel = try container.sdkDecodeRequired(.channel)
+        webhookUrlStatus = try container.sdkDecodeIfPresent(.webhookUrlStatus)
+    }
+}
+
+public extension SlackNotificationConfigResponse {
+    init(channel: String, webhookUrlStatus: SecretStatus? = nil) {
         (self.channel, self.webhookUrlStatus) = (channel, webhookUrlStatus)
     }
 }
@@ -54,22 +60,28 @@ public struct SlackNotificationConfigRequest: Codable {
         case webhookUrl = "webhook_url"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SlackNotificationConfigRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.channel) else {
-            throw SdkValidationError(field: "channel", code: "required", message: "Validation failed for 'channel': value is required")
-        }
-        self.channel = try container.sdkDecodeRequired(.channel)
-        self.webhookUrl = try container.sdkDecodeIfPresent(.webhookUrl)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SlackNotificationConfigRequest {
-    public init(channel: String, webhookUrl: String? = nil) {
+public extension SlackNotificationConfigRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.channel) else {
+            throw SdkValidationError(
+                field: "channel",
+                code: "required",
+                message: "Validation failed for 'channel': value is required"
+            )
+        }
+        channel = try container.sdkDecodeRequired(.channel)
+        webhookUrl = try container.sdkDecodeIfPresent(.webhookUrl)
+    }
+}
+
+public extension SlackNotificationConfigRequest {
+    init(channel: String, webhookUrl: String? = nil) {
         (self.channel, self.webhookUrl) = (channel, webhookUrl)
     }
 }

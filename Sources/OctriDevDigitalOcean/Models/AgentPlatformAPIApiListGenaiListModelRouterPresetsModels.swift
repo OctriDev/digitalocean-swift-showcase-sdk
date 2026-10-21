@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiList domain models
+/// AgentPlatformAPIApiList domain models
 /// List of model router presets
 public struct ApiListModelRouterPresetsOutput: Codable {
     /// Links to other pages
@@ -20,21 +20,21 @@ public struct ApiListModelRouterPresetsOutput: Codable {
     }
 
     init() {
-        (self.links, self.meta, self.presets) = (nil, nil, nil)
+        (links, meta, presets) = (nil, nil, nil)
     }
 }
 
-extension ApiListModelRouterPresetsOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiListModelRouterPresetsOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.links = try container.sdkDecodeIfPresent(.links)
-        self.meta = try container.sdkDecodeIfPresent(.meta)
-        self.presets = try container.sdkDecodeIfPresent(.presets)
+        links = try container.sdkDecodeIfPresent(.links)
+        meta = try container.sdkDecodeIfPresent(.meta)
+        presets = try container.sdkDecodeIfPresent(.presets)
     }
 }
 
-extension ApiListModelRouterPresetsOutput {
-    public init(links: ApiLinks? = nil, meta: ApiMeta? = nil, presets: [ApiModelRouterPreset]? = nil) {
+public extension ApiListModelRouterPresetsOutput {
+    init(links: ApiLinks? = nil, meta: ApiMeta? = nil, presets: [ApiModelRouterPreset]? = nil) {
         self.init()
         (self.links, self.meta) = (links, meta)
         self.presets = presets

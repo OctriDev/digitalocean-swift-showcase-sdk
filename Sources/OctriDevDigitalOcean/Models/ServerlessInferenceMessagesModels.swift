@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ServerlessInferenceMessages domain models
+/// ServerlessInferenceMessages domain models
 public indirect enum MessagesRequestContentBlockParam {
     case messagesRequestTextBlockParam(MessagesRequestTextBlockParam)
     case messagesImageBlockParam(MessagesImageBlockParam)
@@ -14,7 +14,6 @@ public indirect enum MessagesRequestContentBlockParam {
 }
 
 extension MessagesRequestContentBlockParam: Codable {
-
     private enum CodingKeys: String, CodingKey {
         case discriminator = "type"
     }
@@ -22,12 +21,16 @@ extension MessagesRequestContentBlockParam: Codable {
     public init(from decoder: Decoder) throws {
         let tagged = try decoder.container(keyedBy: CodingKeys.self)
         let discriminator = try tagged.decode(String.self, forKey: .discriminator)
-        if let value = try Self.decodeGroup1(discriminator, from: decoder) { self = value; return }
+        if let value = try Self.decodeGroup1(discriminator, from: decoder) {
+            self = value; return
+        }
         self = try .unknown(tag: discriminator, raw: JSONValue(from: decoder))
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
         if case let .unknown(_, raw) = self {
             var container = encoder.singleValueContainer()
             try container.encode(raw)
@@ -38,11 +41,11 @@ extension MessagesRequestContentBlockParam: Codable {
 extension MessagesRequestContentBlockParam {
     static func decodeGroup1(_ discriminator: String, from decoder: Decoder) throws -> Self? {
         switch discriminator {
-        case "text": return .messagesRequestTextBlockParam(try MessagesRequestTextBlockParam(from: decoder))
-        case "image": return .messagesImageBlockParam(try MessagesImageBlockParam(from: decoder))
-        case "tool_use": return .messagesToolUseBlockParam(try MessagesToolUseBlockParam(from: decoder))
-        case "tool_result": return .messagesToolResultBlockParam(try MessagesToolResultBlockParam(from: decoder))
-        default: return nil
+        case "text": try .messagesRequestTextBlockParam(MessagesRequestTextBlockParam(from: decoder))
+        case "image": try .messagesImageBlockParam(MessagesImageBlockParam(from: decoder))
+        case "tool_use": try .messagesToolUseBlockParam(MessagesToolUseBlockParam(from: decoder))
+        case "tool_result": try .messagesToolResultBlockParam(MessagesToolResultBlockParam(from: decoder))
+        default: nil
         }
     }
 }
@@ -68,7 +71,6 @@ public indirect enum MessagesResponseContentBlock {
 }
 
 extension MessagesResponseContentBlock: Codable {
-
     private enum CodingKeys: String, CodingKey {
         case discriminator = "type"
     }
@@ -76,12 +78,16 @@ extension MessagesResponseContentBlock: Codable {
     public init(from decoder: Decoder) throws {
         let tagged = try decoder.container(keyedBy: CodingKeys.self)
         let discriminator = try tagged.decode(String.self, forKey: .discriminator)
-        if let value = try Self.decodeGroup1(discriminator, from: decoder) { self = value; return }
+        if let value = try Self.decodeGroup1(discriminator, from: decoder) {
+            self = value; return
+        }
         self = try .unknown(tag: discriminator, raw: JSONValue(from: decoder))
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
         if case let .unknown(_, raw) = self {
             var container = encoder.singleValueContainer()
             try container.encode(raw)
@@ -92,9 +98,9 @@ extension MessagesResponseContentBlock: Codable {
 extension MessagesResponseContentBlock {
     static func decodeGroup1(_ discriminator: String, from decoder: Decoder) throws -> Self? {
         switch discriminator {
-        case "text": return .messagesResponseTextBlock(try MessagesResponseTextBlock(from: decoder))
-        case "tool_use": return .messagesResponseToolUseBlock(try MessagesResponseToolUseBlock(from: decoder))
-        default: return nil
+        case "text": try .messagesResponseTextBlock(MessagesResponseTextBlock(from: decoder))
+        case "tool_use": try .messagesResponseToolUseBlock(MessagesResponseToolUseBlock(from: decoder))
+        default: nil
         }
     }
 }
@@ -116,22 +122,33 @@ public indirect enum MessagesToolChoiceParam {
 }
 
 extension MessagesToolChoiceParam: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for MessagesToolChoiceParam")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for MessagesToolChoiceParam"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension MessagesToolChoiceParam {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode(MessagesToolChoiceParamVariant1.self) { return .messagesToolChoiceParamVariant1(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container
+            .decode(MessagesToolChoiceParamVariant1.self) {
+            return .messagesToolChoiceParamVariant1(value)
+        }
         return nil
     }
 }
@@ -171,26 +188,39 @@ public struct MessagesStreamEvent: Codable {
         case usage
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension MessagesStreamEvent {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.message = try container.sdkDecodeIfPresent(.message)
-        self.index = try container.sdkDecodeIfPresent(.index)
-        self.contentBlock = try container.sdkDecodeIfPresent(.contentBlock)
-        self.delta = try container.sdkDecodeIfPresent(.delta)
-        self.usage = try container.sdkDecodeIfPresent(.usage)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension MessagesStreamEvent {
-    public init(type: MessagesStreamEventType, message: [String: JSONValue]? = nil, index: Int? = nil, contentBlock: [String: JSONValue]? = nil, delta: [String: JSONValue]? = nil, usage: MessagesStreamEventUsage? = nil) {
+public extension MessagesStreamEvent {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        message = try container.sdkDecodeIfPresent(.message)
+        index = try container.sdkDecodeIfPresent(.index)
+        contentBlock = try container.sdkDecodeIfPresent(.contentBlock)
+        delta = try container.sdkDecodeIfPresent(.delta)
+        usage = try container.sdkDecodeIfPresent(.usage)
+    }
+}
+
+public extension MessagesStreamEvent {
+    init(
+        type: MessagesStreamEventType,
+        message: [String: JSONValue]? = nil,
+        index: Int? = nil,
+        contentBlock: [String: JSONValue]? = nil,
+        delta: [String: JSONValue]? = nil,
+        usage: MessagesStreamEventUsage? = nil
+    ) {
         (self.type, self.message) = (type, message)
         (self.index, self.contentBlock) = (index, contentBlock)
         (self.delta, self.usage) = (delta, usage)
@@ -232,46 +262,85 @@ public struct MessagesCreateResponse: Codable {
         case stopSequence = "stop_sequence"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension MessagesCreateResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.role) else {
-            throw SdkValidationError(field: "role", code: "required", message: "Validation failed for 'role': value is required")
-        }
-        guard container.contains(.content) else {
-            throw SdkValidationError(field: "content", code: "required", message: "Validation failed for 'content': value is required")
-        }
-        guard container.contains(.model) else {
-            throw SdkValidationError(field: "model", code: "required", message: "Validation failed for 'model': value is required")
-        }
-        guard container.contains(.stopReason) else {
-            throw SdkValidationError(field: "stop_reason", code: "required", message: "Validation failed for 'stop_reason': value is required")
-        }
-        guard container.contains(.usage) else {
-            throw SdkValidationError(field: "usage", code: "required", message: "Validation failed for 'usage': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.role = try container.sdkDecodeRequired(.role)
-        self.content = try container.sdkDecodeRequired(.content)
-        self.model = try container.sdkDecodeRequired(.model)
-        self.stopReason = try container.sdkDecodeNullable(.stopReason)
-        self.usage = try container.sdkDecodeRequired(.usage)
-        self.stopSequence = try container.sdkDecodeIfPresent(.stopSequence)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension MessagesCreateResponse {
-    public init(id: String, type: MessagesCreateResponseType, role: MessagesCreateResponseRole, content: [MessagesResponseContentBlock], model: String, stopReason: MessagesCreateResponseStopReason?, usage: MessagesUsage, stopSequence: String? = nil) {
+public extension MessagesCreateResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.role) else {
+            throw SdkValidationError(
+                field: "role",
+                code: "required",
+                message: "Validation failed for 'role': value is required"
+            )
+        }
+        guard container.contains(.content) else {
+            throw SdkValidationError(
+                field: "content",
+                code: "required",
+                message: "Validation failed for 'content': value is required"
+            )
+        }
+        guard container.contains(.model) else {
+            throw SdkValidationError(
+                field: "model",
+                code: "required",
+                message: "Validation failed for 'model': value is required"
+            )
+        }
+        guard container.contains(.stopReason) else {
+            throw SdkValidationError(
+                field: "stop_reason",
+                code: "required",
+                message: "Validation failed for 'stop_reason': value is required"
+            )
+        }
+        guard container.contains(.usage) else {
+            throw SdkValidationError(
+                field: "usage",
+                code: "required",
+                message: "Validation failed for 'usage': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+        type = try container.sdkDecodeRequired(.type)
+        role = try container.sdkDecodeRequired(.role)
+        content = try container.sdkDecodeRequired(.content)
+        model = try container.sdkDecodeRequired(.model)
+        stopReason = try container.sdkDecodeNullable(.stopReason)
+        usage = try container.sdkDecodeRequired(.usage)
+        stopSequence = try container.sdkDecodeIfPresent(.stopSequence)
+    }
+}
+
+public extension MessagesCreateResponse {
+    init(
+        id: String,
+        type: MessagesCreateResponseType,
+        role: MessagesCreateResponseRole,
+        content: [MessagesResponseContentBlock],
+        model: String,
+        stopReason: MessagesCreateResponseStopReason?,
+        usage: MessagesUsage,
+        stopSequence: String? = nil
+    ) {
         (self.id, self.type) = (id, type)
         (self.role, self.content) = (role, content)
         (self.model, self.stopReason) = (model, stopReason)
@@ -285,25 +354,33 @@ public indirect enum MessagesApiMessageParamContent {
 }
 
 extension MessagesApiMessageParamContent: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for MessagesApiMessageParamContent")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for MessagesApiMessageParamContent"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension MessagesApiMessageParamContent {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
         if let value = try? container.decode(
             [MessagesRequestContentBlockParam].self
         ) {
-            return             .messagesRequestContentBlockParamList(value)
+            return .messagesRequestContentBlockParamList(value)
         }
         return nil
     }
@@ -336,26 +413,36 @@ public struct MessagesToolDefinitionParam: Codable {
         case description
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension MessagesToolDefinitionParam {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.inputSchema) else {
-            throw SdkValidationError(field: "input_schema", code: "required", message: "Validation failed for 'input_schema': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.inputSchema = try container.sdkDecodeRequired(.inputSchema)
-        self.description = try container.sdkDecodeIfPresent(.description)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension MessagesToolDefinitionParam {
-    public init(name: String, inputSchema: [String: JSONValue], description: String? = nil) {
+public extension MessagesToolDefinitionParam {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.inputSchema) else {
+            throw SdkValidationError(
+                field: "input_schema",
+                code: "required",
+                message: "Validation failed for 'input_schema': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        inputSchema = try container.sdkDecodeRequired(.inputSchema)
+        description = try container.sdkDecodeIfPresent(.description)
+    }
+}
+
+public extension MessagesToolDefinitionParam {
+    init(name: String, inputSchema: [String: JSONValue], description: String? = nil) {
         (self.name, self.inputSchema) = (name, inputSchema)
         self.description = description
     }
@@ -367,22 +454,33 @@ public indirect enum MessagesCreateRequestSystem {
 }
 
 extension MessagesCreateRequestSystem: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for MessagesCreateRequestSystem")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for MessagesCreateRequestSystem"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension MessagesCreateRequestSystem {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode([MessagesRequestTextBlockParam].self) { return .messagesRequestTextBlockParamList(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container
+            .decode([MessagesRequestTextBlockParam].self) {
+            return .messagesRequestTextBlockParamList(value)
+        }
         return nil
     }
 }
@@ -408,19 +506,19 @@ public struct MessagesCreateRequestMetadata: Codable {
     }
 
     init() {
-        self.userId = nil
+        userId = nil
     }
 }
 
-extension MessagesCreateRequestMetadata {
-    public init(from decoder: Decoder) throws {
+public extension MessagesCreateRequestMetadata {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
+        userId = try container.sdkDecodeIfPresent(.userId)
     }
 }
 
-extension MessagesCreateRequestMetadata {
-    public init(userId: String? = nil) {
+public extension MessagesCreateRequestMetadata {
+    init(userId: String? = nil) {
         self.init()
         self.userId = userId
     }
@@ -440,28 +538,38 @@ public struct MessagesRequestTextBlockParam: Codable {
         case text
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension MessagesRequestTextBlockParam {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.text) else {
-            throw SdkValidationError(field: "text", code: "required", message: "Validation failed for 'text': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.text = try container.sdkDecodeRequired(.text)
-            try sdkValidateRawEnum("type", self.type, MessagesRequestTextBlockParamType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension MessagesRequestTextBlockParam {
-    public init(type: MessagesRequestTextBlockParamType, text: String) throws {
+public extension MessagesRequestTextBlockParam {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.text) else {
+            throw SdkValidationError(
+                field: "text",
+                code: "required",
+                message: "Validation failed for 'text': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        text = try container.sdkDecodeRequired(.text)
+        try sdkValidateRawEnum("type", type, MessagesRequestTextBlockParamType.allCases.map(\.rawValue))
+    }
+}
+
+public extension MessagesRequestTextBlockParam {
+    init(type: MessagesRequestTextBlockParamType, text: String) throws {
         (self.type, self.text) = (type, text)
-            try sdkValidateRawEnum("type", self.type, MessagesRequestTextBlockParamType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, MessagesRequestTextBlockParamType.allCases.map(\.rawValue))
     }
 }
 
@@ -479,25 +587,35 @@ public struct MessagesCreateErrorResponseError: Codable {
         case message
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension MessagesCreateErrorResponseError {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.message) else {
-            throw SdkValidationError(field: "message", code: "required", message: "Validation failed for 'message': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.message = try container.sdkDecodeRequired(.message)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension MessagesCreateErrorResponseError {
-    public init(type: String, message: String) {
+public extension MessagesCreateErrorResponseError {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.message) else {
+            throw SdkValidationError(
+                field: "message",
+                code: "required",
+                message: "Validation failed for 'message': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        message = try container.sdkDecodeRequired(.message)
+    }
+}
+
+public extension MessagesCreateErrorResponseError {
+    init(type: String, message: String) {
         (self.type, self.message) = (type, message)
     }
 }

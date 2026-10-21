@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Images domain models
+/// Images domain models
 /// Typed representation of the `ImagesPostAccountTransferAccept` API schema.
 public struct ImagesPostAccountTransferAccept: Codable {
     /// A unique number that used to identify and reference an image account transfer.
@@ -18,25 +18,35 @@ public struct ImagesPostAccountTransferAccept: Codable {
         case recipientUuid = "recipient_uuid"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ImagesPostAccountTransferAccept {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.transferId) else {
-            throw SdkValidationError(field: "transfer_id", code: "required", message: "Validation failed for 'transfer_id': value is required")
-        }
-        guard container.contains(.recipientUuid) else {
-            throw SdkValidationError(field: "recipient_uuid", code: "required", message: "Validation failed for 'recipient_uuid': value is required")
-        }
-        self.transferId = try container.sdkDecodeRequired(.transferId)
-        self.recipientUuid = try container.sdkDecodeRequired(.recipientUuid)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ImagesPostAccountTransferAccept {
-    public init(transferId: Int, recipientUuid: String) {
+public extension ImagesPostAccountTransferAccept {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.transferId) else {
+            throw SdkValidationError(
+                field: "transfer_id",
+                code: "required",
+                message: "Validation failed for 'transfer_id': value is required"
+            )
+        }
+        guard container.contains(.recipientUuid) else {
+            throw SdkValidationError(
+                field: "recipient_uuid",
+                code: "required",
+                message: "Validation failed for 'recipient_uuid': value is required"
+            )
+        }
+        transferId = try container.sdkDecodeRequired(.transferId)
+        recipientUuid = try container.sdkDecodeRequired(.recipientUuid)
+    }
+}
+
+public extension ImagesPostAccountTransferAccept {
+    init(transferId: Int, recipientUuid: String) {
         (self.transferId, self.recipientUuid) = (transferId, recipientUuid)
     }
 }
@@ -50,21 +60,27 @@ public struct ImagesPostAccountTransferAcceptVariant1: Codable {
         case recipientUuid = "recipient_uuid"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ImagesPostAccountTransferAcceptVariant1 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.recipientUuid) else {
-            throw SdkValidationError(field: "recipient_uuid", code: "required", message: "Validation failed for 'recipient_uuid': value is required")
-        }
-        self.recipientUuid = try container.sdkDecodeRequired(.recipientUuid)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ImagesPostAccountTransferAcceptVariant1 {
-    public init(recipientUuid: String) {
+public extension ImagesPostAccountTransferAcceptVariant1 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.recipientUuid) else {
+            throw SdkValidationError(
+                field: "recipient_uuid",
+                code: "required",
+                message: "Validation failed for 'recipient_uuid': value is required"
+            )
+        }
+        recipientUuid = try container.sdkDecodeRequired(.recipientUuid)
+    }
+}
+
+public extension ImagesPostAccountTransferAcceptVariant1 {
+    init(recipientUuid: String) {
         self.recipientUuid = recipientUuid
     }
 }
@@ -78,21 +94,27 @@ public struct ImagesPostAccountTransferAcceptVariant0: Codable {
         case transferId = "transfer_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ImagesPostAccountTransferAcceptVariant0 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.transferId) else {
-            throw SdkValidationError(field: "transfer_id", code: "required", message: "Validation failed for 'transfer_id': value is required")
-        }
-        self.transferId = try container.sdkDecodeRequired(.transferId)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ImagesPostAccountTransferAcceptVariant0 {
-    public init(transferId: Int) {
+public extension ImagesPostAccountTransferAcceptVariant0 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.transferId) else {
+            throw SdkValidationError(
+                field: "transfer_id",
+                code: "required",
+                message: "Validation failed for 'transfer_id': value is required"
+            )
+        }
+        transferId = try container.sdkDecodeRequired(.transferId)
+    }
+}
+
+public extension ImagesPostAccountTransferAcceptVariant0 {
+    init(transferId: Int) {
         self.transferId = transferId
     }
 }

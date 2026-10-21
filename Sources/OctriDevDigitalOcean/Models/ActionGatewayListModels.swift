@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ActionGatewayList domain models
+/// ActionGatewayList domain models
 /// Lists the toolkits available to your team.
 public struct ListToolkitsResponse: Codable {
     /// Catalog version identifier, for example `v1`.
@@ -18,20 +18,20 @@ public struct ListToolkitsResponse: Codable {
     }
 
     init() {
-        (self.version, self.toolkits) = (nil, nil)
+        (version, toolkits) = (nil, nil)
     }
 }
 
-extension ListToolkitsResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListToolkitsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.version = try container.sdkDecodeIfPresent(.version)
-        self.toolkits = try container.sdkDecodeIfPresent(.toolkits)
+        version = try container.sdkDecodeIfPresent(.version)
+        toolkits = try container.sdkDecodeIfPresent(.toolkits)
     }
 }
 
-extension ListToolkitsResponse {
-    public init(version: String? = nil, toolkits: [Toolkit]? = nil) {
+public extension ListToolkitsResponse {
+    init(version: String? = nil, toolkits: [Toolkit]? = nil) {
         self.init()
         (self.version, self.toolkits) = (version, toolkits)
     }
@@ -47,19 +47,19 @@ public struct ListMcpServerToolsResponse: Codable {
     }
 
     init() {
-        self.tools = nil
+        tools = nil
     }
 }
 
-extension ListMcpServerToolsResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListMcpServerToolsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.tools = try container.sdkDecodeIfPresent(.tools)
+        tools = try container.sdkDecodeIfPresent(.tools)
     }
 }
 
-extension ListMcpServerToolsResponse {
-    public init(tools: [McpServerTool]? = nil) {
+public extension ListMcpServerToolsResponse {
+    init(tools: [McpServerTool]? = nil) {
         self.init()
         self.tools = tools
     }
@@ -75,19 +75,19 @@ public struct ListMcpServersResponse: Codable {
     }
 
     init() {
-        self.mcpServers = nil
+        mcpServers = nil
     }
 }
 
-extension ListMcpServersResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListMcpServersResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.mcpServers = try container.sdkDecodeIfPresent(.mcpServers)
+        mcpServers = try container.sdkDecodeIfPresent(.mcpServers)
     }
 }
 
-extension ListMcpServersResponse {
-    public init(mcpServers: [McpServer]? = nil) {
+public extension ListMcpServersResponse {
+    init(mcpServers: [McpServer]? = nil) {
         self.init()
         self.mcpServers = mcpServers
     }
@@ -109,21 +109,21 @@ public struct ListToolHealthResponse: Codable {
     }
 
     init() {
-        (self.snapshot, self.tools, self.pagination) = (nil, nil, nil)
+        (snapshot, tools, pagination) = (nil, nil, nil)
     }
 }
 
-extension ListToolHealthResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListToolHealthResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.snapshot = try container.sdkDecodeIfPresent(.snapshot)
-        self.tools = try container.sdkDecodeIfPresent(.tools)
-        self.pagination = try container.sdkDecodeIfPresent(.pagination)
+        snapshot = try container.sdkDecodeIfPresent(.snapshot)
+        tools = try container.sdkDecodeIfPresent(.tools)
+        pagination = try container.sdkDecodeIfPresent(.pagination)
     }
 }
 
-extension ListToolHealthResponse {
-    public init(snapshot: HealthSnapshot? = nil, tools: [ToolHealth]? = nil, pagination: Pagination? = nil) {
+public extension ListToolHealthResponse {
+    init(snapshot: HealthSnapshot? = nil, tools: [ToolHealth]? = nil, pagination: Pagination? = nil) {
         self.init()
         (self.snapshot, self.tools) = (snapshot, tools)
         self.pagination = pagination
@@ -143,20 +143,20 @@ public struct ListConnectionsResponse: Codable {
     }
 
     init() {
-        (self.connections, self.pagination) = (nil, nil)
+        (connections, pagination) = (nil, nil)
     }
 }
 
-extension ListConnectionsResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListConnectionsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.connections = try container.sdkDecodeIfPresent(.connections)
-        self.pagination = try container.sdkDecodeIfPresent(.pagination)
+        connections = try container.sdkDecodeIfPresent(.connections)
+        pagination = try container.sdkDecodeIfPresent(.pagination)
     }
 }
 
-extension ListConnectionsResponse {
-    public init(connections: [Connection]? = nil, pagination: Pagination? = nil) {
+public extension ListConnectionsResponse {
+    init(connections: [Connection]? = nil, pagination: Pagination? = nil) {
         self.init()
         (self.connections, self.pagination) = (connections, pagination)
     }
@@ -175,20 +175,20 @@ public struct ListToolbeltProviderToolsResponse: Codable {
     }
 
     init() {
-        (self.tools, self.pagination) = (nil, nil)
+        (tools, pagination) = (nil, nil)
     }
 }
 
-extension ListToolbeltProviderToolsResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListToolbeltProviderToolsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.tools = try container.sdkDecodeIfPresent(.tools)
-        self.pagination = try container.sdkDecodeIfPresent(.pagination)
+        tools = try container.sdkDecodeIfPresent(.tools)
+        pagination = try container.sdkDecodeIfPresent(.pagination)
     }
 }
 
-extension ListToolbeltProviderToolsResponse {
-    public init(tools: [ToolbeltToolDetail]? = nil, pagination: Pagination? = nil) {
+public extension ListToolbeltProviderToolsResponse {
+    init(tools: [ToolbeltToolDetail]? = nil, pagination: Pagination? = nil) {
         self.init()
         (self.tools, self.pagination) = (tools, pagination)
     }
@@ -204,19 +204,19 @@ public struct ListProvidersResponse: Codable {
     }
 
     init() {
-        self.providers = nil
+        providers = nil
     }
 }
 
-extension ListProvidersResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListProvidersResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.providers = try container.sdkDecodeIfPresent(.providers)
+        providers = try container.sdkDecodeIfPresent(.providers)
     }
 }
 
-extension ListProvidersResponse {
-    public init(providers: [ProviderSummary]? = nil) {
+public extension ListProvidersResponse {
+    init(providers: [ProviderSummary]? = nil) {
         self.init()
         self.providers = providers
     }
@@ -248,23 +248,29 @@ public struct ListOutputViewsResponse: Codable {
     }
 
     init() {
-        (self.views, self.toolId, self.tool, self.version, self.nextPageToken) = (nil, nil, nil, nil, nil)
+        (views, toolId, tool, version, nextPageToken) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ListOutputViewsResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListOutputViewsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.views = try container.sdkDecodeIfPresent(.views)
-        self.toolId = try container.sdkDecodeIfPresent(.toolId)
-        self.tool = try container.sdkDecodeIfPresent(.tool)
-        self.version = try container.sdkDecodeIfPresent(.version)
-        self.nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
+        views = try container.sdkDecodeIfPresent(.views)
+        toolId = try container.sdkDecodeIfPresent(.toolId)
+        tool = try container.sdkDecodeIfPresent(.tool)
+        version = try container.sdkDecodeIfPresent(.version)
+        nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
     }
 }
 
-extension ListOutputViewsResponse {
-    public init(views: [OutputView]? = nil, toolId: String? = nil, tool: String? = nil, version: String? = nil, nextPageToken: NextPageToken? = nil) {
+public extension ListOutputViewsResponse {
+    init(
+        views: [OutputView]? = nil,
+        toolId: String? = nil,
+        tool: String? = nil,
+        version: String? = nil,
+        nextPageToken: NextPageToken? = nil
+    ) {
         self.init()
         (self.views, self.toolId) = (views, toolId)
         (self.tool, self.version) = (tool, version)
@@ -288,21 +294,21 @@ public struct ListToolbeltProvidersResponse: Codable {
     }
 
     init() {
-        (self.toolbelt, self.providers, self.pagination) = (nil, nil, nil)
+        (toolbelt, providers, pagination) = (nil, nil, nil)
     }
 }
 
-extension ListToolbeltProvidersResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListToolbeltProvidersResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.toolbelt = try container.sdkDecodeIfPresent(.toolbelt)
-        self.providers = try container.sdkDecodeIfPresent(.providers)
-        self.pagination = try container.sdkDecodeIfPresent(.pagination)
+        toolbelt = try container.sdkDecodeIfPresent(.toolbelt)
+        providers = try container.sdkDecodeIfPresent(.providers)
+        pagination = try container.sdkDecodeIfPresent(.pagination)
     }
 }
 
-extension ListToolbeltProvidersResponse {
-    public init(toolbelt: Toolbelt? = nil, providers: [ToolbeltProviderSummary]? = nil, pagination: Pagination? = nil) {
+public extension ListToolbeltProvidersResponse {
+    init(toolbelt: Toolbelt? = nil, providers: [ToolbeltProviderSummary]? = nil, pagination: Pagination? = nil) {
         self.init()
         (self.toolbelt, self.providers) = (toolbelt, providers)
         self.pagination = pagination
@@ -330,22 +336,27 @@ public struct ListToolsResponse: Codable {
     }
 
     init() {
-        (self.version, self.tools, self.definitions, self.pagination) = (nil, nil, nil, nil)
+        (version, tools, definitions, pagination) = (nil, nil, nil, nil)
     }
 }
 
-extension ListToolsResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListToolsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.version = try container.sdkDecodeIfPresent(.version)
-        self.tools = try container.sdkDecodeIfPresent(.tools)
-        self.definitions = try container.sdkDecodeIfPresent(.definitions)
-        self.pagination = try container.sdkDecodeIfPresent(.pagination)
+        version = try container.sdkDecodeIfPresent(.version)
+        tools = try container.sdkDecodeIfPresent(.tools)
+        definitions = try container.sdkDecodeIfPresent(.definitions)
+        pagination = try container.sdkDecodeIfPresent(.pagination)
     }
 }
 
-extension ListToolsResponse {
-    public init(version: String? = nil, tools: [Tool]? = nil, definitions: [ToolDefinition]? = nil, pagination: Pagination? = nil) {
+public extension ListToolsResponse {
+    init(
+        version: String? = nil,
+        tools: [Tool]? = nil,
+        definitions: [ToolDefinition]? = nil,
+        pagination: Pagination? = nil
+    ) {
         self.init()
         (self.version, self.tools) = (version, tools)
         (self.definitions, self.pagination) = (definitions, pagination)
@@ -365,20 +376,20 @@ public struct ListSessionsResponse: Codable {
     }
 
     init() {
-        (self.sessions, self.pagination) = (nil, nil)
+        (sessions, pagination) = (nil, nil)
     }
 }
 
-extension ListSessionsResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListSessionsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.sessions = try container.sdkDecodeIfPresent(.sessions)
-        self.pagination = try container.sdkDecodeIfPresent(.pagination)
+        sessions = try container.sdkDecodeIfPresent(.sessions)
+        pagination = try container.sdkDecodeIfPresent(.pagination)
     }
 }
 
-extension ListSessionsResponse {
-    public init(sessions: [Session]? = nil, pagination: Pagination? = nil) {
+public extension ListSessionsResponse {
+    init(sessions: [Session]? = nil, pagination: Pagination? = nil) {
         self.init()
         (self.sessions, self.pagination) = (sessions, pagination)
     }
@@ -400,21 +411,21 @@ public struct ListProviderHealthResponse: Codable {
     }
 
     init() {
-        (self.snapshot, self.providers, self.pagination) = (nil, nil, nil)
+        (snapshot, providers, pagination) = (nil, nil, nil)
     }
 }
 
-extension ListProviderHealthResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListProviderHealthResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.snapshot = try container.sdkDecodeIfPresent(.snapshot)
-        self.providers = try container.sdkDecodeIfPresent(.providers)
-        self.pagination = try container.sdkDecodeIfPresent(.pagination)
+        snapshot = try container.sdkDecodeIfPresent(.snapshot)
+        providers = try container.sdkDecodeIfPresent(.providers)
+        pagination = try container.sdkDecodeIfPresent(.pagination)
     }
 }
 
-extension ListProviderHealthResponse {
-    public init(snapshot: HealthSnapshot? = nil, providers: [ProviderHealth]? = nil, pagination: Pagination? = nil) {
+public extension ListProviderHealthResponse {
+    init(snapshot: HealthSnapshot? = nil, providers: [ProviderHealth]? = nil, pagination: Pagination? = nil) {
         self.init()
         (self.snapshot, self.providers) = (snapshot, providers)
         self.pagination = pagination
@@ -435,20 +446,20 @@ public struct ListUsersResponse: Codable {
     }
 
     init() {
-        (self.userIds, self.pagination) = (nil, nil)
+        (userIds, pagination) = (nil, nil)
     }
 }
 
-extension ListUsersResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListUsersResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.userIds = try container.sdkDecodeIfPresent(.userIds)
-        self.pagination = try container.sdkDecodeIfPresent(.pagination)
+        userIds = try container.sdkDecodeIfPresent(.userIds)
+        pagination = try container.sdkDecodeIfPresent(.pagination)
     }
 }
 
-extension ListUsersResponse {
-    public init(userIds: [String]? = nil, pagination: Pagination? = nil) {
+public extension ListUsersResponse {
+    init(userIds: [String]? = nil, pagination: Pagination? = nil) {
         self.init()
         (self.userIds, self.pagination) = (userIds, pagination)
     }

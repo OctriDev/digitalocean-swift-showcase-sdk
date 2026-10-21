@@ -6,18 +6,41 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension HarnessRuntimeMethods {
-    /// Releases the active team-scoped name; the config row is retained (soft delete), so sessions created from it keep a resolvable config_id.
+public extension HarnessRuntimeMethods {
+    /// Releases the active team-scoped name; the config row is retained (soft delete), so sessions created from it keep
+    /// a resolvable config_id.
     ///
     /// - Parameters:
     /// - configId: The Environment Config UUID.
-    public static func harnessDeleteConfig(config: ClientConfig, configId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func harnessDeleteConfig(
+        config: ClientConfig,
+        configId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("config_id", configId)
 
-        return try (await sdkRequest("DELETE", ["/v2/agents/configs/", sdkEncodePathSegment(sdkWireString(configId))].joined(), config: config, decoder: .empty, operationId: "harness_delete_config", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "409": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "DELETE",
+            ["/v2/agents/configs/", sdkEncodePathSegment(sdkWireString(configId))].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "harness_delete_config",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "404": Error2.self,
+                "409": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Copies the source config's sanitized manifest to a new UUID. Source and clone are independent (no lineage). Credential bindings are never copied: if the manifest declares secret slots, supply secrets/oauth_assignments again (write-only). content_hash matches the source when the manifest is unchanged.
+    /// Copies the source config's sanitized manifest to a new UUID. Source and clone are independent (no lineage).
+    /// Credential bindings are never copied: if the manifest declares secret slots, supply secrets/oauth_assignments
+    /// again (write-only). content_hash matches the source when the manifest is unchanged.
     ///
     /// - Parameters:
     /// - configId: The Environment Config UUID.
@@ -27,14 +50,44 @@ extension HarnessRuntimeMethods {
     /// - oauthAssignments: Write-only map from oauth logical slot to an OAuth
     ///   assignment UUID. Required when the source declares those slots; never copied
     ///   from the source.
-    public static func harnessCreateConfigClone(config: ClientConfig, configId: String, name: String, secrets: [String: String]? = nil, oauthAssignments: [String: String]? = nil, requestOptions: RequestOptions? = nil) async throws -> AgentConfigResponse {
+    static func harnessCreateConfigClone(
+        config: ClientConfig,
+        configId: String,
+        name: String,
+        secrets: [String: String]? = nil,
+        oauthAssignments: [String: String]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AgentConfigResponse {
         try sdkValidateUuid("config_id", configId)
 
         try validateLength("name", name, min: 1, max: 64)
         try sdkValidatePattern("name", name, sdkPatternd6415432f58a)
 
-        let requestBody = HarnessCreateConfigCloneRequestBody(name: name, secrets: secrets, oauthAssignments: oauthAssignments)
+        let requestBody = HarnessCreateConfigCloneRequestBody(
+            name: name,
+            secrets: secrets,
+            oauthAssignments: oauthAssignments
+        )
 
-        return try (await sdkRequest("POST", ["/v2/agents/configs/", sdkEncodePathSegment(sdkWireString(configId)), "/clone"].joined(), config: config, body: requestBody, decoder: .json, operationId: "harness_create_config_clone", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "409": Error2.self, "413": Error2.self, "415": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/v2/agents/configs/", sdkEncodePathSegment(sdkWireString(configId)), "/clone"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "harness_create_config_clone",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "404": Error2.self,
+                "409": Error2.self,
+                "413": Error2.self,
+                "415": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

@@ -6,8 +6,10 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ActionGatewayMethods {
-    /// Returns the providers of `GET /v2/action-gateway/tools/providers` whose name, display name, or description contains query, case-insensitively, sorted by name. Cursor-paged with `page_size` and `page_token`; no total is reported.
+public extension ActionGatewayMethods {
+    /// Returns the providers of `GET /v2/action-gateway/tools/providers` whose name, display name, or description
+    /// contains query, case-insensitively, sorted by name. Cursor-paged with `page_size` and `page_token`; no total is
+    /// reported.
     ///
     /// - Parameters:
     /// - query: Matched case-insensitively as a substring of name, `display_name`,
@@ -18,19 +20,42 @@ extension ActionGatewayMethods {
     ///   values are rejected with 400.
     /// - pageToken: `next_page_token` from the previous response. Valid only with
     ///   the same query; otherwise the request is rejected with 400.
-    public static func toolsListSearchProviders(config: ClientConfig, query: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) async throws -> SearchProvidersResponse {
-        if let pageSize = pageSize {
+    static func toolsListSearchProviders(
+        config: ClientConfig,
+        query: String? = nil,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SearchProvidersResponse {
+        if let pageSize {
             try validateRange("page_size", Double(pageSize), min: 1, max: 100)
         }
 
-        return try (await sdkRequest("GET", "/v2/action-gateway/tools/providers/search", config: config, query: [
-            SdkQueryParameter("query", value: query),
-            SdkQueryParameter("page_size", value: pageSize),
-            SdkQueryParameter("page_token", value: pageToken),
-        ], decoder: .json, operationId: "tools_list_search_providers", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/v2/action-gateway/tools/providers/search",
+            config: config,
+            query: [
+                SdkQueryParameter("query", value: query),
+                SdkQueryParameter("page_size", value: pageSize),
+                SdkQueryParameter("page_token", value: pageToken),
+            ],
+            decoder: .json,
+            operationId: "tools_list_search_providers",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Returns the providers of `GET /v2/action-gateway/tools/providers` whose name, display name, or description contains query, case-insensitively, sorted by name. Cursor-paged with `page_size` and `page_token`; no total is reported.
+    /// Returns the providers of `GET /v2/action-gateway/tools/providers` whose name, display name, or description
+    /// contains query, case-insensitively, sorted by name. Cursor-paged with `page_size` and `page_token`; no total is
+    /// reported.
     ///
     /// - Parameters:
     /// - query: Matched case-insensitively as a substring of name, `display_name`,
@@ -41,17 +66,38 @@ extension ActionGatewayMethods {
     ///   values are rejected with 400.
     /// - pageToken: `next_page_token` from the previous response. Valid only with
     ///   the same query; otherwise the request is rejected with 400.
-    public static func toolsListSearchProvidersPaginated(config: ClientConfig, query: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<ProviderSummary, Swift.Error> {
-        return AsyncThrowingStream<ProviderSummary, Swift.Error> { (continuation: AsyncThrowingStream<ProviderSummary, Swift.Error>.Continuation) in
+    static func toolsListSearchProvidersPaginated(
+        config: ClientConfig,
+        query: String? = nil,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<ProviderSummary, Swift.Error> {
+        AsyncThrowingStream<ProviderSummary, Swift.Error> { (continuation: AsyncThrowingStream<
+            ProviderSummary,
+            Swift.Error
+        >.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await toolsListSearchProviders(config: config, query: query, pageSize: pageSize, pageToken: pageCursor, requestOptions: requestOptions)
+                        let pageResponse = try await toolsListSearchProviders(
+                            config: config,
+                            query: query,
+                            pageSize: pageSize,
+                            pageToken: pageCursor,
+                            requestOptions: requestOptions
+                        )
                         let pageItems = (pageResponse.providers ?? [])
-                        if pageItems.isEmpty { break }
-                        for item in pageItems { continuation.yield(item) }
-                        guard let nextCursor = pageResponse.nextPageToken else { break }
+                        if pageItems.isEmpty {
+                            break
+                        }
+                        for item in pageItems {
+                            continuation.yield(item)
+                        }
+                        guard let nextCursor = pageResponse.nextPageToken else {
+                            break
+                        }
                         pageCursor = nextCursor
                     }
                 } catch {
@@ -64,25 +110,50 @@ extension ActionGatewayMethods {
         }
     }
 
-    public struct ToolsListSearchProvidersPage {
+    struct ToolsListSearchProvidersPage {
         public let data: SearchProvidersResponse
         public let items: [ProviderSummary]
         public let hasMore: Bool
     }
 
-    public static func toolsListSearchProvidersPages(config: ClientConfig, query: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<ToolsListSearchProvidersPage, Swift.Error> {
-        return AsyncThrowingStream<ToolsListSearchProvidersPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<ToolsListSearchProvidersPage, Swift.Error>.Continuation) in
+    static func toolsListSearchProvidersPages(
+        config: ClientConfig,
+        query: String? = nil,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<ToolsListSearchProvidersPage, Swift.Error> {
+        AsyncThrowingStream<ToolsListSearchProvidersPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<
+            ToolsListSearchProvidersPage,
+            Swift.Error
+        >.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = pageToken
                     while true {
-                        let pageResponse = try await toolsListSearchProviders(config: config, query: query, pageSize: pageSize, pageToken: pageCursor, requestOptions: requestOptions)
+                        let pageResponse = try await toolsListSearchProviders(
+                            config: config,
+                            query: query,
+                            pageSize: pageSize,
+                            pageToken: pageCursor,
+                            requestOptions: requestOptions
+                        )
                         let pageItems = (pageResponse.providers ?? [])
-                        if pageItems.isEmpty { break }
+                        if pageItems.isEmpty {
+                            break
+                        }
                         let hasMore = pageResponse.nextPageToken != nil
-                        pageContinuation.yield(ToolsListSearchProvidersPage(data: pageResponse, items: pageItems, hasMore: hasMore))
-                        if !hasMore { break }
-                        guard let nextCursor = pageResponse.nextPageToken else { break }
+                        pageContinuation.yield(ToolsListSearchProvidersPage(
+                            data: pageResponse,
+                            items: pageItems,
+                            hasMore: hasMore
+                        ))
+                        if !hasMore {
+                            break
+                        }
+                        guard let nextCursor = pageResponse.nextPageToken else {
+                            break
+                        }
                         pageCursor = nextCursor
                     }
                 } catch {

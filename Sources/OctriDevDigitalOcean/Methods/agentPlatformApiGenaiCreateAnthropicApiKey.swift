@@ -6,24 +6,62 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
+public extension AgentPlatformApiMethods {
     /// To create an Anthropic API key, send a POST request to `/v2/gen-ai/anthropic/keys`.
     ///
     /// - Parameters:
     /// - apiKey: Anthropic API key
     /// - name: Name of the key
-    public static func genaiCreateAnthropicApiKey(config: ClientConfig, apiKey: String? = nil, name: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiCreateAnthropicAPIKeyOutput {
+    static func genaiCreateAnthropicApiKey(
+        config: ClientConfig,
+        apiKey: String? = nil,
+        name: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiCreateAnthropicAPIKeyOutput {
         let requestBody = GenaiCreateAnthropicApiKeyRequestBody(apiKey: apiKey, name: name)
 
-        return try (await sdkRequest("POST", "/v2/gen-ai/anthropic/keys", config: config, body: requestBody, decoder: .json, operationId: "genai_create_anthropic_api_key", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/gen-ai/anthropic/keys",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "genai_create_anthropic_api_key",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
     /// To retrieve details of an Anthropic API key, send a GET request to `/v2/gen-ai/anthropic/keys/{api_key_uuid}`.
     ///
     /// - Parameters:
     /// - apiKeyUuid: API key ID
-    public static func genaiGetAnthropicApiKey(config: ClientConfig, apiKeyUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiGetAnthropicAPIKeyOutput {
-        return try (await sdkRequest("GET", ["/v2/gen-ai/anthropic/keys/", sdkEncodePathSegment(sdkWireString(apiKeyUuid))].joined(), config: config, decoder: .json, operationId: "genai_get_anthropic_api_key", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiGetAnthropicApiKey(
+        config: ClientConfig,
+        apiKeyUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiGetAnthropicAPIKeyOutput {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/gen-ai/anthropic/keys/", sdkEncodePathSegment(sdkWireString(apiKeyUuid))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "genai_get_anthropic_api_key",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
     /// To update an Anthropic API key, send a PUT request to `/v2/gen-ai/anthropic/keys/{api_key_uuid}`.
@@ -33,9 +71,31 @@ extension AgentPlatformApiMethods {
     /// - apiKey: Anthropic API key
     /// - apiKeyUuid2: API key ID
     /// - name: Name of the key
-    public static func genaiUpdateAnthropicApiKey(config: ClientConfig, apiKeyUuid: String, apiKey: String? = nil, apiKeyUuid2: String? = nil, name: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiUpdateAnthropicAPIKeyOutput {
+    static func genaiUpdateAnthropicApiKey(
+        config: ClientConfig,
+        apiKeyUuid: String,
+        apiKey: String? = nil,
+        apiKeyUuid2: String? = nil,
+        name: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiUpdateAnthropicAPIKeyOutput {
         let requestBody = GenaiUpdateAnthropicApiKeyRequestBody(apiKey: apiKey, apiKeyUuid2: apiKeyUuid2, name: name)
 
-        return try (await sdkRequest("PUT", ["/v2/gen-ai/anthropic/keys/", sdkEncodePathSegment(sdkWireString(apiKeyUuid))].joined(), config: config, body: requestBody, decoder: .json, operationId: "genai_update_anthropic_api_key", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/v2/gen-ai/anthropic/keys/", sdkEncodePathSegment(sdkWireString(apiKeyUuid))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "genai_update_anthropic_api_key",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

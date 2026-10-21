@@ -6,17 +6,33 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AppsMethods {
-    /// To propose and validate a spec for a new or existing app, send a POST request to the `/v2/apps/propose` endpoint. The request returns some information about the proposed app, including app cost and upgrade cost. If an existing app ID is specified, the app spec is treated as a proposed update to the existing app.
+public extension AppsMethods {
+    /// To propose and validate a spec for a new or existing app, send a POST request to the `/v2/apps/propose`
+    /// endpoint. The request returns some information about the proposed app, including app cost and upgrade cost. If
+    /// an existing app ID is specified, the app spec is treated as a proposed update to the existing app.
     ///
     /// - Parameters:
     /// - spec: The desired configuration of an application.
     /// - appId: An optional ID of an existing app. If set, the spec will be treated
     ///   as a proposed update to the specified app. The existing app is not modified
     ///   using this method.
-    public static func appsValidateAppSpec(config: ClientConfig, spec: AppSpecRequest, appId: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AppProposeResponse {
+    static func appsValidateAppSpec(
+        config: ClientConfig,
+        spec: AppSpecRequest,
+        appId: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AppProposeResponse {
         let requestBody = AppsValidateAppSpecRequestBody(spec: spec, appId: appId)
 
-        return try (await sdkRequest("POST", "/v2/apps/propose", config: config, body: requestBody, decoder: .json, operationId: "apps_validate_appSpec", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/apps/propose",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "apps_validate_appSpec",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

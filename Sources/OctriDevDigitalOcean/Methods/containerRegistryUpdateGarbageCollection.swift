@@ -6,8 +6,10 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ContainerRegistryMethods {
-    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To cancel the currently-active garbage collection for a registry, send a PUT request to `/v2/registry/$REGISTRY_NAME/garbage-collection/$GC_UUID` and specify one or more of the attributes below.
+public extension ContainerRegistryMethods {
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To cancel the
+    /// currently-active garbage collection for a registry, send a PUT request to
+    /// `/v2/registry/$REGISTRY_NAME/garbage-collection/$GC_UUID` and specify one or more of the attributes below.
     ///
     /// - Parameters:
     /// - registryName: The name of a container registry.
@@ -16,9 +18,35 @@ extension ContainerRegistryMethods {
     ///   cancelled.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    public static func registryUpdateGarbageCollection(config: ClientConfig, registryName: String, garbageCollectionUuid: String, cancel: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> GarbageCollectionResponse {
+    static func registryUpdateGarbageCollection(
+        config: ClientConfig,
+        registryName: String,
+        garbageCollectionUuid: String,
+        cancel: Bool? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GarbageCollectionResponse {
         let requestBody = RegistryUpdateGarbageCollectionRequestBody(cancel: cancel)
 
-        return try (await sdkRequest("PUT", ["/v2/registry/", sdkEncodePathSegment(sdkWireString(registryName)), "/garbage-collection/", sdkEncodePathSegment(sdkWireString(garbageCollectionUuid))].joined(), config: config, body: requestBody, decoder: .json, operationId: "registry_update_garbageCollection", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            [
+                "/v2/registry/",
+                sdkEncodePathSegment(sdkWireString(registryName)),
+                "/garbage-collection/",
+                sdkEncodePathSegment(sdkWireString(garbageCollectionUuid)),
+            ].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "registry_update_garbageCollection",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

@@ -3,9 +3,9 @@
 
 import Foundation
 
-// Databases domain models
-extension OptionsOptionsRedis {
-    public init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
+/// Databases domain models
+public extension OptionsOptionsRedis {
+    init(regions: [String]? = nil, versions: [String]? = nil, layouts: [DatabaseLayoutOption]? = nil) {
         self.init()
         (self.regions, self.versions) = (regions, versions)
         self.layouts = layouts
@@ -25,20 +25,20 @@ public struct Options: Codable {
     }
 
     init() {
-        (self.options, self.versionAvailability) = (nil, nil)
+        (options, versionAvailability) = (nil, nil)
     }
 }
 
-extension Options {
-    public init(from decoder: Decoder) throws {
+public extension Options {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.options = try container.sdkDecodeIfPresent(.options)
-        self.versionAvailability = try container.sdkDecodeIfPresent(.versionAvailability)
+        options = try container.sdkDecodeIfPresent(.options)
+        versionAvailability = try container.sdkDecodeIfPresent(.versionAvailability)
     }
 }
 
-extension Options {
-    public init(options: OptionsOptions? = nil, versionAvailability: OptionsVersionAvailability? = nil) {
+public extension Options {
+    init(options: OptionsOptions? = nil, versionAvailability: OptionsVersionAvailability? = nil) {
         self.init()
         (self.options, self.versionAvailability) = (options, versionAvailability)
     }
@@ -324,8 +324,8 @@ extension PostgresAdvancedConfig {
     }
 }
 
-extension PostgresAdvancedConfig {
-    public init(from decoder: Decoder) throws {
+public extension PostgresAdvancedConfig {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init(sdkDefaults: ())
         try sdkDecodeFieldsPart1(container)
@@ -340,8 +340,66 @@ extension PostgresAdvancedConfig {
     }
 }
 
-extension PostgresAdvancedConfig {
-    public init(autovacuumFreezeMaxAge: Int? = nil, autovacuumMaxWorkers: Int? = nil, autovacuumNaptime: Int? = nil, autovacuumVacuumThreshold: Int? = nil, autovacuumAnalyzeThreshold: Int? = nil, autovacuumVacuumScaleFactor: Double? = nil, autovacuumAnalyzeScaleFactor: Double? = nil, autovacuumVacuumCostDelay: Int? = nil, autovacuumVacuumCostLimit: Int? = nil, backupHour: Int? = nil, backupMinute: Int? = nil, bgwriterDelay: Int? = nil, bgwriterFlushAfter: Int? = nil, bgwriterLruMaxpages: Int? = nil, bgwriterLruMultiplier: Double? = nil, deadlockTimeout: Int? = nil, defaultToastCompression: PostgresAdvancedConfigDefaultToastCompression? = nil, idleInTransactionSessionTimeout: Int? = nil, jit: Bool? = nil, logAutovacuumMinDuration: Int? = nil, logErrorVerbosity: PostgresAdvancedConfigLogErrorVerbosity? = nil, logLinePrefix: PostgresAdvancedConfigLogLinePrefix? = nil, logMinDurationStatement: Int? = nil, maxFilesPerProcess: Int? = nil, maxPreparedTransactions: Int? = nil, maxPredLocksPerTransaction: Int? = nil, maxLocksPerTransaction: Int? = nil, maxStackDepth: Int? = nil, maxStandbyArchiveDelay: Int? = nil, maxStandbyStreamingDelay: Int? = nil, maxReplicationSlots: Int? = nil, maxLogicalReplicationWorkers: Int? = nil, maxParallelWorkers: Int? = nil, maxParallelWorkersPerGather: Int? = nil, maxWorkerProcesses: Int? = nil, pgPartmanBgwRole: String? = nil, pgPartmanBgwInterval: Int? = nil, pgStatStatementsTrack: PostgresAdvancedConfigPgStatStatementsTrack? = nil, tempFileLimit: Int? = nil, timezone: String? = nil, trackActivityQuerySize: Int? = nil, trackCommitTimestamp: PostgresAdvancedConfigTrackCommitTimestamp? = nil, trackFunctions: PostgresAdvancedConfigTrackFunctions? = nil, trackIoTiming: PostgresAdvancedConfigTrackIoTiming? = nil, maxWalSenders: Int? = nil, walSenderTimeout: Int? = nil, walWriterDelay: Int? = nil, sharedBuffersPercentage: Double? = nil, pgbouncer: PgbouncerAdvancedConfig? = nil, workMem: Int? = nil, timescaledb: TimescaledbAdvancedConfig? = nil, synchronousReplication: PostgresAdvancedConfigSynchronousReplication? = nil, statMonitorEnable: Bool? = nil, maxFailoverReplicationTimeLag: Int? = nil, maxConnections: Int? = nil, maxSlotWalKeepSize: Int? = nil, pgaudit: PostgresAdvancedConfigPgaudit? = nil) throws {
+public extension PostgresAdvancedConfig {
+    init(
+        autovacuumFreezeMaxAge: Int? = nil,
+        autovacuumMaxWorkers: Int? = nil,
+        autovacuumNaptime: Int? = nil,
+        autovacuumVacuumThreshold: Int? = nil,
+        autovacuumAnalyzeThreshold: Int? = nil,
+        autovacuumVacuumScaleFactor: Double? = nil,
+        autovacuumAnalyzeScaleFactor: Double? = nil,
+        autovacuumVacuumCostDelay: Int? = nil,
+        autovacuumVacuumCostLimit: Int? = nil,
+        backupHour: Int? = nil,
+        backupMinute: Int? = nil,
+        bgwriterDelay: Int? = nil,
+        bgwriterFlushAfter: Int? = nil,
+        bgwriterLruMaxpages: Int? = nil,
+        bgwriterLruMultiplier: Double? = nil,
+        deadlockTimeout: Int? = nil,
+        defaultToastCompression: PostgresAdvancedConfigDefaultToastCompression? = nil,
+        idleInTransactionSessionTimeout: Int? = nil,
+        jit: Bool? = nil,
+        logAutovacuumMinDuration: Int? = nil,
+        logErrorVerbosity: PostgresAdvancedConfigLogErrorVerbosity? = nil,
+        logLinePrefix: PostgresAdvancedConfigLogLinePrefix? = nil,
+        logMinDurationStatement: Int? = nil,
+        maxFilesPerProcess: Int? = nil,
+        maxPreparedTransactions: Int? = nil,
+        maxPredLocksPerTransaction: Int? = nil,
+        maxLocksPerTransaction: Int? = nil,
+        maxStackDepth: Int? = nil,
+        maxStandbyArchiveDelay: Int? = nil,
+        maxStandbyStreamingDelay: Int? = nil,
+        maxReplicationSlots: Int? = nil,
+        maxLogicalReplicationWorkers: Int? = nil,
+        maxParallelWorkers: Int? = nil,
+        maxParallelWorkersPerGather: Int? = nil,
+        maxWorkerProcesses: Int? = nil,
+        pgPartmanBgwRole: String? = nil,
+        pgPartmanBgwInterval: Int? = nil,
+        pgStatStatementsTrack: PostgresAdvancedConfigPgStatStatementsTrack? = nil,
+        tempFileLimit: Int? = nil,
+        timezone: String? = nil,
+        trackActivityQuerySize: Int? = nil,
+        trackCommitTimestamp: PostgresAdvancedConfigTrackCommitTimestamp? = nil,
+        trackFunctions: PostgresAdvancedConfigTrackFunctions? = nil,
+        trackIoTiming: PostgresAdvancedConfigTrackIoTiming? = nil,
+        maxWalSenders: Int? = nil,
+        walSenderTimeout: Int? = nil,
+        walWriterDelay: Int? = nil,
+        sharedBuffersPercentage: Double? = nil,
+        pgbouncer: PgbouncerAdvancedConfig? = nil,
+        workMem: Int? = nil,
+        timescaledb: TimescaledbAdvancedConfig? = nil,
+        synchronousReplication: PostgresAdvancedConfigSynchronousReplication? = nil,
+        statMonitorEnable: Bool? = nil,
+        maxFailoverReplicationTimeLag: Int? = nil,
+        maxConnections: Int? = nil,
+        maxSlotWalKeepSize: Int? = nil,
+        pgaudit: PostgresAdvancedConfigPgaudit? = nil
+    ) throws {
         self.init(sdkDefaults: ())
         sdkSet1(autovacuumFreezeMaxAge, autovacuumMaxWorkers, autovacuumNaptime, autovacuumVacuumThreshold)
         sdkSet2(autovacuumAnalyzeThreshold, autovacuumVacuumScaleFactor, autovacuumAnalyzeScaleFactor)
@@ -365,7 +423,12 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet1(_ autovacuumFreezeMaxAge: Int?, _ autovacuumMaxWorkers: Int?, _ autovacuumNaptime: Int?, _ autovacuumVacuumThreshold: Int?) {
+    mutating func sdkSet1(
+        _ autovacuumFreezeMaxAge: Int?,
+        _ autovacuumMaxWorkers: Int?,
+        _ autovacuumNaptime: Int?,
+        _ autovacuumVacuumThreshold: Int?
+    ) {
         self.autovacuumFreezeMaxAge = autovacuumFreezeMaxAge
         self.autovacuumMaxWorkers = autovacuumMaxWorkers
         self.autovacuumNaptime = autovacuumNaptime
@@ -374,7 +437,11 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet2(_ autovacuumAnalyzeThreshold: Int?, _ autovacuumVacuumScaleFactor: Double?, _ autovacuumAnalyzeScaleFactor: Double?) {
+    mutating func sdkSet2(
+        _ autovacuumAnalyzeThreshold: Int?,
+        _ autovacuumVacuumScaleFactor: Double?,
+        _ autovacuumAnalyzeScaleFactor: Double?
+    ) {
         self.autovacuumAnalyzeThreshold = autovacuumAnalyzeThreshold
         self.autovacuumVacuumScaleFactor = autovacuumVacuumScaleFactor
         self.autovacuumAnalyzeScaleFactor = autovacuumAnalyzeScaleFactor
@@ -382,7 +449,13 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet3(_ autovacuumVacuumCostDelay: Int?, _ autovacuumVacuumCostLimit: Int?, _ backupHour: Int?, _ backupMinute: Int?, _ bgwriterDelay: Int?) {
+    mutating func sdkSet3(
+        _ autovacuumVacuumCostDelay: Int?,
+        _ autovacuumVacuumCostLimit: Int?,
+        _ backupHour: Int?,
+        _ backupMinute: Int?,
+        _ bgwriterDelay: Int?
+    ) {
         self.autovacuumVacuumCostDelay = autovacuumVacuumCostDelay
         self.autovacuumVacuumCostLimit = autovacuumVacuumCostLimit
         self.backupHour = backupHour
@@ -392,7 +465,12 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet4(_ bgwriterFlushAfter: Int?, _ bgwriterLruMaxpages: Int?, _ bgwriterLruMultiplier: Double?, _ deadlockTimeout: Int?) {
+    mutating func sdkSet4(
+        _ bgwriterFlushAfter: Int?,
+        _ bgwriterLruMaxpages: Int?,
+        _ bgwriterLruMultiplier: Double?,
+        _ deadlockTimeout: Int?
+    ) {
         self.bgwriterFlushAfter = bgwriterFlushAfter
         self.bgwriterLruMaxpages = bgwriterLruMaxpages
         self.bgwriterLruMultiplier = bgwriterLruMultiplier
@@ -401,7 +479,12 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet5(_ defaultToastCompression: PostgresAdvancedConfigDefaultToastCompression?, _ idleInTransactionSessionTimeout: Int?, _ jit: Bool?, _ logAutovacuumMinDuration: Int?) {
+    mutating func sdkSet5(
+        _ defaultToastCompression: PostgresAdvancedConfigDefaultToastCompression?,
+        _ idleInTransactionSessionTimeout: Int?,
+        _ jit: Bool?,
+        _ logAutovacuumMinDuration: Int?
+    ) {
         self.defaultToastCompression = defaultToastCompression
         self.idleInTransactionSessionTimeout = idleInTransactionSessionTimeout
         self.jit = jit
@@ -410,7 +493,12 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet6(_ logErrorVerbosity: PostgresAdvancedConfigLogErrorVerbosity?, _ logLinePrefix: PostgresAdvancedConfigLogLinePrefix?, _ logMinDurationStatement: Int?, _ maxFilesPerProcess: Int?) {
+    mutating func sdkSet6(
+        _ logErrorVerbosity: PostgresAdvancedConfigLogErrorVerbosity?,
+        _ logLinePrefix: PostgresAdvancedConfigLogLinePrefix?,
+        _ logMinDurationStatement: Int?,
+        _ maxFilesPerProcess: Int?
+    ) {
         self.logErrorVerbosity = logErrorVerbosity
         self.logLinePrefix = logLinePrefix
         self.logMinDurationStatement = logMinDurationStatement
@@ -419,7 +507,12 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet7(_ maxPreparedTransactions: Int?, _ maxPredLocksPerTransaction: Int?, _ maxLocksPerTransaction: Int?, _ maxStackDepth: Int?) {
+    mutating func sdkSet7(
+        _ maxPreparedTransactions: Int?,
+        _ maxPredLocksPerTransaction: Int?,
+        _ maxLocksPerTransaction: Int?,
+        _ maxStackDepth: Int?
+    ) {
         self.maxPreparedTransactions = maxPreparedTransactions
         self.maxPredLocksPerTransaction = maxPredLocksPerTransaction
         self.maxLocksPerTransaction = maxLocksPerTransaction
@@ -428,7 +521,12 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet8(_ maxStandbyArchiveDelay: Int?, _ maxStandbyStreamingDelay: Int?, _ maxReplicationSlots: Int?, _ maxLogicalReplicationWorkers: Int?) {
+    mutating func sdkSet8(
+        _ maxStandbyArchiveDelay: Int?,
+        _ maxStandbyStreamingDelay: Int?,
+        _ maxReplicationSlots: Int?,
+        _ maxLogicalReplicationWorkers: Int?
+    ) {
         self.maxStandbyArchiveDelay = maxStandbyArchiveDelay
         self.maxStandbyStreamingDelay = maxStandbyStreamingDelay
         self.maxReplicationSlots = maxReplicationSlots
@@ -437,7 +535,12 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet9(_ maxParallelWorkers: Int?, _ maxParallelWorkersPerGather: Int?, _ maxWorkerProcesses: Int?, _ pgPartmanBgwRole: String?) {
+    mutating func sdkSet9(
+        _ maxParallelWorkers: Int?,
+        _ maxParallelWorkersPerGather: Int?,
+        _ maxWorkerProcesses: Int?,
+        _ pgPartmanBgwRole: String?
+    ) {
         self.maxParallelWorkers = maxParallelWorkers
         self.maxParallelWorkersPerGather = maxParallelWorkersPerGather
         self.maxWorkerProcesses = maxWorkerProcesses
@@ -446,7 +549,13 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet10(_ pgPartmanBgwInterval: Int?, _ pgStatStatementsTrack: PostgresAdvancedConfigPgStatStatementsTrack?, _ tempFileLimit: Int?, _ timezone: String?, _ trackActivityQuerySize: Int?) {
+    mutating func sdkSet10(
+        _ pgPartmanBgwInterval: Int?,
+        _ pgStatStatementsTrack: PostgresAdvancedConfigPgStatStatementsTrack?,
+        _ tempFileLimit: Int?,
+        _ timezone: String?,
+        _ trackActivityQuerySize: Int?
+    ) {
         self.pgPartmanBgwInterval = pgPartmanBgwInterval
         self.pgStatStatementsTrack = pgStatStatementsTrack
         self.tempFileLimit = tempFileLimit
@@ -456,7 +565,13 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet11(_ trackCommitTimestamp: PostgresAdvancedConfigTrackCommitTimestamp?, _ trackFunctions: PostgresAdvancedConfigTrackFunctions?, _ trackIoTiming: PostgresAdvancedConfigTrackIoTiming?, _ maxWalSenders: Int?, _ walSenderTimeout: Int?) {
+    mutating func sdkSet11(
+        _ trackCommitTimestamp: PostgresAdvancedConfigTrackCommitTimestamp?,
+        _ trackFunctions: PostgresAdvancedConfigTrackFunctions?,
+        _ trackIoTiming: PostgresAdvancedConfigTrackIoTiming?,
+        _ maxWalSenders: Int?,
+        _ walSenderTimeout: Int?
+    ) {
         self.trackCommitTimestamp = trackCommitTimestamp
         self.trackFunctions = trackFunctions
         self.trackIoTiming = trackIoTiming
@@ -466,7 +581,13 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet12(_ walWriterDelay: Int?, _ sharedBuffersPercentage: Double?, _ pgbouncer: PgbouncerAdvancedConfig?, _ workMem: Int?, _ timescaledb: TimescaledbAdvancedConfig?) {
+    mutating func sdkSet12(
+        _ walWriterDelay: Int?,
+        _ sharedBuffersPercentage: Double?,
+        _ pgbouncer: PgbouncerAdvancedConfig?,
+        _ workMem: Int?,
+        _ timescaledb: TimescaledbAdvancedConfig?
+    ) {
         self.walWriterDelay = walWriterDelay
         self.sharedBuffersPercentage = sharedBuffersPercentage
         self.pgbouncer = pgbouncer
@@ -476,7 +597,12 @@ extension PostgresAdvancedConfig {
 }
 
 extension PostgresAdvancedConfig {
-    mutating func sdkSet13(_ synchronousReplication: PostgresAdvancedConfigSynchronousReplication?, _ statMonitorEnable: Bool?, _ maxFailoverReplicationTimeLag: Int?, _ maxConnections: Int?) {
+    mutating func sdkSet13(
+        _ synchronousReplication: PostgresAdvancedConfigSynchronousReplication?,
+        _ statMonitorEnable: Bool?,
+        _ maxFailoverReplicationTimeLag: Int?,
+        _ maxConnections: Int?
+    ) {
         self.synchronousReplication = synchronousReplication
         self.statMonitorEnable = statMonitorEnable
         self.maxFailoverReplicationTimeLag = maxFailoverReplicationTimeLag

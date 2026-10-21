@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DomainRecords domain models
+/// DomainRecords domain models
 /// Typed representation of the `DomainRecordAaaa` API schema.
 public struct DomainRecordAaaa: Codable {
     /// The type of the DNS record. For example: A, CNAME, TXT, ...
@@ -48,30 +48,47 @@ public struct DomainRecordAaaa: Codable {
         case tag
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DomainRecordAaaa {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.priority = try container.sdkDecodeIfPresent(.priority)
-        self.port = try container.sdkDecodeIfPresent(.port)
-        self.ttl = try container.sdkDecodeIfPresent(.ttl)
-        self.weight = try container.sdkDecodeIfPresent(.weight)
-        self.flags = try container.sdkDecodeIfPresent(.flags)
-        self.tag = try container.sdkDecodeIfPresent(.tag)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DomainRecordAaaa {
-    public init(type: String, id: Int? = nil, name: String? = nil, data: String? = nil, priority: Int? = nil, port: Int? = nil, ttl: Int? = nil, weight: Int? = nil, flags: Int? = nil, tag: String? = nil) {
+public extension DomainRecordAaaa {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        data = try container.sdkDecodeIfPresent(.data)
+        priority = try container.sdkDecodeIfPresent(.priority)
+        port = try container.sdkDecodeIfPresent(.port)
+        ttl = try container.sdkDecodeIfPresent(.ttl)
+        weight = try container.sdkDecodeIfPresent(.weight)
+        flags = try container.sdkDecodeIfPresent(.flags)
+        tag = try container.sdkDecodeIfPresent(.tag)
+    }
+}
+
+public extension DomainRecordAaaa {
+    init(
+        type: String,
+        id: Int? = nil,
+        name: String? = nil,
+        data: String? = nil,
+        priority: Int? = nil,
+        port: Int? = nil,
+        ttl: Int? = nil,
+        weight: Int? = nil,
+        flags: Int? = nil,
+        tag: String? = nil
+    ) {
         (self.type, self.id) = (type, id)
         (self.name, self.data) = (name, data)
         (self.priority, self.port) = (priority, port)
@@ -124,30 +141,47 @@ public struct DomainRecordSoa: Codable {
         case tag
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DomainRecordSoa {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.priority = try container.sdkDecodeIfPresent(.priority)
-        self.port = try container.sdkDecodeIfPresent(.port)
-        self.ttl = try container.sdkDecodeIfPresent(.ttl)
-        self.weight = try container.sdkDecodeIfPresent(.weight)
-        self.flags = try container.sdkDecodeIfPresent(.flags)
-        self.tag = try container.sdkDecodeIfPresent(.tag)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DomainRecordSoa {
-    public init(type: String, id: Int? = nil, name: String? = nil, data: String? = nil, priority: Int? = nil, port: Int? = nil, ttl: Int? = nil, weight: Int? = nil, flags: Int? = nil, tag: String? = nil) {
+public extension DomainRecordSoa {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        data = try container.sdkDecodeIfPresent(.data)
+        priority = try container.sdkDecodeIfPresent(.priority)
+        port = try container.sdkDecodeIfPresent(.port)
+        ttl = try container.sdkDecodeIfPresent(.ttl)
+        weight = try container.sdkDecodeIfPresent(.weight)
+        flags = try container.sdkDecodeIfPresent(.flags)
+        tag = try container.sdkDecodeIfPresent(.tag)
+    }
+}
+
+public extension DomainRecordSoa {
+    init(
+        type: String,
+        id: Int? = nil,
+        name: String? = nil,
+        data: String? = nil,
+        priority: Int? = nil,
+        port: Int? = nil,
+        ttl: Int? = nil,
+        weight: Int? = nil,
+        flags: Int? = nil,
+        tag: String? = nil
+    ) {
         (self.type, self.id) = (type, id)
         (self.name, self.data) = (name, data)
         (self.priority, self.port) = (priority, port)
@@ -170,23 +204,29 @@ public struct AllDomainRecordsResponse: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllDomainRecordsResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.domainRecords = try container.sdkDecodeIfPresent(.domainRecords)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllDomainRecordsResponse {
-    public init(meta: MetaMeta, domainRecords: [DomainRecord]? = nil, links: PageLinks? = nil) {
+public extension AllDomainRecordsResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        domainRecords = try container.sdkDecodeIfPresent(.domainRecords)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllDomainRecordsResponse {
+    init(meta: MetaMeta, domainRecords: [DomainRecord]? = nil, links: PageLinks? = nil) {
         (self.meta, self.domainRecords) = (meta, domainRecords)
         self.links = links
     }
@@ -232,29 +272,45 @@ public struct DomainRecordARequest: Codable {
         case tag
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DomainRecordARequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.priority = try container.sdkDecodeIfPresent(.priority)
-        self.port = try container.sdkDecodeIfPresent(.port)
-        self.ttl = try container.sdkDecodeIfPresent(.ttl)
-        self.weight = try container.sdkDecodeIfPresent(.weight)
-        self.flags = try container.sdkDecodeIfPresent(.flags)
-        self.tag = try container.sdkDecodeIfPresent(.tag)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DomainRecordARequest {
-    public init(type: String, name: String? = nil, data: String? = nil, priority: Int? = nil, port: Int? = nil, ttl: Int? = nil, weight: Int? = nil, flags: Int? = nil, tag: String? = nil) {
+public extension DomainRecordARequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        name = try container.sdkDecodeIfPresent(.name)
+        data = try container.sdkDecodeIfPresent(.data)
+        priority = try container.sdkDecodeIfPresent(.priority)
+        port = try container.sdkDecodeIfPresent(.port)
+        ttl = try container.sdkDecodeIfPresent(.ttl)
+        weight = try container.sdkDecodeIfPresent(.weight)
+        flags = try container.sdkDecodeIfPresent(.flags)
+        tag = try container.sdkDecodeIfPresent(.tag)
+    }
+}
+
+public extension DomainRecordARequest {
+    init(
+        type: String,
+        name: String? = nil,
+        data: String? = nil,
+        priority: Int? = nil,
+        port: Int? = nil,
+        ttl: Int? = nil,
+        weight: Int? = nil,
+        flags: Int? = nil,
+        tag: String? = nil
+    ) {
         (self.type, self.name) = (type, name)
         (self.data, self.priority) = (data, priority)
         (self.port, self.ttl) = (port, ttl)
@@ -307,30 +363,47 @@ public struct DomainRecordTxt: Codable {
         case tag
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DomainRecordTxt {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.priority = try container.sdkDecodeIfPresent(.priority)
-        self.port = try container.sdkDecodeIfPresent(.port)
-        self.ttl = try container.sdkDecodeIfPresent(.ttl)
-        self.weight = try container.sdkDecodeIfPresent(.weight)
-        self.flags = try container.sdkDecodeIfPresent(.flags)
-        self.tag = try container.sdkDecodeIfPresent(.tag)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DomainRecordTxt {
-    public init(type: String, id: Int? = nil, name: String? = nil, data: String? = nil, priority: Int? = nil, port: Int? = nil, ttl: Int? = nil, weight: Int? = nil, flags: Int? = nil, tag: String? = nil) {
+public extension DomainRecordTxt {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        data = try container.sdkDecodeIfPresent(.data)
+        priority = try container.sdkDecodeIfPresent(.priority)
+        port = try container.sdkDecodeIfPresent(.port)
+        ttl = try container.sdkDecodeIfPresent(.ttl)
+        weight = try container.sdkDecodeIfPresent(.weight)
+        flags = try container.sdkDecodeIfPresent(.flags)
+        tag = try container.sdkDecodeIfPresent(.tag)
+    }
+}
+
+public extension DomainRecordTxt {
+    init(
+        type: String,
+        id: Int? = nil,
+        name: String? = nil,
+        data: String? = nil,
+        priority: Int? = nil,
+        port: Int? = nil,
+        ttl: Int? = nil,
+        weight: Int? = nil,
+        flags: Int? = nil,
+        tag: String? = nil
+    ) {
         (self.type, self.id) = (type, id)
         (self.name, self.data) = (name, data)
         (self.priority, self.port) = (priority, port)
@@ -347,19 +420,19 @@ public struct AllDomainRecordsResponseVariant0: Codable {
     }
 
     init() {
-        self.domainRecords = nil
+        domainRecords = nil
     }
 }
 
-extension AllDomainRecordsResponseVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AllDomainRecordsResponseVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.domainRecords = try container.sdkDecodeIfPresent(.domainRecords)
+        domainRecords = try container.sdkDecodeIfPresent(.domainRecords)
     }
 }
 
-extension AllDomainRecordsResponseVariant0 {
-    public init(domainRecords: [DomainRecord]? = nil) {
+public extension AllDomainRecordsResponseVariant0 {
+    init(domainRecords: [DomainRecord]? = nil) {
         self.init()
         self.domainRecords = domainRecords
     }
@@ -405,29 +478,45 @@ public struct DomainRecordRequest: Codable {
         case tag
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DomainRecordRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.priority = try container.sdkDecodeIfPresent(.priority)
-        self.port = try container.sdkDecodeIfPresent(.port)
-        self.ttl = try container.sdkDecodeIfPresent(.ttl)
-        self.weight = try container.sdkDecodeIfPresent(.weight)
-        self.flags = try container.sdkDecodeIfPresent(.flags)
-        self.tag = try container.sdkDecodeIfPresent(.tag)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DomainRecordRequest {
-    public init(type: String, name: String? = nil, data: String? = nil, priority: Int? = nil, port: Int? = nil, ttl: Int? = nil, weight: Int? = nil, flags: Int? = nil, tag: String? = nil) {
+public extension DomainRecordRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        name = try container.sdkDecodeIfPresent(.name)
+        data = try container.sdkDecodeIfPresent(.data)
+        priority = try container.sdkDecodeIfPresent(.priority)
+        port = try container.sdkDecodeIfPresent(.port)
+        ttl = try container.sdkDecodeIfPresent(.ttl)
+        weight = try container.sdkDecodeIfPresent(.weight)
+        flags = try container.sdkDecodeIfPresent(.flags)
+        tag = try container.sdkDecodeIfPresent(.tag)
+    }
+}
+
+public extension DomainRecordRequest {
+    init(
+        type: String,
+        name: String? = nil,
+        data: String? = nil,
+        priority: Int? = nil,
+        port: Int? = nil,
+        ttl: Int? = nil,
+        weight: Int? = nil,
+        flags: Int? = nil,
+        tag: String? = nil
+    ) {
         (self.type, self.name) = (type, name)
         (self.data, self.priority) = (data, priority)
         (self.port, self.ttl) = (port, ttl)

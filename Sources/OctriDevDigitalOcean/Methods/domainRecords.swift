@@ -8,8 +8,13 @@ import Foundation
 #endif
 public enum DomainRecordsMethods {}
 
-extension DomainRecordsMethods {
-    /// To get a listing of all records configured for a domain, send a GET request to `/v2/domains/$DOMAIN_NAME/records`. The list of records returned can be filtered by using the `name` and `type` query parameters. For example, to only include A records for a domain, send a GET request to `/v2/domains/$DOMAIN_NAME/records?type=A`. `name` must be a fully qualified record name. For example, to only include records matching `sub.example.com`, send a GET request to `/v2/domains/$DOMAIN_NAME/records?name=sub.example.com`. Both name and type may be used together.
+public extension DomainRecordsMethods {
+    /// To get a listing of all records configured for a domain, send a GET request to
+    /// `/v2/domains/$DOMAIN_NAME/records`. The list of records returned can be filtered by using the `name` and `type`
+    /// query parameters. For example, to only include A records for a domain, send a GET request to
+    /// `/v2/domains/$DOMAIN_NAME/records?type=A`. `name` must be a fully qualified record name. For example, to only
+    /// include records matching `sub.example.com`, send a GET request to
+    /// `/v2/domains/$DOMAIN_NAME/records?name=sub.example.com`. Both name and type may be used together.
     ///
     /// - Parameters:
     /// - domainName: The name of the domain itself.
@@ -19,30 +24,76 @@ extension DomainRecordsMethods {
     /// - type: The type of the DNS record. For example: A, CNAME, TXT, ...
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    public static func domainsListRecords(config: ClientConfig, domainName: String, name: String? = nil, type: DomainsListRecordsParameter? = nil, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AllDomainRecordsResponse {
-        if let perPage = perPage {
+    static func domainsListRecords(
+        config: ClientConfig,
+        domainName: String,
+        name: String? = nil,
+        type: DomainsListRecordsParameter? = nil,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AllDomainRecordsResponse {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page = page {
+        if let page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try (await sdkRequest("GET", ["/v2/domains/", sdkEncodePathSegment(sdkWireString(domainName)), "/records"].joined(), config: config, query: [
-            SdkQueryParameter("name", value: name),
-            SdkQueryParameter("type", value: type),
-            SdkQueryParameter("per_page", value: perPage),
-            SdkQueryParameter("page", value: page),
-        ], decoder: .json, operationId: "domains_list_records", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/domains/", sdkEncodePathSegment(sdkWireString(domainName)), "/records"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("name", value: name),
+                SdkQueryParameter("type", value: type),
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("page", value: page),
+            ],
+            decoder: .json,
+            operationId: "domains_list_records",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Creates a DNS record for the specified domain. Supply `type` and the attributes required for that record type, such as `name` and `data` where applicable. The response includes the created record with its generated `id`.
+    /// Creates a DNS record for the specified domain. Supply `type` and the attributes required for that record type,
+    /// such as `name` and `data` where applicable. The response includes the created record with its generated `id`.
     ///
-    /// To create a new record to a domain, send a POST request to `/v2/domains/$DOMAIN_NAME/records`. The request must include all of the required fields for the domain record type being added. See the attribute table for details regarding record types and their respective required attributes.
+    /// To create a new record to a domain, send a POST request to `/v2/domains/$DOMAIN_NAME/records`. The request must
+    /// include all of the required fields for the domain record type being added. See the attribute table for details
+    /// regarding record types and their respective required attributes.
     ///
     /// - Parameters:
     /// - domainName: The name of the domain itself.
-    public static func domainsCreateRecord(config: ClientConfig, domainName: String, body: DomainsCreateRecordRequestBody? = nil, requestOptions: RequestOptions? = nil) async throws -> CreatedDomainRecord {
-        return try (await sdkRequest("POST", ["/v2/domains/", sdkEncodePathSegment(sdkWireString(domainName)), "/records"].joined(), config: config, rawBody: (try body.map { try sdkEncodeBody($0, contentType: "application/json") }), decoder: .json, operationId: "domains_create_record", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func domainsCreateRecord(
+        config: ClientConfig,
+        domainName: String,
+        body: DomainsCreateRecordRequestBody? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreatedDomainRecord {
+        try await (sdkRequest(
+            "POST",
+            ["/v2/domains/", sdkEncodePathSegment(sdkWireString(domainName)), "/records"].joined(),
+            config: config,
+            rawBody: (body.map { try sdkEncodeBody($0, contentType: "application/json") }),
+            decoder: .json,
+            operationId: "domains_create_record",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

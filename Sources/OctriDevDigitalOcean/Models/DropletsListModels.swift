@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Droplets domain models
+/// Droplets domain models
 /// Typed representation of the `AllDroplets` API schema.
 public struct AllDroplets: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,23 +18,29 @@ public struct AllDroplets: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllDroplets {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.droplets = try container.sdkDecodeIfPresent(.droplets)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllDroplets {
-    public init(meta: MetaMeta, droplets: [Droplet]? = nil, links: PageLinks? = nil) {
+public extension AllDroplets {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        droplets = try container.sdkDecodeIfPresent(.droplets)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllDroplets {
+    init(meta: MetaMeta, droplets: [Droplet]? = nil, links: PageLinks? = nil) {
         (self.meta, self.droplets) = (meta, droplets)
         self.links = links
     }
@@ -48,19 +54,19 @@ public struct AllDropletsVariant0: Codable {
     }
 
     init() {
-        self.droplets = nil
+        droplets = nil
     }
 }
 
-extension AllDropletsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AllDropletsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.droplets = try container.sdkDecodeIfPresent(.droplets)
+        droplets = try container.sdkDecodeIfPresent(.droplets)
     }
 }
 
-extension AllDropletsVariant0 {
-    public init(droplets: [Droplet]? = nil) {
+public extension AllDropletsVariant0 {
+    init(droplets: [Droplet]? = nil) {
         self.init()
         self.droplets = droplets
     }

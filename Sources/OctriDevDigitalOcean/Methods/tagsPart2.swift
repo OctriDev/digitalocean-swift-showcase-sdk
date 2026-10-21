@@ -6,25 +6,40 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension TagsMethods {
-    /// To list all of your tags, you can send a GET request to `/v2/tags`. This endpoint will only return tagged resources that you are authorized to see (e.g. Droplets will only be returned if you have `droplet:read`).
+public extension TagsMethods {
+    /// To list all of your tags, you can send a GET request to `/v2/tags`. This endpoint will only return tagged
+    /// resources that you are authorized to see (e.g. Droplets will only be returned if you have `droplet:read`).
     ///
     /// - Parameters:
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
-    public static func tagsList(config: ClientConfig, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> TagsAll {
-        if let perPage = perPage {
+    static func tagsList(
+        config: ClientConfig,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> TagsAll {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page = page {
+        if let page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try (await sdkRequest("GET", "/v2/tags", config: config, query: [
-            SdkQueryParameter("per_page", value: perPage),
-            SdkQueryParameter("page", value: page),
-        ], decoder: .json, operationId: "tags_list", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/v2/tags",
+            config: config,
+            query: [
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("page", value: page),
+            ],
+            decoder: .json,
+            operationId: "tags_list",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 
     /// To create a tag you can send a POST request to `/v2/tags` with a `name` attribute.
@@ -42,14 +57,33 @@ extension TagsMethods {
     ///   tag named "PROD", you can tag resources in the control panel by entering
     ///   "prod". The tag will still display with its canonical capitalization,
     ///   "PROD".
-    public static func tagsCreate(config: ClientConfig, name: String? = nil, requestOptions: RequestOptions? = nil) async throws -> TagsNew {
-        if let name = name {
+    static func tagsCreate(
+        config: ClientConfig,
+        name: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> TagsNew {
+        if let name {
             try validateLength("name", name, max: 255)
             try sdkValidatePattern("name", name, sdkPattern6b8f6cfdcfdf)
         }
 
         let requestBody = TagsCreateRequestBody(name: name)
 
-        return try (await sdkRequest("POST", "/v2/tags", config: config, body: requestBody, decoder: .json, operationId: "tags_create", options: requestOptions, errors: ["400": ErrorWithRootCauses.self, "401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/tags",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "tags_create",
+            options: requestOptions,
+            errors: [
+                "400": ErrorWithRootCauses.self,
+                "401": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

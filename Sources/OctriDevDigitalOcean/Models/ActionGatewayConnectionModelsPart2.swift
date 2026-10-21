@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ActionGatewayConnection domain models
+/// ActionGatewayConnection domain models
 /// One connection of any kind. Everything every kind has stays on the envelope, so a reader takes an ID, a status
 /// or a provider without first asking what kind it is; only the members a kind alone has move into details.
 public struct Connection: Codable {
@@ -76,53 +76,71 @@ public struct Connection: Codable {
     }
 
     init() {
-        (self.id, self.provider, self.providerDisplayName, self.userId, self.status) = (nil, nil, nil, nil, nil)
-        (self.createdAt, self.updatedAt, self.revokedAt, self.connectionParameters, self.credentialKind) = (nil, nil, nil, nil, nil)
-        (self.credentialId, self.network, self.oauth, self.apiKey, self.scopes) = (nil, nil, nil, nil, nil)
-        (self.grantedAt, self.owningUserId) = (nil, nil)
+        (id, provider, providerDisplayName, userId, status) = (nil, nil, nil, nil, nil)
+        (createdAt, updatedAt, revokedAt, connectionParameters, credentialKind) = (nil, nil, nil, nil, nil)
+        (credentialId, network, oauth, apiKey, scopes) = (nil, nil, nil, nil, nil)
+        (grantedAt, owningUserId) = (nil, nil)
     }
 }
 
-extension Connection {
-    public init(from decoder: Decoder) throws {
+public extension Connection {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.provider = try container.sdkDecodeIfPresent(.provider)
-        self.providerDisplayName = try container.sdkDecodeIfPresent(.providerDisplayName)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.revokedAt = try container.sdkDecodeIfPresent(.revokedAt)
-        self.connectionParameters = try container.sdkDecodeIfPresent(.connectionParameters)
-        self.credentialKind = try container.sdkDecodeIfPresent(.credentialKind)
-        self.credentialId = try container.sdkDecodeIfPresent(.credentialId)
-        self.network = try container.sdkDecodeIfPresent(.network)
-        self.oauth = try container.sdkDecodeIfPresent(.oauth)
-        self.apiKey = try container.sdkDecodeIfPresent(.apiKey)
-        self.scopes = try container.sdkDecodeIfPresent(.scopes)
-        self.grantedAt = try container.sdkDecodeIfPresent(.grantedAt)
-        self.owningUserId = try container.sdkDecodeIfPresent(.owningUserId)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        provider = try container.sdkDecodeIfPresent(.provider)
+        providerDisplayName = try container.sdkDecodeIfPresent(.providerDisplayName)
+        userId = try container.sdkDecodeIfPresent(.userId)
+        status = try container.sdkDecodeIfPresent(.status)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        revokedAt = try container.sdkDecodeIfPresent(.revokedAt)
+        connectionParameters = try container.sdkDecodeIfPresent(.connectionParameters)
+        credentialKind = try container.sdkDecodeIfPresent(.credentialKind)
+        credentialId = try container.sdkDecodeIfPresent(.credentialId)
+        network = try container.sdkDecodeIfPresent(.network)
+        oauth = try container.sdkDecodeIfPresent(.oauth)
+        apiKey = try container.sdkDecodeIfPresent(.apiKey)
+        scopes = try container.sdkDecodeIfPresent(.scopes)
+        grantedAt = try container.sdkDecodeIfPresent(.grantedAt)
+        owningUserId = try container.sdkDecodeIfPresent(.owningUserId)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
-        if let value = self.revokedAt {
+        if let value = revokedAt {
             try sdkValidateDateTime("revoked_at", sdkWireString(value))
         }
-        if let value = self.grantedAt {
+        if let value = grantedAt {
             try sdkValidateDateTime("granted_at", sdkWireString(value))
         }
     }
 }
 
-extension Connection {
-    public init(id: String? = nil, provider: String? = nil, providerDisplayName: String? = nil, userId: String? = nil, status: ConnectionStatus? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, revokedAt: Date? = nil, connectionParameters: [String: JSONValue]? = nil, credentialKind: ConnectionCredentialKind? = nil, credentialId: String? = nil, network: ConnectionNetwork? = nil, oauth: ConnectionOauth? = nil, apiKey: [String: JSONValue]? = nil, scopes: [String]? = nil, grantedAt: Date? = nil, owningUserId: String? = nil) throws {
+public extension Connection {
+    init(
+        id: String? = nil,
+        provider: String? = nil,
+        providerDisplayName: String? = nil,
+        userId: String? = nil,
+        status: ConnectionStatus? = nil,
+        createdAt: Date? = nil,
+        updatedAt: Date? = nil,
+        revokedAt: Date? = nil,
+        connectionParameters: [String: JSONValue]? = nil,
+        credentialKind: ConnectionCredentialKind? = nil,
+        credentialId: String? = nil,
+        network: ConnectionNetwork? = nil,
+        oauth: ConnectionOauth? = nil,
+        apiKey: [String: JSONValue]? = nil,
+        scopes: [String]? = nil,
+        grantedAt: Date? = nil,
+        owningUserId: String? = nil
+    ) throws {
         self.init()
         (self.id, self.provider) = (id, provider)
         (self.providerDisplayName, self.userId) = (providerDisplayName, userId)
@@ -162,19 +180,19 @@ public struct ConnectionCreateCredentialTeamCredential: Codable {
     }
 
     init() {
-        self.credentialId = nil
+        credentialId = nil
     }
 }
 
-extension ConnectionCreateCredentialTeamCredential {
-    public init(from decoder: Decoder) throws {
+public extension ConnectionCreateCredentialTeamCredential {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.credentialId = try container.sdkDecodeIfPresent(.credentialId)
+        credentialId = try container.sdkDecodeIfPresent(.credentialId)
     }
 }
 
-extension ConnectionCreateCredentialTeamCredential {
-    public init(credentialId: String? = nil) {
+public extension ConnectionCreateCredentialTeamCredential {
+    init(credentialId: String? = nil) {
         self.init()
         self.credentialId = credentialId
     }
@@ -190,19 +208,19 @@ public struct ConnectionNetwork: Codable {
     }
 
     init() {
-        self.vpc = nil
+        vpc = nil
     }
 }
 
-extension ConnectionNetwork {
-    public init(from decoder: Decoder) throws {
+public extension ConnectionNetwork {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.vpc = try container.sdkDecodeIfPresent(.vpc)
+        vpc = try container.sdkDecodeIfPresent(.vpc)
     }
 }
 
-extension ConnectionNetwork {
-    public init(vpc: ConnectionNetworkVpc? = nil) {
+public extension ConnectionNetwork {
+    init(vpc: ConnectionNetworkVpc? = nil) {
         self.init()
         self.vpc = vpc
     }
@@ -212,12 +230,15 @@ extension ConnectionNetwork {
 public struct ConnectionAuthorizationStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let requiresAuthorization = ConnectionAuthorizationStatus(rawValue: "requires_authorization")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -230,14 +251,17 @@ public struct ConnectionAuthorizationStatus: RawRepresentable, Hashable, Codable
 public struct ConnectionCredentialKind: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let digitaloceanOauth = ConnectionCredentialKind(rawValue: "digitalocean_oauth")
     public static let privateOauth = ConnectionCredentialKind(rawValue: "private_oauth")
     public static let teamApiKey = ConnectionCredentialKind(rawValue: "team_api_key")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -250,7 +274,10 @@ public struct ConnectionCredentialKind: RawRepresentable, Hashable, Codable, Sen
 public struct ConnectionStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pending = ConnectionStatus(rawValue: "pending")
     public static let active = ConnectionStatus(rawValue: "active")
     public static let revoked = ConnectionStatus(rawValue: "revoked")
@@ -258,7 +285,7 @@ public struct ConnectionStatus: RawRepresentable, Hashable, Codable, Sendable, S
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -271,14 +298,17 @@ public struct ConnectionStatus: RawRepresentable, Hashable, Codable, Sendable, S
 public struct ConnectionParameterSpecInputKind: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let string = ConnectionParameterSpecInputKind(rawValue: "string")
     public static let httpsOrigin = ConnectionParameterSpecInputKind(rawValue: "https_origin")
     public static let `enum` = ConnectionParameterSpecInputKind(rawValue: "enum")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

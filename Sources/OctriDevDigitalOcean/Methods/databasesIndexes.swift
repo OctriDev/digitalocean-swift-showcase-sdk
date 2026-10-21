@@ -6,25 +6,70 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DatabasesMethods {
-    /// To list all of a OpenSearch cluster's indexes, send a GET request to `/v2/databases/$DATABASE_ID/indexes`. The result will be a JSON object with a `indexes` key.
+public extension DatabasesMethods {
+    /// To list all of a OpenSearch cluster's indexes, send a GET request to `/v2/databases/$DATABASE_ID/indexes`. The
+    /// result will be a JSON object with a `indexes` key.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    public static func databasesListOpeasearchIndexes(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> OpensearchIndexes {
+    static func databasesListOpeasearchIndexes(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> OpensearchIndexes {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/indexes"].joined(), config: config, decoder: .json, operationId: "databases_list_opeasearch_indexes", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/indexes"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "databases_list_opeasearch_indexes",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To delete a single index within OpenSearch cluster, send a DELETE request to `/v2/databases/$DATABASE_ID/indexes/$INDEX_NAME`. A status of 204 will be given. This indicates that the request was processed successfully, but that no response body is needed.
+    /// To delete a single index within OpenSearch cluster, send a DELETE request to
+    /// `/v2/databases/$DATABASE_ID/indexes/$INDEX_NAME`. A status of 204 will be given. This indicates that the request
+    /// was processed successfully, but that no response body is needed.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - indexName: The name of the OpenSearch index.
-    public static func databasesDeleteOpensearchIndex(config: ClientConfig, databaseClusterUuid: String, indexName: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func databasesDeleteOpensearchIndex(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        indexName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("DELETE", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/indexes/", sdkEncodePathSegment(sdkWireString(indexName))].joined(), config: config, decoder: .empty, operationId: "databases_delete_opensearch_index", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "DELETE",
+            [
+                "/v2/databases/",
+                sdkEncodePathSegment(sdkWireString(databaseClusterUuid)),
+                "/indexes/",
+                sdkEncodePathSegment(sdkWireString(indexName)),
+            ].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "databases_delete_opensearch_index",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

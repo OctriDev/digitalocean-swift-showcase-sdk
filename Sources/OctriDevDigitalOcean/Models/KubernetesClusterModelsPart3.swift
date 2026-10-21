@@ -3,9 +3,38 @@
 
 import Foundation
 
-// KubernetesCluster domain models
-extension ClusterRequest {
-    public init(name: String, region: String, version: String, nodePools: [KubernetesNodePoolRequest], clusterSubnet: String? = nil, serviceSubnet: String? = nil, vpcUuid: String? = nil, workerSubnetUuid: String? = nil, tags: [String]? = nil, maintenancePolicy: MaintenancePolicyRequest? = nil, autoUpgrade: Bool? = nil, isolatedWorkers: Bool? = nil, gpuOperatorReady: Bool? = nil, surgeUpgrade: Bool? = nil, ha: Bool? = nil, controlPlaneFirewall: ControlPlaneFirewall? = nil, clusterAutoscalerConfiguration: ClusterAutoscalerConfiguration? = nil, sso: Sso? = nil, routingAgent: RoutingAgent? = nil, p2pOciRegistryPlugin: P2pOciRegistryPlugin? = nil, nfsCsiPlugin: NfsCsiPlugin? = nil, amdGpuDevicePlugin: AmdGpuDevicePlugin? = nil, amdGpuDeviceMetricsExporterPlugin: AmdGpuDeviceMetricsExporterPlugin? = nil, nvidiaGpuDevicePlugin: NvidiaGpuDevicePlugin? = nil, nvidiaGpuDraDriver: NvidiaGpuDraDriver? = nil, amdGpuDraDriver: AmdGpuDraDriver? = nil, rdmaSharedDevPlugin: RdmaSharedDevPlugin? = nil, corednsAutoscaler: CorednsAutoscaler? = nil) throws {
+/// KubernetesCluster domain models
+public extension ClusterRequest {
+    init(
+        name: String,
+        region: String,
+        version: String,
+        nodePools: [KubernetesNodePoolRequest],
+        clusterSubnet: String? = nil,
+        serviceSubnet: String? = nil,
+        vpcUuid: String? = nil,
+        workerSubnetUuid: String? = nil,
+        tags: [String]? = nil,
+        maintenancePolicy: MaintenancePolicyRequest? = nil,
+        autoUpgrade: Bool? = nil,
+        isolatedWorkers: Bool? = nil,
+        gpuOperatorReady: Bool? = nil,
+        surgeUpgrade: Bool? = nil,
+        ha: Bool? = nil,
+        controlPlaneFirewall: ControlPlaneFirewall? = nil,
+        clusterAutoscalerConfiguration: ClusterAutoscalerConfiguration? = nil,
+        sso: Sso? = nil,
+        routingAgent: RoutingAgent? = nil,
+        p2pOciRegistryPlugin: P2pOciRegistryPlugin? = nil,
+        nfsCsiPlugin: NfsCsiPlugin? = nil,
+        amdGpuDevicePlugin: AmdGpuDevicePlugin? = nil,
+        amdGpuDeviceMetricsExporterPlugin: AmdGpuDeviceMetricsExporterPlugin? = nil,
+        nvidiaGpuDevicePlugin: NvidiaGpuDevicePlugin? = nil,
+        nvidiaGpuDraDriver: NvidiaGpuDraDriver? = nil,
+        amdGpuDraDriver: AmdGpuDraDriver? = nil,
+        rdmaSharedDevPlugin: RdmaSharedDevPlugin? = nil,
+        corednsAutoscaler: CorednsAutoscaler? = nil
+    ) throws {
         (self.name, self.region) = (name, region)
         (self.version, self.nodePools) = (version, nodePools)
         (self.clusterSubnet, self.serviceSubnet) = (clusterSubnet, serviceSubnet)
@@ -31,17 +60,21 @@ extension ClusterRequest {
 }
 
 /// Required enumerated value serialized in the `expanders[]` wire field.
-public struct ClusterAutoscalerConfigurationExpandersItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ClusterAutoscalerConfigurationExpandersItem: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let random = ClusterAutoscalerConfigurationExpandersItem(rawValue: "random")
     public static let priority = ClusterAutoscalerConfigurationExpandersItem(rawValue: "priority")
     public static let leastWaste = ClusterAutoscalerConfigurationExpandersItem(rawValue: "least_waste")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -54,7 +87,10 @@ public struct ClusterAutoscalerConfigurationExpandersItem: RawRepresentable, Has
 public struct ClusterReadStatusState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let running = ClusterReadStatusState(rawValue: "running")
     public static let provisioning = ClusterReadStatusState(rawValue: "provisioning")
     public static let degraded = ClusterReadStatusState(rawValue: "degraded")
@@ -65,7 +101,7 @@ public struct ClusterReadStatusState: RawRepresentable, Hashable, Codable, Senda
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -78,7 +114,10 @@ public struct ClusterReadStatusState: RawRepresentable, Hashable, Codable, Senda
 public struct ClusterStatusState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let running = ClusterStatusState(rawValue: "running")
     public static let provisioning = ClusterStatusState(rawValue: "provisioning")
     public static let degraded = ClusterStatusState(rawValue: "degraded")
@@ -89,7 +128,7 @@ public struct ClusterStatusState: RawRepresentable, Hashable, Codable, Sendable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

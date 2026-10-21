@@ -3,7 +3,7 @@
 
 import Foundation
 
-// VectorDatabases domain models
+/// VectorDatabases domain models
 /// Typed representation of the `VectordbUpdateVectorDBRequest` API schema.
 public struct VectordbUpdateVectorDBRequest: Codable {
     /// VectorDBConfig holds optional, advanced cluster settings.
@@ -22,21 +22,21 @@ public struct VectordbUpdateVectorDBRequest: Codable {
     }
 
     init() {
-        (self.config, self.id, self.projectId) = (nil, nil, nil)
+        (config, id, projectId) = (nil, nil, nil)
     }
 }
 
-extension VectordbUpdateVectorDBRequest {
-    public init(from decoder: Decoder) throws {
+public extension VectordbUpdateVectorDBRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.config = try container.sdkDecodeIfPresent(.config)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.projectId = try container.sdkDecodeIfPresent(.projectId)
+        config = try container.sdkDecodeIfPresent(.config)
+        id = try container.sdkDecodeIfPresent(.id)
+        projectId = try container.sdkDecodeIfPresent(.projectId)
     }
 }
 
-extension VectordbUpdateVectorDBRequest {
-    public init(config: VectordbVectorDBConfig? = nil, id: String? = nil, projectId: String? = nil) {
+public extension VectordbUpdateVectorDBRequest {
+    init(config: VectordbVectorDBConfig? = nil, id: String? = nil, projectId: String? = nil) {
         self.init()
         (self.config, self.id) = (config, id)
         self.projectId = projectId
@@ -53,19 +53,19 @@ public struct VectordbUpdateVectorDBResponse: Codable {
     }
 
     init() {
-        self.vectorDb = nil
+        vectorDb = nil
     }
 }
 
-extension VectordbUpdateVectorDBResponse {
-    public init(from decoder: Decoder) throws {
+public extension VectordbUpdateVectorDBResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.vectorDb = try container.sdkDecodeIfPresent(.vectorDb)
+        vectorDb = try container.sdkDecodeIfPresent(.vectorDb)
     }
 }
 
-extension VectordbUpdateVectorDBResponse {
-    public init(vectorDb: VectordbVectorDB? = nil) {
+public extension VectordbUpdateVectorDBResponse {
+    init(vectorDb: VectordbVectorDB? = nil) {
         self.init()
         self.vectorDb = vectorDb
     }

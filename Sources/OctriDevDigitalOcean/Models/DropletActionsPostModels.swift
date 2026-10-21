@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DropletActions domain models
+/// DropletActions domain models
 /// Typed representation of the `DropletActionChangeBackupPolicy` API schema.
 public struct DropletActionChangeBackupPolicy: Codable {
     /// The type of action to initiate for the Droplet.
@@ -17,28 +17,38 @@ public struct DropletActionChangeBackupPolicy: Codable {
         case backupPolicy = "backup_policy"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DropletActionChangeBackupPolicy {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.backupPolicy) else {
-            throw SdkValidationError(field: "backup_policy", code: "required", message: "Validation failed for 'backup_policy': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.backupPolicy = try container.sdkDecodeRequired(.backupPolicy)
-            try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DropletActionChangeBackupPolicy {
-    public init(type: DropletActionType, backupPolicy: DropletBackupPolicy) throws {
+public extension DropletActionChangeBackupPolicy {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.backupPolicy) else {
+            throw SdkValidationError(
+                field: "backup_policy",
+                code: "required",
+                message: "Validation failed for 'backup_policy': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        backupPolicy = try container.sdkDecodeRequired(.backupPolicy)
+        try sdkValidateRawEnum("type", type, DropletActionType.allCases.map(\.rawValue))
+    }
+}
+
+public extension DropletActionChangeBackupPolicy {
+    init(type: DropletActionType, backupPolicy: DropletBackupPolicy) throws {
         (self.type, self.backupPolicy) = (type, backupPolicy)
-            try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
     }
 }
 
@@ -56,25 +66,31 @@ public struct DropletActionRename: Codable {
         case name
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DropletActionRename {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.name = try container.sdkDecodeIfPresent(.name)
-            try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DropletActionRename {
-    public init(type: DropletActionType, name: String? = nil) throws {
+public extension DropletActionRename {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        name = try container.sdkDecodeIfPresent(.name)
+        try sdkValidateRawEnum("type", type, DropletActionType.allCases.map(\.rawValue))
+    }
+}
+
+public extension DropletActionRename {
+    init(type: DropletActionType, name: String? = nil) throws {
         (self.type, self.name) = (type, name)
-            try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
     }
 }
 
@@ -92,25 +108,31 @@ public struct DropletActionChangeKernel: Codable {
         case kernel
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DropletActionChangeKernel {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.kernel = try container.sdkDecodeIfPresent(.kernel)
-            try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DropletActionChangeKernel {
-    public init(type: DropletActionType, kernel: Int? = nil) throws {
+public extension DropletActionChangeKernel {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        kernel = try container.sdkDecodeIfPresent(.kernel)
+        try sdkValidateRawEnum("type", type, DropletActionType.allCases.map(\.rawValue))
+    }
+}
+
+public extension DropletActionChangeKernel {
+    init(type: DropletActionType, kernel: Int? = nil) throws {
         (self.type, self.kernel) = (type, kernel)
-            try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
     }
 }
 
@@ -129,25 +151,31 @@ public struct DropletActionRebuild: Codable {
         case image
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DropletActionRebuild {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.image = try container.sdkDecodeIfPresent(.image)
-            try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DropletActionRebuild {
-    public init(type: DropletActionType, image: DropletActionRebuildVariant1Image? = nil) throws {
+public extension DropletActionRebuild {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        image = try container.sdkDecodeIfPresent(.image)
+        try sdkValidateRawEnum("type", type, DropletActionType.allCases.map(\.rawValue))
+    }
+}
+
+public extension DropletActionRebuild {
+    init(type: DropletActionType, image: DropletActionRebuildVariant1Image? = nil) throws {
         (self.type, self.image) = (type, image)
-            try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
     }
 }
 
@@ -160,19 +188,19 @@ public struct DropletActionEnableBackupsRequestVariant1: Codable {
     }
 
     init() {
-        self.backupPolicy = nil
+        backupPolicy = nil
     }
 }
 
-extension DropletActionEnableBackupsRequestVariant1 {
-    public init(from decoder: Decoder) throws {
+public extension DropletActionEnableBackupsRequestVariant1 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.backupPolicy = try container.sdkDecodeIfPresent(.backupPolicy)
+        backupPolicy = try container.sdkDecodeIfPresent(.backupPolicy)
     }
 }
 
-extension DropletActionEnableBackupsRequestVariant1 {
-    public init(backupPolicy: DropletBackupPolicyRequest? = nil) {
+public extension DropletActionEnableBackupsRequestVariant1 {
+    init(backupPolicy: DropletBackupPolicyRequest? = nil) {
         self.init()
         self.backupPolicy = backupPolicy
     }
@@ -193,20 +221,20 @@ public struct DropletActionResizeVariant1: Codable {
     }
 
     init() {
-        (self.disk, self.size) = (nil, nil)
+        (disk, size) = (nil, nil)
     }
 }
 
-extension DropletActionResizeVariant1 {
-    public init(from decoder: Decoder) throws {
+public extension DropletActionResizeVariant1 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.disk = try container.sdkDecodeIfPresent(.disk)
-        self.size = try container.sdkDecodeIfPresent(.size)
+        disk = try container.sdkDecodeIfPresent(.disk)
+        size = try container.sdkDecodeIfPresent(.size)
     }
 }
 
-extension DropletActionResizeVariant1 {
-    public init(disk: Bool? = nil, size: String? = nil) {
+public extension DropletActionResizeVariant1 {
+    init(disk: Bool? = nil, size: String? = nil) {
         self.init()
         (self.disk, self.size) = (disk, size)
     }
@@ -222,19 +250,19 @@ public struct DropletActionRenameVariant1: Codable {
     }
 
     init() {
-        self.name = nil
+        name = nil
     }
 }
 
-extension DropletActionRenameVariant1 {
-    public init(from decoder: Decoder) throws {
+public extension DropletActionRenameVariant1 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension DropletActionRenameVariant1 {
-    public init(name: String? = nil) {
+public extension DropletActionRenameVariant1 {
+    init(name: String? = nil) {
         self.init()
         self.name = name
     }
@@ -254,25 +282,31 @@ public struct DropletActionRestore: Codable {
         case image
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DropletActionRestore {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.image = try container.sdkDecodeIfPresent(.image)
-            try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DropletActionRestore {
-    public init(type: DropletActionType, image: Int? = nil) throws {
+public extension DropletActionRestore {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        image = try container.sdkDecodeIfPresent(.image)
+        try sdkValidateRawEnum("type", type, DropletActionType.allCases.map(\.rawValue))
+    }
+}
+
+public extension DropletActionRestore {
+    init(type: DropletActionType, image: Int? = nil) throws {
         (self.type, self.image) = (type, image)
-            try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
     }
 }
 
@@ -286,19 +320,19 @@ public struct DropletActionResponse: Codable {
     }
 
     init() {
-        self.action = nil
+        action = nil
     }
 }
 
-extension DropletActionResponse {
-    public init(from decoder: Decoder) throws {
+public extension DropletActionResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.action = try container.sdkDecodeIfPresent(.action)
+        action = try container.sdkDecodeIfPresent(.action)
     }
 }
 
-extension DropletActionResponse {
-    public init(action: Action? = nil) {
+public extension DropletActionResponse {
+    init(action: Action? = nil) {
         self.init()
         self.action = action
     }
@@ -310,22 +344,32 @@ public indirect enum DropletActionRebuildVariant1Image {
 }
 
 extension DropletActionRebuildVariant1Image: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for DropletActionRebuildVariant1Image")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for DropletActionRebuildVariant1Image"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension DropletActionRebuildVariant1Image {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode(Int.self) { return .intValue(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode(Int.self) {
+            return .intValue(value)
+        }
         return nil
     }
 }
@@ -368,27 +412,33 @@ public struct DropletActionResize: Codable {
         case size
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DropletActionResize {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.disk = try container.sdkDecodeIfPresent(.disk)
-        self.size = try container.sdkDecodeIfPresent(.size)
-            try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DropletActionResize {
-    public init(type: DropletActionType, disk: Bool? = nil, size: String? = nil) throws {
+public extension DropletActionResize {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        disk = try container.sdkDecodeIfPresent(.disk)
+        size = try container.sdkDecodeIfPresent(.size)
+        try sdkValidateRawEnum("type", type, DropletActionType.allCases.map(\.rawValue))
+    }
+}
+
+public extension DropletActionResize {
+    init(type: DropletActionType, disk: Bool? = nil, size: String? = nil) throws {
         (self.type, self.disk) = (type, disk)
         self.size = size
-            try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
     }
 }
 
@@ -402,19 +452,19 @@ public struct DropletActionRestoreVariant1: Codable {
     }
 
     init() {
-        self.image = nil
+        image = nil
     }
 }
 
-extension DropletActionRestoreVariant1 {
-    public init(from decoder: Decoder) throws {
+public extension DropletActionRestoreVariant1 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.image = try container.sdkDecodeIfPresent(.image)
+        image = try container.sdkDecodeIfPresent(.image)
     }
 }
 
-extension DropletActionRestoreVariant1 {
-    public init(image: Int? = nil) {
+public extension DropletActionRestoreVariant1 {
+    init(image: Int? = nil) {
         self.init()
         self.image = image
     }
@@ -433,25 +483,31 @@ public struct DropletActionEnableBackupsRequest: Codable {
         case backupPolicy = "backup_policy"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DropletActionEnableBackupsRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.backupPolicy = try container.sdkDecodeIfPresent(.backupPolicy)
-            try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DropletActionEnableBackupsRequest {
-    public init(type: DropletActionType, backupPolicy: DropletBackupPolicyRequest? = nil) throws {
+public extension DropletActionEnableBackupsRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        backupPolicy = try container.sdkDecodeIfPresent(.backupPolicy)
+        try sdkValidateRawEnum("type", type, DropletActionType.allCases.map(\.rawValue))
+    }
+}
+
+public extension DropletActionEnableBackupsRequest {
+    init(type: DropletActionType, backupPolicy: DropletBackupPolicyRequest? = nil) throws {
         (self.type, self.backupPolicy) = (type, backupPolicy)
-            try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
     }
 }
 
@@ -466,19 +522,19 @@ public struct DropletActionRebuildVariant1: Codable {
     }
 
     init() {
-        self.image = nil
+        image = nil
     }
 }
 
-extension DropletActionRebuildVariant1 {
-    public init(from decoder: Decoder) throws {
+public extension DropletActionRebuildVariant1 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.image = try container.sdkDecodeIfPresent(.image)
+        image = try container.sdkDecodeIfPresent(.image)
     }
 }
 
-extension DropletActionRebuildVariant1 {
-    public init(image: DropletActionRebuildVariant1Image? = nil) {
+public extension DropletActionRebuildVariant1 {
+    init(image: DropletActionRebuildVariant1Image? = nil) {
         self.init()
         self.image = image
     }
@@ -493,19 +549,19 @@ public struct DropletActionChangeBackupPolicyVariant1: Codable {
     }
 
     init() {
-        self.backupPolicy = nil
+        backupPolicy = nil
     }
 }
 
-extension DropletActionChangeBackupPolicyVariant1 {
-    public init(from decoder: Decoder) throws {
+public extension DropletActionChangeBackupPolicyVariant1 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.backupPolicy = try container.sdkDecodeIfPresent(.backupPolicy)
+        backupPolicy = try container.sdkDecodeIfPresent(.backupPolicy)
     }
 }
 
-extension DropletActionChangeBackupPolicyVariant1 {
-    public init(backupPolicy: DropletBackupPolicy? = nil) {
+public extension DropletActionChangeBackupPolicyVariant1 {
+    init(backupPolicy: DropletBackupPolicy? = nil) {
         self.init()
         self.backupPolicy = backupPolicy
     }
@@ -521,19 +577,19 @@ public struct DropletActionChangeKernelVariant1: Codable {
     }
 
     init() {
-        self.kernel = nil
+        kernel = nil
     }
 }
 
-extension DropletActionChangeKernelVariant1 {
-    public init(from decoder: Decoder) throws {
+public extension DropletActionChangeKernelVariant1 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.kernel = try container.sdkDecodeIfPresent(.kernel)
+        kernel = try container.sdkDecodeIfPresent(.kernel)
     }
 }
 
-extension DropletActionChangeKernelVariant1 {
-    public init(kernel: Int? = nil) {
+public extension DropletActionChangeKernelVariant1 {
+    init(kernel: Int? = nil) {
         self.init()
         self.kernel = kernel
     }

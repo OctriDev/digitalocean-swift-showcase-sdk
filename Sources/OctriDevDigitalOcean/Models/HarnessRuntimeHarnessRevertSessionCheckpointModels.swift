@@ -3,7 +3,7 @@
 
 import Foundation
 
-// HarnessRuntime domain models
+/// HarnessRuntime domain models
 /// The session after in-place rollback: same session_id, sandbox_id swapped to the restored VM.
 public struct RollbackToCheckpointResponse: Codable {
     /// Session is the user-facing record of a environment session + sandbox pair.
@@ -14,19 +14,19 @@ public struct RollbackToCheckpointResponse: Codable {
     }
 
     init() {
-        self.session = nil
+        session = nil
     }
 }
 
-extension RollbackToCheckpointResponse {
-    public init(from decoder: Decoder) throws {
+public extension RollbackToCheckpointResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.session = try container.sdkDecodeIfPresent(.session)
+        session = try container.sdkDecodeIfPresent(.session)
     }
 }
 
-extension RollbackToCheckpointResponse {
-    public init(session: DefinitionsSession? = nil) {
+public extension RollbackToCheckpointResponse {
+    init(session: DefinitionsSession? = nil) {
         self.init()
         self.session = session
     }

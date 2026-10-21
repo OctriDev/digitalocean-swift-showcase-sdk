@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiGet domain models
+/// AgentPlatformAPIApiGet domain models
 /// Agent usage
 public struct ApiGetAgentUsageOutput: Codable {
     /// Resource Usage Description
@@ -17,20 +17,20 @@ public struct ApiGetAgentUsageOutput: Codable {
     }
 
     init() {
-        (self.logInsightsUsage, self.usage) = (nil, nil)
+        (logInsightsUsage, usage) = (nil, nil)
     }
 }
 
-extension ApiGetAgentUsageOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetAgentUsageOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.logInsightsUsage = try container.sdkDecodeIfPresent(.logInsightsUsage)
-        self.usage = try container.sdkDecodeIfPresent(.usage)
+        logInsightsUsage = try container.sdkDecodeIfPresent(.logInsightsUsage)
+        usage = try container.sdkDecodeIfPresent(.usage)
     }
 }
 
-extension ApiGetAgentUsageOutput {
-    public init(logInsightsUsage: ApiResourceUsage? = nil, usage: ApiResourceUsage? = nil) {
+public extension ApiGetAgentUsageOutput {
+    init(logInsightsUsage: ApiResourceUsage? = nil, usage: ApiResourceUsage? = nil) {
         self.init()
         (self.logInsightsUsage, self.usage) = (logInsightsUsage, usage)
     }

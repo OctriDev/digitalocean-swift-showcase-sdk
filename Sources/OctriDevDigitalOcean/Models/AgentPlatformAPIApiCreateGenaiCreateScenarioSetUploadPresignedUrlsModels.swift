@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiCreate domain models
+/// AgentPlatformAPIApiCreate domain models
 /// Public parameters for requesting scenario set upload presigned URLs.
 public struct ApiCreateScenarioSetUploadPresignedUrlsInputPublic: Codable {
     /// A list of files to generate presigned URLs for.
@@ -14,19 +14,19 @@ public struct ApiCreateScenarioSetUploadPresignedUrlsInputPublic: Codable {
     }
 
     init() {
-        self.files = nil
+        files = nil
     }
 }
 
-extension ApiCreateScenarioSetUploadPresignedUrlsInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateScenarioSetUploadPresignedUrlsInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.files = try container.sdkDecodeIfPresent(.files)
+        files = try container.sdkDecodeIfPresent(.files)
     }
 }
 
-extension ApiCreateScenarioSetUploadPresignedUrlsInputPublic {
-    public init(files: [ApiPresignedUrlFile]? = nil) {
+public extension ApiCreateScenarioSetUploadPresignedUrlsInputPublic {
+    init(files: [ApiPresignedUrlFile]? = nil) {
         self.init()
         self.files = files
     }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Databases domain models
+/// Databases domain models
 /// Typed representation of the `Backup` API schema.
 public struct Backup: Codable {
     /// A time value given in ISO8601 combined date and time format at which the backup was created.
@@ -21,29 +21,39 @@ public struct Backup: Codable {
         case incremental
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension Backup {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.createdAt) else {
-            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
-        }
-        guard container.contains(.sizeGigabytes) else {
-            throw SdkValidationError(field: "size_gigabytes", code: "required", message: "Validation failed for 'size_gigabytes': value is required")
-        }
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.sizeGigabytes = try container.sdkDecodeRequired(.sizeGigabytes)
-        self.incremental = try container.sdkDecodeIfPresent(.incremental)
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension Backup {
-    public init(createdAt: Date, sizeGigabytes: Double, incremental: Bool? = nil) throws {
+public extension Backup {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.createdAt) else {
+            throw SdkValidationError(
+                field: "created_at",
+                code: "required",
+                message: "Validation failed for 'created_at': value is required"
+            )
+        }
+        guard container.contains(.sizeGigabytes) else {
+            throw SdkValidationError(
+                field: "size_gigabytes",
+                code: "required",
+                message: "Validation failed for 'size_gigabytes': value is required"
+            )
+        }
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        sizeGigabytes = try container.sdkDecodeRequired(.sizeGigabytes)
+        incremental = try container.sdkDecodeIfPresent(.incremental)
+        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+    }
+}
+
+public extension Backup {
+    init(createdAt: Date, sizeGigabytes: Double, incremental: Bool? = nil) throws {
         (self.createdAt, self.sizeGigabytes) = (createdAt, sizeGigabytes)
         self.incremental = incremental
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }

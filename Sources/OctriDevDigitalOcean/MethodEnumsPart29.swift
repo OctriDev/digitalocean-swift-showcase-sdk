@@ -25,39 +25,39 @@ struct InferenceCreateMessagesStreamStreamRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.model, forKey: SdkCodingKey("model"))
-        try keyedContainer.encode(self.maxTokens, forKey: SdkCodingKey("max_tokens"))
-        try keyedContainer.encode(self.messages, forKey: SdkCodingKey("messages"))
-        try keyedContainer.encode(self.stream, forKey: SdkCodingKey("stream"))
-        try keyedContainer.encodeIfPresent(self.system, forKey: SdkCodingKey("system"))
-        try keyedContainer.encodeIfPresent(self.stopSequences, forKey: SdkCodingKey("stop_sequences"))
-        try keyedContainer.encodeIfPresent(self.temperature, forKey: SdkCodingKey("temperature"))
-        try keyedContainer.encodeIfPresent(self.topP, forKey: SdkCodingKey("top_p"))
-        try keyedContainer.encodeIfPresent(self.topK, forKey: SdkCodingKey("top_k"))
-        try keyedContainer.encodeIfPresent(self.tools, forKey: SdkCodingKey("tools"))
-        try keyedContainer.encodeIfPresent(self.toolChoice, forKey: SdkCodingKey("tool_choice"))
-        try keyedContainer.encodeIfPresent(self.metadata, forKey: SdkCodingKey("metadata"))
-        try keyedContainer.encodeIfPresent(self.reasoningEffort, forKey: SdkCodingKey("reasoning_effort"))
-        try keyedContainer.encodeIfPresent(self.speed, forKey: SdkCodingKey("speed"))
-        try keyedContainer.encodeIfPresent(self.thinking, forKey: SdkCodingKey("thinking"))
+        try keyedContainer.encode(model, forKey: SdkCodingKey("model"))
+        try keyedContainer.encode(maxTokens, forKey: SdkCodingKey("max_tokens"))
+        try keyedContainer.encode(messages, forKey: SdkCodingKey("messages"))
+        try keyedContainer.encode(stream, forKey: SdkCodingKey("stream"))
+        try keyedContainer.encodeIfPresent(system, forKey: SdkCodingKey("system"))
+        try keyedContainer.encodeIfPresent(stopSequences, forKey: SdkCodingKey("stop_sequences"))
+        try keyedContainer.encodeIfPresent(temperature, forKey: SdkCodingKey("temperature"))
+        try keyedContainer.encodeIfPresent(topP, forKey: SdkCodingKey("top_p"))
+        try keyedContainer.encodeIfPresent(topK, forKey: SdkCodingKey("top_k"))
+        try keyedContainer.encodeIfPresent(tools, forKey: SdkCodingKey("tools"))
+        try keyedContainer.encodeIfPresent(toolChoice, forKey: SdkCodingKey("tool_choice"))
+        try keyedContainer.encodeIfPresent(metadata, forKey: SdkCodingKey("metadata"))
+        try keyedContainer.encodeIfPresent(reasoningEffort, forKey: SdkCodingKey("reasoning_effort"))
+        try keyedContainer.encodeIfPresent(speed, forKey: SdkCodingKey("speed"))
+        try keyedContainer.encodeIfPresent(thinking, forKey: SdkCodingKey("thinking"))
     }
 
     init(options: ServerlessInferenceMethods.InferenceCreateMessagesStreamOptions) {
-        self.model = options.model
-        self.maxTokens = options.maxTokens
-        self.messages = options.messages
-        self.stream = options.stream
-        self.system = options.system
-        self.stopSequences = options.stopSequences
-        self.temperature = options.temperature
-        self.topP = options.topP
-        self.topK = options.topK
-        self.tools = options.tools
-        self.toolChoice = options.toolChoice
-        self.metadata = options.metadata
-        self.reasoningEffort = options.reasoningEffort
-        self.speed = options.speed
-        self.thinking = options.thinking
+        model = options.model
+        maxTokens = options.maxTokens
+        messages = options.messages
+        stream = options.stream
+        system = options.system
+        stopSequences = options.stopSequences
+        temperature = options.temperature
+        topP = options.topP
+        topK = options.topK
+        tools = options.tools
+        toolChoice = options.toolChoice
+        metadata = options.metadata
+        reasoningEffort = options.reasoningEffort
+        speed = options.speed
+        thinking = options.thinking
     }
 }
 
@@ -69,10 +69,10 @@ struct InferenceCreateEmbeddingRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.model, forKey: SdkCodingKey("model"))
-        try keyedContainer.encode(self.input, forKey: SdkCodingKey("input"))
-        try keyedContainer.encodeIfPresent(self.user, forKey: SdkCodingKey("user"))
-        try keyedContainer.encodeIfPresent(self.encodingFormat, forKey: SdkCodingKey("encoding_format"))
+        try keyedContainer.encode(model, forKey: SdkCodingKey("model"))
+        try keyedContainer.encode(input, forKey: SdkCodingKey("input"))
+        try keyedContainer.encodeIfPresent(user, forKey: SdkCodingKey("user"))
+        try keyedContainer.encodeIfPresent(encodingFormat, forKey: SdkCodingKey("encoding_format"))
     }
 }
 
@@ -92,33 +92,33 @@ struct InferenceCreateImageRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.prompt, forKey: SdkCodingKey("prompt"))
-        try keyedContainer.encode(self.model, forKey: SdkCodingKey("model"))
-        try keyedContainer.encode(self.n, forKey: SdkCodingKey("n"))
-        try keyedContainer.encodeIfPresent(self.moderation, forKey: SdkCodingKey("moderation"))
-        try keyedContainer.encodeIfPresent(self.background, forKey: SdkCodingKey("background"))
-        try keyedContainer.encodeIfPresent(self.outputFormat, forKey: SdkCodingKey("output_format"))
-        try keyedContainer.encodeIfPresent(self.outputCompression, forKey: SdkCodingKey("output_compression"))
-        try keyedContainer.encodeIfPresent(self.quality, forKey: SdkCodingKey("quality"))
-        try keyedContainer.encodeIfPresent(self.size, forKey: SdkCodingKey("size"))
-        try keyedContainer.encodeIfPresent(self.stream, forKey: SdkCodingKey("stream"))
-        try keyedContainer.encodeIfPresent(self.partialImages, forKey: SdkCodingKey("partial_images"))
-        try keyedContainer.encodeIfPresent(self.user, forKey: SdkCodingKey("user"))
+        try keyedContainer.encode(prompt, forKey: SdkCodingKey("prompt"))
+        try keyedContainer.encode(model, forKey: SdkCodingKey("model"))
+        try keyedContainer.encode(n, forKey: SdkCodingKey("n"))
+        try keyedContainer.encodeIfPresent(moderation, forKey: SdkCodingKey("moderation"))
+        try keyedContainer.encodeIfPresent(background, forKey: SdkCodingKey("background"))
+        try keyedContainer.encodeIfPresent(outputFormat, forKey: SdkCodingKey("output_format"))
+        try keyedContainer.encodeIfPresent(outputCompression, forKey: SdkCodingKey("output_compression"))
+        try keyedContainer.encodeIfPresent(quality, forKey: SdkCodingKey("quality"))
+        try keyedContainer.encodeIfPresent(size, forKey: SdkCodingKey("size"))
+        try keyedContainer.encodeIfPresent(stream, forKey: SdkCodingKey("stream"))
+        try keyedContainer.encodeIfPresent(partialImages, forKey: SdkCodingKey("partial_images"))
+        try keyedContainer.encodeIfPresent(user, forKey: SdkCodingKey("user"))
     }
 
     init(options: ServerlessInferenceMethods.InferenceCreateImageOptions) {
-        self.prompt = options.prompt
-        self.model = options.model
-        self.n = options.n
-        self.moderation = options.moderation
-        self.background = options.background
-        self.outputFormat = options.outputFormat
-        self.outputCompression = options.outputCompression
-        self.quality = options.quality
-        self.size = options.size
-        self.stream = options.stream
-        self.partialImages = options.partialImages
-        self.user = options.user
+        prompt = options.prompt
+        model = options.model
+        n = options.n
+        moderation = options.moderation
+        background = options.background
+        outputFormat = options.outputFormat
+        outputCompression = options.outputCompression
+        quality = options.quality
+        size = options.size
+        stream = options.stream
+        partialImages = options.partialImages
+        user = options.user
     }
 }
 
@@ -138,33 +138,33 @@ struct InferenceCreateImageStreamStreamRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.prompt, forKey: SdkCodingKey("prompt"))
-        try keyedContainer.encode(self.model, forKey: SdkCodingKey("model"))
-        try keyedContainer.encode(self.n, forKey: SdkCodingKey("n"))
-        try keyedContainer.encode(self.stream, forKey: SdkCodingKey("stream"))
-        try keyedContainer.encodeIfPresent(self.moderation, forKey: SdkCodingKey("moderation"))
-        try keyedContainer.encodeIfPresent(self.background, forKey: SdkCodingKey("background"))
-        try keyedContainer.encodeIfPresent(self.outputFormat, forKey: SdkCodingKey("output_format"))
-        try keyedContainer.encodeIfPresent(self.outputCompression, forKey: SdkCodingKey("output_compression"))
-        try keyedContainer.encodeIfPresent(self.quality, forKey: SdkCodingKey("quality"))
-        try keyedContainer.encodeIfPresent(self.size, forKey: SdkCodingKey("size"))
-        try keyedContainer.encodeIfPresent(self.partialImages, forKey: SdkCodingKey("partial_images"))
-        try keyedContainer.encodeIfPresent(self.user, forKey: SdkCodingKey("user"))
+        try keyedContainer.encode(prompt, forKey: SdkCodingKey("prompt"))
+        try keyedContainer.encode(model, forKey: SdkCodingKey("model"))
+        try keyedContainer.encode(n, forKey: SdkCodingKey("n"))
+        try keyedContainer.encode(stream, forKey: SdkCodingKey("stream"))
+        try keyedContainer.encodeIfPresent(moderation, forKey: SdkCodingKey("moderation"))
+        try keyedContainer.encodeIfPresent(background, forKey: SdkCodingKey("background"))
+        try keyedContainer.encodeIfPresent(outputFormat, forKey: SdkCodingKey("output_format"))
+        try keyedContainer.encodeIfPresent(outputCompression, forKey: SdkCodingKey("output_compression"))
+        try keyedContainer.encodeIfPresent(quality, forKey: SdkCodingKey("quality"))
+        try keyedContainer.encodeIfPresent(size, forKey: SdkCodingKey("size"))
+        try keyedContainer.encodeIfPresent(partialImages, forKey: SdkCodingKey("partial_images"))
+        try keyedContainer.encodeIfPresent(user, forKey: SdkCodingKey("user"))
     }
 
     init(options: ServerlessInferenceMethods.InferenceCreateImageStreamOptions) {
-        self.prompt = options.prompt
-        self.model = options.model
-        self.n = options.n
-        self.stream = options.stream
-        self.moderation = options.moderation
-        self.background = options.background
-        self.outputFormat = options.outputFormat
-        self.outputCompression = options.outputCompression
-        self.quality = options.quality
-        self.size = options.size
-        self.partialImages = options.partialImages
-        self.user = options.user
+        prompt = options.prompt
+        model = options.model
+        n = options.n
+        stream = options.stream
+        moderation = options.moderation
+        background = options.background
+        outputFormat = options.outputFormat
+        outputCompression = options.outputCompression
+        quality = options.quality
+        size = options.size
+        partialImages = options.partialImages
+        user = options.user
     }
 }
 
@@ -175,8 +175,8 @@ struct InferenceCreateSystemoneRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.state, forKey: SdkCodingKey("state"))
-        try keyedContainer.encode(self.model, forKey: SdkCodingKey("model"))
-        try keyedContainer.encode(self.questions, forKey: SdkCodingKey("questions"))
+        try keyedContainer.encode(state, forKey: SdkCodingKey("state"))
+        try keyedContainer.encode(model, forKey: SdkCodingKey("model"))
+        try keyedContainer.encode(questions, forKey: SdkCodingKey("questions"))
     }
 }

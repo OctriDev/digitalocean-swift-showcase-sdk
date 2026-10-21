@@ -29,9 +29,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.nfs.deleteSnapshot(
-            nfsSnapshotId: decoded("\"0a1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d\""),
-            region: decoded("\"atl1\"")
-        )
+                nfsSnapshotId: decoded("\"0a1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d\""),
+                region: decoded("\"atl1\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -77,9 +77,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.nfs.get(
-            nfsId: decoded("\"0a1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d\""),
-            region: decoded("\"atl1\"")
-        )
+                nfsId: decoded("\"0a1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d\""),
+                region: decoded("\"atl1\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -124,8 +124,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.nfs.getAccessPoint(
-            accessPointId: decoded("\"becd9f04-8afa-4ccd-b03e-9676447df603\"")
-        )
+                accessPointId: decoded("\"becd9f04-8afa-4ccd-b03e-9676447df603\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -171,9 +171,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.nfs.getSnapshot(
-            nfsSnapshotId: decoded("\"0a1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d\""),
-            region: decoded("\"atl1\"")
-        )
+                nfsSnapshotId: decoded("\"0a1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d\""),
+                region: decoded("\"atl1\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -218,8 +218,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.nfs.list(
-            region: decoded("\"atl1\"")
-        )
+                region: decoded("\"atl1\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -265,9 +265,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.nfs.listAccessPoints(
-            shareId: decoded("\"baf4827c-6fa9-456f-9dbd-9ddfcacd0720\""),
-            status: decoded("\"ACCESS_POINT_ACTIVE\"")
-        )
+                shareId: decoded("\"baf4827c-6fa9-456f-9dbd-9ddfcacd0720\""),
+                status: decoded("\"ACCESS_POINT_ACTIVE\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -313,9 +313,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.nfs.listSnapshot(
-            region: decoded("\"atl1\""),
-            shareId: decoded("\"0a1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d\"")
-        )
+                region: decoded("\"atl1\""),
+                shareId: decoded("\"0a1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -361,9 +361,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.n1ClickApplications.oneClicksInstallKubernetes(
-            addonSlugs: decoded("[\"kube-state-metrics\",\"loki\"]"),
-            clusterUuid: decoded("\"50a994b6-c303-438f-9495-7e896cfe6b08\"")
-        )
+                addonSlugs: decoded("[\"kube-state-metrics\",\"loki\"]"),
+                clusterUuid: decoded("\"50a994b6-c303-438f-9495-7e896cfe6b08\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -408,8 +408,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.n1ClickApplications.oneClicksList(
-            type: decoded("\"kubernetes\"")
-        )
+                type: decoded("\"kubernetes\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -455,9 +455,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.organizations.createTeam(
-            name: decoded("\"production\""),
-            invitations: decoded("null")
-        )
+                name: decoded("\"production\""),
+                invitations: decoded("null")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -548,12 +548,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.outputViewsCreate(
-            name: decoded("\"titles-and-urls\""),
-            fields: decoded("[\"results.title\",\"results.url\"]"),
-            tool: decoded("\"exa_web_search\""),
-            toolId: decoded("null"),
-            description: decoded("\"Keep only result titles and URLs.\"")
-        )
+                name: decoded("\"titles-and-urls\""),
+                fields: decoded("[\"results.title\",\"results.url\"]"),
+                tool: decoded("\"exa_web_search\""),
+                toolId: decoded("null"),
+                description: decoded("\"Keep only result titles and URLs.\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)

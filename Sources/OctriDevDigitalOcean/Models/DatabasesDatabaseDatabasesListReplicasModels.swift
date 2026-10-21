@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DatabasesDatabase domain models
+/// DatabasesDatabase domain models
 /// Typed representation of the `DatabaseReplicas` API schema.
 public struct DatabaseReplicas: Codable {
     /// Optional array value serialized in the `replicas` wire field.
@@ -14,19 +14,19 @@ public struct DatabaseReplicas: Codable {
     }
 
     init() {
-        self.replicas = nil
+        replicas = nil
     }
 }
 
-extension DatabaseReplicas {
-    public init(from decoder: Decoder) throws {
+public extension DatabaseReplicas {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.replicas = try container.sdkDecodeIfPresent(.replicas)
+        replicas = try container.sdkDecodeIfPresent(.replicas)
     }
 }
 
-extension DatabaseReplicas {
-    public init(replicas: [DatabaseReplicaRead]? = nil) {
+public extension DatabaseReplicas {
+    init(replicas: [DatabaseReplicaRead]? = nil) {
         self.init()
         self.replicas = replicas
     }

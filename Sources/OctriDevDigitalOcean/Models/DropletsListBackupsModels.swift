@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Droplets domain models
+/// Droplets domain models
 /// Typed representation of the `AllDropletBackups` API schema.
 public struct AllDropletBackups: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,23 +18,29 @@ public struct AllDropletBackups: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllDropletBackups {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.backups = try container.sdkDecodeIfPresent(.backups)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllDropletBackups {
-    public init(meta: MetaMeta, backups: [DropletSnapshot]? = nil, links: PageLinks? = nil) {
+public extension AllDropletBackups {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        backups = try container.sdkDecodeIfPresent(.backups)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllDropletBackups {
+    init(meta: MetaMeta, backups: [DropletSnapshot]? = nil, links: PageLinks? = nil) {
         (self.meta, self.backups) = (meta, backups)
         self.links = links
     }
@@ -48,19 +54,19 @@ public struct AllDropletBackupsVariant0: Codable {
     }
 
     init() {
-        self.backups = nil
+        backups = nil
     }
 }
 
-extension AllDropletBackupsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AllDropletBackupsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.backups = try container.sdkDecodeIfPresent(.backups)
+        backups = try container.sdkDecodeIfPresent(.backups)
     }
 }
 
-extension AllDropletBackupsVariant0 {
-    public init(backups: [DropletSnapshot]? = nil) {
+public extension AllDropletBackupsVariant0 {
+    init(backups: [DropletSnapshot]? = nil) {
         self.init()
         self.backups = backups
     }
