@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Security domain models
+/// Security domain models
 /// The results of the scan.
 public struct ScanFindingsItem: Codable {
     /// The unique identifier for the rule that triggered the finding.
@@ -54,31 +54,41 @@ public struct ScanFindingsItem: Codable {
     }
 
     init() {
-        (self.ruleUuid, self.name, self.details, self.foundAt, self.severity) = (nil, nil, nil, nil, nil)
-        (self.businessImpact, self.technicalDetails, self.mitigationSteps, self.affectedResourcesCount) = (nil, nil, nil, nil)
+        (ruleUuid, name, details, foundAt, severity) = (nil, nil, nil, nil, nil)
+        (businessImpact, technicalDetails, mitigationSteps, affectedResourcesCount) = (nil, nil, nil, nil)
     }
 }
 
-extension ScanFindingsItem {
-    public init(from decoder: Decoder) throws {
+public extension ScanFindingsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.ruleUuid = try container.sdkDecodeIfPresent(.ruleUuid)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.details = try container.sdkDecodeIfPresent(.details)
-        self.foundAt = try container.sdkDecodeIfPresent(.foundAt)
-        self.severity = try container.sdkDecodeIfPresent(.severity)
-        self.businessImpact = try container.sdkDecodeIfPresent(.businessImpact)
-        self.technicalDetails = try container.sdkDecodeIfPresent(.technicalDetails)
-        self.mitigationSteps = try container.sdkDecodeIfPresent(.mitigationSteps)
-        self.affectedResourcesCount = try container.sdkDecodeIfPresent(.affectedResourcesCount)
-        if let value = self.foundAt {
+        ruleUuid = try container.sdkDecodeIfPresent(.ruleUuid)
+        name = try container.sdkDecodeIfPresent(.name)
+        details = try container.sdkDecodeIfPresent(.details)
+        foundAt = try container.sdkDecodeIfPresent(.foundAt)
+        severity = try container.sdkDecodeIfPresent(.severity)
+        businessImpact = try container.sdkDecodeIfPresent(.businessImpact)
+        technicalDetails = try container.sdkDecodeIfPresent(.technicalDetails)
+        mitigationSteps = try container.sdkDecodeIfPresent(.mitigationSteps)
+        affectedResourcesCount = try container.sdkDecodeIfPresent(.affectedResourcesCount)
+        if let value = foundAt {
             try sdkValidateDateTime("found_at", sdkWireString(value))
         }
     }
 }
 
-extension ScanFindingsItem {
-    public init(ruleUuid: String? = nil, name: String? = nil, details: String? = nil, foundAt: Date? = nil, severity: ScanFindingsItemSeverity? = nil, businessImpact: String? = nil, technicalDetails: String? = nil, mitigationSteps: [ScanFindingsItemMitigationStepsItem]? = nil, affectedResourcesCount: Int? = nil) throws {
+public extension ScanFindingsItem {
+    init(
+        ruleUuid: String? = nil,
+        name: String? = nil,
+        details: String? = nil,
+        foundAt: Date? = nil,
+        severity: ScanFindingsItemSeverity? = nil,
+        businessImpact: String? = nil,
+        technicalDetails: String? = nil,
+        mitigationSteps: [ScanFindingsItemMitigationStepsItem]? = nil,
+        affectedResourcesCount: Int? = nil
+    ) throws {
         self.init()
         (self.ruleUuid, self.name) = (ruleUuid, name)
         (self.details, self.foundAt) = (details, foundAt)
@@ -110,21 +120,21 @@ public struct ScanFindingsItemMitigationStepsItem: Codable {
     }
 
     init() {
-        (self.step, self.title, self.description) = (nil, nil, nil)
+        (step, title, description) = (nil, nil, nil)
     }
 }
 
-extension ScanFindingsItemMitigationStepsItem {
-    public init(from decoder: Decoder) throws {
+public extension ScanFindingsItemMitigationStepsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.step = try container.sdkDecodeIfPresent(.step)
-        self.title = try container.sdkDecodeIfPresent(.title)
-        self.description = try container.sdkDecodeIfPresent(.description)
+        step = try container.sdkDecodeIfPresent(.step)
+        title = try container.sdkDecodeIfPresent(.title)
+        description = try container.sdkDecodeIfPresent(.description)
     }
 }
 
-extension ScanFindingsItemMitigationStepsItem {
-    public init(step: Int? = nil, title: String? = nil, description: String? = nil) {
+public extension ScanFindingsItemMitigationStepsItem {
+    init(step: Int? = nil, title: String? = nil, description: String? = nil) {
         self.init()
         (self.step, self.title) = (step, title)
         self.description = description
@@ -154,22 +164,22 @@ public struct SuppressedResourceRootLinksPages: Codable {
     }
 
     init() {
-        (self.first, self.prev, self.next, self.last) = (nil, nil, nil, nil)
+        (first, prev, next, last) = (nil, nil, nil, nil)
     }
 }
 
-extension SuppressedResourceRootLinksPages {
-    public init(from decoder: Decoder) throws {
+public extension SuppressedResourceRootLinksPages {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.first = try container.sdkDecodeIfPresent(.first)
-        self.prev = try container.sdkDecodeIfPresent(.prev)
-        self.next = try container.sdkDecodeIfPresent(.next)
-        self.last = try container.sdkDecodeIfPresent(.last)
+        first = try container.sdkDecodeIfPresent(.first)
+        prev = try container.sdkDecodeIfPresent(.prev)
+        next = try container.sdkDecodeIfPresent(.next)
+        last = try container.sdkDecodeIfPresent(.last)
     }
 }
 
-extension SuppressedResourceRootLinksPages {
-    public init(first: String? = nil, prev: String? = nil, next: String? = nil, last: String? = nil) {
+public extension SuppressedResourceRootLinksPages {
+    init(first: String? = nil, prev: String? = nil, next: String? = nil, last: String? = nil) {
         self.init()
         (self.first, self.prev) = (first, prev)
         (self.next, self.last) = (next, last)
@@ -192,21 +202,25 @@ public struct SuppressedResourceRoot: Codable {
     }
 
     init() {
-        (self.resources, self.meta, self.links) = (nil, nil, nil)
+        (resources, meta, links) = (nil, nil, nil)
     }
 }
 
-extension SuppressedResourceRoot {
-    public init(from decoder: Decoder) throws {
+public extension SuppressedResourceRoot {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.resources = try container.sdkDecodeIfPresent(.resources)
-        self.meta = try container.sdkDecodeIfPresent(.meta)
-        self.links = try container.sdkDecodeIfPresent(.links)
+        resources = try container.sdkDecodeIfPresent(.resources)
+        meta = try container.sdkDecodeIfPresent(.meta)
+        links = try container.sdkDecodeIfPresent(.links)
     }
 }
 
-extension SuppressedResourceRoot {
-    public init(resources: [SuppressedResource]? = nil, meta: SuppressedResourceRootMeta? = nil, links: SuppressedResourceRootLinks? = nil) {
+public extension SuppressedResourceRoot {
+    init(
+        resources: [SuppressedResource]? = nil,
+        meta: SuppressedResourceRootMeta? = nil,
+        links: SuppressedResourceRootLinks? = nil
+    ) {
         self.init()
         (self.resources, self.meta) = (resources, meta)
         self.links = links
@@ -223,19 +237,19 @@ public struct ScanResponse: Codable {
     }
 
     init() {
-        self.scan = nil
+        scan = nil
     }
 }
 
-extension ScanResponse {
-    public init(from decoder: Decoder) throws {
+public extension ScanResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.scan = try container.sdkDecodeIfPresent(.scan)
+        scan = try container.sdkDecodeIfPresent(.scan)
     }
 }
 
-extension ScanResponse {
-    public init(scan: Scan? = nil) {
+public extension ScanResponse {
+    init(scan: Scan? = nil) {
         self.init()
         self.scan = scan
     }
@@ -260,21 +274,21 @@ public struct SuppressedResourceRootMeta: Codable {
     }
 
     init() {
-        (self.page, self.pages, self.total) = (nil, nil, nil)
+        (page, pages, total) = (nil, nil, nil)
     }
 }
 
-extension SuppressedResourceRootMeta {
-    public init(from decoder: Decoder) throws {
+public extension SuppressedResourceRootMeta {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.page = try container.sdkDecodeIfPresent(.page)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
-        self.total = try container.sdkDecodeIfPresent(.total)
+        page = try container.sdkDecodeIfPresent(.page)
+        pages = try container.sdkDecodeIfPresent(.pages)
+        total = try container.sdkDecodeIfPresent(.total)
     }
 }
 
-extension SuppressedResourceRootMeta {
-    public init(page: Int? = nil, pages: Int? = nil, total: Int? = nil) {
+public extension SuppressedResourceRootMeta {
+    init(page: Int? = nil, pages: Int? = nil, total: Int? = nil) {
         self.init()
         (self.page, self.pages) = (page, pages)
         self.total = total
@@ -291,19 +305,19 @@ public struct SuppressedResourceRootLinks: Codable {
     }
 
     init() {
-        self.pages = nil
+        pages = nil
     }
 }
 
-extension SuppressedResourceRootLinks {
-    public init(from decoder: Decoder) throws {
+public extension SuppressedResourceRootLinks {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
+        pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-extension SuppressedResourceRootLinks {
-    public init(pages: SuppressedResourceRootLinksPages? = nil) {
+public extension SuppressedResourceRootLinks {
+    init(pages: SuppressedResourceRootLinksPages? = nil) {
         self.init()
         self.pages = pages
     }
@@ -331,25 +345,30 @@ public struct Scan: Codable {
     }
 
     init() {
-        (self.id, self.status, self.createdAt, self.findings) = (nil, nil, nil, nil)
+        (id, status, createdAt, findings) = (nil, nil, nil, nil)
     }
 }
 
-extension Scan {
-    public init(from decoder: Decoder) throws {
+public extension Scan {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.findings = try container.sdkDecodeIfPresent(.findings)
-        if let value = self.createdAt {
+        id = try container.sdkDecodeIfPresent(.id)
+        status = try container.sdkDecodeIfPresent(.status)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        findings = try container.sdkDecodeIfPresent(.findings)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-extension Scan {
-    public init(id: String? = nil, status: ScanStatus? = nil, createdAt: Date? = nil, findings: [ScanFindingsItem]? = nil) throws {
+public extension Scan {
+    init(
+        id: String? = nil,
+        status: ScanStatus? = nil,
+        createdAt: Date? = nil,
+        findings: [ScanFindingsItem]? = nil
+    ) throws {
         self.init()
         (self.id, self.status) = (id, status)
         (self.createdAt, self.findings) = (createdAt, findings)
@@ -386,23 +405,29 @@ public struct SuppressedResource: Codable {
     }
 
     init() {
-        (self.id, self.ruleUuid, self.ruleName, self.resourceId, self.resourceType) = (nil, nil, nil, nil, nil)
+        (id, ruleUuid, ruleName, resourceId, resourceType) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension SuppressedResource {
-    public init(from decoder: Decoder) throws {
+public extension SuppressedResource {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.ruleUuid = try container.sdkDecodeIfPresent(.ruleUuid)
-        self.ruleName = try container.sdkDecodeIfPresent(.ruleName)
-        self.resourceId = try container.sdkDecodeIfPresent(.resourceId)
-        self.resourceType = try container.sdkDecodeIfPresent(.resourceType)
+        id = try container.sdkDecodeIfPresent(.id)
+        ruleUuid = try container.sdkDecodeIfPresent(.ruleUuid)
+        ruleName = try container.sdkDecodeIfPresent(.ruleName)
+        resourceId = try container.sdkDecodeIfPresent(.resourceId)
+        resourceType = try container.sdkDecodeIfPresent(.resourceType)
     }
 }
 
-extension SuppressedResource {
-    public init(id: String? = nil, ruleUuid: String? = nil, ruleName: String? = nil, resourceId: String? = nil, resourceType: String? = nil) {
+public extension SuppressedResource {
+    init(
+        id: String? = nil,
+        ruleUuid: String? = nil,
+        ruleName: String? = nil,
+        resourceId: String? = nil,
+        resourceType: String? = nil
+    ) {
         self.init()
         (self.id, self.ruleUuid) = (id, ruleUuid)
         (self.ruleName, self.resourceId) = (ruleName, resourceId)
@@ -414,7 +439,10 @@ extension SuppressedResource {
 public struct ScanStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let inProgress = ScanStatus(rawValue: "IN_PROGRESS")
     public static let completed = ScanStatus(rawValue: "COMPLETED")
     public static let failed = ScanStatus(rawValue: "FAILED")
@@ -423,7 +451,7 @@ public struct ScanStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWire
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -436,7 +464,10 @@ public struct ScanStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWire
 public struct ScanFindingsItemSeverity: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let critical = ScanFindingsItemSeverity(rawValue: "CRITICAL")
     public static let high = ScanFindingsItemSeverity(rawValue: "HIGH")
     public static let medium = ScanFindingsItemSeverity(rawValue: "MEDIUM")
@@ -444,7 +475,7 @@ public struct ScanFindingsItemSeverity: RawRepresentable, Hashable, Codable, Sen
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

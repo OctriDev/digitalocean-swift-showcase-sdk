@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Images domain models
+/// Images domain models
 /// Typed representation of the `ImageUpdate` API schema.
 public struct ImageUpdate: Codable {
     /// The display name that has been given to an image. This is what is shown in the control panel and is
@@ -26,21 +26,21 @@ public struct ImageUpdate: Codable {
     }
 
     init() {
-        (self.name, self.distribution, self.description) = (nil, nil, nil)
+        (name, distribution, description) = (nil, nil, nil)
     }
 }
 
-extension ImageUpdate {
-    public init(from decoder: Decoder) throws {
+public extension ImageUpdate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.distribution = try container.sdkDecodeIfPresent(.distribution)
-        self.description = try container.sdkDecodeIfPresent(.description)
+        name = try container.sdkDecodeIfPresent(.name)
+        distribution = try container.sdkDecodeIfPresent(.distribution)
+        description = try container.sdkDecodeIfPresent(.description)
     }
 }
 
-extension ImageUpdate {
-    public init(name: ImageName? = nil, distribution: Distribution? = nil, description: ImageDescription? = nil) {
+public extension ImageUpdate {
+    init(name: ImageName? = nil, distribution: Distribution? = nil, description: ImageDescription? = nil) {
         self.init()
         (self.name, self.distribution) = (name, distribution)
         self.description = description

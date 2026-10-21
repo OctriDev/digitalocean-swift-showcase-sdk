@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiModel domain models
+/// AgentPlatformAPIApiModel domain models
 /// Task preset that can be referenced by slug in model router policies.
 public struct ApiModelRouterTaskPreset: Codable {
     /// Higher-level grouping used by the UI
@@ -38,26 +38,34 @@ public struct ApiModelRouterTaskPreset: Codable {
     }
 
     init() {
-        (self.category, self.description, self.models, self.name, self.selectionPolicy) = (nil, nil, nil, nil, nil)
-        (self.tags, self.taskSlug) = (nil, nil)
+        (category, description, models, name, selectionPolicy) = (nil, nil, nil, nil, nil)
+        (tags, taskSlug) = (nil, nil)
     }
 }
 
-extension ApiModelRouterTaskPreset {
-    public init(from decoder: Decoder) throws {
+public extension ApiModelRouterTaskPreset {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.category = try container.sdkDecodeIfPresent(.category)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.models = try container.sdkDecodeIfPresent(.models)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.selectionPolicy = try container.sdkDecodeIfPresent(.selectionPolicy)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.taskSlug = try container.sdkDecodeIfPresent(.taskSlug)
+        category = try container.sdkDecodeIfPresent(.category)
+        description = try container.sdkDecodeIfPresent(.description)
+        models = try container.sdkDecodeIfPresent(.models)
+        name = try container.sdkDecodeIfPresent(.name)
+        selectionPolicy = try container.sdkDecodeIfPresent(.selectionPolicy)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        taskSlug = try container.sdkDecodeIfPresent(.taskSlug)
     }
 }
 
-extension ApiModelRouterTaskPreset {
-    public init(category: String? = nil, description: String? = nil, models: [String]? = nil, name: String? = nil, selectionPolicy: ApiModelRouterSelectionPolicy? = nil, tags: [String]? = nil, taskSlug: String? = nil) {
+public extension ApiModelRouterTaskPreset {
+    init(
+        category: String? = nil,
+        description: String? = nil,
+        models: [String]? = nil,
+        name: String? = nil,
+        selectionPolicy: ApiModelRouterSelectionPolicy? = nil,
+        tags: [String]? = nil,
+        taskSlug: String? = nil
+    ) {
         self.init()
         (self.category, self.description) = (category, description)
         (self.models, self.name) = (models, name)

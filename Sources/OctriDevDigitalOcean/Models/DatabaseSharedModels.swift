@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Database domain models
+/// Database domain models
 /// Optional API value serialized in the `maintenance_window` wire field.
 public struct DatabaseClusterMaintenanceWindow: Codable {
     /// The day of the week on which to apply maintenance updates.
@@ -26,27 +26,37 @@ public struct DatabaseClusterMaintenanceWindow: Codable {
         case description
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DatabaseClusterMaintenanceWindow {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.day) else {
-            throw SdkValidationError(field: "day", code: "required", message: "Validation failed for 'day': value is required")
-        }
-        guard container.contains(.hour) else {
-            throw SdkValidationError(field: "hour", code: "required", message: "Validation failed for 'hour': value is required")
-        }
-        self.day = try container.sdkDecodeRequired(.day)
-        self.hour = try container.sdkDecodeRequired(.hour)
-        self.pending = try container.sdkDecodeIfPresent(.pending)
-        self.description = try container.sdkDecodeIfPresent(.description)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DatabaseClusterMaintenanceWindow {
-    public init(day: String, hour: String, pending: Bool? = nil, description: [String]? = nil) {
+public extension DatabaseClusterMaintenanceWindow {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.day) else {
+            throw SdkValidationError(
+                field: "day",
+                code: "required",
+                message: "Validation failed for 'day': value is required"
+            )
+        }
+        guard container.contains(.hour) else {
+            throw SdkValidationError(
+                field: "hour",
+                code: "required",
+                message: "Validation failed for 'hour': value is required"
+            )
+        }
+        day = try container.sdkDecodeRequired(.day)
+        hour = try container.sdkDecodeRequired(.hour)
+        pending = try container.sdkDecodeIfPresent(.pending)
+        description = try container.sdkDecodeIfPresent(.description)
+    }
+}
+
+public extension DatabaseClusterMaintenanceWindow {
+    init(day: String, hour: String, pending: Bool? = nil, description: [String]? = nil) {
         (self.day, self.hour) = (day, hour)
         (self.pending, self.description) = (pending, description)
     }
@@ -72,21 +82,21 @@ public struct DatabaseKafkaSchemaCreate: Codable {
     }
 
     init() {
-        (self.subjectName, self.schemaType, self.schema) = (nil, nil, nil)
+        (subjectName, schemaType, schema) = (nil, nil, nil)
     }
 }
 
-extension DatabaseKafkaSchemaCreate {
-    public init(from decoder: Decoder) throws {
+public extension DatabaseKafkaSchemaCreate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.subjectName = try container.sdkDecodeIfPresent(.subjectName)
-        self.schemaType = try container.sdkDecodeIfPresent(.schemaType)
-        self.schema = try container.sdkDecodeIfPresent(.schema)
+        subjectName = try container.sdkDecodeIfPresent(.subjectName)
+        schemaType = try container.sdkDecodeIfPresent(.schemaType)
+        schema = try container.sdkDecodeIfPresent(.schema)
     }
 }
 
-extension DatabaseKafkaSchemaCreate {
-    public init(subjectName: String? = nil, schemaType: DatabaseKafkaSchemaCreateSchemaType? = nil, schema: String? = nil) {
+public extension DatabaseKafkaSchemaCreate {
+    init(subjectName: String? = nil, schemaType: DatabaseKafkaSchemaCreateSchemaType? = nil, schema: String? = nil) {
         self.init()
         (self.subjectName, self.schemaType) = (subjectName, schemaType)
         self.schema = schema
@@ -129,26 +139,34 @@ public struct DatabaseClusterPrivateConnection: Codable {
     }
 
     init() {
-        (self.uri, self.database, self.host, self.port, self.user) = (nil, nil, nil, nil, nil)
-        (self.password, self.ssl) = (nil, nil)
+        (uri, database, host, port, user) = (nil, nil, nil, nil, nil)
+        (password, ssl) = (nil, nil)
     }
 }
 
-extension DatabaseClusterPrivateConnection {
-    public init(from decoder: Decoder) throws {
+public extension DatabaseClusterPrivateConnection {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.uri = try container.sdkDecodeIfPresent(.uri)
-        self.database = try container.sdkDecodeIfPresent(.database)
-        self.host = try container.sdkDecodeIfPresent(.host)
-        self.port = try container.sdkDecodeIfPresent(.port)
-        self.user = try container.sdkDecodeIfPresent(.user)
-        self.password = try container.sdkDecodeIfPresent(.password)
-        self.ssl = try container.sdkDecodeIfPresent(.ssl)
+        uri = try container.sdkDecodeIfPresent(.uri)
+        database = try container.sdkDecodeIfPresent(.database)
+        host = try container.sdkDecodeIfPresent(.host)
+        port = try container.sdkDecodeIfPresent(.port)
+        user = try container.sdkDecodeIfPresent(.user)
+        password = try container.sdkDecodeIfPresent(.password)
+        ssl = try container.sdkDecodeIfPresent(.ssl)
     }
 }
 
-extension DatabaseClusterPrivateConnection {
-    public init(uri: String? = nil, database: String? = nil, host: String? = nil, port: Int? = nil, user: String? = nil, password: String? = nil, ssl: Bool? = nil) {
+public extension DatabaseClusterPrivateConnection {
+    init(
+        uri: String? = nil,
+        database: String? = nil,
+        host: String? = nil,
+        port: Int? = nil,
+        user: String? = nil,
+        password: String? = nil,
+        ssl: Bool? = nil
+    ) {
         self.init()
         (self.uri, self.database) = (uri, database)
         (self.host, self.port) = (host, port)
@@ -214,38 +232,57 @@ public struct DatabaseReplica: Codable {
         case doSettings = "do_settings"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension DatabaseReplica {
-    public init(from decoder: Decoder) throws {
+public extension DatabaseReplica {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
         }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.size = try container.sdkDecodeIfPresent(.size)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.privateNetworkUuid = try container.sdkDecodeIfPresent(.privateNetworkUuid)
-        self.connection = try container.sdkDecodeIfPresent(.connection)
-        self.privateConnection = try container.sdkDecodeIfPresent(.privateConnection)
-        self.storageSizeMib = try container.sdkDecodeIfPresent(.storageSizeMib)
-        self.doSettings = try container.sdkDecodeIfPresent(.doSettings)
-        if let value = self.id {
+        name = try container.sdkDecodeRequired(.name)
+        id = try container.sdkDecodeIfPresent(.id)
+        region = try container.sdkDecodeIfPresent(.region)
+        size = try container.sdkDecodeIfPresent(.size)
+        status = try container.sdkDecodeIfPresent(.status)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        privateNetworkUuid = try container.sdkDecodeIfPresent(.privateNetworkUuid)
+        connection = try container.sdkDecodeIfPresent(.connection)
+        privateConnection = try container.sdkDecodeIfPresent(.privateConnection)
+        storageSizeMib = try container.sdkDecodeIfPresent(.storageSizeMib)
+        doSettings = try container.sdkDecodeIfPresent(.doSettings)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-extension DatabaseReplica {
-    public init(name: String, id: String? = nil, region: String? = nil, size: String? = nil, status: DatabaseReplicaStatus? = nil, tags: [String]? = nil, createdAt: Date? = nil, privateNetworkUuid: String? = nil, connection: DatabaseReplicaConnection? = nil, privateConnection: DatabaseReplicaPrivateConnection? = nil, storageSizeMib: Int? = nil, doSettings: DoSettings? = nil) throws {
+public extension DatabaseReplica {
+    init(
+        name: String,
+        id: String? = nil,
+        region: String? = nil,
+        size: String? = nil,
+        status: DatabaseReplicaStatus? = nil,
+        tags: [String]? = nil,
+        createdAt: Date? = nil,
+        privateNetworkUuid: String? = nil,
+        connection: DatabaseReplicaConnection? = nil,
+        privateConnection: DatabaseReplicaPrivateConnection? = nil,
+        storageSizeMib: Int? = nil,
+        doSettings: DoSettings? = nil
+    ) throws {
         (self.name, self.id) = (name, id)
         (self.region, self.size) = (region, size)
         (self.status, self.tags) = (status, tags)
@@ -297,26 +334,34 @@ public struct DatabaseClusterConnection: Codable {
     }
 
     init() {
-        (self.uri, self.database, self.host, self.port, self.user) = (nil, nil, nil, nil, nil)
-        (self.password, self.ssl) = (nil, nil)
+        (uri, database, host, port, user) = (nil, nil, nil, nil, nil)
+        (password, ssl) = (nil, nil)
     }
 }
 
-extension DatabaseClusterConnection {
-    public init(from decoder: Decoder) throws {
+public extension DatabaseClusterConnection {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.uri = try container.sdkDecodeIfPresent(.uri)
-        self.database = try container.sdkDecodeIfPresent(.database)
-        self.host = try container.sdkDecodeIfPresent(.host)
-        self.port = try container.sdkDecodeIfPresent(.port)
-        self.user = try container.sdkDecodeIfPresent(.user)
-        self.password = try container.sdkDecodeIfPresent(.password)
-        self.ssl = try container.sdkDecodeIfPresent(.ssl)
+        uri = try container.sdkDecodeIfPresent(.uri)
+        database = try container.sdkDecodeIfPresent(.database)
+        host = try container.sdkDecodeIfPresent(.host)
+        port = try container.sdkDecodeIfPresent(.port)
+        user = try container.sdkDecodeIfPresent(.user)
+        password = try container.sdkDecodeIfPresent(.password)
+        ssl = try container.sdkDecodeIfPresent(.ssl)
     }
 }
 
-extension DatabaseClusterConnection {
-    public init(uri: String? = nil, database: String? = nil, host: String? = nil, port: Int? = nil, user: String? = nil, password: String? = nil, ssl: Bool? = nil) {
+public extension DatabaseClusterConnection {
+    init(
+        uri: String? = nil,
+        database: String? = nil,
+        host: String? = nil,
+        port: Int? = nil,
+        user: String? = nil,
+        password: String? = nil,
+        ssl: Bool? = nil
+    ) {
         self.init()
         (self.uri, self.database) = (uri, database)
         (self.host, self.port) = (host, port)
@@ -361,26 +406,34 @@ public struct DatabaseReplicaPrivateConnection: Codable {
     }
 
     init() {
-        (self.uri, self.database, self.host, self.port, self.user) = (nil, nil, nil, nil, nil)
-        (self.password, self.ssl) = (nil, nil)
+        (uri, database, host, port, user) = (nil, nil, nil, nil, nil)
+        (password, ssl) = (nil, nil)
     }
 }
 
-extension DatabaseReplicaPrivateConnection {
-    public init(from decoder: Decoder) throws {
+public extension DatabaseReplicaPrivateConnection {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.uri = try container.sdkDecodeIfPresent(.uri)
-        self.database = try container.sdkDecodeIfPresent(.database)
-        self.host = try container.sdkDecodeIfPresent(.host)
-        self.port = try container.sdkDecodeIfPresent(.port)
-        self.user = try container.sdkDecodeIfPresent(.user)
-        self.password = try container.sdkDecodeIfPresent(.password)
-        self.ssl = try container.sdkDecodeIfPresent(.ssl)
+        uri = try container.sdkDecodeIfPresent(.uri)
+        database = try container.sdkDecodeIfPresent(.database)
+        host = try container.sdkDecodeIfPresent(.host)
+        port = try container.sdkDecodeIfPresent(.port)
+        user = try container.sdkDecodeIfPresent(.user)
+        password = try container.sdkDecodeIfPresent(.password)
+        ssl = try container.sdkDecodeIfPresent(.ssl)
     }
 }
 
-extension DatabaseReplicaPrivateConnection {
-    public init(uri: String? = nil, database: String? = nil, host: String? = nil, port: Int? = nil, user: String? = nil, password: String? = nil, ssl: Bool? = nil) {
+public extension DatabaseReplicaPrivateConnection {
+    init(
+        uri: String? = nil,
+        database: String? = nil,
+        host: String? = nil,
+        port: Int? = nil,
+        user: String? = nil,
+        password: String? = nil,
+        ssl: Bool? = nil
+    ) {
         self.init()
         (self.uri, self.database) = (uri, database)
         (self.host, self.port) = (host, port)
@@ -400,19 +453,19 @@ public struct DatabaseVersionOptions: Codable {
     }
 
     init() {
-        self.versions = nil
+        versions = nil
     }
 }
 
-extension DatabaseVersionOptions {
-    public init(from decoder: Decoder) throws {
+public extension DatabaseVersionOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.versions = try container.sdkDecodeIfPresent(.versions)
+        versions = try container.sdkDecodeIfPresent(.versions)
     }
 }
 
-extension DatabaseVersionOptions {
-    public init(versions: [String]? = nil) {
+public extension DatabaseVersionOptions {
+    init(versions: [String]? = nil) {
         self.init()
         self.versions = versions
     }
@@ -449,25 +502,32 @@ public struct DatabaseClusterUiConnection: Codable {
     }
 
     init() {
-        (self.uri, self.host, self.port, self.user, self.password) = (nil, nil, nil, nil, nil)
-        self.ssl = nil
+        (uri, host, port, user, password) = (nil, nil, nil, nil, nil)
+        ssl = nil
     }
 }
 
-extension DatabaseClusterUiConnection {
-    public init(from decoder: Decoder) throws {
+public extension DatabaseClusterUiConnection {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.uri = try container.sdkDecodeIfPresent(.uri)
-        self.host = try container.sdkDecodeIfPresent(.host)
-        self.port = try container.sdkDecodeIfPresent(.port)
-        self.user = try container.sdkDecodeIfPresent(.user)
-        self.password = try container.sdkDecodeIfPresent(.password)
-        self.ssl = try container.sdkDecodeIfPresent(.ssl)
+        uri = try container.sdkDecodeIfPresent(.uri)
+        host = try container.sdkDecodeIfPresent(.host)
+        port = try container.sdkDecodeIfPresent(.port)
+        user = try container.sdkDecodeIfPresent(.user)
+        password = try container.sdkDecodeIfPresent(.password)
+        ssl = try container.sdkDecodeIfPresent(.ssl)
     }
 }
 
-extension DatabaseClusterUiConnection {
-    public init(uri: String? = nil, host: String? = nil, port: Int? = nil, user: String? = nil, password: String? = nil, ssl: Bool? = nil) {
+public extension DatabaseClusterUiConnection {
+    init(
+        uri: String? = nil,
+        host: String? = nil,
+        port: Int? = nil,
+        user: String? = nil,
+        password: String? = nil,
+        ssl: Bool? = nil
+    ) {
         self.init()
         (self.uri, self.host) = (uri, host)
         (self.port, self.user) = (port, user)
@@ -511,26 +571,34 @@ public struct DatabaseClusterStandbyConnection: Codable {
     }
 
     init() {
-        (self.uri, self.database, self.host, self.port, self.user) = (nil, nil, nil, nil, nil)
-        (self.password, self.ssl) = (nil, nil)
+        (uri, database, host, port, user) = (nil, nil, nil, nil, nil)
+        (password, ssl) = (nil, nil)
     }
 }
 
-extension DatabaseClusterStandbyConnection {
-    public init(from decoder: Decoder) throws {
+public extension DatabaseClusterStandbyConnection {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.uri = try container.sdkDecodeIfPresent(.uri)
-        self.database = try container.sdkDecodeIfPresent(.database)
-        self.host = try container.sdkDecodeIfPresent(.host)
-        self.port = try container.sdkDecodeIfPresent(.port)
-        self.user = try container.sdkDecodeIfPresent(.user)
-        self.password = try container.sdkDecodeIfPresent(.password)
-        self.ssl = try container.sdkDecodeIfPresent(.ssl)
+        uri = try container.sdkDecodeIfPresent(.uri)
+        database = try container.sdkDecodeIfPresent(.database)
+        host = try container.sdkDecodeIfPresent(.host)
+        port = try container.sdkDecodeIfPresent(.port)
+        user = try container.sdkDecodeIfPresent(.user)
+        password = try container.sdkDecodeIfPresent(.password)
+        ssl = try container.sdkDecodeIfPresent(.ssl)
     }
 }
 
-extension DatabaseClusterStandbyConnection {
-    public init(uri: String? = nil, database: String? = nil, host: String? = nil, port: Int? = nil, user: String? = nil, password: String? = nil, ssl: Bool? = nil) {
+public extension DatabaseClusterStandbyConnection {
+    init(
+        uri: String? = nil,
+        database: String? = nil,
+        host: String? = nil,
+        port: Int? = nil,
+        user: String? = nil,
+        password: String? = nil,
+        ssl: Bool? = nil
+    ) {
         self.init()
         (self.uri, self.database) = (uri, database)
         (self.host, self.port) = (host, port)

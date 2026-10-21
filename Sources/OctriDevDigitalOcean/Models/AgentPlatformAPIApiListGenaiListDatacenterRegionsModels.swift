@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiList domain models
+/// AgentPlatformAPIApiList domain models
 /// Region Codes
 public struct ApiListRegionsOutput: Codable {
     /// Region code
@@ -14,19 +14,19 @@ public struct ApiListRegionsOutput: Codable {
     }
 
     init() {
-        self.regions = nil
+        regions = nil
     }
 }
 
-extension ApiListRegionsOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiListRegionsOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
+        regions = try container.sdkDecodeIfPresent(.regions)
     }
 }
 
-extension ApiListRegionsOutput {
-    public init(regions: [GenaiapiRegion]? = nil) {
+public extension ApiListRegionsOutput {
+    init(regions: [GenaiapiRegion]? = nil) {
         self.init()
         self.regions = regions
     }

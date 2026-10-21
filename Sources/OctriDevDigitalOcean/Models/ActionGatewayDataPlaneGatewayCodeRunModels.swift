@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ActionGatewayDataPlane domain models
+/// ActionGatewayDataPlane domain models
 public struct ExecuteCodeResponseVariant1: Codable {
     public var output: ExecuteCodeResponseVariant1Output?
 
@@ -12,19 +12,19 @@ public struct ExecuteCodeResponseVariant1: Codable {
     }
 
     init() {
-        self.output = nil
+        output = nil
     }
 }
 
-extension ExecuteCodeResponseVariant1 {
-    public init(from decoder: Decoder) throws {
+public extension ExecuteCodeResponseVariant1 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.output = try container.sdkDecodeIfPresent(.output)
+        output = try container.sdkDecodeIfPresent(.output)
     }
 }
 
-extension ExecuteCodeResponseVariant1 {
-    public init(output: ExecuteCodeResponseVariant1Output? = nil) {
+public extension ExecuteCodeResponseVariant1 {
+    init(output: ExecuteCodeResponseVariant1Output? = nil) {
         self.init()
         self.output = output
     }
@@ -45,21 +45,21 @@ public struct ExecuteCodeResponseVariant1Output: Codable {
     }
 
     init() {
-        (self.stdout, self.stderr, self.exitCode) = (nil, nil, nil)
+        (stdout, stderr, exitCode) = (nil, nil, nil)
     }
 }
 
-extension ExecuteCodeResponseVariant1Output {
-    public init(from decoder: Decoder) throws {
+public extension ExecuteCodeResponseVariant1Output {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.stdout = try container.sdkDecodeIfPresent(.stdout)
-        self.stderr = try container.sdkDecodeIfPresent(.stderr)
-        self.exitCode = try container.sdkDecodeIfPresent(.exitCode)
+        stdout = try container.sdkDecodeIfPresent(.stdout)
+        stderr = try container.sdkDecodeIfPresent(.stderr)
+        exitCode = try container.sdkDecodeIfPresent(.exitCode)
     }
 }
 
-extension ExecuteCodeResponseVariant1Output {
-    public init(stdout: String? = nil, stderr: String? = nil, exitCode: Int? = nil) {
+public extension ExecuteCodeResponseVariant1Output {
+    init(stdout: String? = nil, stderr: String? = nil, exitCode: Int? = nil) {
         self.init()
         (self.stdout, self.stderr) = (stdout, stderr)
         self.exitCode = exitCode
@@ -77,21 +77,27 @@ public struct ExecuteCodeRequest: Codable {
         case code
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ExecuteCodeRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.code) else {
-            throw SdkValidationError(field: "code", code: "required", message: "Validation failed for 'code': value is required")
-        }
-        self.code = try container.sdkDecodeRequired(.code)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ExecuteCodeRequest {
-    public init(code: String) {
+public extension ExecuteCodeRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.code) else {
+            throw SdkValidationError(
+                field: "code",
+                code: "required",
+                message: "Validation failed for 'code': value is required"
+            )
+        }
+        code = try container.sdkDecodeRequired(.code)
+    }
+}
+
+public extension ExecuteCodeRequest {
+    init(code: String) {
         self.code = code
     }
 }
@@ -126,28 +132,44 @@ public struct ExecuteCodeResponse: Codable {
         case meta = "_meta"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ExecuteCodeResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.status) else {
-            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
-        }
-        guard container.contains(.callId) else {
-            throw SdkValidationError(field: "call_id", code: "required", message: "Validation failed for 'call_id': value is required")
-        }
-        self.status = try container.sdkDecodeRequired(.status)
-        self.callId = try container.sdkDecodeRequired(.callId)
-        self.output = try container.sdkDecodeIfPresent(.output)
-        self.error = try container.sdkDecodeIfPresent(.error)
-        self.meta = try container.sdkDecodeIfPresent(.meta)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ExecuteCodeResponse {
-    public init(status: ToolResultStatus, callId: String, output: ExecuteCodeResponseVariant1Output? = nil, error: ErrorEnvelope? = nil, meta: [String: JSONValue]? = nil) {
+public extension ExecuteCodeResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.status) else {
+            throw SdkValidationError(
+                field: "status",
+                code: "required",
+                message: "Validation failed for 'status': value is required"
+            )
+        }
+        guard container.contains(.callId) else {
+            throw SdkValidationError(
+                field: "call_id",
+                code: "required",
+                message: "Validation failed for 'call_id': value is required"
+            )
+        }
+        status = try container.sdkDecodeRequired(.status)
+        callId = try container.sdkDecodeRequired(.callId)
+        output = try container.sdkDecodeIfPresent(.output)
+        error = try container.sdkDecodeIfPresent(.error)
+        meta = try container.sdkDecodeIfPresent(.meta)
+    }
+}
+
+public extension ExecuteCodeResponse {
+    init(
+        status: ToolResultStatus,
+        callId: String,
+        output: ExecuteCodeResponseVariant1Output? = nil,
+        error: ErrorEnvelope? = nil,
+        meta: [String: JSONValue]? = nil
+    ) {
         (self.status, self.callId) = (status, callId)
         (self.output, self.error) = (output, error)
         self.meta = meta

@@ -6,9 +6,22 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension HarnessRuntimeMethods {
-    /// A static, code-defined registry (not a database table), webhook-only. Cron triggers have no provider and never call this. Used to populate the provider dropdown with display name, docs link, paste hint, and the signature scheme.
-    public static func harnessListWebhookProviders(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> ListWebhookProvidersResponse {
-        return try (await sdkRequest("GET", "/v2/agents/webhook-providers", config: config, decoder: .json, operationId: "harness_list_webhook_providers", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+public extension HarnessRuntimeMethods {
+    /// A static, code-defined registry (not a database table), webhook-only. Cron triggers have no provider and never
+    /// call this. Used to populate the provider dropdown with display name, docs link, paste hint, and the signature
+    /// scheme.
+    static func harnessListWebhookProviders(
+        config: ClientConfig,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListWebhookProvidersResponse {
+        try await (sdkRequest(
+            "GET",
+            "/v2/agents/webhook-providers",
+            config: config,
+            decoder: .json,
+            operationId: "harness_list_webhook_providers",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

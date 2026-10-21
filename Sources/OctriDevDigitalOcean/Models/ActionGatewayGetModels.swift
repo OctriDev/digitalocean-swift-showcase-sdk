@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ActionGatewayGet domain models
+/// ActionGatewayGet domain models
 /// Present only when the request set `include_history`.
 public struct GetToolHealthResponseHistory: Codable {
     /// Length of each point.
@@ -22,21 +22,21 @@ public struct GetToolHealthResponseHistory: Codable {
     }
 
     init() {
-        (self.resolution, self.stale, self.points) = (nil, nil, nil)
+        (resolution, stale, points) = (nil, nil, nil)
     }
 }
 
-extension GetToolHealthResponseHistory {
-    public init(from decoder: Decoder) throws {
+public extension GetToolHealthResponseHistory {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.resolution = try container.sdkDecodeIfPresent(.resolution)
-        self.stale = try container.sdkDecodeIfPresent(.stale)
-        self.points = try container.sdkDecodeIfPresent(.points)
+        resolution = try container.sdkDecodeIfPresent(.resolution)
+        stale = try container.sdkDecodeIfPresent(.stale)
+        points = try container.sdkDecodeIfPresent(.points)
     }
 }
 
-extension GetToolHealthResponseHistory {
-    public init(resolution: String? = nil, stale: Bool? = nil, points: [GetToolHealthResponseHistoryPointsItem]? = nil) {
+public extension GetToolHealthResponseHistory {
+    init(resolution: String? = nil, stale: Bool? = nil, points: [GetToolHealthResponseHistoryPointsItem]? = nil) {
         self.init()
         (self.resolution, self.stale) = (resolution, stale)
         self.points = points
@@ -57,23 +57,23 @@ public struct GetToolHealthResponseHistoryPointsItem: Codable {
     }
 
     init() {
-        (self.bucketStart, self.health) = (nil, nil)
+        (bucketStart, health) = (nil, nil)
     }
 }
 
-extension GetToolHealthResponseHistoryPointsItem {
-    public init(from decoder: Decoder) throws {
+public extension GetToolHealthResponseHistoryPointsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.bucketStart = try container.sdkDecodeIfPresent(.bucketStart)
-        self.health = try container.sdkDecodeIfPresent(.health)
-        if let value = self.bucketStart {
+        bucketStart = try container.sdkDecodeIfPresent(.bucketStart)
+        health = try container.sdkDecodeIfPresent(.health)
+        if let value = bucketStart {
             try sdkValidateDateTime("bucket_start", sdkWireString(value))
         }
     }
 }
 
-extension GetToolHealthResponseHistoryPointsItem {
-    public init(bucketStart: Date? = nil, health: HealthMetrics? = nil) throws {
+public extension GetToolHealthResponseHistoryPointsItem {
+    init(bucketStart: Date? = nil, health: HealthMetrics? = nil) throws {
         self.init()
         (self.bucketStart, self.health) = (bucketStart, health)
         if let value = self.bucketStart {
@@ -95,20 +95,20 @@ public struct GetConnectionResponse: Codable {
     }
 
     init() {
-        (self.connection, self.authorization) = (nil, nil)
+        (connection, authorization) = (nil, nil)
     }
 }
 
-extension GetConnectionResponse {
-    public init(from decoder: Decoder) throws {
+public extension GetConnectionResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.connection = try container.sdkDecodeIfPresent(.connection)
-        self.authorization = try container.sdkDecodeIfPresent(.authorization)
+        connection = try container.sdkDecodeIfPresent(.connection)
+        authorization = try container.sdkDecodeIfPresent(.authorization)
     }
 }
 
-extension GetConnectionResponse {
-    public init(connection: Connection? = nil, authorization: ConnectionAuthorization? = nil) {
+public extension GetConnectionResponse {
+    init(connection: Connection? = nil, authorization: ConnectionAuthorization? = nil) {
         self.init()
         (self.connection, self.authorization) = (connection, authorization)
     }
@@ -132,21 +132,21 @@ public struct GetToolbeltResponse: Codable {
     }
 
     init() {
-        (self.toolbelt, self.toolDetails, self.nextPageToken) = (nil, nil, nil)
+        (toolbelt, toolDetails, nextPageToken) = (nil, nil, nil)
     }
 }
 
-extension GetToolbeltResponse {
-    public init(from decoder: Decoder) throws {
+public extension GetToolbeltResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.toolbelt = try container.sdkDecodeIfPresent(.toolbelt)
-        self.toolDetails = try container.sdkDecodeIfPresent(.toolDetails)
-        self.nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
+        toolbelt = try container.sdkDecodeIfPresent(.toolbelt)
+        toolDetails = try container.sdkDecodeIfPresent(.toolDetails)
+        nextPageToken = try container.sdkDecodeIfPresent(.nextPageToken)
     }
 }
 
-extension GetToolbeltResponse {
-    public init(toolbelt: Toolbelt? = nil, toolDetails: [ToolbeltToolDetail]? = nil, nextPageToken: NextPageToken? = nil) {
+public extension GetToolbeltResponse {
+    init(toolbelt: Toolbelt? = nil, toolDetails: [ToolbeltToolDetail]? = nil, nextPageToken: NextPageToken? = nil) {
         self.init()
         (self.toolbelt, self.toolDetails) = (toolbelt, toolDetails)
         self.nextPageToken = nextPageToken
@@ -163,19 +163,19 @@ public struct GetUserResponse: Codable {
     }
 
     init() {
-        self.user = nil
+        user = nil
     }
 }
 
-extension GetUserResponse {
-    public init(from decoder: Decoder) throws {
+public extension GetUserResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.user = try container.sdkDecodeIfPresent(.user)
+        user = try container.sdkDecodeIfPresent(.user)
     }
 }
 
-extension GetUserResponse {
-    public init(user: User? = nil) {
+public extension GetUserResponse {
+    init(user: User? = nil) {
         self.init()
         self.user = user
     }
@@ -197,21 +197,21 @@ public struct GetToolHealthResponse: Codable {
     }
 
     init() {
-        (self.snapshot, self.tool, self.history) = (nil, nil, nil)
+        (snapshot, tool, history) = (nil, nil, nil)
     }
 }
 
-extension GetToolHealthResponse {
-    public init(from decoder: Decoder) throws {
+public extension GetToolHealthResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.snapshot = try container.sdkDecodeIfPresent(.snapshot)
-        self.tool = try container.sdkDecodeIfPresent(.tool)
-        self.history = try container.sdkDecodeIfPresent(.history)
+        snapshot = try container.sdkDecodeIfPresent(.snapshot)
+        tool = try container.sdkDecodeIfPresent(.tool)
+        history = try container.sdkDecodeIfPresent(.history)
     }
 }
 
-extension GetToolHealthResponse {
-    public init(snapshot: HealthSnapshot? = nil, tool: ToolHealth? = nil, history: GetToolHealthResponseHistory? = nil) {
+public extension GetToolHealthResponse {
+    init(snapshot: HealthSnapshot? = nil, tool: ToolHealth? = nil, history: GetToolHealthResponseHistory? = nil) {
         self.init()
         (self.snapshot, self.tool) = (snapshot, tool)
         self.history = history
@@ -231,20 +231,20 @@ public struct GetActorLimitsResponse: Codable {
     }
 
     init() {
-        (self.configuredLimits, self.effectiveLimits) = (nil, nil)
+        (configuredLimits, effectiveLimits) = (nil, nil)
     }
 }
 
-extension GetActorLimitsResponse {
-    public init(from decoder: Decoder) throws {
+public extension GetActorLimitsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.configuredLimits = try container.sdkDecodeIfPresent(.configuredLimits)
-        self.effectiveLimits = try container.sdkDecodeIfPresent(.effectiveLimits)
+        configuredLimits = try container.sdkDecodeIfPresent(.configuredLimits)
+        effectiveLimits = try container.sdkDecodeIfPresent(.effectiveLimits)
     }
 }
 
-extension GetActorLimitsResponse {
-    public init(configuredLimits: [LimitOverride]? = nil, effectiveLimits: ToolQuotas? = nil) {
+public extension GetActorLimitsResponse {
+    init(configuredLimits: [LimitOverride]? = nil, effectiveLimits: ToolQuotas? = nil) {
         self.init()
         (self.configuredLimits, self.effectiveLimits) = (configuredLimits, effectiveLimits)
     }

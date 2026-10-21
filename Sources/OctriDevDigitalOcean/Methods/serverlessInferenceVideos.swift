@@ -6,39 +6,94 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ServerlessInferenceMethods {
-    /// Start an asynchronous video generation job from a text prompt. Poll `GET /v1/videos/{video_id}` until the job reaches a terminal status, then download the MP4 with `GET /v1/videos/{video_id}/content` or from `output.url` when present.
+public extension ServerlessInferenceMethods {
+    /// Start an asynchronous video generation job from a text prompt. Poll `GET /v1/videos/{video_id}` until the job
+    /// reaches a terminal status, then download the MP4 with `GET /v1/videos/{video_id}/content` or from `output.url`
+    /// when present.
     ///
     /// - Parameters:
     /// - model: The video generation model to use.
     /// - prompt: A text description of the desired video.
     /// - size: The output resolution, for example `1280x720`.
     /// - fps: Frames per second for the generated video.
-    public static func inferenceCreateVideo(config: ClientConfig, model: String, prompt: String, size: String? = nil, fps: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> VideoGeneration {
+    static func inferenceCreateVideo(
+        config: ClientConfig,
+        model: String,
+        prompt: String,
+        size: String? = nil,
+        fps: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> VideoGeneration {
         try validateLength("prompt", prompt, min: 1)
 
-        if let fps = fps {
+        if let fps {
             try validateRange("fps", Double(fps), min: 1)
         }
 
         let requestBody = InferenceCreateVideoRequestBody(model: model, prompt: prompt, size: size, fps: fps)
 
-        return try (await sdkRequest("POST", "/v1/videos", config: config, body: requestBody, decoder: .json, operationId: "inference_create_video", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v1/videos",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "inference_create_video",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 
-    /// Returns the current state of a video generation job. Poll until `status` reaches a terminal value such as `completed` or `failed`.
+    /// Returns the current state of a video generation job. Poll until `status` reaches a terminal value such as
+    /// `completed` or `failed`.
     ///
     /// - Parameters:
     /// - videoId: The video generation job identifier.
-    public static func inferenceGetVideo(config: ClientConfig, videoId: String, requestOptions: RequestOptions? = nil) async throws -> VideoGeneration {
-        return try (await sdkRequest("GET", ["/v1/videos/", sdkEncodePathSegment(sdkWireString(videoId))].joined(), config: config, decoder: .json, operationId: "inference_get_video", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func inferenceGetVideo(
+        config: ClientConfig,
+        videoId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> VideoGeneration {
+        try await (sdkRequest(
+            "GET",
+            ["/v1/videos/", sdkEncodePathSegment(sdkWireString(videoId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "inference_get_video",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
     /// Downloads the generated MP4 for a completed video generation job.
     ///
     /// - Parameters:
     /// - videoId: The video generation job identifier.
-    public static func inferenceGetVideoContent(config: ClientConfig, videoId: String, requestOptions: RequestOptions? = nil) async throws -> Data {
-        return try (await sdkRequest("GET", ["/v1/videos/", sdkEncodePathSegment(sdkWireString(videoId)), "/content"].joined(), config: config, decoder: .bytes, operationId: "inference_get_video_content", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func inferenceGetVideoContent(
+        config: ClientConfig,
+        videoId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Data {
+        try await (sdkRequest(
+            "GET",
+            ["/v1/videos/", sdkEncodePathSegment(sdkWireString(videoId)), "/content"].joined(),
+            config: config,
+            decoder: .bytes,
+            operationId: "inference_get_video_content",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

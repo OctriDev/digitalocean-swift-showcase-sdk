@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiGet domain models
+/// AgentPlatformAPIApiGet domain models
 /// Typed representation of the `ApiGetModelEvaluationRunOutput` API schema.
 public struct ApiGetModelEvaluationRunOutput: Codable {
     /// Links to other pages
@@ -23,22 +23,27 @@ public struct ApiGetModelEvaluationRunOutput: Codable {
     }
 
     init() {
-        (self.links, self.meta, self.results, self.run) = (nil, nil, nil, nil)
+        (links, meta, results, run) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiGetModelEvaluationRunOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetModelEvaluationRunOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.links = try container.sdkDecodeIfPresent(.links)
-        self.meta = try container.sdkDecodeIfPresent(.meta)
-        self.results = try container.sdkDecodeIfPresent(.results)
-        self.run = try container.sdkDecodeIfPresent(.run)
+        links = try container.sdkDecodeIfPresent(.links)
+        meta = try container.sdkDecodeIfPresent(.meta)
+        results = try container.sdkDecodeIfPresent(.results)
+        run = try container.sdkDecodeIfPresent(.run)
     }
 }
 
-extension ApiGetModelEvaluationRunOutput {
-    public init(links: ApiLinks? = nil, meta: ApiMeta? = nil, results: [ApiModelEvaluationResult]? = nil, run: ApiModelEvaluationRunDetail? = nil) {
+public extension ApiGetModelEvaluationRunOutput {
+    init(
+        links: ApiLinks? = nil,
+        meta: ApiMeta? = nil,
+        results: [ApiModelEvaluationResult]? = nil,
+        run: ApiModelEvaluationRunDetail? = nil
+    ) {
         self.init()
         (self.links, self.meta) = (links, meta)
         (self.results, self.run) = (results, run)

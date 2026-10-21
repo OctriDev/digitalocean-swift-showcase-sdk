@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ActionGateway domain models
+/// ActionGateway domain models
 /// Provider of tools.
 public struct Toolkit: Codable {
     /// Provider ID. For one of your team's MCP servers it is normally the server's `serverRef`; `provider_kind`
@@ -37,28 +37,35 @@ public struct Toolkit: Codable {
     }
 
     init() {
-        (self.id, self.name, self.description, self.categories, self.createdAt) = (nil, nil, nil, nil, nil)
-        self.providerKind = nil
+        (id, name, description, categories, createdAt) = (nil, nil, nil, nil, nil)
+        providerKind = nil
     }
 }
 
-extension Toolkit {
-    public init(from decoder: Decoder) throws {
+public extension Toolkit {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.categories = try container.sdkDecodeIfPresent(.categories)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.providerKind = try container.sdkDecodeIfPresent(.providerKind)
-        if let value = self.createdAt {
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        description = try container.sdkDecodeIfPresent(.description)
+        categories = try container.sdkDecodeIfPresent(.categories)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        providerKind = try container.sdkDecodeIfPresent(.providerKind)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-extension Toolkit {
-    public init(id: String? = nil, name: String? = nil, description: String? = nil, categories: [String]? = nil, createdAt: Date? = nil, providerKind: String? = nil) throws {
+public extension Toolkit {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        description: String? = nil,
+        categories: [String]? = nil,
+        createdAt: Date? = nil,
+        providerKind: String? = nil
+    ) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.description, self.categories) = (description, categories)

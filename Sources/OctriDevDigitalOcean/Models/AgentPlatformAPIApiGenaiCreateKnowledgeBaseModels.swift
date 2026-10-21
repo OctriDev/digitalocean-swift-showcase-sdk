@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApi domain models
+/// AgentPlatformAPIApi domain models
 /// Typed representation of the `ApiKBDataSource` API schema.
 public struct ApiKBDataSource: Codable {
     /// AWS S3 Data Source
@@ -48,31 +48,49 @@ public struct ApiKBDataSource: Codable {
     }
 
     init() {
-        (self.awsDataSource, self.bucketName, self.bucketRegion, self.chunkingAlgorithm, self.chunkingOptions) = (nil, nil, nil, nil, nil)
-        (self.dropboxDataSource, self.fileUploadDataSource, self.googleDriveDataSource, self.itemPath, self.spacesDataSource) = (nil, nil, nil, nil, nil)
-        self.webCrawlerDataSource = nil
+        (awsDataSource, bucketName, bucketRegion, chunkingAlgorithm, chunkingOptions) = (nil, nil, nil, nil, nil)
+        (dropboxDataSource, fileUploadDataSource, googleDriveDataSource, itemPath, spacesDataSource) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        webCrawlerDataSource = nil
     }
 }
 
-extension ApiKBDataSource {
-    public init(from decoder: Decoder) throws {
+public extension ApiKBDataSource {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.awsDataSource = try container.sdkDecodeIfPresent(.awsDataSource)
-        self.bucketName = try container.sdkDecodeIfPresent(.bucketName)
-        self.bucketRegion = try container.sdkDecodeIfPresent(.bucketRegion)
-        self.chunkingAlgorithm = try container.sdkDecodeIfPresent(.chunkingAlgorithm)
-        self.chunkingOptions = try container.sdkDecodeIfPresent(.chunkingOptions)
-        self.dropboxDataSource = try container.sdkDecodeIfPresent(.dropboxDataSource)
-        self.fileUploadDataSource = try container.sdkDecodeIfPresent(.fileUploadDataSource)
-        self.googleDriveDataSource = try container.sdkDecodeIfPresent(.googleDriveDataSource)
-        self.itemPath = try container.sdkDecodeIfPresent(.itemPath)
-        self.spacesDataSource = try container.sdkDecodeIfPresent(.spacesDataSource)
-        self.webCrawlerDataSource = try container.sdkDecodeIfPresent(.webCrawlerDataSource)
+        awsDataSource = try container.sdkDecodeIfPresent(.awsDataSource)
+        bucketName = try container.sdkDecodeIfPresent(.bucketName)
+        bucketRegion = try container.sdkDecodeIfPresent(.bucketRegion)
+        chunkingAlgorithm = try container.sdkDecodeIfPresent(.chunkingAlgorithm)
+        chunkingOptions = try container.sdkDecodeIfPresent(.chunkingOptions)
+        dropboxDataSource = try container.sdkDecodeIfPresent(.dropboxDataSource)
+        fileUploadDataSource = try container.sdkDecodeIfPresent(.fileUploadDataSource)
+        googleDriveDataSource = try container.sdkDecodeIfPresent(.googleDriveDataSource)
+        itemPath = try container.sdkDecodeIfPresent(.itemPath)
+        spacesDataSource = try container.sdkDecodeIfPresent(.spacesDataSource)
+        webCrawlerDataSource = try container.sdkDecodeIfPresent(.webCrawlerDataSource)
     }
 }
 
-extension ApiKBDataSource {
-    public init(awsDataSource: ApiAWSDataSource? = nil, bucketName: String? = nil, bucketRegion: String? = nil, chunkingAlgorithm: ApiChunkingAlgorithm? = nil, chunkingOptions: ApiChunkingOptions? = nil, dropboxDataSource: ApiDropboxDataSource? = nil, fileUploadDataSource: ApiFileUploadDataSource? = nil, googleDriveDataSource: ApiGoogleDriveDataSource? = nil, itemPath: String? = nil, spacesDataSource: ApiSpacesDataSource? = nil, webCrawlerDataSource: ApiWebCrawlerDataSource? = nil) {
+public extension ApiKBDataSource {
+    init(
+        awsDataSource: ApiAWSDataSource? = nil,
+        bucketName: String? = nil,
+        bucketRegion: String? = nil,
+        chunkingAlgorithm: ApiChunkingAlgorithm? = nil,
+        chunkingOptions: ApiChunkingOptions? = nil,
+        dropboxDataSource: ApiDropboxDataSource? = nil,
+        fileUploadDataSource: ApiFileUploadDataSource? = nil,
+        googleDriveDataSource: ApiGoogleDriveDataSource? = nil,
+        itemPath: String? = nil,
+        spacesDataSource: ApiSpacesDataSource? = nil,
+        webCrawlerDataSource: ApiWebCrawlerDataSource? = nil
+    ) {
         self.init()
         (self.awsDataSource, self.bucketName) = (awsDataSource, bucketName)
         (self.bucketRegion, self.chunkingAlgorithm) = (bucketRegion, chunkingAlgorithm)

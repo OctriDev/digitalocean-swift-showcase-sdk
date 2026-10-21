@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiGet domain models
+/// AgentPlatformAPIApiGet domain models
 /// Typed representation of the `ApiGetAnthropicAPIKeyOutput` API schema.
 public struct ApiGetAnthropicAPIKeyOutput: Codable {
     /// Anthropic API Key Info
@@ -14,19 +14,19 @@ public struct ApiGetAnthropicAPIKeyOutput: Codable {
     }
 
     init() {
-        self.apiKeyInfo = nil
+        apiKeyInfo = nil
     }
 }
 
-extension ApiGetAnthropicAPIKeyOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetAnthropicAPIKeyOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-extension ApiGetAnthropicAPIKeyOutput {
-    public init(apiKeyInfo: ApiAnthropicAPIKeyInfo? = nil) {
+public extension ApiGetAnthropicAPIKeyOutput {
+    init(apiKeyInfo: ApiAnthropicAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }

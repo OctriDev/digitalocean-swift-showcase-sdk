@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiUpdate domain models
+/// AgentPlatformAPIApiUpdate domain models
 /// Typed representation of the `ApiUpdateModelEvaluationRunInputPublic` API schema.
 public struct ApiUpdateModelEvaluationRunInputPublic: Codable {
     /// UUID of the model evaluation run to update. Returned by `CreateModelEvaluationRun` and listed via
@@ -20,20 +20,20 @@ public struct ApiUpdateModelEvaluationRunInputPublic: Codable {
     }
 
     init() {
-        (self.evalRunUuid, self.name) = (nil, nil)
+        (evalRunUuid, name) = (nil, nil)
     }
 }
 
-extension ApiUpdateModelEvaluationRunInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateModelEvaluationRunInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.evalRunUuid = try container.sdkDecodeIfPresent(.evalRunUuid)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        evalRunUuid = try container.sdkDecodeIfPresent(.evalRunUuid)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ApiUpdateModelEvaluationRunInputPublic {
-    public init(evalRunUuid: String? = nil, name: String? = nil) {
+public extension ApiUpdateModelEvaluationRunInputPublic {
+    init(evalRunUuid: String? = nil, name: String? = nil) {
         self.init()
         (self.evalRunUuid, self.name) = (evalRunUuid, name)
     }
@@ -49,19 +49,19 @@ public struct ApiUpdateModelEvaluationRunOutput: Codable {
     }
 
     init() {
-        self.run = nil
+        run = nil
     }
 }
 
-extension ApiUpdateModelEvaluationRunOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateModelEvaluationRunOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.run = try container.sdkDecodeIfPresent(.run)
+        run = try container.sdkDecodeIfPresent(.run)
     }
 }
 
-extension ApiUpdateModelEvaluationRunOutput {
-    public init(run: ApiModelEvaluationRunSummary? = nil) {
+public extension ApiUpdateModelEvaluationRunOutput {
+    init(run: ApiModelEvaluationRunSummary? = nil) {
         self.init()
         self.run = run
     }

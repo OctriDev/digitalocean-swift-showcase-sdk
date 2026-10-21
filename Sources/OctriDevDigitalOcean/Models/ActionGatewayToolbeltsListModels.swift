@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ActionGateway domain models
+/// ActionGateway domain models
 /// One page of your team's toolbelts.
 public struct ToolbeltsResponse: Codable {
     /// Toolbelts sorted by name.
@@ -17,20 +17,20 @@ public struct ToolbeltsResponse: Codable {
     }
 
     init() {
-        (self.toolbelts, self.pagination) = (nil, nil)
+        (toolbelts, pagination) = (nil, nil)
     }
 }
 
-extension ToolbeltsResponse {
-    public init(from decoder: Decoder) throws {
+public extension ToolbeltsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.toolbelts = try container.sdkDecodeIfPresent(.toolbelts)
-        self.pagination = try container.sdkDecodeIfPresent(.pagination)
+        toolbelts = try container.sdkDecodeIfPresent(.toolbelts)
+        pagination = try container.sdkDecodeIfPresent(.pagination)
     }
 }
 
-extension ToolbeltsResponse {
-    public init(toolbelts: [ToolbeltSummary]? = nil, pagination: Pagination? = nil) {
+public extension ToolbeltsResponse {
+    init(toolbelts: [ToolbeltSummary]? = nil, pagination: Pagination? = nil) {
         self.init()
         (self.toolbelts, self.pagination) = (toolbelts, pagination)
     }

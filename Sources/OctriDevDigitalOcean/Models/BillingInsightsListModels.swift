@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Billing domain models
+/// Billing domain models
 /// Typed representation of the `BillingDataPoint` API schema.
 public struct BillingDataPoint: Codable {
     /// URN of the team that incurred the usage
@@ -40,29 +40,37 @@ public struct BillingDataPoint: Codable {
     }
 
     init() {
-        (self.usageTeamUrn, self.startDate, self.totalAmount, self.region, self.sku) = (nil, nil, nil, nil, nil)
-        (self.description, self.groupDescription) = (nil, nil)
+        (usageTeamUrn, startDate, totalAmount, region, sku) = (nil, nil, nil, nil, nil)
+        (description, groupDescription) = (nil, nil)
     }
 }
 
-extension BillingDataPoint {
-    public init(from decoder: Decoder) throws {
+public extension BillingDataPoint {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.usageTeamUrn = try container.sdkDecodeIfPresent(.usageTeamUrn)
-        self.startDate = try container.sdkDecodeIfPresent(.startDate)
-        self.totalAmount = try container.sdkDecodeIfPresent(.totalAmount)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.sku = try container.sdkDecodeIfPresent(.sku)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.groupDescription = try container.sdkDecodeIfPresent(.groupDescription)
-        if let value = self.startDate {
+        usageTeamUrn = try container.sdkDecodeIfPresent(.usageTeamUrn)
+        startDate = try container.sdkDecodeIfPresent(.startDate)
+        totalAmount = try container.sdkDecodeIfPresent(.totalAmount)
+        region = try container.sdkDecodeIfPresent(.region)
+        sku = try container.sdkDecodeIfPresent(.sku)
+        description = try container.sdkDecodeIfPresent(.description)
+        groupDescription = try container.sdkDecodeIfPresent(.groupDescription)
+        if let value = startDate {
             try sdkValidateDate("start_date", value)
         }
     }
 }
 
-extension BillingDataPoint {
-    public init(usageTeamUrn: String? = nil, startDate: String? = nil, totalAmount: String? = nil, region: String? = nil, sku: String? = nil, description: String? = nil, groupDescription: String? = nil) throws {
+public extension BillingDataPoint {
+    init(
+        usageTeamUrn: String? = nil,
+        startDate: String? = nil,
+        totalAmount: String? = nil,
+        region: String? = nil,
+        sku: String? = nil,
+        description: String? = nil,
+        groupDescription: String? = nil
+    ) throws {
         self.init()
         (self.usageTeamUrn, self.startDate) = (usageTeamUrn, startDate)
         (self.totalAmount, self.region) = (totalAmount, region)
@@ -96,33 +104,51 @@ public struct BillingInsights: Codable {
         case currentPage = "current_page"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension BillingInsights {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.dataPoints) else {
-            throw SdkValidationError(field: "data_points", code: "required", message: "Validation failed for 'data_points': value is required")
-        }
-        guard container.contains(.totalItems) else {
-            throw SdkValidationError(field: "total_items", code: "required", message: "Validation failed for 'total_items': value is required")
-        }
-        guard container.contains(.totalPages) else {
-            throw SdkValidationError(field: "total_pages", code: "required", message: "Validation failed for 'total_pages': value is required")
-        }
-        guard container.contains(.currentPage) else {
-            throw SdkValidationError(field: "current_page", code: "required", message: "Validation failed for 'current_page': value is required")
-        }
-        self.dataPoints = try container.sdkDecodeRequired(.dataPoints)
-        self.totalItems = try container.sdkDecodeRequired(.totalItems)
-        self.totalPages = try container.sdkDecodeRequired(.totalPages)
-        self.currentPage = try container.sdkDecodeRequired(.currentPage)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension BillingInsights {
-    public init(dataPoints: [BillingDataPoint], totalItems: Int, totalPages: Int, currentPage: Int) {
+public extension BillingInsights {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.dataPoints) else {
+            throw SdkValidationError(
+                field: "data_points",
+                code: "required",
+                message: "Validation failed for 'data_points': value is required"
+            )
+        }
+        guard container.contains(.totalItems) else {
+            throw SdkValidationError(
+                field: "total_items",
+                code: "required",
+                message: "Validation failed for 'total_items': value is required"
+            )
+        }
+        guard container.contains(.totalPages) else {
+            throw SdkValidationError(
+                field: "total_pages",
+                code: "required",
+                message: "Validation failed for 'total_pages': value is required"
+            )
+        }
+        guard container.contains(.currentPage) else {
+            throw SdkValidationError(
+                field: "current_page",
+                code: "required",
+                message: "Validation failed for 'current_page': value is required"
+            )
+        }
+        dataPoints = try container.sdkDecodeRequired(.dataPoints)
+        totalItems = try container.sdkDecodeRequired(.totalItems)
+        totalPages = try container.sdkDecodeRequired(.totalPages)
+        currentPage = try container.sdkDecodeRequired(.currentPage)
+    }
+}
+
+public extension BillingInsights {
+    init(dataPoints: [BillingDataPoint], totalItems: Int, totalPages: Int, currentPage: Int) {
         (self.dataPoints, self.totalItems) = (dataPoints, totalItems)
         (self.totalPages, self.currentPage) = (totalPages, currentPage)
     }

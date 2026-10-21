@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Droplets domain models
+/// Droplets domain models
 /// Typed representation of the `AllFirewalls` API schema.
 public struct AllFirewalls: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,23 +18,29 @@ public struct AllFirewalls: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllFirewalls {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.firewalls = try container.sdkDecodeIfPresent(.firewalls)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllFirewalls {
-    public init(meta: MetaMeta, firewalls: [Firewall]? = nil, links: PageLinks? = nil) {
+public extension AllFirewalls {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        firewalls = try container.sdkDecodeIfPresent(.firewalls)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllFirewalls {
+    init(meta: MetaMeta, firewalls: [Firewall]? = nil, links: PageLinks? = nil) {
         (self.meta, self.firewalls) = (meta, firewalls)
         self.links = links
     }
@@ -48,19 +54,19 @@ public struct AllFirewallsVariant0: Codable {
     }
 
     init() {
-        self.firewalls = nil
+        firewalls = nil
     }
 }
 
-extension AllFirewallsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AllFirewallsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.firewalls = try container.sdkDecodeIfPresent(.firewalls)
+        firewalls = try container.sdkDecodeIfPresent(.firewalls)
     }
 }
 
-extension AllFirewallsVariant0 {
-    public init(firewalls: [Firewall]? = nil) {
+public extension AllFirewallsVariant0 {
+    init(firewalls: [Firewall]? = nil) {
         self.init()
         self.firewalls = firewalls
     }

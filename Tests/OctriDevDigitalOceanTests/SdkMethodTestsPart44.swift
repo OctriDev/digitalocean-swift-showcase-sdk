@@ -37,10 +37,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.billing.invoicesGetByUuid(
-            invoiceUuid: decoded("\"22737513-0ea7-4206-8ceb-98a575af7681\""),
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                invoiceUuid: decoded("\"22737513-0ea7-4206-8ceb-98a575af7681\""),
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -85,8 +85,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.billing.invoicesGetCsvByUuid(
-            invoiceUuid: decoded("\"22737513-0ea7-4206-8ceb-98a575af7681\"")
-        )
+                invoiceUuid: decoded("\"22737513-0ea7-4206-8ceb-98a575af7681\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -124,8 +124,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.billing.invoicesGetPdfByUuid(
-            invoiceUuid: decoded("\"22737513-0ea7-4206-8ceb-98a575af7681\"")
-        )
+                invoiceUuid: decoded("\"22737513-0ea7-4206-8ceb-98a575af7681\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -170,8 +170,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.billing.invoicesGetSummaryByUuid(
-            invoiceUuid: decoded("\"22737513-0ea7-4206-8ceb-98a575af7681\"")
-        )
+                invoiceUuid: decoded("\"22737513-0ea7-4206-8ceb-98a575af7681\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -217,9 +217,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.billing.invoicesList(
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -265,9 +265,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.addNodePool(
-            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
-            body: decoded(sdkMethodFixture994Value1)
-        )
+                clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
+                body: decoded(sdkMethodFixture994Value1)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -306,9 +306,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.addRegistries(
-            clusterUuids: decoded(sdkMethodFixture996Value1),
-            registries: decoded("[\"registry-a\",\"registry-b\"]")
-        )
+                clusterUuids: decoded(sdkMethodFixture996Value1),
+                registries: decoded("[\"registry-a\",\"registry-b\"]")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -346,8 +346,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.addRegistry(
-            clusterUuids: decoded(sdkMethodFixture998Value1)
-        )
+                clusterUuids: decoded(sdkMethodFixture998Value1)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -368,7 +368,12 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try KubernetesMethods.KubernetesCreateClusterOptions(name: decoded("\"prod-cluster-01\""), region: decoded("\"nyc1\""), version: decoded("\"1.18.6-do.0\""), nodePools: decoded("[{\"size\":\"s-1vcpu-2gb\",\"count\":3,\"name\":\"worker-pool\"}]"))
+        var options = try KubernetesMethods.KubernetesCreateClusterOptions(
+            name: decoded("\"prod-cluster-01\""),
+            region: decoded("\"nyc1\""),
+            version: decoded("\"1.18.6-do.0\""),
+            nodePools: decoded("[{\"size\":\"s-1vcpu-2gb\",\"count\":3,\"name\":\"worker-pool\"}]")
+        )
         options.clusterSubnet = try decoded("null")
         options.serviceSubnet = try decoded("null")
         options.vpcUuid = try decoded("null")
@@ -411,7 +416,12 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try KubernetesMethods.KubernetesCreateClusterOptions(name: decoded("\"prod-cluster-01\""), region: decoded("\"nyc1\""), version: decoded("\"1.18.6-do.0\""), nodePools: decoded("[{\"size\":\"s-1vcpu-2gb\",\"count\":3,\"name\":\"worker-pool\"}]"))
+        var options = try KubernetesMethods.KubernetesCreateClusterOptions(
+            name: decoded("\"prod-cluster-01\""),
+            region: decoded("\"nyc1\""),
+            version: decoded("\"1.18.6-do.0\""),
+            nodePools: decoded("[{\"size\":\"s-1vcpu-2gb\",\"count\":3,\"name\":\"worker-pool\"}]")
+        )
         options.clusterSubnet = try decoded("null")
         options.serviceSubnet = try decoded("null")
         options.vpcUuid = try decoded("null")
@@ -442,8 +452,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.createCluster(
-            options: options
-        )
+                options: options
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -481,8 +491,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.deleteCluster(
-            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\"")
-        )
+                clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -524,12 +534,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.kubernetes.deleteNode(
-            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
-            nodePoolId: decoded("\"cdda885e-7663-40c8-bc74-3a036c66545d\""),
-            nodeId: decoded("\"478247f8-b1bb-4f7a-8db9-2a5f8d4b8f8f\""),
-            skipDrain: decoded("1"),
-            replace: decoded("1")
-        )
+                clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
+                nodePoolId: decoded("\"cdda885e-7663-40c8-bc74-3a036c66545d\""),
+                nodeId: decoded("\"478247f8-b1bb-4f7a-8db9-2a5f8d4b8f8f\""),
+                skipDrain: decoded("1"),
+                replace: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

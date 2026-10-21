@@ -3,7 +3,7 @@
 
 import Foundation
 
-// LoadBalancers domain models
+/// LoadBalancers domain models
 /// Typed representation of the `ExistingLoadBalancer` API schema.
 public struct ExistingLoadBalancer: Codable {
     /// Optional API value serialized in the `load_balancer` wire field.
@@ -14,19 +14,19 @@ public struct ExistingLoadBalancer: Codable {
     }
 
     init() {
-        self.loadBalancer = nil
+        loadBalancer = nil
     }
 }
 
-extension ExistingLoadBalancer {
-    public init(from decoder: Decoder) throws {
+public extension ExistingLoadBalancer {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.loadBalancer = try container.sdkDecodeIfPresent(.loadBalancer)
+        loadBalancer = try container.sdkDecodeIfPresent(.loadBalancer)
     }
 }
 
-extension ExistingLoadBalancer {
-    public init(loadBalancer: LoadBalancer? = nil) {
+public extension ExistingLoadBalancer {
+    init(loadBalancer: LoadBalancer? = nil) {
         self.init()
         self.loadBalancer = loadBalancer
     }

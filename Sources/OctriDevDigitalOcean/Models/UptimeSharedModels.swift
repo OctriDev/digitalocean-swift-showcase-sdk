@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Uptime domain models
+/// Uptime domain models
 /// Typed representation of the `ExistingAlert` API schema.
 public struct ExistingAlert: Codable {
     /// Optional object value serialized in the `alert` wire field.
@@ -14,19 +14,19 @@ public struct ExistingAlert: Codable {
     }
 
     init() {
-        self.alert = nil
+        alert = nil
     }
 }
 
-extension ExistingAlert {
-    public init(from decoder: Decoder) throws {
+public extension ExistingAlert {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.alert = try container.sdkDecodeIfPresent(.alert)
+        alert = try container.sdkDecodeIfPresent(.alert)
     }
 }
 
-extension ExistingAlert {
-    public init(alert: Alert? = nil) {
+public extension ExistingAlert {
+    init(alert: Alert? = nil) {
         self.init()
         self.alert = alert
     }
@@ -59,23 +59,29 @@ public struct CheckUpdatable: Codable {
     }
 
     init() {
-        (self.name, self.type, self.target, self.regions, self.enabled) = (nil, nil, nil, nil, nil)
+        (name, type, target, regions, enabled) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension CheckUpdatable {
-    public init(from decoder: Decoder) throws {
+public extension CheckUpdatable {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.target = try container.sdkDecodeIfPresent(.target)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
+        name = try container.sdkDecodeIfPresent(.name)
+        type = try container.sdkDecodeIfPresent(.type)
+        target = try container.sdkDecodeIfPresent(.target)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
     }
 }
 
-extension CheckUpdatable {
-    public init(name: String? = nil, type: CheckUpdatableType? = nil, target: String? = nil, regions: [CheckUpdatableRegionsItem]? = nil, enabled: Bool? = nil) {
+public extension CheckUpdatable {
+    init(
+        name: String? = nil,
+        type: CheckUpdatableType? = nil,
+        target: String? = nil,
+        regions: [CheckUpdatableRegionsItem]? = nil,
+        enabled: Bool? = nil
+    ) {
         self.init()
         (self.name, self.type) = (name, type)
         (self.target, self.regions) = (target, regions)
@@ -94,22 +100,22 @@ public struct AlertBase: Codable {
     }
 
     init() {
-        self.id = nil
+        id = nil
     }
 }
 
-extension AlertBase {
-    public init(from decoder: Decoder) throws {
+public extension AlertBase {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension AlertBase {
-    public init(id: String? = nil) throws {
+public extension AlertBase {
+    init(id: String? = nil) throws {
         self.init()
         self.id = id
         if let value = self.id {
@@ -132,25 +138,35 @@ public struct Notification: Codable {
         case slack
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension Notification {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.email) else {
-            throw SdkValidationError(field: "email", code: "required", message: "Validation failed for 'email': value is required")
-        }
-        guard container.contains(.slack) else {
-            throw SdkValidationError(field: "slack", code: "required", message: "Validation failed for 'slack': value is required")
-        }
-        self.email = try container.sdkDecodeRequired(.email)
-        self.slack = try container.sdkDecodeRequired(.slack)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension Notification {
-    public init(email: [String], slack: [NotificationSlackItem]) {
+public extension Notification {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.email) else {
+            throw SdkValidationError(
+                field: "email",
+                code: "required",
+                message: "Validation failed for 'email': value is required"
+            )
+        }
+        guard container.contains(.slack) else {
+            throw SdkValidationError(
+                field: "slack",
+                code: "required",
+                message: "Validation failed for 'slack': value is required"
+            )
+        }
+        email = try container.sdkDecodeRequired(.email)
+        slack = try container.sdkDecodeRequired(.slack)
+    }
+}
+
+public extension Notification {
+    init(email: [String], slack: [NotificationSlackItem]) {
         (self.email, self.slack) = (email, slack)
     }
 }
@@ -190,29 +206,37 @@ public struct Alert: Codable {
     }
 
     init() {
-        (self.id, self.name, self.type, self.threshold, self.comparison) = (nil, nil, nil, nil, nil)
-        (self.notifications, self.period) = (nil, nil)
+        (id, name, type, threshold, comparison) = (nil, nil, nil, nil, nil)
+        (notifications, period) = (nil, nil)
     }
 }
 
-extension Alert {
-    public init(from decoder: Decoder) throws {
+public extension Alert {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.threshold = try container.sdkDecodeIfPresent(.threshold)
-        self.comparison = try container.sdkDecodeIfPresent(.comparison)
-        self.notifications = try container.sdkDecodeIfPresent(.notifications)
-        self.period = try container.sdkDecodeIfPresent(.period)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        type = try container.sdkDecodeIfPresent(.type)
+        threshold = try container.sdkDecodeIfPresent(.threshold)
+        comparison = try container.sdkDecodeIfPresent(.comparison)
+        notifications = try container.sdkDecodeIfPresent(.notifications)
+        period = try container.sdkDecodeIfPresent(.period)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension Alert {
-    public init(id: String? = nil, name: String? = nil, type: AlertUpdatableType? = nil, threshold: Int? = nil, comparison: AlertUpdatableComparison? = nil, notifications: Notification? = nil, period: AlertUpdatablePeriod? = nil) throws {
+public extension Alert {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        type: AlertUpdatableType? = nil,
+        threshold: Int? = nil,
+        comparison: AlertUpdatableComparison? = nil,
+        notifications: Notification? = nil,
+        period: AlertUpdatablePeriod? = nil
+    ) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.type, self.threshold) = (type, threshold)
@@ -234,19 +258,19 @@ public struct ExistingCheck: Codable {
     }
 
     init() {
-        self.check = nil
+        check = nil
     }
 }
 
-extension ExistingCheck {
-    public init(from decoder: Decoder) throws {
+public extension ExistingCheck {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.check = try container.sdkDecodeIfPresent(.check)
+        check = try container.sdkDecodeIfPresent(.check)
     }
 }
 
-extension ExistingCheck {
-    public init(check: Check? = nil) {
+public extension ExistingCheck {
+    init(check: Check? = nil) {
         self.init()
         self.check = check
     }
@@ -263,22 +287,22 @@ public struct CheckBase: Codable {
     }
 
     init() {
-        self.id = nil
+        id = nil
     }
 }
 
-extension CheckBase {
-    public init(from decoder: Decoder) throws {
+public extension CheckBase {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension CheckBase {
-    public init(id: String? = nil) throws {
+public extension CheckBase {
+    init(id: String? = nil) throws {
         self.init()
         self.id = id
         if let value = self.id {
@@ -318,28 +342,35 @@ public struct Check: Codable {
     }
 
     init() {
-        (self.id, self.name, self.type, self.target, self.regions) = (nil, nil, nil, nil, nil)
-        self.enabled = nil
+        (id, name, type, target, regions) = (nil, nil, nil, nil, nil)
+        enabled = nil
     }
 }
 
-extension Check {
-    public init(from decoder: Decoder) throws {
+public extension Check {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.target = try container.sdkDecodeIfPresent(.target)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        type = try container.sdkDecodeIfPresent(.type)
+        target = try container.sdkDecodeIfPresent(.target)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension Check {
-    public init(id: String? = nil, name: String? = nil, type: CheckUpdatableType? = nil, target: String? = nil, regions: [CheckUpdatableRegionsItem]? = nil, enabled: Bool? = nil) throws {
+public extension Check {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        type: CheckUpdatableType? = nil,
+        target: String? = nil,
+        regions: [CheckUpdatableRegionsItem]? = nil,
+        enabled: Bool? = nil
+    ) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.type, self.target) = (type, target)
@@ -381,25 +412,32 @@ public struct AlertUpdatable: Codable {
     }
 
     init() {
-        (self.name, self.type, self.threshold, self.comparison, self.notifications) = (nil, nil, nil, nil, nil)
-        self.period = nil
+        (name, type, threshold, comparison, notifications) = (nil, nil, nil, nil, nil)
+        period = nil
     }
 }
 
-extension AlertUpdatable {
-    public init(from decoder: Decoder) throws {
+public extension AlertUpdatable {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.threshold = try container.sdkDecodeIfPresent(.threshold)
-        self.comparison = try container.sdkDecodeIfPresent(.comparison)
-        self.notifications = try container.sdkDecodeIfPresent(.notifications)
-        self.period = try container.sdkDecodeIfPresent(.period)
+        name = try container.sdkDecodeIfPresent(.name)
+        type = try container.sdkDecodeIfPresent(.type)
+        threshold = try container.sdkDecodeIfPresent(.threshold)
+        comparison = try container.sdkDecodeIfPresent(.comparison)
+        notifications = try container.sdkDecodeIfPresent(.notifications)
+        period = try container.sdkDecodeIfPresent(.period)
     }
 }
 
-extension AlertUpdatable {
-    public init(name: String? = nil, type: AlertUpdatableType? = nil, threshold: Int? = nil, comparison: AlertUpdatableComparison? = nil, notifications: Notification? = nil, period: AlertUpdatablePeriod? = nil) {
+public extension AlertUpdatable {
+    init(
+        name: String? = nil,
+        type: AlertUpdatableType? = nil,
+        threshold: Int? = nil,
+        comparison: AlertUpdatableComparison? = nil,
+        notifications: Notification? = nil,
+        period: AlertUpdatablePeriod? = nil
+    ) {
         self.init()
         (self.name, self.type) = (name, type)
         (self.threshold, self.comparison) = (threshold, comparison)
@@ -421,25 +459,35 @@ public struct NotificationSlackItem: Codable {
         case url
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension NotificationSlackItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.channel) else {
-            throw SdkValidationError(field: "channel", code: "required", message: "Validation failed for 'channel': value is required")
-        }
-        guard container.contains(.url) else {
-            throw SdkValidationError(field: "url", code: "required", message: "Validation failed for 'url': value is required")
-        }
-        self.channel = try container.sdkDecodeRequired(.channel)
-        self.url = try container.sdkDecodeRequired(.url)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension NotificationSlackItem {
-    public init(channel: String, url: String) {
+public extension NotificationSlackItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.channel) else {
+            throw SdkValidationError(
+                field: "channel",
+                code: "required",
+                message: "Validation failed for 'channel': value is required"
+            )
+        }
+        guard container.contains(.url) else {
+            throw SdkValidationError(
+                field: "url",
+                code: "required",
+                message: "Validation failed for 'url': value is required"
+            )
+        }
+        channel = try container.sdkDecodeRequired(.channel)
+        url = try container.sdkDecodeRequired(.url)
+    }
+}
+
+public extension NotificationSlackItem {
+    init(channel: String, url: String) {
         (self.channel, self.url) = (channel, url)
     }
 }
@@ -448,7 +496,10 @@ extension NotificationSlackItem {
 public struct AlertUpdatablePeriod: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let value2m = AlertUpdatablePeriod(rawValue: "2m")
     public static let value3m = AlertUpdatablePeriod(rawValue: "3m")
     public static let value5m = AlertUpdatablePeriod(rawValue: "5m")
@@ -459,7 +510,7 @@ public struct AlertUpdatablePeriod: RawRepresentable, Hashable, Codable, Sendabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -472,14 +523,17 @@ public struct AlertUpdatablePeriod: RawRepresentable, Hashable, Codable, Sendabl
 public struct CheckUpdatableType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let ping = CheckUpdatableType(rawValue: "ping")
     public static let http = CheckUpdatableType(rawValue: "http")
     public static let https = CheckUpdatableType(rawValue: "https")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -492,13 +546,16 @@ public struct CheckUpdatableType: RawRepresentable, Hashable, Codable, Sendable,
 public struct AlertUpdatableComparison: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let greaterThan = AlertUpdatableComparison(rawValue: "greater_than")
     public static let lessThan = AlertUpdatableComparison(rawValue: "less_than")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -511,7 +568,10 @@ public struct AlertUpdatableComparison: RawRepresentable, Hashable, Codable, Sen
 public struct CheckUpdatableRegionsItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let usEast = CheckUpdatableRegionsItem(rawValue: "us_east")
     public static let usWest = CheckUpdatableRegionsItem(rawValue: "us_west")
     public static let euWest = CheckUpdatableRegionsItem(rawValue: "eu_west")
@@ -519,7 +579,7 @@ public struct CheckUpdatableRegionsItem: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -532,7 +592,10 @@ public struct CheckUpdatableRegionsItem: RawRepresentable, Hashable, Codable, Se
 public struct AlertUpdatableType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let latency = AlertUpdatableType(rawValue: "latency")
     public static let down = AlertUpdatableType(rawValue: "down")
     public static let downGlobal = AlertUpdatableType(rawValue: "down_global")
@@ -540,7 +603,7 @@ public struct AlertUpdatableType: RawRepresentable, Hashable, Codable, Sendable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

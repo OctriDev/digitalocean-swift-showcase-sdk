@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Functions domain models
+/// Functions domain models
 /// Typed representation of the `AccessKeyCreate` API schema.
 public struct AccessKeyCreate: Codable {
     /// Optional API value serialized in the `access_key` wire field.
@@ -14,19 +14,19 @@ public struct AccessKeyCreate: Codable {
     }
 
     init() {
-        self.accessKey = nil
+        accessKey = nil
     }
 }
 
-extension AccessKeyCreate {
-    public init(from decoder: Decoder) throws {
+public extension AccessKeyCreate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.accessKey = try container.sdkDecodeIfPresent(.accessKey)
+        accessKey = try container.sdkDecodeIfPresent(.accessKey)
     }
 }
 
-extension AccessKeyCreate {
-    public init(accessKey: AccessKeyCreateResponse? = nil) {
+public extension AccessKeyCreate {
+    init(accessKey: AccessKeyCreateResponse? = nil) {
         self.init()
         self.accessKey = accessKey
     }
@@ -47,22 +47,28 @@ public struct AccessKeyCreateRequest: Codable {
         case expiresIn = "expires_in"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AccessKeyCreateRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.expiresIn = try container.sdkDecodeIfPresent(.expiresIn)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AccessKeyCreateRequest {
-    public init(name: String, expiresIn: String? = nil) {
+public extension AccessKeyCreateRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        expiresIn = try container.sdkDecodeIfPresent(.expiresIn)
+    }
+}
+
+public extension AccessKeyCreateRequest {
+    init(name: String, expiresIn: String? = nil) {
         (self.name, self.expiresIn) = (name, expiresIn)
     }
 }
@@ -79,19 +85,19 @@ public struct AccessKeyCreateResponseVariant0: Codable {
     }
 
     init() {
-        self.secret = nil
+        secret = nil
     }
 }
 
-extension AccessKeyCreateResponseVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AccessKeyCreateResponseVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.secret = try container.sdkDecodeIfPresent(.secret)
+        secret = try container.sdkDecodeIfPresent(.secret)
     }
 }
 
-extension AccessKeyCreateResponseVariant0 {
-    public init(secret: String? = nil) {
+public extension AccessKeyCreateResponseVariant0 {
+    init(secret: String? = nil) {
         self.init()
         self.secret = secret
     }
@@ -129,34 +135,41 @@ public struct AccessKeyCreateResponse: Codable {
     }
 
     init() {
-        (self.secret, self.id, self.name, self.expiresAt, self.createdAt) = (nil, nil, nil, nil, nil)
-        self.updatedAt = nil
+        (secret, id, name, expiresAt, createdAt) = (nil, nil, nil, nil, nil)
+        updatedAt = nil
     }
 }
 
-extension AccessKeyCreateResponse {
-    public init(from decoder: Decoder) throws {
+public extension AccessKeyCreateResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.secret = try container.sdkDecodeIfPresent(.secret)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = self.expiresAt {
+        secret = try container.sdkDecodeIfPresent(.secret)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension AccessKeyCreateResponse {
-    public init(secret: String? = nil, id: String? = nil, name: String? = nil, expiresAt: Date? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) throws {
+public extension AccessKeyCreateResponse {
+    init(
+        secret: String? = nil,
+        id: String? = nil,
+        name: String? = nil,
+        expiresAt: Date? = nil,
+        createdAt: Date? = nil,
+        updatedAt: Date? = nil
+    ) throws {
         self.init()
         (self.secret, self.id) = (secret, id)
         (self.name, self.expiresAt) = (name, expiresAt)

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AddOns domain models
+/// AddOns domain models
 /// Typed representation of the `AddonsGet` API schema.
 public struct AddonsGet: Codable {
     /// Optional object value serialized in the `resource` wire field.
@@ -14,19 +14,19 @@ public struct AddonsGet: Codable {
     }
 
     init() {
-        self.resource = nil
+        resource = nil
     }
 }
 
-extension AddonsGet {
-    public init(from decoder: Decoder) throws {
+public extension AddonsGet {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.resource = try container.sdkDecodeIfPresent(.resource)
+        resource = try container.sdkDecodeIfPresent(.resource)
     }
 }
 
-extension AddonsGet {
-    public init(resource: AddonsResource? = nil) {
+public extension AddonsGet {
+    init(resource: AddonsResource? = nil) {
         self.init()
         self.resource = resource
     }

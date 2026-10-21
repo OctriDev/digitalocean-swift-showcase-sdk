@@ -6,18 +6,39 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ActionGatewayMethods {
-    /// Marks the toolbelt deleted and returns its latest version with status deprecated. Its versions stay readable by explicit version until the name is reused. The name is free to reuse immediately; a new toolbelt with it starts a fresh version history. Returns 404 when the toolbelt does not exist or is already deleted.
+public extension ActionGatewayMethods {
+    /// Marks the toolbelt deleted and returns its latest version with status deprecated. Its versions stay readable by
+    /// explicit version until the name is reused. The name is free to reuse immediately; a new toolbelt with it starts
+    /// a fresh version history. Returns 404 when the toolbelt does not exist or is already deleted.
     ///
     /// - Parameters:
     /// - name: Toolbelt name.
-    public static func toolbeltsDelete(config: ClientConfig, name: String, requestOptions: RequestOptions? = nil) async throws -> ToolbeltUpdateResponse {
+    static func toolbeltsDelete(
+        config: ClientConfig,
+        name: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ToolbeltUpdateResponse {
         try sdkValidatePattern("name", name, sdkPattern96f04f9d57bc)
 
-        return try (await sdkRequest("DELETE", ["/v2/action-gateway/toolbelts/", sdkEncodePathSegment(sdkWireString(name))].joined(), config: config, decoder: .json, operationId: "toolbelts_delete", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "DELETE",
+            ["/v2/action-gateway/toolbelts/", sdkEncodePathSegment(sdkWireString(name))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "toolbelts_delete",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Returns the distinct providers of the toolbelt's members, each with its member count, sorted by provider ID. List one provider's members with `GET .../toolbelts/{name}/providers/{provider}/tools`.
+    /// Returns the distinct providers of the toolbelt's members, each with its member count, sorted by provider ID.
+    /// List one provider's members with `GET .../toolbelts/{name}/providers/{provider}/tools`.
     ///
     /// - Parameters:
     /// - name: Toolbelt name.
@@ -26,26 +47,50 @@ extension ActionGatewayMethods {
     /// - perPage: Page size. Defaults to 20; values above 100 are capped at 100.
     /// - search: Restricts providers whose ID, name, or description contains this
     ///   value, case-insensitively.
-    public static func toolbeltsListProviders(config: ClientConfig, name: String, version: String? = nil, page: Int? = nil, perPage: Int? = nil, search: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListToolbeltProvidersResponse {
+    static func toolbeltsListProviders(
+        config: ClientConfig,
+        name: String,
+        version: String? = nil,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        search: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListToolbeltProvidersResponse {
         try sdkValidatePattern("name", name, sdkPattern96f04f9d57bc)
 
-        if let version = version {
+        if let version {
             try sdkValidatePattern("version", version, sdkPatternb0b1c6a4b4f4)
         }
 
-        if let page = page {
+        if let page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        if let perPage = perPage {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 100)
         }
 
-        return try (await sdkRequest("GET", ["/v2/action-gateway/toolbelts/", sdkEncodePathSegment(sdkWireString(name)), "/providers"].joined(), config: config, query: [
-            SdkQueryParameter("version", value: version),
-            SdkQueryParameter("page", value: page),
-            SdkQueryParameter("per_page", value: perPage),
-            SdkQueryParameter("search", value: search),
-        ], decoder: .json, operationId: "toolbelts_list_providers", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/action-gateway/toolbelts/", sdkEncodePathSegment(sdkWireString(name)), "/providers"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("version", value: version),
+                SdkQueryParameter("page", value: page),
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("search", value: search),
+            ],
+            decoder: .json,
+            operationId: "toolbelts_list_providers",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

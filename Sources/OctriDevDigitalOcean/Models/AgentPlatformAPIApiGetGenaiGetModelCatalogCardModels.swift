@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiGet domain models
+/// AgentPlatformAPIApiGet domain models
 /// Typed representation of the `ApiGetModelCatalogCardOutput` API schema.
 public struct ApiGetModelCatalogCardOutput: Codable {
     /// Detail view for GetModelCatalogCard
@@ -14,19 +14,19 @@ public struct ApiGetModelCatalogCardOutput: Codable {
     }
 
     init() {
-        self.data = nil
+        data = nil
     }
 }
 
-extension ApiGetModelCatalogCardOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetModelCatalogCardOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ApiGetModelCatalogCardOutput {
-    public init(data: ApiModelCatalogCard? = nil) {
+public extension ApiGetModelCatalogCardOutput {
+    init(data: ApiModelCatalogCard? = nil) {
         self.init()
         self.data = data
     }

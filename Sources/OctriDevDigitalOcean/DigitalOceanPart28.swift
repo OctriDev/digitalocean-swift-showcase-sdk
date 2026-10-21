@@ -3,184 +3,507 @@
 
 import Foundation
 
-extension AgentPlatformApiNamespace {
-/// To list all data sources for a knowledge base, send a GET request to `/v2/gen-ai/knowledge_bases/{knowledge_base_uuid}/data_sources`.
-    public func genaiListKnowledgeBaseDataSources(knowledgeBaseUuid: String, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListKnowledgeBaseDataSourcesOutput {
-        return try await AgentPlatformApiMethods.genaiListKnowledgeBaseDataSources(config: config, knowledgeBaseUuid: knowledgeBaseUuid, page: page, perPage: perPage, requestOptions: requestOptions)
+public extension AgentPlatformApiNamespace {
+    /// To list all data sources for a knowledge base, send a GET request to
+    /// `/v2/gen-ai/knowledge_bases/{knowledge_base_uuid}/data_sources`.
+    func genaiListKnowledgeBaseDataSources(
+        knowledgeBaseUuid: String,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiListKnowledgeBaseDataSourcesOutput {
+        try await AgentPlatformApiMethods.genaiListKnowledgeBaseDataSources(
+            config: config,
+            knowledgeBaseUuid: knowledgeBaseUuid,
+            page: page,
+            perPage: perPage,
+            requestOptions: requestOptions
+        )
     }
 
-/// Adds a data source configuration to a knowledge base. Supply the source-specific settings for an AWS S3 bucket, Spaces bucket, or web crawler, and optionally configure chunking. Use this operation to add sources after creating a knowledge base or to attach a source during a later update.
+    /// Adds a data source configuration to a knowledge base. Supply the source-specific settings for an AWS S3 bucket,
+    /// Spaces bucket, or web crawler, and optionally configure chunking. Use this operation to add sources after
+    /// creating a knowledge base or to attach a source during a later update.
     ///
-    /// To add a data source to a knowledge base, send a POST request to `/v2/gen-ai/knowledge_bases/{knowledge_base_uuid}/data_sources`.
-    public func genaiCreateKnowledgeBaseDataSource(knowledgeBaseUuid: String, awsDataSource: ApiAWSDataSource? = nil, chunkingAlgorithm: ApiChunkingAlgorithm? = nil, chunkingOptions: ApiChunkingOptions? = nil, knowledgeBaseUuid2: String? = nil, spacesDataSource: ApiSpacesDataSource? = nil, webCrawlerDataSource: ApiWebCrawlerDataSource? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiCreateKnowledgeBaseDataSourceOutput {
-        return try await AgentPlatformApiMethods.genaiCreateKnowledgeBaseDataSource(config: config, knowledgeBaseUuid: knowledgeBaseUuid, awsDataSource: awsDataSource, chunkingAlgorithm: chunkingAlgorithm, chunkingOptions: chunkingOptions, knowledgeBaseUuid2: knowledgeBaseUuid2, spacesDataSource: spacesDataSource, webCrawlerDataSource: webCrawlerDataSource, requestOptions: requestOptions)
+    /// To add a data source to a knowledge base, send a POST request to
+    /// `/v2/gen-ai/knowledge_bases/{knowledge_base_uuid}/data_sources`.
+    func genaiCreateKnowledgeBaseDataSource(
+        knowledgeBaseUuid: String,
+        awsDataSource: ApiAWSDataSource? = nil,
+        chunkingAlgorithm: ApiChunkingAlgorithm? = nil,
+        chunkingOptions: ApiChunkingOptions? = nil,
+        knowledgeBaseUuid2: String? = nil,
+        spacesDataSource: ApiSpacesDataSource? = nil,
+        webCrawlerDataSource: ApiWebCrawlerDataSource? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiCreateKnowledgeBaseDataSourceOutput {
+        try await AgentPlatformApiMethods.genaiCreateKnowledgeBaseDataSource(
+            config: config,
+            knowledgeBaseUuid: knowledgeBaseUuid,
+            awsDataSource: awsDataSource,
+            chunkingAlgorithm: chunkingAlgorithm,
+            chunkingOptions: chunkingOptions,
+            knowledgeBaseUuid2: knowledgeBaseUuid2,
+            spacesDataSource: spacesDataSource,
+            webCrawlerDataSource: webCrawlerDataSource,
+            requestOptions: requestOptions
+        )
     }
 
-/// Replaces the chunking configuration for a data source in a knowledge base. Supply `chunking_algorithm` and `chunking_options` to configure how the source is divided for indexing. Use the path identifiers to select the knowledge base and data source to update.
+    /// Replaces the chunking configuration for a data source in a knowledge base. Supply `chunking_algorithm` and
+    /// `chunking_options` to configure how the source is divided for indexing. Use the path identifiers to select the
+    /// knowledge base and data source to update.
     ///
-    /// To update a data source (e.g. chunking options), send a PUT request to `/v2/gen-ai/knowledge_bases/{knowledge_base_uuid}/data_sources/{data_source_uuid}`.
-    public func genaiUpdateKnowledgeBaseDataSource(knowledgeBaseUuid: String, dataSourceUuid: String, chunkingAlgorithm: ApiChunkingAlgorithm? = nil, chunkingOptions: ApiChunkingOptions? = nil, dataSourceUuid2: String? = nil, knowledgeBaseUuid2: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiUpdateKnowledgeBaseDataSourceOutput {
-        return try await AgentPlatformApiMethods.genaiUpdateKnowledgeBaseDataSource(config: config, knowledgeBaseUuid: knowledgeBaseUuid, dataSourceUuid: dataSourceUuid, chunkingAlgorithm: chunkingAlgorithm, chunkingOptions: chunkingOptions, dataSourceUuid2: dataSourceUuid2, knowledgeBaseUuid2: knowledgeBaseUuid2, requestOptions: requestOptions)
+    /// To update a data source (e.g. chunking options), send a PUT request to
+    /// `/v2/gen-ai/knowledge_bases/{knowledge_base_uuid}/data_sources/{data_source_uuid}`.
+    func genaiUpdateKnowledgeBaseDataSource(
+        knowledgeBaseUuid: String,
+        dataSourceUuid: String,
+        chunkingAlgorithm: ApiChunkingAlgorithm? = nil,
+        chunkingOptions: ApiChunkingOptions? = nil,
+        dataSourceUuid2: String? = nil,
+        knowledgeBaseUuid2: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiUpdateKnowledgeBaseDataSourceOutput {
+        try await AgentPlatformApiMethods.genaiUpdateKnowledgeBaseDataSource(
+            config: config,
+            knowledgeBaseUuid: knowledgeBaseUuid,
+            dataSourceUuid: dataSourceUuid,
+            chunkingAlgorithm: chunkingAlgorithm,
+            chunkingOptions: chunkingOptions,
+            dataSourceUuid2: dataSourceUuid2,
+            knowledgeBaseUuid2: knowledgeBaseUuid2,
+            requestOptions: requestOptions
+        )
     }
 
-/// To delete a data source from a knowledge base, send a DELETE request to `/v2/gen-ai/knowledge_bases/{knowledge_base_uuid}/data_sources/{data_source_uuid}`.
-    public func genaiDeleteKnowledgeBaseDataSource(knowledgeBaseUuid: String, dataSourceUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiDeleteKnowledgeBaseDataSourceOutput {
-        return try await AgentPlatformApiMethods.genaiDeleteKnowledgeBaseDataSource(config: config, knowledgeBaseUuid: knowledgeBaseUuid, dataSourceUuid: dataSourceUuid, requestOptions: requestOptions)
+    /// To delete a data source from a knowledge base, send a DELETE request to
+    /// `/v2/gen-ai/knowledge_bases/{knowledge_base_uuid}/data_sources/{data_source_uuid}`.
+    func genaiDeleteKnowledgeBaseDataSource(
+        knowledgeBaseUuid: String,
+        dataSourceUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiDeleteKnowledgeBaseDataSourceOutput {
+        try await AgentPlatformApiMethods.genaiDeleteKnowledgeBaseDataSource(
+            config: config,
+            knowledgeBaseUuid: knowledgeBaseUuid,
+            dataSourceUuid: dataSourceUuid,
+            requestOptions: requestOptions
+        )
     }
 
-/// To list latest 15 indexing jobs for a knowledge base, send a GET request to `/v2/gen-ai/knowledge_bases/{knowledge_base_uuid}/indexing_jobs`.
-    public func genaiListIndexingJobsByKnowledgeBase(knowledgeBaseUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiListKnowledgeBaseIndexingJobsOutput {
-        return try await AgentPlatformApiMethods.genaiListIndexingJobsByKnowledgeBase(config: config, knowledgeBaseUuid: knowledgeBaseUuid, requestOptions: requestOptions)
+    /// To list latest 15 indexing jobs for a knowledge base, send a GET request to
+    /// `/v2/gen-ai/knowledge_bases/{knowledge_base_uuid}/indexing_jobs`.
+    func genaiListIndexingJobsByKnowledgeBase(
+        knowledgeBaseUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiListKnowledgeBaseIndexingJobsOutput {
+        try await AgentPlatformApiMethods.genaiListIndexingJobsByKnowledgeBase(
+            config: config,
+            knowledgeBaseUuid: knowledgeBaseUuid,
+            requestOptions: requestOptions
+        )
     }
 
-/// To retrive information about an existing knowledge base, send a GET request to `/v2/gen-ai/knowledge_bases/{uuid}`.
-    public func genaiGetKnowledgeBase(uuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiGetKnowledgeBaseOutput {
-        return try await AgentPlatformApiMethods.genaiGetKnowledgeBase(config: config, uuid: uuid, requestOptions: requestOptions)
+    /// To retrive information about an existing knowledge base, send a GET request to
+    /// `/v2/gen-ai/knowledge_bases/{uuid}`.
+    func genaiGetKnowledgeBase(
+        uuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiGetKnowledgeBaseOutput {
+        try await AgentPlatformApiMethods.genaiGetKnowledgeBase(
+            config: config,
+            uuid: uuid,
+            requestOptions: requestOptions
+        )
     }
 
-/// To update a knowledge base, send a PUT request to `/v2/gen-ai/knowledge_bases/{uuid}`.
-    public func genaiUpdateKnowledgeBase(uuid: String, databaseId: String? = nil, name: String? = nil, projectId: String? = nil, rerankingConfig: ApiRerankingConfiguration? = nil, tags: [String]? = nil, uuid2: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiUpdateKnowledgeBaseOutput {
-        return try await AgentPlatformApiMethods.genaiUpdateKnowledgeBase(config: config, uuid: uuid, databaseId: databaseId, name: name, projectId: projectId, rerankingConfig: rerankingConfig, tags: tags, uuid2: uuid2, requestOptions: requestOptions)
+    /// To update a knowledge base, send a PUT request to `/v2/gen-ai/knowledge_bases/{uuid}`.
+    func genaiUpdateKnowledgeBase(
+        uuid: String,
+        databaseId: String? = nil,
+        name: String? = nil,
+        projectId: String? = nil,
+        rerankingConfig: ApiRerankingConfiguration? = nil,
+        tags: [String]? = nil,
+        uuid2: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiUpdateKnowledgeBaseOutput {
+        try await AgentPlatformApiMethods.genaiUpdateKnowledgeBase(
+            config: config,
+            uuid: uuid,
+            databaseId: databaseId,
+            name: name,
+            projectId: projectId,
+            rerankingConfig: rerankingConfig,
+            tags: tags,
+            uuid2: uuid2,
+            requestOptions: requestOptions
+        )
     }
 
-/// To delete a knowledge base, send a DELETE request to `/v2/gen-ai/knowledge_bases/{uuid}`.
-    public func genaiDeleteKnowledgeBase(uuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiDeleteKnowledgeBaseOutput {
-        return try await AgentPlatformApiMethods.genaiDeleteKnowledgeBase(config: config, uuid: uuid, requestOptions: requestOptions)
+    /// To delete a knowledge base, send a DELETE request to `/v2/gen-ai/knowledge_bases/{uuid}`.
+    func genaiDeleteKnowledgeBase(
+        uuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiDeleteKnowledgeBaseOutput {
+        try await AgentPlatformApiMethods.genaiDeleteKnowledgeBase(
+            config: config,
+            uuid: uuid,
+            requestOptions: requestOptions
+        )
     }
 }
 
-extension AgentPlatformApiNamespace {
-/// To create presigned URLs for model evaluation dataset file upload, send a POST request to `/v2/genai/model_evaluation/datasets/file_upload_presigned_urls`.
-    public func genaiCreateModelEvalDatasetUploadPresignedUrls(files: [ApiPresignedUrlFile]? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiCreateDataSourceFileUploadPresignedUrlsOutput {
-        return try await AgentPlatformApiMethods.genaiCreateModelEvalDatasetUploadPresignedUrls(config: config, files: files, requestOptions: requestOptions)
+public extension AgentPlatformApiNamespace {
+    /// To create presigned URLs for model evaluation dataset file upload, send a POST request to
+    /// `/v2/genai/model_evaluation/datasets/file_upload_presigned_urls`.
+    func genaiCreateModelEvalDatasetUploadPresignedUrls(
+        files: [ApiPresignedUrlFile]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiCreateDataSourceFileUploadPresignedUrlsOutput {
+        try await AgentPlatformApiMethods.genaiCreateModelEvalDatasetUploadPresignedUrls(
+            config: config,
+            files: files,
+            requestOptions: requestOptions
+        )
     }
 
-/// To list all available metrics for model evaluation, send a GET request to `/v2/genai/model_evaluation_metrics`.
-    public func genaiListModelEvaluationMetrics(requestOptions: RequestOptions? = nil) async throws -> ApiListModelEvaluationMetricsOutput {
-        return try await AgentPlatformApiMethods.genaiListModelEvaluationMetrics(config: config, requestOptions: requestOptions)
+    /// To list all available metrics for model evaluation, send a GET request to `/v2/genai/model_evaluation_metrics`.
+    func genaiListModelEvaluationMetrics(requestOptions: RequestOptions? = nil) async throws
+        -> ApiListModelEvaluationMetricsOutput {
+        try await AgentPlatformApiMethods.genaiListModelEvaluationMetrics(
+            config: config,
+            requestOptions: requestOptions
+        )
     }
 
-/// To list all saved model evaluation presets, send a GET request to `/v2/genai/model_evaluation_presets`.
-    public func genaiListModelEvaluationPresets(requestOptions: RequestOptions? = nil) async throws -> ApiListModelEvaluationPresetsOutput {
-        return try await AgentPlatformApiMethods.genaiListModelEvaluationPresets(config: config, requestOptions: requestOptions)
+    /// To list all saved model evaluation presets, send a GET request to `/v2/genai/model_evaluation_presets`.
+    func genaiListModelEvaluationPresets(requestOptions: RequestOptions? = nil) async throws
+        -> ApiListModelEvaluationPresetsOutput {
+        try await AgentPlatformApiMethods.genaiListModelEvaluationPresets(
+            config: config,
+            requestOptions: requestOptions
+        )
     }
 
-/// To retrieve a saved model evaluation preset, send a GET request to `/v2/genai/model_evaluation_presets/{eval_preset_uuid}`.
-    public func genaiGetModelEvaluationPreset(evalPresetUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiGetModelEvaluationPresetOutput {
-        return try await AgentPlatformApiMethods.genaiGetModelEvaluationPreset(config: config, evalPresetUuid: evalPresetUuid, requestOptions: requestOptions)
+    /// To retrieve a saved model evaluation preset, send a GET request to
+    /// `/v2/genai/model_evaluation_presets/{eval_preset_uuid}`.
+    func genaiGetModelEvaluationPreset(
+        evalPresetUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiGetModelEvaluationPresetOutput {
+        try await AgentPlatformApiMethods.genaiGetModelEvaluationPreset(
+            config: config,
+            evalPresetUuid: evalPresetUuid,
+            requestOptions: requestOptions
+        )
     }
 
-/// To delete a saved model evaluation preset, send a DELETE request to `/v2/gen-ai/model_evaluation_presets/{eval_preset_uuid}`.
-    public func genaiDeleteModelEvaluationPreset(evalPresetUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiDeleteModelEvaluationPresetOutput {
-        return try await AgentPlatformApiMethods.genaiDeleteModelEvaluationPreset(config: config, evalPresetUuid: evalPresetUuid, requestOptions: requestOptions)
+    /// To delete a saved model evaluation preset, send a DELETE request to
+    /// `/v2/gen-ai/model_evaluation_presets/{eval_preset_uuid}`.
+    func genaiDeleteModelEvaluationPreset(
+        evalPresetUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiDeleteModelEvaluationPresetOutput {
+        try await AgentPlatformApiMethods.genaiDeleteModelEvaluationPreset(
+            config: config,
+            evalPresetUuid: evalPresetUuid,
+            requestOptions: requestOptions
+        )
     }
 
-/// To list model evaluation runs, send a GET request to `/v2/genai/model_evaluation_runs`.
-    public func genaiListModelEvaluationRuns(options: AgentPlatformApiMethods.GenaiListModelEvaluationRunsOptions, requestOptions: RequestOptions? = nil) async throws -> ApiListModelEvaluationRunsOutput {
-        return try await AgentPlatformApiMethods.genaiListModelEvaluationRuns(config: config, options: options, requestOptions: requestOptions)
+    /// To list model evaluation runs, send a GET request to `/v2/genai/model_evaluation_runs`.
+    func genaiListModelEvaluationRuns(
+        options: AgentPlatformApiMethods.GenaiListModelEvaluationRunsOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiListModelEvaluationRunsOutput {
+        try await AgentPlatformApiMethods.genaiListModelEvaluationRuns(
+            config: config,
+            options: options,
+            requestOptions: requestOptions
+        )
     }
 
-/// Creates a model evaluation run to score a candidate model against a dataset using selected metrics and a judge model. Configure the candidate, dataset, metrics, and judge with the corresponding fields; `candidate_model_source` defaults to the serverless model source, and `epochs` defaults to 1 and is capped at 3. A successful response returns the created run's `eval_run_uuid`.
+    /// Creates a model evaluation run to score a candidate model against a dataset using selected metrics and a judge
+    /// model. Configure the candidate, dataset, metrics, and judge with the corresponding fields;
+    /// `candidate_model_source` defaults to the serverless model source, and `epochs` defaults to 1 and is capped at 3.
+    /// A successful response returns the created run's `eval_run_uuid`.
     ///
     /// To create a model evaluation run, send a POST request to `/v2/genai/model_evaluation_runs`.
-    public func genaiCreateModelEvaluationRun(options: AgentPlatformApiMethods.GenaiCreateModelEvaluationRunOptions, requestOptions: RequestOptions? = nil) async throws -> ApiCreateModelEvaluationRunOutput {
-        return try await AgentPlatformApiMethods.genaiCreateModelEvaluationRun(config: config, options: options, requestOptions: requestOptions)
+    func genaiCreateModelEvaluationRun(
+        options: AgentPlatformApiMethods.GenaiCreateModelEvaluationRunOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiCreateModelEvaluationRunOutput {
+        try await AgentPlatformApiMethods.genaiCreateModelEvaluationRun(
+            config: config,
+            options: options,
+            requestOptions: requestOptions
+        )
     }
 
-/// To retrieve a model evaluation run, send a GET request to `/v2/genai/model_evaluation_runs/{eval_run_uuid}`.
-    public func genaiGetModelEvaluationRun(evalRunUuid: String, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiGetModelEvaluationRunOutput {
-        return try await AgentPlatformApiMethods.genaiGetModelEvaluationRun(config: config, evalRunUuid: evalRunUuid, page: page, perPage: perPage, requestOptions: requestOptions)
+    /// To retrieve a model evaluation run, send a GET request to `/v2/genai/model_evaluation_runs/{eval_run_uuid}`.
+    func genaiGetModelEvaluationRun(
+        evalRunUuid: String,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiGetModelEvaluationRunOutput {
+        try await AgentPlatformApiMethods.genaiGetModelEvaluationRun(
+            config: config,
+            evalRunUuid: evalRunUuid,
+            page: page,
+            perPage: perPage,
+            requestOptions: requestOptions
+        )
     }
 }
 
-extension AgentPlatformApiNamespace {
-/// To delete a model evaluation run, send a DELETE request to `/v2/gen-ai/model_evaluation_runs/{eval_run_uuid}`. The run must be in a terminal status (`successful`, `partially_successful`, `failed`, or `cancelled`). For runs still in progress, either wait for the run to finish or cancel it, then retry the delete once the run reaches a terminal status.
-    public func genaiDeleteModelEvaluationRun(evalRunUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiDeleteModelEvaluationRunOutputPublic {
-        return try await AgentPlatformApiMethods.genaiDeleteModelEvaluationRun(config: config, evalRunUuid: evalRunUuid, requestOptions: requestOptions)
+public extension AgentPlatformApiNamespace {
+    /// To delete a model evaluation run, send a DELETE request to `/v2/gen-ai/model_evaluation_runs/{eval_run_uuid}`.
+    /// The run must be in a terminal status (`successful`, `partially_successful`, `failed`, or `cancelled`). For runs
+    /// still in progress, either wait for the run to finish or cancel it, then retry the delete once the run reaches a
+    /// terminal status.
+    func genaiDeleteModelEvaluationRun(
+        evalRunUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiDeleteModelEvaluationRunOutputPublic {
+        try await AgentPlatformApiMethods.genaiDeleteModelEvaluationRun(
+            config: config,
+            evalRunUuid: evalRunUuid,
+            requestOptions: requestOptions
+        )
     }
 
-/// To update a model evaluation run's display name, send a PATCH request to `/v2/gen-ai/model_evaluation_runs/{eval_run_uuid}`.
-    public func genaiUpdateModelEvaluationRun(evalRunUuid: String, evalRunUuid2: String? = nil, name: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiUpdateModelEvaluationRunOutput {
-        return try await AgentPlatformApiMethods.genaiUpdateModelEvaluationRun(config: config, evalRunUuid: evalRunUuid, evalRunUuid2: evalRunUuid2, name: name, requestOptions: requestOptions)
+    /// To update a model evaluation run's display name, send a PATCH request to
+    /// `/v2/gen-ai/model_evaluation_runs/{eval_run_uuid}`.
+    func genaiUpdateModelEvaluationRun(
+        evalRunUuid: String,
+        evalRunUuid2: String? = nil,
+        name: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiUpdateModelEvaluationRunOutput {
+        try await AgentPlatformApiMethods.genaiUpdateModelEvaluationRun(
+            config: config,
+            evalRunUuid: evalRunUuid,
+            evalRunUuid2: evalRunUuid2,
+            name: name,
+            requestOptions: requestOptions
+        )
     }
 
-/// To cancel an in-progress model evaluation run, send a PUT request to `/v2/gen-ai/model_evaluation_runs/{eval_run_uuid}/cancel`.
-    public func genaiCancelModelEvaluationRun(evalRunUuid: String, evalRunUuid2: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiCancelModelEvaluationRunOutput {
-        return try await AgentPlatformApiMethods.genaiCancelModelEvaluationRun(config: config, evalRunUuid: evalRunUuid, evalRunUuid2: evalRunUuid2, requestOptions: requestOptions)
+    /// To cancel an in-progress model evaluation run, send a PUT request to
+    /// `/v2/gen-ai/model_evaluation_runs/{eval_run_uuid}/cancel`.
+    func genaiCancelModelEvaluationRun(
+        evalRunUuid: String,
+        evalRunUuid2: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiCancelModelEvaluationRunOutput {
+        try await AgentPlatformApiMethods.genaiCancelModelEvaluationRun(
+            config: config,
+            evalRunUuid: evalRunUuid,
+            evalRunUuid2: evalRunUuid2,
+            requestOptions: requestOptions
+        )
     }
 
-/// To get a presigned download URL for model evaluation run results (gzip-compressed JSON), send a GET request to `/v2/genai/model_evaluation_runs/{eval_run_uuid}/results/download_url`.
-    public func genaiGetModelEvaluationRunResultsDownloadUrl(evalRunUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiGetModelEvaluationRunResultsDownloadURLOutput {
-        return try await AgentPlatformApiMethods.genaiGetModelEvaluationRunResultsDownloadUrl(config: config, evalRunUuid: evalRunUuid, requestOptions: requestOptions)
+    /// To get a presigned download URL for model evaluation run results (gzip-compressed JSON), send a GET request to
+    /// `/v2/genai/model_evaluation_runs/{eval_run_uuid}/results/download_url`.
+    func genaiGetModelEvaluationRunResultsDownloadUrl(
+        evalRunUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiGetModelEvaluationRunResultsDownloadURLOutput {
+        try await AgentPlatformApiMethods.genaiGetModelEvaluationRunResultsDownloadUrl(
+            config: config,
+            evalRunUuid: evalRunUuid,
+            requestOptions: requestOptions
+        )
     }
 
-/// To list all models, send a GET request to `/v2/gen-ai/models`.
-    public func genaiListModels(usecases: [GenaiListModelsParameterItem]? = nil, publicOnly: Bool? = nil, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListModelsOutputPublic {
-        return try await AgentPlatformApiMethods.genaiListModels(config: config, usecases: usecases, publicOnly: publicOnly, page: page, perPage: perPage, requestOptions: requestOptions)
+    /// To list all models, send a GET request to `/v2/gen-ai/models`.
+    func genaiListModels(
+        usecases: [GenaiListModelsParameterItem]? = nil,
+        publicOnly: Bool? = nil,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiListModelsOutputPublic {
+        try await AgentPlatformApiMethods.genaiListModels(
+            config: config,
+            usecases: usecases,
+            publicOnly: publicOnly,
+            page: page,
+            perPage: perPage,
+            requestOptions: requestOptions
+        )
     }
 
-/// To list all model API keys, send a GET request to `/v2/gen-ai/models/api_keys`.
-    public func genaiListModelApiKeys(page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListModelAPIKeysOutput {
-        return try await AgentPlatformApiMethods.genaiListModelApiKeys(config: config, page: page, perPage: perPage, requestOptions: requestOptions)
+    /// To list all model API keys, send a GET request to `/v2/gen-ai/models/api_keys`.
+    func genaiListModelApiKeys(
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiListModelAPIKeysOutput {
+        try await AgentPlatformApiMethods.genaiListModelApiKeys(
+            config: config,
+            page: page,
+            perPage: perPage,
+            requestOptions: requestOptions
+        )
     }
 
-/// **Note: This endpoint is deprecated and has been retired. All requests return a `410 gone` response.** Creating model API keys through this endpoint is no longer supported. To create a model access key, visit the manage page in the control panel. Previously, you could create a model API key by sending a POST request to `/v2/gen-ai/models/api_keys`.
+    /// **Note: This endpoint is deprecated and has been retired. All requests return a `410 gone` response.** Creating
+    /// model API keys through this endpoint is no longer supported. To create a model access key, visit the manage page
+    /// in the control panel. Previously, you could create a model API key by sending a POST request to
+    /// `/v2/gen-ai/models/api_keys`.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    public func genaiCreateModelApiKey(name: String? = nil, requestOptions: RequestOptions? = nil) async throws -> Error2 {
-        return try await AgentPlatformApiMethods.genaiCreateModelApiKey(config: config, name: name, requestOptions: requestOptions)
+    func genaiCreateModelApiKey(name: String? = nil, requestOptions: RequestOptions? = nil) async throws -> Error2 {
+        try await AgentPlatformApiMethods.genaiCreateModelApiKey(
+            config: config,
+            name: name,
+            requestOptions: requestOptions
+        )
     }
 
-/// Replaces the model API key resource identified by its UUID. Use `api_key_uuid` to select the key and provide `name` to set its display name; the request body is optional.
+    /// Replaces the model API key resource identified by its UUID. Use `api_key_uuid` to select the key and provide
+    /// `name` to set its display name; the request body is optional.
     ///
     /// To update a model API key, send a PUT request to `/v2/gen-ai/models/api_keys/{api_key_uuid}`.
-    public func genaiUpdateModelApiKey(apiKeyUuid: String, apiKeyUuid2: String? = nil, name: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiUpdateModelAPIKeyOutput {
-        return try await AgentPlatformApiMethods.genaiUpdateModelApiKey(config: config, apiKeyUuid: apiKeyUuid, apiKeyUuid2: apiKeyUuid2, name: name, requestOptions: requestOptions)
+    func genaiUpdateModelApiKey(
+        apiKeyUuid: String,
+        apiKeyUuid2: String? = nil,
+        name: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiUpdateModelAPIKeyOutput {
+        try await AgentPlatformApiMethods.genaiUpdateModelApiKey(
+            config: config,
+            apiKeyUuid: apiKeyUuid,
+            apiKeyUuid2: apiKeyUuid2,
+            name: name,
+            requestOptions: requestOptions
+        )
     }
 }
 
-extension AgentPlatformApiNamespace {
-/// To delete an API key for a model, send a DELETE request to `/v2/gen-ai/models/api_keys/{api_key_uuid}`.
-    public func genaiDeleteModelApiKey(apiKeyUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiDeleteModelAPIKeyOutput {
-        return try await AgentPlatformApiMethods.genaiDeleteModelApiKey(config: config, apiKeyUuid: apiKeyUuid, requestOptions: requestOptions)
+public extension AgentPlatformApiNamespace {
+    /// To delete an API key for a model, send a DELETE request to `/v2/gen-ai/models/api_keys/{api_key_uuid}`.
+    func genaiDeleteModelApiKey(
+        apiKeyUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiDeleteModelAPIKeyOutput {
+        try await AgentPlatformApiMethods.genaiDeleteModelApiKey(
+            config: config,
+            apiKeyUuid: apiKeyUuid,
+            requestOptions: requestOptions
+        )
     }
 
-/// To regenerate a model API key, send a PUT request to `/v2/gen-ai/models/api_keys/{api_key_uuid}/regenerate`.
-    public func genaiRegenerateModelApiKey(apiKeyUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiRegenerateModelAPIKeyOutput {
-        return try await AgentPlatformApiMethods.genaiRegenerateModelApiKey(config: config, apiKeyUuid: apiKeyUuid, requestOptions: requestOptions)
+    /// To regenerate a model API key, send a PUT request to `/v2/gen-ai/models/api_keys/{api_key_uuid}/regenerate`.
+    func genaiRegenerateModelApiKey(
+        apiKeyUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiRegenerateModelAPIKeyOutput {
+        try await AgentPlatformApiMethods.genaiRegenerateModelApiKey(
+            config: config,
+            apiKeyUuid: apiKeyUuid,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists models available in the model catalog with pagination, filtering, and sorting options. Use `search` and the model filters to narrow the results, and use `page` and `per_page` to paginate the results.
+    /// Lists models available in the model catalog with pagination, filtering, and sorting options. Use `search` and
+    /// the model filters to narrow the results, and use `page` and `per_page` to paginate the results.
     ///
     /// Returns all available models.
-    public func genaiListModelCatalog(options: AgentPlatformApiMethods.GenaiListModelCatalogOptions, requestOptions: RequestOptions? = nil) async throws -> ApiListModelCatalogOutput {
-        return try await AgentPlatformApiMethods.genaiListModelCatalog(config: config, options: options, requestOptions: requestOptions)
+    func genaiListModelCatalog(
+        options: AgentPlatformApiMethods.GenaiListModelCatalogOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiListModelCatalogOutput {
+        try await AgentPlatformApiMethods.genaiListModelCatalog(
+            config: config,
+            options: options,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves detailed information about a specific model in the catalog, including its capabilities, pricing, and code examples. Use the `id` path parameter to look up a catalog entry, or use `model_id` to look it up by the identifier used for API calls.
+    /// Retrieves detailed information about a specific model in the catalog, including its capabilities, pricing, and
+    /// code examples. Use the `id` path parameter to look up a catalog entry, or use `model_id` to look it up by the
+    /// identifier used for API calls.
     ///
-    /// Returns detailed information for a specific model in the catalog including capabilities, pricing, and code examples.
-    public func genaiGetModelCatalogCard(id: String, modelId: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiGetModelCatalogCardOutput {
-        return try await AgentPlatformApiMethods.genaiGetModelCatalogCard(config: config, id: id, modelId: modelId, requestOptions: requestOptions)
+    /// Returns detailed information for a specific model in the catalog including capabilities, pricing, and code
+    /// examples.
+    func genaiGetModelCatalogCard(
+        id: String,
+        modelId: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiGetModelCatalogCardOutput {
+        try await AgentPlatformApiMethods.genaiGetModelCatalogCard(
+            config: config,
+            id: id,
+            modelId: modelId,
+            requestOptions: requestOptions
+        )
     }
 
-/// To list model routers, send a GET request to `/v2/gen-ai/models/routers`.
-    public func genaiListModelRouters(page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListModelRoutersOutput {
-        return try await AgentPlatformApiMethods.genaiListModelRouters(config: config, page: page, perPage: perPage, requestOptions: requestOptions)
+    /// To list model routers, send a GET request to `/v2/gen-ai/models/routers`.
+    func genaiListModelRouters(
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiListModelRoutersOutput {
+        try await AgentPlatformApiMethods.genaiListModelRouters(
+            config: config,
+            page: page,
+            perPage: perPage,
+            requestOptions: requestOptions
+        )
     }
 
-/// To create a model router, send a POST request to `/v2/gen-ai/models/routers`.
-    public func genaiCreateModelRouter(description: String? = nil, fallbackModels: [String]? = nil, name: String? = nil, policies: [ApiModelRouterTaskPolicy]? = nil, regions: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiCreateModelRouterOutput {
-        return try await AgentPlatformApiMethods.genaiCreateModelRouter(config: config, description: description, fallbackModels: fallbackModels, name: name, policies: policies, regions: regions, requestOptions: requestOptions)
+    /// To create a model router, send a POST request to `/v2/gen-ai/models/routers`.
+    func genaiCreateModelRouter(
+        description: String? = nil,
+        fallbackModels: [String]? = nil,
+        name: String? = nil,
+        policies: [ApiModelRouterTaskPolicy]? = nil,
+        regions: [String]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiCreateModelRouterOutput {
+        try await AgentPlatformApiMethods.genaiCreateModelRouter(
+            config: config,
+            description: description,
+            fallbackModels: fallbackModels,
+            name: name,
+            policies: policies,
+            regions: regions,
+            requestOptions: requestOptions
+        )
     }
 
-/// To list model router presets, send a GET request to `/v2/gen-ai/models/routers/presets`.
-    public func genaiListModelRouterPresets(page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListModelRouterPresetsOutput {
-        return try await AgentPlatformApiMethods.genaiListModelRouterPresets(config: config, page: page, perPage: perPage, requestOptions: requestOptions)
+    /// To list model router presets, send a GET request to `/v2/gen-ai/models/routers/presets`.
+    func genaiListModelRouterPresets(
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiListModelRouterPresetsOutput {
+        try await AgentPlatformApiMethods.genaiListModelRouterPresets(
+            config: config,
+            page: page,
+            perPage: perPage,
+            requestOptions: requestOptions
+        )
     }
 
-/// To list model router task presets, send a GET request to `/v2/gen-ai/models/routers/tasks/presets`.
-    public func genaiListModelRouterTaskPresets(page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiListModelRouterTaskPresetsOutput {
-        return try await AgentPlatformApiMethods.genaiListModelRouterTaskPresets(config: config, page: page, perPage: perPage, requestOptions: requestOptions)
+    /// To list model router task presets, send a GET request to `/v2/gen-ai/models/routers/tasks/presets`.
+    func genaiListModelRouterTaskPresets(
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiListModelRouterTaskPresetsOutput {
+        try await AgentPlatformApiMethods.genaiListModelRouterTaskPresets(
+            config: config,
+            page: page,
+            perPage: perPage,
+            requestOptions: requestOptions
+        )
     }
 }

@@ -6,8 +6,10 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ActionGatewayMethods {
-    /// Returns one page of the tools your team can use: released catalog tools plus the enabled tools of your team's MCP servers. definitions[i] describes tools[i]. Offset-paged with page and `per_page`; an unknown `toolkitId` returns an empty page.
+public extension ActionGatewayMethods {
+    /// Returns one page of the tools your team can use: released catalog tools plus the enabled tools of your team's
+    /// MCP servers. definitions[i] describes tools[i]. Offset-paged with page and `per_page`; an unknown `toolkitId`
+    /// returns an empty page.
     ///
     /// - Parameters:
     /// - toolkitId: Restricts the page to one provider. It accepts the provider ID
@@ -17,19 +19,34 @@ extension ActionGatewayMethods {
     ///   end returns an empty tools list with the real total.
     /// - perPage: Page size. Defaults to 100 when omitted or 0; values above 100
     ///   are capped at 100.
-    public static func toolsList(config: ClientConfig, toolkitId: String? = nil, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ListToolsResponse {
-        if let page = page {
+    static func toolsList(
+        config: ClientConfig,
+        toolkitId: String? = nil,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListToolsResponse {
+        if let page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        if let perPage = perPage {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 100)
         }
 
-        return try (await sdkRequest("GET", "/v2/action-gateway/tools", config: config, query: [
-            SdkQueryParameter("toolkit_id", value: toolkitId),
-            SdkQueryParameter("page", value: page),
-            SdkQueryParameter("per_page", value: perPage),
-        ], decoder: .json, operationId: "tools_list", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/v2/action-gateway/tools",
+            config: config,
+            query: [
+                SdkQueryParameter("toolkit_id", value: toolkitId),
+                SdkQueryParameter("page", value: page),
+                SdkQueryParameter("per_page", value: perPage),
+            ],
+            decoder: .json,
+            operationId: "tools_list",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

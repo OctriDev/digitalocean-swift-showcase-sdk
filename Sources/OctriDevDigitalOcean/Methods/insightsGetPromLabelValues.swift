@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InsightsMethods {
-    /// To list values for a label name, send a GET request to `/v2/insights/query/{region}/prom/api/v1/label/{name}/values`.
+public extension InsightsMethods {
+    /// To list values for a label name, send a GET request to
+    /// `/v2/insights/query/{region}/prom/api/v1/label/{name}/values`.
     ///
     /// - Parameters:
     /// - region: The datacenter region slug for the query.
@@ -18,11 +19,44 @@ extension InsightsMethods {
     ///   UNIX timestamp.
     /// - match: One or more series selectors. Repeat the parameter for multiple
     ///   matchers.
-    public static func insightsGetPromLabelValues(config: ClientConfig, region: String, name: String, start: String? = nil, end: String? = nil, match: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> PromStringListResponse {
-        return try (await sdkRequest("GET", ["/v2/insights/query/", sdkEncodePathSegment(sdkWireString(region)), "/prom/api/v1/label/", sdkEncodePathSegment(sdkWireString(name)), "/values"].joined(), config: config, query: [
-            SdkQueryParameter("start", value: start),
-            SdkQueryParameter("end", value: end),
-            SdkQueryParameter("match[]", values: match, style: "form", explode: true),
-        ], decoder: .json, operationId: "insights_get_promLabelValues", options: requestOptions, errors: ["400": PromError.self, "401": Error2.self, "403": Error2.self, "404": Error2.self, "422": PromError.self, "429": Error2.self, "500": PromError.self, "503": PromError.self, "default": Error2.self])).data
+    static func insightsGetPromLabelValues(
+        config: ClientConfig,
+        region: String,
+        name: String,
+        start: String? = nil,
+        end: String? = nil,
+        match: [String]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> PromStringListResponse {
+        try await (sdkRequest(
+            "GET",
+            [
+                "/v2/insights/query/",
+                sdkEncodePathSegment(sdkWireString(region)),
+                "/prom/api/v1/label/",
+                sdkEncodePathSegment(sdkWireString(name)),
+                "/values",
+            ].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("start", value: start),
+                SdkQueryParameter("end", value: end),
+                SdkQueryParameter("match[]", values: match, style: "form", explode: true),
+            ],
+            decoder: .json,
+            operationId: "insights_get_promLabelValues",
+            options: requestOptions,
+            errors: [
+                "400": PromError.self,
+                "401": Error2.self,
+                "403": Error2.self,
+                "404": Error2.self,
+                "422": PromError.self,
+                "429": Error2.self,
+                "500": PromError.self,
+                "503": PromError.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

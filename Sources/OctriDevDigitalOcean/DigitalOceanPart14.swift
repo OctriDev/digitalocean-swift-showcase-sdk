@@ -3,44 +3,188 @@
 
 import Foundation
 
-extension InsightsNamespace {
-/// To list label names, send a GET request to `/v2/insights/query/{region}/prom/api/v1/labels`.
-    public func getPromLabels(region: String, start: String? = nil, end: String? = nil, match: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> PromStringListResponse {
-        return try await InsightsMethods.insightsGetPromLabels(config: config, region: region, start: start, end: end, match: match, requestOptions: requestOptions)
+public extension InsightsNamespace {
+    /// To list label names, send a GET request to `/v2/insights/query/{region}/prom/api/v1/labels`.
+    func getPromLabels(
+        region: String,
+        start: String? = nil,
+        end: String? = nil,
+        match: [String]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> PromStringListResponse {
+        try await InsightsMethods.insightsGetPromLabels(
+            config: config,
+            region: region,
+            start: start,
+            end: end,
+            match: match,
+            requestOptions: requestOptions
+        )
     }
 
-/// To list label names, send a POST request to `/v2/insights/query/{region}/prom/api/v1/labels` with `application/x-www-form-urlencoded` parameters.
-    public func postPromLabels(region: String, start: String? = nil, end: String? = nil, match: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> PromStringListResponse {
-        return try await InsightsMethods.insightsPostPromLabels(config: config, region: region, start: start, end: end, match: match, requestOptions: requestOptions)
+    /// To list label names, send a POST request to `/v2/insights/query/{region}/prom/api/v1/labels` with
+    /// `application/x-www-form-urlencoded` parameters.
+    func postPromLabels(
+        region: String,
+        start: String? = nil,
+        end: String? = nil,
+        match: [String]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> PromStringListResponse {
+        try await InsightsMethods.insightsPostPromLabels(
+            config: config,
+            region: region,
+            start: start,
+            end: end,
+            match: match,
+            requestOptions: requestOptions
+        )
     }
 
-/// To list values for a label name, send a GET request to `/v2/insights/query/{region}/prom/api/v1/label/{name}/values`.
-    public func getPromLabelValues(region: String, name: String, start: String? = nil, end: String? = nil, match: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> PromStringListResponse {
-        return try await InsightsMethods.insightsGetPromLabelValues(config: config, region: region, name: name, start: start, end: end, match: match, requestOptions: requestOptions)
+    /// To list values for a label name, send a GET request to
+    /// `/v2/insights/query/{region}/prom/api/v1/label/{name}/values`.
+    func getPromLabelValues(
+        region: String,
+        name: String,
+        start: String? = nil,
+        end: String? = nil,
+        match: [String]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> PromStringListResponse {
+        try await InsightsMethods.insightsGetPromLabelValues(
+            config: config,
+            region: region,
+            name: name,
+            start: start,
+            end: end,
+            match: match,
+            requestOptions: requestOptions
+        )
     }
 
-/// To find series matching one or more selectors, send a GET request to `/v2/insights/query/{region}/prom/api/v1/series`.
-    public func getPromSeries(region: String, match: [String], start: String? = nil, end: String? = nil, requestOptions: RequestOptions? = nil) async throws -> PromSeriesResponse {
-        return try await InsightsMethods.insightsGetPromSeries(config: config, region: region, match: match, start: start, end: end, requestOptions: requestOptions)
+    /// To find series matching one or more selectors, send a GET request to
+    /// `/v2/insights/query/{region}/prom/api/v1/series`.
+    func getPromSeries(
+        region: String,
+        match: [String],
+        start: String? = nil,
+        end: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> PromSeriesResponse {
+        try await InsightsMethods.insightsGetPromSeries(
+            config: config,
+            region: region,
+            match: match,
+            start: start,
+            end: end,
+            requestOptions: requestOptions
+        )
     }
 
-/// To find series matching one or more selectors, send a POST request to `/v2/insights/query/{region}/prom/api/v1/series` with `application/x-www-form-urlencoded` parameters.
-    public func postPromSeries(region: String, match: [String], start: String? = nil, end: String? = nil, requestOptions: RequestOptions? = nil) async throws -> PromSeriesResponse {
-        return try await InsightsMethods.insightsPostPromSeries(config: config, region: region, match: match, start: start, end: end, requestOptions: requestOptions)
+    /// To find series matching one or more selectors, send a POST request to
+    /// `/v2/insights/query/{region}/prom/api/v1/series` with `application/x-www-form-urlencoded` parameters.
+    func postPromSeries(
+        region: String,
+        match: [String],
+        start: String? = nil,
+        end: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> PromSeriesResponse {
+        try await InsightsMethods.insightsPostPromSeries(
+            config: config,
+            region: region,
+            match: match,
+            start: start,
+            end: end,
+            requestOptions: requestOptions
+        )
     }
 
-/// To search log records in a region, send a POST request to `/v2/insights/query/{region}/logs/search` with a JSON body describing the time range, optional filter, ordering, and pagination. The time range must not exceed 7 days. `pagination.limit` defaults to 100 and is clamped to 1000. Cursor pagination requires ordering by `timestamp` alone; other sort orders return `has_more: false` and cannot be paged.
-    public func postLogsSearch(region: String, timeRange: LogsTimeRange, filter: LogsFilterExpression? = nil, orderBy: [LogsOrderBy]? = nil, pagination: LogsPaginationRequest? = nil, requestOptions: RequestOptions? = nil) async throws -> LogsSearchResponse {
-        return try await InsightsMethods.insightsPostLogsSearch(config: config, region: region, timeRange: timeRange, filter: filter, orderBy: orderBy, pagination: pagination, requestOptions: requestOptions)
+    /// To search log records in a region, send a POST request to `/v2/insights/query/{region}/logs/search` with a JSON
+    /// body describing the time range, optional filter, ordering, and pagination. The time range must not exceed 7
+    /// days. `pagination.limit` defaults to 100 and is clamped to 1000. Cursor pagination requires ordering by
+    /// `timestamp` alone; other sort orders return `has_more: false` and cannot be paged.
+    func postLogsSearch(
+        region: String,
+        timeRange: LogsTimeRange,
+        filter: LogsFilterExpression? = nil,
+        orderBy: [LogsOrderBy]? = nil,
+        pagination: LogsPaginationRequest? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> LogsSearchResponse {
+        try await InsightsMethods.insightsPostLogsSearch(
+            config: config,
+            region: region,
+            timeRange: timeRange,
+            filter: filter,
+            orderBy: orderBy,
+            pagination: pagination,
+            requestOptions: requestOptions
+        )
     }
 
-/// To search traces in a region, send a POST request to `/v2/insights/query/{region}/traces/search` with a JSON body describing the time range, optional filter, ordering, and pagination. Each result is one trace, aggregated from all of its spans in the time range. A trace is included when at least one of its spans matches `filter`. The time range must not exceed 7 days (`168h`). `pagination.limit` defaults to 100 (also used when `limit` is `0`) and must be between 0 and 1000. Results are ordered by `started` descending unless `orderBy` is set. JSON field names are camelCase (`timeRange`, `orderBy`, `hasMore`, `traceId`). Unknown request properties, invalid filters, and out-of-range values are rejected with `400`. Each request searches a single region; there is no multi-region search. Supported regions are `ams2`, `ams3`, `atl1`, `blr1`, `fra1`, `lon1`, `mem1`, `nyc1`, `nyc2`, `nyc3`, `ric1`, `sfo1`, `sfo2`, `sfo3`, `sgp1`, `syd1`, and `tor1`. Requests time out after 60 seconds. Errors produced by the traces service (`400`) have a `text/plain` body containing a short message. Authentication and authorization errors (`401`, `403`), rate limiting (`429`), and routing errors (for example, `404` for an unknown region) come from the API gateway and use the standard JSON error object with `id` and `message`. `403` is also returned for accounts that are in a trial or not in good standing. If the regional traces backend cannot be reached, the response is `502` with a `text/plain` body.
-    public func postTracesSearch(region: String, timeRange: TracesTimeRange, filter: TracesFilterExpression? = nil, orderBy: [TracesOrderBy]? = nil, pagination: TracesPaginationRequest? = nil, requestOptions: RequestOptions? = nil) async throws -> TracesSearchResponse {
-        return try await InsightsMethods.insightsPostTracesSearch(config: config, region: region, timeRange: timeRange, filter: filter, orderBy: orderBy, pagination: pagination, requestOptions: requestOptions)
+    /// To search traces in a region, send a POST request to `/v2/insights/query/{region}/traces/search` with a JSON
+    /// body describing the time range, optional filter, ordering, and pagination. Each result is one trace, aggregated
+    /// from all of its spans in the time range. A trace is included when at least one of its spans matches `filter`.
+    /// The time range must not exceed 7 days (`168h`). `pagination.limit` defaults to 100 (also used when `limit` is
+    /// `0`) and must be between 0 and 1000. Results are ordered by `started` descending unless `orderBy` is set. JSON
+    /// field names are camelCase (`timeRange`, `orderBy`, `hasMore`, `traceId`). Unknown request properties, invalid
+    /// filters, and out-of-range values are rejected with `400`. Each request searches a single region; there is no
+    /// multi-region search. Supported regions are `ams2`, `ams3`, `atl1`, `blr1`, `fra1`, `lon1`, `mem1`, `nyc1`,
+    /// `nyc2`, `nyc3`, `ric1`, `sfo1`, `sfo2`, `sfo3`, `sgp1`, `syd1`, and `tor1`. Requests time out after 60 seconds.
+    /// Errors produced by the traces service (`400`) have a `text/plain` body containing a short message.
+    /// Authentication and authorization errors (`401`, `403`), rate limiting (`429`), and routing errors (for example,
+    /// `404` for an unknown region) come from the API gateway and use the standard JSON error object with `id` and
+    /// `message`. `403` is also returned for accounts that are in a trial or not in good standing. If the regional
+    /// traces backend cannot be reached, the response is `502` with a `text/plain` body.
+    func postTracesSearch(
+        region: String,
+        timeRange: TracesTimeRange,
+        filter: TracesFilterExpression? = nil,
+        orderBy: [TracesOrderBy]? = nil,
+        pagination: TracesPaginationRequest? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> TracesSearchResponse {
+        try await InsightsMethods.insightsPostTracesSearch(
+            config: config,
+            region: region,
+            timeRange: timeRange,
+            filter: filter,
+            orderBy: orderBy,
+            pagination: pagination,
+            requestOptions: requestOptions
+        )
     }
 
-/// To retrieve a single trace and all of its spans, send a GET request to `/v2/insights/query/{region}/traces/{trace_id}`. Only spans that started within the lookup window are returned. The window defaults to the last 7 days and can be narrowed with the `from` and `to` query parameters; it must not exceed 7 days, and `from` must not be after `to`. Spans are returned ordered by start time. At most 10,000 spans are returned; `truncated` is `true` when the trace has more. A trace ID with no spans in the window returns `404`, as do malformed or uppercase trace IDs. A trace is only resolvable in the region that ingested it; querying another region also returns `404`. Supported regions are `ams2`, `ams3`, `atl1`, `blr1`, `fra1`, `lon1`, `mem1`, `nyc1`, `nyc2`, `nyc3`, `ric1`, `sfo1`, `sfo2`, `sfo3`, `sgp1`, `syd1`, and `tor1`. Requests time out after 60 seconds. Errors produced by the traces service (`400`, and `404` when no trace is found) have a `text/plain` body containing a short message. Authentication and authorization errors (`401`, `403`), rate limiting (`429`), and routing errors (for example, `404` for an unknown region) come from the API gateway and use the standard JSON error object with `id` and `message`. `403` is also returned for accounts that are in a trial or not in good standing. If the regional traces backend cannot be reached, the response is `502` with a `text/plain` body. JSON field names are camelCase (`traceId`, `spanId`, `startTime`, `endTime`, `durationNs`, `serviceName`, `statusCode`, `parentSpanId`).
-    public func getTrace(region: String, traceId: String, from: String? = nil, to: String? = nil, requestOptions: RequestOptions? = nil) async throws -> TracesTraceResponse {
-        return try await InsightsMethods.insightsGetTrace(config: config, region: region, traceId: traceId, from: from, to: to, requestOptions: requestOptions)
+    /// To retrieve a single trace and all of its spans, send a GET request to
+    /// `/v2/insights/query/{region}/traces/{trace_id}`. Only spans that started within the lookup window are returned.
+    /// The window defaults to the last 7 days and can be narrowed with the `from` and `to` query parameters; it must
+    /// not exceed 7 days, and `from` must not be after `to`. Spans are returned ordered by start time. At most 10,000
+    /// spans are returned; `truncated` is `true` when the trace has more. A trace ID with no spans in the window
+    /// returns `404`, as do malformed or uppercase trace IDs. A trace is only resolvable in the region that ingested
+    /// it; querying another region also returns `404`. Supported regions are `ams2`, `ams3`, `atl1`, `blr1`, `fra1`,
+    /// `lon1`, `mem1`, `nyc1`, `nyc2`, `nyc3`, `ric1`, `sfo1`, `sfo2`, `sfo3`, `sgp1`, `syd1`, and `tor1`. Requests
+    /// time out after 60 seconds. Errors produced by the traces service (`400`, and `404` when no trace is found) have
+    /// a `text/plain` body containing a short message. Authentication and authorization errors (`401`, `403`), rate
+    /// limiting (`429`), and routing errors (for example, `404` for an unknown region) come from the API gateway and
+    /// use the standard JSON error object with `id` and `message`. `403` is also returned for accounts that are in a
+    /// trial or not in good standing. If the regional traces backend cannot be reached, the response is `502` with a
+    /// `text/plain` body. JSON field names are camelCase (`traceId`, `spanId`, `startTime`, `endTime`, `durationNs`,
+    /// `serviceName`, `statusCode`, `parentSpanId`).
+    func getTrace(
+        region: String,
+        traceId: String,
+        from: String? = nil,
+        to: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> TracesTraceResponse {
+        try await InsightsMethods.insightsGetTrace(
+            config: config,
+            region: region,
+            traceId: traceId,
+            from: from,
+            to: to,
+            requestOptions: requestOptions
+        )
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ActionGatewayDataPlane domain models
+/// ActionGatewayDataPlane domain models
 /// Typed representation of the `SearchQuery` API schema.
 public struct SearchQuery: Codable {
     /// A normalized English description of one complete use case: the action and the intended outcome, including
@@ -21,22 +21,28 @@ public struct SearchQuery: Codable {
         case knownFields = "known_fields"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SearchQuery {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.useCase) else {
-            throw SdkValidationError(field: "use_case", code: "required", message: "Validation failed for 'use_case': value is required")
-        }
-        self.useCase = try container.sdkDecodeRequired(.useCase)
-        self.knownFields = try container.sdkDecodeIfPresent(.knownFields)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SearchQuery {
-    public init(useCase: String, knownFields: String? = nil) {
+public extension SearchQuery {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.useCase) else {
+            throw SdkValidationError(
+                field: "use_case",
+                code: "required",
+                message: "Validation failed for 'use_case': value is required"
+            )
+        }
+        useCase = try container.sdkDecodeRequired(.useCase)
+        knownFields = try container.sdkDecodeIfPresent(.knownFields)
+    }
+}
+
+public extension SearchQuery {
+    init(useCase: String, knownFields: String? = nil) {
         (self.useCase, self.knownFields) = (useCase, knownFields)
     }
 }
@@ -63,33 +69,55 @@ public struct SearchToolsRequest: Codable {
         case limit
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension SearchToolsRequest {
-    public init(from decoder: Decoder) throws {
+public extension SearchToolsRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.queries) else {
-            throw SdkValidationError(field: "queries", code: "required", message: "Validation failed for 'queries': value is required")
+            throw SdkValidationError(
+                field: "queries",
+                code: "required",
+                message: "Validation failed for 'queries': value is required"
+            )
         }
-        self.queries = try container.sdkDecodeRequired(.queries)
-        self.providers = try container.sdkDecodeIfPresent(.providers)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.limit = try container.sdkDecodeIfPresent(.limit)
-            try validateItems("queries", self.queries, min: 1, max: 5)
-        if let value = self.limit {
-            try validateRange("limit", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        queries = try container.sdkDecodeRequired(.queries)
+        providers = try container.sdkDecodeIfPresent(.providers)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        limit = try container.sdkDecodeIfPresent(.limit)
+        try validateItems("queries", queries, min: 1, max: 5)
+        if let value = limit {
+            try validateRange(
+                "limit",
+                Double(value),
+                min: 1,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
-extension SearchToolsRequest {
-    public init(queries: [SearchQuery], providers: [String]? = nil, tags: [String]? = nil, limit: Int? = nil) throws {
+public extension SearchToolsRequest {
+    init(queries: [SearchQuery], providers: [String]? = nil, tags: [String]? = nil, limit: Int? = nil) throws {
         (self.queries, self.providers) = (queries, providers)
         (self.tags, self.limit) = (tags, limit)
-            try validateItems("queries", self.queries, min: 1, max: 5)
+        try validateItems("queries", self.queries, min: 1, max: 5)
         if let value = self.limit {
-            try validateRange("limit", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "limit",
+                Double(value),
+                min: 1,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
@@ -124,28 +152,44 @@ public struct DataPlaneSearchToolsResponse: Codable {
         case meta = "_meta"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DataPlaneSearchToolsResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.status) else {
-            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
-        }
-        guard container.contains(.callId) else {
-            throw SdkValidationError(field: "call_id", code: "required", message: "Validation failed for 'call_id': value is required")
-        }
-        self.status = try container.sdkDecodeRequired(.status)
-        self.callId = try container.sdkDecodeRequired(.callId)
-        self.output = try container.sdkDecodeIfPresent(.output)
-        self.error = try container.sdkDecodeIfPresent(.error)
-        self.meta = try container.sdkDecodeIfPresent(.meta)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DataPlaneSearchToolsResponse {
-    public init(status: ToolResultStatus, callId: String, output: DataPlaneSearchToolsResponseVariant1Output? = nil, error: ErrorEnvelope? = nil, meta: [String: JSONValue]? = nil) {
+public extension DataPlaneSearchToolsResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.status) else {
+            throw SdkValidationError(
+                field: "status",
+                code: "required",
+                message: "Validation failed for 'status': value is required"
+            )
+        }
+        guard container.contains(.callId) else {
+            throw SdkValidationError(
+                field: "call_id",
+                code: "required",
+                message: "Validation failed for 'call_id': value is required"
+            )
+        }
+        status = try container.sdkDecodeRequired(.status)
+        callId = try container.sdkDecodeRequired(.callId)
+        output = try container.sdkDecodeIfPresent(.output)
+        error = try container.sdkDecodeIfPresent(.error)
+        meta = try container.sdkDecodeIfPresent(.meta)
+    }
+}
+
+public extension DataPlaneSearchToolsResponse {
+    init(
+        status: ToolResultStatus,
+        callId: String,
+        output: DataPlaneSearchToolsResponseVariant1Output? = nil,
+        error: ErrorEnvelope? = nil,
+        meta: [String: JSONValue]? = nil
+    ) {
         (self.status, self.callId) = (status, callId)
         (self.output, self.error) = (output, error)
         self.meta = meta
@@ -183,25 +227,32 @@ public struct SearchToolsResult: Codable {
     }
 
     init() {
-        (self.name, self.version, self.title, self.description, self.inputSchema) = (nil, nil, nil, nil, nil)
-        self.score = nil
+        (name, version, title, description, inputSchema) = (nil, nil, nil, nil, nil)
+        score = nil
     }
 }
 
-extension SearchToolsResult {
-    public init(from decoder: Decoder) throws {
+public extension SearchToolsResult {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.version = try container.sdkDecodeIfPresent(.version)
-        self.title = try container.sdkDecodeIfPresent(.title)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.inputSchema = try container.sdkDecodeIfPresent(.inputSchema)
-        self.score = try container.sdkDecodeIfPresent(.score)
+        name = try container.sdkDecodeIfPresent(.name)
+        version = try container.sdkDecodeIfPresent(.version)
+        title = try container.sdkDecodeIfPresent(.title)
+        description = try container.sdkDecodeIfPresent(.description)
+        inputSchema = try container.sdkDecodeIfPresent(.inputSchema)
+        score = try container.sdkDecodeIfPresent(.score)
     }
 }
 
-extension SearchToolsResult {
-    public init(name: String? = nil, version: String? = nil, title: String? = nil, description: String? = nil, inputSchema: [String: JSONValue]? = nil, score: Double? = nil) {
+public extension SearchToolsResult {
+    init(
+        name: String? = nil,
+        version: String? = nil,
+        title: String? = nil,
+        description: String? = nil,
+        inputSchema: [String: JSONValue]? = nil,
+        score: Double? = nil
+    ) {
         self.init()
         (self.name, self.version) = (name, version)
         (self.title, self.description) = (title, description)
@@ -217,19 +268,19 @@ public struct DataPlaneSearchToolsResponseVariant1: Codable {
     }
 
     init() {
-        self.output = nil
+        output = nil
     }
 }
 
-extension DataPlaneSearchToolsResponseVariant1 {
-    public init(from decoder: Decoder) throws {
+public extension DataPlaneSearchToolsResponseVariant1 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.output = try container.sdkDecodeIfPresent(.output)
+        output = try container.sdkDecodeIfPresent(.output)
     }
 }
 
-extension DataPlaneSearchToolsResponseVariant1 {
-    public init(output: DataPlaneSearchToolsResponseVariant1Output? = nil) {
+public extension DataPlaneSearchToolsResponseVariant1 {
+    init(output: DataPlaneSearchToolsResponseVariant1Output? = nil) {
         self.init()
         self.output = output
     }
@@ -244,19 +295,19 @@ public struct DataPlaneSearchToolsResponseVariant1Output: Codable {
     }
 
     init() {
-        self.results = nil
+        results = nil
     }
 }
 
-extension DataPlaneSearchToolsResponseVariant1Output {
-    public init(from decoder: Decoder) throws {
+public extension DataPlaneSearchToolsResponseVariant1Output {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.results = try container.sdkDecodeIfPresent(.results)
+        results = try container.sdkDecodeIfPresent(.results)
     }
 }
 
-extension DataPlaneSearchToolsResponseVariant1Output {
-    public init(results: [SearchToolsGroup]? = nil) {
+public extension DataPlaneSearchToolsResponseVariant1Output {
+    init(results: [SearchToolsGroup]? = nil) {
         self.init()
         self.results = results
     }
@@ -284,22 +335,22 @@ public struct SearchToolsGroup: Codable {
     }
 
     init() {
-        (self.index, self.useCase, self.results, self.guidance) = (nil, nil, nil, nil)
+        (index, useCase, results, guidance) = (nil, nil, nil, nil)
     }
 }
 
-extension SearchToolsGroup {
-    public init(from decoder: Decoder) throws {
+public extension SearchToolsGroup {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.index = try container.sdkDecodeIfPresent(.index)
-        self.useCase = try container.sdkDecodeIfPresent(.useCase)
-        self.results = try container.sdkDecodeIfPresent(.results)
-        self.guidance = try container.sdkDecodeIfPresent(.guidance)
+        index = try container.sdkDecodeIfPresent(.index)
+        useCase = try container.sdkDecodeIfPresent(.useCase)
+        results = try container.sdkDecodeIfPresent(.results)
+        guidance = try container.sdkDecodeIfPresent(.guidance)
     }
 }
 
-extension SearchToolsGroup {
-    public init(index: Int? = nil, useCase: String? = nil, results: [SearchToolsResult]? = nil, guidance: String? = nil) {
+public extension SearchToolsGroup {
+    init(index: Int? = nil, useCase: String? = nil, results: [SearchToolsResult]? = nil, guidance: String? = nil) {
         self.init()
         (self.index, self.useCase) = (index, useCase)
         (self.results, self.guidance) = (results, guidance)

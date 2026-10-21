@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DedicatedInference domain models
+/// DedicatedInference domain models
 /// Typed representation of the `CaCertificate` API schema.
 public struct CaCertificate: Codable {
     /// Base64-encoded CA certificate.
@@ -13,21 +13,27 @@ public struct CaCertificate: Codable {
         case cert
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CaCertificate {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.cert) else {
-            throw SdkValidationError(field: "cert", code: "required", message: "Validation failed for 'cert': value is required")
-        }
-        self.cert = try container.sdkDecodeRequired(.cert)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CaCertificate {
-    public init(cert: String) {
+public extension CaCertificate {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.cert) else {
+            throw SdkValidationError(
+                field: "cert",
+                code: "required",
+                message: "Validation failed for 'cert': value is required"
+            )
+        }
+        cert = try container.sdkDecodeRequired(.cert)
+    }
+}
+
+public extension CaCertificate {
+    init(cert: String) {
         self.cert = cert
     }
 }

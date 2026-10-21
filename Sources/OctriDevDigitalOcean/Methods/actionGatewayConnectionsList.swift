@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ActionGatewayMethods {
-    /// Returns the connections you can see, excluding revoked ones. Offset-paged with page and `per_page`; filter by provider, `user_id`, and status.
+public extension ActionGatewayMethods {
+    /// Returns the connections you can see, excluding revoked ones. Offset-paged with page and `per_page`; filter by
+    /// provider, `user_id`, and status.
     ///
     /// - Parameters:
     /// - provider: Optional provider slug, matched exactly.
@@ -20,31 +21,76 @@ extension ActionGatewayMethods {
     /// - sortDirection: asc (the default) or desc.
     /// - page: 1-based page number. Values below 1 are treated as 1.
     /// - perPage: Page size. Defaults to 20; values above 100 are capped at 100.
-    public static func connectionsList(config: ClientConfig, provider: String? = nil, userId: String? = nil, status: ConnectionsListParameterX0feec021? = nil, sort: ConnectionsListParameter? = nil, sortDirection: ConnectionsListParameterXb8008b58? = nil, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ListConnectionsResponse {
-        if let page = page {
+    static func connectionsList(
+        config: ClientConfig,
+        provider: String? = nil,
+        userId: String? = nil,
+        status: ConnectionsListParameterX0feec021? = nil,
+        sort: ConnectionsListParameter? = nil,
+        sortDirection: ConnectionsListParameterXb8008b58? = nil,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListConnectionsResponse {
+        if let page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        if let perPage = perPage {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 100)
         }
 
-        return try (await sdkRequest("GET", "/v2/action-gateway/connections", config: config, query: [
-            SdkQueryParameter("provider", value: provider),
-            SdkQueryParameter("user_id", value: userId),
-            SdkQueryParameter("status", value: status),
-            SdkQueryParameter("sort", value: sort),
-            SdkQueryParameter("sort_direction", value: sortDirection),
-            SdkQueryParameter("page", value: page),
-            SdkQueryParameter("per_page", value: perPage),
-        ], decoder: .json, operationId: "connections_list", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/v2/action-gateway/connections",
+            config: config,
+            query: [
+                SdkQueryParameter("provider", value: provider),
+                SdkQueryParameter("user_id", value: userId),
+                SdkQueryParameter("status", value: status),
+                SdkQueryParameter("sort", value: sort),
+                SdkQueryParameter("sort_direction", value: sortDirection),
+                SdkQueryParameter("page", value: page),
+                SdkQueryParameter("per_page", value: perPage),
+            ],
+            decoder: .json,
+            operationId: "connections_list",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Returns the connection and, while it is pending, the authorization the user still has to complete. Reading a pending connection picks up a completed authorization, and marks the connection expired once its link has lapsed. Returns 404 for an unknown connection or one you cannot see.
+    /// Returns the connection and, while it is pending, the authorization the user still has to complete. Reading a
+    /// pending connection picks up a completed authorization, and marks the connection expired once its link has
+    /// lapsed. Returns 404 for an unknown connection or one you cannot see.
     ///
     /// - Parameters:
     /// - id: Connection ID.
-    public static func connectionsGet(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> GetConnectionResponse {
-        return try (await sdkRequest("GET", ["/v2/action-gateway/connections/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "connections_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func connectionsGet(
+        config: ClientConfig,
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetConnectionResponse {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/action-gateway/connections/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "connections_get",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

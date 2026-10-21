@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AddOns domain models
+/// AddOns domain models
 /// Typed representation of the `AddonsList` API schema.
 public struct AddonsList: Codable {
     /// Optional array value serialized in the `resources` wire field.
@@ -14,19 +14,19 @@ public struct AddonsList: Codable {
     }
 
     init() {
-        self.resources = nil
+        resources = nil
     }
 }
 
-extension AddonsList {
-    public init(from decoder: Decoder) throws {
+public extension AddonsList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.resources = try container.sdkDecodeIfPresent(.resources)
+        resources = try container.sdkDecodeIfPresent(.resources)
     }
 }
 
-extension AddonsList {
-    public init(resources: [AddonsResource]? = nil) {
+public extension AddonsList {
+    init(resources: [AddonsResource]? = nil) {
         self.init()
         self.resources = resources
     }

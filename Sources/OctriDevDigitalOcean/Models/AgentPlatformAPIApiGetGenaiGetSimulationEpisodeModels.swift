@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiGet domain models
+/// AgentPlatformAPIApiGet domain models
 /// Output for getting a single episode.
 public struct ApiGetSimulationEpisodeOutput: Codable {
     /// One independent execution within a simulation run, including its trajectory and verdict.
@@ -14,19 +14,19 @@ public struct ApiGetSimulationEpisodeOutput: Codable {
     }
 
     init() {
-        self.episode = nil
+        episode = nil
     }
 }
 
-extension ApiGetSimulationEpisodeOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetSimulationEpisodeOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.episode = try container.sdkDecodeIfPresent(.episode)
+        episode = try container.sdkDecodeIfPresent(.episode)
     }
 }
 
-extension ApiGetSimulationEpisodeOutput {
-    public init(episode: ApiSimulationEpisode? = nil) {
+public extension ApiGetSimulationEpisodeOutput {
+    init(episode: ApiSimulationEpisode? = nil) {
         self.init()
         self.episode = episode
     }

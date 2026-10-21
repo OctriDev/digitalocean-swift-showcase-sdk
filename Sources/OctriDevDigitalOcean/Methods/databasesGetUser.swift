@@ -6,26 +6,83 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DatabasesMethods {
-    /// To show information about an existing database user, send a GET request to `/v2/databases/$DATABASE_ID/users/$USERNAME`. Note: User management is not supported for Caching or Valkey clusters. The response will be a JSON object with a `user` key. This will be set to an object containing the standard database user attributes. The user's password will not show up unless the `database:view_credentials` scope is present. For MySQL clusters, additional options will be contained in the `mysql_settings` object. For PostgreSQL clusters, additional options will be contained in the `settings` object (for example, `pg_allow_replication`). For Kafka clusters, additional options will be contained in the `settings` object. For MongoDB clusters, additional information will be contained in the mongo_user_settings object
+public extension DatabasesMethods {
+    /// To show information about an existing database user, send a GET request to
+    /// `/v2/databases/$DATABASE_ID/users/$USERNAME`. Note: User management is not supported for Caching or Valkey
+    /// clusters. The response will be a JSON object with a `user` key. This will be set to an object containing the
+    /// standard database user attributes. The user's password will not show up unless the `database:view_credentials`
+    /// scope is present. For MySQL clusters, additional options will be contained in the `mysql_settings` object. For
+    /// PostgreSQL clusters, additional options will be contained in the `settings` object (for example,
+    /// `pg_allow_replication`). For Kafka clusters, additional options will be contained in the `settings` object. For
+    /// MongoDB clusters, additional information will be contained in the mongo_user_settings object
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - username: The name of the database user.
-    public static func databasesGetUser(config: ClientConfig, databaseClusterUuid: String, username: String, requestOptions: RequestOptions? = nil) async throws -> UserResponse {
+    static func databasesGetUser(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        username: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UserResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/users/", sdkEncodePathSegment(sdkWireString(username))].joined(), config: config, decoder: .json, operationId: "databases_get_user", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            [
+                "/v2/databases/",
+                sdkEncodePathSegment(sdkWireString(databaseClusterUuid)),
+                "/users/",
+                sdkEncodePathSegment(sdkWireString(username)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "databases_get_user",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To remove a specific database user, send a DELETE request to `/v2/databases/$DATABASE_ID/users/$USERNAME`. A status of 204 will be given. This indicates that the request was processed successfully, but that no response body is needed. Note: User management is not supported for Caching or Valkey clusters.
+    /// To remove a specific database user, send a DELETE request to `/v2/databases/$DATABASE_ID/users/$USERNAME`. A
+    /// status of 204 will be given. This indicates that the request was processed successfully, but that no response
+    /// body is needed. Note: User management is not supported for Caching or Valkey clusters.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - username: The name of the database user.
-    public static func databasesDeleteUser(config: ClientConfig, databaseClusterUuid: String, username: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func databasesDeleteUser(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        username: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("DELETE", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/users/", sdkEncodePathSegment(sdkWireString(username))].joined(), config: config, decoder: .empty, operationId: "databases_delete_user", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "DELETE",
+            [
+                "/v2/databases/",
+                sdkEncodePathSegment(sdkWireString(databaseClusterUuid)),
+                "/users/",
+                sdkEncodePathSegment(sdkWireString(username)),
+            ].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "databases_delete_user",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiList domain models
+/// AgentPlatformAPIApiList domain models
 /// Typed representation of the `ApiListEvaluationTestCasesOutput` API schema.
 public struct ApiListEvaluationTestCasesOutput: Codable {
     /// Alternative way of authentication for internal usage only - should not be exposed to public api
@@ -14,19 +14,19 @@ public struct ApiListEvaluationTestCasesOutput: Codable {
     }
 
     init() {
-        self.evaluationTestCases = nil
+        evaluationTestCases = nil
     }
 }
 
-extension ApiListEvaluationTestCasesOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiListEvaluationTestCasesOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.evaluationTestCases = try container.sdkDecodeIfPresent(.evaluationTestCases)
+        evaluationTestCases = try container.sdkDecodeIfPresent(.evaluationTestCases)
     }
 }
 
-extension ApiListEvaluationTestCasesOutput {
-    public init(evaluationTestCases: [ApiEvaluationTestCase]? = nil) {
+public extension ApiListEvaluationTestCasesOutput {
+    init(evaluationTestCases: [ApiEvaluationTestCase]? = nil) {
         self.init()
         self.evaluationTestCases = evaluationTestCases
     }

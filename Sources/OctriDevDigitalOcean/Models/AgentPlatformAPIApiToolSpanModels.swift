@@ -3,17 +3,17 @@
 
 import Foundation
 
-// AgentPlatformAPIApi domain models
-extension ApiToolSpan {
-    public init(from decoder: Decoder) throws {
+/// AgentPlatformAPIApi domain models
+public extension ApiToolSpan {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.common = try container.sdkDecodeIfPresent(.common)
-        self.toolCallId = try container.sdkDecodeIfPresent(.toolCallId)
+        common = try container.sdkDecodeIfPresent(.common)
+        toolCallId = try container.sdkDecodeIfPresent(.toolCallId)
     }
 }
 
-extension ApiToolSpan {
-    public init(common: ApiSpanCommon? = nil, toolCallId: String? = nil) {
+public extension ApiToolSpan {
+    init(common: ApiSpanCommon? = nil, toolCallId: String? = nil) {
         self.init()
         (self.common, self.toolCallId) = (common, toolCallId)
     }
@@ -29,19 +29,19 @@ public struct ApiRetrieverSpan: Codable {
     }
 
     init() {
-        self.common = nil
+        common = nil
     }
 }
 
-extension ApiRetrieverSpan {
-    public init(from decoder: Decoder) throws {
+public extension ApiRetrieverSpan {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.common = try container.sdkDecodeIfPresent(.common)
+        common = try container.sdkDecodeIfPresent(.common)
     }
 }
 
-extension ApiRetrieverSpan {
-    public init(common: ApiSpanCommon? = nil) {
+public extension ApiRetrieverSpan {
+    init(common: ApiSpanCommon? = nil) {
         self.init()
         self.common = common
     }
@@ -53,7 +53,10 @@ extension ApiRetrieverSpan {
 public struct ApiRetrievalMethod: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let retrievalMethodUnknown = ApiRetrievalMethod(rawValue: "RETRIEVAL_METHOD_UNKNOWN")
     public static let retrievalMethodRewrite = ApiRetrievalMethod(rawValue: "RETRIEVAL_METHOD_REWRITE")
     public static let retrievalMethodStepBack = ApiRetrievalMethod(rawValue: "RETRIEVAL_METHOD_STEP_BACK")
@@ -62,7 +65,7 @@ public struct ApiRetrievalMethod: RawRepresentable, Hashable, Codable, Sendable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -75,7 +78,10 @@ public struct ApiRetrievalMethod: RawRepresentable, Hashable, Codable, Sendable,
 public struct ApiBatchJobPhase: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let batchJobPhaseUnknown = ApiBatchJobPhase(rawValue: "BATCH_JOB_PHASE_UNKNOWN")
     public static let batchJobPhasePending = ApiBatchJobPhase(rawValue: "BATCH_JOB_PHASE_PENDING")
     public static let batchJobPhaseRunning = ApiBatchJobPhase(rawValue: "BATCH_JOB_PHASE_RUNNING")
@@ -86,7 +92,7 @@ public struct ApiBatchJobPhase: RawRepresentable, Hashable, Codable, Sendable, S
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -103,17 +109,21 @@ public struct ApiBatchJobPhase: RawRepresentable, Hashable, Codable, Sendable, S
 public struct ApiPresetSaveSection: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let presetSaveSectionUnspecified = ApiPresetSaveSection(rawValue: "PRESET_SAVE_SECTION_UNSPECIFIED")
     public static let presetSaveSectionCandidate = ApiPresetSaveSection(rawValue: "PRESET_SAVE_SECTION_CANDIDATE")
     public static let presetSaveSectionMetrics = ApiPresetSaveSection(rawValue: "PRESET_SAVE_SECTION_METRICS")
     public static let presetSaveSectionJudge = ApiPresetSaveSection(rawValue: "PRESET_SAVE_SECTION_JUDGE")
     public static let presetSaveSectionDataset = ApiPresetSaveSection(rawValue: "PRESET_SAVE_SECTION_DATASET")
-    public static let presetSaveSectionSystemPrompt = ApiPresetSaveSection(rawValue: "PRESET_SAVE_SECTION_SYSTEM_PROMPT")
+    public static let presetSaveSectionSystemPrompt =
+        ApiPresetSaveSection(rawValue: "PRESET_SAVE_SECTION_SYSTEM_PROMPT")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -129,7 +139,10 @@ public struct ApiPresetSaveSection: RawRepresentable, Hashable, Codable, Sendabl
 public struct ApiCrawlingOption: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let unknown = ApiCrawlingOption(rawValue: "UNKNOWN")
     public static let scoped = ApiCrawlingOption(rawValue: "SCOPED")
     public static let path = ApiCrawlingOption(rawValue: "PATH")
@@ -139,7 +152,7 @@ public struct ApiCrawlingOption: RawRepresentable, Hashable, Codable, Sendable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -152,7 +165,10 @@ public struct ApiCrawlingOption: RawRepresentable, Hashable, Codable, Sendable, 
 public struct ApiGuardrailType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let guardrailTypeUnknown = ApiGuardrailType(rawValue: "GUARDRAIL_TYPE_UNKNOWN")
     public static let guardrailTypeJailbreak = ApiGuardrailType(rawValue: "GUARDRAIL_TYPE_JAILBREAK")
     public static let guardrailTypeSensitiveData = ApiGuardrailType(rawValue: "GUARDRAIL_TYPE_SENSITIVE_DATA")
@@ -160,7 +176,7 @@ public struct ApiGuardrailType: RawRepresentable, Hashable, Codable, Sendable, S
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -173,7 +189,10 @@ public struct ApiGuardrailType: RawRepresentable, Hashable, Codable, Sendable, S
 public struct ApiIndexJobStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let indexJobStatusUnknown = ApiIndexJobStatus(rawValue: "INDEX_JOB_STATUS_UNKNOWN")
     public static let indexJobStatusPartial = ApiIndexJobStatus(rawValue: "INDEX_JOB_STATUS_PARTIAL")
     public static let indexJobStatusInProgress = ApiIndexJobStatus(rawValue: "INDEX_JOB_STATUS_IN_PROGRESS")
@@ -185,7 +204,7 @@ public struct ApiIndexJobStatus: RawRepresentable, Hashable, Codable, Sendable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -198,14 +217,17 @@ public struct ApiIndexJobStatus: RawRepresentable, Hashable, Codable, Sendable, 
 public struct ApiSortDirection: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let sortDirectionUnspecified = ApiSortDirection(rawValue: "SORT_DIRECTION_UNSPECIFIED")
     public static let sortDirectionAsc = ApiSortDirection(rawValue: "SORT_DIRECTION_ASC")
     public static let sortDirectionDesc = ApiSortDirection(rawValue: "SORT_DIRECTION_DESC")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

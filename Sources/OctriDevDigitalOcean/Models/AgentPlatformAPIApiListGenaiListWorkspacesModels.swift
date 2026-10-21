@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiList domain models
+/// AgentPlatformAPIApiList domain models
 /// Typed representation of the `ApiListWorkspacesOutput` API schema.
 public struct ApiListWorkspacesOutput: Codable {
     /// Workspaces
@@ -14,19 +14,19 @@ public struct ApiListWorkspacesOutput: Codable {
     }
 
     init() {
-        self.workspaces = nil
+        workspaces = nil
     }
 }
 
-extension ApiListWorkspacesOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiListWorkspacesOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.workspaces = try container.sdkDecodeIfPresent(.workspaces)
+        workspaces = try container.sdkDecodeIfPresent(.workspaces)
     }
 }
 
-extension ApiListWorkspacesOutput {
-    public init(workspaces: [ApiWorkspace]? = nil) {
+public extension ApiListWorkspacesOutput {
+    init(workspaces: [ApiWorkspace]? = nil) {
         self.init()
         self.workspaces = workspaces
     }

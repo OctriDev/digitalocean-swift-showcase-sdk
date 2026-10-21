@@ -6,8 +6,12 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InsightsMethods {
-    /// To search spans in a region, send a POST request to `/v2/insights/query/{region}/spans/search` with a JSON body describing the time range, optional filter, ordering, and pagination. The time range must not exceed 7 days. `pagination.limit` defaults to 100 and must be between 1 and 1000. Results are ordered by `startTime` descending by default. Cursor-based pagination is not yet supported; `pagination.hasMore` indicates whether additional spans matched beyond the returned page.
+public extension InsightsMethods {
+    /// To search spans in a region, send a POST request to `/v2/insights/query/{region}/spans/search` with a JSON body
+    /// describing the time range, optional filter, ordering, and pagination. The time range must not exceed 7 days.
+    /// `pagination.limit` defaults to 100 and must be between 1 and 1000. Results are ordered by `startTime` descending
+    /// by default. Cursor-based pagination is not yet supported; `pagination.hasMore` indicates whether additional
+    /// spans matched beyond the returned page.
     ///
     /// - Parameters:
     /// - region: The datacenter region slug for the query.
@@ -20,9 +24,39 @@ extension InsightsMethods {
     /// - orderBy: Sort clauses applied to the result set. Defaults to `startTime`
     ///   descending when omitted.
     /// - pagination: Limits the number of spans returned.
-    public static func insightsPostSpansSearch(config: ClientConfig, region: String, timeRange: SpansTimeRange, filter: SpansFilterExpression? = nil, orderBy: [SpansOrderBy]? = nil, pagination: SpansPaginationRequest? = nil, requestOptions: RequestOptions? = nil) async throws -> SpansSearchResponse {
-        let requestBody = InsightsPostSpansSearchRequestBody(timeRange: timeRange, filter: filter, orderBy: orderBy, pagination: pagination)
+    static func insightsPostSpansSearch(
+        config: ClientConfig,
+        region: String,
+        timeRange: SpansTimeRange,
+        filter: SpansFilterExpression? = nil,
+        orderBy: [SpansOrderBy]? = nil,
+        pagination: SpansPaginationRequest? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SpansSearchResponse {
+        let requestBody = InsightsPostSpansSearchRequestBody(
+            timeRange: timeRange,
+            filter: filter,
+            orderBy: orderBy,
+            pagination: pagination
+        )
 
-        return try (await sdkRequest("POST", ["/v2/insights/query/", sdkEncodePathSegment(sdkWireString(region)), "/spans/search"].joined(), config: config, body: requestBody, decoder: .json, operationId: "insights_post_spansSearch", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "403": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/v2/insights/query/", sdkEncodePathSegment(sdkWireString(region)), "/spans/search"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "insights_post_spansSearch",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "403": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

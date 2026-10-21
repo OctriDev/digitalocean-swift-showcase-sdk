@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
-    /// To create a scenario set, send a POST request to `/v2/gen-ai/scenario_sets`. Provide exactly one of `scenarios` or `file_upload_scenario_set`. The set is created in the ready state.
+public extension AgentPlatformApiMethods {
+    /// To create a scenario set, send a POST request to `/v2/gen-ai/scenario_sets`. Provide exactly one of `scenarios`
+    /// or `file_upload_scenario_set`. The set is created in the ready state.
     ///
     /// - Parameters:
     /// - fileUploadScenarioSet: Uploaded scenario file to ingest. Provide this or
@@ -15,19 +16,65 @@ extension AgentPlatformApiMethods {
     /// - name: The name of the scenario set.
     /// - scenarios: Inline scenarios. Provide this or `file_upload_scenario_set`,
     ///   not both.
-    public static func genaiCreateScenarioSet(config: ClientConfig, fileUploadScenarioSet: ApiFileUploadDataSource? = nil, name: String? = nil, scenarios: [ApiScenario]? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiCreateScenarioSetOutput {
-        let requestBody = GenaiCreateScenarioSetRequestBody(fileUploadScenarioSet: fileUploadScenarioSet, name: name, scenarios: scenarios)
+    static func genaiCreateScenarioSet(
+        config: ClientConfig,
+        fileUploadScenarioSet: ApiFileUploadDataSource? = nil,
+        name: String? = nil,
+        scenarios: [ApiScenario]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiCreateScenarioSetOutput {
+        let requestBody = GenaiCreateScenarioSetRequestBody(
+            fileUploadScenarioSet: fileUploadScenarioSet,
+            name: name,
+            scenarios: scenarios
+        )
 
-        return try (await sdkRequest("POST", "/v2/gen-ai/scenario_sets", config: config, body: requestBody, decoder: .json, operationId: "genai_create_scenario_set", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/gen-ai/scenario_sets",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "genai_create_scenario_set",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To create presigned URLs for uploading a scenario set file, send a POST request to `/v2/gen-ai/scenario_sets/file_upload_presigned_urls`. After uploading, pass the stored object in Create Scenario Set as `file_upload_scenario_set`.
+    /// To create presigned URLs for uploading a scenario set file, send a POST request to
+    /// `/v2/gen-ai/scenario_sets/file_upload_presigned_urls`. After uploading, pass the stored object in Create
+    /// Scenario Set as `file_upload_scenario_set`.
     ///
     /// - Parameters:
     /// - files: A list of files to generate presigned URLs for.
-    public static func genaiCreateScenarioSetUploadPresignedUrls(config: ClientConfig, files: [ApiPresignedUrlFile]? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiCreateDataSourceFileUploadPresignedUrlsOutput {
+    static func genaiCreateScenarioSetUploadPresignedUrls(
+        config: ClientConfig,
+        files: [ApiPresignedUrlFile]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiCreateDataSourceFileUploadPresignedUrlsOutput {
         let requestBody = GenaiCreateScenarioSetUploadPresignedUrlsRequestBody(files: files)
 
-        return try (await sdkRequest("POST", "/v2/gen-ai/scenario_sets/file_upload_presigned_urls", config: config, body: requestBody, decoder: .json, operationId: "genai_create_scenario_set_upload_presigned_urls", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/gen-ai/scenario_sets/file_upload_presigned_urls",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "genai_create_scenario_set_upload_presigned_urls",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ContainerRegistries domain models
+/// ContainerRegistries domain models
 /// Typed representation of the `Multiregistry` API schema.
 public struct Multiregistry: Codable {
     /// A globally unique name for the container registry. Must be lowercase and be composed only of numbers,
@@ -33,33 +33,39 @@ public struct Multiregistry: Codable {
     }
 
     init() {
-        (self.name, self.createdAt, self.region, self.storageUsageBytes, self.storageUsageBytesUpdatedAt) = (nil, nil, nil, nil, nil)
+        (name, createdAt, region, storageUsageBytes, storageUsageBytesUpdatedAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension Multiregistry {
-    public init(from decoder: Decoder) throws {
+public extension Multiregistry {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.storageUsageBytes = try container.sdkDecodeIfPresent(.storageUsageBytes)
-        self.storageUsageBytesUpdatedAt = try container.sdkDecodeIfPresent(.storageUsageBytesUpdatedAt)
-        if let value = self.name {
+        name = try container.sdkDecodeIfPresent(.name)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        region = try container.sdkDecodeIfPresent(.region)
+        storageUsageBytes = try container.sdkDecodeIfPresent(.storageUsageBytes)
+        storageUsageBytesUpdatedAt = try container.sdkDecodeIfPresent(.storageUsageBytesUpdatedAt)
+        if let value = name {
             try validateLength("name", value, min: nil, max: 63)
             try sdkValidatePattern("name", value, sdkPattern41dd286f4dc3)
         }
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.storageUsageBytesUpdatedAt {
+        if let value = storageUsageBytesUpdatedAt {
             try sdkValidateDateTime("storage_usage_bytes_updated_at", sdkWireString(value))
         }
     }
 }
 
-extension Multiregistry {
-    public init(name: String? = nil, createdAt: Date? = nil, region: String? = nil, storageUsageBytes: Int? = nil, storageUsageBytesUpdatedAt: Date? = nil) throws {
+public extension Multiregistry {
+    init(
+        name: String? = nil,
+        createdAt: Date? = nil,
+        region: String? = nil,
+        storageUsageBytes: Int? = nil,
+        storageUsageBytesUpdatedAt: Date? = nil
+    ) throws {
         self.init()
         (self.name, self.createdAt) = (name, createdAt)
         (self.region, self.storageUsageBytes) = (region, storageUsageBytes)
@@ -87,19 +93,19 @@ public struct AllRegistriesInfo: Codable {
     }
 
     init() {
-        self.registries = nil
+        registries = nil
     }
 }
 
-extension AllRegistriesInfo {
-    public init(from decoder: Decoder) throws {
+public extension AllRegistriesInfo {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.registries = try container.sdkDecodeIfPresent(.registries)
+        registries = try container.sdkDecodeIfPresent(.registries)
     }
 }
 
-extension AllRegistriesInfo {
-    public init(registries: [AllRegistriesInfoRegistriesItem]? = nil) {
+public extension AllRegistriesInfo {
+    init(registries: [AllRegistriesInfoRegistriesItem]? = nil) {
         self.init()
         self.registries = registries
     }
@@ -115,19 +121,19 @@ public struct MultiregistryInfo: Codable {
     }
 
     init() {
-        self.registry = nil
+        registry = nil
     }
 }
 
-extension MultiregistryInfo {
-    public init(from decoder: Decoder) throws {
+public extension MultiregistryInfo {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.registry = try container.sdkDecodeIfPresent(.registry)
+        registry = try container.sdkDecodeIfPresent(.registry)
     }
 }
 
-extension MultiregistryInfo {
-    public init(registry: Multiregistry? = nil) {
+public extension MultiregistryInfo {
+    init(registry: Multiregistry? = nil) {
         self.init()
         self.registry = registry
     }
@@ -138,21 +144,29 @@ public indirect enum AllRegistriesInfoRegistriesItem {
 }
 
 extension AllRegistriesInfoRegistriesItem: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for AllRegistriesInfoRegistriesItem")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for AllRegistriesInfoRegistriesItem"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension AllRegistriesInfoRegistriesItem {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(Registry.self) { return .registry(value) }
+        if let value = try? container.decode(Registry.self) {
+            return .registry(value)
+        }
         return nil
     }
 }
@@ -185,29 +199,39 @@ public struct MultiregistryCreate: Codable {
         case region
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension MultiregistryCreate {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.subscriptionTierSlug = try container.sdkDecodeIfPresent(.subscriptionTierSlug)
-        self.region = try container.sdkDecodeIfPresent(.region)
-            try validateLength("name", self.name, min: nil, max: 63)
-            try sdkValidatePattern("name", self.name, sdkPattern41dd286f4dc3)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension MultiregistryCreate {
-    public init(name: String, subscriptionTierSlug: MultiregistryCreateSubscriptionTierSlug? = nil, region: MultiregistryCreateRegion? = nil) throws {
+public extension MultiregistryCreate {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        subscriptionTierSlug = try container.sdkDecodeIfPresent(.subscriptionTierSlug)
+        region = try container.sdkDecodeIfPresent(.region)
+        try validateLength("name", name, min: nil, max: 63)
+        try sdkValidatePattern("name", name, sdkPattern41dd286f4dc3)
+    }
+}
+
+public extension MultiregistryCreate {
+    init(
+        name: String,
+        subscriptionTierSlug: MultiregistryCreateSubscriptionTierSlug? = nil,
+        region: MultiregistryCreateRegion? = nil
+    ) throws {
         (self.name, self.subscriptionTierSlug) = (name, subscriptionTierSlug)
         self.region = region
-            try validateLength("name", self.name, min: nil, max: 63)
-            try sdkValidatePattern("name", self.name, sdkPattern41dd286f4dc3)
+        try validateLength("name", self.name, min: nil, max: 63)
+        try sdkValidatePattern("name", self.name, sdkPattern41dd286f4dc3)
     }
 }
 
@@ -215,7 +239,10 @@ extension MultiregistryCreate {
 public struct MultiregistryCreateRegion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let nyc3 = MultiregistryCreateRegion(rawValue: "nyc3")
     public static let sfo3 = MultiregistryCreateRegion(rawValue: "sfo3")
     public static let sfo2 = MultiregistryCreateRegion(rawValue: "sfo2")
@@ -227,7 +254,7 @@ public struct MultiregistryCreateRegion: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -237,17 +264,21 @@ public struct MultiregistryCreateRegion: RawRepresentable, Hashable, Codable, Se
 }
 
 /// The slug of the subscription tier to sign up for. Valid values can be retrieved using the options endpoint.
-public struct MultiregistryCreateSubscriptionTierSlug: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct MultiregistryCreateSubscriptionTierSlug: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let starter = MultiregistryCreateSubscriptionTierSlug(rawValue: "starter")
     public static let basic = MultiregistryCreateSubscriptionTierSlug(rawValue: "basic")
     public static let professional = MultiregistryCreateSubscriptionTierSlug(rawValue: "professional")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

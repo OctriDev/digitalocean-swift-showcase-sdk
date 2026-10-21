@@ -6,13 +6,37 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DomainRecordsMethods {
+public extension DomainRecordsMethods {
     /// To retrieve a specific domain record, send a GET request to `/v2/domains/$DOMAIN_NAME/records/$RECORD_ID`.
     ///
     /// - Parameters:
     /// - domainName: The name of the domain itself.
     /// - domainRecordId: The unique identifier of the domain record.
-    public static func domainsGetRecord(config: ClientConfig, domainName: String, domainRecordId: Int, requestOptions: RequestOptions? = nil) async throws -> DomainRecordResponse {
-        return try (await sdkRequest("GET", ["/v2/domains/", sdkEncodePathSegment(sdkWireString(domainName)), "/records/", sdkEncodePathSegment(sdkWireString(domainRecordId))].joined(), config: config, decoder: .json, operationId: "domains_get_record", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func domainsGetRecord(
+        config: ClientConfig,
+        domainName: String,
+        domainRecordId: Int,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DomainRecordResponse {
+        try await (sdkRequest(
+            "GET",
+            [
+                "/v2/domains/",
+                sdkEncodePathSegment(sdkWireString(domainName)),
+                "/records/",
+                sdkEncodePathSegment(sdkWireString(domainRecordId)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "domains_get_record",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

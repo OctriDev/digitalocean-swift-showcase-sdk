@@ -3,7 +3,7 @@
 
 import Foundation
 
-// PartnerNetworkConnect domain models
+/// PartnerNetworkConnect domain models
 public struct SinglePartnerAttachmentBgpAuthKeyVariant0: Codable {
     public var bgpAuthKey: [String: JSONValue]?
 
@@ -12,19 +12,19 @@ public struct SinglePartnerAttachmentBgpAuthKeyVariant0: Codable {
     }
 
     init() {
-        self.bgpAuthKey = nil
+        bgpAuthKey = nil
     }
 }
 
-extension SinglePartnerAttachmentBgpAuthKeyVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension SinglePartnerAttachmentBgpAuthKeyVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.bgpAuthKey = try container.sdkDecodeIfPresent(.bgpAuthKey)
+        bgpAuthKey = try container.sdkDecodeIfPresent(.bgpAuthKey)
     }
 }
 
-extension SinglePartnerAttachmentBgpAuthKeyVariant0 {
-    public init(bgpAuthKey: [String: JSONValue]? = nil) {
+public extension SinglePartnerAttachmentBgpAuthKeyVariant0 {
+    init(bgpAuthKey: [String: JSONValue]? = nil) {
         self.init()
         self.bgpAuthKey = bgpAuthKey
     }
@@ -39,19 +39,19 @@ public struct SinglePartnerAttachmentBgpAuthKey: Codable {
     }
 
     init() {
-        self.bgpAuthKey = nil
+        bgpAuthKey = nil
     }
 }
 
-extension SinglePartnerAttachmentBgpAuthKey {
-    public init(from decoder: Decoder) throws {
+public extension SinglePartnerAttachmentBgpAuthKey {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.bgpAuthKey = try container.sdkDecodeIfPresent(.bgpAuthKey)
+        bgpAuthKey = try container.sdkDecodeIfPresent(.bgpAuthKey)
     }
 }
 
-extension SinglePartnerAttachmentBgpAuthKey {
-    public init(bgpAuthKey: [String: JSONValue]? = nil) {
+public extension SinglePartnerAttachmentBgpAuthKey {
+    init(bgpAuthKey: [String: JSONValue]? = nil) {
         self.init()
         self.bgpAuthKey = bgpAuthKey
     }

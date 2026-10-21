@@ -6,29 +6,81 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension SignalsMethods {
-    /// To retrieve the available filter options for creating an export, send a GET request to `/v1/signals/exports/options`. The response lists valid signal types that can be used in the `signal_type` filter when creating an export.
-    public static func signalsGetExportOptions(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> ExportOptions {
-        return try (await sdkRequest("GET", "/v1/signals/exports/options", config: config, decoder: .json, operationId: "signals_get_export_options", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+public extension SignalsMethods {
+    /// To retrieve the available filter options for creating an export, send a GET request to
+    /// `/v1/signals/exports/options`. The response lists valid signal types that can be used in the `signal_type`
+    /// filter when creating an export.
+    static func signalsGetExportOptions(
+        config: ClientConfig,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExportOptions {
+        try await (sdkRequest(
+            "GET",
+            "/v1/signals/exports/options",
+            config: config,
+            decoder: .json,
+            operationId: "signals_get_export_options",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 
-    /// To retrieve the status and details of a signals export job, send a GET request to `/v1/signals/exports/{export_id}`.
+    /// To retrieve the status and details of a signals export job, send a GET request to
+    /// `/v1/signals/exports/{export_id}`.
     ///
     /// - Parameters:
     /// - exportId: A unique identifier for an export job.
-    public static func signalsGetExport(config: ClientConfig, exportId: String, requestOptions: RequestOptions? = nil) async throws -> ExportJob {
+    static func signalsGetExport(
+        config: ClientConfig,
+        exportId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExportJob {
         try sdkValidateUuid("export_id", exportId)
 
-        return try (await sdkRequest("GET", ["/v1/signals/exports/", sdkEncodePathSegment(sdkWireString(exportId))].joined(), config: config, decoder: .json, operationId: "signals_get_export", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v1/signals/exports/", sdkEncodePathSegment(sdkWireString(exportId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "signals_get_export",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To retrieve a pre-signed download URL for a completed export, send a GET request to `/v1/signals/exports/{export_id}/download`. The export must have a `complete` status. The URL is temporary and will expire.
+    /// To retrieve a pre-signed download URL for a completed export, send a GET request to
+    /// `/v1/signals/exports/{export_id}/download`. The export must have a `complete` status. The URL is temporary and
+    /// will expire.
     ///
     /// - Parameters:
     /// - exportId: A unique identifier for an export job.
-    public static func signalsGetExportDownload(config: ClientConfig, exportId: String, requestOptions: RequestOptions? = nil) async throws -> ExportDownload {
+    static func signalsGetExportDownload(
+        config: ClientConfig,
+        exportId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExportDownload {
         try sdkValidateUuid("export_id", exportId)
 
-        return try (await sdkRequest("GET", ["/v1/signals/exports/", sdkEncodePathSegment(sdkWireString(exportId)), "/download"].joined(), config: config, decoder: .json, operationId: "signals_get_export_download", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v1/signals/exports/", sdkEncodePathSegment(sdkWireString(exportId)), "/download"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "signals_get_export_download",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// HarnessRuntimeAgent domain models
+/// HarnessRuntimeAgent domain models
 /// Environment Config create body. Credentials are not request fields: every secret is declared in the environment
 /// spec under secrets (or legacy spec.secrets), with tenantSecret slots carrying plaintext in a write-only value
 /// extracted into Secrets Manager and never returned.
@@ -27,33 +27,43 @@ public struct AgentConfigCreateRequest: Codable {
         case insights
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AgentConfigCreateRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.manifestYaml) else {
-            throw SdkValidationError(field: "manifest_yaml", code: "required", message: "Validation failed for 'manifest_yaml': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.manifestYaml = try container.sdkDecodeRequired(.manifestYaml)
-        self.insights = try container.sdkDecodeIfPresent(.insights)
-            try validateLength("name", self.name, min: 1, max: 64)
-            try sdkValidatePattern("name", self.name, sdkPatternd6415432f58a)
-            try validateLength("manifest_yaml", self.manifestYaml, min: nil, max: 524288)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AgentConfigCreateRequest {
-    public init(name: String, manifestYaml: String, insights: InsightsOptIn? = nil) throws {
+public extension AgentConfigCreateRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.manifestYaml) else {
+            throw SdkValidationError(
+                field: "manifest_yaml",
+                code: "required",
+                message: "Validation failed for 'manifest_yaml': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        manifestYaml = try container.sdkDecodeRequired(.manifestYaml)
+        insights = try container.sdkDecodeIfPresent(.insights)
+        try validateLength("name", name, min: 1, max: 64)
+        try sdkValidatePattern("name", name, sdkPatternd6415432f58a)
+        try validateLength("manifest_yaml", manifestYaml, min: nil, max: 524_288)
+    }
+}
+
+public extension AgentConfigCreateRequest {
+    init(name: String, manifestYaml: String, insights: InsightsOptIn? = nil) throws {
         (self.name, self.manifestYaml) = (name, manifestYaml)
         self.insights = insights
-            try validateLength("name", self.name, min: 1, max: 64)
-            try sdkValidatePattern("name", self.name, sdkPatternd6415432f58a)
-            try validateLength("manifest_yaml", self.manifestYaml, min: nil, max: 524288)
+        try validateLength("name", self.name, min: 1, max: 64)
+        try sdkValidatePattern("name", self.name, sdkPatternd6415432f58a)
+        try validateLength("manifest_yaml", self.manifestYaml, min: nil, max: 524_288)
     }
 }

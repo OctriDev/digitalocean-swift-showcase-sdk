@@ -6,28 +6,71 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DatabasesMethods {
-    /// To retrieve the configured SQL modes for an existing MySQL cluster, send a GET request to `/v2/databases/$DATABASE_ID/sql_mode`. The response will be a JSON object with a `sql_mode` key. This will be set to a string representing the configured SQL modes.
+public extension DatabasesMethods {
+    /// To retrieve the configured SQL modes for an existing MySQL cluster, send a GET request to
+    /// `/v2/databases/$DATABASE_ID/sql_mode`. The response will be a JSON object with a `sql_mode` key. This will be
+    /// set to a string representing the configured SQL modes.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    public static func databasesGetSqlMode(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> SqlMode {
+    static func databasesGetSqlMode(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SqlMode {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/sql_mode"].joined(), config: config, decoder: .json, operationId: "databases_get_sql_mode", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/sql_mode"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "databases_get_sql_mode",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To configure the SQL modes for an existing MySQL cluster, send a PUT request to `/v2/databases/$DATABASE_ID/sql_mode` specifying the desired modes. See the official MySQL 8 documentation for a [full list of supported SQL modes](https://dev.mysql.com/doc/refman/8.0/en/sql-mode.html#sql-mode-full). A successful request will receive a 204 No Content status code with no body in response.
+    /// To configure the SQL modes for an existing MySQL cluster, send a PUT request to
+    /// `/v2/databases/$DATABASE_ID/sql_mode` specifying the desired modes. See the official MySQL 8 documentation for a
+    /// [full list of supported SQL modes](https://dev.mysql.com/doc/refman/8.0/en/sql-mode.html#sql-mode-full). A
+    /// successful request will receive a 204 No Content status code with no body in response.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - sqlMode: A string specifying the configured SQL modes for the MySQL
     ///   cluster.
-    public static func databasesUpdateSqlMode(config: ClientConfig, databaseClusterUuid: String, sqlMode: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func databasesUpdateSqlMode(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        sqlMode: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
         let requestBody = DatabasesUpdateSqlModeRequestBody(sqlMode: sqlMode)
 
-        return try (await sdkRequest("PUT", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/sql_mode"].joined(), config: config, body: requestBody, decoder: .empty, operationId: "databases_update_sql_mode", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/sql_mode"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .empty,
+            operationId: "databases_update_sql_mode",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

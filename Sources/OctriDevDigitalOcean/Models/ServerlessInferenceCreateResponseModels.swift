@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ServerlessInference domain models
+/// ServerlessInference domain models
 /// Detailed usage statistics for the Responses API request, including input/output token counts and detailed
 /// breakdowns.
 public struct ResponseUsage: Codable {
@@ -29,37 +29,65 @@ public struct ResponseUsage: Codable {
         case totalTokens = "total_tokens"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ResponseUsage {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.inputTokens) else {
-            throw SdkValidationError(field: "input_tokens", code: "required", message: "Validation failed for 'input_tokens': value is required")
-        }
-        guard container.contains(.inputTokensDetails) else {
-            throw SdkValidationError(field: "input_tokens_details", code: "required", message: "Validation failed for 'input_tokens_details': value is required")
-        }
-        guard container.contains(.outputTokens) else {
-            throw SdkValidationError(field: "output_tokens", code: "required", message: "Validation failed for 'output_tokens': value is required")
-        }
-        guard container.contains(.outputTokensDetails) else {
-            throw SdkValidationError(field: "output_tokens_details", code: "required", message: "Validation failed for 'output_tokens_details': value is required")
-        }
-        guard container.contains(.totalTokens) else {
-            throw SdkValidationError(field: "total_tokens", code: "required", message: "Validation failed for 'total_tokens': value is required")
-        }
-        self.inputTokens = try container.sdkDecodeRequired(.inputTokens)
-        self.inputTokensDetails = try container.sdkDecodeRequired(.inputTokensDetails)
-        self.outputTokens = try container.sdkDecodeRequired(.outputTokens)
-        self.outputTokensDetails = try container.sdkDecodeRequired(.outputTokensDetails)
-        self.totalTokens = try container.sdkDecodeRequired(.totalTokens)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ResponseUsage {
-    public init(inputTokens: Int, inputTokensDetails: ResponseUsageInputTokensDetails, outputTokens: Int, outputTokensDetails: ResponseUsageOutputTokensDetails, totalTokens: Int) {
+public extension ResponseUsage {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.inputTokens) else {
+            throw SdkValidationError(
+                field: "input_tokens",
+                code: "required",
+                message: "Validation failed for 'input_tokens': value is required"
+            )
+        }
+        guard container.contains(.inputTokensDetails) else {
+            throw SdkValidationError(
+                field: "input_tokens_details",
+                code: "required",
+                message: "Validation failed for 'input_tokens_details': value is required"
+            )
+        }
+        guard container.contains(.outputTokens) else {
+            throw SdkValidationError(
+                field: "output_tokens",
+                code: "required",
+                message: "Validation failed for 'output_tokens': value is required"
+            )
+        }
+        guard container.contains(.outputTokensDetails) else {
+            throw SdkValidationError(
+                field: "output_tokens_details",
+                code: "required",
+                message: "Validation failed for 'output_tokens_details': value is required"
+            )
+        }
+        guard container.contains(.totalTokens) else {
+            throw SdkValidationError(
+                field: "total_tokens",
+                code: "required",
+                message: "Validation failed for 'total_tokens': value is required"
+            )
+        }
+        inputTokens = try container.sdkDecodeRequired(.inputTokens)
+        inputTokensDetails = try container.sdkDecodeRequired(.inputTokensDetails)
+        outputTokens = try container.sdkDecodeRequired(.outputTokens)
+        outputTokensDetails = try container.sdkDecodeRequired(.outputTokensDetails)
+        totalTokens = try container.sdkDecodeRequired(.totalTokens)
+    }
+}
+
+public extension ResponseUsage {
+    init(
+        inputTokens: Int,
+        inputTokensDetails: ResponseUsageInputTokensDetails,
+        outputTokens: Int,
+        outputTokensDetails: ResponseUsageOutputTokensDetails,
+        totalTokens: Int
+    ) {
         (self.inputTokens, self.inputTokensDetails) = (inputTokens, inputTokensDetails)
         (self.outputTokens, self.outputTokensDetails) = (outputTokens, outputTokensDetails)
         self.totalTokens = totalTokens
@@ -76,21 +104,27 @@ public struct ResponseUsageInputTokensDetails: Codable {
         case cachedTokens = "cached_tokens"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ResponseUsageInputTokensDetails {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.cachedTokens) else {
-            throw SdkValidationError(field: "cached_tokens", code: "required", message: "Validation failed for 'cached_tokens': value is required")
-        }
-        self.cachedTokens = try container.sdkDecodeRequired(.cachedTokens)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ResponseUsageInputTokensDetails {
-    public init(cachedTokens: Int) {
+public extension ResponseUsageInputTokensDetails {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.cachedTokens) else {
+            throw SdkValidationError(
+                field: "cached_tokens",
+                code: "required",
+                message: "Validation failed for 'cached_tokens': value is required"
+            )
+        }
+        cachedTokens = try container.sdkDecodeRequired(.cachedTokens)
+    }
+}
+
+public extension ResponseUsageInputTokensDetails {
+    init(cachedTokens: Int) {
         self.cachedTokens = cachedTokens
     }
 }
@@ -108,25 +142,35 @@ public struct ResponseUsageOutputTokensDetails: Codable {
         case toolOutputTokens = "tool_output_tokens"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ResponseUsageOutputTokensDetails {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.reasoningTokens) else {
-            throw SdkValidationError(field: "reasoning_tokens", code: "required", message: "Validation failed for 'reasoning_tokens': value is required")
-        }
-        guard container.contains(.toolOutputTokens) else {
-            throw SdkValidationError(field: "tool_output_tokens", code: "required", message: "Validation failed for 'tool_output_tokens': value is required")
-        }
-        self.reasoningTokens = try container.sdkDecodeRequired(.reasoningTokens)
-        self.toolOutputTokens = try container.sdkDecodeRequired(.toolOutputTokens)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ResponseUsageOutputTokensDetails {
-    public init(reasoningTokens: Int, toolOutputTokens: Int) {
+public extension ResponseUsageOutputTokensDetails {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.reasoningTokens) else {
+            throw SdkValidationError(
+                field: "reasoning_tokens",
+                code: "required",
+                message: "Validation failed for 'reasoning_tokens': value is required"
+            )
+        }
+        guard container.contains(.toolOutputTokens) else {
+            throw SdkValidationError(
+                field: "tool_output_tokens",
+                code: "required",
+                message: "Validation failed for 'tool_output_tokens': value is required"
+            )
+        }
+        reasoningTokens = try container.sdkDecodeRequired(.reasoningTokens)
+        toolOutputTokens = try container.sdkDecodeRequired(.toolOutputTokens)
+    }
+}
+
+public extension ResponseUsageOutputTokensDetails {
+    init(reasoningTokens: Int, toolOutputTokens: Int) {
         (self.reasoningTokens, self.toolOutputTokens) = (reasoningTokens, toolOutputTokens)
     }
 }

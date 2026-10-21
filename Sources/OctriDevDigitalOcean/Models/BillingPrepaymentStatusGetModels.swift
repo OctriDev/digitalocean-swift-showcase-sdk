@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Billing domain models
+/// Billing domain models
 /// Typed representation of the `PrepaymentStatusResponse` API schema.
 public struct PrepaymentStatusResponse: Codable {
     /// Optional object value serialized in the `status` wire field.
@@ -14,19 +14,19 @@ public struct PrepaymentStatusResponse: Codable {
     }
 
     init() {
-        self.status = nil
+        status = nil
     }
 }
 
-extension PrepaymentStatusResponse {
-    public init(from decoder: Decoder) throws {
+public extension PrepaymentStatusResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.status = try container.sdkDecodeIfPresent(.status)
+        status = try container.sdkDecodeIfPresent(.status)
     }
 }
 
-extension PrepaymentStatusResponse {
-    public init(status: PrepaymentStatus? = nil) {
+public extension PrepaymentStatusResponse {
+    init(status: PrepaymentStatus? = nil) {
         self.init()
         self.status = status
     }

@@ -6,8 +6,13 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension SignalsMethods {
-    /// To create a new signals data export, send a POST request to `/v1/signals/exports`. To export one Harness Runtime environment, include its `agent_id` (`type` defaults to `agent`). To export the team's Serverless Inference Signals conversations, set `type` to `inference` and omit `agent_id`. You may optionally filter the export by `signal_type`, `session_ids`, `start_time`, and `end_time`. Use the export options endpoint to discover available signal types. The export job runs asynchronously. Poll the get export endpoint to check its status. When complete, use the download endpoint to retrieve a pre-signed URL.
+public extension SignalsMethods {
+    /// To create a new signals data export, send a POST request to `/v1/signals/exports`. To export one Harness Runtime
+    /// environment, include its `agent_id` (`type` defaults to `agent`). To export the team's Serverless Inference
+    /// Signals conversations, set `type` to `inference` and omit `agent_id`. You may optionally filter the export by
+    /// `signal_type`, `session_ids`, `start_time`, and `end_time`. Use the export options endpoint to discover
+    /// available signal types. The export job runs asynchronously. Poll the get export endpoint to check its status.
+    /// When complete, use the download endpoint to retrieve a pre-signed URL.
     ///
     /// - Parameters:
     /// - type: The scope of the export. `agent` exports Signals conversations for
@@ -24,21 +29,53 @@ extension SignalsMethods {
     ///   export.
     /// - startTime: Include only sessions that started at or after this timestamp.
     /// - endTime: Include only sessions that started at or before this timestamp.
-    public static func signalsCreateExport(config: ClientConfig, type: CreateExportRequestType? = nil, agentId: String? = nil, signalType: [String]? = nil, sessionIds: [String]? = nil, startTime: Date? = nil, endTime: Date? = nil, requestOptions: RequestOptions? = nil) async throws -> ExportJob {
-        if let agentId = agentId {
+    static func signalsCreateExport(
+        config: ClientConfig,
+        type: CreateExportRequestType? = nil,
+        agentId: String? = nil,
+        signalType: [String]? = nil,
+        sessionIds: [String]? = nil,
+        startTime: Date? = nil,
+        endTime: Date? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExportJob {
+        if let agentId {
             try sdkValidateUuid("agent_id", agentId)
         }
 
-        if let startTime = startTime {
+        if let startTime {
             try sdkValidateDateTime("start_time", startTime)
         }
 
-        if let endTime = endTime {
+        if let endTime {
             try sdkValidateDateTime("end_time", endTime)
         }
 
-        let requestBody = SignalsCreateExportRequestBody(type: type, agentId: agentId, signalType: signalType, sessionIds: sessionIds, startTime: startTime, endTime: endTime)
+        let requestBody = SignalsCreateExportRequestBody(
+            type: type,
+            agentId: agentId,
+            signalType: signalType,
+            sessionIds: sessionIds,
+            startTime: startTime,
+            endTime: endTime
+        )
 
-        return try (await sdkRequest("POST", "/v1/signals/exports", config: config, body: requestBody, decoder: .json, operationId: "signals_create_export", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "422": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v1/signals/exports",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "signals_create_export",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "422": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

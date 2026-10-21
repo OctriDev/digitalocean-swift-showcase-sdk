@@ -6,28 +6,70 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension NfsMethods {
-    /// To get an NFS share, send a GET request to `/v2/nfs/{nfs_id}?region=${region}`. A successful request will return the NFS share.
+public extension NfsMethods {
+    /// To get an NFS share, send a GET request to `/v2/nfs/{nfs_id}?region=${region}`. A successful request will return
+    /// the NFS share.
     ///
     /// - Parameters:
     /// - nfsId: The unique ID of the NFS share
     /// - region: The DigitalOcean region slug (e.g., nyc2, atl1) where the NFS
     ///   share resides.
-    public static func nfsGet(config: ClientConfig, nfsId: String, region: String? = nil, requestOptions: RequestOptions? = nil) async throws -> NfsGetResponse {
-        return try (await sdkRequest("GET", ["/v2/nfs/", sdkEncodePathSegment(sdkWireString(nfsId))].joined(), config: config, query: [
-            SdkQueryParameter("region", value: region),
-        ], decoder: .json, operationId: "nfs_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func nfsGet(
+        config: ClientConfig,
+        nfsId: String,
+        region: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> NfsGetResponse {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/nfs/", sdkEncodePathSegment(sdkWireString(nfsId))].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("region", value: region),
+            ],
+            decoder: .json,
+            operationId: "nfs_get",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To delete an NFS share, send a DELETE request to `/v2/nfs/{nfs_id}?region=${region}`. A successful request will return a `204 No Content` status code.
+    /// To delete an NFS share, send a DELETE request to `/v2/nfs/{nfs_id}?region=${region}`. A successful request will
+    /// return a `204 No Content` status code.
     ///
     /// - Parameters:
     /// - nfsId: The unique ID of the NFS share
     /// - region: The DigitalOcean region slug (e.g., nyc2, atl1) where the NFS
     ///   share resides.
-    public static func nfsDelete(config: ClientConfig, nfsId: String, region: String? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try (await sdkRequest("DELETE", ["/v2/nfs/", sdkEncodePathSegment(sdkWireString(nfsId))].joined(), config: config, query: [
-            SdkQueryParameter("region", value: region),
-        ], decoder: .empty, operationId: "nfs_delete", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func nfsDelete(
+        config: ClientConfig,
+        nfsId: String,
+        region: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await (sdkRequest(
+            "DELETE",
+            ["/v2/nfs/", sdkEncodePathSegment(sdkWireString(nfsId))].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("region", value: region),
+            ],
+            decoder: .empty,
+            operationId: "nfs_delete",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

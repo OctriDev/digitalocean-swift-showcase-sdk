@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ServerlessInferenceAsync domain models
+/// ServerlessInferenceAsync domain models
 /// Request body for asynchronously invoking a model. Supports image generation, audio generation, and
 /// text-to-speech models. The `input` object fields vary depending on the model type.
 public struct AsyncInvokeRequest: Codable {
@@ -25,26 +25,36 @@ public struct AsyncInvokeRequest: Codable {
         case tags
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AsyncInvokeRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.modelId) else {
-            throw SdkValidationError(field: "model_id", code: "required", message: "Validation failed for 'model_id': value is required")
-        }
-        guard container.contains(.input) else {
-            throw SdkValidationError(field: "input", code: "required", message: "Validation failed for 'input': value is required")
-        }
-        self.modelId = try container.sdkDecodeRequired(.modelId)
-        self.input = try container.sdkDecodeRequired(.input)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AsyncInvokeRequest {
-    public init(modelId: String, input: AsyncInvokeRequestInput, tags: [AsyncInvokeRequestTagsItem]? = nil) {
+public extension AsyncInvokeRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.modelId) else {
+            throw SdkValidationError(
+                field: "model_id",
+                code: "required",
+                message: "Validation failed for 'model_id': value is required"
+            )
+        }
+        guard container.contains(.input) else {
+            throw SdkValidationError(
+                field: "input",
+                code: "required",
+                message: "Validation failed for 'input': value is required"
+            )
+        }
+        modelId = try container.sdkDecodeRequired(.modelId)
+        input = try container.sdkDecodeRequired(.input)
+        tags = try container.sdkDecodeIfPresent(.tags)
+    }
+}
+
+public extension AsyncInvokeRequest {
+    init(modelId: String, input: AsyncInvokeRequestInput, tags: [AsyncInvokeRequestTagsItem]? = nil) {
         (self.modelId, self.input) = (modelId, input)
         self.tags = tags
     }
@@ -87,49 +97,76 @@ public struct AsyncInvokeResponse: Codable {
         case error
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension AsyncInvokeResponse {
-    public init(from decoder: Decoder) throws {
+public extension AsyncInvokeResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.requestId) else {
-            throw SdkValidationError(field: "request_id", code: "required", message: "Validation failed for 'request_id': value is required")
+            throw SdkValidationError(
+                field: "request_id",
+                code: "required",
+                message: "Validation failed for 'request_id': value is required"
+            )
         }
         guard container.contains(.status) else {
-            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
+            throw SdkValidationError(
+                field: "status",
+                code: "required",
+                message: "Validation failed for 'status': value is required"
+            )
         }
         guard container.contains(.modelId) else {
-            throw SdkValidationError(field: "model_id", code: "required", message: "Validation failed for 'model_id': value is required")
+            throw SdkValidationError(
+                field: "model_id",
+                code: "required",
+                message: "Validation failed for 'model_id': value is required"
+            )
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
+            throw SdkValidationError(
+                field: "created_at",
+                code: "required",
+                message: "Validation failed for 'created_at': value is required"
+            )
         }
-        self.requestId = try container.sdkDecodeRequired(.requestId)
-        self.status = try container.sdkDecodeRequired(.status)
-        self.modelId = try container.sdkDecodeRequired(.modelId)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        self.output = try container.sdkDecodeIfPresent(.output)
-        self.error = try container.sdkDecodeIfPresent(.error)
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-        if let value = self.startedAt {
+        requestId = try container.sdkDecodeRequired(.requestId)
+        status = try container.sdkDecodeRequired(.status)
+        modelId = try container.sdkDecodeRequired(.modelId)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        output = try container.sdkDecodeIfPresent(.output)
+        error = try container.sdkDecodeIfPresent(.error)
+        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        if let value = startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
-        if let value = self.completedAt {
+        if let value = completedAt {
             try sdkValidateDateTime("completed_at", sdkWireString(value))
         }
     }
 }
 
-extension AsyncInvokeResponse {
-    public init(requestId: String, status: AsyncInvokeResponseStatus, modelId: String, createdAt: Date, startedAt: Date? = nil, completedAt: Date? = nil, output: [String: JSONValue]? = nil, error: String? = nil) throws {
+public extension AsyncInvokeResponse {
+    init(
+        requestId: String,
+        status: AsyncInvokeResponseStatus,
+        modelId: String,
+        createdAt: Date,
+        startedAt: Date? = nil,
+        completedAt: Date? = nil,
+        output: [String: JSONValue]? = nil,
+        error: String? = nil
+    ) throws {
         (self.requestId, self.status) = (requestId, status)
         (self.modelId, self.createdAt) = (modelId, createdAt)
         (self.startedAt, self.completedAt) = (startedAt, completedAt)
         (self.output, self.error) = (output, error)
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
         if let value = self.startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
@@ -186,56 +223,113 @@ public struct AsyncInvokeRequestInput: Codable {
     }
 
     init() {
-        (self.prompt, self.text, self.outputFormat, self.numInferenceSteps, self.guidanceScale) = (nil, nil, nil, nil, nil)
-        (self.numImages, self.enableSafetyChecker, self.secondsTotal) = (nil, nil, nil)
+        (prompt, text, outputFormat, numInferenceSteps, guidanceScale) = (nil, nil, nil, nil, nil)
+        (numImages, enableSafetyChecker, secondsTotal) = (nil, nil, nil)
     }
 }
 
-extension AsyncInvokeRequestInput {
-    public init(from decoder: Decoder) throws {
+public extension AsyncInvokeRequestInput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.prompt = try container.sdkDecodeIfPresent(.prompt)
-        self.text = try container.sdkDecodeIfPresent(.text)
-        self.outputFormat = try container.sdkDecodeIfPresent(.outputFormat)
-        self.numInferenceSteps = try container.sdkDecodeIfPresent(.numInferenceSteps)
-        self.guidanceScale = try container.sdkDecodeIfPresent(.guidanceScale)
-        self.numImages = try container.sdkDecodeIfPresent(.numImages)
-        self.enableSafetyChecker = try container.sdkDecodeIfPresent(.enableSafetyChecker)
-        self.secondsTotal = try container.sdkDecodeIfPresent(.secondsTotal)
+        prompt = try container.sdkDecodeIfPresent(.prompt)
+        text = try container.sdkDecodeIfPresent(.text)
+        outputFormat = try container.sdkDecodeIfPresent(.outputFormat)
+        numInferenceSteps = try container.sdkDecodeIfPresent(.numInferenceSteps)
+        guidanceScale = try container.sdkDecodeIfPresent(.guidanceScale)
+        numImages = try container.sdkDecodeIfPresent(.numImages)
+        enableSafetyChecker = try container.sdkDecodeIfPresent(.enableSafetyChecker)
+        secondsTotal = try container.sdkDecodeIfPresent(.secondsTotal)
         additionalProperties = try decoder.sdkAdditionalProperties(besides: CodingKeys.self)
-        if let value = self.numInferenceSteps {
-            try validateRange("num_inference_steps", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = numInferenceSteps {
+            try validateRange(
+                "num_inference_steps",
+                Double(value),
+                min: 1,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.numImages {
-            try validateRange("num_images", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = numImages {
+            try validateRange(
+                "num_images",
+                Double(value),
+                min: 1,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.secondsTotal {
-            try validateRange("seconds_total", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = secondsTotal {
+            try validateRange(
+                "seconds_total",
+                Double(value),
+                min: 1,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
-extension AsyncInvokeRequestInput {
-    public init(prompt: String? = nil, text: String? = nil, outputFormat: String? = nil, numInferenceSteps: Int? = nil, guidanceScale: Double? = nil, numImages: Int? = nil, enableSafetyChecker: Bool? = nil, secondsTotal: Int? = nil) throws {
+public extension AsyncInvokeRequestInput {
+    init(
+        prompt: String? = nil,
+        text: String? = nil,
+        outputFormat: String? = nil,
+        numInferenceSteps: Int? = nil,
+        guidanceScale: Double? = nil,
+        numImages: Int? = nil,
+        enableSafetyChecker: Bool? = nil,
+        secondsTotal: Int? = nil
+    ) throws {
         self.init()
         (self.prompt, self.text) = (prompt, text)
         (self.outputFormat, self.numInferenceSteps) = (outputFormat, numInferenceSteps)
         (self.guidanceScale, self.numImages) = (guidanceScale, numImages)
         (self.enableSafetyChecker, self.secondsTotal) = (enableSafetyChecker, secondsTotal)
         if let value = self.numInferenceSteps {
-            try validateRange("num_inference_steps", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "num_inference_steps",
+                Double(value),
+                min: 1,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
         if let value = self.numImages {
-            try validateRange("num_images", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "num_images",
+                Double(value),
+                min: 1,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
         if let value = self.secondsTotal {
-            try validateRange("seconds_total", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "seconds_total",
+                Double(value),
+                min: 1,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
-extension AsyncInvokeRequestInput {
-    public func encode(to encoder: Encoder) throws {
+public extension AsyncInvokeRequestInput {
+    func encode(to encoder: Encoder) throws {
         try encoder.sdkEncodeAdditionalProperties(additionalProperties)
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(prompt, forKey: .prompt)
@@ -263,25 +357,35 @@ public struct AsyncInvokeRequestTagsItem: Codable {
         case value
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AsyncInvokeRequestTagsItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.key) else {
-            throw SdkValidationError(field: "key", code: "required", message: "Validation failed for 'key': value is required")
-        }
-        guard container.contains(.value) else {
-            throw SdkValidationError(field: "value", code: "required", message: "Validation failed for 'value': value is required")
-        }
-        self.key = try container.sdkDecodeRequired(.key)
-        self.value = try container.sdkDecodeRequired(.value)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AsyncInvokeRequestTagsItem {
-    public init(key: String, value: String) {
+public extension AsyncInvokeRequestTagsItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.key) else {
+            throw SdkValidationError(
+                field: "key",
+                code: "required",
+                message: "Validation failed for 'key': value is required"
+            )
+        }
+        guard container.contains(.value) else {
+            throw SdkValidationError(
+                field: "value",
+                code: "required",
+                message: "Validation failed for 'value': value is required"
+            )
+        }
+        key = try container.sdkDecodeRequired(.key)
+        value = try container.sdkDecodeRequired(.value)
+    }
+}
+
+public extension AsyncInvokeRequestTagsItem {
+    init(key: String, value: String) {
         (self.key, self.value) = (key, value)
     }
 }
@@ -290,7 +394,10 @@ extension AsyncInvokeRequestTagsItem {
 public struct AsyncInvokeResponseStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let queued = AsyncInvokeResponseStatus(rawValue: "QUEUED")
     public static let inProgress = AsyncInvokeResponseStatus(rawValue: "IN_PROGRESS")
     public static let completed = AsyncInvokeResponseStatus(rawValue: "COMPLETED")
@@ -298,7 +405,7 @@ public struct AsyncInvokeResponseStatus: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Signals domain models
+/// Signals domain models
 /// A pre-signed download URL for a completed export.
 public struct ExportDownload: Codable {
     /// A temporary pre-signed URL to download the export archive.
@@ -20,27 +20,37 @@ public struct ExportDownload: Codable {
         case expiresAt = "expires_at"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ExportDownload {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.downloadUrl) else {
-            throw SdkValidationError(field: "download_url", code: "required", message: "Validation failed for 'download_url': value is required")
-        }
-        guard container.contains(.expiresAt) else {
-            throw SdkValidationError(field: "expires_at", code: "required", message: "Validation failed for 'expires_at': value is required")
-        }
-        self.downloadUrl = try container.sdkDecodeRequired(.downloadUrl)
-        self.expiresAt = try container.sdkDecodeRequired(.expiresAt)
-            try sdkValidateUri("download_url", self.downloadUrl)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ExportDownload {
-    public init(downloadUrl: String, expiresAt: Int) throws {
+public extension ExportDownload {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.downloadUrl) else {
+            throw SdkValidationError(
+                field: "download_url",
+                code: "required",
+                message: "Validation failed for 'download_url': value is required"
+            )
+        }
+        guard container.contains(.expiresAt) else {
+            throw SdkValidationError(
+                field: "expires_at",
+                code: "required",
+                message: "Validation failed for 'expires_at': value is required"
+            )
+        }
+        downloadUrl = try container.sdkDecodeRequired(.downloadUrl)
+        expiresAt = try container.sdkDecodeRequired(.expiresAt)
+        try sdkValidateUri("download_url", downloadUrl)
+    }
+}
+
+public extension ExportDownload {
+    init(downloadUrl: String, expiresAt: Int) throws {
         (self.downloadUrl, self.expiresAt) = (downloadUrl, expiresAt)
-            try sdkValidateUri("download_url", self.downloadUrl)
+        try sdkValidateUri("download_url", self.downloadUrl)
     }
 }

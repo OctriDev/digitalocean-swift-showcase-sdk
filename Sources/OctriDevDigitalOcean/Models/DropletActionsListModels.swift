@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DropletActions domain models
+/// DropletActions domain models
 public struct AllDropletActionsVariant0: Codable {
     public var actions: [Action]?
 
@@ -12,19 +12,19 @@ public struct AllDropletActionsVariant0: Codable {
     }
 
     init() {
-        self.actions = nil
+        actions = nil
     }
 }
 
-extension AllDropletActionsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AllDropletActionsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.actions = try container.sdkDecodeIfPresent(.actions)
+        actions = try container.sdkDecodeIfPresent(.actions)
     }
 }
 
-extension AllDropletActionsVariant0 {
-    public init(actions: [Action]? = nil) {
+public extension AllDropletActionsVariant0 {
+    init(actions: [Action]? = nil) {
         self.init()
         self.actions = actions
     }
@@ -44,23 +44,29 @@ public struct AllDropletActions: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllDropletActions {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.actions = try container.sdkDecodeIfPresent(.actions)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllDropletActions {
-    public init(meta: MetaMeta, actions: [Action]? = nil, links: PageLinks? = nil) {
+public extension AllDropletActions {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        actions = try container.sdkDecodeIfPresent(.actions)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllDropletActions {
+    init(meta: MetaMeta, actions: [Action]? = nil, links: PageLinks? = nil) {
         (self.meta, self.actions) = (meta, actions)
         self.links = links
     }

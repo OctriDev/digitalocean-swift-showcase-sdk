@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Insights domain models
+/// Insights domain models
 /// Email notification channel configuration. Recipients must be verified team member email addresses.
 public struct EmailNotificationConfig: Codable {
     /// One or more recipient email addresses, separated by commas, semicolons, or spaces.
@@ -14,21 +14,27 @@ public struct EmailNotificationConfig: Codable {
         case to
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension EmailNotificationConfig {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.to) else {
-            throw SdkValidationError(field: "to", code: "required", message: "Validation failed for 'to': value is required")
-        }
-        self.to = try container.sdkDecodeRequired(.to)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension EmailNotificationConfig {
-    public init(to: String) {
+public extension EmailNotificationConfig {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.to) else {
+            throw SdkValidationError(
+                field: "to",
+                code: "required",
+                message: "Validation failed for 'to': value is required"
+            )
+        }
+        to = try container.sdkDecodeRequired(.to)
+    }
+}
+
+public extension EmailNotificationConfig {
+    init(to: String) {
         self.to = to
     }
 }
@@ -96,40 +102,55 @@ public struct SpanRecord: Codable {
     }
 
     init() {
-        (self.traceId, self.spanId, self.parentSpanId, self.startTime, self.endTime) = (nil, nil, nil, nil, nil)
-        (self.durationNs, self.name, self.kind, self.statusCode, self.statusMessage) = (nil, nil, nil, nil, nil)
-        (self.serviceName, self.resource, self.attributes, self.region) = (nil, nil, nil, nil)
+        (traceId, spanId, parentSpanId, startTime, endTime) = (nil, nil, nil, nil, nil)
+        (durationNs, name, kind, statusCode, statusMessage) = (nil, nil, nil, nil, nil)
+        (serviceName, resource, attributes, region) = (nil, nil, nil, nil)
     }
 }
 
-extension SpanRecord {
-    public init(from decoder: Decoder) throws {
+public extension SpanRecord {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.traceId = try container.sdkDecodeIfPresent(.traceId)
-        self.spanId = try container.sdkDecodeIfPresent(.spanId)
-        self.parentSpanId = try container.sdkDecodeIfPresent(.parentSpanId)
-        self.startTime = try container.sdkDecodeIfPresent(.startTime)
-        self.endTime = try container.sdkDecodeIfPresent(.endTime)
-        self.durationNs = try container.sdkDecodeIfPresent(.durationNs)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.kind = try container.sdkDecodeIfPresent(.kind)
-        self.statusCode = try container.sdkDecodeIfPresent(.statusCode)
-        self.statusMessage = try container.sdkDecodeIfPresent(.statusMessage)
-        self.serviceName = try container.sdkDecodeIfPresent(.serviceName)
-        self.resource = try container.sdkDecodeIfPresent(.resource)
-        self.attributes = try container.sdkDecodeIfPresent(.attributes)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        if let value = self.startTime {
+        traceId = try container.sdkDecodeIfPresent(.traceId)
+        spanId = try container.sdkDecodeIfPresent(.spanId)
+        parentSpanId = try container.sdkDecodeIfPresent(.parentSpanId)
+        startTime = try container.sdkDecodeIfPresent(.startTime)
+        endTime = try container.sdkDecodeIfPresent(.endTime)
+        durationNs = try container.sdkDecodeIfPresent(.durationNs)
+        name = try container.sdkDecodeIfPresent(.name)
+        kind = try container.sdkDecodeIfPresent(.kind)
+        statusCode = try container.sdkDecodeIfPresent(.statusCode)
+        statusMessage = try container.sdkDecodeIfPresent(.statusMessage)
+        serviceName = try container.sdkDecodeIfPresent(.serviceName)
+        resource = try container.sdkDecodeIfPresent(.resource)
+        attributes = try container.sdkDecodeIfPresent(.attributes)
+        region = try container.sdkDecodeIfPresent(.region)
+        if let value = startTime {
             try sdkValidateDateTime("startTime", sdkWireString(value))
         }
-        if let value = self.endTime {
+        if let value = endTime {
             try sdkValidateDateTime("endTime", sdkWireString(value))
         }
     }
 }
 
-extension SpanRecord {
-    public init(traceId: String? = nil, spanId: String? = nil, parentSpanId: String? = nil, startTime: Date? = nil, endTime: Date? = nil, durationNs: Int? = nil, name: String? = nil, kind: String? = nil, statusCode: String? = nil, statusMessage: String? = nil, serviceName: String? = nil, resource: [String: String]? = nil, attributes: [String: String]? = nil, region: String? = nil) throws {
+public extension SpanRecord {
+    init(
+        traceId: String? = nil,
+        spanId: String? = nil,
+        parentSpanId: String? = nil,
+        startTime: Date? = nil,
+        endTime: Date? = nil,
+        durationNs: Int? = nil,
+        name: String? = nil,
+        kind: String? = nil,
+        statusCode: String? = nil,
+        statusMessage: String? = nil,
+        serviceName: String? = nil,
+        resource: [String: String]? = nil,
+        attributes: [String: String]? = nil,
+        region: String? = nil
+    ) throws {
         self.init()
         (self.traceId, self.spanId) = (traceId, spanId)
         (self.parentSpanId, self.startTime) = (parentSpanId, startTime)
@@ -168,30 +189,44 @@ public struct QueryFilter: Codable {
         case value
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension QueryFilter {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.field) else {
-            throw SdkValidationError(field: "field", code: "required", message: "Validation failed for 'field': value is required")
-        }
-        guard container.contains(.`operator`) else {
-            throw SdkValidationError(field: "operator", code: "required", message: "Validation failed for 'operator': value is required")
-        }
-        guard container.contains(.value) else {
-            throw SdkValidationError(field: "value", code: "required", message: "Validation failed for 'value': value is required")
-        }
-        self.field = try container.sdkDecodeRequired(.field)
-        self.`operator` = try container.sdkDecodeRequired(.`operator`)
-        self.value = try container.sdkDecodeRequired(.value)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension QueryFilter {
-    public init(field: String, `operator`: QueryFilterOperator, value: String) {
-        (self.field, self.`operator`) = (field, `operator`)
+public extension QueryFilter {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.field) else {
+            throw SdkValidationError(
+                field: "field",
+                code: "required",
+                message: "Validation failed for 'field': value is required"
+            )
+        }
+        guard container.contains(.operator) else {
+            throw SdkValidationError(
+                field: "operator",
+                code: "required",
+                message: "Validation failed for 'operator': value is required"
+            )
+        }
+        guard container.contains(.value) else {
+            throw SdkValidationError(
+                field: "value",
+                code: "required",
+                message: "Validation failed for 'value': value is required"
+            )
+        }
+        field = try container.sdkDecodeRequired(.field)
+        self.operator = try container.sdkDecodeRequired(.operator)
+        value = try container.sdkDecodeRequired(.value)
+    }
+}
+
+public extension QueryFilter {
+    init(field: String, operator: QueryFilterOperator, value: String) {
+        (self.field, self.operator) = (field, `operator`)
         self.value = value
     }
 }
@@ -207,21 +242,27 @@ public struct SecretStatus: Codable {
         case configured
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SecretStatus {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.configured) else {
-            throw SdkValidationError(field: "configured", code: "required", message: "Validation failed for 'configured': value is required")
-        }
-        self.configured = try container.sdkDecodeRequired(.configured)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SecretStatus {
-    public init(configured: Bool) {
+public extension SecretStatus {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.configured) else {
+            throw SdkValidationError(
+                field: "configured",
+                code: "required",
+                message: "Validation failed for 'configured': value is required"
+            )
+        }
+        configured = try container.sdkDecodeRequired(.configured)
+    }
+}
+
+public extension SecretStatus {
+    init(configured: Bool) {
         self.configured = configured
     }
 }
@@ -250,24 +291,30 @@ public struct MetricsQuery: Codable {
         case tags
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension MetricsQuery {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.metric) else {
-            throw SdkValidationError(field: "metric", code: "required", message: "Validation failed for 'metric': value is required")
-        }
-        self.metric = try container.sdkDecodeRequired(.metric)
-        self.filters = try container.sdkDecodeIfPresent(.filters)
-        self.resourceUrns = try container.sdkDecodeIfPresent(.resourceUrns)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension MetricsQuery {
-    public init(metric: String, filters: [QueryFilter]? = nil, resourceUrns: [String]? = nil, tags: [String]? = nil) {
+public extension MetricsQuery {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.metric) else {
+            throw SdkValidationError(
+                field: "metric",
+                code: "required",
+                message: "Validation failed for 'metric': value is required"
+            )
+        }
+        metric = try container.sdkDecodeRequired(.metric)
+        filters = try container.sdkDecodeIfPresent(.filters)
+        resourceUrns = try container.sdkDecodeIfPresent(.resourceUrns)
+        tags = try container.sdkDecodeIfPresent(.tags)
+    }
+}
+
+public extension MetricsQuery {
+    init(metric: String, filters: [QueryFilter]? = nil, resourceUrns: [String]? = nil, tags: [String]? = nil) {
         (self.metric, self.filters) = (metric, filters)
         (self.resourceUrns, self.tags) = (resourceUrns, tags)
     }
@@ -280,17 +327,22 @@ extension MetricsQuery {
 public struct QueryFilterOperator: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let filterOperatorEqual = QueryFilterOperator(rawValue: "FILTER_OPERATOR_EQUAL")
     public static let filterOperatorNotEqual = QueryFilterOperator(rawValue: "FILTER_OPERATOR_NOT_EQUAL")
     public static let filterOperatorLessThan = QueryFilterOperator(rawValue: "FILTER_OPERATOR_LESS_THAN")
-    public static let filterOperatorLessThanOrEqual = QueryFilterOperator(rawValue: "FILTER_OPERATOR_LESS_THAN_OR_EQUAL")
+    public static let filterOperatorLessThanOrEqual =
+        QueryFilterOperator(rawValue: "FILTER_OPERATOR_LESS_THAN_OR_EQUAL")
     public static let filterOperatorGreaterThan = QueryFilterOperator(rawValue: "FILTER_OPERATOR_GREATER_THAN")
-    public static let filterOperatorGreaterThanOrEqual = QueryFilterOperator(rawValue: "FILTER_OPERATOR_GREATER_THAN_OR_EQUAL")
+    public static let filterOperatorGreaterThanOrEqual =
+        QueryFilterOperator(rawValue: "FILTER_OPERATOR_GREATER_THAN_OR_EQUAL")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

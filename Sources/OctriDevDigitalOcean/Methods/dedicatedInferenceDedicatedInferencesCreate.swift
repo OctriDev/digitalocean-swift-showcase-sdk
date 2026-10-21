@@ -6,19 +6,39 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DedicatedInferenceMethods {
-    /// Create a new Dedicated Inference for your team. Send a POST request to `/v2/dedicated-inferences` with a `spec` object (version, name, region, vpc, enable_public_endpoint, model_deployments) and optional `access_tokens` (e.g. hugging_face_token for gated models). The response code 202 Accepted indicates the request was accepted for processing; it does not indicate success or failure. The token value is returned only on create; store it securely.
+public extension DedicatedInferenceMethods {
+    /// Create a new Dedicated Inference for your team. Send a POST request to `/v2/dedicated-inferences` with a `spec`
+    /// object (version, name, region, vpc, enable_public_endpoint, model_deployments) and optional `access_tokens`
+    /// (e.g. hugging_face_token for gated models). The response code 202 Accepted indicates the request was accepted
+    /// for processing; it does not indicate success or failure. The token value is returned only on create; store it
+    /// securely.
     ///
     /// - Parameters:
     /// - spec: Structured configuration for a Dedicated Inference deployment.
     /// - accessTokens: Key-value pairs for provider tokens (e.g. Hugging Face).
-    public static func dedicatedInferencesCreate(config: ClientConfig, spec: DedicatedInferenceSpecRequest, accessTokens: [String: String]? = nil, requestOptions: RequestOptions? = nil) async throws -> DedicatedInferenceProvisioning {
+    static func dedicatedInferencesCreate(
+        config: ClientConfig,
+        spec: DedicatedInferenceSpecRequest,
+        accessTokens: [String: String]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DedicatedInferenceProvisioning {
         let requestBody = DedicatedInferencesCreateRequestBody(spec: spec, accessTokens: accessTokens)
 
-        return try (await sdkRequest("POST", "/v2/dedicated-inferences", config: config, body: requestBody, decoder: .json, operationId: "dedicatedInferences_create", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/dedicated-inferences",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "dedicatedInferences_create",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 
-    /// List all accelerators (GPUs) in use by a Dedicated Inference instance. Send a GET request to `/v2/dedicated-inferences/{dedicated_inference_id}/accelerators`. Optionally filter by slug and use page/per_page for pagination.
+    /// List all accelerators (GPUs) in use by a Dedicated Inference instance. Send a GET request to
+    /// `/v2/dedicated-inferences/{dedicated_inference_id}/accelerators`. Optionally filter by slug and use
+    /// page/per_page for pagination.
     ///
     /// - Parameters:
     /// - dedicatedInferenceId: A unique identifier for a Dedicated Inference
@@ -26,21 +46,44 @@ extension DedicatedInferenceMethods {
     /// - perPage: Number of items returned per page
     /// - page: Which 'page' of paginated results to return.
     /// - slug: Filter accelerators by GPU slug.
-    public static func dedicatedInferencesListAccelerators(config: ClientConfig, dedicatedInferenceId: String, perPage: Int? = nil, page: Int? = nil, slug: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AcceleratorsList {
+    static func dedicatedInferencesListAccelerators(
+        config: ClientConfig,
+        dedicatedInferenceId: String,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        slug: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AcceleratorsList {
         try sdkValidateUuid("dedicated_inference_id", dedicatedInferenceId)
 
-        if let perPage = perPage {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 200)
         }
 
-        if let page = page {
+        if let page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try (await sdkRequest("GET", ["/v2/dedicated-inferences/", sdkEncodePathSegment(sdkWireString(dedicatedInferenceId)), "/accelerators"].joined(), config: config, query: [
-            SdkQueryParameter("per_page", value: perPage),
-            SdkQueryParameter("page", value: page),
-            SdkQueryParameter("slug", value: slug),
-        ], decoder: .json, operationId: "dedicatedInferences_list_accelerators", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/dedicated-inferences/", sdkEncodePathSegment(sdkWireString(dedicatedInferenceId)), "/accelerators"]
+                .joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("page", value: page),
+                SdkQueryParameter("slug", value: slug),
+            ],
+            decoder: .json,
+            operationId: "dedicatedInferences_list_accelerators",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Snapshots domain models
+/// Snapshots domain models
 /// Typed representation of the `SnapshotsResponse` API schema.
 public struct SnapshotsResponse: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,23 +18,29 @@ public struct SnapshotsResponse: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SnapshotsResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.snapshots = try container.sdkDecodeIfPresent(.snapshots)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SnapshotsResponse {
-    public init(meta: MetaMeta, snapshots: [Snapshots]? = nil, links: PageLinks? = nil) {
+public extension SnapshotsResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        snapshots = try container.sdkDecodeIfPresent(.snapshots)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension SnapshotsResponse {
+    init(meta: MetaMeta, snapshots: [Snapshots]? = nil, links: PageLinks? = nil) {
         (self.meta, self.snapshots) = (meta, snapshots)
         self.links = links
     }
@@ -50,19 +56,19 @@ public struct SnapshotsExisting: Codable {
     }
 
     init() {
-        self.snapshot = nil
+        snapshot = nil
     }
 }
 
-extension SnapshotsExisting {
-    public init(from decoder: Decoder) throws {
+public extension SnapshotsExisting {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.snapshot = try container.sdkDecodeIfPresent(.snapshot)
+        snapshot = try container.sdkDecodeIfPresent(.snapshot)
     }
 }
 
-extension SnapshotsExisting {
-    public init(snapshot: Snapshots? = nil) {
+public extension SnapshotsExisting {
+    init(snapshot: Snapshots? = nil) {
         self.init()
         self.snapshot = snapshot
     }
@@ -76,19 +82,19 @@ public struct SnapshotsResponseVariant0: Codable {
     }
 
     init() {
-        self.snapshots = nil
+        snapshots = nil
     }
 }
 
-extension SnapshotsResponseVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension SnapshotsResponseVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.snapshots = try container.sdkDecodeIfPresent(.snapshots)
+        snapshots = try container.sdkDecodeIfPresent(.snapshots)
     }
 }
 
-extension SnapshotsResponseVariant0 {
-    public init(snapshots: [Snapshots]? = nil) {
+public extension SnapshotsResponseVariant0 {
+    init(snapshots: [Snapshots]? = nil) {
         self.init()
         self.snapshots = snapshots
     }

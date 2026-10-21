@@ -6,34 +6,82 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension FirewallsMethods {
-    /// To assign a Droplet to a firewall, send a POST request to `/v2/firewalls/$FIREWALL_ID/droplets`. In the body of the request, there should be a `droplet_ids` attribute containing a list of Droplet IDs. No response body will be sent back, but the response code will indicate success. Specifically, the response code will be a 204, which means that the action was successful with no returned body data.
+public extension FirewallsMethods {
+    /// To assign a Droplet to a firewall, send a POST request to `/v2/firewalls/$FIREWALL_ID/droplets`. In the body of
+    /// the request, there should be a `droplet_ids` attribute containing a list of Droplet IDs. No response body will
+    /// be sent back, but the response code will indicate success. Specifically, the response code will be a 204, which
+    /// means that the action was successful with no returned body data.
     ///
     /// - Parameters:
     /// - firewallId: A unique ID that can be used to identify and reference a
     ///   firewall.
     /// - dropletIds: An array containing the IDs of the Droplets to be assigned to
     ///   the firewall.
-    public static func firewallsAssignDroplets(config: ClientConfig, firewallId: String, dropletIds: [Int], requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func firewallsAssignDroplets(
+        config: ClientConfig,
+        firewallId: String,
+        dropletIds: [Int],
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("firewall_id", firewallId)
 
         let requestBody = FirewallsAssignDropletsRequestBody(dropletIds: dropletIds)
 
-        return try (await sdkRequest("POST", ["/v2/firewalls/", sdkEncodePathSegment(sdkWireString(firewallId)), "/droplets"].joined(), config: config, body: requestBody, decoder: .empty, operationId: "firewalls_assign_droplets", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/v2/firewalls/", sdkEncodePathSegment(sdkWireString(firewallId)), "/droplets"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .empty,
+            operationId: "firewalls_assign_droplets",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To remove a Droplet from a firewall, send a DELETE request to `/v2/firewalls/$FIREWALL_ID/droplets`. In the body of the request, there should be a `droplet_ids` attribute containing a list of Droplet IDs. No response body will be sent back, but the response code will indicate success. Specifically, the response code will be a 204, which means that the action was successful with no returned body data.
+    /// To remove a Droplet from a firewall, send a DELETE request to `/v2/firewalls/$FIREWALL_ID/droplets`. In the body
+    /// of the request, there should be a `droplet_ids` attribute containing a list of Droplet IDs. No response body
+    /// will be sent back, but the response code will indicate success. Specifically, the response code will be a 204,
+    /// which means that the action was successful with no returned body data.
     ///
     /// - Parameters:
     /// - firewallId: A unique ID that can be used to identify and reference a
     ///   firewall.
     /// - dropletIds: An array containing the IDs of the Droplets to be removed from
     ///   the firewall.
-    public static func firewallsDeleteDroplets(config: ClientConfig, firewallId: String, dropletIds: [Int], requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func firewallsDeleteDroplets(
+        config: ClientConfig,
+        firewallId: String,
+        dropletIds: [Int],
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("firewall_id", firewallId)
 
         let requestBody = FirewallsDeleteDropletsRequestBody(dropletIds: dropletIds)
 
-        return try (await sdkRequest("DELETE", ["/v2/firewalls/", sdkEncodePathSegment(sdkWireString(firewallId)), "/droplets"].joined(), config: config, body: requestBody, decoder: .empty, operationId: "firewalls_delete_droplets", options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "DELETE",
+            ["/v2/firewalls/", sdkEncodePathSegment(sdkWireString(firewallId)), "/droplets"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .empty,
+            operationId: "firewalls_delete_droplets",
+            options: requestOptions,
+            errors: [
+                "400": Error2.self,
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

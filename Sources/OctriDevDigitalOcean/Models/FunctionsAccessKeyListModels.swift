@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Functions domain models
+/// Functions domain models
 /// Typed representation of the `AccessKeyList` API schema.
 public struct AccessKeyList: Codable {
     /// Optional array value serialized in the `access_keys` wire field.
@@ -17,20 +17,20 @@ public struct AccessKeyList: Codable {
     }
 
     init() {
-        (self.accessKeys, self.count) = (nil, nil)
+        (accessKeys, count) = (nil, nil)
     }
 }
 
-extension AccessKeyList {
-    public init(from decoder: Decoder) throws {
+public extension AccessKeyList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.accessKeys = try container.sdkDecodeIfPresent(.accessKeys)
-        self.count = try container.sdkDecodeIfPresent(.count)
+        accessKeys = try container.sdkDecodeIfPresent(.accessKeys)
+        count = try container.sdkDecodeIfPresent(.count)
     }
 }
 
-extension AccessKeyList {
-    public init(accessKeys: [AccessKey]? = nil, count: Int? = nil) {
+public extension AccessKeyList {
+    init(accessKeys: [AccessKey]? = nil, count: Int? = nil) {
         self.init()
         (self.accessKeys, self.count) = (accessKeys, count)
     }

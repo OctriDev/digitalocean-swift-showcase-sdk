@@ -6,25 +6,85 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension HarnessRuntimeMethods {
-    /// Returns the current transfer state. For a completed download the response also carries a freshly minted presigned GET `download_url` (its TTL starts at poll time) and the payload `sha256` for client-side verification.
+public extension HarnessRuntimeMethods {
+    /// Returns the current transfer state. For a completed download the response also carries a freshly minted
+    /// presigned GET `download_url` (its TTL starts at poll time) and the payload `sha256` for client-side
+    /// verification.
     ///
     /// - Parameters:
     /// - sessionId: The session UUID.
     /// - transferId: The workspace transfer identifier.
-    public static func harnessGetSessionWorkspaceTransfer(config: ClientConfig, sessionId: String, transferId: String, requestOptions: RequestOptions? = nil) async throws -> WorkspaceTransferStatus {
-        return try (await sdkRequest("GET", ["/v2/agents/sessions/", sdkEncodePathSegment(sdkWireString(sessionId)), "/workspace/transfers/", sdkEncodePathSegment(sdkWireString(transferId))].joined(), config: config, decoder: .json, operationId: "harness_get_session_workspace_transfer", options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self, "423": Error2.self, "429": Error2.self, "500": Error2.self, "501": Error2.self, "default": Error2.self])).data
+    static func harnessGetSessionWorkspaceTransfer(
+        config: ClientConfig,
+        sessionId: String,
+        transferId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> WorkspaceTransferStatus {
+        try await (sdkRequest(
+            "GET",
+            [
+                "/v2/agents/sessions/",
+                sdkEncodePathSegment(sdkWireString(sessionId)),
+                "/workspace/transfers/",
+                sdkEncodePathSegment(sdkWireString(transferId)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "harness_get_session_workspace_transfer",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "403": Error2.self,
+                "404": Error2.self,
+                "423": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "501": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Aborts an in-flight transfer. Idempotent: cancelling an already-terminal transfer returns `aborted: false` with the current status. The request body is optional.
+    /// Aborts an in-flight transfer. Idempotent: cancelling an already-terminal transfer returns `aborted: false` with
+    /// the current status. The request body is optional.
     ///
     /// - Parameters:
     /// - sessionId: The session UUID.
     /// - transferId: The workspace transfer identifier.
     /// - reason: Optional caller-visible audit/debug context.
-    public static func harnessCancelSessionWorkspaceTransfer(config: ClientConfig, sessionId: String, transferId: String, reason: String? = nil, requestOptions: RequestOptions? = nil) async throws -> WorkspaceTransferCancelled {
+    static func harnessCancelSessionWorkspaceTransfer(
+        config: ClientConfig,
+        sessionId: String,
+        transferId: String,
+        reason: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> WorkspaceTransferCancelled {
         let requestBody = HarnessCancelSessionWorkspaceTransferRequestBody(reason: reason)
 
-        return try (await sdkRequest("POST", ["/v2/agents/sessions/", sdkEncodePathSegment(sdkWireString(sessionId)), "/workspace/transfers/", sdkEncodePathSegment(sdkWireString(transferId)), "/cancel"].joined(), config: config, body: requestBody, decoder: .json, operationId: "harness_cancel_session_workspace_transfer", options: requestOptions, errors: ["401": Error2.self, "402": Error2.self, "404": Error2.self, "423": Error2.self, "429": Error2.self, "500": Error2.self, "501": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            [
+                "/v2/agents/sessions/",
+                sdkEncodePathSegment(sdkWireString(sessionId)),
+                "/workspace/transfers/",
+                sdkEncodePathSegment(sdkWireString(transferId)),
+                "/cancel",
+            ].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "harness_cancel_session_workspace_transfer",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "402": Error2.self,
+                "404": Error2.self,
+                "423": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "501": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

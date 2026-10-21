@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
-    public struct GenaiListSimulationEpisodesOptions: Codable {
+public extension AgentPlatformApiMethods {
+    struct GenaiListSimulationEpisodesOptions: Codable {
         public var runUuid: String
         public var scenarioUuid: String?
         public var page: Int?
@@ -23,7 +23,8 @@ extension AgentPlatformApiMethods {
         }
     }
 
-    /// To list the episodes within a simulation run, send a GET request to `/v2/gen-ai/simulation_runs/{run_uuid}/episodes`.
+    /// To list the episodes within a simulation run, send a GET request to
+    /// `/v2/gen-ai/simulation_runs/{run_uuid}/episodes`.
     ///
     /// - Parameters:
     /// - runUuid: UUID of the run whose episodes to list.
@@ -52,16 +53,35 @@ extension AgentPlatformApiMethods {
     ///   status using lifecycle order. - SIMULATION_EPISODE_SORT_FIELD_VERDICT: Sort
     ///   by verdict (nulls last).
     /// - sortDirection: Sort direction. Defaults to ascending when unspecified.
-    public static func genaiListSimulationEpisodes(config: ClientConfig, options: GenaiListSimulationEpisodesOptions, requestOptions: RequestOptions? = nil) async throws -> ApiListSimulationEpisodesOutput {
-        return try (await sdkRequest("GET", ["/v2/gen-ai/simulation_runs/", sdkEncodePathSegment(sdkWireString(options.runUuid)), "/episodes"].joined(), config: config, query: [
-            SdkQueryParameter("scenario_uuid", value: options.scenarioUuid),
-            SdkQueryParameter("page", value: options.page),
-            SdkQueryParameter("per_page", value: options.perPage),
-            SdkQueryParameter("statuses", values: options.statuses, style: "form", explode: true),
-            SdkQueryParameter("verdicts", values: options.verdicts, style: "form", explode: true),
-            SdkQueryParameter("search", value: options.search),
-            SdkQueryParameter("sort_by", value: options.sortBy),
-            SdkQueryParameter("sort_direction", value: options.sortDirection),
-        ], decoder: .json, operationId: "genai_list_simulation_episodes", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiListSimulationEpisodes(
+        config: ClientConfig,
+        options: GenaiListSimulationEpisodesOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiListSimulationEpisodesOutput {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/gen-ai/simulation_runs/", sdkEncodePathSegment(sdkWireString(options.runUuid)), "/episodes"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("scenario_uuid", value: options.scenarioUuid),
+                SdkQueryParameter("page", value: options.page),
+                SdkQueryParameter("per_page", value: options.perPage),
+                SdkQueryParameter("statuses", values: options.statuses, style: "form", explode: true),
+                SdkQueryParameter("verdicts", values: options.verdicts, style: "form", explode: true),
+                SdkQueryParameter("search", value: options.search),
+                SdkQueryParameter("sort_by", value: options.sortBy),
+                SdkQueryParameter("sort_direction", value: options.sortDirection),
+            ],
+            decoder: .json,
+            operationId: "genai_list_simulation_episodes",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

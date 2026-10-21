@@ -6,7 +6,8 @@ import Foundation
 import XCTest
 
 extension SdkMethodTests {
-    func testSecurityListScanFindingAffectedResourcesSecurityListScanFindiXa41cd7cf12ReachesMockAndDecodesResponse() async throws {
+    func testSecurityListScanFindingAffectedResourcesSecurityListScanFindiXa41cd7cf12ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -27,7 +28,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testSecurityListScanFindingAffectedResourcesSecurityListScanFindiX522d6778beReachesMockAndDecodesResponse() async throws {
+    func testSecurityListScanFindingAffectedResourcesSecurityListScanFindiX522d6778beReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -38,11 +40,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.security.listScanFindingAffectedResources(
-            scanId: decoded("\"497dcba3-ecbf-4587-a2dd-5eb0665e6880\""),
-            findingUuid: decoded("\"50e14f43-dd4e-412f-864d-78943ea28d91\""),
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                scanId: decoded("\"497dcba3-ecbf-4587-a2dd-5eb0665e6880\""),
+                findingUuid: decoded("\"50e14f43-dd4e-412f-864d-78943ea28d91\""),
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -88,9 +90,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.security.listScans(
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -136,9 +138,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.security.listSettings(
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -183,8 +185,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.security.updateSettingsPlan(
-            tierCoverage: decoded(sdkMethodFixture1466Value1)
-        )
+                tierCoverage: decoded(sdkMethodFixture1466Value1)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -235,14 +237,14 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.sessionsCreate(
-            name: decoded("\"support-bot-alice\""),
-            actorId: decoded("\"alice\""),
-            policy: decoded(sdkMethodFixture1468Value1),
-            tools: decoded("[\"toolbelt:search-toolbelt@1\",\"jira_create_issue\"]"),
-            config: decoded(sdkMethodFixture1468Value2),
-            network: decoded("null"),
-            insights: decoded("null")
-        )
+                name: decoded("\"support-bot-alice\""),
+                actorId: decoded("\"alice\""),
+                policy: decoded(sdkMethodFixture1468Value1),
+                tools: decoded("[\"toolbelt:search-toolbelt@1\",\"jira_create_issue\"]"),
+                config: decoded(sdkMethodFixture1468Value2),
+                network: decoded("null"),
+                insights: decoded("null")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -287,8 +289,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.sessionsDelete(
-            sessionUrn: decoded("\"do:managed_agent_session:2b3c9f0e-1a4d-4e5f-8a7b-6c5d4e3f2a1b\"")
-        )
+                sessionUrn: decoded("\"do:managed_agent_session:2b3c9f0e-1a4d-4e5f-8a7b-6c5d4e3f2a1b\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -335,10 +337,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.sessionsList(
-            endUserId: decoded("\"alice\""),
-            page: decoded("1"),
-            perPage: decoded("20")
-        )
+                endUserId: decoded("\"alice\""),
+                page: decoded("1"),
+                perPage: decoded("20")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -386,11 +388,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.sessionsListSearch(
-            query: decoded("\"search\""),
-            endUserId: decoded("\"alice\""),
-            pageSize: decoded("20"),
-            pageToken: decoded("\"ZXhhX3dlYl9zZWFyY2hAMQ\"")
-        )
+                query: decoded("\"search\""),
+                endUserId: decoded("\"alice\""),
+                pageSize: decoded("20"),
+                pageToken: decoded("\"ZXhhX3dlYl9zZWFyY2hAMQ\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -437,10 +439,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.signals.createDeletion(
-            type: decoded("\"agent\""),
-            teamId: decoded("12345678"),
-            agentId: decoded("\"01a10d3f-2c09-764f-99f8-458e521627f3\"")
-        )
+                type: decoded("\"agent\""),
+                teamId: decoded("12345678"),
+                agentId: decoded("\"01a10d3f-2c09-764f-99f8-458e521627f3\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -490,13 +492,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.signals.createExport(
-            type: decoded("null"),
-            agentId: decoded("\"01a0f3d5-b58d-7c99-a743-7ca0397b7f5d\""),
-            signalType: decoded("[\"ExecutionFailureToolNotFound\"]"),
-            sessionIds: decoded("null"),
-            startTime: decoded("null"),
-            endTime: decoded("null")
-        )
+                type: decoded("null"),
+                agentId: decoded("\"01a0f3d5-b58d-7c99-a743-7ca0397b7f5d\""),
+                signalType: decoded("[\"ExecutionFailureToolNotFound\"]"),
+                sessionIds: decoded("null"),
+                startTime: decoded("null"),
+                endTime: decoded("null")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -541,8 +543,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.signals.getConsent(
-            agentId: decoded("\"019fb3d2-8a56-72cc-8bf9-9d21510b2a99\"")
-        )
+                agentId: decoded("\"019fb3d2-8a56-72cc-8bf9-9d21510b2a99\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)

@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ServerlessInferenceMethods {
-    /// Convert text input to speech audio. The response may be raw audio bytes (`audio/mpeg`, `audio/wav`, and similar) or a JSON envelope with base64-encoded audio in `data[].b64_json`.
+public extension ServerlessInferenceMethods {
+    /// Convert text input to speech audio. The response may be raw audio bytes (`audio/mpeg`, `audio/wav`, and similar)
+    /// or a JSON envelope with base64-encoded audio in `data[].b64_json`.
     ///
     /// - Parameters:
     /// - model: The text-to-speech model to use.
@@ -17,11 +18,34 @@ extension ServerlessInferenceMethods {
     ///   and `wav`. The API may return raw audio bytes or a JSON envelope with
     ///   base64-encoded audio.
     /// - instructions: Optional style or delivery instructions for the synthesizer.
-    public static func inferenceCreateSpeech(config: ClientConfig, model: String, input: String, voice: String? = nil, responseFormat: String? = nil, instructions: String? = nil, requestOptions: RequestOptions? = nil) async throws -> SpeechResponse {
+    static func inferenceCreateSpeech(
+        config: ClientConfig,
+        model: String,
+        input: String,
+        voice: String? = nil,
+        responseFormat: String? = nil,
+        instructions: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SpeechResponse {
         try validateLength("input", input, min: 1)
 
-        let requestBody = InferenceCreateSpeechRequestBody(model: model, input: input, voice: voice, responseFormat: responseFormat, instructions: instructions)
+        let requestBody = InferenceCreateSpeechRequestBody(
+            model: model,
+            input: input,
+            voice: voice,
+            responseFormat: responseFormat,
+            instructions: instructions
+        )
 
-        return try (await sdkRequest("POST", "/v1/audio/speech", config: config, body: requestBody, decoder: .json, operationId: "inference_create_speech", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v1/audio/speech",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "inference_create_speech",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

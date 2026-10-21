@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension MonitoringMethods {
-    /// Retrieve table I/O throughput (rows per second) for a schema. Requires **schema** and **metric** (insert, fetch, update, delete).
+public extension MonitoringMethods {
+    /// Retrieve table I/O throughput (rows per second) for a schema. Requires **schema** and **metric** (insert, fetch,
+    /// update, delete).
     ///
     /// - Parameters:
     /// - dbId: The DBaaS cluster UUID (database ID).
@@ -15,19 +16,43 @@ extension MonitoringMethods {
     /// - metric: Table I/O operation (insert, fetch, update, or delete).
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    public static func monitoringGetDatabaseMysqlSchemaThroughput(config: ClientConfig, dbId: String, schema: String, metric: MonitoringGetDatabaseMysqlSchemaLatencyParameter, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
+    static func monitoringGetDatabaseMysqlSchemaThroughput(
+        config: ClientConfig,
+        dbId: String,
+        schema: String,
+        metric: MonitoringGetDatabaseMysqlSchemaLatencyParameter,
+        start: String,
+        end: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Metrics {
         try sdkValidateUuid("db_id", dbId)
 
-        return try (await sdkRequest("GET", "/v2/monitoring/metrics/database/mysql/schema_throughput", config: config, query: [
-            SdkQueryParameter("db_id", value: dbId),
-            SdkQueryParameter("schema", value: schema),
-            SdkQueryParameter("metric", value: metric),
-            SdkQueryParameter("start", value: start),
-            SdkQueryParameter("end", value: end),
-        ], decoder: .json, operationId: "monitoring_get_database_mysql_schema_throughput", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/v2/monitoring/metrics/database/mysql/schema_throughput",
+            config: config,
+            query: [
+                SdkQueryParameter("db_id", value: dbId),
+                SdkQueryParameter("schema", value: schema),
+                SdkQueryParameter("metric", value: metric),
+                SdkQueryParameter("start", value: start),
+                SdkQueryParameter("end", value: end),
+            ],
+            decoder: .json,
+            operationId: "monitoring_get_database_mysql_schema_throughput",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Retrieve table I/O latency (seconds) for a schema. Requires **schema** and **metric** (insert, fetch, update, delete).
+    /// Retrieve table I/O latency (seconds) for a schema. Requires **schema** and **metric** (insert, fetch, update,
+    /// delete).
     ///
     /// - Parameters:
     /// - dbId: The DBaaS cluster UUID (database ID).
@@ -35,15 +60,38 @@ extension MonitoringMethods {
     /// - metric: Table I/O operation (insert, fetch, update, or delete).
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    public static func monitoringGetDatabaseMysqlSchemaLatency(config: ClientConfig, dbId: String, schema: String, metric: MonitoringGetDatabaseMysqlSchemaLatencyParameter, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
+    static func monitoringGetDatabaseMysqlSchemaLatency(
+        config: ClientConfig,
+        dbId: String,
+        schema: String,
+        metric: MonitoringGetDatabaseMysqlSchemaLatencyParameter,
+        start: String,
+        end: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Metrics {
         try sdkValidateUuid("db_id", dbId)
 
-        return try (await sdkRequest("GET", "/v2/monitoring/metrics/database/mysql/schema_latency", config: config, query: [
-            SdkQueryParameter("db_id", value: dbId),
-            SdkQueryParameter("schema", value: schema),
-            SdkQueryParameter("metric", value: metric),
-            SdkQueryParameter("start", value: start),
-            SdkQueryParameter("end", value: end),
-        ], decoder: .json, operationId: "monitoring_get_database_mysql_schema_latency", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/v2/monitoring/metrics/database/mysql/schema_latency",
+            config: config,
+            query: [
+                SdkQueryParameter("db_id", value: dbId),
+                SdkQueryParameter("schema", value: schema),
+                SdkQueryParameter("metric", value: metric),
+                SdkQueryParameter("start", value: start),
+                SdkQueryParameter("end", value: end),
+            ],
+            decoder: .json,
+            operationId: "monitoring_get_database_mysql_schema_latency",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

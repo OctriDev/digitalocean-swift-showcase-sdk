@@ -6,23 +6,23 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ServerlessInferenceMethods {
-    public struct InferenceCreateMessagesStreamOptions {
+public extension ServerlessInferenceMethods {
+    struct InferenceCreateMessagesStreamOptions {
         public var model: String
         public var maxTokens: Int
         public var messages: [MessagesApiMessageParam]
         public var stream: Bool
-        public var system: MessagesCreateRequestSystem? = nil
-        public var stopSequences: [String]? = nil
-        public var temperature: SdkOptional<Double>? = nil
-        public var topP: SdkOptional<Double>? = nil
-        public var topK: SdkOptional<Int>? = nil
-        public var tools: [MessagesToolDefinitionParam]? = nil
-        public var toolChoice: MessagesToolChoiceParam? = nil
-        public var metadata: MessagesCreateRequestMetadata? = nil
-        public var reasoningEffort: SdkOptional<MessagesCreateRequestReasoningEffort>? = nil
-        public var speed: SdkOptional<MessagesCreateRequestSpeed>? = nil
-        public var thinking: SdkOptional<MessagesThinkingConfigParam>? = nil
+        public var system: MessagesCreateRequestSystem?
+        public var stopSequences: [String]?
+        public var temperature: SdkOptional<Double>?
+        public var topP: SdkOptional<Double>?
+        public var topK: SdkOptional<Int>?
+        public var tools: [MessagesToolDefinitionParam]?
+        public var toolChoice: MessagesToolChoiceParam?
+        public var metadata: MessagesCreateRequestMetadata?
+        public var reasoningEffort: SdkOptional<MessagesCreateRequestReasoningEffort>?
+        public var speed: SdkOptional<MessagesCreateRequestSpeed>?
+        public var thinking: SdkOptional<MessagesThinkingConfigParam>?
 
         public init(model: String, maxTokens: Int, messages: [MessagesApiMessageParam], stream: Bool) {
             self.model = model
@@ -32,7 +32,8 @@ extension ServerlessInferenceMethods {
         }
     }
 
-    /// Send a structured list of input messages with text and/or image content, and the model will generate the next message in the conversation.
+    /// Send a structured list of input messages with text and/or image content, and the model will generate the next
+    /// message in the conversation.
     ///
     /// - Parameters:
     /// - model: Model ID (for example `claude-opus-4-6` or a serverless model id).
@@ -57,9 +58,12 @@ extension ServerlessInferenceMethods {
     ///   not supported.
     /// - thinking: Extended thinking configuration. Executors that do not support
     ///   thinking may ignore this field.
-    public static func inferenceCreateMessagesStream(config: ClientConfig, options: InferenceCreateMessagesStreamOptions, requestOptions: RequestOptions? = nil) async throws -> AsyncThrowingStream<MessagesStreamEvent, Swift.Error> {
+    static func inferenceCreateMessagesStream(
+        config: ClientConfig,
+        options: InferenceCreateMessagesStreamOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AsyncThrowingStream<MessagesStreamEvent, Swift.Error> {
         let requestBody = InferenceCreateMessagesStreamStreamRequestBody(options: options)
-
 
         let upstream = try await sdkStream(
             "POST",
@@ -71,7 +75,12 @@ extension ServerlessInferenceMethods {
             streamMediaType: "text/event-stream",
             chunkDomain: "bytes",
             options: requestOptions,
-            errors: ["400": MessagesCreateErrorResponse.self, "401": Error2.self, "429": Error2.self, "500": Error2.self]
+            errors: [
+                "400": MessagesCreateErrorResponse.self,
+                "401": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+            ]
         )
         return AsyncThrowingStream { continuation in
             let streamTask = _Concurrency.Task {
@@ -81,8 +90,11 @@ extension ServerlessInferenceMethods {
                             continuation.finish()
                             return
                         }
-                        let payload = try sdkDecodeBody(Data(event.data.utf8)) { try sdkJsonDecoder().decode(MessagesStreamEvent.self, from: Data(event.data.utf8)) }
-                        
+                        let payload = try sdkDecodeBody(Data(event.data.utf8)) { try sdkJsonDecoder().decode(
+                            MessagesStreamEvent.self,
+                            from: Data(event.data.utf8)
+                        ) }
+
                         continuation.yield(payload)
                     }
                     continuation.finish()

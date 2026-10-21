@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiGet domain models
+/// AgentPlatformAPIApiGet domain models
 /// Typed representation of the `ApiGetEvaluationRunOutput` API schema.
 public struct ApiGetEvaluationRunOutput: Codable {
     /// Optional object value serialized in the `evaluation_run` wire field.
@@ -14,19 +14,19 @@ public struct ApiGetEvaluationRunOutput: Codable {
     }
 
     init() {
-        self.evaluationRun = nil
+        evaluationRun = nil
     }
 }
 
-extension ApiGetEvaluationRunOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetEvaluationRunOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.evaluationRun = try container.sdkDecodeIfPresent(.evaluationRun)
+        evaluationRun = try container.sdkDecodeIfPresent(.evaluationRun)
     }
 }
 
-extension ApiGetEvaluationRunOutput {
-    public init(evaluationRun: ApiEvaluationRun? = nil) {
+public extension ApiGetEvaluationRunOutput {
+    init(evaluationRun: ApiEvaluationRun? = nil) {
         self.init()
         self.evaluationRun = evaluationRun
     }

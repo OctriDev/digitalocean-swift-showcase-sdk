@@ -3,7 +3,7 @@
 
 import Foundation
 
-// PartnerNetworkConnect domain models
+/// PartnerNetworkConnect domain models
 /// Typed representation of the `PartnerAttachment` API schema.
 public struct PartnerAttachment: Codable {
     /// A unique ID that can be used to identify and reference the partner attachment.
@@ -55,43 +55,55 @@ public struct PartnerAttachment: Codable {
     }
 
     init() {
-        (self.id, self.name, self.state, self.connectionBandwidthInMbps, self.region) = (nil, nil, nil, nil, nil)
-        (self.naasProvider, self.vpcIds, self.bgp, self.createdAt, self.parentUuid) = (nil, nil, nil, nil, nil)
-        self.children = nil
+        (id, name, state, connectionBandwidthInMbps, region) = (nil, nil, nil, nil, nil)
+        (naasProvider, vpcIds, bgp, createdAt, parentUuid) = (nil, nil, nil, nil, nil)
+        children = nil
     }
 }
 
-extension PartnerAttachment {
-    public init(from decoder: Decoder) throws {
+public extension PartnerAttachment {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.connectionBandwidthInMbps = try container.sdkDecodeIfPresent(.connectionBandwidthInMbps)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.naasProvider = try container.sdkDecodeIfPresent(.naasProvider)
-        self.vpcIds = try container.sdkDecodeIfPresent(.vpcIds)
-        self.bgp = try container.sdkDecodeIfPresent(.bgp)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.parentUuid = try container.sdkDecodeIfPresent(.parentUuid)
-        self.children = try container.sdkDecodeIfPresent(.children)
-        if let value = self.name {
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        state = try container.sdkDecodeIfPresent(.state)
+        connectionBandwidthInMbps = try container.sdkDecodeIfPresent(.connectionBandwidthInMbps)
+        region = try container.sdkDecodeIfPresent(.region)
+        naasProvider = try container.sdkDecodeIfPresent(.naasProvider)
+        vpcIds = try container.sdkDecodeIfPresent(.vpcIds)
+        bgp = try container.sdkDecodeIfPresent(.bgp)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        parentUuid = try container.sdkDecodeIfPresent(.parentUuid)
+        children = try container.sdkDecodeIfPresent(.children)
+        if let value = name {
             try sdkValidatePattern("name", value, sdkPatternef0a913b6e4d)
         }
-        if let value = self.vpcIds {
+        if let value = vpcIds {
             try validateItems("vpc_ids", value, min: 1, max: nil)
         }
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.children {
+        if let value = children {
             try validateItems("children", value, min: 1, max: nil)
         }
     }
 }
 
-extension PartnerAttachment {
-    public init(id: String? = nil, name: String? = nil, state: String? = nil, connectionBandwidthInMbps: Int? = nil, region: String? = nil, naasProvider: String? = nil, vpcIds: [String]? = nil, bgp: PartnerAttachmentBgp? = nil, createdAt: Date? = nil, parentUuid: String? = nil, children: [String]? = nil) throws {
+public extension PartnerAttachment {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        state: String? = nil,
+        connectionBandwidthInMbps: Int? = nil,
+        region: String? = nil,
+        naasProvider: String? = nil,
+        vpcIds: [String]? = nil,
+        bgp: PartnerAttachmentBgp? = nil,
+        createdAt: Date? = nil,
+        parentUuid: String? = nil,
+        children: [String]? = nil
+    ) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.state, self.connectionBandwidthInMbps) = (state, connectionBandwidthInMbps)
@@ -123,19 +135,19 @@ public struct SinglePartnerAttachment: Codable {
     }
 
     init() {
-        self.partnerAttachment = nil
+        partnerAttachment = nil
     }
 }
 
-extension SinglePartnerAttachment {
-    public init(from decoder: Decoder) throws {
+public extension SinglePartnerAttachment {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.partnerAttachment = try container.sdkDecodeIfPresent(.partnerAttachment)
+        partnerAttachment = try container.sdkDecodeIfPresent(.partnerAttachment)
     }
 }
 
-extension SinglePartnerAttachment {
-    public init(partnerAttachment: PartnerAttachment? = nil) {
+public extension SinglePartnerAttachment {
+    init(partnerAttachment: PartnerAttachment? = nil) {
         self.init()
         self.partnerAttachment = partnerAttachment
     }
@@ -149,19 +161,19 @@ public struct SinglePartnerAttachmentVariant0: Codable {
     }
 
     init() {
-        self.partnerAttachment = nil
+        partnerAttachment = nil
     }
 }
 
-extension SinglePartnerAttachmentVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension SinglePartnerAttachmentVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.partnerAttachment = try container.sdkDecodeIfPresent(.partnerAttachment)
+        partnerAttachment = try container.sdkDecodeIfPresent(.partnerAttachment)
     }
 }
 
-extension SinglePartnerAttachmentVariant0 {
-    public init(partnerAttachment: PartnerAttachment? = nil) {
+public extension SinglePartnerAttachmentVariant0 {
+    init(partnerAttachment: PartnerAttachment? = nil) {
         self.init()
         self.partnerAttachment = partnerAttachment
     }
@@ -190,22 +202,22 @@ public struct PartnerAttachmentBgp: Codable {
     }
 
     init() {
-        (self.localAsn, self.peerAsn, self.localRouterIp, self.peerRouterIp) = (nil, nil, nil, nil)
+        (localAsn, peerAsn, localRouterIp, peerRouterIp) = (nil, nil, nil, nil)
     }
 }
 
-extension PartnerAttachmentBgp {
-    public init(from decoder: Decoder) throws {
+public extension PartnerAttachmentBgp {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.localAsn = try container.sdkDecodeIfPresent(.localAsn)
-        self.peerAsn = try container.sdkDecodeIfPresent(.peerAsn)
-        self.localRouterIp = try container.sdkDecodeIfPresent(.localRouterIp)
-        self.peerRouterIp = try container.sdkDecodeIfPresent(.peerRouterIp)
+        localAsn = try container.sdkDecodeIfPresent(.localAsn)
+        peerAsn = try container.sdkDecodeIfPresent(.peerAsn)
+        localRouterIp = try container.sdkDecodeIfPresent(.localRouterIp)
+        peerRouterIp = try container.sdkDecodeIfPresent(.peerRouterIp)
     }
 }
 
-extension PartnerAttachmentBgp {
-    public init(localAsn: Int? = nil, peerAsn: Int? = nil, localRouterIp: String? = nil, peerRouterIp: String? = nil) {
+public extension PartnerAttachmentBgp {
+    init(localAsn: Int? = nil, peerAsn: Int? = nil, localRouterIp: String? = nil, peerRouterIp: String? = nil) {
         self.init()
         (self.localAsn, self.peerAsn) = (localAsn, peerAsn)
         (self.localRouterIp, self.peerRouterIp) = (localRouterIp, peerRouterIp)

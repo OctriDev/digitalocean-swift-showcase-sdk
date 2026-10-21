@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AppsApps domain models
+/// AppsApps domain models
 /// Typed representation of the `AppsDeleteAppResponse` API schema.
 public struct AppsDeleteAppResponse: Codable {
     /// Optional `string` value serialized in the `id` wire field.
@@ -15,19 +15,19 @@ public struct AppsDeleteAppResponse: Codable {
     }
 
     init() {
-        self.id = nil
+        id = nil
     }
 }
 
-extension AppsDeleteAppResponse {
-    public init(from decoder: Decoder) throws {
+public extension AppsDeleteAppResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension AppsDeleteAppResponse {
-    public init(id: String? = nil) {
+public extension AppsDeleteAppResponse {
+    init(id: String? = nil) {
         self.init()
         self.id = id
     }

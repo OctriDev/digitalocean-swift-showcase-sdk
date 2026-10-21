@@ -35,8 +35,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.batchInference.inferenceCreateBatchFile(
-            fileName: decoded("\"batch_requests.jsonl\"")
-        )
+                fileName: decoded("\"batch_requests.jsonl\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -57,7 +57,10 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try ServerlessInferenceMethods.InferenceCreateChatCompletionOptions(messages: decoded(sdkMethodFixture899Value1), model: decoded("\"llama3-8b-instruct\""))
+        var options = try ServerlessInferenceMethods.InferenceCreateChatCompletionOptions(
+            messages: decoded(sdkMethodFixture899Value1),
+            model: decoded("\"llama3-8b-instruct\"")
+        )
         options.maxTokens = try decoded("0")
         options.maxCompletionTokens = try decoded("256")
         options.frequencyPenalty = try decoded("0")
@@ -95,7 +98,10 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try ServerlessInferenceMethods.InferenceCreateChatCompletionOptions(messages: decoded(sdkMethodFixture900Value1), model: decoded("\"llama3-8b-instruct\""))
+        var options = try ServerlessInferenceMethods.InferenceCreateChatCompletionOptions(
+            messages: decoded(sdkMethodFixture900Value1),
+            model: decoded("\"llama3-8b-instruct\"")
+        )
         options.maxTokens = try decoded("0")
         options.maxCompletionTokens = try decoded("256")
         options.frequencyPenalty = try decoded("0")
@@ -121,8 +127,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.serverlessInference.inferenceCreateChatCompletion(
-            options: options
-        )
+                options: options
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -138,13 +144,18 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testInferenceCreateChatCompletionInferenceCreateChatCompletionStreamReachesMockAndDecodesResponse() async throws {
+    func testInferenceCreateChatCompletionInferenceCreateChatCompletionStreamReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
         _ = client
         let stream = try await client.serverlessInference.inferenceCreateChatCompletionStream(
-            options: ServerlessInferenceMethods.InferenceCreateChatCompletionStreamOptions(messages: decoded(sdkMethodFixture901Value1), model: decoded("\"llama3-8b-instruct\""), stream: decoded("false"))
+            options: ServerlessInferenceMethods.InferenceCreateChatCompletionStreamOptions(
+                messages: decoded(sdkMethodFixture901Value1),
+                model: decoded("\"llama3-8b-instruct\""),
+                stream: decoded("false")
+            )
         )
         var events = stream.makeAsyncIterator()
         guard let actual = try await events.next() else {
@@ -193,11 +204,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.serverlessInference.inferenceCreateEmbedding(
-            model: decoded("\"qwen3-embedding-0.6b\""),
-            input: decoded("\"hello world\""),
-            user: decoded("\"user-1234\""),
-            encodingFormat: decoded("\"float\"")
-        )
+                model: decoded("\"qwen3-embedding-0.6b\""),
+                input: decoded("\"hello world\""),
+                user: decoded("\"user-1234\""),
+                encodingFormat: decoded("\"float\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -218,7 +229,11 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try ServerlessInferenceMethods.InferenceCreateImageOptions(prompt: decoded("\"A cute baby sea otter floating on its back in calm blue water\""), model: decoded("\"openai-gpt-image-1\""), n: decoded("1"))
+        var options = try ServerlessInferenceMethods.InferenceCreateImageOptions(
+            prompt: decoded("\"A cute baby sea otter floating on its back in calm blue water\""),
+            model: decoded("\"openai-gpt-image-1\""),
+            n: decoded("1")
+        )
         options.moderation = try decoded("\"auto\"")
         options.background = try decoded("\"auto\"")
         options.outputFormat = try decoded("\"png\"")
@@ -246,7 +261,11 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try ServerlessInferenceMethods.InferenceCreateImageOptions(prompt: decoded("\"A cute baby sea otter floating on its back in calm blue water\""), model: decoded("\"openai-gpt-image-1\""), n: decoded("1"))
+        var options = try ServerlessInferenceMethods.InferenceCreateImageOptions(
+            prompt: decoded("\"A cute baby sea otter floating on its back in calm blue water\""),
+            model: decoded("\"openai-gpt-image-1\""),
+            n: decoded("1")
+        )
         options.moderation = try decoded("\"auto\"")
         options.background = try decoded("\"auto\"")
         options.outputFormat = try decoded("\"png\"")
@@ -262,8 +281,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.serverlessInference.inferenceCreateImage(
-            options: options
-        )
+                options: options
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -285,7 +304,12 @@ extension SdkMethodTests {
         }
         _ = client
         let stream = try await client.serverlessInference.inferenceCreateImageStream(
-            options: ServerlessInferenceMethods.InferenceCreateImageStreamOptions(prompt: decoded("\"A cute baby sea otter floating on its back in calm blue water\""), model: decoded("\"openai-gpt-image-1\""), n: decoded("1"), stream: decoded("false"))
+            options: ServerlessInferenceMethods.InferenceCreateImageStreamOptions(
+                prompt: decoded("\"A cute baby sea otter floating on its back in calm blue water\""),
+                model: decoded("\"openai-gpt-image-1\""),
+                n: decoded("1"),
+                stream: decoded("false")
+            )
         )
         var events = stream.makeAsyncIterator()
         guard let actual = try await events.next() else {
@@ -307,7 +331,11 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try ServerlessInferenceMethods.InferenceCreateMessagesOptions(model: decoded("\"claude-opus-4-6\""), maxTokens: decoded("1"), messages: decoded("[{\"role\":\"user\",\"content\":\"What is the capital of Portugal?\"}]"))
+        var options = try ServerlessInferenceMethods.InferenceCreateMessagesOptions(
+            model: decoded("\"claude-opus-4-6\""),
+            maxTokens: decoded("1"),
+            messages: decoded("[{\"role\":\"user\",\"content\":\"What is the capital of Portugal?\"}]")
+        )
         options.system = try decoded("\"system\"")
         options.stopSequences = try decoded("[\"stop_sequences\"]")
         options.stream = try decoded("false")
@@ -338,7 +366,11 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try ServerlessInferenceMethods.InferenceCreateMessagesOptions(model: decoded("\"claude-opus-4-6\""), maxTokens: decoded("1"), messages: decoded("[{\"role\":\"user\",\"content\":\"What is the capital of Portugal?\"}]"))
+        var options = try ServerlessInferenceMethods.InferenceCreateMessagesOptions(
+            model: decoded("\"claude-opus-4-6\""),
+            maxTokens: decoded("1"),
+            messages: decoded("[{\"role\":\"user\",\"content\":\"What is the capital of Portugal?\"}]")
+        )
         options.system = try decoded("\"system\"")
         options.stopSequences = try decoded("[\"stop_sequences\"]")
         options.stream = try decoded("false")
@@ -357,8 +389,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.serverlessInference.inferenceCreateMessages(
-            options: options
-        )
+                options: options
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -380,7 +412,12 @@ extension SdkMethodTests {
         }
         _ = client
         let stream = try await client.serverlessInference.inferenceCreateMessagesStream(
-            options: ServerlessInferenceMethods.InferenceCreateMessagesStreamOptions(model: decoded("\"claude-opus-4-6\""), maxTokens: decoded("1"), messages: decoded("[{\"role\":\"user\",\"content\":\"What is the capital of Portugal?\"}]"), stream: decoded("false"))
+            options: ServerlessInferenceMethods.InferenceCreateMessagesStreamOptions(
+                model: decoded("\"claude-opus-4-6\""),
+                maxTokens: decoded("1"),
+                messages: decoded("[{\"role\":\"user\",\"content\":\"What is the capital of Portugal?\"}]"),
+                stream: decoded("false")
+            )
         )
         var events = stream.makeAsyncIterator()
         guard let actual = try await events.next() else {
@@ -402,7 +439,10 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try ServerlessInferenceMethods.InferenceCreateResponseOptions(model: decoded("\"openai-gpt-oss-20b\""), input: decoded("\"What is the capital of France?\""))
+        var options = try ServerlessInferenceMethods.InferenceCreateResponseOptions(
+            model: decoded("\"openai-gpt-oss-20b\""),
+            input: decoded("\"What is the capital of France?\"")
+        )
         options.maxOutputTokens = try decoded("50")
         options.temperature = try decoded("0.7")
         options.stream = try decoded("false")
@@ -432,7 +472,10 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try ServerlessInferenceMethods.InferenceCreateResponseOptions(model: decoded("\"openai-gpt-oss-20b\""), input: decoded("\"What is the capital of France?\""))
+        var options = try ServerlessInferenceMethods.InferenceCreateResponseOptions(
+            model: decoded("\"openai-gpt-oss-20b\""),
+            input: decoded("\"What is the capital of France?\"")
+        )
         options.maxOutputTokens = try decoded("50")
         options.temperature = try decoded("0.7")
         options.stream = try decoded("false")
@@ -450,8 +493,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.serverlessInference.inferenceCreateResponse(
-            options: options
-        )
+                options: options
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -473,7 +516,11 @@ extension SdkMethodTests {
         }
         _ = client
         let stream = try await client.serverlessInference.inferenceCreateResponseStream(
-            options: ServerlessInferenceMethods.InferenceCreateResponseStreamOptions(model: decoded("\"openai-gpt-oss-20b\""), input: decoded("\"What is the capital of France?\""), stream: decoded("false"))
+            options: ServerlessInferenceMethods.InferenceCreateResponseStreamOptions(
+                model: decoded("\"openai-gpt-oss-20b\""),
+                input: decoded("\"What is the capital of France?\""),
+                stream: decoded("false")
+            )
         )
         var events = stream.makeAsyncIterator()
         guard let actual = try await events.next() else {
@@ -523,12 +570,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.serverlessInference.inferenceCreateSpeech(
-            model: decoded("\"qwen3-tts-voicedesign\""),
-            input: decoded("\"Hello, world!\""),
-            voice: decoded("\"alloy\""),
-            responseFormat: decoded("\"mp3\""),
-            instructions: decoded("\"Speak naturally.\"")
-        )
+                model: decoded("\"qwen3-tts-voicedesign\""),
+                input: decoded("\"Hello, world!\""),
+                voice: decoded("\"alloy\""),
+                responseFormat: decoded("\"mp3\""),
+                instructions: decoded("\"Speak naturally.\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

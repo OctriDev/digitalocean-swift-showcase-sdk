@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DomainRecords domain models
+/// DomainRecords domain models
 /// Typed representation of the `AllDomainRecordsResponse` API schema.
 public struct AllDomainRecordsResponse: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,23 +18,29 @@ public struct AllDomainRecordsResponse: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllDomainRecordsResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.domainRecords = try container.sdkDecodeIfPresent(.domainRecords)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllDomainRecordsResponse {
-    public init(meta: MetaMeta, domainRecords: [DomainRecord]? = nil, links: PageLinks? = nil) {
+public extension AllDomainRecordsResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        domainRecords = try container.sdkDecodeIfPresent(.domainRecords)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllDomainRecordsResponse {
+    init(meta: MetaMeta, domainRecords: [DomainRecord]? = nil, links: PageLinks? = nil) {
         (self.meta, self.domainRecords) = (meta, domainRecords)
         self.links = links
     }
@@ -48,19 +54,19 @@ public struct AllDomainRecordsResponseVariant0: Codable {
     }
 
     init() {
-        self.domainRecords = nil
+        domainRecords = nil
     }
 }
 
-extension AllDomainRecordsResponseVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AllDomainRecordsResponseVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.domainRecords = try container.sdkDecodeIfPresent(.domainRecords)
+        domainRecords = try container.sdkDecodeIfPresent(.domainRecords)
     }
 }
 
-extension AllDomainRecordsResponseVariant0 {
-    public init(domainRecords: [DomainRecord]? = nil) {
+public extension AllDomainRecordsResponseVariant0 {
+    init(domainRecords: [DomainRecord]? = nil) {
         self.init()
         self.domainRecords = domainRecords
     }

@@ -6,26 +6,82 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DatabasesMethods {
-    /// To list all of the users for your database cluster, send a GET request to `/v2/databases/$DATABASE_ID/users`. Note: User management is not supported for Caching or Valkey clusters. The result will be a JSON object with a `users` key. This will be set to an array of database user objects, each of which will contain the standard database user attributes. User passwords will not show without the `database:view_credentials` scope. For MySQL clusters, additional options will be contained in the mysql_settings object. For PostgreSQL clusters, additional options will be contained in the `settings` object (for example, `pg_allow_replication`). For Kafka clusters, additional options will be contained in the `settings` object. For MongoDB clusters, additional information will be contained in the mongo_user_settings object
+public extension DatabasesMethods {
+    /// To list all of the users for your database cluster, send a GET request to `/v2/databases/$DATABASE_ID/users`.
+    /// Note: User management is not supported for Caching or Valkey clusters. The result will be a JSON object with a
+    /// `users` key. This will be set to an array of database user objects, each of which will contain the standard
+    /// database user attributes. User passwords will not show without the `database:view_credentials` scope. For MySQL
+    /// clusters, additional options will be contained in the mysql_settings object. For PostgreSQL clusters, additional
+    /// options will be contained in the `settings` object (for example, `pg_allow_replication`). For Kafka clusters,
+    /// additional options will be contained in the `settings` object. For MongoDB clusters, additional information will
+    /// be contained in the mongo_user_settings object
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    public static func databasesListUsers(config: ClientConfig, databaseClusterUuid: String, requestOptions: RequestOptions? = nil) async throws -> Users {
+    static func databasesListUsers(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Users {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("GET", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/users"].joined(), config: config, decoder: .json, operationId: "databases_list_users", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/users"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "databases_list_users",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// Creates a database user for a database cluster. Supply the required `name` and, where applicable, engine-specific options in `mysql_settings` or `settings`; PostgreSQL `pg_allow_replication` defaults to `false` when omitted. The response includes the new user and its randomly generated password, and user management is not supported for Caching or Valkey clusters.
+    /// Creates a database user for a database cluster. Supply the required `name` and, where applicable,
+    /// engine-specific options in `mysql_settings` or `settings`; PostgreSQL `pg_allow_replication` defaults to `false`
+    /// when omitted. The response includes the new user and its randomly generated password, and user management is not
+    /// supported for Caching or Valkey clusters.
     ///
-    /// To add a new database user, send a POST request to `/v2/databases/$DATABASE_ID/users` with the desired username. Note: User management is not supported for Caching or Valkey clusters. When adding a user to a MySQL cluster, additional options can be configured in the `mysql_settings` object. When adding a user to a PostgreSQL cluster, additional options can be configured in the `settings` object (for example, `pg_allow_replication`). When `pg_allow_replication` is omitted, it defaults to `false`. When adding a user to a Kafka cluster, additional options can be configured in the `settings` object. When adding a user to a MongoDB cluster, additional options can be configured in the `settings.mongo_user_settings` object. The response will be a JSON object with a key called `user`. The value of this will be an object that contains the standard attributes associated with a database user including its randomly generated password.
+    /// To add a new database user, send a POST request to `/v2/databases/$DATABASE_ID/users` with the desired username.
+    /// Note: User management is not supported for Caching or Valkey clusters. When adding a user to a MySQL cluster,
+    /// additional options can be configured in the `mysql_settings` object. When adding a user to a PostgreSQL cluster,
+    /// additional options can be configured in the `settings` object (for example, `pg_allow_replication`). When
+    /// `pg_allow_replication` is omitted, it defaults to `false`. When adding a user to a Kafka cluster, additional
+    /// options can be configured in the `settings` object. When adding a user to a MongoDB cluster, additional options
+    /// can be configured in the `settings.mongo_user_settings` object. The response will be a JSON object with a key
+    /// called `user`. The value of this will be an object that contains the standard attributes associated with a
+    /// database user including its randomly generated password.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
-    public static func databasesAddUser(config: ClientConfig, databaseClusterUuid: String, body: DatabasesAddUserRequestBody, requestOptions: RequestOptions? = nil) async throws -> UserResponse {
+    static func databasesAddUser(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        body: DatabasesAddUserRequestBody,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UserResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("POST", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/users"].joined(), config: config, rawBody: (try sdkEncodeBody(body, contentType: "application/json")), decoder: .json, operationId: "databases_add_user", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/users"].joined(),
+            config: config,
+            rawBody: sdkEncodeBody(body, contentType: "application/json"),
+            decoder: .json,
+            operationId: "databases_add_user",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

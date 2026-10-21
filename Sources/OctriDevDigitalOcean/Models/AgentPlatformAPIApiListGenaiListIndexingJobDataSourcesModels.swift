@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiList domain models
+/// AgentPlatformAPIApiList domain models
 /// Typed representation of the `ApiListIndexingJobDataSourcesOutput` API schema.
 public struct ApiListIndexingJobDataSourcesOutput: Codable {
     /// Optional array value serialized in the `indexed_data_sources` wire field.
@@ -14,19 +14,19 @@ public struct ApiListIndexingJobDataSourcesOutput: Codable {
     }
 
     init() {
-        self.indexedDataSources = nil
+        indexedDataSources = nil
     }
 }
 
-extension ApiListIndexingJobDataSourcesOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiListIndexingJobDataSourcesOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.indexedDataSources = try container.sdkDecodeIfPresent(.indexedDataSources)
+        indexedDataSources = try container.sdkDecodeIfPresent(.indexedDataSources)
     }
 }
 
-extension ApiListIndexingJobDataSourcesOutput {
-    public init(indexedDataSources: [ApiIndexedDataSource]? = nil) {
+public extension ApiListIndexingJobDataSourcesOutput {
+    init(indexedDataSources: [ApiIndexedDataSource]? = nil) {
         self.init()
         self.indexedDataSources = indexedDataSources
     }

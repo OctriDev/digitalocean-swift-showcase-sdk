@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiUpdate domain models
+/// AgentPlatformAPIApiUpdate domain models
 /// Typed representation of the `ApiUpdateWorkspaceOutput` API schema.
 public struct ApiUpdateWorkspaceOutput: Codable {
     /// Optional object value serialized in the `workspace` wire field.
@@ -14,19 +14,19 @@ public struct ApiUpdateWorkspaceOutput: Codable {
     }
 
     init() {
-        self.workspace = nil
+        workspace = nil
     }
 }
 
-extension ApiUpdateWorkspaceOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateWorkspaceOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.workspace = try container.sdkDecodeIfPresent(.workspace)
+        workspace = try container.sdkDecodeIfPresent(.workspace)
     }
 }
 
-extension ApiUpdateWorkspaceOutput {
-    public init(workspace: ApiWorkspace? = nil) {
+public extension ApiUpdateWorkspaceOutput {
+    init(workspace: ApiWorkspace? = nil) {
         self.init()
         self.workspace = workspace
     }
@@ -51,21 +51,21 @@ public struct ApiUpdateWorkspaceInputPublic: Codable {
     }
 
     init() {
-        (self.description, self.name, self.workspaceUuid) = (nil, nil, nil)
+        (description, name, workspaceUuid) = (nil, nil, nil)
     }
 }
 
-extension ApiUpdateWorkspaceInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateWorkspaceInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.workspaceUuid = try container.sdkDecodeIfPresent(.workspaceUuid)
+        description = try container.sdkDecodeIfPresent(.description)
+        name = try container.sdkDecodeIfPresent(.name)
+        workspaceUuid = try container.sdkDecodeIfPresent(.workspaceUuid)
     }
 }
 
-extension ApiUpdateWorkspaceInputPublic {
-    public init(description: String? = nil, name: String? = nil, workspaceUuid: String? = nil) {
+public extension ApiUpdateWorkspaceInputPublic {
+    init(description: String? = nil, name: String? = nil, workspaceUuid: String? = nil) {
         self.init()
         (self.description, self.name) = (description, name)
         self.workspaceUuid = workspaceUuid

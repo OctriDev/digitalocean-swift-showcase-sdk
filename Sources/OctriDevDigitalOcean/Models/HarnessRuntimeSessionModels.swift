@@ -3,7 +3,7 @@
 
 import Foundation
 
-// HarnessRuntimeSession domain models
+/// HarnessRuntimeSession domain models
 /// A publicly routable HTTPS URL to one guest port of the session's sandbox. The hostname is stable while the
 /// session runs; it is revoked on pause and lock, and rollback moves the session to a new sandbox, so re-fetch
 /// after resume, unlock or rollback. Requests must carry the caller's DO token as a Bearer header.
@@ -38,28 +38,35 @@ public struct SessionIngressUrl: Codable {
     }
 
     init() {
-        (self.ingressUrlId, self.sessionId, self.port, self.url, self.state) = (nil, nil, nil, nil, nil)
-        self.createdAt = nil
+        (ingressUrlId, sessionId, port, url, state) = (nil, nil, nil, nil, nil)
+        createdAt = nil
     }
 }
 
-extension SessionIngressUrl {
-    public init(from decoder: Decoder) throws {
+public extension SessionIngressUrl {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.ingressUrlId = try container.sdkDecodeIfPresent(.ingressUrlId)
-        self.sessionId = try container.sdkDecodeIfPresent(.sessionId)
-        self.port = try container.sdkDecodeIfPresent(.port)
-        self.url = try container.sdkDecodeIfPresent(.url)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        if let value = self.createdAt {
+        ingressUrlId = try container.sdkDecodeIfPresent(.ingressUrlId)
+        sessionId = try container.sdkDecodeIfPresent(.sessionId)
+        port = try container.sdkDecodeIfPresent(.port)
+        url = try container.sdkDecodeIfPresent(.url)
+        state = try container.sdkDecodeIfPresent(.state)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-extension SessionIngressUrl {
-    public init(ingressUrlId: String? = nil, sessionId: String? = nil, port: Int? = nil, url: String? = nil, state: IngressUrlState? = nil, createdAt: Date? = nil) throws {
+public extension SessionIngressUrl {
+    init(
+        ingressUrlId: String? = nil,
+        sessionId: String? = nil,
+        port: Int? = nil,
+        url: String? = nil,
+        state: IngressUrlState? = nil,
+        createdAt: Date? = nil
+    ) throws {
         self.init()
         (self.ingressUrlId, self.sessionId) = (ingressUrlId, sessionId)
         (self.port, self.url) = (port, url)
@@ -76,7 +83,10 @@ extension SessionIngressUrl {
 public struct SessionStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let sessionStatusUnspecified = SessionStatus(rawValue: "SESSION_STATUS_UNSPECIFIED")
     public static let sessionStatusProvisioning = SessionStatus(rawValue: "SESSION_STATUS_PROVISIONING")
     public static let sessionStatusReady = SessionStatus(rawValue: "SESSION_STATUS_READY")
@@ -90,7 +100,7 @@ public struct SessionStatus: RawRepresentable, Hashable, Codable, Sendable, SdkW
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

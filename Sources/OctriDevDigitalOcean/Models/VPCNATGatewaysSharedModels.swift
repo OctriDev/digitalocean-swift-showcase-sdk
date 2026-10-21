@@ -3,7 +3,7 @@
 
 import Foundation
 
-// VPCNATGateways domain models
+/// VPCNATGateways domain models
 /// Required object value serialized in the `vpcs[]` wire field.
 public struct VpcNatGatewayGetVpcsItem: Codable {
     /// The unique identifier of the VPC to which the NAT gateway is attached.
@@ -23,27 +23,27 @@ public struct VpcNatGatewayGetVpcsItem: Codable {
     }
 
     init() {
-        (self.vpcUuid, self.subnetUuid, self.gatewayIp) = (nil, nil, nil)
+        (vpcUuid, subnetUuid, gatewayIp) = (nil, nil, nil)
     }
 }
 
-extension VpcNatGatewayGetVpcsItem {
-    public init(from decoder: Decoder) throws {
+public extension VpcNatGatewayGetVpcsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        self.subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
-        self.gatewayIp = try container.sdkDecodeIfPresent(.gatewayIp)
-        if let value = self.vpcUuid {
+        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
+        gatewayIp = try container.sdkDecodeIfPresent(.gatewayIp)
+        if let value = vpcUuid {
             try sdkValidateUuid("vpc_uuid", value)
         }
-        if let value = self.subnetUuid {
+        if let value = subnetUuid {
             try sdkValidateUuid("subnet_uuid", value)
         }
     }
 }
 
-extension VpcNatGatewayGetVpcsItem {
-    public init(vpcUuid: String? = nil, subnetUuid: String? = nil, gatewayIp: String? = nil) throws {
+public extension VpcNatGatewayGetVpcsItem {
+    init(vpcUuid: String? = nil, subnetUuid: String? = nil, gatewayIp: String? = nil) throws {
         self.init()
         (self.vpcUuid, self.subnetUuid) = (vpcUuid, subnetUuid)
         self.gatewayIp = gatewayIp
@@ -68,19 +68,19 @@ public struct VpcNatGatewayGetEgressesPublicGatewaysItem: Codable {
     }
 
     init() {
-        self.ipv4 = nil
+        ipv4 = nil
     }
 }
 
-extension VpcNatGatewayGetEgressesPublicGatewaysItem {
-    public init(from decoder: Decoder) throws {
+public extension VpcNatGatewayGetEgressesPublicGatewaysItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.ipv4 = try container.sdkDecodeIfPresent(.ipv4)
+        ipv4 = try container.sdkDecodeIfPresent(.ipv4)
     }
 }
 
-extension VpcNatGatewayGetEgressesPublicGatewaysItem {
-    public init(ipv4: String? = nil) {
+public extension VpcNatGatewayGetEgressesPublicGatewaysItem {
+    init(ipv4: String? = nil) {
         self.init()
         self.ipv4 = ipv4
     }
@@ -145,39 +145,53 @@ public struct VpcNatGatewayGet: Codable {
     }
 
     init() {
-        (self.id, self.name, self.type, self.state, self.region) = (nil, nil, nil, nil, nil)
-        (self.size, self.vpcs, self.egresses, self.udpTimeoutSeconds, self.icmpTimeoutSeconds) = (nil, nil, nil, nil, nil)
-        (self.tcpTimeoutSeconds, self.createdAt, self.updatedAt) = (nil, nil, nil)
+        (id, name, type, state, region) = (nil, nil, nil, nil, nil)
+        (size, vpcs, egresses, udpTimeoutSeconds, icmpTimeoutSeconds) = (nil, nil, nil, nil, nil)
+        (tcpTimeoutSeconds, createdAt, updatedAt) = (nil, nil, nil)
     }
 }
 
-extension VpcNatGatewayGet {
-    public init(from decoder: Decoder) throws {
+public extension VpcNatGatewayGet {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.size = try container.sdkDecodeIfPresent(.size)
-        self.vpcs = try container.sdkDecodeIfPresent(.vpcs)
-        self.egresses = try container.sdkDecodeIfPresent(.egresses)
-        self.udpTimeoutSeconds = try container.sdkDecodeIfPresent(.udpTimeoutSeconds)
-        self.icmpTimeoutSeconds = try container.sdkDecodeIfPresent(.icmpTimeoutSeconds)
-        self.tcpTimeoutSeconds = try container.sdkDecodeIfPresent(.tcpTimeoutSeconds)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = self.createdAt {
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        type = try container.sdkDecodeIfPresent(.type)
+        state = try container.sdkDecodeIfPresent(.state)
+        region = try container.sdkDecodeIfPresent(.region)
+        size = try container.sdkDecodeIfPresent(.size)
+        vpcs = try container.sdkDecodeIfPresent(.vpcs)
+        egresses = try container.sdkDecodeIfPresent(.egresses)
+        udpTimeoutSeconds = try container.sdkDecodeIfPresent(.udpTimeoutSeconds)
+        icmpTimeoutSeconds = try container.sdkDecodeIfPresent(.icmpTimeoutSeconds)
+        tcpTimeoutSeconds = try container.sdkDecodeIfPresent(.tcpTimeoutSeconds)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension VpcNatGatewayGet {
-    public init(id: String? = nil, name: String? = nil, type: VpcNatGatewayGetType? = nil, state: VpcNatGatewayGetState? = nil, region: VpcNatGatewayGetRegion? = nil, size: Int? = nil, vpcs: [VpcNatGatewayGetVpcsItem]? = nil, egresses: VpcNatGatewayGetEgresses? = nil, udpTimeoutSeconds: Int? = nil, icmpTimeoutSeconds: Int? = nil, tcpTimeoutSeconds: Int? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) throws {
+public extension VpcNatGatewayGet {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        type: VpcNatGatewayGetType? = nil,
+        state: VpcNatGatewayGetState? = nil,
+        region: VpcNatGatewayGetRegion? = nil,
+        size: Int? = nil,
+        vpcs: [VpcNatGatewayGetVpcsItem]? = nil,
+        egresses: VpcNatGatewayGetEgresses? = nil,
+        udpTimeoutSeconds: Int? = nil,
+        icmpTimeoutSeconds: Int? = nil,
+        tcpTimeoutSeconds: Int? = nil,
+        createdAt: Date? = nil,
+        updatedAt: Date? = nil
+    ) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.type, self.state) = (type, state)
@@ -205,19 +219,19 @@ public struct VpcNatGatewayGetEgresses: Codable {
     }
 
     init() {
-        self.publicGateways = nil
+        publicGateways = nil
     }
 }
 
-extension VpcNatGatewayGetEgresses {
-    public init(from decoder: Decoder) throws {
+public extension VpcNatGatewayGetEgresses {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.publicGateways = try container.sdkDecodeIfPresent(.publicGateways)
+        publicGateways = try container.sdkDecodeIfPresent(.publicGateways)
     }
 }
 
-extension VpcNatGatewayGetEgresses {
-    public init(publicGateways: [VpcNatGatewayGetEgressesPublicGatewaysItem]? = nil) {
+public extension VpcNatGatewayGetEgresses {
+    init(publicGateways: [VpcNatGatewayGetEgressesPublicGatewaysItem]? = nil) {
         self.init()
         self.publicGateways = publicGateways
     }
@@ -227,7 +241,10 @@ extension VpcNatGatewayGetEgresses {
 public struct VpcNatGatewayGetRegion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let nyc1 = VpcNatGatewayGetRegion(rawValue: "nyc1")
     public static let nyc2 = VpcNatGatewayGetRegion(rawValue: "nyc2")
     public static let nyc3 = VpcNatGatewayGetRegion(rawValue: "nyc3")
@@ -246,7 +263,7 @@ public struct VpcNatGatewayGetRegion: RawRepresentable, Hashable, Codable, Senda
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -259,12 +276,15 @@ public struct VpcNatGatewayGetRegion: RawRepresentable, Hashable, Codable, Senda
 public struct VpcNatGatewayGetType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let `public` = VpcNatGatewayGetType(rawValue: "PUBLIC")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -277,7 +297,10 @@ public struct VpcNatGatewayGetType: RawRepresentable, Hashable, Codable, Sendabl
 public struct VpcNatGatewayGetState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let new = VpcNatGatewayGetState(rawValue: "NEW")
     public static let provisioning = VpcNatGatewayGetState(rawValue: "PROVISIONING")
     public static let active = VpcNatGatewayGetState(rawValue: "ACTIVE")
@@ -287,7 +310,7 @@ public struct VpcNatGatewayGetState: RawRepresentable, Hashable, Codable, Sendab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

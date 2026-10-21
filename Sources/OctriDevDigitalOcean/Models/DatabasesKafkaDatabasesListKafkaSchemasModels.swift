@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DatabasesKafka domain models
+/// DatabasesKafka domain models
 /// Typed representation of the `KafkaSchemaVerbose` API schema.
 public struct KafkaSchemaVerbose: Codable {
     /// The id for schema.
@@ -28,22 +28,27 @@ public struct KafkaSchemaVerbose: Codable {
     }
 
     init() {
-        (self.schemaId, self.subjectName, self.schemaType, self.schema) = (nil, nil, nil, nil)
+        (schemaId, subjectName, schemaType, schema) = (nil, nil, nil, nil)
     }
 }
 
-extension KafkaSchemaVerbose {
-    public init(from decoder: Decoder) throws {
+public extension KafkaSchemaVerbose {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.schemaId = try container.sdkDecodeIfPresent(.schemaId)
-        self.subjectName = try container.sdkDecodeIfPresent(.subjectName)
-        self.schemaType = try container.sdkDecodeIfPresent(.schemaType)
-        self.schema = try container.sdkDecodeIfPresent(.schema)
+        schemaId = try container.sdkDecodeIfPresent(.schemaId)
+        subjectName = try container.sdkDecodeIfPresent(.subjectName)
+        schemaType = try container.sdkDecodeIfPresent(.schemaType)
+        schema = try container.sdkDecodeIfPresent(.schema)
     }
 }
 
-extension KafkaSchemaVerbose {
-    public init(schemaId: Int? = nil, subjectName: String? = nil, schemaType: KafkaSchemaVerboseSchemaType? = nil, schema: String? = nil) {
+public extension KafkaSchemaVerbose {
+    init(
+        schemaId: Int? = nil,
+        subjectName: String? = nil,
+        schemaType: KafkaSchemaVerboseSchemaType? = nil,
+        schema: String? = nil
+    ) {
         self.init()
         (self.schemaId, self.subjectName) = (schemaId, subjectName)
         (self.schemaType, self.schema) = (schemaType, schema)
@@ -60,19 +65,19 @@ public struct KafkaSchemas: Codable {
     }
 
     init() {
-        self.subjects = nil
+        subjects = nil
     }
 }
 
-extension KafkaSchemas {
-    public init(from decoder: Decoder) throws {
+public extension KafkaSchemas {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.subjects = try container.sdkDecodeIfPresent(.subjects)
+        subjects = try container.sdkDecodeIfPresent(.subjects)
     }
 }
 
-extension KafkaSchemas {
-    public init(subjects: [KafkaSchemaVerbose]? = nil) {
+public extension KafkaSchemas {
+    init(subjects: [KafkaSchemaVerbose]? = nil) {
         self.init()
         self.subjects = subjects
     }
@@ -82,14 +87,17 @@ extension KafkaSchemas {
 public struct KafkaSchemaVerboseSchemaType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let avro = KafkaSchemaVerboseSchemaType(rawValue: "AVRO")
     public static let json = KafkaSchemaVerboseSchemaType(rawValue: "JSON")
     public static let protobuf = KafkaSchemaVerboseSchemaType(rawValue: "PROTOBUF")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

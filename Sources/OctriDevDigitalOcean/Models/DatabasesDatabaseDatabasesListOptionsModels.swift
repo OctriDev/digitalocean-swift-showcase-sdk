@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DatabasesDatabase domain models
+/// DatabasesDatabase domain models
 public typealias DatabaseVersionAvailabilities = [DatabaseVersionAvailability]
 
 /// Typed representation of the `DatabaseLayoutOption` API schema.
@@ -21,20 +21,20 @@ public struct DatabaseLayoutOption: Codable {
     }
 
     init() {
-        (self.numNodes, self.sizes) = (nil, nil)
+        (numNodes, sizes) = (nil, nil)
     }
 }
 
-extension DatabaseLayoutOption {
-    public init(from decoder: Decoder) throws {
+public extension DatabaseLayoutOption {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.numNodes = try container.sdkDecodeIfPresent(.numNodes)
-        self.sizes = try container.sdkDecodeIfPresent(.sizes)
+        numNodes = try container.sdkDecodeIfPresent(.numNodes)
+        sizes = try container.sdkDecodeIfPresent(.sizes)
     }
 }
 
-extension DatabaseLayoutOption {
-    public init(numNodes: Int? = nil, sizes: [String]? = nil) {
+public extension DatabaseLayoutOption {
+    init(numNodes: Int? = nil, sizes: [String]? = nil) {
         self.init()
         (self.numNodes, self.sizes) = (numNodes, sizes)
     }
@@ -61,21 +61,21 @@ public struct DatabaseVersionAvailability: Codable {
     }
 
     init() {
-        (self.endOfLife, self.endOfAvailability, self.version) = (nil, nil, nil)
+        (endOfLife, endOfAvailability, version) = (nil, nil, nil)
     }
 }
 
-extension DatabaseVersionAvailability {
-    public init(from decoder: Decoder) throws {
+public extension DatabaseVersionAvailability {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.endOfLife = try container.sdkDecodeIfPresent(.endOfLife)
-        self.endOfAvailability = try container.sdkDecodeIfPresent(.endOfAvailability)
-        self.version = try container.sdkDecodeIfPresent(.version)
+        endOfLife = try container.sdkDecodeIfPresent(.endOfLife)
+        endOfAvailability = try container.sdkDecodeIfPresent(.endOfAvailability)
+        version = try container.sdkDecodeIfPresent(.version)
     }
 }
 
-extension DatabaseVersionAvailability {
-    public init(endOfLife: String? = nil, endOfAvailability: String? = nil, version: String? = nil) {
+public extension DatabaseVersionAvailability {
+    init(endOfLife: String? = nil, endOfAvailability: String? = nil, version: String? = nil) {
         self.init()
         (self.endOfLife, self.endOfAvailability) = (endOfLife, endOfAvailability)
         self.version = version

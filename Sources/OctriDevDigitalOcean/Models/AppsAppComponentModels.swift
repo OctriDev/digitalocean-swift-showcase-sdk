@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AppsAppComponent domain models
+/// AppsAppComponent domain models
 /// Typed representation of the `AppComponentHealth` API schema.
 public struct AppComponentHealth: Codable {
     /// Optional `string` value serialized in the `name` wire field.
@@ -35,25 +35,32 @@ public struct AppComponentHealth: Codable {
     }
 
     init() {
-        (self.name, self.cpuUsagePercent, self.memoryUsagePercent, self.replicasDesired, self.replicasReady) = (nil, nil, nil, nil, nil)
-        self.state = nil
+        (name, cpuUsagePercent, memoryUsagePercent, replicasDesired, replicasReady) = (nil, nil, nil, nil, nil)
+        state = nil
     }
 }
 
-extension AppComponentHealth {
-    public init(from decoder: Decoder) throws {
+public extension AppComponentHealth {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.cpuUsagePercent = try container.sdkDecodeIfPresent(.cpuUsagePercent)
-        self.memoryUsagePercent = try container.sdkDecodeIfPresent(.memoryUsagePercent)
-        self.replicasDesired = try container.sdkDecodeIfPresent(.replicasDesired)
-        self.replicasReady = try container.sdkDecodeIfPresent(.replicasReady)
-        self.state = try container.sdkDecodeIfPresent(.state)
+        name = try container.sdkDecodeIfPresent(.name)
+        cpuUsagePercent = try container.sdkDecodeIfPresent(.cpuUsagePercent)
+        memoryUsagePercent = try container.sdkDecodeIfPresent(.memoryUsagePercent)
+        replicasDesired = try container.sdkDecodeIfPresent(.replicasDesired)
+        replicasReady = try container.sdkDecodeIfPresent(.replicasReady)
+        state = try container.sdkDecodeIfPresent(.state)
     }
 }
 
-extension AppComponentHealth {
-    public init(name: String? = nil, cpuUsagePercent: Double? = nil, memoryUsagePercent: Double? = nil, replicasDesired: Int? = nil, replicasReady: Int? = nil, state: AppComponentHealthState? = nil) {
+public extension AppComponentHealth {
+    init(
+        name: String? = nil,
+        cpuUsagePercent: Double? = nil,
+        memoryUsagePercent: Double? = nil,
+        replicasDesired: Int? = nil,
+        replicasReady: Int? = nil,
+        state: AppComponentHealthState? = nil
+    ) {
         self.init()
         (self.name, self.cpuUsagePercent) = (name, cpuUsagePercent)
         (self.memoryUsagePercent, self.replicasDesired) = (memoryUsagePercent, replicasDesired)
@@ -77,27 +84,43 @@ public struct AppComponentInstanceBase: Codable {
     }
 
     init() {
-        (self.instanceCount, self.instanceSizeSlug) = (nil, nil)
+        (instanceCount, instanceSizeSlug) = (nil, nil)
     }
 }
 
-extension AppComponentInstanceBase {
-    public init(from decoder: Decoder) throws {
+public extension AppComponentInstanceBase {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.instanceCount = try container.sdkDecodeIfPresent(.instanceCount)
-        self.instanceSizeSlug = try container.sdkDecodeIfPresent(.instanceSizeSlug)
-        if let value = self.instanceCount {
-            try validateRange("instance_count", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        instanceCount = try container.sdkDecodeIfPresent(.instanceCount)
+        instanceSizeSlug = try container.sdkDecodeIfPresent(.instanceSizeSlug)
+        if let value = instanceCount {
+            try validateRange(
+                "instance_count",
+                Double(value),
+                min: 1,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
-extension AppComponentInstanceBase {
-    public init(instanceCount: Int? = nil, instanceSizeSlug: AppComponentInstanceBaseInstanceSizeSlug? = nil) throws {
+public extension AppComponentInstanceBase {
+    init(instanceCount: Int? = nil, instanceSizeSlug: AppComponentInstanceBaseInstanceSizeSlug? = nil) throws {
         self.init()
         (self.instanceCount, self.instanceSizeSlug) = (instanceCount, instanceSizeSlug)
         if let value = self.instanceCount {
-            try validateRange("instance_count", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "instance_count",
+                Double(value),
+                min: 1,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
@@ -157,37 +180,51 @@ public struct AppComponentBase: Codable {
     }
 
     init() {
-        (self.name, self.git, self.github, self.gitlab, self.bitbucket) = (nil, nil, nil, nil, nil)
-        (self.image, self.dockerfilePath, self.buildCommand, self.runCommand, self.sourceDir) = (nil, nil, nil, nil, nil)
-        (self.envs, self.environmentSlug, self.logDestinations) = (nil, nil, nil)
+        (name, git, github, gitlab, bitbucket) = (nil, nil, nil, nil, nil)
+        (image, dockerfilePath, buildCommand, runCommand, sourceDir) = (nil, nil, nil, nil, nil)
+        (envs, environmentSlug, logDestinations) = (nil, nil, nil)
     }
 }
 
-extension AppComponentBase {
-    public init(from decoder: Decoder) throws {
+public extension AppComponentBase {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.git = try container.sdkDecodeIfPresent(.git)
-        self.github = try container.sdkDecodeIfPresent(.github)
-        self.gitlab = try container.sdkDecodeIfPresent(.gitlab)
-        self.bitbucket = try container.sdkDecodeIfPresent(.bitbucket)
-        self.image = try container.sdkDecodeIfPresent(.image)
-        self.dockerfilePath = try container.sdkDecodeIfPresent(.dockerfilePath)
-        self.buildCommand = try container.sdkDecodeIfPresent(.buildCommand)
-        self.runCommand = try container.sdkDecodeIfPresent(.runCommand)
-        self.sourceDir = try container.sdkDecodeIfPresent(.sourceDir)
-        self.envs = try container.sdkDecodeIfPresent(.envs)
-        self.environmentSlug = try container.sdkDecodeIfPresent(.environmentSlug)
-        self.logDestinations = try container.sdkDecodeIfPresent(.logDestinations)
-        if let value = self.name {
+        name = try container.sdkDecodeIfPresent(.name)
+        git = try container.sdkDecodeIfPresent(.git)
+        github = try container.sdkDecodeIfPresent(.github)
+        gitlab = try container.sdkDecodeIfPresent(.gitlab)
+        bitbucket = try container.sdkDecodeIfPresent(.bitbucket)
+        image = try container.sdkDecodeIfPresent(.image)
+        dockerfilePath = try container.sdkDecodeIfPresent(.dockerfilePath)
+        buildCommand = try container.sdkDecodeIfPresent(.buildCommand)
+        runCommand = try container.sdkDecodeIfPresent(.runCommand)
+        sourceDir = try container.sdkDecodeIfPresent(.sourceDir)
+        envs = try container.sdkDecodeIfPresent(.envs)
+        environmentSlug = try container.sdkDecodeIfPresent(.environmentSlug)
+        logDestinations = try container.sdkDecodeIfPresent(.logDestinations)
+        if let value = name {
             try validateLength("name", value, min: 2, max: 32)
             try sdkValidatePattern("name", value, sdkPattern3c600f7d20be)
         }
     }
 }
 
-extension AppComponentBase {
-    public init(name: String? = nil, git: AppsGitSourceSpec? = nil, github: AppsGithubSourceSpec? = nil, gitlab: AppsGitlabSourceSpec? = nil, bitbucket: AppsBitbucketSourceSpec? = nil, image: AppsImageSourceSpec? = nil, dockerfilePath: String? = nil, buildCommand: String? = nil, runCommand: String? = nil, sourceDir: String? = nil, envs: [AppVariableDefinition]? = nil, environmentSlug: String? = nil, logDestinations: [AppLogDestinationDefinition]? = nil) throws {
+public extension AppComponentBase {
+    init(
+        name: String? = nil,
+        git: AppsGitSourceSpec? = nil,
+        github: AppsGithubSourceSpec? = nil,
+        gitlab: AppsGitlabSourceSpec? = nil,
+        bitbucket: AppsBitbucketSourceSpec? = nil,
+        image: AppsImageSourceSpec? = nil,
+        dockerfilePath: String? = nil,
+        buildCommand: String? = nil,
+        runCommand: String? = nil,
+        sourceDir: String? = nil,
+        envs: [AppVariableDefinition]? = nil,
+        environmentSlug: String? = nil,
+        logDestinations: [AppLogDestinationDefinition]? = nil
+    ) throws {
         self.init()
         (self.name, self.git) = (name, git)
         (self.github, self.gitlab) = (github, gitlab)
@@ -209,22 +246,32 @@ public indirect enum AppComponentInstanceBaseInstanceSizeSlug {
 }
 
 extension AppComponentInstanceBaseInstanceSizeSlug: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for AppComponentInstanceBaseInstanceSizeSlug")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for AppComponentInstanceBaseInstanceSizeSlug"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension AppComponentInstanceBaseInstanceSizeSlug {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode(String.self) { return .stringValue1(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode(String.self) {
+            return .stringValue1(value)
+        }
         return nil
     }
 }
@@ -243,14 +290,17 @@ extension AppComponentInstanceBaseInstanceSizeSlug {
 public struct AppComponentHealthState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let unknown = AppComponentHealthState(rawValue: "UNKNOWN")
     public static let healthy = AppComponentHealthState(rawValue: "HEALTHY")
     public static let unhealthy = AppComponentHealthState(rawValue: "UNHEALTHY")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -261,10 +311,14 @@ public struct AppComponentHealthState: RawRepresentable, Hashable, Codable, Send
 
 /// Deprecated size slugs for legacy plans. We strongly encourage customers to use the new plans when creating
 /// or upgrading apps.
-public struct AppComponentInstanceBaseInstanceSizeSlugVariant1: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct AppComponentInstanceBaseInstanceSizeSlugVariant1: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let basicXxs = AppComponentInstanceBaseInstanceSizeSlugVariant1(rawValue: "basic-xxs")
     public static let basicXs = AppComponentInstanceBaseInstanceSizeSlugVariant1(rawValue: "basic-xs")
     public static let basicS = AppComponentInstanceBaseInstanceSizeSlugVariant1(rawValue: "basic-s")
@@ -278,7 +332,7 @@ public struct AppComponentInstanceBaseInstanceSizeSlugVariant1: RawRepresentable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -288,12 +342,17 @@ public struct AppComponentInstanceBaseInstanceSizeSlugVariant1: RawRepresentable
 }
 
 /// Optional enumerated value serialized in the `instance_size_slug` wire field.
-public struct AppComponentInstanceBaseInstanceSizeSlugVariant0: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct AppComponentInstanceBaseInstanceSizeSlugVariant0: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let appsS1vcpu05gb = AppComponentInstanceBaseInstanceSizeSlugVariant0(rawValue: "apps-s-1vcpu-0.5gb")
-    public static let appsS1vcpu1gbFixed = AppComponentInstanceBaseInstanceSizeSlugVariant0(rawValue: "apps-s-1vcpu-1gb-fixed")
+    public static let appsS1vcpu1gbFixed =
+        AppComponentInstanceBaseInstanceSizeSlugVariant0(rawValue: "apps-s-1vcpu-1gb-fixed")
     public static let appsS1vcpu1gb = AppComponentInstanceBaseInstanceSizeSlugVariant0(rawValue: "apps-s-1vcpu-1gb")
     public static let appsS1vcpu2gb = AppComponentInstanceBaseInstanceSizeSlugVariant0(rawValue: "apps-s-1vcpu-2gb")
     public static let appsS2vcpu4gb = AppComponentInstanceBaseInstanceSizeSlugVariant0(rawValue: "apps-s-2vcpu-4gb")
@@ -309,7 +368,7 @@ public struct AppComponentInstanceBaseInstanceSizeSlugVariant0: RawRepresentable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

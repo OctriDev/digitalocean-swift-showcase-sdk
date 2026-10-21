@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ServerlessInferenceSystemone domain models
+/// ServerlessInferenceSystemone domain models
 /// The evaluated answer for a single question. The fields that are populated depend on the corresponding question's
 /// `type`.
 public struct SystemoneAnswer: Codable {
@@ -39,27 +39,41 @@ public struct SystemoneAnswer: Codable {
         case confidence
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SystemoneAnswer {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.noul = try container.sdkDecodeIfPresent(.noul)
-        self.choice = try container.sdkDecodeIfPresent(.choice)
-        self.score = try container.sdkDecodeIfPresent(.score)
-        self.legend = try container.sdkDecodeIfPresent(.legend)
-        self.probabilities = try container.sdkDecodeIfPresent(.probabilities)
-        self.confidence = try container.sdkDecodeIfPresent(.confidence)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SystemoneAnswer {
-    public init(type: SystemoneAnswerType, noul: Double? = nil, choice: String? = nil, score: Double? = nil, legend: [String: JSONValue]? = nil, probabilities: [String: Double]? = nil, confidence: Double? = nil) {
+public extension SystemoneAnswer {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        noul = try container.sdkDecodeIfPresent(.noul)
+        choice = try container.sdkDecodeIfPresent(.choice)
+        score = try container.sdkDecodeIfPresent(.score)
+        legend = try container.sdkDecodeIfPresent(.legend)
+        probabilities = try container.sdkDecodeIfPresent(.probabilities)
+        confidence = try container.sdkDecodeIfPresent(.confidence)
+    }
+}
+
+public extension SystemoneAnswer {
+    init(
+        type: SystemoneAnswerType,
+        noul: Double? = nil,
+        choice: String? = nil,
+        score: Double? = nil,
+        legend: [String: JSONValue]? = nil,
+        probabilities: [String: Double]? = nil,
+        confidence: Double? = nil
+    ) {
         (self.type, self.noul) = (type, noul)
         (self.choice, self.score) = (choice, score)
         (self.legend, self.probabilities) = (legend, probabilities)
@@ -90,29 +104,43 @@ public struct SystemoneRequest: Codable {
         case questions
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SystemoneRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.state) else {
-            throw SdkValidationError(field: "state", code: "required", message: "Validation failed for 'state': value is required")
-        }
-        guard container.contains(.model) else {
-            throw SdkValidationError(field: "model", code: "required", message: "Validation failed for 'model': value is required")
-        }
-        guard container.contains(.questions) else {
-            throw SdkValidationError(field: "questions", code: "required", message: "Validation failed for 'questions': value is required")
-        }
-        self.state = try container.sdkDecodeRequired(.state)
-        self.model = try container.sdkDecodeRequired(.model)
-        self.questions = try container.sdkDecodeRequired(.questions)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SystemoneRequest {
-    public init(state: String, model: String, questions: [String: SystemoneQuestion]) {
+public extension SystemoneRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.state) else {
+            throw SdkValidationError(
+                field: "state",
+                code: "required",
+                message: "Validation failed for 'state': value is required"
+            )
+        }
+        guard container.contains(.model) else {
+            throw SdkValidationError(
+                field: "model",
+                code: "required",
+                message: "Validation failed for 'model': value is required"
+            )
+        }
+        guard container.contains(.questions) else {
+            throw SdkValidationError(
+                field: "questions",
+                code: "required",
+                message: "Validation failed for 'questions': value is required"
+            )
+        }
+        state = try container.sdkDecodeRequired(.state)
+        model = try container.sdkDecodeRequired(.model)
+        questions = try container.sdkDecodeRequired(.questions)
+    }
+}
+
+public extension SystemoneRequest {
+    init(state: String, model: String, questions: [String: SystemoneQuestion]) {
         (self.state, self.model) = (state, model)
         self.questions = questions
     }
@@ -134,29 +162,43 @@ public struct SystemoneResponse: Codable {
         case usage
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SystemoneResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.model) else {
-            throw SdkValidationError(field: "model", code: "required", message: "Validation failed for 'model': value is required")
-        }
-        guard container.contains(.answers) else {
-            throw SdkValidationError(field: "answers", code: "required", message: "Validation failed for 'answers': value is required")
-        }
-        guard container.contains(.usage) else {
-            throw SdkValidationError(field: "usage", code: "required", message: "Validation failed for 'usage': value is required")
-        }
-        self.model = try container.sdkDecodeRequired(.model)
-        self.answers = try container.sdkDecodeRequired(.answers)
-        self.usage = try container.sdkDecodeRequired(.usage)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SystemoneResponse {
-    public init(model: String, answers: [String: SystemoneAnswer], usage: SystemoneUsage) {
+public extension SystemoneResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.model) else {
+            throw SdkValidationError(
+                field: "model",
+                code: "required",
+                message: "Validation failed for 'model': value is required"
+            )
+        }
+        guard container.contains(.answers) else {
+            throw SdkValidationError(
+                field: "answers",
+                code: "required",
+                message: "Validation failed for 'answers': value is required"
+            )
+        }
+        guard container.contains(.usage) else {
+            throw SdkValidationError(
+                field: "usage",
+                code: "required",
+                message: "Validation failed for 'usage': value is required"
+            )
+        }
+        model = try container.sdkDecodeRequired(.model)
+        answers = try container.sdkDecodeRequired(.answers)
+        usage = try container.sdkDecodeRequired(.usage)
+    }
+}
+
+public extension SystemoneResponse {
+    init(model: String, answers: [String: SystemoneAnswer], usage: SystemoneUsage) {
         (self.model, self.answers) = (model, answers)
         self.usage = usage
     }
@@ -175,30 +217,72 @@ public struct SystemoneUsage: Codable {
         case outputTokens = "output_tokens"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SystemoneUsage {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.inputTokens) else {
-            throw SdkValidationError(field: "input_tokens", code: "required", message: "Validation failed for 'input_tokens': value is required")
-        }
-        guard container.contains(.outputTokens) else {
-            throw SdkValidationError(field: "output_tokens", code: "required", message: "Validation failed for 'output_tokens': value is required")
-        }
-        self.inputTokens = try container.sdkDecodeRequired(.inputTokens)
-        self.outputTokens = try container.sdkDecodeRequired(.outputTokens)
-            try validateRange("input_tokens", Double(self.inputTokens), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
-            try validateRange("output_tokens", Double(self.outputTokens), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SystemoneUsage {
-    public init(inputTokens: Int, outputTokens: Int) throws {
+public extension SystemoneUsage {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.inputTokens) else {
+            throw SdkValidationError(
+                field: "input_tokens",
+                code: "required",
+                message: "Validation failed for 'input_tokens': value is required"
+            )
+        }
+        guard container.contains(.outputTokens) else {
+            throw SdkValidationError(
+                field: "output_tokens",
+                code: "required",
+                message: "Validation failed for 'output_tokens': value is required"
+            )
+        }
+        inputTokens = try container.sdkDecodeRequired(.inputTokens)
+        outputTokens = try container.sdkDecodeRequired(.outputTokens)
+        try validateRange(
+            "input_tokens",
+            Double(inputTokens),
+            min: 0,
+            max: nil,
+            exclusiveMin: nil,
+            exclusiveMax: nil,
+            multipleOf: nil
+        )
+        try validateRange(
+            "output_tokens",
+            Double(outputTokens),
+            min: 0,
+            max: nil,
+            exclusiveMin: nil,
+            exclusiveMax: nil,
+            multipleOf: nil
+        )
+    }
+}
+
+public extension SystemoneUsage {
+    init(inputTokens: Int, outputTokens: Int) throws {
         (self.inputTokens, self.outputTokens) = (inputTokens, outputTokens)
-            try validateRange("input_tokens", Double(self.inputTokens), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
-            try validateRange("output_tokens", Double(self.outputTokens), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        try validateRange(
+            "input_tokens",
+            Double(self.inputTokens),
+            min: 0,
+            max: nil,
+            exclusiveMin: nil,
+            exclusiveMax: nil,
+            multipleOf: nil
+        )
+        try validateRange(
+            "output_tokens",
+            Double(self.outputTokens),
+            min: 0,
+            max: nil,
+            exclusiveMin: nil,
+            exclusiveMax: nil,
+            multipleOf: nil
+        )
     }
 }
 
@@ -208,22 +292,32 @@ public indirect enum SystemoneQuestionCriteria {
 }
 
 extension SystemoneQuestionCriteria: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for SystemoneQuestionCriteria")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for SystemoneQuestionCriteria"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension SystemoneQuestionCriteria {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode([String: String].self) { return .dictionary(value) }
-        if let value = try? container.decode([String].self) { return .stringList(value) }
+        if let value = try? container.decode([String: String].self) {
+            return .dictionary(value)
+        }
+        if let value = try? container.decode([String].self) {
+            return .stringList(value)
+        }
         return nil
     }
 }
@@ -263,26 +357,36 @@ public struct SystemoneQuestion: Codable {
         case criteria
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SystemoneQuestion {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.instructions) else {
-            throw SdkValidationError(field: "instructions", code: "required", message: "Validation failed for 'instructions': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.instructions = try container.sdkDecodeRequired(.instructions)
-        self.criteria = try container.sdkDecodeIfPresent(.criteria)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SystemoneQuestion {
-    public init(type: SystemoneQuestionType, instructions: String, criteria: SystemoneQuestionCriteria? = nil) {
+public extension SystemoneQuestion {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.instructions) else {
+            throw SdkValidationError(
+                field: "instructions",
+                code: "required",
+                message: "Validation failed for 'instructions': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        instructions = try container.sdkDecodeRequired(.instructions)
+        criteria = try container.sdkDecodeIfPresent(.criteria)
+    }
+}
+
+public extension SystemoneQuestion {
+    init(type: SystemoneQuestionType, instructions: String, criteria: SystemoneQuestionCriteria? = nil) {
         (self.type, self.instructions) = (type, instructions)
         self.criteria = criteria
     }
@@ -292,14 +396,17 @@ extension SystemoneQuestion {
 public struct SystemoneAnswerType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let noul = SystemoneAnswerType(rawValue: "noul")
     public static let choice = SystemoneAnswerType(rawValue: "choice")
     public static let score = SystemoneAnswerType(rawValue: "score")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -313,14 +420,17 @@ public struct SystemoneAnswerType: RawRepresentable, Hashable, Codable, Sendable
 public struct SystemoneQuestionType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let noul = SystemoneQuestionType(rawValue: "noul")
     public static let choice = SystemoneQuestionType(rawValue: "choice")
     public static let score = SystemoneQuestionType(rawValue: "score")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

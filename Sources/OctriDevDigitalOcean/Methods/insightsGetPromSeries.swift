@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InsightsMethods {
-    /// To find series matching one or more selectors, send a GET request to `/v2/insights/query/{region}/prom/api/v1/series`.
+public extension InsightsMethods {
+    /// To find series matching one or more selectors, send a GET request to
+    /// `/v2/insights/query/{region}/prom/api/v1/series`.
     ///
     /// - Parameters:
     /// - region: The datacenter region slug for the query.
@@ -17,24 +18,78 @@ extension InsightsMethods {
     ///   UNIX timestamp.
     /// - end: Optional end timestamp (inclusive). Accepts a RFC3339 string or a
     ///   UNIX timestamp.
-    public static func insightsGetPromSeries(config: ClientConfig, region: String, match: [String], start: String? = nil, end: String? = nil, requestOptions: RequestOptions? = nil) async throws -> PromSeriesResponse {
-        return try (await sdkRequest("GET", ["/v2/insights/query/", sdkEncodePathSegment(sdkWireString(region)), "/prom/api/v1/series"].joined(), config: config, query: [
-            SdkQueryParameter("match[]", values: match, style: "form", explode: true),
-            SdkQueryParameter("start", value: start),
-            SdkQueryParameter("end", value: end),
-        ], decoder: .json, operationId: "insights_get_promSeries", options: requestOptions, errors: ["400": PromError.self, "401": Error2.self, "403": Error2.self, "404": Error2.self, "422": PromError.self, "429": Error2.self, "500": PromError.self, "503": PromError.self, "default": Error2.self])).data
+    static func insightsGetPromSeries(
+        config: ClientConfig,
+        region: String,
+        match: [String],
+        start: String? = nil,
+        end: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> PromSeriesResponse {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/insights/query/", sdkEncodePathSegment(sdkWireString(region)), "/prom/api/v1/series"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("match[]", values: match, style: "form", explode: true),
+                SdkQueryParameter("start", value: start),
+                SdkQueryParameter("end", value: end),
+            ],
+            decoder: .json,
+            operationId: "insights_get_promSeries",
+            options: requestOptions,
+            errors: [
+                "400": PromError.self,
+                "401": Error2.self,
+                "403": Error2.self,
+                "404": Error2.self,
+                "422": PromError.self,
+                "429": Error2.self,
+                "500": PromError.self,
+                "503": PromError.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To find series matching one or more selectors, send a POST request to `/v2/insights/query/{region}/prom/api/v1/series` with `application/x-www-form-urlencoded` parameters.
+    /// To find series matching one or more selectors, send a POST request to
+    /// `/v2/insights/query/{region}/prom/api/v1/series` with `application/x-www-form-urlencoded` parameters.
     ///
     /// - Parameters:
     /// - region: The datacenter region slug for the query.
     /// - match: One or more series selectors.
     /// - start: Optional start timestamp.
     /// - end: Optional end timestamp.
-    public static func insightsPostPromSeries(config: ClientConfig, region: String, match: [String], start: String? = nil, end: String? = nil, requestOptions: RequestOptions? = nil) async throws -> PromSeriesResponse {
+    static func insightsPostPromSeries(
+        config: ClientConfig,
+        region: String,
+        match: [String],
+        start: String? = nil,
+        end: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> PromSeriesResponse {
         let requestBody = InsightsPostPromSeriesRequestBody(match: match, start: start, end: end)
 
-        return try (await sdkRequest("POST", ["/v2/insights/query/", sdkEncodePathSegment(sdkWireString(region)), "/prom/api/v1/series"].joined(), config: config, body: requestBody, contentType: "application/x-www-form-urlencoded", decoder: .json, operationId: "insights_post_promSeries", options: requestOptions, errors: ["400": PromError.self, "401": Error2.self, "403": Error2.self, "404": Error2.self, "422": PromError.self, "429": Error2.self, "500": PromError.self, "503": PromError.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/v2/insights/query/", sdkEncodePathSegment(sdkWireString(region)), "/prom/api/v1/series"].joined(),
+            config: config,
+            body: requestBody,
+            contentType: "application/x-www-form-urlencoded",
+            decoder: .json,
+            operationId: "insights_post_promSeries",
+            options: requestOptions,
+            errors: [
+                "400": PromError.self,
+                "401": Error2.self,
+                "403": Error2.self,
+                "404": Error2.self,
+                "422": PromError.self,
+                "429": Error2.self,
+                "500": PromError.self,
+                "503": PromError.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

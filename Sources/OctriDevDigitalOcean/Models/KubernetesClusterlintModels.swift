@@ -3,7 +3,7 @@
 
 import Foundation
 
-// KubernetesClusterlint domain models
+/// KubernetesClusterlint domain models
 /// Typed representation of the `ClusterlintRun` API schema.
 public struct ClusterlintRun: Codable {
     /// ID of the clusterlint run that can be used later to fetch the diagnostics.
@@ -15,19 +15,19 @@ public struct ClusterlintRun: Codable {
     }
 
     init() {
-        self.runId = nil
+        runId = nil
     }
 }
 
-extension ClusterlintRun {
-    public init(from decoder: Decoder) throws {
+public extension ClusterlintRun {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.runId = try container.sdkDecodeIfPresent(.runId)
+        runId = try container.sdkDecodeIfPresent(.runId)
     }
 }
 
-extension ClusterlintRun {
-    public init(runId: String? = nil) {
+public extension ClusterlintRun {
+    init(runId: String? = nil) {
         self.init()
         self.runId = runId
     }
@@ -57,28 +57,33 @@ public struct ClusterlintResults: Codable {
     }
 
     init() {
-        (self.runId, self.requestedAt, self.completedAt, self.diagnostics) = (nil, nil, nil, nil)
+        (runId, requestedAt, completedAt, diagnostics) = (nil, nil, nil, nil)
     }
 }
 
-extension ClusterlintResults {
-    public init(from decoder: Decoder) throws {
+public extension ClusterlintResults {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.runId = try container.sdkDecodeIfPresent(.runId)
-        self.requestedAt = try container.sdkDecodeIfPresent(.requestedAt)
-        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        self.diagnostics = try container.sdkDecodeIfPresent(.diagnostics)
-        if let value = self.requestedAt {
+        runId = try container.sdkDecodeIfPresent(.runId)
+        requestedAt = try container.sdkDecodeIfPresent(.requestedAt)
+        completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        diagnostics = try container.sdkDecodeIfPresent(.diagnostics)
+        if let value = requestedAt {
             try sdkValidateDateTime("requested_at", sdkWireString(value))
         }
-        if let value = self.completedAt {
+        if let value = completedAt {
             try sdkValidateDateTime("completed_at", sdkWireString(value))
         }
     }
 }
 
-extension ClusterlintResults {
-    public init(runId: String? = nil, requestedAt: Date? = nil, completedAt: Date? = nil, diagnostics: [ClusterlintResultsDiagnosticsItem]? = nil) throws {
+public extension ClusterlintResults {
+    init(
+        runId: String? = nil,
+        requestedAt: Date? = nil,
+        completedAt: Date? = nil,
+        diagnostics: [ClusterlintResultsDiagnosticsItem]? = nil
+    ) throws {
         self.init()
         (self.runId, self.requestedAt) = (runId, requestedAt)
         (self.completedAt, self.diagnostics) = (completedAt, diagnostics)
@@ -110,21 +115,21 @@ public struct ClusterlintResultsDiagnosticsItemObject: Codable {
     }
 
     init() {
-        (self.name, self.kind, self.namespace) = (nil, nil, nil)
+        (name, kind, namespace) = (nil, nil, nil)
     }
 }
 
-extension ClusterlintResultsDiagnosticsItemObject {
-    public init(from decoder: Decoder) throws {
+public extension ClusterlintResultsDiagnosticsItemObject {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.kind = try container.sdkDecodeIfPresent(.kind)
-        self.namespace = try container.sdkDecodeIfPresent(.namespace)
+        name = try container.sdkDecodeIfPresent(.name)
+        kind = try container.sdkDecodeIfPresent(.kind)
+        namespace = try container.sdkDecodeIfPresent(.namespace)
     }
 }
 
-extension ClusterlintResultsDiagnosticsItemObject {
-    public init(name: String? = nil, kind: String? = nil, namespace: String? = nil) {
+public extension ClusterlintResultsDiagnosticsItemObject {
+    init(name: String? = nil, kind: String? = nil, namespace: String? = nil) {
         self.init()
         (self.name, self.kind) = (name, kind)
         self.namespace = namespace
@@ -153,22 +158,27 @@ public struct ClusterlintResultsDiagnosticsItem: Codable {
     }
 
     init() {
-        (self.checkName, self.severity, self.message, self.object) = (nil, nil, nil, nil)
+        (checkName, severity, message, object) = (nil, nil, nil, nil)
     }
 }
 
-extension ClusterlintResultsDiagnosticsItem {
-    public init(from decoder: Decoder) throws {
+public extension ClusterlintResultsDiagnosticsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.checkName = try container.sdkDecodeIfPresent(.checkName)
-        self.severity = try container.sdkDecodeIfPresent(.severity)
-        self.message = try container.sdkDecodeIfPresent(.message)
-        self.object = try container.sdkDecodeIfPresent(.object)
+        checkName = try container.sdkDecodeIfPresent(.checkName)
+        severity = try container.sdkDecodeIfPresent(.severity)
+        message = try container.sdkDecodeIfPresent(.message)
+        object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-extension ClusterlintResultsDiagnosticsItem {
-    public init(checkName: String? = nil, severity: String? = nil, message: String? = nil, object: ClusterlintResultsDiagnosticsItemObject? = nil) {
+public extension ClusterlintResultsDiagnosticsItem {
+    init(
+        checkName: String? = nil,
+        severity: String? = nil,
+        message: String? = nil,
+        object: ClusterlintResultsDiagnosticsItemObject? = nil
+    ) {
         self.init()
         (self.checkName, self.severity) = (checkName, severity)
         (self.message, self.object) = (message, object)
@@ -198,22 +208,27 @@ public struct ClusterlintRequest: Codable {
     }
 
     init() {
-        (self.includeGroups, self.includeChecks, self.excludeGroups, self.excludeChecks) = (nil, nil, nil, nil)
+        (includeGroups, includeChecks, excludeGroups, excludeChecks) = (nil, nil, nil, nil)
     }
 }
 
-extension ClusterlintRequest {
-    public init(from decoder: Decoder) throws {
+public extension ClusterlintRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.includeGroups = try container.sdkDecodeIfPresent(.includeGroups)
-        self.includeChecks = try container.sdkDecodeIfPresent(.includeChecks)
-        self.excludeGroups = try container.sdkDecodeIfPresent(.excludeGroups)
-        self.excludeChecks = try container.sdkDecodeIfPresent(.excludeChecks)
+        includeGroups = try container.sdkDecodeIfPresent(.includeGroups)
+        includeChecks = try container.sdkDecodeIfPresent(.includeChecks)
+        excludeGroups = try container.sdkDecodeIfPresent(.excludeGroups)
+        excludeChecks = try container.sdkDecodeIfPresent(.excludeChecks)
     }
 }
 
-extension ClusterlintRequest {
-    public init(includeGroups: [String]? = nil, includeChecks: [String]? = nil, excludeGroups: [String]? = nil, excludeChecks: [String]? = nil) {
+public extension ClusterlintRequest {
+    init(
+        includeGroups: [String]? = nil,
+        includeChecks: [String]? = nil,
+        excludeGroups: [String]? = nil,
+        excludeChecks: [String]? = nil
+    ) {
         self.init()
         (self.includeGroups, self.includeChecks) = (includeGroups, includeChecks)
         (self.excludeGroups, self.excludeChecks) = (excludeGroups, excludeChecks)

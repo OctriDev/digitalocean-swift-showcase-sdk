@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Security domain models
+/// Security domain models
 /// Typed representation of the `Scans` API schema.
 public struct Scans: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,23 +18,29 @@ public struct Scans: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension Scans {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.scans = try container.sdkDecodeIfPresent(.scans)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension Scans {
-    public init(meta: MetaMeta, scans: [Scan]? = nil, links: PageLinks? = nil) {
+public extension Scans {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        scans = try container.sdkDecodeIfPresent(.scans)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension Scans {
+    init(meta: MetaMeta, scans: [Scan]? = nil, links: PageLinks? = nil) {
         (self.meta, self.scans) = (meta, scans)
         self.links = links
     }
@@ -48,19 +54,19 @@ public struct ScansVariant0: Codable {
     }
 
     init() {
-        self.scans = nil
+        scans = nil
     }
 }
 
-extension ScansVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension ScansVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.scans = try container.sdkDecodeIfPresent(.scans)
+        scans = try container.sdkDecodeIfPresent(.scans)
     }
 }
 
-extension ScansVariant0 {
-    public init(scans: [Scan]? = nil) {
+public extension ScansVariant0 {
+    init(scans: [Scan]? = nil) {
         self.init()
         self.scans = scans
     }

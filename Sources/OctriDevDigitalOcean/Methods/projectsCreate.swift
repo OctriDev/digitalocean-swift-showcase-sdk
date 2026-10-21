@@ -6,7 +6,7 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ProjectsMethods {
+public extension ProjectsMethods {
     /// To create a project, send a POST request to `/v2/projects`.
     ///
     /// - Parameters:
@@ -22,27 +22,66 @@ extension ProjectsMethods {
     /// - description: The description of the project. The maximum length is 255
     ///   characters.
     /// - environment: The environment of the project's resources.
-    public static func projectsCreate(config: ClientConfig, name: String, purpose: String, description: String? = nil, environment: ProjectsCreateRequestBodyEnvironment? = nil, requestOptions: RequestOptions? = nil) async throws -> ExistingProject {
+    static func projectsCreate(
+        config: ClientConfig,
+        name: String,
+        purpose: String,
+        description: String? = nil,
+        environment: ProjectsCreateRequestBodyEnvironment? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExistingProject {
         try validateLength("name", name, max: 175)
 
         try validateLength("purpose", purpose, max: 255)
 
-        if let description = description {
+        if let description {
             try validateLength("description", description, max: 255)
         }
 
-        let requestBody = ProjectsCreateRequestBody(name: name, purpose: purpose, description: description, environment: environment)
+        let requestBody = ProjectsCreateRequestBody(
+            name: name,
+            purpose: purpose,
+            description: description,
+            environment: environment
+        )
 
-        return try (await sdkRequest("POST", "/v2/projects", config: config, body: requestBody, decoder: .json, operationId: "projects_create", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/v2/projects",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "projects_create",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 
     /// To get a project, send a GET request to `/v2/projects/$PROJECT_ID`.
     ///
     /// - Parameters:
     /// - projectId: A unique identifier for a project.
-    public static func projectsGet(config: ClientConfig, projectId: String, requestOptions: RequestOptions? = nil) async throws -> ExistingProject {
+    static func projectsGet(
+        config: ClientConfig,
+        projectId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExistingProject {
         try sdkValidateUuid("project_id", projectId)
 
-        return try (await sdkRequest("GET", ["/v2/projects/", sdkEncodePathSegment(sdkWireString(projectId))].joined(), config: config, decoder: .json, operationId: "projects_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/projects/", sdkEncodePathSegment(sdkWireString(projectId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "projects_get",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

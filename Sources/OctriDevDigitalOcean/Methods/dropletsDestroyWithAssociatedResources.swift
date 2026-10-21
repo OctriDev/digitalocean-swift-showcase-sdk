@@ -6,14 +6,37 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DropletsMethods {
-    /// To list the associated billable resources that can be destroyed along with a Droplet, send a GET request to the `/v2/droplets/$DROPLET_ID/destroy_with_associated_resources` endpoint. This endpoint will only return resources that you are authorized to see. For example, to see associated Reserved IPs, include the `reserved_ip:read` scope. The response will be a JSON object containing `snapshots`, `volumes`, and `volume_snapshots` keys. Each will be set to an array of objects containing information about the associated resources.
+public extension DropletsMethods {
+    /// To list the associated billable resources that can be destroyed along with a Droplet, send a GET request to the
+    /// `/v2/droplets/$DROPLET_ID/destroy_with_associated_resources` endpoint. This endpoint will only return resources
+    /// that you are authorized to see. For example, to see associated Reserved IPs, include the `reserved_ip:read`
+    /// scope. The response will be a JSON object containing `snapshots`, `volumes`, and `volume_snapshots` keys. Each
+    /// will be set to an array of objects containing information about the associated resources.
     ///
     /// - Parameters:
     /// - dropletId: A unique identifier for a Droplet instance.
-    public static func dropletsListAssociatedResources(config: ClientConfig, dropletId: Int, requestOptions: RequestOptions? = nil) async throws -> AssociatedResourcesList {
+    static func dropletsListAssociatedResources(
+        config: ClientConfig,
+        dropletId: Int,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AssociatedResourcesList {
         try validateRange("droplet_id", Double(dropletId), min: 1)
 
-        return try (await sdkRequest("GET", ["/v2/droplets/", sdkEncodePathSegment(sdkWireString(dropletId)), "/destroy_with_associated_resources"].joined(), config: config, decoder: .json, operationId: "droplets_list_associatedResources", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/droplets/", sdkEncodePathSegment(sdkWireString(dropletId)), "/destroy_with_associated_resources"]
+                .joined(),
+            config: config,
+            decoder: .json,
+            operationId: "droplets_list_associatedResources",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

@@ -6,32 +6,64 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension MonitoringMethods {
-    /// To retrieve the target size for a given Droplet Autoscale Pool, send a GET request to `/v2/monitoring/metrics/droplet_autoscale/target_instances`.
+public extension MonitoringMethods {
+    /// To retrieve the target size for a given Droplet Autoscale Pool, send a GET request to
+    /// `/v2/monitoring/metrics/droplet_autoscale/target_instances`.
     ///
     /// - Parameters:
     /// - autoscalePoolId: A unique identifier for an autoscale pool.
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    public static func monitoringGetDropletAutoscaleTargetInstances(config: ClientConfig, autoscalePoolId: String, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
-        return try (await sdkRequest("GET", "/v2/monitoring/metrics/droplet_autoscale/target_instances", config: config, query: [
-            SdkQueryParameter("autoscale_pool_id", value: autoscalePoolId),
-            SdkQueryParameter("start", value: start),
-            SdkQueryParameter("end", value: end),
-        ], decoder: .json, operationId: "monitoring_get_droplet_autoscale_target_instances", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func monitoringGetDropletAutoscaleTargetInstances(
+        config: ClientConfig,
+        autoscalePoolId: String,
+        start: String,
+        end: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Metrics {
+        try await (sdkRequest(
+            "GET",
+            "/v2/monitoring/metrics/droplet_autoscale/target_instances",
+            config: config,
+            query: [
+                SdkQueryParameter("autoscale_pool_id", value: autoscalePoolId),
+                SdkQueryParameter("start", value: start),
+                SdkQueryParameter("end", value: end),
+            ],
+            decoder: .json,
+            operationId: "monitoring_get_droplet_autoscale_target_instances",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 
-    /// To retrieve the current average CPU utilization for a given Droplet Autoscale Pool, send a GET request to `/v2/monitoring/metrics/droplet_autoscale/current_cpu_utilization`.
+    /// To retrieve the current average CPU utilization for a given Droplet Autoscale Pool, send a GET request to
+    /// `/v2/monitoring/metrics/droplet_autoscale/current_cpu_utilization`.
     ///
     /// - Parameters:
     /// - autoscalePoolId: A unique identifier for an autoscale pool.
     /// - start: UNIX timestamp to start metric window.
     /// - end: UNIX timestamp to end metric window.
-    public static func monitoringGetDropletAutoscaleCurrentCpuUtilizationYml(config: ClientConfig, autoscalePoolId: String, start: String, end: String, requestOptions: RequestOptions? = nil) async throws -> Metrics {
-        return try (await sdkRequest("GET", "/v2/monitoring/metrics/droplet_autoscale/current_cpu_utilization", config: config, query: [
-            SdkQueryParameter("autoscale_pool_id", value: autoscalePoolId),
-            SdkQueryParameter("start", value: start),
-            SdkQueryParameter("end", value: end),
-        ], decoder: .json, operationId: "monitoringGetDropletAutoscaleCurrentCpuUtilizationYml", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func monitoringGetDropletAutoscaleCurrentCpuUtilizationYml(
+        config: ClientConfig,
+        autoscalePoolId: String,
+        start: String,
+        end: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Metrics {
+        try await (sdkRequest(
+            "GET",
+            "/v2/monitoring/metrics/droplet_autoscale/current_cpu_utilization",
+            config: config,
+            query: [
+                SdkQueryParameter("autoscale_pool_id", value: autoscalePoolId),
+                SdkQueryParameter("start", value: start),
+                SdkQueryParameter("end", value: end),
+            ],
+            decoder: .json,
+            operationId: "monitoringGetDropletAutoscaleCurrentCpuUtilizationYml",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

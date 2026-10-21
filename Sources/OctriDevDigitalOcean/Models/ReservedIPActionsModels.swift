@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ReservedIPActions domain models
+/// ReservedIPActions domain models
 /// Typed representation of the `ReservedIpActionUnassign` API schema.
 public struct ReservedIpActionUnassign: Codable {
     /// The type of action to initiate for the reserved IP.
@@ -15,30 +15,36 @@ public struct ReservedIpActionUnassign: Codable {
         case type
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension ReservedIpActionUnassign {
-    public init(from decoder: Decoder) throws {
+public extension ReservedIpActionUnassign {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
         }
-        self.type = try container.sdkDecodeRequired(.type)
+        type = try container.sdkDecodeRequired(.type)
         additionalProperties = try decoder.sdkAdditionalProperties(besides: CodingKeys.self)
-            try sdkValidateRawEnum("type", self.type, ReservedIpActionTypeType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", type, ReservedIpActionTypeType.allCases.map(\.rawValue))
     }
 }
 
-extension ReservedIpActionUnassign {
-    public init(type: ReservedIpActionTypeType) throws {
+public extension ReservedIpActionUnassign {
+    init(type: ReservedIpActionTypeType) throws {
         self.type = type
-            try sdkValidateRawEnum("type", self.type, ReservedIpActionTypeType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, ReservedIpActionTypeType.allCases.map(\.rawValue))
     }
 }
 
-extension ReservedIpActionUnassign {
-    public func encode(to encoder: Encoder) throws {
+public extension ReservedIpActionUnassign {
+    func encode(to encoder: Encoder) throws {
         try encoder.sdkEncodeAdditionalProperties(additionalProperties)
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(type, forKey: .type)
@@ -92,38 +98,49 @@ public struct ReservedIpActionAction: Codable {
     }
 
     init() {
-        (self.id, self.status, self.type, self.startedAt, self.completedAt) = (nil, nil, nil, nil, nil)
-        (self.resourceId, self.resourceType, self.region, self.regionSlug, self.projectId) = (nil, nil, nil, nil, nil)
+        (id, status, type, startedAt, completedAt) = (nil, nil, nil, nil, nil)
+        (resourceId, resourceType, region, regionSlug, projectId) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ReservedIpActionAction {
-    public init(from decoder: Decoder) throws {
+public extension ReservedIpActionAction {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        self.resourceId = try container.sdkDecodeIfPresent(.resourceId)
-        self.resourceType = try container.sdkDecodeIfPresent(.resourceType)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.regionSlug = try container.sdkDecodeIfPresent(.regionSlug)
-        self.projectId = try container.sdkDecodeIfPresent(.projectId)
-        if let value = self.startedAt {
+        id = try container.sdkDecodeIfPresent(.id)
+        status = try container.sdkDecodeIfPresent(.status)
+        type = try container.sdkDecodeIfPresent(.type)
+        startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        resourceId = try container.sdkDecodeIfPresent(.resourceId)
+        resourceType = try container.sdkDecodeIfPresent(.resourceType)
+        region = try container.sdkDecodeIfPresent(.region)
+        regionSlug = try container.sdkDecodeIfPresent(.regionSlug)
+        projectId = try container.sdkDecodeIfPresent(.projectId)
+        if let value = startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
-        if let value = self.completedAt {
+        if let value = completedAt {
             try sdkValidateDateTime("completed_at", sdkWireString(value))
         }
-        if let value = self.projectId {
+        if let value = projectId {
             try sdkValidateUuid("project_id", value)
         }
     }
 }
 
-extension ReservedIpActionAction {
-    public init(id: Int? = nil, status: ReservedIpActionActionStatus? = nil, type: String? = nil, startedAt: Date? = nil, completedAt: Date? = nil, resourceId: Int? = nil, resourceType: String? = nil, region: Region? = nil, regionSlug: String? = nil, projectId: String? = nil) throws {
+public extension ReservedIpActionAction {
+    init(
+        id: Int? = nil,
+        status: ReservedIpActionActionStatus? = nil,
+        type: String? = nil,
+        startedAt: Date? = nil,
+        completedAt: Date? = nil,
+        resourceId: Int? = nil,
+        resourceType: String? = nil,
+        region: Region? = nil,
+        regionSlug: String? = nil,
+        projectId: String? = nil
+    ) throws {
         self.init()
         (self.id, self.status) = (id, status)
         (self.type, self.startedAt) = (type, startedAt)
@@ -150,19 +167,19 @@ public struct ReservedIpActionsVariant0: Codable {
     }
 
     init() {
-        self.actions = nil
+        actions = nil
     }
 }
 
-extension ReservedIpActionsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension ReservedIpActionsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.actions = try container.sdkDecodeIfPresent(.actions)
+        actions = try container.sdkDecodeIfPresent(.actions)
     }
 }
 
-extension ReservedIpActionsVariant0 {
-    public init(actions: [Action]? = nil) {
+public extension ReservedIpActionsVariant0 {
+    init(actions: [Action]? = nil) {
         self.init()
         self.actions = actions
     }
@@ -177,24 +194,30 @@ public struct ReservedIpActionType: Codable {
         case type
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ReservedIpActionType {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-            try sdkValidateRawEnum("type", self.type, ReservedIpActionTypeType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ReservedIpActionType {
-    public init(type: ReservedIpActionTypeType) throws {
+public extension ReservedIpActionType {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        try sdkValidateRawEnum("type", type, ReservedIpActionTypeType.allCases.map(\.rawValue))
+    }
+}
+
+public extension ReservedIpActionType {
+    init(type: ReservedIpActionTypeType) throws {
         self.type = type
-            try sdkValidateRawEnum("type", self.type, ReservedIpActionTypeType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, ReservedIpActionTypeType.allCases.map(\.rawValue))
     }
 }
 
@@ -211,28 +234,38 @@ public struct ReservedIpActionAssign: Codable {
         case dropletId = "droplet_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ReservedIpActionAssign {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.dropletId) else {
-            throw SdkValidationError(field: "droplet_id", code: "required", message: "Validation failed for 'droplet_id': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.dropletId = try container.sdkDecodeRequired(.dropletId)
-            try sdkValidateRawEnum("type", self.type, ReservedIpActionTypeType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ReservedIpActionAssign {
-    public init(type: ReservedIpActionTypeType, dropletId: Int) throws {
+public extension ReservedIpActionAssign {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.dropletId) else {
+            throw SdkValidationError(
+                field: "droplet_id",
+                code: "required",
+                message: "Validation failed for 'droplet_id': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        dropletId = try container.sdkDecodeRequired(.dropletId)
+        try sdkValidateRawEnum("type", type, ReservedIpActionTypeType.allCases.map(\.rawValue))
+    }
+}
+
+public extension ReservedIpActionAssign {
+    init(type: ReservedIpActionTypeType, dropletId: Int) throws {
         (self.type, self.dropletId) = (type, dropletId)
-            try sdkValidateRawEnum("type", self.type, ReservedIpActionTypeType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, ReservedIpActionTypeType.allCases.map(\.rawValue))
     }
 }
 
@@ -246,19 +279,19 @@ public struct ReservedIpAction: Codable {
     }
 
     init() {
-        self.action = nil
+        action = nil
     }
 }
 
-extension ReservedIpAction {
-    public init(from decoder: Decoder) throws {
+public extension ReservedIpAction {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.action = try container.sdkDecodeIfPresent(.action)
+        action = try container.sdkDecodeIfPresent(.action)
     }
 }
 
-extension ReservedIpAction {
-    public init(action: ReservedIpActionAction? = nil) {
+public extension ReservedIpAction {
+    init(action: ReservedIpActionAction? = nil) {
         self.init()
         self.action = action
     }
@@ -278,23 +311,29 @@ public struct ReservedIpActions: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ReservedIpActions {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.actions = try container.sdkDecodeIfPresent(.actions)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ReservedIpActions {
-    public init(meta: MetaMeta, actions: [Action]? = nil, links: PageLinks? = nil) {
+public extension ReservedIpActions {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        actions = try container.sdkDecodeIfPresent(.actions)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension ReservedIpActions {
+    init(meta: MetaMeta, actions: [Action]? = nil, links: PageLinks? = nil) {
         (self.meta, self.actions) = (meta, actions)
         self.links = links
     }
@@ -309,21 +348,27 @@ public struct ReservedIpActionAssignVariant1: Codable {
         case dropletId = "droplet_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ReservedIpActionAssignVariant1 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.dropletId) else {
-            throw SdkValidationError(field: "droplet_id", code: "required", message: "Validation failed for 'droplet_id': value is required")
-        }
-        self.dropletId = try container.sdkDecodeRequired(.dropletId)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ReservedIpActionAssignVariant1 {
-    public init(dropletId: Int) {
+public extension ReservedIpActionAssignVariant1 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.dropletId) else {
+            throw SdkValidationError(
+                field: "droplet_id",
+                code: "required",
+                message: "Validation failed for 'droplet_id': value is required"
+            )
+        }
+        dropletId = try container.sdkDecodeRequired(.dropletId)
+    }
+}
+
+public extension ReservedIpActionAssignVariant1 {
+    init(dropletId: Int) {
         self.dropletId = dropletId
     }
 }
@@ -351,14 +396,17 @@ public enum ReservedIpActionTypeType: String, CaseIterable, Codable {
 public struct ReservedIpActionActionStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let inProgress = ReservedIpActionActionStatus(rawValue: "in-progress")
     public static let completed = ReservedIpActionActionStatus(rawValue: "completed")
     public static let errored = ReservedIpActionActionStatus(rawValue: "errored")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

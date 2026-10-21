@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ActionGatewayDataPlane domain models
+/// ActionGatewayDataPlane domain models
 /// Typed representation of the `InvokeToolsRequest` API schema.
 public struct InvokeToolsRequest: Codable {
     /// The tool calls to run in parallel.
@@ -17,25 +17,31 @@ public struct InvokeToolsRequest: Codable {
         case rationale
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension InvokeToolsRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.tools) else {
-            throw SdkValidationError(field: "tools", code: "required", message: "Validation failed for 'tools': value is required")
-        }
-        self.tools = try container.sdkDecodeRequired(.tools)
-        self.rationale = try container.sdkDecodeIfPresent(.rationale)
-            try validateItems("tools", self.tools, min: 1, max: 10)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension InvokeToolsRequest {
-    public init(tools: [ToolCall], rationale: String? = nil) throws {
+public extension InvokeToolsRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.tools) else {
+            throw SdkValidationError(
+                field: "tools",
+                code: "required",
+                message: "Validation failed for 'tools': value is required"
+            )
+        }
+        tools = try container.sdkDecodeRequired(.tools)
+        rationale = try container.sdkDecodeIfPresent(.rationale)
+        try validateItems("tools", tools, min: 1, max: 10)
+    }
+}
+
+public extension InvokeToolsRequest {
+    init(tools: [ToolCall], rationale: String? = nil) throws {
         (self.tools, self.rationale) = (tools, rationale)
-            try validateItems("tools", self.tools, min: 1, max: 10)
+        try validateItems("tools", self.tools, min: 1, max: 10)
     }
 }
 
@@ -57,23 +63,29 @@ public struct ToolCall: Codable {
         case arguments
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ToolCall {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.tool) else {
-            throw SdkValidationError(field: "tool", code: "required", message: "Validation failed for 'tool': value is required")
-        }
-        self.tool = try container.sdkDecodeRequired(.tool)
-        self.version = try container.sdkDecodeIfPresent(.version)
-        self.arguments = try container.sdkDecodeIfPresent(.arguments)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ToolCall {
-    public init(tool: String, version: String? = nil, arguments: [String: JSONValue]? = nil) {
+public extension ToolCall {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.tool) else {
+            throw SdkValidationError(
+                field: "tool",
+                code: "required",
+                message: "Validation failed for 'tool': value is required"
+            )
+        }
+        tool = try container.sdkDecodeRequired(.tool)
+        version = try container.sdkDecodeIfPresent(.version)
+        arguments = try container.sdkDecodeIfPresent(.arguments)
+    }
+}
+
+public extension ToolCall {
+    init(tool: String, version: String? = nil, arguments: [String: JSONValue]? = nil) {
         (self.tool, self.version) = (tool, version)
         self.arguments = arguments
     }
@@ -101,22 +113,22 @@ public struct InvokeToolsItem: Codable {
     }
 
     init() {
-        (self.index, self.tool, self.version, self.result) = (nil, nil, nil, nil)
+        (index, tool, version, result) = (nil, nil, nil, nil)
     }
 }
 
-extension InvokeToolsItem {
-    public init(from decoder: Decoder) throws {
+public extension InvokeToolsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.index = try container.sdkDecodeIfPresent(.index)
-        self.tool = try container.sdkDecodeIfPresent(.tool)
-        self.version = try container.sdkDecodeIfPresent(.version)
-        self.result = try container.sdkDecodeIfPresent(.result)
+        index = try container.sdkDecodeIfPresent(.index)
+        tool = try container.sdkDecodeIfPresent(.tool)
+        version = try container.sdkDecodeIfPresent(.version)
+        result = try container.sdkDecodeIfPresent(.result)
     }
 }
 
-extension InvokeToolsItem {
-    public init(index: Int? = nil, tool: String? = nil, version: String? = nil, result: ToolResult? = nil) {
+public extension InvokeToolsItem {
+    init(index: Int? = nil, tool: String? = nil, version: String? = nil, result: ToolResult? = nil) {
         self.init()
         (self.index, self.tool) = (index, tool)
         (self.version, self.result) = (version, result)
@@ -144,22 +156,22 @@ public struct InvokeToolsResponse: Codable {
     }
 
     init() {
-        (self.totalCount, self.successCount, self.errorCount, self.results) = (nil, nil, nil, nil)
+        (totalCount, successCount, errorCount, results) = (nil, nil, nil, nil)
     }
 }
 
-extension InvokeToolsResponse {
-    public init(from decoder: Decoder) throws {
+public extension InvokeToolsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.successCount = try container.sdkDecodeIfPresent(.successCount)
-        self.errorCount = try container.sdkDecodeIfPresent(.errorCount)
-        self.results = try container.sdkDecodeIfPresent(.results)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        successCount = try container.sdkDecodeIfPresent(.successCount)
+        errorCount = try container.sdkDecodeIfPresent(.errorCount)
+        results = try container.sdkDecodeIfPresent(.results)
     }
 }
 
-extension InvokeToolsResponse {
-    public init(totalCount: Int? = nil, successCount: Int? = nil, errorCount: Int? = nil, results: [InvokeToolsItem]? = nil) {
+public extension InvokeToolsResponse {
+    init(totalCount: Int? = nil, successCount: Int? = nil, errorCount: Int? = nil, results: [InvokeToolsItem]? = nil) {
         self.init()
         (self.totalCount, self.successCount) = (totalCount, successCount)
         (self.errorCount, self.results) = (errorCount, results)

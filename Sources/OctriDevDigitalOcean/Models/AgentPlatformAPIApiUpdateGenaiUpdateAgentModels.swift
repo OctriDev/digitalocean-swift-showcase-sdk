@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiUpdate domain models
+/// AgentPlatformAPIApiUpdate domain models
 /// Data to modify an existing Agent
 public struct ApiUpdateAgentInputPublic: Codable {
     /// Optional `boolean` value serialized in the `agent_log_insights_enabled` wire field.
@@ -127,50 +127,84 @@ public struct ApiUpdateAgentInputPublic: Codable {
     }
 
     init() {
-        (self.agentLogInsightsEnabled, self.allowedDomains, self.anthropicKeyUuid, self.clearMcpServers, self.conversationLogsEnabled) = (nil, nil, nil, nil, nil)
-        (self.description, self.instruction, self.k, self.maxTokens, self.mcpServers) = (nil, nil, nil, nil, nil)
-        (self.modelProviderKeyUuid, self.modelRouterUuid, self.modelUuid, self.name, self.openAiKeyUuid) = (nil, nil, nil, nil, nil)
-        (self.projectId, self.provideCitations, self.reasoningEffort, self.retrievalMethod, self.routerPresetSlug) = (nil, nil, nil, nil, nil)
-        (self.tags, self.temperature, self.thinkingTokenBudget, self.topP, self.uuid) = (nil, nil, nil, nil, nil)
-        (self.webFetchEnabled, self.webSearchEnabled) = (nil, nil)
+        (agentLogInsightsEnabled, allowedDomains, anthropicKeyUuid, clearMcpServers, conversationLogsEnabled) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (description, instruction, k, maxTokens, mcpServers) = (nil, nil, nil, nil, nil)
+        (modelProviderKeyUuid, modelRouterUuid, modelUuid, name, openAiKeyUuid) = (nil, nil, nil, nil, nil)
+        (projectId, provideCitations, reasoningEffort, retrievalMethod, routerPresetSlug) = (nil, nil, nil, nil, nil)
+        (tags, temperature, thinkingTokenBudget, topP, uuid) = (nil, nil, nil, nil, nil)
+        (webFetchEnabled, webSearchEnabled) = (nil, nil)
     }
 }
 
-extension ApiUpdateAgentInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateAgentInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agentLogInsightsEnabled = try container.sdkDecodeIfPresent(.agentLogInsightsEnabled)
-        self.allowedDomains = try container.sdkDecodeIfPresent(.allowedDomains)
-        self.anthropicKeyUuid = try container.sdkDecodeIfPresent(.anthropicKeyUuid)
-        self.clearMcpServers = try container.sdkDecodeIfPresent(.clearMcpServers)
-        self.conversationLogsEnabled = try container.sdkDecodeIfPresent(.conversationLogsEnabled)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.instruction = try container.sdkDecodeIfPresent(.instruction)
-        self.k = try container.sdkDecodeIfPresent(.k)
-        self.maxTokens = try container.sdkDecodeIfPresent(.maxTokens)
-        self.mcpServers = try container.sdkDecodeIfPresent(.mcpServers)
-        self.modelProviderKeyUuid = try container.sdkDecodeIfPresent(.modelProviderKeyUuid)
-        self.modelRouterUuid = try container.sdkDecodeIfPresent(.modelRouterUuid)
-        self.modelUuid = try container.sdkDecodeIfPresent(.modelUuid)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.openAiKeyUuid = try container.sdkDecodeIfPresent(.openAiKeyUuid)
-        self.projectId = try container.sdkDecodeIfPresent(.projectId)
-        self.provideCitations = try container.sdkDecodeIfPresent(.provideCitations)
-        self.reasoningEffort = try container.sdkDecodeIfPresent(.reasoningEffort)
-        self.retrievalMethod = try container.sdkDecodeIfPresent(.retrievalMethod)
-        self.routerPresetSlug = try container.sdkDecodeIfPresent(.routerPresetSlug)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.temperature = try container.sdkDecodeIfPresent(.temperature)
-        self.thinkingTokenBudget = try container.sdkDecodeIfPresent(.thinkingTokenBudget)
-        self.topP = try container.sdkDecodeIfPresent(.topP)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
-        self.webFetchEnabled = try container.sdkDecodeIfPresent(.webFetchEnabled)
-        self.webSearchEnabled = try container.sdkDecodeIfPresent(.webSearchEnabled)
+        agentLogInsightsEnabled = try container.sdkDecodeIfPresent(.agentLogInsightsEnabled)
+        allowedDomains = try container.sdkDecodeIfPresent(.allowedDomains)
+        anthropicKeyUuid = try container.sdkDecodeIfPresent(.anthropicKeyUuid)
+        clearMcpServers = try container.sdkDecodeIfPresent(.clearMcpServers)
+        conversationLogsEnabled = try container.sdkDecodeIfPresent(.conversationLogsEnabled)
+        description = try container.sdkDecodeIfPresent(.description)
+        instruction = try container.sdkDecodeIfPresent(.instruction)
+        k = try container.sdkDecodeIfPresent(.k)
+        maxTokens = try container.sdkDecodeIfPresent(.maxTokens)
+        mcpServers = try container.sdkDecodeIfPresent(.mcpServers)
+        modelProviderKeyUuid = try container.sdkDecodeIfPresent(.modelProviderKeyUuid)
+        modelRouterUuid = try container.sdkDecodeIfPresent(.modelRouterUuid)
+        modelUuid = try container.sdkDecodeIfPresent(.modelUuid)
+        name = try container.sdkDecodeIfPresent(.name)
+        openAiKeyUuid = try container.sdkDecodeIfPresent(.openAiKeyUuid)
+        projectId = try container.sdkDecodeIfPresent(.projectId)
+        provideCitations = try container.sdkDecodeIfPresent(.provideCitations)
+        reasoningEffort = try container.sdkDecodeIfPresent(.reasoningEffort)
+        retrievalMethod = try container.sdkDecodeIfPresent(.retrievalMethod)
+        routerPresetSlug = try container.sdkDecodeIfPresent(.routerPresetSlug)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        temperature = try container.sdkDecodeIfPresent(.temperature)
+        thinkingTokenBudget = try container.sdkDecodeIfPresent(.thinkingTokenBudget)
+        topP = try container.sdkDecodeIfPresent(.topP)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
+        webFetchEnabled = try container.sdkDecodeIfPresent(.webFetchEnabled)
+        webSearchEnabled = try container.sdkDecodeIfPresent(.webSearchEnabled)
     }
 }
 
-extension ApiUpdateAgentInputPublic {
-    public init(agentLogInsightsEnabled: Bool? = nil, allowedDomains: [String]? = nil, anthropicKeyUuid: String? = nil, clearMcpServers: Bool? = nil, conversationLogsEnabled: Bool? = nil, description: String? = nil, instruction: String? = nil, k: Int? = nil, maxTokens: Int? = nil, mcpServers: [ApiMcpServer]? = nil, modelProviderKeyUuid: String? = nil, modelRouterUuid: String? = nil, modelUuid: String? = nil, name: String? = nil, openAiKeyUuid: String? = nil, projectId: String? = nil, provideCitations: Bool? = nil, reasoningEffort: String? = nil, retrievalMethod: ApiRetrievalMethod? = nil, routerPresetSlug: String? = nil, tags: [String]? = nil, temperature: Double? = nil, thinkingTokenBudget: Int? = nil, topP: Double? = nil, uuid: String? = nil, webFetchEnabled: Bool? = nil, webSearchEnabled: Bool? = nil) {
+public extension ApiUpdateAgentInputPublic {
+    init(
+        agentLogInsightsEnabled: Bool? = nil,
+        allowedDomains: [String]? = nil,
+        anthropicKeyUuid: String? = nil,
+        clearMcpServers: Bool? = nil,
+        conversationLogsEnabled: Bool? = nil,
+        description: String? = nil,
+        instruction: String? = nil,
+        k: Int? = nil,
+        maxTokens: Int? = nil,
+        mcpServers: [ApiMcpServer]? = nil,
+        modelProviderKeyUuid: String? = nil,
+        modelRouterUuid: String? = nil,
+        modelUuid: String? = nil,
+        name: String? = nil,
+        openAiKeyUuid: String? = nil,
+        projectId: String? = nil,
+        provideCitations: Bool? = nil,
+        reasoningEffort: String? = nil,
+        retrievalMethod: ApiRetrievalMethod? = nil,
+        routerPresetSlug: String? = nil,
+        tags: [String]? = nil,
+        temperature: Double? = nil,
+        thinkingTokenBudget: Int? = nil,
+        topP: Double? = nil,
+        uuid: String? = nil,
+        webFetchEnabled: Bool? = nil,
+        webSearchEnabled: Bool? = nil
+    ) {
         self.init()
         (self.agentLogInsightsEnabled, self.allowedDomains) = (agentLogInsightsEnabled, allowedDomains)
         (self.anthropicKeyUuid, self.clearMcpServers) = (anthropicKeyUuid, clearMcpServers)
@@ -199,19 +233,19 @@ public struct ApiUpdateAgentOutput: Codable {
     }
 
     init() {
-        self.agent = nil
+        agent = nil
     }
 }
 
-extension ApiUpdateAgentOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUpdateAgentOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agent = try container.sdkDecodeIfPresent(.agent)
+        agent = try container.sdkDecodeIfPresent(.agent)
     }
 }
 
-extension ApiUpdateAgentOutput {
-    public init(agent: ApiAgent? = nil) {
+public extension ApiUpdateAgentOutput {
+    init(agent: ApiAgent? = nil) {
         self.init()
         self.agent = agent
     }

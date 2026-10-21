@@ -3,7 +3,7 @@
 
 import Foundation
 
-// VectorDatabases domain models
+/// VectorDatabases domain models
 /// Typed representation of the `VectordbListVectorDBsResponse` API schema.
 public struct VectordbListVectorDBsResponse: Codable {
     /// Optional `int64`-formatted value serialized in the `total` wire field.
@@ -18,20 +18,20 @@ public struct VectordbListVectorDBsResponse: Codable {
     }
 
     init() {
-        (self.total, self.vectorDbs) = (nil, nil)
+        (total, vectorDbs) = (nil, nil)
     }
 }
 
-extension VectordbListVectorDBsResponse {
-    public init(from decoder: Decoder) throws {
+public extension VectordbListVectorDBsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.total = try container.sdkDecodeIfPresent(.total)
-        self.vectorDbs = try container.sdkDecodeIfPresent(.vectorDbs)
+        total = try container.sdkDecodeIfPresent(.total)
+        vectorDbs = try container.sdkDecodeIfPresent(.vectorDbs)
     }
 }
 
-extension VectordbListVectorDBsResponse {
-    public init(total: Int? = nil, vectorDbs: [VectordbVectorDB]? = nil) {
+public extension VectordbListVectorDBsResponse {
+    init(total: Int? = nil, vectorDbs: [VectordbVectorDB]? = nil) {
         self.init()
         (self.total, self.vectorDbs) = (total, vectorDbs)
     }

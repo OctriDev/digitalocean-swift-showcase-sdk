@@ -3,7 +3,7 @@
 
 import Foundation
 
-// NFS domain models
+/// NFS domain models
 /// Response containing a list of access points.
 public struct AccessPointListResponse: Codable {
     /// Array of access point objects.
@@ -13,21 +13,27 @@ public struct AccessPointListResponse: Codable {
         case accessPoints = "access_points"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AccessPointListResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.accessPoints) else {
-            throw SdkValidationError(field: "access_points", code: "required", message: "Validation failed for 'access_points': value is required")
-        }
-        self.accessPoints = try container.sdkDecodeRequired(.accessPoints)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AccessPointListResponse {
-    public init(accessPoints: [AccessPointResponse]) {
+public extension AccessPointListResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.accessPoints) else {
+            throw SdkValidationError(
+                field: "access_points",
+                code: "required",
+                message: "Validation failed for 'access_points': value is required"
+            )
+        }
+        accessPoints = try container.sdkDecodeRequired(.accessPoints)
+    }
+}
+
+public extension AccessPointListResponse {
+    init(accessPoints: [AccessPointResponse]) {
         self.accessPoints = accessPoints
     }
 }

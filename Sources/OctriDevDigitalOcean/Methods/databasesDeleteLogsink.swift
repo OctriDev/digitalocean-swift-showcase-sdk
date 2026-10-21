@@ -6,15 +6,40 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DatabasesMethods {
-    /// To delete a logsink for a database cluster, send a DELETE request to `/v2/databases/$DATABASE_ID/logsink/$LOGSINK_ID`.
+public extension DatabasesMethods {
+    /// To delete a logsink for a database cluster, send a DELETE request to
+    /// `/v2/databases/$DATABASE_ID/logsink/$LOGSINK_ID`.
     ///
     /// - Parameters:
     /// - databaseClusterUuid: A unique identifier for a database cluster.
     /// - logsinkId: A unique identifier for a logsink of a database cluster
-    public static func databasesDeleteLogsink(config: ClientConfig, databaseClusterUuid: String, logsinkId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func databasesDeleteLogsink(
+        config: ClientConfig,
+        databaseClusterUuid: String,
+        logsinkId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("database_cluster_uuid", databaseClusterUuid)
 
-        return try (await sdkRequest("DELETE", ["/v2/databases/", sdkEncodePathSegment(sdkWireString(databaseClusterUuid)), "/logsink/", sdkEncodePathSegment(sdkWireString(logsinkId))].joined(), config: config, decoder: .empty, operationId: "databases_delete_logsink", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "DELETE",
+            [
+                "/v2/databases/",
+                sdkEncodePathSegment(sdkWireString(databaseClusterUuid)),
+                "/logsink/",
+                sdkEncodePathSegment(sdkWireString(logsinkId)),
+            ].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "databases_delete_logsink",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

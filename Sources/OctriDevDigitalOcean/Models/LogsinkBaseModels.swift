@@ -3,7 +3,7 @@
 
 import Foundation
 
-// LogsinkBase domain models
+/// LogsinkBase domain models
 /// Typed representation of the `LogsinkBaseVerbose` API schema.
 public struct LogsinkBaseVerbose: Codable {
     /// A unique identifier for Logsink
@@ -23,21 +23,21 @@ public struct LogsinkBaseVerbose: Codable {
     }
 
     init() {
-        (self.sinkId, self.sinkName, self.sinkType) = (nil, nil, nil)
+        (sinkId, sinkName, sinkType) = (nil, nil, nil)
     }
 }
 
-extension LogsinkBaseVerbose {
-    public init(from decoder: Decoder) throws {
+public extension LogsinkBaseVerbose {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.sinkId = try container.sdkDecodeIfPresent(.sinkId)
-        self.sinkName = try container.sdkDecodeIfPresent(.sinkName)
-        self.sinkType = try container.sdkDecodeIfPresent(.sinkType)
+        sinkId = try container.sdkDecodeIfPresent(.sinkId)
+        sinkName = try container.sdkDecodeIfPresent(.sinkName)
+        sinkType = try container.sdkDecodeIfPresent(.sinkType)
     }
 }
 
-extension LogsinkBaseVerbose {
-    public init(sinkId: String? = nil, sinkName: String? = nil, sinkType: LogsinkBaseVerboseSinkType? = nil) {
+public extension LogsinkBaseVerbose {
+    init(sinkId: String? = nil, sinkName: String? = nil, sinkType: LogsinkBaseVerboseSinkType? = nil) {
         self.init()
         (self.sinkId, self.sinkName) = (sinkId, sinkName)
         self.sinkType = sinkType
@@ -62,20 +62,20 @@ public struct LogsinkBase: Codable {
     }
 
     init() {
-        (self.sinkName, self.sinkType) = (nil, nil)
+        (sinkName, sinkType) = (nil, nil)
     }
 }
 
-extension LogsinkBase {
-    public init(from decoder: Decoder) throws {
+public extension LogsinkBase {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.sinkName = try container.sdkDecodeIfPresent(.sinkName)
-        self.sinkType = try container.sdkDecodeIfPresent(.sinkType)
+        sinkName = try container.sdkDecodeIfPresent(.sinkName)
+        sinkType = try container.sdkDecodeIfPresent(.sinkType)
     }
 }
 
-extension LogsinkBase {
-    public init(sinkName: String? = nil, sinkType: LogsinkBaseSinkType? = nil) {
+public extension LogsinkBase {
+    init(sinkName: String? = nil, sinkType: LogsinkBaseSinkType? = nil) {
         self.init()
         (self.sinkName, self.sinkType) = (sinkName, sinkType)
     }
@@ -88,7 +88,10 @@ extension LogsinkBase {
 public struct LogsinkBaseSinkType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let rsyslog = LogsinkBaseSinkType(rawValue: "rsyslog")
     public static let elasticsearch = LogsinkBaseSinkType(rawValue: "elasticsearch")
     public static let opensearch = LogsinkBaseSinkType(rawValue: "opensearch")
@@ -96,7 +99,7 @@ public struct LogsinkBaseSinkType: RawRepresentable, Hashable, Codable, Sendable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -109,14 +112,17 @@ public struct LogsinkBaseSinkType: RawRepresentable, Hashable, Codable, Sendable
 public struct LogsinkBaseVerboseSinkType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let rsyslog = LogsinkBaseVerboseSinkType(rawValue: "rsyslog")
     public static let elasticsearch = LogsinkBaseVerboseSinkType(rawValue: "elasticsearch")
     public static let opensearch = LogsinkBaseVerboseSinkType(rawValue: "opensearch")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// VPCNATGateways domain models
+/// VPCNATGateways domain models
 /// Typed representation of the `VpcNatGateways` API schema.
 public struct VpcNatGateways: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,23 +18,29 @@ public struct VpcNatGateways: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension VpcNatGateways {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.vpcNatGateways = try container.sdkDecodeIfPresent(.vpcNatGateways)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension VpcNatGateways {
-    public init(meta: MetaMeta, vpcNatGateways: [VpcNatGatewayGet]? = nil, links: PageLinks? = nil) {
+public extension VpcNatGateways {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        vpcNatGateways = try container.sdkDecodeIfPresent(.vpcNatGateways)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension VpcNatGateways {
+    init(meta: MetaMeta, vpcNatGateways: [VpcNatGatewayGet]? = nil, links: PageLinks? = nil) {
         (self.meta, self.vpcNatGateways) = (meta, vpcNatGateways)
         self.links = links
     }
@@ -48,19 +54,19 @@ public struct VpcNatGatewaysVariant0: Codable {
     }
 
     init() {
-        self.vpcNatGateways = nil
+        vpcNatGateways = nil
     }
 }
 
-extension VpcNatGatewaysVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension VpcNatGatewaysVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.vpcNatGateways = try container.sdkDecodeIfPresent(.vpcNatGateways)
+        vpcNatGateways = try container.sdkDecodeIfPresent(.vpcNatGateways)
     }
 }
 
-extension VpcNatGatewaysVariant0 {
-    public init(vpcNatGateways: [VpcNatGatewayGet]? = nil) {
+public extension VpcNatGatewaysVariant0 {
+    init(vpcNatGateways: [VpcNatGatewayGet]? = nil) {
         self.init()
         self.vpcNatGateways = vpcNatGateways
     }

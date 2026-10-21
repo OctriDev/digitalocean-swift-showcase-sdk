@@ -3,7 +3,7 @@
 
 import Foundation
 
-// SharedAction domain models
+/// SharedAction domain models
 /// Typed representation of the `Action` API schema.
 public struct Action: Codable {
     /// A unique numeric ID that can be used to identify and reference an action.
@@ -47,34 +47,44 @@ public struct Action: Codable {
     }
 
     init() {
-        (self.id, self.status, self.type, self.startedAt, self.completedAt) = (nil, nil, nil, nil, nil)
-        (self.resourceId, self.resourceType, self.region, self.regionSlug) = (nil, nil, nil, nil)
+        (id, status, type, startedAt, completedAt) = (nil, nil, nil, nil, nil)
+        (resourceId, resourceType, region, regionSlug) = (nil, nil, nil, nil)
     }
 }
 
-extension Action {
-    public init(from decoder: Decoder) throws {
+public extension Action {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        self.resourceId = try container.sdkDecodeIfPresent(.resourceId)
-        self.resourceType = try container.sdkDecodeIfPresent(.resourceType)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.regionSlug = try container.sdkDecodeIfPresent(.regionSlug)
-        if let value = self.startedAt {
+        id = try container.sdkDecodeIfPresent(.id)
+        status = try container.sdkDecodeIfPresent(.status)
+        type = try container.sdkDecodeIfPresent(.type)
+        startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        resourceId = try container.sdkDecodeIfPresent(.resourceId)
+        resourceType = try container.sdkDecodeIfPresent(.resourceType)
+        region = try container.sdkDecodeIfPresent(.region)
+        regionSlug = try container.sdkDecodeIfPresent(.regionSlug)
+        if let value = startedAt {
             try sdkValidateDateTime("started_at", sdkWireString(value))
         }
-        if let value = self.completedAt {
+        if let value = completedAt {
             try sdkValidateDateTime("completed_at", sdkWireString(value))
         }
     }
 }
 
-extension Action {
-    public init(id: Int? = nil, status: ActionStatus? = nil, type: String? = nil, startedAt: Date? = nil, completedAt: Date? = nil, resourceId: Int? = nil, resourceType: String? = nil, region: Region? = nil, regionSlug: String? = nil) throws {
+public extension Action {
+    init(
+        id: Int? = nil,
+        status: ActionStatus? = nil,
+        type: String? = nil,
+        startedAt: Date? = nil,
+        completedAt: Date? = nil,
+        resourceId: Int? = nil,
+        resourceType: String? = nil,
+        region: Region? = nil,
+        regionSlug: String? = nil
+    ) throws {
         self.init()
         (self.id, self.status) = (id, status)
         (self.type, self.startedAt) = (type, startedAt)
@@ -100,19 +110,19 @@ public struct ActionResponse: Codable {
     }
 
     init() {
-        self.action = nil
+        action = nil
     }
 }
 
-extension ActionResponse {
-    public init(from decoder: Decoder) throws {
+public extension ActionResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.action = try container.sdkDecodeIfPresent(.action)
+        action = try container.sdkDecodeIfPresent(.action)
     }
 }
 
-extension ActionResponse {
-    public init(action: Action? = nil) {
+public extension ActionResponse {
+    init(action: Action? = nil) {
         self.init()
         self.action = action
     }
@@ -137,24 +147,24 @@ public struct ActionLink: Codable {
     }
 
     init() {
-        (self.id, self.rel, self.href) = (nil, nil, nil)
+        (id, rel, href) = (nil, nil, nil)
     }
 }
 
-extension ActionLink {
-    public init(from decoder: Decoder) throws {
+public extension ActionLink {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.rel = try container.sdkDecodeIfPresent(.rel)
-        self.href = try container.sdkDecodeIfPresent(.href)
-        if let value = self.href {
+        id = try container.sdkDecodeIfPresent(.id)
+        rel = try container.sdkDecodeIfPresent(.rel)
+        href = try container.sdkDecodeIfPresent(.href)
+        if let value = href {
             try sdkValidateUri("href", value)
         }
     }
 }
 
-extension ActionLink {
-    public init(id: Int? = nil, rel: String? = nil, href: String? = nil) throws {
+public extension ActionLink {
+    init(id: Int? = nil, rel: String? = nil, href: String? = nil) throws {
         self.init()
         (self.id, self.rel) = (id, rel)
         self.href = href
@@ -168,14 +178,17 @@ extension ActionLink {
 public struct ActionStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let inProgress = ActionStatus(rawValue: "in-progress")
     public static let completed = ActionStatus(rawValue: "completed")
     public static let errored = ActionStatus(rawValue: "errored")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

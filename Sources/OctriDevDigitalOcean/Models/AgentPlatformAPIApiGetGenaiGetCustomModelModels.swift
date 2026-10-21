@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiGet domain models
+/// AgentPlatformAPIApiGet domain models
 /// Response containing a single custom model (public)
 public struct ApiGetCustomModelOutputPublic: Codable {
     /// Custom model - user-imported model from HuggingFace, Spaces, etc.
@@ -14,19 +14,19 @@ public struct ApiGetCustomModelOutputPublic: Codable {
     }
 
     init() {
-        self.model = nil
+        model = nil
     }
 }
 
-extension ApiGetCustomModelOutputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetCustomModelOutputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.model = try container.sdkDecodeIfPresent(.model)
+        model = try container.sdkDecodeIfPresent(.model)
     }
 }
 
-extension ApiGetCustomModelOutputPublic {
-    public init(model: ApiCustomModel? = nil) {
+public extension ApiGetCustomModelOutputPublic {
+    init(model: ApiCustomModel? = nil) {
         self.init()
         self.model = model
     }

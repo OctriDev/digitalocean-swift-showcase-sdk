@@ -3,7 +3,7 @@
 
 import Foundation
 
-// PartnerNetworkConnect domain models
+/// PartnerNetworkConnect domain models
 public struct AllPartnerAttachmentRemoteRoutesVariant0: Codable {
     public var remoteRoutes: [PartnerAttachmentRemoteRoute]?
 
@@ -12,19 +12,19 @@ public struct AllPartnerAttachmentRemoteRoutesVariant0: Codable {
     }
 
     init() {
-        self.remoteRoutes = nil
+        remoteRoutes = nil
     }
 }
 
-extension AllPartnerAttachmentRemoteRoutesVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AllPartnerAttachmentRemoteRoutesVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.remoteRoutes = try container.sdkDecodeIfPresent(.remoteRoutes)
+        remoteRoutes = try container.sdkDecodeIfPresent(.remoteRoutes)
     }
 }
 
-extension AllPartnerAttachmentRemoteRoutesVariant0 {
-    public init(remoteRoutes: [PartnerAttachmentRemoteRoute]? = nil) {
+public extension AllPartnerAttachmentRemoteRoutesVariant0 {
+    init(remoteRoutes: [PartnerAttachmentRemoteRoute]? = nil) {
         self.init()
         self.remoteRoutes = remoteRoutes
     }
@@ -44,23 +44,29 @@ public struct AllPartnerAttachmentRemoteRoutes: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllPartnerAttachmentRemoteRoutes {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.remoteRoutes = try container.sdkDecodeIfPresent(.remoteRoutes)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllPartnerAttachmentRemoteRoutes {
-    public init(meta: MetaMeta, remoteRoutes: [PartnerAttachmentRemoteRoute]? = nil, links: PageLinks? = nil) {
+public extension AllPartnerAttachmentRemoteRoutes {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        remoteRoutes = try container.sdkDecodeIfPresent(.remoteRoutes)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllPartnerAttachmentRemoteRoutes {
+    init(meta: MetaMeta, remoteRoutes: [PartnerAttachmentRemoteRoute]? = nil, links: PageLinks? = nil) {
         (self.meta, self.remoteRoutes) = (meta, remoteRoutes)
         self.links = links
     }
@@ -77,19 +83,19 @@ public struct PartnerAttachmentRemoteRoute: Codable {
     }
 
     init() {
-        self.cidr = nil
+        cidr = nil
     }
 }
 
-extension PartnerAttachmentRemoteRoute {
-    public init(from decoder: Decoder) throws {
+public extension PartnerAttachmentRemoteRoute {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.cidr = try container.sdkDecodeIfPresent(.cidr)
+        cidr = try container.sdkDecodeIfPresent(.cidr)
     }
 }
 
-extension PartnerAttachmentRemoteRoute {
-    public init(cidr: String? = nil) {
+public extension PartnerAttachmentRemoteRoute {
+    init(cidr: String? = nil) {
         self.init()
         self.cidr = cidr
     }

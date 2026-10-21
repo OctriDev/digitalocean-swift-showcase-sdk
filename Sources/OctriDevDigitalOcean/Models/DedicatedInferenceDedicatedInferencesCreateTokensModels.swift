@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DedicatedInference domain models
+/// DedicatedInference domain models
 /// Typed representation of the `TokenCreated` API schema.
 public struct TokenCreated: Codable {
     /// Access token for authenticating to Dedicated Inference endpoints.
@@ -14,19 +14,19 @@ public struct TokenCreated: Codable {
     }
 
     init() {
-        self.token = nil
+        token = nil
     }
 }
 
-extension TokenCreated {
-    public init(from decoder: Decoder) throws {
+public extension TokenCreated {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.token = try container.sdkDecodeIfPresent(.token)
+        token = try container.sdkDecodeIfPresent(.token)
     }
 }
 
-extension TokenCreated {
-    public init(token: DedicatedInferenceAccessToken? = nil) {
+public extension TokenCreated {
+    init(token: DedicatedInferenceAccessToken? = nil) {
         self.init()
         self.token = token
     }
@@ -42,25 +42,31 @@ public struct DedicatedInferenceTokenCreateRequest: Codable {
         case name
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DedicatedInferenceTokenCreateRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-            try validateLength("name", self.name, min: nil, max: 255)
-            try sdkValidatePattern("name", self.name, sdkPatterna828669d9fe5)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DedicatedInferenceTokenCreateRequest {
-    public init(name: String) throws {
+public extension DedicatedInferenceTokenCreateRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        try validateLength("name", name, min: nil, max: 255)
+        try sdkValidatePattern("name", name, sdkPatterna828669d9fe5)
+    }
+}
+
+public extension DedicatedInferenceTokenCreateRequest {
+    init(name: String) throws {
         self.name = name
-            try validateLength("name", self.name, min: nil, max: 255)
-            try sdkValidatePattern("name", self.name, sdkPatterna828669d9fe5)
+        try validateLength("name", self.name, min: nil, max: 255)
+        try sdkValidatePattern("name", self.name, sdkPatterna828669d9fe5)
     }
 }

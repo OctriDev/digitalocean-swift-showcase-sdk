@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
-    /// To update an agent route for an agent, send a PUT request to `/v2/gen-ai/agents/{parent_agent_uuid}/child_agents/{child_agent_uuid}`.
+public extension AgentPlatformApiMethods {
+    /// To update an agent route for an agent, send a PUT request to
+    /// `/v2/gen-ai/agents/{parent_agent_uuid}/child_agents/{child_agent_uuid}`.
     ///
     /// - Parameters:
     /// - parentAgentUuid: A unique identifier for the parent agent.
@@ -17,18 +18,79 @@ extension AgentPlatformApiMethods {
     /// - parentAgentUuid2: A unique identifier for the parent agent.
     /// - routeName: Route name
     /// - uuid: Unique id of linkage
-    public static func genaiUpdateAttachedAgent(config: ClientConfig, parentAgentUuid: String, childAgentUuid: String, childAgentUuid2: String? = nil, ifCase: String? = nil, parentAgentUuid2: String? = nil, routeName: String? = nil, uuid: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ApiUpdateLinkedAgentOutput {
-        let requestBody = GenaiUpdateAttachedAgentRequestBody(childAgentUuid2: childAgentUuid2, ifCase: ifCase, parentAgentUuid2: parentAgentUuid2, routeName: routeName, uuid: uuid)
+    static func genaiUpdateAttachedAgent(
+        config: ClientConfig,
+        parentAgentUuid: String,
+        childAgentUuid: String,
+        childAgentUuid2: String? = nil,
+        ifCase: String? = nil,
+        parentAgentUuid2: String? = nil,
+        routeName: String? = nil,
+        uuid: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiUpdateLinkedAgentOutput {
+        let requestBody = GenaiUpdateAttachedAgentRequestBody(
+            childAgentUuid2: childAgentUuid2,
+            ifCase: ifCase,
+            parentAgentUuid2: parentAgentUuid2,
+            routeName: routeName,
+            uuid: uuid
+        )
 
-        return try (await sdkRequest("PUT", ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(parentAgentUuid)), "/child_agents/", sdkEncodePathSegment(sdkWireString(childAgentUuid))].joined(), config: config, body: requestBody, decoder: .json, operationId: "genai_update_attached_agent", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            [
+                "/v2/gen-ai/agents/",
+                sdkEncodePathSegment(sdkWireString(parentAgentUuid)),
+                "/child_agents/",
+                sdkEncodePathSegment(sdkWireString(childAgentUuid)),
+            ].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "genai_update_attached_agent",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To delete an agent route from a parent agent, send a DELETE request to `/v2/gen-ai/agents/{parent_agent_uuid}/child_agents/{child_agent_uuid}`.
+    /// To delete an agent route from a parent agent, send a DELETE request to
+    /// `/v2/gen-ai/agents/{parent_agent_uuid}/child_agents/{child_agent_uuid}`.
     ///
     /// - Parameters:
     /// - parentAgentUuid: Pagent agent id
     /// - childAgentUuid: Routed agent id
-    public static func genaiDetachAgent(config: ClientConfig, parentAgentUuid: String, childAgentUuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiUnlinkAgentOutput {
-        return try (await sdkRequest("DELETE", ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(parentAgentUuid)), "/child_agents/", sdkEncodePathSegment(sdkWireString(childAgentUuid))].joined(), config: config, decoder: .json, operationId: "genai_detach_agent", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiDetachAgent(
+        config: ClientConfig,
+        parentAgentUuid: String,
+        childAgentUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiUnlinkAgentOutput {
+        try await (sdkRequest(
+            "DELETE",
+            [
+                "/v2/gen-ai/agents/",
+                sdkEncodePathSegment(sdkWireString(parentAgentUuid)),
+                "/child_agents/",
+                sdkEncodePathSegment(sdkWireString(childAgentUuid)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "genai_detach_agent",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

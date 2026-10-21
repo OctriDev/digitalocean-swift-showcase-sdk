@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiCreate domain models
+/// AgentPlatformAPIApiCreate domain models
 /// Public parameters for creating a simulation run.
 public struct ApiCreateSimulationRunInputPublic: Codable {
     /// Configuration of the candidate agent under test for a simulation run.
@@ -47,28 +47,38 @@ public struct ApiCreateSimulationRunInputPublic: Codable {
     }
 
     init() {
-        (self.agentConfig, self.evaluationConfig, self.explorationBudget, self.judgeModelUuid, self.maxTurns) = (nil, nil, nil, nil, nil)
-        (self.name, self.scenarioSetUuid, self.userSimulatorConfig, self.userSimulatorModelUuid) = (nil, nil, nil, nil)
+        (agentConfig, evaluationConfig, explorationBudget, judgeModelUuid, maxTurns) = (nil, nil, nil, nil, nil)
+        (name, scenarioSetUuid, userSimulatorConfig, userSimulatorModelUuid) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiCreateSimulationRunInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateSimulationRunInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agentConfig = try container.sdkDecodeIfPresent(.agentConfig)
-        self.evaluationConfig = try container.sdkDecodeIfPresent(.evaluationConfig)
-        self.explorationBudget = try container.sdkDecodeIfPresent(.explorationBudget)
-        self.judgeModelUuid = try container.sdkDecodeIfPresent(.judgeModelUuid)
-        self.maxTurns = try container.sdkDecodeIfPresent(.maxTurns)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.scenarioSetUuid = try container.sdkDecodeIfPresent(.scenarioSetUuid)
-        self.userSimulatorConfig = try container.sdkDecodeIfPresent(.userSimulatorConfig)
-        self.userSimulatorModelUuid = try container.sdkDecodeIfPresent(.userSimulatorModelUuid)
+        agentConfig = try container.sdkDecodeIfPresent(.agentConfig)
+        evaluationConfig = try container.sdkDecodeIfPresent(.evaluationConfig)
+        explorationBudget = try container.sdkDecodeIfPresent(.explorationBudget)
+        judgeModelUuid = try container.sdkDecodeIfPresent(.judgeModelUuid)
+        maxTurns = try container.sdkDecodeIfPresent(.maxTurns)
+        name = try container.sdkDecodeIfPresent(.name)
+        scenarioSetUuid = try container.sdkDecodeIfPresent(.scenarioSetUuid)
+        userSimulatorConfig = try container.sdkDecodeIfPresent(.userSimulatorConfig)
+        userSimulatorModelUuid = try container.sdkDecodeIfPresent(.userSimulatorModelUuid)
     }
 }
 
-extension ApiCreateSimulationRunInputPublic {
-    public init(agentConfig: ApiCandidateAgentConfig? = nil, evaluationConfig: ApiSimulationEvaluationConfig? = nil, explorationBudget: Int? = nil, judgeModelUuid: String? = nil, maxTurns: Int? = nil, name: String? = nil, scenarioSetUuid: String? = nil, userSimulatorConfig: [String: JSONValue]? = nil, userSimulatorModelUuid: String? = nil) {
+public extension ApiCreateSimulationRunInputPublic {
+    init(
+        agentConfig: ApiCandidateAgentConfig? = nil,
+        evaluationConfig: ApiSimulationEvaluationConfig? = nil,
+        explorationBudget: Int? = nil,
+        judgeModelUuid: String? = nil,
+        maxTurns: Int? = nil,
+        name: String? = nil,
+        scenarioSetUuid: String? = nil,
+        userSimulatorConfig: [String: JSONValue]? = nil,
+        userSimulatorModelUuid: String? = nil
+    ) {
         self.init()
         (self.agentConfig, self.evaluationConfig) = (agentConfig, evaluationConfig)
         (self.explorationBudget, self.judgeModelUuid) = (explorationBudget, judgeModelUuid)
@@ -88,19 +98,19 @@ public struct ApiCreateSimulationRunOutput: Codable {
     }
 
     init() {
-        self.simulationRun = nil
+        simulationRun = nil
     }
 }
 
-extension ApiCreateSimulationRunOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateSimulationRunOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.simulationRun = try container.sdkDecodeIfPresent(.simulationRun)
+        simulationRun = try container.sdkDecodeIfPresent(.simulationRun)
     }
 }
 
-extension ApiCreateSimulationRunOutput {
-    public init(simulationRun: ApiSimulationRun? = nil) {
+public extension ApiCreateSimulationRunOutput {
+    init(simulationRun: ApiSimulationRun? = nil) {
         self.init()
         self.simulationRun = simulationRun
     }

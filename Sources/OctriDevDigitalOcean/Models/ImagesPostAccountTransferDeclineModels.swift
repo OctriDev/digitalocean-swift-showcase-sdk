@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Images domain models
+/// Images domain models
 /// Typed representation of the `ImagesPostAccountTransferDecline` API schema.
 public struct ImagesPostAccountTransferDecline: Codable {
     /// A unique number that used to identify and reference an image account transfer.
@@ -14,21 +14,27 @@ public struct ImagesPostAccountTransferDecline: Codable {
         case transferId = "transfer_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ImagesPostAccountTransferDecline {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.transferId) else {
-            throw SdkValidationError(field: "transfer_id", code: "required", message: "Validation failed for 'transfer_id': value is required")
-        }
-        self.transferId = try container.sdkDecodeRequired(.transferId)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ImagesPostAccountTransferDecline {
-    public init(transferId: Int) {
+public extension ImagesPostAccountTransferDecline {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.transferId) else {
+            throw SdkValidationError(
+                field: "transfer_id",
+                code: "required",
+                message: "Validation failed for 'transfer_id': value is required"
+            )
+        }
+        transferId = try container.sdkDecodeRequired(.transferId)
+    }
+}
+
+public extension ImagesPostAccountTransferDecline {
+    init(transferId: Int) {
         self.transferId = transferId
     }
 }

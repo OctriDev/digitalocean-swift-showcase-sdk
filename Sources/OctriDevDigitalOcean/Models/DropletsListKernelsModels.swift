@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Droplets domain models
+/// Droplets domain models
 public struct AllKernelsVariant0: Codable {
     public var kernels: [Kernel?]?
 
@@ -12,19 +12,19 @@ public struct AllKernelsVariant0: Codable {
     }
 
     init() {
-        self.kernels = nil
+        kernels = nil
     }
 }
 
-extension AllKernelsVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AllKernelsVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.kernels = try container.sdkDecodeIfPresent(.kernels)
+        kernels = try container.sdkDecodeIfPresent(.kernels)
     }
 }
 
-extension AllKernelsVariant0 {
-    public init(kernels: [Kernel?]? = nil) {
+public extension AllKernelsVariant0 {
+    init(kernels: [Kernel?]? = nil) {
         self.init()
         self.kernels = kernels
     }
@@ -44,23 +44,29 @@ public struct AllKernels: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AllKernels {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.kernels = try container.sdkDecodeIfPresent(.kernels)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AllKernels {
-    public init(meta: MetaMeta, kernels: [Kernel?]? = nil, links: PageLinks? = nil) {
+public extension AllKernels {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        kernels = try container.sdkDecodeIfPresent(.kernels)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AllKernels {
+    init(meta: MetaMeta, kernels: [Kernel?]? = nil, links: PageLinks? = nil) {
         (self.meta, self.kernels) = (meta, kernels)
         self.links = links
     }

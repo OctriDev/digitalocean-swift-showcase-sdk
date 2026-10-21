@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiGet domain models
+/// AgentPlatformAPIApiGet domain models
 /// Typed representation of the `ApiGetModelEvaluationPresetOutput` API schema.
 public struct ApiGetModelEvaluationPresetOutput: Codable {
     /// Model Evaluation Preset - a saved, reusable configuration for model evaluation runs. Each section (dataset,
@@ -18,19 +18,19 @@ public struct ApiGetModelEvaluationPresetOutput: Codable {
     }
 
     init() {
-        self.preset = nil
+        preset = nil
     }
 }
 
-extension ApiGetModelEvaluationPresetOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetModelEvaluationPresetOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.preset = try container.sdkDecodeIfPresent(.preset)
+        preset = try container.sdkDecodeIfPresent(.preset)
     }
 }
 
-extension ApiGetModelEvaluationPresetOutput {
-    public init(preset: ApiModelEvaluationPreset? = nil) {
+public extension ApiGetModelEvaluationPresetOutput {
+    init(preset: ApiModelEvaluationPreset? = nil) {
         self.init()
         self.preset = preset
     }

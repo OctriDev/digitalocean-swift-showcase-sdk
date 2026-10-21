@@ -6,20 +6,56 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentPlatformApiMethods {
+public extension AgentPlatformApiMethods {
     /// To delete an agent, send a DELETE request to `/v2/gen-ai/agents/{uuid}`.
     ///
     /// - Parameters:
     /// - uuid: Unique agent id
-    public static func genaiDeleteAgent(config: ClientConfig, uuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiDeleteAgentOutput {
-        return try (await sdkRequest("DELETE", ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(uuid))].joined(), config: config, decoder: .json, operationId: "genai_delete_agent", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiDeleteAgent(
+        config: ClientConfig,
+        uuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiDeleteAgentOutput {
+        try await (sdkRequest(
+            "DELETE",
+            ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(uuid))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "genai_delete_agent",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
     /// To view agent routes for an agent, send a GET requtest to `/v2/gen-ai/agents/{uuid}/child_agents`.
     ///
     /// - Parameters:
     /// - uuid: Agent id
-    public static func genaiGetAgentChildren(config: ClientConfig, uuid: String, requestOptions: RequestOptions? = nil) async throws -> ApiGetChildrenOutput {
-        return try (await sdkRequest("GET", ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(uuid)), "/child_agents"].joined(), config: config, decoder: .json, operationId: "genai_get_agent_children", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func genaiGetAgentChildren(
+        config: ClientConfig,
+        uuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ApiGetChildrenOutput {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/gen-ai/agents/", sdkEncodePathSegment(sdkWireString(uuid)), "/child_agents"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "genai_get_agent_children",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

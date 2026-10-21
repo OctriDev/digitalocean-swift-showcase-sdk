@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DedicatedInference domain models
+/// DedicatedInference domain models
 /// Typed representation of the `AcceleratorsList` API schema.
 public struct AcceleratorsList: Codable {
     /// Required API value serialized in the `meta` wire field.
@@ -18,23 +18,29 @@ public struct AcceleratorsList: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AcceleratorsList {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.accelerators = try container.sdkDecodeIfPresent(.accelerators)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AcceleratorsList {
-    public init(meta: MetaMeta, accelerators: [DedicatedInferenceAccelerator]? = nil, links: PageLinks? = nil) {
+public extension AcceleratorsList {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        accelerators = try container.sdkDecodeIfPresent(.accelerators)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension AcceleratorsList {
+    init(meta: MetaMeta, accelerators: [DedicatedInferenceAccelerator]? = nil, links: PageLinks? = nil) {
         (self.meta, self.accelerators) = (meta, accelerators)
         self.links = links
     }
@@ -48,19 +54,19 @@ public struct AcceleratorsListVariant0: Codable {
     }
 
     init() {
-        self.accelerators = nil
+        accelerators = nil
     }
 }
 
-extension AcceleratorsListVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension AcceleratorsListVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.accelerators = try container.sdkDecodeIfPresent(.accelerators)
+        accelerators = try container.sdkDecodeIfPresent(.accelerators)
     }
 }
 
-extension AcceleratorsListVariant0 {
-    public init(accelerators: [DedicatedInferenceAccelerator]? = nil) {
+public extension AcceleratorsListVariant0 {
+    init(accelerators: [DedicatedInferenceAccelerator]? = nil) {
         self.init()
         self.accelerators = accelerators
     }

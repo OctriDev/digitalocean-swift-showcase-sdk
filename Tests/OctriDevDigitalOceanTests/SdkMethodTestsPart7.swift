@@ -36,9 +36,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.byoipPrefixes.patch(
-            byoipPrefixUuid: decoded("\"f47ac10b-58cc-4372-a567-0e02b2c3d479\""),
-            advertise: decoded("true")
-        )
+                byoipPrefixUuid: decoded("\"f47ac10b-58cc-4372-a567-0e02b2c3d479\""),
+                advertise: decoded("true")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -86,11 +86,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.cdnEndpoints.cdnCreateEndpoint(
-            origin: decoded("\"static-images.nyc3.digitaloceanspaces.com\""),
-            ttl: decoded("3600"),
-            certificateId: decoded("null"),
-            customDomain: decoded("null")
-        )
+                origin: decoded("\"static-images.nyc3.digitaloceanspaces.com\""),
+                ttl: decoded("3600"),
+                certificateId: decoded("null"),
+                customDomain: decoded("null")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -128,8 +128,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.cdnEndpoints.cdnDeleteEndpoint(
-            cdnId: decoded("\"19f06b6a-3ace-4315-b086-499a0e521b76\"")
-        )
+                cdnId: decoded("\"19f06b6a-3ace-4315-b086-499a0e521b76\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -174,8 +174,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.cdnEndpoints.cdnGetEndpoint(
-            cdnId: decoded("\"19f06b6a-3ace-4315-b086-499a0e521b76\"")
-        )
+                cdnId: decoded("\"19f06b6a-3ace-4315-b086-499a0e521b76\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -221,9 +221,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.cdnEndpoints.cdnListEndpoints(
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -262,9 +262,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.cdnEndpoints.cdnPurgeCache(
-            cdnId: decoded("\"19f06b6a-3ace-4315-b086-499a0e521b76\""),
-            files: decoded("[\"path/to/image.png\",\"path/to/css/*\"]")
-        )
+                cdnId: decoded("\"19f06b6a-3ace-4315-b086-499a0e521b76\""),
+                files: decoded("[\"path/to/image.png\",\"path/to/css/*\"]")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -312,11 +312,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.cdnEndpoints.cdnUpdateEndpoints(
-            cdnId: decoded("\"19f06b6a-3ace-4315-b086-499a0e521b76\""),
-            ttl: decoded("3600"),
-            certificateId: decoded("\"892071a0-bb95-49bc-8021-3afd67a210bf\""),
-            customDomain: decoded("\"static.example.com\"")
-        )
+                cdnId: decoded("\"19f06b6a-3ace-4315-b086-499a0e521b76\""),
+                ttl: decoded("3600"),
+                certificateId: decoded("\"892071a0-bb95-49bc-8021-3afd67a210bf\""),
+                customDomain: decoded("\"static.example.com\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -361,8 +361,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.certificates.create(
-            body: decoded(sdkMethodFixture155Value1)
-        )
+                body: decoded(sdkMethodFixture155Value1)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -400,8 +400,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.certificates.delete(
-            certificateId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
-        )
+                certificateId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -446,8 +446,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.certificates.get(
-            certificateId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
-        )
+                certificateId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -494,10 +494,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.certificates.list(
-            perPage: decoded("2"),
-            page: decoded("1"),
-            name: decoded("\"certificate-name\"")
-        )
+                perPage: decoded("2"),
+                page: decoded("1"),
+                name: decoded("\"certificate-name\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -547,13 +547,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.connectionsCreate(
-            provider: decoded("\"jira\""),
-            userId: decoded("\"alice\""),
-            scopes: decoded("[\"write:jira-work\"]"),
-            connectionParameters: decoded("{\"site_url\":\"https://example.atlassian.net\"}"),
-            credential: decoded("{\"digitalocean_oauth\":{}}"),
-            network: decoded("null")
-        )
+                provider: decoded("\"jira\""),
+                userId: decoded("\"alice\""),
+                scopes: decoded("[\"write:jira-work\"]"),
+                connectionParameters: decoded("{\"site_url\":\"https://example.atlassian.net\"}"),
+                credential: decoded("{\"digitalocean_oauth\":{}}"),
+                network: decoded("null")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)

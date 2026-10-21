@@ -3,7 +3,7 @@
 
 import Foundation
 
-// VectorDatabases domain models
+/// VectorDatabases domain models
 /// Typed representation of the `VectordbRestoreBackupResponse` API schema.
 public struct VectordbRestoreBackupResponse: Codable {
     /// The backup ID being restored.
@@ -19,20 +19,20 @@ public struct VectordbRestoreBackupResponse: Codable {
     }
 
     init() {
-        (self.backupId, self.status) = (nil, nil)
+        (backupId, status) = (nil, nil)
     }
 }
 
-extension VectordbRestoreBackupResponse {
-    public init(from decoder: Decoder) throws {
+public extension VectordbRestoreBackupResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.backupId = try container.sdkDecodeIfPresent(.backupId)
-        self.status = try container.sdkDecodeIfPresent(.status)
+        backupId = try container.sdkDecodeIfPresent(.backupId)
+        status = try container.sdkDecodeIfPresent(.status)
     }
 }
 
-extension VectordbRestoreBackupResponse {
-    public init(backupId: String? = nil, status: String? = nil) {
+public extension VectordbRestoreBackupResponse {
+    init(backupId: String? = nil, status: String? = nil) {
         self.init()
         (self.backupId, self.status) = (backupId, status)
     }
@@ -53,20 +53,20 @@ public struct VectordbRestoreBackupRequest: Codable {
     }
 
     init() {
-        (self.backupId, self.id) = (nil, nil)
+        (backupId, id) = (nil, nil)
     }
 }
 
-extension VectordbRestoreBackupRequest {
-    public init(from decoder: Decoder) throws {
+public extension VectordbRestoreBackupRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.backupId = try container.sdkDecodeIfPresent(.backupId)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        backupId = try container.sdkDecodeIfPresent(.backupId)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension VectordbRestoreBackupRequest {
-    public init(backupId: String? = nil, id: String? = nil) {
+public extension VectordbRestoreBackupRequest {
+    init(backupId: String? = nil, id: String? = nil) {
         self.init()
         (self.backupId, self.id) = (backupId, id)
     }

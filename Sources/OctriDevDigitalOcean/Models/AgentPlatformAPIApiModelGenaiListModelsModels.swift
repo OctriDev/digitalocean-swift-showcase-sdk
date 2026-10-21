@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiModel domain models
+/// AgentPlatformAPIApiModel domain models
 /// A machine learning model stored on the GenAI platform
 public struct ApiModelPublic: Codable {
     /// Agreement Description
@@ -120,58 +120,88 @@ public struct ApiModelPublic: Codable {
     }
 
     init() {
-        (self.agreement, self.benchmarkScore, self.capabilities, self.contextWindow, self.createdAt) = (nil, nil, nil, nil, nil)
-        (self.description, self.endpoints, self.id, self.isFoundational, self.kbDefaultChunkSize) = (nil, nil, nil, nil, nil)
-        (self.kbMaxChunkSize, self.kbMinChunkSize, self.lifecycleStatus, self.modalities, self.modelAvailability) = (nil, nil, nil, nil, nil)
-        (self.name, self.parameterCount, self.parentUuid, self.pricing, self.provider) = (nil, nil, nil, nil, nil)
-        (self.reasoningEfforts, self.settings, self.thinking, self.type, self.updatedAt) = (nil, nil, nil, nil, nil)
-        (self.uploadComplete, self.url, self.uuid, self.version) = (nil, nil, nil, nil)
+        (agreement, benchmarkScore, capabilities, contextWindow, createdAt) = (nil, nil, nil, nil, nil)
+        (description, endpoints, id, isFoundational, kbDefaultChunkSize) = (nil, nil, nil, nil, nil)
+        (kbMaxChunkSize, kbMinChunkSize, lifecycleStatus, modalities, modelAvailability) = (nil, nil, nil, nil, nil)
+        (name, parameterCount, parentUuid, pricing, provider) = (nil, nil, nil, nil, nil)
+        (reasoningEfforts, settings, thinking, type, updatedAt) = (nil, nil, nil, nil, nil)
+        (uploadComplete, url, uuid, version) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiModelPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiModelPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agreement = try container.sdkDecodeIfPresent(.agreement)
-        self.benchmarkScore = try container.sdkDecodeIfPresent(.benchmarkScore)
-        self.capabilities = try container.sdkDecodeIfPresent(.capabilities)
-        self.contextWindow = try container.sdkDecodeIfPresent(.contextWindow)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.endpoints = try container.sdkDecodeIfPresent(.endpoints)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.isFoundational = try container.sdkDecodeIfPresent(.isFoundational)
-        self.kbDefaultChunkSize = try container.sdkDecodeIfPresent(.kbDefaultChunkSize)
-        self.kbMaxChunkSize = try container.sdkDecodeIfPresent(.kbMaxChunkSize)
-        self.kbMinChunkSize = try container.sdkDecodeIfPresent(.kbMinChunkSize)
-        self.lifecycleStatus = try container.sdkDecodeIfPresent(.lifecycleStatus)
-        self.modalities = try container.sdkDecodeIfPresent(.modalities)
-        self.modelAvailability = try container.sdkDecodeIfPresent(.modelAvailability)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.parameterCount = try container.sdkDecodeIfPresent(.parameterCount)
-        self.parentUuid = try container.sdkDecodeIfPresent(.parentUuid)
-        self.pricing = try container.sdkDecodeIfPresent(.pricing)
-        self.provider = try container.sdkDecodeIfPresent(.provider)
-        self.reasoningEfforts = try container.sdkDecodeIfPresent(.reasoningEfforts)
-        self.settings = try container.sdkDecodeIfPresent(.settings)
-        self.thinking = try container.sdkDecodeIfPresent(.thinking)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.uploadComplete = try container.sdkDecodeIfPresent(.uploadComplete)
-        self.url = try container.sdkDecodeIfPresent(.url)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
-        self.version = try container.sdkDecodeIfPresent(.version)
-        if let value = self.createdAt {
+        agreement = try container.sdkDecodeIfPresent(.agreement)
+        benchmarkScore = try container.sdkDecodeIfPresent(.benchmarkScore)
+        capabilities = try container.sdkDecodeIfPresent(.capabilities)
+        contextWindow = try container.sdkDecodeIfPresent(.contextWindow)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        description = try container.sdkDecodeIfPresent(.description)
+        endpoints = try container.sdkDecodeIfPresent(.endpoints)
+        id = try container.sdkDecodeIfPresent(.id)
+        isFoundational = try container.sdkDecodeIfPresent(.isFoundational)
+        kbDefaultChunkSize = try container.sdkDecodeIfPresent(.kbDefaultChunkSize)
+        kbMaxChunkSize = try container.sdkDecodeIfPresent(.kbMaxChunkSize)
+        kbMinChunkSize = try container.sdkDecodeIfPresent(.kbMinChunkSize)
+        lifecycleStatus = try container.sdkDecodeIfPresent(.lifecycleStatus)
+        modalities = try container.sdkDecodeIfPresent(.modalities)
+        modelAvailability = try container.sdkDecodeIfPresent(.modelAvailability)
+        name = try container.sdkDecodeIfPresent(.name)
+        parameterCount = try container.sdkDecodeIfPresent(.parameterCount)
+        parentUuid = try container.sdkDecodeIfPresent(.parentUuid)
+        pricing = try container.sdkDecodeIfPresent(.pricing)
+        provider = try container.sdkDecodeIfPresent(.provider)
+        reasoningEfforts = try container.sdkDecodeIfPresent(.reasoningEfforts)
+        settings = try container.sdkDecodeIfPresent(.settings)
+        thinking = try container.sdkDecodeIfPresent(.thinking)
+        type = try container.sdkDecodeIfPresent(.type)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        uploadComplete = try container.sdkDecodeIfPresent(.uploadComplete)
+        url = try container.sdkDecodeIfPresent(.url)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
+        version = try container.sdkDecodeIfPresent(.version)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiModelPublic {
-    public init(agreement: ApiAgreement? = nil, benchmarkScore: [String: JSONValue]? = nil, capabilities: [String]? = nil, contextWindow: String? = nil, createdAt: Date? = nil, description: String? = nil, endpoints: [ApiModelEndpoint]? = nil, id: String? = nil, isFoundational: Bool? = nil, kbDefaultChunkSize: Int? = nil, kbMaxChunkSize: Int? = nil, kbMinChunkSize: Int? = nil, lifecycleStatus: String? = nil, modalities: ApiModelModalities? = nil, modelAvailability: String? = nil, name: String? = nil, parameterCount: Double? = nil, parentUuid: String? = nil, pricing: ApiModelPricing? = nil, provider: ApiModelProvider? = nil, reasoningEfforts: [String]? = nil, settings: [ApiModelSetting]? = nil, thinking: Bool? = nil, type: String? = nil, updatedAt: Date? = nil, uploadComplete: Bool? = nil, url: String? = nil, uuid: String? = nil, version: ApiModelVersion? = nil) throws {
+public extension ApiModelPublic {
+    init(
+        agreement: ApiAgreement? = nil,
+        benchmarkScore: [String: JSONValue]? = nil,
+        capabilities: [String]? = nil,
+        contextWindow: String? = nil,
+        createdAt: Date? = nil,
+        description: String? = nil,
+        endpoints: [ApiModelEndpoint]? = nil,
+        id: String? = nil,
+        isFoundational: Bool? = nil,
+        kbDefaultChunkSize: Int? = nil,
+        kbMaxChunkSize: Int? = nil,
+        kbMinChunkSize: Int? = nil,
+        lifecycleStatus: String? = nil,
+        modalities: ApiModelModalities? = nil,
+        modelAvailability: String? = nil,
+        name: String? = nil,
+        parameterCount: Double? = nil,
+        parentUuid: String? = nil,
+        pricing: ApiModelPricing? = nil,
+        provider: ApiModelProvider? = nil,
+        reasoningEfforts: [String]? = nil,
+        settings: [ApiModelSetting]? = nil,
+        thinking: Bool? = nil,
+        type: String? = nil,
+        updatedAt: Date? = nil,
+        uploadComplete: Bool? = nil,
+        url: String? = nil,
+        uuid: String? = nil,
+        version: ApiModelVersion? = nil
+    ) throws {
         self.init()
         (self.agreement, self.benchmarkScore) = (agreement, benchmarkScore)
         (self.capabilities, self.contextWindow) = (capabilities, contextWindow)

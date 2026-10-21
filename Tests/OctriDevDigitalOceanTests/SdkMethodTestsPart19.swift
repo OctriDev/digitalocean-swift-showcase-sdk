@@ -17,8 +17,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.floatingIpActions.list(
-            floatingIp: decoded("\"45.55.96.47\"")
-        )
+                floatingIp: decoded("\"45.55.96.47\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -64,9 +64,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.floatingIpActions.post(
-            floatingIp: decoded("\"45.55.96.47\""),
-            body: decoded("{\"type\":\"unassign\"}")
-        )
+                floatingIp: decoded("\"45.55.96.47\""),
+                body: decoded("{\"type\":\"unassign\"}")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -111,8 +111,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.floatingIps.create(
-            body: decoded("{\"droplet_id\":2457247}")
-        )
+                body: decoded("{\"droplet_id\":2457247}")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -150,8 +150,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.floatingIps.delete(
-            floatingIp: decoded("\"45.55.96.47\"")
-        )
+                floatingIp: decoded("\"45.55.96.47\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -196,8 +196,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.floatingIps.get(
-            floatingIp: decoded("\"45.55.96.47\"")
-        )
+                floatingIp: decoded("\"45.55.96.47\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -243,9 +243,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.floatingIps.list(
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -292,10 +292,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.functions.accessKeyCreate(
-            namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\""),
-            name: decoded("\"my-function-access-key\""),
-            expiresIn: decoded("null")
-        )
+                namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\""),
+                name: decoded("\"my-function-access-key\""),
+                expiresIn: decoded("null")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -341,9 +341,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.functions.accessKeyDelete(
-            namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\""),
-            keyId: decoded("\"dof-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"")
-        )
+                namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\""),
+                keyId: decoded("\"dof-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -388,8 +388,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.functions.accessKeyList(
-            namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"")
-        )
+                namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -436,10 +436,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.functions.accessKeyUpdate(
-            namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\""),
-            keyId: decoded("\"dof-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\""),
-            name: decoded("\"updated-key-name\"")
-        )
+                namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\""),
+                keyId: decoded("\"dof-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\""),
+                name: decoded("\"updated-key-name\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -485,9 +485,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.functions.createNamespace(
-            region: decoded("\"nyc1\""),
-            label: decoded("\"my namespace\"")
-        )
+                region: decoded("\"nyc1\""),
+                label: decoded("\"my namespace\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -537,13 +537,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.functions.createTrigger(
-            namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\""),
-            name: decoded("\"my trigger\""),
-            function: decoded("\"hello\""),
-            type: decoded("\"SCHEDULED\""),
-            isEnabled: decoded("true"),
-            scheduledDetails: decoded("{\"cron\":\"* * * * *\",\"body\":{\"name\":\"Welcome to DO!\"}}")
-        )
+                namespaceId: decoded("\"fn-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\""),
+                name: decoded("\"my trigger\""),
+                function: decoded("\"hello\""),
+                type: decoded("\"SCHEDULED\""),
+                isEnabled: decoded("true"),
+                scheduledDetails: decoded("{\"cron\":\"* * * * *\",\"body\":{\"name\":\"Welcome to DO!\"}}")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)

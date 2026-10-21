@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Functions domain models
+/// Functions domain models
 /// Typed representation of the `AccessKeyUpdate` API schema.
 public struct AccessKeyUpdate: Codable {
     /// Optional object value serialized in the `access_key` wire field.
@@ -14,19 +14,19 @@ public struct AccessKeyUpdate: Codable {
     }
 
     init() {
-        self.accessKey = nil
+        accessKey = nil
     }
 }
 
-extension AccessKeyUpdate {
-    public init(from decoder: Decoder) throws {
+public extension AccessKeyUpdate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.accessKey = try container.sdkDecodeIfPresent(.accessKey)
+        accessKey = try container.sdkDecodeIfPresent(.accessKey)
     }
 }
 
-extension AccessKeyUpdate {
-    public init(accessKey: AccessKey? = nil) {
+public extension AccessKeyUpdate {
+    init(accessKey: AccessKey? = nil) {
         self.init()
         self.accessKey = accessKey
     }

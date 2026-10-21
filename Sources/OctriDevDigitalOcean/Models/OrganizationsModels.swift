@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Organizations domain models
+/// Organizations domain models
 /// Typed representation of the `ListTeams` API schema.
 public struct ListTeams: Codable {
     /// Required array value serialized in the `teams` wire field.
@@ -13,21 +13,27 @@ public struct ListTeams: Codable {
         case teams
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ListTeams {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.teams) else {
-            throw SdkValidationError(field: "teams", code: "required", message: "Validation failed for 'teams': value is required")
-        }
-        self.teams = try container.sdkDecodeRequired(.teams)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ListTeams {
-    public init(teams: [OrganizationTeam]) {
+public extension ListTeams {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.teams) else {
+            throw SdkValidationError(
+                field: "teams",
+                code: "required",
+                message: "Validation failed for 'teams': value is required"
+            )
+        }
+        teams = try container.sdkDecodeRequired(.teams)
+    }
+}
+
+public extension ListTeams {
+    init(teams: [OrganizationTeam]) {
         self.teams = teams
     }
 }
@@ -43,19 +49,19 @@ public struct TeamInvitationStatus: Codable {
     }
 
     init() {
-        self.status = nil
+        status = nil
     }
 }
 
-extension TeamInvitationStatus {
-    public init(from decoder: Decoder) throws {
+public extension TeamInvitationStatus {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.status = try container.sdkDecodeIfPresent(.status)
+        status = try container.sdkDecodeIfPresent(.status)
     }
 }
 
-extension TeamInvitationStatus {
-    public init(status: TeamInvitationStatusStatus? = nil) {
+public extension TeamInvitationStatus {
+    init(status: TeamInvitationStatusStatus? = nil) {
         self.init()
         self.status = status
     }
@@ -75,28 +81,38 @@ public struct TeamInvitation: Codable {
         case role
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension TeamInvitation {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.email) else {
-            throw SdkValidationError(field: "email", code: "required", message: "Validation failed for 'email': value is required")
-        }
-        guard container.contains(.role) else {
-            throw SdkValidationError(field: "role", code: "required", message: "Validation failed for 'role': value is required")
-        }
-        self.email = try container.sdkDecodeRequired(.email)
-        self.role = try container.sdkDecodeRequired(.role)
-            try sdkValidateEmail("email", self.email)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension TeamInvitation {
-    public init(email: String, role: TeamInvitationRole) throws {
+public extension TeamInvitation {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.email) else {
+            throw SdkValidationError(
+                field: "email",
+                code: "required",
+                message: "Validation failed for 'email': value is required"
+            )
+        }
+        guard container.contains(.role) else {
+            throw SdkValidationError(
+                field: "role",
+                code: "required",
+                message: "Validation failed for 'role': value is required"
+            )
+        }
+        email = try container.sdkDecodeRequired(.email)
+        role = try container.sdkDecodeRequired(.role)
+        try sdkValidateEmail("email", email)
+    }
+}
+
+public extension TeamInvitation {
+    init(email: String, role: TeamInvitationRole) throws {
         (self.email, self.role) = (email, role)
-            try sdkValidateEmail("email", self.email)
+        try sdkValidateEmail("email", self.email)
     }
 }
 
@@ -140,36 +156,45 @@ public struct OrganizationTeam: Codable {
     }
 
     init() {
-        (self.id, self.uuid, self.name, self.email, self.memberCount) = (nil, nil, nil, nil, nil)
-        (self.status, self.joinedOrganizationAt, self.company) = (nil, nil, nil)
+        (id, uuid, name, email, memberCount) = (nil, nil, nil, nil, nil)
+        (status, joinedOrganizationAt, company) = (nil, nil, nil)
     }
 }
 
-extension OrganizationTeam {
-    public init(from decoder: Decoder) throws {
+public extension OrganizationTeam {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.email = try container.sdkDecodeIfPresent(.email)
-        self.memberCount = try container.sdkDecodeIfPresent(.memberCount)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.joinedOrganizationAt = try container.sdkDecodeIfPresent(.joinedOrganizationAt)
-        self.company = try container.sdkDecodeIfPresent(.company)
-        if let value = self.uuid {
+        id = try container.sdkDecodeIfPresent(.id)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
+        name = try container.sdkDecodeIfPresent(.name)
+        email = try container.sdkDecodeIfPresent(.email)
+        memberCount = try container.sdkDecodeIfPresent(.memberCount)
+        status = try container.sdkDecodeIfPresent(.status)
+        joinedOrganizationAt = try container.sdkDecodeIfPresent(.joinedOrganizationAt)
+        company = try container.sdkDecodeIfPresent(.company)
+        if let value = uuid {
             try sdkValidateUuid("uuid", value)
         }
-        if let value = self.email {
+        if let value = email {
             try sdkValidateEmail("email", value)
         }
-        if let value = self.joinedOrganizationAt {
+        if let value = joinedOrganizationAt {
             try sdkValidateDateTime("joined_organization_at", sdkWireString(value))
         }
     }
 }
 
-extension OrganizationTeam {
-    public init(id: UInt64? = nil, uuid: String? = nil, name: String? = nil, email: String? = nil, memberCount: UInt64? = nil, status: OrganizationTeamStatus? = nil, joinedOrganizationAt: Date? = nil, company: String? = nil) throws {
+public extension OrganizationTeam {
+    init(
+        id: UInt64? = nil,
+        uuid: String? = nil,
+        name: String? = nil,
+        email: String? = nil,
+        memberCount: UInt64? = nil,
+        status: OrganizationTeamStatus? = nil,
+        joinedOrganizationAt: Date? = nil,
+        company: String? = nil
+    ) throws {
         self.init()
         (self.id, self.uuid) = (id, uuid)
         (self.name, self.email) = (name, email)
@@ -201,28 +226,38 @@ public struct CreateTeam: Codable {
         case name
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateTeam {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.uuid) else {
-            throw SdkValidationError(field: "uuid", code: "required", message: "Validation failed for 'uuid': value is required")
-        }
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.uuid = try container.sdkDecodeRequired(.uuid)
-        self.name = try container.sdkDecodeRequired(.name)
-            try sdkValidateUuid("uuid", self.uuid)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateTeam {
-    public init(uuid: String, name: String) throws {
+public extension CreateTeam {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.uuid) else {
+            throw SdkValidationError(
+                field: "uuid",
+                code: "required",
+                message: "Validation failed for 'uuid': value is required"
+            )
+        }
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        uuid = try container.sdkDecodeRequired(.uuid)
+        name = try container.sdkDecodeRequired(.name)
+        try sdkValidateUuid("uuid", uuid)
+    }
+}
+
+public extension CreateTeam {
+    init(uuid: String, name: String) throws {
         (self.uuid, self.name) = (uuid, name)
-            try sdkValidateUuid("uuid", self.uuid)
+        try sdkValidateUuid("uuid", self.uuid)
     }
 }
 
@@ -239,22 +274,28 @@ public struct CreateTeamResponse: Codable {
         case invitations
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateTeamResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.team) else {
-            throw SdkValidationError(field: "team", code: "required", message: "Validation failed for 'team': value is required")
-        }
-        self.team = try container.sdkDecodeRequired(.team)
-        self.invitations = try container.sdkDecodeIfPresent(.invitations)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateTeamResponse {
-    public init(team: CreateTeam, invitations: [String: TeamInvitationStatus]? = nil) {
+public extension CreateTeamResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.team) else {
+            throw SdkValidationError(
+                field: "team",
+                code: "required",
+                message: "Validation failed for 'team': value is required"
+            )
+        }
+        team = try container.sdkDecodeRequired(.team)
+        invitations = try container.sdkDecodeIfPresent(.invitations)
+    }
+}
+
+public extension CreateTeamResponse {
+    init(team: CreateTeam, invitations: [String: TeamInvitationStatus]? = nil) {
         (self.team, self.invitations) = (team, invitations)
     }
 }
@@ -274,22 +315,28 @@ public struct CreateTeamRequest: Codable {
         case invitations
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateTeamRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.invitations = try container.sdkDecodeIfPresent(.invitations)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateTeamRequest {
-    public init(name: String, invitations: [TeamInvitation]? = nil) {
+public extension CreateTeamRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        invitations = try container.sdkDecodeIfPresent(.invitations)
+    }
+}
+
+public extension CreateTeamRequest {
+    init(name: String, invitations: [TeamInvitation]? = nil) {
         (self.name, self.invitations) = (name, invitations)
     }
 }
@@ -298,7 +345,10 @@ extension CreateTeamRequest {
 public struct TeamInvitationRole: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let member = TeamInvitationRole(rawValue: "member")
     public static let biller = TeamInvitationRole(rawValue: "biller")
     public static let billingViewer = TeamInvitationRole(rawValue: "billing viewer")
@@ -307,7 +357,7 @@ public struct TeamInvitationRole: RawRepresentable, Hashable, Codable, Sendable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -320,13 +370,16 @@ public struct TeamInvitationRole: RawRepresentable, Hashable, Codable, Sendable,
 public struct TeamInvitationStatusStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let ok = TeamInvitationStatusStatus(rawValue: "ok")
     public static let dailyInviteLimitReached = TeamInvitationStatusStatus(rawValue: "daily_invite_limit_reached")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -339,13 +392,16 @@ public struct TeamInvitationStatusStatus: RawRepresentable, Hashable, Codable, S
 public struct OrganizationTeamStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let joined = OrganizationTeamStatus(rawValue: "joined")
     public static let pending = OrganizationTeamStatus(rawValue: "pending")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

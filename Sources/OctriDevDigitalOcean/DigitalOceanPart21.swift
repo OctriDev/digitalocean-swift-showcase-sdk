@@ -9,24 +9,61 @@ public class ProjectResourcesNamespace {
         self.config = config
     }
 
-/// To list all your resources in a project, send a GET request to `/v2/projects/$PROJECT_ID/resources`. This endpoint will only return resources that you are authorized to see. For example, to see Droplets in a project, include the `droplet:read` scope.
-    public func projectsListResources(projectId: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ResourcesList {
-        return try await ProjectResourcesMethods.projectsListResources(config: config, projectId: projectId, perPage: perPage, page: page, requestOptions: requestOptions)
+    /// To list all your resources in a project, send a GET request to `/v2/projects/$PROJECT_ID/resources`. This
+    /// endpoint will only return resources that you are authorized to see. For example, to see Droplets in a project,
+    /// include the `droplet:read` scope.
+    public func projectsListResources(
+        projectId: String,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ResourcesList {
+        try await ProjectResourcesMethods.projectsListResources(
+            config: config,
+            projectId: projectId,
+            perPage: perPage,
+            page: page,
+            requestOptions: requestOptions
+        )
     }
 
-/// To assign resources to a project, send a POST request to `/v2/projects/$PROJECT_ID/resources`. You must have both `project:assign_resource` and `<resource>:read` scopes to assign new resources. For example, to assign a Droplet to a project, include both the `project:assign_resource` and `droplet:read` scopes. The `project:update` scope also grants `project:assign_resource`.
-    public func projectsAssignResources(projectId: String, resources: [Urn]? = nil, requestOptions: RequestOptions? = nil) async throws -> AssignedResourcesList {
-        return try await ProjectResourcesMethods.projectsAssignResources(config: config, projectId: projectId, resources: resources, requestOptions: requestOptions)
+    /// To assign resources to a project, send a POST request to `/v2/projects/$PROJECT_ID/resources`. You must have
+    /// both `project:assign_resource` and `<resource>:read` scopes to assign new resources. For example, to assign a
+    /// Droplet to a project, include both the `project:assign_resource` and `droplet:read` scopes. The `project:update`
+    /// scope also grants `project:assign_resource`.
+    public func projectsAssignResources(
+        projectId: String,
+        resources: [Urn]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AssignedResourcesList {
+        try await ProjectResourcesMethods.projectsAssignResources(
+            config: config,
+            projectId: projectId,
+            resources: resources,
+            requestOptions: requestOptions
+        )
     }
 
-/// To list all your resources in your default project, send a GET request to `/v2/projects/default/resources`. Only resources that you are authorized to see will be returned. For example, to see Droplets in a project, include the `droplet:read` scope.
+    /// To list all your resources in your default project, send a GET request to `/v2/projects/default/resources`. Only
+    /// resources that you are authorized to see will be returned. For example, to see Droplets in a project, include
+    /// the `droplet:read` scope.
     public func projectsListResourcesDefault(requestOptions: RequestOptions? = nil) async throws -> ResourcesList {
-        return try await ProjectResourcesMethods.projectsListResourcesDefault(config: config, requestOptions: requestOptions)
+        try await ProjectResourcesMethods.projectsListResourcesDefault(config: config, requestOptions: requestOptions)
     }
 
-/// To assign resources to your default project, send a POST request to `/v2/projects/default/resources`. You must have both `project:assign_resource` and `<resource>:read` scopes to assign new resources. For example, to assign a Droplet to the default project, include both the `project:assign_resource` and `droplet:read` scopes. The `project:update` scope also grants `project:assign_resource`.
-    public func projectsAssignResourcesDefault(resources: [Urn]? = nil, requestOptions: RequestOptions? = nil) async throws -> AssignedResourcesList {
-        return try await ProjectResourcesMethods.projectsAssignResourcesDefault(config: config, resources: resources, requestOptions: requestOptions)
+    /// To assign resources to your default project, send a POST request to `/v2/projects/default/resources`. You must
+    /// have both `project:assign_resource` and `<resource>:read` scopes to assign new resources. For example, to assign
+    /// a Droplet to the default project, include both the `project:assign_resource` and `droplet:read` scopes. The
+    /// `project:update` scope also grants `project:assign_resource`.
+    public func projectsAssignResourcesDefault(
+        resources: [Urn]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AssignedResourcesList {
+        try await ProjectResourcesMethods.projectsAssignResourcesDefault(
+            config: config,
+            resources: resources,
+            requestOptions: requestOptions
+        )
     }
 }
 
@@ -36,9 +73,20 @@ public class RegionsNamespace {
         self.config = config
     }
 
-/// To list all of the regions that are available, send a GET request to `/v2/regions`. The response will be a JSON object with a key called `regions`. The value of this will be an array of `region` objects, each of which will contain the standard region attributes.
-    public func list(perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AllRegions {
-        return try await RegionsMethods.regionsList(config: config, perPage: perPage, page: page, requestOptions: requestOptions)
+    /// To list all of the regions that are available, send a GET request to `/v2/regions`. The response will be a JSON
+    /// object with a key called `regions`. The value of this will be an array of `region` objects, each of which will
+    /// contain the standard region attributes.
+    public func list(
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AllRegions {
+        try await RegionsMethods.regionsList(
+            config: config,
+            perPage: perPage,
+            page: page,
+            requestOptions: requestOptions
+        )
     }
 }
 
@@ -48,103 +96,320 @@ public class ContainerRegistriesNamespace {
         self.config = config
     }
 
-/// To get information about any container registry in your account, send a GET request to `/v2/registries/`.
+    /// To get information about any container registry in your account, send a GET request to `/v2/registries/`.
     public func registriesList(requestOptions: RequestOptions? = nil) async throws -> AllRegistriesInfo {
-        return try await ContainerRegistriesMethods.registriesList(config: config, requestOptions: requestOptions)
+        try await ContainerRegistriesMethods.registriesList(config: config, requestOptions: requestOptions)
     }
 
-/// To create your container registry, send a POST request to `/v2/registries`. The `name` becomes part of the URL for images stored in the registry. For example, if your registry is called `example`, an image in it will have the URL `registry.digitalocean.com/example/image:tag`.
-    public func registriesCreate(name: String, subscriptionTierSlug: MultiregistryCreateSubscriptionTierSlug? = nil, region: MultiregistryCreateRegion? = nil, requestOptions: RequestOptions? = nil) async throws -> MultiregistryInfo {
-        return try await ContainerRegistriesMethods.registriesCreate(config: config, name: name, subscriptionTierSlug: subscriptionTierSlug, region: region, requestOptions: requestOptions)
+    /// To create your container registry, send a POST request to `/v2/registries`. The `name` becomes part of the URL
+    /// for images stored in the registry. For example, if your registry is called `example`, an image in it will have
+    /// the URL `registry.digitalocean.com/example/image:tag`.
+    public func registriesCreate(
+        name: String,
+        subscriptionTierSlug: MultiregistryCreateSubscriptionTierSlug? = nil,
+        region: MultiregistryCreateRegion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> MultiregistryInfo {
+        try await ContainerRegistriesMethods.registriesCreate(
+            config: config,
+            name: name,
+            subscriptionTierSlug: subscriptionTierSlug,
+            region: region,
+            requestOptions: requestOptions
+        )
     }
 
-/// To get information about any container registry in your account, send a GET request to `/v2/registries/{registry_name}`.
-    public func registriesGet(registryName: String, requestOptions: RequestOptions? = nil) async throws -> MultiregistryInfo {
-        return try await ContainerRegistriesMethods.registriesGet(config: config, registryName: registryName, requestOptions: requestOptions)
+    /// To get information about any container registry in your account, send a GET request to
+    /// `/v2/registries/{registry_name}`.
+    public func registriesGet(
+        registryName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> MultiregistryInfo {
+        try await ContainerRegistriesMethods.registriesGet(
+            config: config,
+            registryName: registryName,
+            requestOptions: requestOptions
+        )
     }
 
-/// To delete your container registry, destroying all container image data stored in it, send a DELETE request to `/v2/registries/{registry_name}`.
-    public func registriesDelete(registryName: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await ContainerRegistriesMethods.registriesDelete(config: config, registryName: registryName, requestOptions: requestOptions)
+    /// To delete your container registry, destroying all container image data stored in it, send a DELETE request to
+    /// `/v2/registries/{registry_name}`.
+    public func registriesDelete(
+        registryName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await ContainerRegistriesMethods.registriesDelete(
+            config: config,
+            registryName: registryName,
+            requestOptions: requestOptions
+        )
     }
 
-/// In order to access your container registry with the Docker client or from a Kubernetes cluster, you will need to configure authentication. The necessary JSON configuration can be retrieved by sending a GET request to `/v2/registries/{registry_name}/docker-credentials`. The response will be in the format of a Docker `config.json` file. To use the config in your Kubernetes cluster, create a Secret with: kubectl create secret generic docr \ --from-file=.dockerconfigjson=config.json \ --type=kubernetes.io/dockerconfigjson By default, the returned credentials have read-only access to your registry and cannot be used to push images. This is appropriate for most Kubernetes clusters. To retrieve read/write credentials, suitable for use with the Docker client or in a CI system, read_write may be provided as query parameter. For example: `/v2/registries/{registry_name}/docker-credentials?read_write=true` By default, the returned credentials will not expire. To retrieve credentials with an expiry set, expiry_seconds may be provided as a query parameter. For example: `/v2/registries/{registry_name}/docker-credentials?expiry_seconds=3600` will return credentials that expire after one hour.
-    public func registriesGetDockerCredentials(registryName: String, requestOptions: RequestOptions? = nil) async throws -> DockerCredentials {
-        return try await ContainerRegistriesMethods.registriesGetDockerCredentials(config: config, registryName: registryName, requestOptions: requestOptions)
+    /// In order to access your container registry with the Docker client or from a Kubernetes cluster, you will need to
+    /// configure authentication. The necessary JSON configuration can be retrieved by sending a GET request to
+    /// `/v2/registries/{registry_name}/docker-credentials`. The response will be in the format of a Docker
+    /// `config.json` file. To use the config in your Kubernetes cluster, create a Secret with: kubectl create secret
+    /// generic docr \ --from-file=.dockerconfigjson=config.json \ --type=kubernetes.io/dockerconfigjson By default, the
+    /// returned credentials have read-only access to your registry and cannot be used to push images. This is
+    /// appropriate for most Kubernetes clusters. To retrieve read/write credentials, suitable for use with the Docker
+    /// client or in a CI system, read_write may be provided as query parameter. For example:
+    /// `/v2/registries/{registry_name}/docker-credentials?read_write=true` By default, the returned credentials will
+    /// not expire. To retrieve credentials with an expiry set, expiry_seconds may be provided as a query parameter. For
+    /// example: `/v2/registries/{registry_name}/docker-credentials?expiry_seconds=3600` will return credentials that
+    /// expire after one hour.
+    public func registriesGetDockerCredentials(
+        registryName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DockerCredentials {
+        try await ContainerRegistriesMethods.registriesGetDockerCredentials(
+            config: config,
+            registryName: registryName,
+            requestOptions: requestOptions
+        )
     }
 
-/// A subscription is automatically created when you configure your container registry. To get information about your subscription, send a GET request to `/v2/registries/subscription`. It is similar to GET `/v2/registry/subscription`.
+    /// A subscription is automatically created when you configure your container registry. To get information about
+    /// your subscription, send a GET request to `/v2/registries/subscription`. It is similar to GET
+    /// `/v2/registry/subscription`.
     public func registriesGetSubscription(requestOptions: RequestOptions? = nil) async throws -> SubscriptionResponse {
-        return try await ContainerRegistriesMethods.registriesGetSubscription(config: config, requestOptions: requestOptions)
+        try await ContainerRegistriesMethods.registriesGetSubscription(config: config, requestOptions: requestOptions)
     }
 
-/// After creating your registry, you can switch to a different subscription tier to better suit your needs. To do this, send a POST request to `/v2/registries/subscription`. It is similar to POST `/v2/registry/subscription`.
-    public func registriesUpdateSubscription(tierSlug: RegistriesUpdateSubscriptionRequestBodyTierSlug? = nil, requestOptions: RequestOptions? = nil) async throws -> SubscriptionResponse {
-        return try await ContainerRegistriesMethods.registriesUpdateSubscription(config: config, tierSlug: tierSlug, requestOptions: requestOptions)
+    /// After creating your registry, you can switch to a different subscription tier to better suit your needs. To do
+    /// this, send a POST request to `/v2/registries/subscription`. It is similar to POST `/v2/registry/subscription`.
+    public func registriesUpdateSubscription(
+        tierSlug: RegistriesUpdateSubscriptionRequestBodyTierSlug? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SubscriptionResponse {
+        try await ContainerRegistriesMethods.registriesUpdateSubscription(
+            config: config,
+            tierSlug: tierSlug,
+            requestOptions: requestOptions
+        )
     }
 
-/// This endpoint serves to provide additional information as to which option values are available when creating a container registry. There are multiple subscription tiers available for container registry. Each tier allows a different number of image repositories to be created in your registry, and has a different amount of storage and transfer included. There are multiple regions available for container registry and controls where your data is stored. To list the available options, send a GET request to `/v2/registries/options`. This is similar to GET `/v2/registry/options`.
+    /// This endpoint serves to provide additional information as to which option values are available when creating a
+    /// container registry. There are multiple subscription tiers available for container registry. Each tier allows a
+    /// different number of image repositories to be created in your registry, and has a different amount of storage and
+    /// transfer included. There are multiple regions available for container registry and controls where your data is
+    /// stored. To list the available options, send a GET request to `/v2/registries/options`. This is similar to GET
+    /// `/v2/registry/options`.
     public func registriesGetOptions(requestOptions: RequestOptions? = nil) async throws -> RegistryOptionsResponse {
-        return try await ContainerRegistriesMethods.registriesGetOptions(config: config, requestOptions: requestOptions)
+        try await ContainerRegistriesMethods.registriesGetOptions(config: config, requestOptions: requestOptions)
     }
 }
 
-extension ContainerRegistriesNamespace {
-/// To get information about the currently-active garbage collection for a registry, send a GET request to `/v2/registry/$REGISTRY_NAME/garbage-collection`.
-    public func registriesGetGarbageCollection(registryName: String, requestOptions: RequestOptions? = nil) async throws -> GarbageCollectionResponse {
-        return try await ContainerRegistriesMethods.registriesGetGarbageCollection(config: config, registryName: registryName, requestOptions: requestOptions)
+public extension ContainerRegistriesNamespace {
+    /// To get information about the currently-active garbage collection for a registry, send a GET request to
+    /// `/v2/registry/$REGISTRY_NAME/garbage-collection`.
+    func registriesGetGarbageCollection(
+        registryName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GarbageCollectionResponse {
+        try await ContainerRegistriesMethods.registriesGetGarbageCollection(
+            config: config,
+            registryName: registryName,
+            requestOptions: requestOptions
+        )
     }
 
-/// Garbage collection enables users to clear out unreferenced blobs (layer & manifest data) after deleting one or more manifests from a repository. If there are no unreferenced blobs resulting from the deletion of one or more manifests, garbage collection is effectively a noop. [See here for more information](https://docs.digitalocean.com/products/container-registry/how-to/clean-up-container-registry/) about how and why you should clean up your container registry periodically. To request a garbage collection run on your registry, send a POST request to `/v2/registries/$REGISTRY_NAME/garbage-collection`. This will initiate the following sequence of events on your registry. * Set the registry to read-only mode, meaning no further write-scoped JWTs will be issued to registry clients. Existing write-scoped JWTs will continue to work until they expire which can take up to 15 minutes. * Wait until all existing write-scoped JWTs have expired. * Scan all registry manifests to determine which blobs are unreferenced. * Delete all unreferenced blobs from the registry. * Record the number of blobs deleted and bytes freed, mark the garbage collection status as `success`. * Remove the read-only mode restriction from the registry, meaning write-scoped JWTs will once again be issued to registry clients.
-    public func registriesRunGarbageCollection(registryName: String, requestOptions: RequestOptions? = nil) async throws -> GarbageCollectionResponse {
-        return try await ContainerRegistriesMethods.registriesRunGarbageCollection(config: config, registryName: registryName, requestOptions: requestOptions)
+    /// Garbage collection enables users to clear out unreferenced blobs (layer & manifest data) after deleting one or
+    /// more manifests from a repository. If there are no unreferenced blobs resulting from the deletion of one or more
+    /// manifests, garbage collection is effectively a noop. [See here for more
+    /// information](https://docs.digitalocean.com/products/container-registry/how-to/clean-up-container-registry/)
+    /// about how and why you should clean up your container registry periodically. To request a garbage collection run
+    /// on your registry, send a POST request to `/v2/registries/$REGISTRY_NAME/garbage-collection`. This will initiate
+    /// the following sequence of events on your registry. * Set the registry to read-only mode, meaning no further
+    /// write-scoped JWTs will be issued to registry clients. Existing write-scoped JWTs will continue to work until
+    /// they expire which can take up to 15 minutes. * Wait until all existing write-scoped JWTs have expired. * Scan
+    /// all registry manifests to determine which blobs are unreferenced. * Delete all unreferenced blobs from the
+    /// registry. * Record the number of blobs deleted and bytes freed, mark the garbage collection status as `success`.
+    /// * Remove the read-only mode restriction from the registry, meaning write-scoped JWTs will once again be issued
+    /// to registry clients.
+    func registriesRunGarbageCollection(
+        registryName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GarbageCollectionResponse {
+        try await ContainerRegistriesMethods.registriesRunGarbageCollection(
+            config: config,
+            registryName: registryName,
+            requestOptions: requestOptions
+        )
     }
 
-/// To get information about past garbage collections for a registry, send a GET request to `/v2/registry/$REGISTRY_NAME/garbage-collections`.
-    public func registriesListGarbageCollections(registryName: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> GarbageCollections {
-        return try await ContainerRegistriesMethods.registriesListGarbageCollections(config: config, registryName: registryName, perPage: perPage, page: page, requestOptions: requestOptions)
+    /// To get information about past garbage collections for a registry, send a GET request to
+    /// `/v2/registry/$REGISTRY_NAME/garbage-collections`.
+    func registriesListGarbageCollections(
+        registryName: String,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GarbageCollections {
+        try await ContainerRegistriesMethods.registriesListGarbageCollections(
+            config: config,
+            registryName: registryName,
+            perPage: perPage,
+            page: page,
+            requestOptions: requestOptions
+        )
     }
 
-/// To cancel the currently-active garbage collection for a registry, send a PUT request to `/v2/registries/$REGISTRY_NAME/garbage-collection/$GC_UUID` and specify one or more of the attributes below. It is similar to PUT `/v2/registries/$REGISTRY_NAME/garbage-collection/$GC_UUID`.
-    public func registriesUpdateGarbageCollection(registryName: String, garbageCollectionUuid: String, cancel: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> GarbageCollectionResponse {
-        return try await ContainerRegistriesMethods.registriesUpdateGarbageCollection(config: config, registryName: registryName, garbageCollectionUuid: garbageCollectionUuid, cancel: cancel, requestOptions: requestOptions)
+    /// To cancel the currently-active garbage collection for a registry, send a PUT request to
+    /// `/v2/registries/$REGISTRY_NAME/garbage-collection/$GC_UUID` and specify one or more of the attributes below. It
+    /// is similar to PUT `/v2/registries/$REGISTRY_NAME/garbage-collection/$GC_UUID`.
+    func registriesUpdateGarbageCollection(
+        registryName: String,
+        garbageCollectionUuid: String,
+        cancel: Bool? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GarbageCollectionResponse {
+        try await ContainerRegistriesMethods.registriesUpdateGarbageCollection(
+            config: config,
+            registryName: registryName,
+            garbageCollectionUuid: garbageCollectionUuid,
+            cancel: cancel,
+            requestOptions: requestOptions
+        )
     }
 
-/// To list all repositories in your container registry, send a GET request to `/v2/registries/$REGISTRY_NAME/repositoriesV2`. It is similar to GET `/v2/registry/$REGISTRY_NAME/repositoriesV2`.
-    public func registriesListRepositoriesV2(registryName: String, perPage: Int? = nil, page: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AllRepositoriesV2 {
-        return try await ContainerRegistriesMethods.registriesListRepositoriesV2(config: config, registryName: registryName, perPage: perPage, page: page, pageToken: pageToken, requestOptions: requestOptions)
+    /// To list all repositories in your container registry, send a GET request to
+    /// `/v2/registries/$REGISTRY_NAME/repositoriesV2`. It is similar to GET
+    /// `/v2/registry/$REGISTRY_NAME/repositoriesV2`.
+    func registriesListRepositoriesV2(
+        registryName: String,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        pageToken: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AllRepositoriesV2 {
+        try await ContainerRegistriesMethods.registriesListRepositoriesV2(
+            config: config,
+            registryName: registryName,
+            perPage: perPage,
+            page: page,
+            pageToken: pageToken,
+            requestOptions: requestOptions
+        )
     }
 
-/// To delete a container repository including all of its tags, send a DELETE request to `/v2/registries/$REGISTRY_NAME/repositories/$REPOSITORY_NAME`. A successful request will receive a 204 status code with no body in response. This indicates that the request was processed successfully.
-    public func registriesDeleteRepository(registryName: String, repositoryName: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await ContainerRegistriesMethods.registriesDeleteRepository(config: config, registryName: registryName, repositoryName: repositoryName, requestOptions: requestOptions)
+    /// To delete a container repository including all of its tags, send a DELETE request to
+    /// `/v2/registries/$REGISTRY_NAME/repositories/$REPOSITORY_NAME`. A successful request will receive a 204 status
+    /// code with no body in response. This indicates that the request was processed successfully.
+    func registriesDeleteRepository(
+        registryName: String,
+        repositoryName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await ContainerRegistriesMethods.registriesDeleteRepository(
+            config: config,
+            registryName: registryName,
+            repositoryName: repositoryName,
+            requestOptions: requestOptions
+        )
     }
 
-/// To list all tags in one of your container registry's repository, send a GET request to `/v2/registries/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/tags`. Note that if your repository name contains `/` characters, it must be URL-encoded in the request URL. For example, to list tags for `registry.digitalocean.com/example/my/repo`, the path would be `/v2/registry/example/repositories/my%2Frepo/tags`. It is similar to GET `/v2/registry/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/tags`.
-    public func registriesListRepositoryTags(registryName: String, repositoryName: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> RepositoryTags {
-        return try await ContainerRegistriesMethods.registriesListRepositoryTags(config: config, registryName: registryName, repositoryName: repositoryName, perPage: perPage, page: page, requestOptions: requestOptions)
+    /// To list all tags in one of your container registry's repository, send a GET request to
+    /// `/v2/registries/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/tags`. Note that if your repository name contains
+    /// `/` characters, it must be URL-encoded in the request URL. For example, to list tags for
+    /// `registry.digitalocean.com/example/my/repo`, the path would be
+    /// `/v2/registry/example/repositories/my%2Frepo/tags`. It is similar to GET
+    /// `/v2/registry/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/tags`.
+    func registriesListRepositoryTags(
+        registryName: String,
+        repositoryName: String,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RepositoryTags {
+        try await ContainerRegistriesMethods.registriesListRepositoryTags(
+            config: config,
+            registryName: registryName,
+            repositoryName: repositoryName,
+            perPage: perPage,
+            page: page,
+            requestOptions: requestOptions
+        )
     }
 
-/// To delete a container repository tag in on of our container registries, send a DELETE request to `/v2/registries/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/tags/$TAG`. Note that if your repository name contains `/` characters, it must be URL-encoded in the request URL. For example, to delete `registry.digitalocean.com/example/my/repo:mytag`, the path would be `/v2/registry/example/repositories/my%2Frepo/tags/mytag`. A successful request will receive a 204 status code with no body in response. This indicates that the request was processed successfully. It is similar to DELETE `/v2/registry/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/tags/$TAG`.
-    public func registriesDeleteRepositoryTag(registryName: String, repositoryName: String, repositoryTag: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await ContainerRegistriesMethods.registriesDeleteRepositoryTag(config: config, registryName: registryName, repositoryName: repositoryName, repositoryTag: repositoryTag, requestOptions: requestOptions)
+    /// To delete a container repository tag in on of our container registries, send a DELETE request to
+    /// `/v2/registries/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/tags/$TAG`. Note that if your repository name
+    /// contains `/` characters, it must be URL-encoded in the request URL. For example, to delete
+    /// `registry.digitalocean.com/example/my/repo:mytag`, the path would be
+    /// `/v2/registry/example/repositories/my%2Frepo/tags/mytag`. A successful request will receive a 204 status code
+    /// with no body in response. This indicates that the request was processed successfully. It is similar to DELETE
+    /// `/v2/registry/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/tags/$TAG`.
+    func registriesDeleteRepositoryTag(
+        registryName: String,
+        repositoryName: String,
+        repositoryTag: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await ContainerRegistriesMethods.registriesDeleteRepositoryTag(
+            config: config,
+            registryName: registryName,
+            repositoryName: repositoryName,
+            repositoryTag: repositoryTag,
+            requestOptions: requestOptions
+        )
     }
 }
 
-extension ContainerRegistriesNamespace {
-/// To list all manifests in your container registry repository, send a GET request to `/v2/registries/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/digests`. Note that if your repository name contains `/` characters, it must be URL-encoded in the request URL. For example, to list manifests for `registry.digitalocean.com/example/my/repo`, the path would be `/v2/registry/example/repositories/my%2Frepo/digests`. It is similar to `/v2/registry/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/digests`.
-    public func registriesListRepositoryManifests(registryName: String, repositoryName: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> RepositoryManifests {
-        return try await ContainerRegistriesMethods.registriesListRepositoryManifests(config: config, registryName: registryName, repositoryName: repositoryName, perPage: perPage, page: page, requestOptions: requestOptions)
+public extension ContainerRegistriesNamespace {
+    /// To list all manifests in your container registry repository, send a GET request to
+    /// `/v2/registries/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/digests`. Note that if your repository name
+    /// contains `/` characters, it must be URL-encoded in the request URL. For example, to list manifests for
+    /// `registry.digitalocean.com/example/my/repo`, the path would be
+    /// `/v2/registry/example/repositories/my%2Frepo/digests`. It is similar to
+    /// `/v2/registry/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/digests`.
+    func registriesListRepositoryManifests(
+        registryName: String,
+        repositoryName: String,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RepositoryManifests {
+        try await ContainerRegistriesMethods.registriesListRepositoryManifests(
+            config: config,
+            registryName: registryName,
+            repositoryName: repositoryName,
+            perPage: perPage,
+            page: page,
+            requestOptions: requestOptions
+        )
     }
 
-/// To delete a container repository manifest by digest in one of your registries, send a DELETE request to `/v2/registries/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/digests/$MANIFEST_DIGEST`. Note that if your repository name contains `/` characters, it must be URL-encoded in the request URL. For example, to delete `registry.digitalocean.com/example/my/repo@sha256:abcd`, the path would be `/v2/registry/example/repositories/my%2Frepo/digests/sha256:abcd`. A successful request will receive a 204 status code with no body in response. This indicates that the request was processed successfully. It is similar to DELETE `/v2/registry/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/digests/$MANIFEST_DIGEST`.
-    public func registriesDeleteRepositoryManifest(registryName: String, repositoryName: String, manifestDigest: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await ContainerRegistriesMethods.registriesDeleteRepositoryManifest(config: config, registryName: registryName, repositoryName: repositoryName, manifestDigest: manifestDigest, requestOptions: requestOptions)
+    /// To delete a container repository manifest by digest in one of your registries, send a DELETE request to
+    /// `/v2/registries/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/digests/$MANIFEST_DIGEST`. Note that if your
+    /// repository name contains `/` characters, it must be URL-encoded in the request URL. For example, to delete
+    /// `registry.digitalocean.com/example/my/repo@sha256:abcd`, the path would be
+    /// `/v2/registry/example/repositories/my%2Frepo/digests/sha256:abcd`. A successful request will receive a 204
+    /// status code with no body in response. This indicates that the request was processed successfully. It is similar
+    /// to DELETE `/v2/registry/$REGISTRY_NAME/repositories/$REPOSITORY_NAME/digests/$MANIFEST_DIGEST`.
+    func registriesDeleteRepositoryManifest(
+        registryName: String,
+        repositoryName: String,
+        manifestDigest: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await ContainerRegistriesMethods.registriesDeleteRepositoryManifest(
+            config: config,
+            registryName: registryName,
+            repositoryName: repositoryName,
+            manifestDigest: manifestDigest,
+            requestOptions: requestOptions
+        )
     }
 
-/// To validate that a container registry name is available for use, send a POST request to `/v2/registries/validate-name`. If the name is both formatted correctly and available, the response code will be 204 and contain no body. If the name is already in use, the response will be a 409 Conflict. It is similar to `/v2/registry/validate-name`.
-    public func registriesValidateName(name: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await ContainerRegistriesMethods.registriesValidateName(config: config, name: name, requestOptions: requestOptions)
+    /// To validate that a container registry name is available for use, send a POST request to
+    /// `/v2/registries/validate-name`. If the name is both formatted correctly and available, the response code will be
+    /// 204 and contain no body. If the name is already in use, the response will be a 409 Conflict. It is similar to
+    /// `/v2/registry/validate-name`.
+    func registriesValidateName(name: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        try await ContainerRegistriesMethods.registriesValidateName(
+            config: config,
+            name: name,
+            requestOptions: requestOptions
+        )
     }
 }
 
@@ -154,59 +419,132 @@ public class ContainerRegistryNamespace {
         self.config = config
     }
 
-/// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To get information about your container registry, send a GET request to `/v2/registry`. This operation is not compatible with multiple registries in a DO account. You should use `/v2/registries/{registry_name}` instead.
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To get information
+    /// about your container registry, send a GET request to `/v2/registry`. This operation is not compatible with
+    /// multiple registries in a DO account. You should use `/v2/registries/{registry_name}` instead.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
     public func registryGet(requestOptions: RequestOptions? = nil) async throws -> RegistryInfo {
-        return try await ContainerRegistryMethods.registryGet(config: config, requestOptions: requestOptions)
+        try await ContainerRegistryMethods.registryGet(config: config, requestOptions: requestOptions)
     }
 
-/// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To create your container registry, send a POST request to `/v2/registry`. The `name` becomes part of the URL for images stored in the registry. For example, if your registry is called `example`, an image in it will have the URL `registry.digitalocean.com/example/image:tag`.
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To create your
+    /// container registry, send a POST request to `/v2/registry`. The `name` becomes part of the URL for images stored
+    /// in the registry. For example, if your registry is called `example`, an image in it will have the URL
+    /// `registry.digitalocean.com/example/image:tag`.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    public func registryCreate(name: String, subscriptionTierSlug: RegistryCreateSubscriptionTierSlug, region: RegistryCreateRegion? = nil, requestOptions: RequestOptions? = nil) async throws -> RegistryInfo {
-        return try await ContainerRegistryMethods.registryCreate(config: config, name: name, subscriptionTierSlug: subscriptionTierSlug, region: region, requestOptions: requestOptions)
+    public func registryCreate(
+        name: String,
+        subscriptionTierSlug: RegistryCreateSubscriptionTierSlug,
+        region: RegistryCreateRegion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RegistryInfo {
+        try await ContainerRegistryMethods.registryCreate(
+            config: config,
+            name: name,
+            subscriptionTierSlug: subscriptionTierSlug,
+            region: region,
+            requestOptions: requestOptions
+        )
     }
 
-/// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To delete your container registry, destroying all container image data stored in it, send a DELETE request to `/v2/registry`. This operation is not compatible with multiple registries in a DO account. You should use `/v2/registries/{registry_name}` instead.
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To delete your
+    /// container registry, destroying all container image data stored in it, send a DELETE request to `/v2/registry`.
+    /// This operation is not compatible with multiple registries in a DO account. You should use
+    /// `/v2/registries/{registry_name}` instead.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
     public func registryDelete(requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await ContainerRegistryMethods.registryDelete(config: config, requestOptions: requestOptions)
+        try await ContainerRegistryMethods.registryDelete(config: config, requestOptions: requestOptions)
     }
 
-/// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** A subscription is automatically created when you configure your container registry. To get information about your subscription, send a GET request to `/v2/registry/subscription`.
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** A subscription is
+    /// automatically created when you configure your container registry. To get information about your subscription,
+    /// send a GET request to `/v2/registry/subscription`.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
     public func registryGetSubscription(requestOptions: RequestOptions? = nil) async throws -> SubscriptionResponse {
-        return try await ContainerRegistryMethods.registryGetSubscription(config: config, requestOptions: requestOptions)
+        try await ContainerRegistryMethods.registryGetSubscription(config: config, requestOptions: requestOptions)
     }
 
-/// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** After creating your registry, you can switch to a different subscription tier to better suit your needs. To do this, send a POST request to `/v2/registry/subscription`.
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** After creating your
+    /// registry, you can switch to a different subscription tier to better suit your needs. To do this, send a POST
+    /// request to `/v2/registry/subscription`.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    public func registryUpdateSubscription(tierSlug: RegistryUpdateSubscriptionRequestBodyTierSlug? = nil, requestOptions: RequestOptions? = nil) async throws -> SubscriptionResponse {
-        return try await ContainerRegistryMethods.registryUpdateSubscription(config: config, tierSlug: tierSlug, requestOptions: requestOptions)
+    public func registryUpdateSubscription(
+        tierSlug: RegistryUpdateSubscriptionRequestBodyTierSlug? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SubscriptionResponse {
+        try await ContainerRegistryMethods.registryUpdateSubscription(
+            config: config,
+            tierSlug: tierSlug,
+            requestOptions: requestOptions
+        )
     }
 
-/// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** In order to access your container registry with the Docker client or from a Kubernetes cluster, you will need to configure authentication. The necessary JSON configuration can be retrieved by sending a GET request to `/v2/registry/docker-credentials`. The response will be in the format of a Docker `config.json` file. To use the config in your Kubernetes cluster, create a Secret with: kubectl create secret generic docr \ --from-file=.dockerconfigjson=config.json \ --type=kubernetes.io/dockerconfigjson By default, the returned credentials have read-only access to your registry and cannot be used to push images. This is appropriate for most Kubernetes clusters. To retrieve read/write credentials, suitable for use with the Docker client or in a CI system, read_write may be provided as query parameter. For example: `/v2/registry/docker-credentials?read_write=true` By default, the returned credentials will not expire. To retrieve credentials with an expiry set, expiry_seconds may be provided as a query parameter. For example: `/v2/registry/docker-credentials?expiry_seconds=3600` will return credentials that expire after one hour.
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** In order to access your
+    /// container registry with the Docker client or from a Kubernetes cluster, you will need to configure
+    /// authentication. The necessary JSON configuration can be retrieved by sending a GET request to
+    /// `/v2/registry/docker-credentials`. The response will be in the format of a Docker `config.json` file. To use the
+    /// config in your Kubernetes cluster, create a Secret with: kubectl create secret generic docr \
+    /// --from-file=.dockerconfigjson=config.json \ --type=kubernetes.io/dockerconfigjson By default, the returned
+    /// credentials have read-only access to your registry and cannot be used to push images. This is appropriate for
+    /// most Kubernetes clusters. To retrieve read/write credentials, suitable for use with the Docker client or in a CI
+    /// system, read_write may be provided as query parameter. For example:
+    /// `/v2/registry/docker-credentials?read_write=true` By default, the returned credentials will not expire. To
+    /// retrieve credentials with an expiry set, expiry_seconds may be provided as a query parameter. For example:
+    /// `/v2/registry/docker-credentials?expiry_seconds=3600` will return credentials that expire after one hour.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    public func registryGetDockerCredentials(expirySeconds: Int? = nil, readWrite: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> DockerCredentials {
-        return try await ContainerRegistryMethods.registryGetDockerCredentials(config: config, expirySeconds: expirySeconds, readWrite: readWrite, requestOptions: requestOptions)
+    public func registryGetDockerCredentials(
+        expirySeconds: Int? = nil,
+        readWrite: Bool? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DockerCredentials {
+        try await ContainerRegistryMethods.registryGetDockerCredentials(
+            config: config,
+            expirySeconds: expirySeconds,
+            readWrite: readWrite,
+            requestOptions: requestOptions
+        )
     }
 
-/// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To validate that a container registry name is available for use, send a POST request to `/v2/registry/validate-name`. If the name is both formatted correctly and available, the response code will be 204 and contain no body. If the name is already in use, the response will be a 409 Conflict.
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** To validate that a
+    /// container registry name is available for use, send a POST request to `/v2/registry/validate-name`. If the name
+    /// is both formatted correctly and available, the response code will be 204 and contain no body. If the name is
+    /// already in use, the response will be a 409 Conflict.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    public func registryValidateName(name: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await ContainerRegistryMethods.registryValidateName(config: config, name: name, requestOptions: requestOptions)
+    public func registryValidateName(
+        name: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await ContainerRegistryMethods.registryValidateName(
+            config: config,
+            name: name,
+            requestOptions: requestOptions
+        )
     }
 
-/// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** This endpoint has been deprecated in favor of the _List All Container Registry Repositories [V2]_ endpoint. To list all repositories in your container registry, send a GET request to `/v2/registry/$REGISTRY_NAME/repositories`.
+    /// **Note: This endpoint is deprecated. Please use the `/v2/registries` endpoint instead.** This endpoint has been
+    /// deprecated in favor of the _List All Container Registry Repositories [V2]_ endpoint. To list all repositories in
+    /// your container registry, send a GET request to `/v2/registry/$REGISTRY_NAME/repositories`.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    public func registryListRepositories(registryName: String, perPage: Int? = nil, page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> AllRepositories {
-        return try await ContainerRegistryMethods.registryListRepositories(config: config, registryName: registryName, perPage: perPage, page: page, requestOptions: requestOptions)
+    public func registryListRepositories(
+        registryName: String,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AllRepositories {
+        try await ContainerRegistryMethods.registryListRepositories(
+            config: config,
+            registryName: registryName,
+            perPage: perPage,
+            page: page,
+            requestOptions: requestOptions
+        )
     }
 }

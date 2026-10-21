@@ -3,9 +3,28 @@
 
 import Foundation
 
-// AgentPlatformAPIApiAgent domain models
-extension ApiAgentTemplate {
-    public init(createdAt: Date? = nil, description: String? = nil, guardrails: [ApiAgentTemplateGuardrail]? = nil, instruction: String? = nil, k: Int? = nil, knowledgeBases: [ApiKnowledgeBase]? = nil, longDescription: String? = nil, maxTokens: Int? = nil, model: ApiModel? = nil, name: String? = nil, shortDescription: String? = nil, summary: String? = nil, tags: [String]? = nil, temperature: Double? = nil, templateType: ApiAgentTemplateType? = nil, topP: Double? = nil, updatedAt: Date? = nil, uuid: String? = nil) throws {
+/// AgentPlatformAPIApiAgent domain models
+public extension ApiAgentTemplate {
+    init(
+        createdAt: Date? = nil,
+        description: String? = nil,
+        guardrails: [ApiAgentTemplateGuardrail]? = nil,
+        instruction: String? = nil,
+        k: Int? = nil,
+        knowledgeBases: [ApiKnowledgeBase]? = nil,
+        longDescription: String? = nil,
+        maxTokens: Int? = nil,
+        model: ApiModel? = nil,
+        name: String? = nil,
+        shortDescription: String? = nil,
+        summary: String? = nil,
+        tags: [String]? = nil,
+        temperature: Double? = nil,
+        templateType: ApiAgentTemplateType? = nil,
+        topP: Double? = nil,
+        updatedAt: Date? = nil,
+        uuid: String? = nil
+    ) throws {
         self.init()
         (self.createdAt, self.description) = (createdAt, description)
         (self.guardrails, self.instruction) = (guardrails, instruction)
@@ -40,20 +59,20 @@ public struct ApiAgentTemplateGuardrail: Codable {
     }
 
     init() {
-        (self.priority, self.uuid) = (nil, nil)
+        (priority, uuid) = (nil, nil)
     }
 }
 
-extension ApiAgentTemplateGuardrail {
-    public init(from decoder: Decoder) throws {
+public extension ApiAgentTemplateGuardrail {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.priority = try container.sdkDecodeIfPresent(.priority)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        priority = try container.sdkDecodeIfPresent(.priority)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
     }
 }
 
-extension ApiAgentTemplateGuardrail {
-    public init(priority: Int? = nil, uuid: String? = nil) {
+public extension ApiAgentTemplateGuardrail {
+    init(priority: Int? = nil, uuid: String? = nil) {
         self.init()
         (self.priority, self.uuid) = (priority, uuid)
     }
@@ -64,13 +83,16 @@ extension ApiAgentTemplateGuardrail {
 public struct ApiAgentTemplateType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let agentTemplateTypeStandard = ApiAgentTemplateType(rawValue: "AGENT_TEMPLATE_TYPE_STANDARD")
     public static let agentTemplateTypeOneClick = ApiAgentTemplateType(rawValue: "AGENT_TEMPLATE_TYPE_ONE_CLICK")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -83,7 +105,10 @@ public struct ApiAgentTemplateType: RawRepresentable, Hashable, Codable, Sendabl
 public struct ApiAgentType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let agentTypeUnspecified = ApiAgentType(rawValue: "AGENT_TYPE_UNSPECIFIED")
     public static let agentTypeDefault = ApiAgentType(rawValue: "AGENT_TYPE_DEFAULT")
     public static let agentTypePlanner = ApiAgentType(rawValue: "AGENT_TYPE_PLANNER")
@@ -96,7 +121,7 @@ public struct ApiAgentType: RawRepresentable, Hashable, Codable, Sendable, SdkWi
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

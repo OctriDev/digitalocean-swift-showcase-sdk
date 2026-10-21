@@ -6,16 +6,38 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension VectorDatabasesMethods {
-    /// To update the tags on a vector database, send a PUT request to `/v2/vector-databases/{id}/tags`. The supplied set of tags replaces the database's existing tags.
+public extension VectorDatabasesMethods {
+    /// To update the tags on a vector database, send a PUT request to `/v2/vector-databases/{id}/tags`. The supplied
+    /// set of tags replaces the database's existing tags.
     ///
     /// - Parameters:
     /// - id: Required. ID of the vector database to update tags for.
     /// - id2: Required. ID of the vector database to update tags for.
     /// - tags: Tags to set on the vector database. Replaces all existing tags.
-    public static func vectorDatabasesUpdateTags(config: ClientConfig, id: String, id2: String? = nil, tags: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> VectordbUpdateVectorDBTagsResponse {
+    static func vectorDatabasesUpdateTags(
+        config: ClientConfig,
+        id: String,
+        id2: String? = nil,
+        tags: [String]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> VectordbUpdateVectorDBTagsResponse {
         let requestBody = VectorDatabasesUpdateTagsRequestBody(id2: id2, tags: tags)
 
-        return try (await sdkRequest("PUT", ["/v2/vector-databases/", sdkEncodePathSegment(sdkWireString(id)), "/tags"].joined(), config: config, body: requestBody, decoder: .json, operationId: "vectorDatabases_update_tags", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/v2/vector-databases/", sdkEncodePathSegment(sdkWireString(id)), "/tags"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "vectorDatabases_update_tags",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

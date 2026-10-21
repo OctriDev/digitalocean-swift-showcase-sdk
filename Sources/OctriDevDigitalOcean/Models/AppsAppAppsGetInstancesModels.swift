@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AppsApp domain models
+/// AppsApp domain models
 /// Typed representation of the `AppInstance` API schema.
 public struct AppInstance: Codable {
     /// Name of the component, from the app spec.
@@ -27,22 +27,27 @@ public struct AppInstance: Codable {
     }
 
     init() {
-        (self.componentName, self.componentType, self.instanceName, self.instanceAlias) = (nil, nil, nil, nil)
+        (componentName, componentType, instanceName, instanceAlias) = (nil, nil, nil, nil)
     }
 }
 
-extension AppInstance {
-    public init(from decoder: Decoder) throws {
+public extension AppInstance {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.componentName = try container.sdkDecodeIfPresent(.componentName)
-        self.componentType = try container.sdkDecodeIfPresent(.componentType)
-        self.instanceName = try container.sdkDecodeIfPresent(.instanceName)
-        self.instanceAlias = try container.sdkDecodeIfPresent(.instanceAlias)
+        componentName = try container.sdkDecodeIfPresent(.componentName)
+        componentType = try container.sdkDecodeIfPresent(.componentType)
+        instanceName = try container.sdkDecodeIfPresent(.instanceName)
+        instanceAlias = try container.sdkDecodeIfPresent(.instanceAlias)
     }
 }
 
-extension AppInstance {
-    public init(componentName: String? = nil, componentType: AppInstanceComponentType? = nil, instanceName: String? = nil, instanceAlias: String? = nil) {
+public extension AppInstance {
+    init(
+        componentName: String? = nil,
+        componentType: AppInstanceComponentType? = nil,
+        instanceName: String? = nil,
+        instanceAlias: String? = nil
+    ) {
         self.init()
         (self.componentName, self.componentType) = (componentName, componentType)
         (self.instanceName, self.instanceAlias) = (instanceName, instanceAlias)
@@ -59,19 +64,19 @@ public struct AppInstances: Codable {
     }
 
     init() {
-        self.instances = nil
+        instances = nil
     }
 }
 
-extension AppInstances {
-    public init(from decoder: Decoder) throws {
+public extension AppInstances {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.instances = try container.sdkDecodeIfPresent(.instances)
+        instances = try container.sdkDecodeIfPresent(.instances)
     }
 }
 
-extension AppInstances {
-    public init(instances: [AppInstance]? = nil) {
+public extension AppInstances {
+    init(instances: [AppInstance]? = nil) {
         self.init()
         self.instances = instances
     }
@@ -81,14 +86,17 @@ extension AppInstances {
 public struct AppInstanceComponentType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let service = AppInstanceComponentType(rawValue: "SERVICE")
     public static let worker = AppInstanceComponentType(rawValue: "WORKER")
     public static let job = AppInstanceComponentType(rawValue: "JOB")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

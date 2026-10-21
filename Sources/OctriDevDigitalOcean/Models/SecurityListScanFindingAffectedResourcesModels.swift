@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Security domain models
+/// Security domain models
 /// Typed representation of the `AffectedResource` API schema.
 public struct AffectedResource: Codable {
     /// The URN for the affected resource.
@@ -23,21 +23,21 @@ public struct AffectedResource: Codable {
     }
 
     init() {
-        (self.urn, self.name, self.type) = (nil, nil, nil)
+        (urn, name, type) = (nil, nil, nil)
     }
 }
 
-extension AffectedResource {
-    public init(from decoder: Decoder) throws {
+public extension AffectedResource {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.urn = try container.sdkDecodeIfPresent(.urn)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.type = try container.sdkDecodeIfPresent(.type)
+        urn = try container.sdkDecodeIfPresent(.urn)
+        name = try container.sdkDecodeIfPresent(.name)
+        type = try container.sdkDecodeIfPresent(.type)
     }
 }
 
-extension AffectedResource {
-    public init(urn: String? = nil, name: String? = nil, type: String? = nil) {
+public extension AffectedResource {
+    init(urn: String? = nil, name: String? = nil, type: String? = nil) {
         self.init()
         (self.urn, self.name) = (urn, name)
         self.type = type
@@ -54,19 +54,19 @@ public struct AffectedResources: Codable {
     }
 
     init() {
-        self.affectedResources = nil
+        affectedResources = nil
     }
 }
 
-extension AffectedResources {
-    public init(from decoder: Decoder) throws {
+public extension AffectedResources {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.affectedResources = try container.sdkDecodeIfPresent(.affectedResources)
+        affectedResources = try container.sdkDecodeIfPresent(.affectedResources)
     }
 }
 
-extension AffectedResources {
-    public init(affectedResources: [AffectedResource]? = nil) {
+public extension AffectedResources {
+    init(affectedResources: [AffectedResource]? = nil) {
         self.init()
         self.affectedResources = affectedResources
     }

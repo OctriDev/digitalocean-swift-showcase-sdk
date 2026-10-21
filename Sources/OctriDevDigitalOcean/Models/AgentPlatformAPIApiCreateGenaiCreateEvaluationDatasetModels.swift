@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiCreate domain models
+/// AgentPlatformAPIApiCreate domain models
 /// Output for creating an agent evaluation dataset
 public struct ApiCreateEvaluationDatasetOutput: Codable {
     /// Evaluation dataset uuid.
@@ -15,19 +15,19 @@ public struct ApiCreateEvaluationDatasetOutput: Codable {
     }
 
     init() {
-        self.evaluationDatasetUuid = nil
+        evaluationDatasetUuid = nil
     }
 }
 
-extension ApiCreateEvaluationDatasetOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateEvaluationDatasetOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.evaluationDatasetUuid = try container.sdkDecodeIfPresent(.evaluationDatasetUuid)
+        evaluationDatasetUuid = try container.sdkDecodeIfPresent(.evaluationDatasetUuid)
     }
 }
 
-extension ApiCreateEvaluationDatasetOutput {
-    public init(evaluationDatasetUuid: String? = nil) {
+public extension ApiCreateEvaluationDatasetOutput {
+    init(evaluationDatasetUuid: String? = nil) {
         self.init()
         self.evaluationDatasetUuid = evaluationDatasetUuid
     }
@@ -56,22 +56,27 @@ public struct ApiCreateEvaluationDatasetInputPublic: Codable {
     }
 
     init() {
-        (self.datasetParadigm, self.datasetType, self.fileUploadDataset, self.name) = (nil, nil, nil, nil)
+        (datasetParadigm, datasetType, fileUploadDataset, name) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiCreateEvaluationDatasetInputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiCreateEvaluationDatasetInputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.datasetParadigm = try container.sdkDecodeIfPresent(.datasetParadigm)
-        self.datasetType = try container.sdkDecodeIfPresent(.datasetType)
-        self.fileUploadDataset = try container.sdkDecodeIfPresent(.fileUploadDataset)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        datasetParadigm = try container.sdkDecodeIfPresent(.datasetParadigm)
+        datasetType = try container.sdkDecodeIfPresent(.datasetType)
+        fileUploadDataset = try container.sdkDecodeIfPresent(.fileUploadDataset)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ApiCreateEvaluationDatasetInputPublic {
-    public init(datasetParadigm: ApiEvaluationDatasetParadigm? = nil, datasetType: ApiEvaluationDatasetType? = nil, fileUploadDataset: ApiFileUploadDataSource? = nil, name: String? = nil) {
+public extension ApiCreateEvaluationDatasetInputPublic {
+    init(
+        datasetParadigm: ApiEvaluationDatasetParadigm? = nil,
+        datasetType: ApiEvaluationDatasetType? = nil,
+        fileUploadDataset: ApiFileUploadDataSource? = nil,
+        name: String? = nil
+    ) {
         self.init()
         (self.datasetParadigm, self.datasetType) = (datasetParadigm, datasetType)
         (self.fileUploadDataset, self.name) = (fileUploadDataset, name)

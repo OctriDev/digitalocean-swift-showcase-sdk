@@ -6,27 +6,58 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension VpcSubnetsPublicPreviewMethods {
+public extension VpcSubnetsPublicPreviewMethods {
     /// To retrieve a specific subnet within a VPC, send a GET request to `/v2/vpcs/$VPC_UUID/subnets/$SUBNET_UUID`.
     ///
     /// - Parameters:
     /// - vpcUuid: The unique identifier of the VPC to which the subnet belongs.
     /// - subnetUuid: The unique identifier of a VPC subnet.
-    public static func vpcSubnetsGet(config: ClientConfig, vpcUuid: String, subnetUuid: String, requestOptions: RequestOptions? = nil) async throws -> SingleVpcSubnet {
+    static func vpcSubnetsGet(
+        config: ClientConfig,
+        vpcUuid: String,
+        subnetUuid: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SingleVpcSubnet {
         try sdkValidateUuid("vpc_uuid", vpcUuid)
 
         try sdkValidateUuid("subnet_uuid", subnetUuid)
 
-        return try (await sdkRequest("GET", ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcUuid)), "/subnets/", sdkEncodePathSegment(sdkWireString(subnetUuid))].joined(), config: config, decoder: .json, operationId: "vpcSubnets_get", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            [
+                "/v2/vpcs/",
+                sdkEncodePathSegment(sdkWireString(vpcUuid)),
+                "/subnets/",
+                sdkEncodePathSegment(sdkWireString(subnetUuid)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "vpcSubnets_get",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 
-    /// To update the name of a specific subnet within a VPC, send a PATCH request to `/v2/vpcs/$VPC_UUID/subnets/$SUBNET_UUID`.
+    /// To update the name of a specific subnet within a VPC, send a PATCH request to
+    /// `/v2/vpcs/$VPC_UUID/subnets/$SUBNET_UUID`.
     ///
     /// - Parameters:
     /// - vpcUuid: The unique identifier of the VPC to which the subnet belongs.
     /// - subnetUuid: The unique identifier of a VPC subnet.
     /// - name: The new human-readable name of the VPC subnet.
-    public static func vpcSubnetsUpdate(config: ClientConfig, vpcUuid: String, subnetUuid: String, name: String, requestOptions: RequestOptions? = nil) async throws -> SingleVpcSubnet {
+    static func vpcSubnetsUpdate(
+        config: ClientConfig,
+        vpcUuid: String,
+        subnetUuid: String,
+        name: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SingleVpcSubnet {
         try sdkValidateUuid("vpc_uuid", vpcUuid)
 
         try sdkValidateUuid("subnet_uuid", subnetUuid)
@@ -36,6 +67,26 @@ extension VpcSubnetsPublicPreviewMethods {
 
         let requestBody = VpcSubnetsUpdateRequestBody(name: name)
 
-        return try (await sdkRequest("PATCH", ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcUuid)), "/subnets/", sdkEncodePathSegment(sdkWireString(subnetUuid))].joined(), config: config, body: requestBody, decoder: .json, operationId: "vpcSubnets_update", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "PATCH",
+            [
+                "/v2/vpcs/",
+                sdkEncodePathSegment(sdkWireString(vpcUuid)),
+                "/subnets/",
+                sdkEncodePathSegment(sdkWireString(subnetUuid)),
+            ].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "vpcSubnets_update",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

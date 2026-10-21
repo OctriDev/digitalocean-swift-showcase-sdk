@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Uptime domain models
+/// Uptime domain models
 /// Typed representation of the `ExistingCheckState` API schema.
 public struct ExistingCheckState: Codable {
     /// Optional object value serialized in the `state` wire field.
@@ -14,19 +14,19 @@ public struct ExistingCheckState: Codable {
     }
 
     init() {
-        self.state = nil
+        state = nil
     }
 }
 
-extension ExistingCheckState {
-    public init(from decoder: Decoder) throws {
+public extension ExistingCheckState {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.state = try container.sdkDecodeIfPresent(.state)
+        state = try container.sdkDecodeIfPresent(.state)
     }
 }
 
-extension ExistingCheckState {
-    public init(state: State? = nil) {
+public extension ExistingCheckState {
+    init(state: State? = nil) {
         self.init()
         self.state = state
     }
@@ -45,20 +45,20 @@ public struct RegionalState: Codable {
     }
 
     init() {
-        (self.usEast, self.euWest) = (nil, nil)
+        (usEast, euWest) = (nil, nil)
     }
 }
 
-extension RegionalState {
-    public init(from decoder: Decoder) throws {
+public extension RegionalState {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.usEast = try container.sdkDecodeIfPresent(.usEast)
-        self.euWest = try container.sdkDecodeIfPresent(.euWest)
+        usEast = try container.sdkDecodeIfPresent(.usEast)
+        euWest = try container.sdkDecodeIfPresent(.euWest)
     }
 }
 
-extension RegionalState {
-    public init(usEast: RegionState? = nil, euWest: RegionState? = nil) {
+public extension RegionalState {
+    init(usEast: RegionState? = nil, euWest: RegionState? = nil) {
         self.init()
         (self.usEast, self.euWest) = (usEast, euWest)
     }
@@ -87,22 +87,22 @@ public struct PreviousOutage: Codable {
     }
 
     init() {
-        (self.region, self.startedAt, self.endedAt, self.durationSeconds) = (nil, nil, nil, nil)
+        (region, startedAt, endedAt, durationSeconds) = (nil, nil, nil, nil)
     }
 }
 
-extension PreviousOutage {
-    public init(from decoder: Decoder) throws {
+public extension PreviousOutage {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        self.endedAt = try container.sdkDecodeIfPresent(.endedAt)
-        self.durationSeconds = try container.sdkDecodeIfPresent(.durationSeconds)
+        region = try container.sdkDecodeIfPresent(.region)
+        startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        endedAt = try container.sdkDecodeIfPresent(.endedAt)
+        durationSeconds = try container.sdkDecodeIfPresent(.durationSeconds)
     }
 }
 
-extension PreviousOutage {
-    public init(region: String? = nil, startedAt: String? = nil, endedAt: String? = nil, durationSeconds: Int? = nil) {
+public extension PreviousOutage {
+    init(region: String? = nil, startedAt: String? = nil, endedAt: String? = nil, durationSeconds: Int? = nil) {
         self.init()
         (self.region, self.startedAt) = (region, startedAt)
         (self.endedAt, self.durationSeconds) = (endedAt, durationSeconds)
@@ -122,20 +122,20 @@ public struct State: Codable {
     }
 
     init() {
-        (self.regions, self.previousOutage) = (nil, nil)
+        (regions, previousOutage) = (nil, nil)
     }
 }
 
-extension State {
-    public init(from decoder: Decoder) throws {
+public extension State {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.regions = try container.sdkDecodeIfPresent(.regions)
-        self.previousOutage = try container.sdkDecodeIfPresent(.previousOutage)
+        regions = try container.sdkDecodeIfPresent(.regions)
+        previousOutage = try container.sdkDecodeIfPresent(.previousOutage)
     }
 }
 
-extension State {
-    public init(regions: RegionalState? = nil, previousOutage: PreviousOutage? = nil) {
+public extension State {
+    init(regions: RegionalState? = nil, previousOutage: PreviousOutage? = nil) {
         self.init()
         (self.regions, self.previousOutage) = (regions, previousOutage)
     }
@@ -160,21 +160,21 @@ public struct RegionState: Codable {
     }
 
     init() {
-        (self.status, self.statusChangedAt, self.thirtyDayUptimePercentage) = (nil, nil, nil)
+        (status, statusChangedAt, thirtyDayUptimePercentage) = (nil, nil, nil)
     }
 }
 
-extension RegionState {
-    public init(from decoder: Decoder) throws {
+public extension RegionState {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.statusChangedAt = try container.sdkDecodeIfPresent(.statusChangedAt)
-        self.thirtyDayUptimePercentage = try container.sdkDecodeIfPresent(.thirtyDayUptimePercentage)
+        status = try container.sdkDecodeIfPresent(.status)
+        statusChangedAt = try container.sdkDecodeIfPresent(.statusChangedAt)
+        thirtyDayUptimePercentage = try container.sdkDecodeIfPresent(.thirtyDayUptimePercentage)
     }
 }
 
-extension RegionState {
-    public init(status: RegionStateStatus? = nil, statusChangedAt: String? = nil, thirtyDayUptimePercentage: Double? = nil) {
+public extension RegionState {
+    init(status: RegionStateStatus? = nil, statusChangedAt: String? = nil, thirtyDayUptimePercentage: Double? = nil) {
         self.init()
         (self.status, self.statusChangedAt) = (status, statusChangedAt)
         self.thirtyDayUptimePercentage = thirtyDayUptimePercentage
@@ -185,14 +185,17 @@ extension RegionState {
 public struct RegionStateStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let down = RegionStateStatus(rawValue: "DOWN")
     public static let up = RegionStateStatus(rawValue: "UP")
     public static let checking = RegionStateStatus(rawValue: "CHECKING")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

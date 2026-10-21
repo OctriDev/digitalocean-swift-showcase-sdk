@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiList domain models
+/// AgentPlatformAPIApiList domain models
 /// Typed representation of the `ApiListAgentsByWorkspaceOutput` API schema.
 public struct ApiListAgentsByWorkspaceOutput: Codable {
     /// Optional array value serialized in the `agents` wire field.
@@ -20,21 +20,21 @@ public struct ApiListAgentsByWorkspaceOutput: Codable {
     }
 
     init() {
-        (self.agents, self.links, self.meta) = (nil, nil, nil)
+        (agents, links, meta) = (nil, nil, nil)
     }
 }
 
-extension ApiListAgentsByWorkspaceOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiListAgentsByWorkspaceOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agents = try container.sdkDecodeIfPresent(.agents)
-        self.links = try container.sdkDecodeIfPresent(.links)
-        self.meta = try container.sdkDecodeIfPresent(.meta)
+        agents = try container.sdkDecodeIfPresent(.agents)
+        links = try container.sdkDecodeIfPresent(.links)
+        meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-extension ApiListAgentsByWorkspaceOutput {
-    public init(agents: [ApiAgent]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+public extension ApiListAgentsByWorkspaceOutput {
+    init(agents: [ApiAgent]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.agents, self.links) = (agents, links)
         self.meta = meta
