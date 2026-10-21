@@ -6,81 +6,6 @@ import Foundation
 import XCTest
 
 extension SdkMethodTests {
-    func testGenaiDeleteModelEvaluationPresetGenaiDeleteModelEvaluationPreset401ReachesMockAndDecodesResponse(
-    ) async throws {
-        guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
-            return
-        }
-        _ = client
-        let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture561Expected.utf8),
-            options: [.fragmentsAllowed]
-        )
-        do {
-            _ = try await client.agentPlatformApi.genaiDeleteModelEvaluationPreset(
-                evalPresetUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
-            )
-            XCTFail("did not raise its declared error")
-        } catch let error as SdkHttpError {
-            XCTAssertEqual(error.statusCode, 401)
-            let data = try XCTUnwrap(
-                error.data as? any Encodable,
-                "decoded no error body"
-            )
-            XCTAssertNil(
-                try mismatch(jsonValue(data), expected),
-                "decoded an error body that differs from the mock"
-            )
-        }
-        XCTAssertTrue(true)
-    }
-
-    func testGenaiDeleteModelEvaluationRunGenaiDeleteModelEvaluationRunReachesMockAndDecodesResponse() async throws {
-        guard let client = configuredClient() else {
-            return
-        }
-        _ = client
-        let actual = try await client.agentPlatformApi.genaiDeleteModelEvaluationRun(
-            evalRunUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
-        )
-        let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture562Expected.utf8),
-            options: [.fragmentsAllowed]
-        )
-        XCTAssertNil(
-            try mismatch(jsonValue(actual), expected),
-            "decoded a response that differs from the mock"
-        )
-    }
-
-    func testGenaiDeleteModelEvaluationRunGenaiDeleteModelEvaluationRun401ReachesMockAndDecodesResponse() async throws {
-        guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
-            return
-        }
-        _ = client
-        let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture563Expected.utf8),
-            options: [.fragmentsAllowed]
-        )
-        do {
-            _ = try await client.agentPlatformApi.genaiDeleteModelEvaluationRun(
-                evalRunUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
-            )
-            XCTFail("did not raise its declared error")
-        } catch let error as SdkHttpError {
-            XCTAssertEqual(error.statusCode, 401)
-            let data = try XCTUnwrap(
-                error.data as? any Encodable,
-                "decoded no error body"
-            )
-            XCTAssertNil(
-                try mismatch(jsonValue(data), expected),
-                "decoded an error body that differs from the mock"
-            )
-        }
-        XCTAssertTrue(true)
-    }
-
     func testGenaiDeleteModelRouterGenaiDeleteModelRouterReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
@@ -90,7 +15,7 @@ extension SdkMethodTests {
             uuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture564Expected.utf8),
+            with: Data(sdkMethodFixture562Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -105,7 +30,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture565Expected.utf8),
+            with: Data(sdkMethodFixture563Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -136,7 +61,7 @@ extension SdkMethodTests {
             apiKeyUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture566Expected.utf8),
+            with: Data(sdkMethodFixture564Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -151,7 +76,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture567Expected.utf8),
+            with: Data(sdkMethodFixture565Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -182,7 +107,7 @@ extension SdkMethodTests {
             scenarioSetUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture568Expected.utf8),
+            with: Data(sdkMethodFixture566Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -197,7 +122,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture569Expected.utf8),
+            with: Data(sdkMethodFixture567Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -228,7 +153,7 @@ extension SdkMethodTests {
             uuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture570Expected.utf8),
+            with: Data(sdkMethodFixture568Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -243,7 +168,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture571Expected.utf8),
+            with: Data(sdkMethodFixture569Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -274,7 +199,7 @@ extension SdkMethodTests {
             runUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture572Expected.utf8),
+            with: Data(sdkMethodFixture570Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -289,7 +214,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture573Expected.utf8),
+            with: Data(sdkMethodFixture571Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -320,7 +245,7 @@ extension SdkMethodTests {
             workspaceUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture574Expected.utf8),
+            with: Data(sdkMethodFixture572Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -335,7 +260,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture575Expected.utf8),
+            with: Data(sdkMethodFixture573Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -367,7 +292,7 @@ extension SdkMethodTests {
             childAgentUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture576Expected.utf8),
+            with: Data(sdkMethodFixture574Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -382,7 +307,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture577Expected.utf8),
+            with: Data(sdkMethodFixture575Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -415,7 +340,7 @@ extension SdkMethodTests {
             functionUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture578Expected.utf8),
+            with: Data(sdkMethodFixture576Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -430,7 +355,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture579Expected.utf8),
+            with: Data(sdkMethodFixture577Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -463,7 +388,7 @@ extension SdkMethodTests {
             guardrailUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture580Expected.utf8),
+            with: Data(sdkMethodFixture578Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -478,7 +403,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture581Expected.utf8),
+            with: Data(sdkMethodFixture579Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -511,7 +436,7 @@ extension SdkMethodTests {
             knowledgeBaseUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture582Expected.utf8),
+            with: Data(sdkMethodFixture580Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -526,7 +451,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture583Expected.utf8),
+            with: Data(sdkMethodFixture581Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -558,6 +483,52 @@ extension SdkMethodTests {
             uuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
         )
         let expected = try JSONSerialization.jsonObject(
+            with: Data(sdkMethodFixture582Expected.utf8),
+            options: [.fragmentsAllowed]
+        )
+        XCTAssertNil(
+            try mismatch(jsonValue(actual), expected),
+            "decoded a response that differs from the mock"
+        )
+    }
+
+    func testGenaiGetAgentGenaiGetAgent401ReachesMockAndDecodesResponse() async throws {
+        guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
+            return
+        }
+        _ = client
+        let expected = try JSONSerialization.jsonObject(
+            with: Data(sdkMethodFixture583Expected.utf8),
+            options: [.fragmentsAllowed]
+        )
+        do {
+            _ = try await client.agentPlatformApi.genaiGetAgent(
+                uuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
+            )
+            XCTFail("did not raise its declared error")
+        } catch let error as SdkHttpError {
+            XCTAssertEqual(error.statusCode, 401)
+            let data = try XCTUnwrap(
+                error.data as? any Encodable,
+                "decoded no error body"
+            )
+            XCTAssertNil(
+                try mismatch(jsonValue(data), expected),
+                "decoded an error body that differs from the mock"
+            )
+        }
+        XCTAssertTrue(true)
+    }
+
+    func testGenaiGetAgentChildrenGenaiGetAgentChildrenReachesMockAndDecodesResponse() async throws {
+        guard let client = configuredClient() else {
+            return
+        }
+        _ = client
+        let actual = try await client.agentPlatformApi.genaiGetAgentChildren(
+            uuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
+        )
+        let expected = try JSONSerialization.jsonObject(
             with: Data(sdkMethodFixture584Expected.utf8),
             options: [.fragmentsAllowed]
         )
@@ -565,5 +536,33 @@ extension SdkMethodTests {
             try mismatch(jsonValue(actual), expected),
             "decoded a response that differs from the mock"
         )
+    }
+
+    func testGenaiGetAgentChildrenGenaiGetAgentChildren401ReachesMockAndDecodesResponse() async throws {
+        guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
+            return
+        }
+        _ = client
+        let expected = try JSONSerialization.jsonObject(
+            with: Data(sdkMethodFixture585Expected.utf8),
+            options: [.fragmentsAllowed]
+        )
+        do {
+            _ = try await client.agentPlatformApi.genaiGetAgentChildren(
+                uuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\"")
+            )
+            XCTFail("did not raise its declared error")
+        } catch let error as SdkHttpError {
+            XCTAssertEqual(error.statusCode, 401)
+            let data = try XCTUnwrap(
+                error.data as? any Encodable,
+                "decoded no error body"
+            )
+            XCTAssertNil(
+                try mismatch(jsonValue(data), expected),
+                "decoded an error body that differs from the mock"
+            )
+        }
+        XCTAssertTrue(true)
     }
 }

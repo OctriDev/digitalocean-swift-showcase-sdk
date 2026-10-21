@@ -5,6 +5,32 @@ import Foundation
 @testable import OctriDevDigitalOcean
 import XCTest
 
+let sdkMethodFixture1598Value1 = String(
+    data: Data(base64Encoded: [
+        "eyJlbWFpbCI6WyJib2JAZXhhbXBsZS5jb20iXSwic2xhY2siOlt7ImNoYW5uZWwiOiJQcm9kdWN0aW9u",
+        "IEFsZXJ0cyIsInVybCI6Imh0dHBzOi8vaG9va3Muc2xhY2suY29tL3NlcnZpY2VzL1QxMjM0NTY3L0FB",
+        "QUFBQUFBL1paWlpaWiJ9XX0=",
+    ].joined())!,
+    encoding: .utf8
+)!
+
+let sdkMethodFixture1598Expected = String(
+    data: Data(base64Encoded: [
+        "eyJpZCI6InVuYXV0aG9yaXplZCIsIm1lc3NhZ2UiOiJVbmFibGUgdG8gYXV0aGVudGljYXRlIHlvdS4i",
+        "fQ==",
+    ].joined())!,
+    encoding: .utf8
+)!
+
+let sdkMethodFixture1599Value1 = String(
+    data: Data(base64Encoded: [
+        "eyJuYW1lIjoiTGFuZGluZyBwYWdlIGNoZWNrIiwidHlwZSI6Imh0dHBzIiwidGFyZ2V0IjoiaHR0cHM6",
+        "Ly93d3cubGFuZGluZ3BhZ2UuY29tIiwicmVnaW9ucyI6WyJ1c19lYXN0IiwiZXVfd2VzdCJdLCJlbmFi",
+        "bGVkIjp0cnVlfQ==",
+    ].joined())!,
+    encoding: .utf8
+)!
+
 let sdkMethodFixture1599Expected = String(
     data: Data(base64Encoded: [
         "eyJjaGVjayI6eyJpZCI6IjVhNDk4MWFhLTk2NTMtNGJkMS1iZWY1LWQ2YmZmNTIwNDJlNCIsIm5hbWUi",
@@ -623,27 +649,6 @@ let sdkMethodFixture1652Expected = String(
     data: Data(base64Encoded: [
         "eyJpZCI6InVuYXV0aG9yaXplZCIsIm1lc3NhZ2UiOiJVbmFibGUgdG8gYXV0aGVudGljYXRlIHlvdS4i",
         "fQ==",
-    ].joined())!,
-    encoding: .utf8
-)!
-
-let sdkMethodFixture1653Value1 = String(
-    data: Data(base64Encoded: [
-        "W3sidnBjX3V1aWQiOiIwZWIxNzUyZi04MDdiLTQ1NjItYTA3Ny04MDE4ZTEzYWIxZmIiLCJzdWJuZXRf",
-        "dXVpZCI6ImNiZDc5NzcxLTIzZWItNDliZS1iNWVhLTU5Y2M1NjIyMjYyMiIsImRlZmF1bHRfZ2F0ZXdh",
-        "eSI6dHJ1ZX1d",
-    ].joined())!,
-    encoding: .utf8
-)!
-
-let sdkMethodFixture1653Expected = String(
-    data: Data(base64Encoded: [
-        "eyJ2cGNfbmF0X2dhdGV3YXkiOnsibmFtZSI6InRlc3QtdnBjLW5hdC1nYXRld2F5cyIsInR5cGUiOiJQ",
-        "VUJMSUMiLCJyZWdpb24iOiJ0b3IxIiwic2l6ZSI6MSwidnBjcyI6W3sidnBjX3V1aWQiOiIwZWIxNzUy",
-        "Zi04MDdiLTQ1NjItYTA3Ny04MDE4ZTEzYWIxZmIiLCJzdWJuZXRfdXVpZCI6ImNiZDc5NzcxLTIzZWIt",
-        "NDliZS1iNWVhLTU5Y2M1NjIyMjYyMiIsImRlZmF1bHRfZ2F0ZXdheSI6dHJ1ZX1dLCJlZ3Jlc3NlcyI6",
-        "e30sInVkcF90aW1lb3V0X3NlY29uZHMiOjMwLCJpY21wX3RpbWVvdXRfc2Vjb25kcyI6MzAsInRjcF90",
-        "aW1lb3V0X3NlY29uZHMiOjMwfX0=",
     ].joined())!,
     encoding: .utf8
 )!

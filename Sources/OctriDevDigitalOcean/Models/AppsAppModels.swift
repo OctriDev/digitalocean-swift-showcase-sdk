@@ -4,606 +4,366 @@
 import Foundation
 
 /// AppsApp domain models
-/// Typed representation of the `AppVariableDefinition` API schema.
-public struct AppVariableDefinition: Codable {
-    /// The variable name
-    /// - Example: "BASE_URL"
-    public var key: String
-    /// - RUN_TIME: Made available only at run-time - BUILD_TIME: Made available only at build-time -
-    /// RUN_AND_BUILD_TIME: Made available at both build and run-time
-    /// - Example: "BUILD_TIME"
-    public var scope: AppVariableDefinitionScope?
-    /// - GENERAL: A plain-text environment variable - SECRET: A secret encrypted environment variable
-    /// - Example: "GENERAL"
-    public var type: AppVariableDefinitionType?
-    /// The value. If the type is `SECRET`, the value will be encrypted on first submission. On following
-    /// submissions, the encrypted value should be used.
-    /// - Example: "http://example.com"
-    public var value: String?
-
-    enum CodingKeys: String, CodingKey {
-        case key
-        case scope
-        case type
-        case value
-    }
-
-    private init(sdkCopy value: Self) {
-        self = value
-    }
-}
-
-public extension AppVariableDefinition {
+public extension App {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.key) else {
+        guard container.contains(.spec) else {
             throw SdkValidationError(
-                field: "key",
+                field: "spec",
                 code: "required",
-                message: "Validation failed for 'key': value is required"
+                message: "Validation failed for 'spec': value is required"
             )
         }
-        key = try container.sdkDecodeRequired(.key)
-        scope = try container.sdkDecodeIfPresent(.scope)
-        type = try container.sdkDecodeIfPresent(.type)
-        value = try container.sdkDecodeIfPresent(.value)
-        try sdkValidatePattern("key", key, sdkPatterna5127668bf05)
-    }
-}
-
-public extension AppVariableDefinition {
-    init(
-        key: String,
-        scope: AppVariableDefinitionScope? = nil,
-        type: AppVariableDefinitionType? = nil,
-        value: String? = nil
-    ) throws {
-        (self.key, self.scope) = (key, scope)
-        (self.type, self.value) = (type, value)
-        try sdkValidatePattern("key", self.key, sdkPatterna5127668bf05)
-    }
-}
-
-/// Typed representation of the `AppResponse` API schema.
-public struct AppResponse: Codable {
-    /// An application's configuration and status.
-    public var app: App?
-
-    enum CodingKeys: String, CodingKey {
-        case app
-    }
-
-    init() {
-        app = nil
-    }
-}
-
-public extension AppResponse {
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        app = try container.sdkDecodeIfPresent(.app)
-    }
-}
-
-public extension AppResponse {
-    init(app: App? = nil) {
-        self.init()
-        self.app = app
-    }
-}
-
-/// Typed representation of the `AppInstance` API schema.
-public struct AppInstance: Codable {
-    /// Name of the component, from the app spec.
-    /// - Example: "sample-golang"
-    public var componentName: String?
-    /// Supported compute component by DigitalOcean App Platform.
-    /// - Example: "SERVICE"
-    public var componentType: AppInstanceComponentType?
-    /// Name of the instance, which is a unique identifier for the instance.
-    /// - Example: "sample-golang-76b84c7fb8-6p8kq"
-    public var instanceName: String?
-    /// Readable identifier, an alias of the instance name, reference for mapping insights to instance names.
-    /// - Example: "sample-golang-0"
-    public var instanceAlias: String?
-
-    enum CodingKeys: String, CodingKey {
-        case componentName = "component_name"
-        case componentType = "component_type"
-        case instanceName = "instance_name"
-        case instanceAlias = "instance_alias"
-    }
-
-    init() {
-        (componentName, componentType, instanceName, instanceAlias) = (nil, nil, nil, nil)
-    }
-}
-
-public extension AppInstance {
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        componentName = try container.sdkDecodeIfPresent(.componentName)
-        componentType = try container.sdkDecodeIfPresent(.componentType)
-        instanceName = try container.sdkDecodeIfPresent(.instanceName)
-        instanceAlias = try container.sdkDecodeIfPresent(.instanceAlias)
-    }
-}
-
-public extension AppInstance {
-    init(
-        componentName: String? = nil,
-        componentType: AppInstanceComponentType? = nil,
-        instanceName: String? = nil,
-        instanceAlias: String? = nil
-    ) {
-        self.init()
-        (self.componentName, self.componentType) = (componentName, componentType)
-        (self.instanceName, self.instanceAlias) = (instanceName, instanceAlias)
-    }
-}
-
-/// Typed representation of the `AppStaticSiteSpec` API schema.
-public struct AppStaticSiteSpec: Codable {
-    /// The name. Must be unique across all components within the same app.
-    /// - Example: "api"
-    public var name: String
-    /// Optional object value serialized in the `git` wire field.
-    public var git: AppsGitSourceSpec?
-    /// Optional object value serialized in the `github` wire field.
-    public var github: AppsGithubSourceSpec?
-    /// Optional object value serialized in the `gitlab` wire field.
-    public var gitlab: AppsGitlabSourceSpec?
-    /// Optional object value serialized in the `bitbucket` wire field.
-    public var bitbucket: AppsBitbucketSourceSpec?
-    /// Optional object value serialized in the `image` wire field.
-    public var image: AppsImageSourceSpec?
-    /// The path to the Dockerfile relative to the root of the repo. If set, it will be used to build this
-    /// component. Otherwise, App Platform will attempt to build it using buildpacks.
-    /// - Example: "path/to/Dockerfile"
-    public var dockerfilePath: String?
-    /// An optional build command to run while building this component from source.
-    /// - Example: "npm run build"
-    public var buildCommand: String?
-    /// An optional run command to override the component's default.
-    /// - Example: "bin/api"
-    public var runCommand: String?
-    /// An optional path to the working directory to use for the build. For Dockerfile builds, this will be used as
-    /// the build context. Must be relative to the root of the repo.
-    /// - Example: "path/to/dir"
-    public var sourceDir: String?
-    /// A list of environment variables made available to the component.
-    public var envs: [AppVariableDefinition]?
-    /// An environment slug describing the type of this app. For a full list, please refer to the product
-    /// documentation.
-    /// - Example: "node-js"
-    public var environmentSlug: String?
-    /// A list of configured log forwarding destinations.
-    public var logDestinations: [AppLogDestinationDefinition]?
-    /// The name of the index document to use when serving this static site. Default: index.html
-    /// - Example: "main.html"
-    public var indexDocument: String?
-    /// The name of the error document to use when serving this static site. Default: 404.html. If no such file
-    /// exists within the built assets, App Platform will supply one.
-    /// - Example: "error.html"
-    public var errorDocument: String?
-    /// The name of the document to use as the fallback for any requests to documents that are not found when
-    /// serving this static site. Only 1 of `catchall_document` or `error_document` can be set.
-    /// - Example: "index.html"
-    public var catchallDocument: String?
-    /// An optional path to where the built assets will be located, relative to the build context. If not set, App
-    /// Platform will automatically scan for these directory names: `_static`, `dist`, `public`, `build`.
-    /// - Example: "dist/"
-    public var outputDir: String?
-    /// Optional API value serialized in the `cors` wire field.
-    public var cors: AppStaticSiteSpecVariant1Cors?
-    /// (Deprecated - Use Ingress Rules instead). A list of HTTP routes that should be routed to this component.
-    public var routes: [AppRouteSpec]?
-
-    enum CodingKeys: String, CodingKey {
-        case name
-        case git
-        case github
-        case gitlab
-        case bitbucket
-        case image
-        case dockerfilePath = "dockerfile_path"
-        case buildCommand = "build_command"
-        case runCommand = "run_command"
-        case sourceDir = "source_dir"
-        case envs
-        case environmentSlug = "environment_slug"
-        case logDestinations = "log_destinations"
-        case indexDocument = "index_document"
-        case errorDocument = "error_document"
-        case catchallDocument = "catchall_document"
-        case outputDir = "output_dir"
-        case cors
-        case routes
-    }
-
-    private init(sdkCopy value: Self) {
-        self = value
-    }
-}
-
-public extension AppStaticSiteSpec {
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
-        }
-        name = try container.sdkDecodeRequired(.name)
-        git = try container.sdkDecodeIfPresent(.git)
-        github = try container.sdkDecodeIfPresent(.github)
-        gitlab = try container.sdkDecodeIfPresent(.gitlab)
-        bitbucket = try container.sdkDecodeIfPresent(.bitbucket)
-        image = try container.sdkDecodeIfPresent(.image)
-        dockerfilePath = try container.sdkDecodeIfPresent(.dockerfilePath)
-        buildCommand = try container.sdkDecodeIfPresent(.buildCommand)
-        runCommand = try container.sdkDecodeIfPresent(.runCommand)
-        sourceDir = try container.sdkDecodeIfPresent(.sourceDir)
-        envs = try container.sdkDecodeIfPresent(.envs)
-        environmentSlug = try container.sdkDecodeIfPresent(.environmentSlug)
-        logDestinations = try container.sdkDecodeIfPresent(.logDestinations)
-        indexDocument = try container.sdkDecodeIfPresent(.indexDocument)
-        errorDocument = try container.sdkDecodeIfPresent(.errorDocument)
-        catchallDocument = try container.sdkDecodeIfPresent(.catchallDocument)
-        outputDir = try container.sdkDecodeIfPresent(.outputDir)
-        cors = try container.sdkDecodeIfPresent(.cors)
-        routes = try container.sdkDecodeIfPresent(.routes)
-        try validateLength("name", name, min: 2, max: 32)
-        try sdkValidatePattern("name", name, sdkPattern3c600f7d20be)
-    }
-}
-
-public extension AppStaticSiteSpec {
-    init(
-        name: String,
-        git: AppsGitSourceSpec? = nil,
-        github: AppsGithubSourceSpec? = nil,
-        gitlab: AppsGitlabSourceSpec? = nil,
-        bitbucket: AppsBitbucketSourceSpec? = nil,
-        image: AppsImageSourceSpec? = nil,
-        dockerfilePath: String? = nil,
-        buildCommand: String? = nil,
-        runCommand: String? = nil,
-        sourceDir: String? = nil,
-        envs: [AppVariableDefinition]? = nil,
-        environmentSlug: String? = nil,
-        logDestinations: [AppLogDestinationDefinition]? = nil,
-        indexDocument: String? = nil,
-        errorDocument: String? = nil,
-        catchallDocument: String? = nil,
-        outputDir: String? = nil,
-        cors: AppStaticSiteSpecVariant1Cors? = nil,
-        routes: [AppRouteSpec]? = nil
-    ) throws {
-        (self.name, self.git) = (name, git)
-        (self.github, self.gitlab) = (github, gitlab)
-        (self.bitbucket, self.image) = (bitbucket, image)
-        (self.dockerfilePath, self.buildCommand) = (dockerfilePath, buildCommand)
-        (self.runCommand, self.sourceDir) = (runCommand, sourceDir)
-        (self.envs, self.environmentSlug) = (envs, environmentSlug)
-        (self.logDestinations, self.indexDocument) = (logDestinations, indexDocument)
-        (self.errorDocument, self.catchallDocument) = (errorDocument, catchallDocument)
-        (self.outputDir, self.cors) = (outputDir, cors)
-        self.routes = routes
-        try validateLength("name", self.name, min: 2, max: 32)
-        try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
-    }
-}
-
-/// Typed representation of the `AppDatabaseSpec` API schema.
-public struct AppDatabaseSpec: Codable {
-    /// The database's name. The name must be unique across all components within the same app and cannot use
-    /// capital letters.
-    /// - Example: "prod-db"
-    public var name: String
-    /// The name of the underlying DigitalOcean DBaaS cluster. This is required for production databases. For dev
-    /// databases, if cluster_name is not set, a new cluster will be provisioned.
-    /// - Example: "cluster_name"
-    public var clusterName: String?
-    /// The name of the MySQL or PostgreSQL database to configure.
-    /// - Example: "my_db"
-    public var dbName: String?
-    /// The name of the MySQL or PostgreSQL user to configure.
-    /// - Example: "superuser"
-    public var dbUser: String?
-    /// - MYSQL: MySQL - PG: PostgreSQL - REDIS: Caching - MONGODB: MongoDB - KAFKA: Kafka - OPENSEARCH: OpenSearch
-    /// - VALKEY: ValKey
-    /// - Example: "PG"
-    public var engine: AppDatabaseSpecEngine?
-    /// Whether this is a production or dev database.
-    /// - Example: true
-    public var production: Bool?
-    /// The version of the database engine
-    /// - Example: "12"
-    public var version: String?
-
-    enum CodingKeys: String, CodingKey {
-        case name
-        case clusterName = "cluster_name"
-        case dbName = "db_name"
-        case dbUser = "db_user"
-        case engine
-        case production
-        case version
-    }
-
-    private init(sdkCopy value: Self) {
-        self = value
-    }
-}
-
-public extension AppDatabaseSpec {
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
-        }
-        name = try container.sdkDecodeRequired(.name)
-        clusterName = try container.sdkDecodeIfPresent(.clusterName)
-        dbName = try container.sdkDecodeIfPresent(.dbName)
-        dbUser = try container.sdkDecodeIfPresent(.dbUser)
-        engine = try container.sdkDecodeIfPresent(.engine)
-        production = try container.sdkDecodeIfPresent(.production)
-        version = try container.sdkDecodeIfPresent(.version)
-        try validateLength("name", name, min: 2, max: 32)
-        try sdkValidatePattern("name", name, sdkPattern3c600f7d20be)
-    }
-}
-
-public extension AppDatabaseSpec {
-    init(
-        name: String,
-        clusterName: String? = nil,
-        dbName: String? = nil,
-        dbUser: String? = nil,
-        engine: AppDatabaseSpecEngine? = nil,
-        production: Bool? = nil,
-        version: String? = nil
-    ) throws {
-        (self.name, self.clusterName) = (name, clusterName)
-        (self.dbName, self.dbUser) = (dbName, dbUser)
-        (self.engine, self.production) = (engine, production)
-        self.version = version
-        try validateLength("name", self.name, min: 2, max: 32)
-        try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
-    }
-}
-
-/// Optional API value serialized in the `cors` wire field.
-public struct AppStaticSiteSpecVariant1Cors: Codable {
-    /// The set of allowed CORS origins.
-    /// - Example: [{"exact":"https://www.example.com"},{"regex":"^.*example.com"}]
-    public var allowOrigins: [AppsStringMatch]?
-    /// The set of allowed HTTP methods. This configures the `Access-Control-Allow-Methods` header.
-    /// - Example: ["GET","OPTIONS","POST","PUT","PATCH","DELETE"]
-    public var allowMethods: [String]?
-    /// The set of allowed HTTP request headers. This configures the `Access-Control-Allow-Headers` header.
-    /// - Example: ["Content-Type","X-Custom-Header"]
-    public var allowHeaders: [String]?
-    /// The set of HTTP response headers that browsers are allowed to access. This configures the
-    /// `Access-Control-Expose-Headers` header.
-    /// - Example: ["Content-Encoding","X-Custom-Header"]
-    public var exposeHeaders: [String]?
-    /// An optional duration specifying how long browsers can cache the results of a preflight request. This
-    /// configures the `Access-Control-Max-Age` header.
-    /// - Example: "5h30m"
-    public var maxAge: String?
-    /// Whether browsers should expose the response to the client-side JavaScript code when the request’s
-    /// credentials mode is include. This configures the `Access-Control-Allow-Credentials` header.
-    public var allowCredentials: Bool?
-
-    enum CodingKeys: String, CodingKey {
-        case allowOrigins = "allow_origins"
-        case allowMethods = "allow_methods"
-        case allowHeaders = "allow_headers"
-        case exposeHeaders = "expose_headers"
-        case maxAge = "max_age"
-        case allowCredentials = "allow_credentials"
-    }
-
-    init() {
-        (allowOrigins, allowMethods, allowHeaders, exposeHeaders, maxAge) = (nil, nil, nil, nil, nil)
-        allowCredentials = nil
-    }
-}
-
-public extension AppStaticSiteSpecVariant1Cors {
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        allowOrigins = try container.sdkDecodeIfPresent(.allowOrigins)
-        allowMethods = try container.sdkDecodeIfPresent(.allowMethods)
-        allowHeaders = try container.sdkDecodeIfPresent(.allowHeaders)
-        exposeHeaders = try container.sdkDecodeIfPresent(.exposeHeaders)
-        maxAge = try container.sdkDecodeIfPresent(.maxAge)
-        allowCredentials = try container.sdkDecodeIfPresent(.allowCredentials)
-    }
-}
-
-public extension AppStaticSiteSpecVariant1Cors {
-    init(
-        allowOrigins: [AppsStringMatch]? = nil,
-        allowMethods: [String]? = nil,
-        allowHeaders: [String]? = nil,
-        exposeHeaders: [String]? = nil,
-        maxAge: String? = nil,
-        allowCredentials: Bool? = nil
-    ) {
-        self.init()
-        (self.allowOrigins, self.allowMethods) = (allowOrigins, allowMethods)
-        (self.allowHeaders, self.exposeHeaders) = (allowHeaders, exposeHeaders)
-        (self.maxAge, self.allowCredentials) = (maxAge, allowCredentials)
-    }
-}
-
-/// Typed representation of the `AppInstances` API schema.
-public struct AppInstances: Codable {
-    /// Optional array value serialized in the `instances` wire field.
-    public var instances: [AppInstance]?
-
-    enum CodingKeys: String, CodingKey {
-        case instances
-    }
-
-    init() {
-        instances = nil
-    }
-}
-
-public extension AppInstances {
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        instances = try container.sdkDecodeIfPresent(.instances)
-    }
-}
-
-public extension AppInstances {
-    init(instances: [AppInstance]? = nil) {
-        self.init()
-        self.instances = instances
-    }
-}
-
-/// Typed representation of the `AppEvent` API schema.
-public struct AppEvent: Codable {
-    /// Optional `string` value serialized in the `id` wire field.
-    /// - Example: "ba32b134-569c-4c0c-ba02-8ffdb0492ece"
-    public var id: String?
-    /// The type of event
-    /// - Example: "DEPLOYMENT"
-    public var type: AppEventType?
-    /// Optional `date-time`-formatted value serialized in the `created_at` wire field.
-    /// - Example: "2023-10-01T12:00:00Z"
-    public var createdAt: Date?
-    /// For deployment events, this is the same as the deployment's ID. For autoscaling events, this is the
-    /// deployment that was autoscaled.
-    /// - Example: "c020763f-ddb7-4112-a0df-7f01c69fc00b"
-    public var deploymentId: String?
-    /// Optional object value serialized in the `deployment` wire field.
-    public var deployment: AppsDeployment?
-    /// Autoscaling event details. Only present for autoscaling events.
-    public var autoscaling: AppEventAutoscaling?
-
-    enum CodingKeys: String, CodingKey {
-        case id
-        case type
-        case createdAt = "created_at"
-        case deploymentId = "deployment_id"
-        case deployment
-        case autoscaling
-    }
-
-    init() {
-        (id, type, createdAt, deploymentId, deployment) = (nil, nil, nil, nil, nil)
-        autoscaling = nil
-    }
-}
-
-public extension AppEvent {
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        type = try container.sdkDecodeIfPresent(.type)
+        spec = try container.sdkDecodeRequired(.spec)
+        activeDeployment = try container.sdkDecodeIfPresent(.activeDeployment)
         createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        deploymentId = try container.sdkDecodeIfPresent(.deploymentId)
-        deployment = try container.sdkDecodeIfPresent(.deployment)
-        autoscaling = try container.sdkDecodeIfPresent(.autoscaling)
+        defaultIngress = try container.sdkDecodeIfPresent(.defaultIngress)
+        domains = try container.sdkDecodeIfPresent(.domains)
+        id = try container.sdkDecodeIfPresent(.id)
+        inProgressDeployment = try container.sdkDecodeIfPresent(.inProgressDeployment)
+        lastDeploymentCreatedAt = try container.sdkDecodeIfPresent(.lastDeploymentCreatedAt)
+        liveDomain = try container.sdkDecodeIfPresent(.liveDomain)
+        liveUrl = try container.sdkDecodeIfPresent(.liveUrl)
+        liveUrlBase = try container.sdkDecodeIfPresent(.liveUrlBase)
+        ownerUuid = try container.sdkDecodeIfPresent(.ownerUuid)
+        pendingDeployment = try container.sdkDecodeIfPresent(.pendingDeployment)
+        projectId = try container.sdkDecodeIfPresent(.projectId)
+        region = try container.sdkDecodeIfPresent(.region)
+        tierSlug = try container.sdkDecodeIfPresent(.tierSlug)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        pinnedDeployment = try container.sdkDecodeIfPresent(.pinnedDeployment)
+        dedicatedIps = try container.sdkDecodeIfPresent(.dedicatedIps)
+        vpc = try container.sdkDecodeIfPresent(.vpc)
         if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-    }
-}
-
-public extension AppEvent {
-    init(
-        id: String? = nil,
-        type: AppEventType? = nil,
-        createdAt: Date? = nil,
-        deploymentId: String? = nil,
-        deployment: AppsDeployment? = nil,
-        autoscaling: AppEventAutoscaling? = nil
-    ) throws {
-        self.init()
-        (self.id, self.type) = (id, type)
-        (self.createdAt, self.deploymentId) = (createdAt, deploymentId)
-        (self.deployment, self.autoscaling) = (deployment, autoscaling)
-        if let value = self.createdAt {
-            try sdkValidateDateTime("created_at", sdkWireString(value))
+        if let value = lastDeploymentCreatedAt {
+            try sdkValidateDateTime("last_deployment_created_at", sdkWireString(value))
+        }
+        if let value = updatedAt {
+            try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-/// Required object value serialized in the `static_sites[]` wire field.
-public struct AppStaticSiteSpecVariant1: Codable {
-    /// The name of the index document to use when serving this static site. Default: index.html
-    /// - Example: "main.html"
-    public var indexDocument: String?
-    /// The name of the error document to use when serving this static site. Default: 404.html. If no such file
-    /// exists within the built assets, App Platform will supply one.
-    /// - Example: "error.html"
-    public var errorDocument: String?
-    /// The name of the document to use as the fallback for any requests to documents that are not found when
-    /// serving this static site. Only 1 of `catchall_document` or `error_document` can be set.
-    /// - Example: "index.html"
-    public var catchallDocument: String?
-    /// An optional path to where the built assets will be located, relative to the build context. If not set, App
-    /// Platform will automatically scan for these directory names: `_static`, `dist`, `public`, `build`.
-    /// - Example: "dist/"
-    public var outputDir: String?
-    /// Optional API value serialized in the `cors` wire field.
-    public var cors: AppStaticSiteSpecVariant1Cors?
-    /// (Deprecated - Use Ingress Rules instead). A list of HTTP routes that should be routed to this component.
-    public var routes: [AppRouteSpec]?
+public extension App {
+    init(
+        spec: AppSpec,
+        activeDeployment: AppsDeployment? = nil,
+        createdAt: Date? = nil,
+        defaultIngress: String? = nil,
+        domains: [AppsDomain]? = nil,
+        id: String? = nil,
+        inProgressDeployment: AppsDeployment? = nil,
+        lastDeploymentCreatedAt: Date? = nil,
+        liveDomain: String? = nil,
+        liveUrl: String? = nil,
+        liveUrlBase: String? = nil,
+        ownerUuid: String? = nil,
+        pendingDeployment: AppsDeployment? = nil,
+        projectId: String? = nil,
+        region: AppsRegion? = nil,
+        tierSlug: String? = nil,
+        updatedAt: Date? = nil,
+        pinnedDeployment: AppsDeployment? = nil,
+        dedicatedIps: [AppsDedicatedEgressIp]? = nil,
+        vpc: AppsVpc? = nil
+    ) throws {
+        (self.spec, self.activeDeployment) = (spec, activeDeployment)
+        (self.createdAt, self.defaultIngress) = (createdAt, defaultIngress)
+        (self.domains, self.id) = (domains, id)
+        self.inProgressDeployment = inProgressDeployment
+        (self.lastDeploymentCreatedAt, self.liveDomain) = (lastDeploymentCreatedAt, liveDomain)
+        (self.liveUrl, self.liveUrlBase) = (liveUrl, liveUrlBase)
+        (self.ownerUuid, self.pendingDeployment) = (ownerUuid, pendingDeployment)
+        (self.projectId, self.region) = (projectId, region)
+        (self.tierSlug, self.updatedAt) = (tierSlug, updatedAt)
+        (self.pinnedDeployment, self.dedicatedIps) = (pinnedDeployment, dedicatedIps)
+        self.vpc = vpc
+        if let value = self.createdAt {
+            try sdkValidateDateTime("created_at", sdkWireString(value))
+        }
+        if let value = self.lastDeploymentCreatedAt {
+            try sdkValidateDateTime("last_deployment_created_at", sdkWireString(value))
+        }
+        if let value = self.updatedAt {
+            try sdkValidateDateTime("updated_at", sdkWireString(value))
+        }
+    }
+}
+
+/// Specification to configure maintenance settings for the app, such as maintenance mode and archiving the app.
+public struct AppMaintenanceSpec: Codable {
+    /// Indicates whether maintenance mode should be enabled for the app.
+    /// - Example: true
+    public var enabled: Bool?
+    /// Indicates whether the app should be archived. Setting this to true implies that enabled is set to true.
+    /// - Example: true
+    public var archive: Bool?
+    /// A custom offline page to display when maintenance mode is enabled or the app is archived.
+    /// - Example: "https://example.com/offline.html"
+    public var offlinePageUrl: String?
 
     enum CodingKeys: String, CodingKey {
-        case indexDocument = "index_document"
-        case errorDocument = "error_document"
-        case catchallDocument = "catchall_document"
-        case outputDir = "output_dir"
-        case cors
-        case routes
+        case enabled
+        case archive
+        case offlinePageUrl = "offline_page_url"
     }
 
     init() {
-        (indexDocument, errorDocument, catchallDocument, outputDir, cors) = (nil, nil, nil, nil, nil)
-        routes = nil
+        (enabled, archive, offlinePageUrl) = (nil, nil, nil)
     }
 }
 
-public extension AppStaticSiteSpecVariant1 {
+public extension AppMaintenanceSpec {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        indexDocument = try container.sdkDecodeIfPresent(.indexDocument)
-        errorDocument = try container.sdkDecodeIfPresent(.errorDocument)
-        catchallDocument = try container.sdkDecodeIfPresent(.catchallDocument)
-        outputDir = try container.sdkDecodeIfPresent(.outputDir)
-        cors = try container.sdkDecodeIfPresent(.cors)
-        routes = try container.sdkDecodeIfPresent(.routes)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
+        archive = try container.sdkDecodeIfPresent(.archive)
+        offlinePageUrl = try container.sdkDecodeIfPresent(.offlinePageUrl)
     }
 }
 
-public extension AppStaticSiteSpecVariant1 {
-    init(
-        indexDocument: String? = nil,
-        errorDocument: String? = nil,
-        catchallDocument: String? = nil,
-        outputDir: String? = nil,
-        cors: AppStaticSiteSpecVariant1Cors? = nil,
-        routes: [AppRouteSpec]? = nil
-    ) {
+public extension AppMaintenanceSpec {
+    init(enabled: Bool? = nil, archive: Bool? = nil, offlinePageUrl: String? = nil) {
         self.init()
-        (self.indexDocument, self.errorDocument) = (indexDocument, errorDocument)
-        (self.catchallDocument, self.outputDir) = (catchallDocument, outputDir)
-        (self.cors, self.routes) = (cors, routes)
+        (self.enabled, self.archive) = (enabled, archive)
+        self.offlinePageUrl = offlinePageUrl
+    }
+}
+
+public struct AppEventAutoscalingComponentsValue: Codable {
+    /// The number of replicas before scaling
+    /// - Example: 1
+    public var from: Int?
+    /// The number of replicas after scaling
+    /// - Example: 3
+    public var to: Int?
+    /// The metric that triggered the scale change. Known values are "cpu", "requests_per_second",
+    /// "request_duration". For inactivity sleep, "scale_from_zero" and "scale_to_zero" are used.
+    /// - Example: "cpu"
+    public var triggeringMetric: String?
+
+    enum CodingKeys: String, CodingKey {
+        case from
+        case to
+        case triggeringMetric = "triggering_metric"
+    }
+
+    init() {
+        (from, to, triggeringMetric) = (nil, nil, nil)
+    }
+}
+
+public extension AppEventAutoscalingComponentsValue {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        from = try container.sdkDecodeIfPresent(.from)
+        to = try container.sdkDecodeIfPresent(.to)
+        triggeringMetric = try container.sdkDecodeIfPresent(.triggeringMetric)
+    }
+}
+
+public extension AppEventAutoscalingComponentsValue {
+    init(from: Int? = nil, to: Int? = nil, triggeringMetric: String? = nil) {
+        self.init()
+        (self.from, self.to) = (from, to)
+        self.triggeringMetric = triggeringMetric
+    }
+}
+
+/// Autoscaling event details. Only present for autoscaling events.
+public struct AppEventAutoscaling: Codable {
+    /// The current phase of the autoscaling event
+    /// - Example: "SUCCEEDED"
+    public var phase: AppEventAutoscalingPhase?
+    /// Map of component names to their scale changes
+    public var components: [String: AppEventAutoscalingComponentsValue]?
+
+    enum CodingKeys: String, CodingKey {
+        case phase
+        case components
+    }
+
+    init() {
+        (phase, components) = (nil, nil)
+    }
+}
+
+public extension AppEventAutoscaling {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        phase = try container.sdkDecodeIfPresent(.phase)
+        components = try container.sdkDecodeIfPresent(.components)
+    }
+}
+
+public extension AppEventAutoscaling {
+    init(phase: AppEventAutoscalingPhase? = nil, components: [String: AppEventAutoscalingComponentsValue]? = nil) {
+        self.init()
+        (self.phase, self.components) = (phase, components)
+    }
+}
+
+/// Typed representation of the `AppRouteSpec` API schema.
+public struct AppRouteSpec: Codable {
+    /// (Deprecated - Use Ingress Rules instead). An HTTP path prefix. Paths must start with / and must be unique
+    /// across all components within an app.
+    /// - Example: "/api"
+    public var path: String?
+    /// An optional flag to preserve the path that is forwarded to the backend service. By default, the HTTP request
+    /// path will be trimmed from the left when forwarded to the component. For example, a component with
+    /// `path=/api` will have requests to `/api/list` trimmed to `/list`. If this value is `true`, the path will
+    /// remain `/api/list`.
+    /// - Example: true
+    public var preservePathPrefix: Bool?
+
+    enum CodingKeys: String, CodingKey {
+        case path
+        case preservePathPrefix = "preserve_path_prefix"
+    }
+
+    init() {
+        (path, preservePathPrefix) = (nil, nil)
+    }
+}
+
+public extension AppRouteSpec {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        path = try container.sdkDecodeIfPresent(.path)
+        preservePathPrefix = try container.sdkDecodeIfPresent(.preservePathPrefix)
+    }
+}
+
+public extension AppRouteSpec {
+    init(path: String? = nil, preservePathPrefix: Bool? = nil) {
+        self.init()
+        (self.path, self.preservePathPrefix) = (path, preservePathPrefix)
+    }
+}
+
+/// - RUN_TIME: Made available only at run-time - BUILD_TIME: Made available only at build-time -
+/// RUN_AND_BUILD_TIME: Made available at both build and run-time
+public struct AppVariableDefinitionScope: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let unset = AppVariableDefinitionScope(rawValue: "UNSET")
+    public static let runTime = AppVariableDefinitionScope(rawValue: "RUN_TIME")
+    public static let buildTime = AppVariableDefinitionScope(rawValue: "BUILD_TIME")
+    public static let runAndBuildTime = AppVariableDefinitionScope(rawValue: "RUN_AND_BUILD_TIME")
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        try self.init(rawValue: container.decode(String.self))
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(rawValue)
+    }
+}
+
+/// - MYSQL: MySQL - PG: PostgreSQL - REDIS: Caching - MONGODB: MongoDB - KAFKA: Kafka - OPENSEARCH: OpenSearch
+/// - VALKEY: ValKey
+public struct AppDatabaseSpecEngine: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let unset = AppDatabaseSpecEngine(rawValue: "UNSET")
+    public static let mysql = AppDatabaseSpecEngine(rawValue: "MYSQL")
+    public static let pg = AppDatabaseSpecEngine(rawValue: "PG")
+    public static let redis = AppDatabaseSpecEngine(rawValue: "REDIS")
+    public static let mongodb = AppDatabaseSpecEngine(rawValue: "MONGODB")
+    public static let kafka = AppDatabaseSpecEngine(rawValue: "KAFKA")
+    public static let opensearch = AppDatabaseSpecEngine(rawValue: "OPENSEARCH")
+    public static let valkey = AppDatabaseSpecEngine(rawValue: "VALKEY")
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        try self.init(rawValue: container.decode(String.self))
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(rawValue)
+    }
+}
+
+/// - GENERAL: A plain-text environment variable - SECRET: A secret encrypted environment variable
+public struct AppVariableDefinitionType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let general = AppVariableDefinitionType(rawValue: "GENERAL")
+    public static let secret = AppVariableDefinitionType(rawValue: "SECRET")
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        try self.init(rawValue: container.decode(String.self))
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(rawValue)
+    }
+}
+
+/// The type of event
+public struct AppEventType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let unknown = AppEventType(rawValue: "UNKNOWN")
+    public static let deployment = AppEventType(rawValue: "DEPLOYMENT")
+    public static let autoscaling = AppEventType(rawValue: "AUTOSCALING")
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        try self.init(rawValue: container.decode(String.self))
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(rawValue)
+    }
+}
+
+/// The current phase of the autoscaling event
+public struct AppEventAutoscalingPhase: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let unknown = AppEventAutoscalingPhase(rawValue: "UNKNOWN")
+    public static let pending = AppEventAutoscalingPhase(rawValue: "PENDING")
+    public static let inProgress = AppEventAutoscalingPhase(rawValue: "IN_PROGRESS")
+    public static let succeeded = AppEventAutoscalingPhase(rawValue: "SUCCEEDED")
+    public static let failed = AppEventAutoscalingPhase(rawValue: "FAILED")
+    public static let canceled = AppEventAutoscalingPhase(rawValue: "CANCELED")
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        try self.init(rawValue: container.decode(String.self))
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(rawValue)
     }
 }

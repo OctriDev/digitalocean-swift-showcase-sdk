@@ -5,6 +5,31 @@ import Foundation
 @testable import OctriDevDigitalOcean
 import XCTest
 
+let sdkMethodFixture1164Expected = String(
+    data: Data(base64Encoded: [
+        "eyJpZCI6InVuYXV0aG9yaXplZCIsIm1lc3NhZ2UiOiJVbmFibGUgdG8gYXV0aGVudGljYXRlIHlvdS4i",
+        "fQ==",
+    ].joined())!,
+    encoding: .utf8
+)!
+
+let sdkMethodFixture1165Expected = String(
+    data: Data(base64Encoded: [
+        "eyJkYXRhIjp7InJlc3VsdCI6W3sibWV0cmljIjp7Imhvc3RfaWQiOiIxOTIwMTkyMCJ9LCJ2YWx1ZXMi",
+        "OltbMTQzNTc4MTQzMCwiMSJdLFsxNDM1NzgxNDQ1LCIxIl1dfV0sInJlc3VsdFR5cGUiOiJtYXRyaXgi",
+        "fSwic3RhdHVzIjoic3VjY2VzcyJ9",
+    ].joined())!,
+    encoding: .utf8
+)!
+
+let sdkMethodFixture1166Expected = String(
+    data: Data(base64Encoded: [
+        "eyJpZCI6InVuYXV0aG9yaXplZCIsIm1lc3NhZ2UiOiJVbmFibGUgdG8gYXV0aGVudGljYXRlIHlvdS4i",
+        "fQ==",
+    ].joined())!,
+    encoding: .utf8
+)!
+
 let sdkMethodFixture1167Expected = String(
     data: Data(base64Encoded: [
         "eyJkYXRhIjp7InJlc3VsdCI6W3sibWV0cmljIjp7Imhvc3RfaWQiOiIxOTIwMTkyMCJ9LCJ2YWx1ZXMi",
@@ -626,31 +651,6 @@ let sdkMethodFixture1237Expected = String(
         "eyJkYXRhIjp7InJlc3VsdCI6W3sibWV0cmljIjp7Imhvc3RfaWQiOiIxOTIwMTkyMCJ9LCJ2YWx1ZXMi",
         "OltbMTQzNTc4MTQzMCwiMSJdLFsxNDM1NzgxNDQ1LCIxIl1dfV0sInJlc3VsdFR5cGUiOiJtYXRyaXgi",
         "fSwic3RhdHVzIjoic3VjY2VzcyJ9",
-    ].joined())!,
-    encoding: .utf8
-)!
-
-let sdkMethodFixture1238Expected = String(
-    data: Data(base64Encoded: [
-        "eyJpZCI6InVuYXV0aG9yaXplZCIsIm1lc3NhZ2UiOiJVbmFibGUgdG8gYXV0aGVudGljYXRlIHlvdS4i",
-        "fQ==",
-    ].joined())!,
-    encoding: .utf8
-)!
-
-let sdkMethodFixture1239Expected = String(
-    data: Data(base64Encoded: [
-        "eyJkYXRhIjp7InJlc3VsdCI6W3sibWV0cmljIjp7Imhvc3RfaWQiOiIxOTIwMTkyMCJ9LCJ2YWx1ZXMi",
-        "OltbMTQzNTc4MTQzMCwiMSJdLFsxNDM1NzgxNDQ1LCIxIl1dfV0sInJlc3VsdFR5cGUiOiJtYXRyaXgi",
-        "fSwic3RhdHVzIjoic3VjY2VzcyJ9",
-    ].joined())!,
-    encoding: .utf8
-)!
-
-let sdkMethodFixture1240Expected = String(
-    data: Data(base64Encoded: [
-        "eyJpZCI6InVuYXV0aG9yaXplZCIsIm1lc3NhZ2UiOiJVbmFibGUgdG8gYXV0aGVudGljYXRlIHlvdS4i",
-        "fQ==",
     ].joined())!,
     encoding: .utf8
 )!

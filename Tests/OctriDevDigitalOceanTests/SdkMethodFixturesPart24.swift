@@ -5,7 +5,7 @@ import Foundation
 @testable import OctriDevDigitalOcean
 import XCTest
 
-let sdkMethodFixture582Expected = String(
+let sdkMethodFixture580Expected = String(
     data: Data(base64Encoded: [
         "eyJhZ2VudCI6eyJhbnRocm9waWNfYXBpX2tleSI6eyJjcmVhdGVkX2F0IjoiMjAyMy0wMS0wMVQwMDow",
         "MDowMFoiLCJjcmVhdGVkX2J5IjoiMTIzNDUiLCJkZWxldGVkX2F0IjoiMjAyMy0wMS0wMVQwMDowMDow",
@@ -553,7 +553,7 @@ let sdkMethodFixture582Expected = String(
     encoding: .utf8
 )!
 
-let sdkMethodFixture583Expected = String(
+let sdkMethodFixture581Expected = String(
     data: Data(base64Encoded: [
         "eyJpZCI6InVuYXV0aG9yaXplZCIsIm1lc3NhZ2UiOiJVbmFibGUgdG8gYXV0aGVudGljYXRlIHlvdS4i",
         "fQ==",

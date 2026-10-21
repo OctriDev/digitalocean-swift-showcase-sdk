@@ -6,39 +6,6 @@ import Foundation
 import XCTest
 
 extension SdkMethodTests {
-    func testInsightsUpdateNotificationChannelInsightsUpdateNotificationChannel400ReachesMockAndDecodesResponse(
-    ) async throws {
-        guard let client = configuredClient(statusPrefix: "/__mockStatus/400") else {
-            return
-        }
-        _ = client
-        let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture984Expected.utf8),
-            options: [.fragmentsAllowed]
-        )
-        do {
-            _ = try await client.insights.updateNotificationChannel(
-                id: decoded("\"550e8400-e29b-41d4-a716-446655440000\""),
-                name: decoded("\"Platform alerts (updated)\""),
-                email: decoded("null"),
-                slack: decoded("{\"channel\":\"#platform-alerts-prod\"}"),
-                webhook: decoded("null")
-            )
-            XCTFail("did not raise its declared error")
-        } catch let error as SdkHttpError {
-            XCTAssertEqual(error.statusCode, 400)
-            let data = try XCTUnwrap(
-                error.data as? any Encodable,
-                "decoded no error body"
-            )
-            XCTAssertNil(
-                try mismatch(jsonValue(data), expected),
-                "decoded an error body that differs from the mock"
-            )
-        }
-        XCTAssertTrue(true)
-    }
-
     func testInvoicesGetByUuidInvoicesGetByUuidReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
@@ -50,7 +17,7 @@ extension SdkMethodTests {
             page: decoded("1")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture985Expected.utf8),
+            with: Data(sdkMethodFixture983Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -65,7 +32,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture986Expected.utf8),
+            with: Data(sdkMethodFixture984Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -98,7 +65,7 @@ extension SdkMethodTests {
             invoiceUuid: decoded("\"22737513-0ea7-4206-8ceb-98a575af7681\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture987Expected.utf8),
+            with: Data(sdkMethodFixture985Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -113,7 +80,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture988Expected.utf8),
+            with: Data(sdkMethodFixture986Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -152,7 +119,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture990Expected.utf8),
+            with: Data(sdkMethodFixture988Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -183,7 +150,7 @@ extension SdkMethodTests {
             invoiceUuid: decoded("\"22737513-0ea7-4206-8ceb-98a575af7681\"")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture991Expected.utf8),
+            with: Data(sdkMethodFixture989Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -198,7 +165,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture992Expected.utf8),
+            with: Data(sdkMethodFixture990Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -230,7 +197,7 @@ extension SdkMethodTests {
             page: decoded("1")
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture993Expected.utf8),
+            with: Data(sdkMethodFixture991Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -245,7 +212,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture994Expected.utf8),
+            with: Data(sdkMethodFixture992Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -275,10 +242,10 @@ extension SdkMethodTests {
         _ = client
         let actual = try await client.kubernetes.addNodePool(
             clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
-            body: decoded(sdkMethodFixture995Value1)
+            body: decoded(sdkMethodFixture993Value1)
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture995Expected.utf8),
+            with: Data(sdkMethodFixture993Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -293,13 +260,13 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture996Expected.utf8),
+            with: Data(sdkMethodFixture994Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
             _ = try await client.kubernetes.addNodePool(
                 clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
-                body: decoded(sdkMethodFixture996Value1)
+                body: decoded(sdkMethodFixture994Value1)
             )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
@@ -322,7 +289,7 @@ extension SdkMethodTests {
         }
         _ = client
         _ = try await client.kubernetes.addRegistries(
-            clusterUuids: decoded(sdkMethodFixture997Value1),
+            clusterUuids: decoded(sdkMethodFixture995Value1),
             registries: decoded("[\"registry-a\",\"registry-b\"]")
         )
         XCTAssertTrue(true)
@@ -334,12 +301,12 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture998Expected.utf8),
+            with: Data(sdkMethodFixture996Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
             _ = try await client.kubernetes.addRegistries(
-                clusterUuids: decoded(sdkMethodFixture998Value1),
+                clusterUuids: decoded(sdkMethodFixture996Value1),
                 registries: decoded("[\"registry-a\",\"registry-b\"]")
             )
             XCTFail("did not raise its declared error")
@@ -363,7 +330,7 @@ extension SdkMethodTests {
         }
         _ = client
         _ = try await client.kubernetes.addRegistry(
-            clusterUuids: decoded(sdkMethodFixture999Value1)
+            clusterUuids: decoded(sdkMethodFixture997Value1)
         )
         XCTAssertTrue(true)
     }
@@ -374,12 +341,12 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1000Expected.utf8),
+            with: Data(sdkMethodFixture998Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
             _ = try await client.kubernetes.addRegistry(
-                clusterUuids: decoded(sdkMethodFixture1000Value1)
+                clusterUuids: decoded(sdkMethodFixture998Value1)
             )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
@@ -435,7 +402,7 @@ extension SdkMethodTests {
             options: options
         )
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1001Expected.utf8),
+            with: Data(sdkMethodFixture999Expected.utf8),
             options: [.fragmentsAllowed]
         )
         XCTAssertNil(
@@ -480,7 +447,7 @@ extension SdkMethodTests {
         options.rdmaSharedDevPlugin = try decoded("null")
         options.corednsAutoscaler = try decoded("null")
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1002Expected.utf8),
+            with: Data(sdkMethodFixture1000Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -519,7 +486,7 @@ extension SdkMethodTests {
         }
         _ = client
         let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture1004Expected.utf8),
+            with: Data(sdkMethodFixture1002Expected.utf8),
             options: [.fragmentsAllowed]
         )
         do {
@@ -552,6 +519,50 @@ extension SdkMethodTests {
             nodeId: decoded("\"478247f8-b1bb-4f7a-8db9-2a5f8d4b8f8f\""),
             skipDrain: decoded("1"),
             replace: decoded("1")
+        )
+        XCTAssertTrue(true)
+    }
+
+    func testKubernetesDeleteNodeKubernetesDeleteNode401ReachesMockAndDecodesResponse() async throws {
+        guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
+            return
+        }
+        _ = client
+        let expected = try JSONSerialization.jsonObject(
+            with: Data(sdkMethodFixture1004Expected.utf8),
+            options: [.fragmentsAllowed]
+        )
+        do {
+            _ = try await client.kubernetes.deleteNode(
+                clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
+                nodePoolId: decoded("\"cdda885e-7663-40c8-bc74-3a036c66545d\""),
+                nodeId: decoded("\"478247f8-b1bb-4f7a-8db9-2a5f8d4b8f8f\""),
+                skipDrain: decoded("1"),
+                replace: decoded("1")
+            )
+            XCTFail("did not raise its declared error")
+        } catch let error as SdkHttpError {
+            XCTAssertEqual(error.statusCode, 401)
+            let data = try XCTUnwrap(
+                error.data as? any Encodable,
+                "decoded no error body"
+            )
+            XCTAssertNil(
+                try mismatch(jsonValue(data), expected),
+                "decoded an error body that differs from the mock"
+            )
+        }
+        XCTAssertTrue(true)
+    }
+
+    func testKubernetesDeleteNodePoolKubernetesDeleteNodePoolReachesMockAndDecodesResponse() async throws {
+        guard let client = configuredClient() else {
+            return
+        }
+        _ = client
+        _ = try await client.kubernetes.deleteNodePool(
+            clusterId: decoded("\"bd5f5959-5e1e-4205-a714-a914373942af\""),
+            nodePoolId: decoded("\"cdda885e-7663-40c8-bc74-3a036c66545d\"")
         )
         XCTAssertTrue(true)
     }

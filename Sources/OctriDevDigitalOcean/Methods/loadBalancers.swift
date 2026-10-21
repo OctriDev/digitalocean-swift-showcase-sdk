@@ -7,3 +7,92 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum LoadBalancersMethods {}
+
+public extension LoadBalancersMethods {
+    /// Creates a load balancer in the specified region and assigns Droplets to it. Provide either `droplet_ids` to
+    /// select Droplets individually or `tag` to select Droplets by tag; these methods are mutually exclusive. A 202
+    /// response confirms acceptance and returns the load balancer object.
+    ///
+    /// To create a new load balancer instance, send a POST request to `/v2/load_balancers`. You can specify the
+    /// Droplets that will sit behind the load balancer using one of two methods: * Set `droplet_ids` to a list of
+    /// specific Droplet IDs. * Set `tag` to the name of a tag. All Droplets with this tag applied will be assigned to
+    /// the load balancer. Additional Droplets will be automatically assigned as they are tagged. These methods are
+    /// mutually exclusive.
+    static func loadBalancersCreate(
+        config: ClientConfig,
+        body: LoadBalancerCreateRequest,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> LoadBalancerCreateResponse {
+        try await (sdkRequest(
+            "POST",
+            "/v2/load_balancers",
+            config: config,
+            rawBody: sdkEncodeBody(body, contentType: "application/json"),
+            decoder: .json,
+            operationId: "loadBalancers_create",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
+    }
+
+    /// To list all of the load balancer instances on your account, send a GET request to `/v2/load_balancers`.
+    ///
+    /// - Parameters:
+    /// - perPage: Number of items returned per page
+    /// - page: Which 'page' of paginated results to return.
+    static func loadBalancersList(
+        config: ClientConfig,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AllLoadBalancers {
+        if let perPage {
+            try validateRange("per_page", Double(perPage), min: 1, max: 200)
+        }
+
+        if let page {
+            try validateRange("page", Double(page), min: 1)
+        }
+
+        return try await (sdkRequest(
+            "GET",
+            "/v2/load_balancers",
+            config: config,
+            query: [
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("page", value: page),
+            ],
+            decoder: .json,
+            operationId: "loadBalancers_list",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
+    }
+
+    /// To show information about a load balancer instance, send a GET request to
+    /// `/v2/load_balancers/$LOAD_BALANCER_ID`.
+    ///
+    /// - Parameters:
+    /// - lbId: A unique identifier for a load balancer.
+    static func loadBalancersGet(
+        config: ClientConfig,
+        lbId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExistingLoadBalancer {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/load_balancers/", sdkEncodePathSegment(sdkWireString(lbId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "loadBalancers_get",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
+    }
+}

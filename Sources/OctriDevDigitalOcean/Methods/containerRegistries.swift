@@ -7,3 +7,94 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum ContainerRegistriesMethods {}
+
+public extension ContainerRegistriesMethods {
+    /// To get information about any container registry in your account, send a GET request to `/v2/registries/`.
+    static func registriesList(
+        config: ClientConfig,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AllRegistriesInfo {
+        try await (sdkRequest(
+            "GET",
+            "/v2/registries",
+            config: config,
+            decoder: .json,
+            operationId: "registries_list",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
+    }
+
+    /// To create your container registry, send a POST request to `/v2/registries`. The `name` becomes part of the URL
+    /// for images stored in the registry. For example, if your registry is called `example`, an image in it will have
+    /// the URL `registry.digitalocean.com/example/image:tag`.
+    ///
+    /// - Parameters:
+    /// - name: A globally unique name for the container registry. Must be lowercase
+    ///   and be composed only of numbers, letters and `-`, up to a limit of 63
+    ///   characters.
+    /// - subscriptionTierSlug: The slug of the subscription tier to sign up for.
+    ///   Valid values can be retrieved using the options endpoint.
+    /// - region: Slug of the region where registry data is stored. When not
+    ///   provided, a region will be selected.
+    static func registriesCreate(
+        config: ClientConfig,
+        name: String,
+        subscriptionTierSlug: MultiregistryCreateSubscriptionTierSlug? = nil,
+        region: MultiregistryCreateRegion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> MultiregistryInfo {
+        try validateLength("name", name, max: 63)
+        try sdkValidatePattern("name", name, sdkPattern41dd286f4dc3)
+
+        let requestBody = RegistriesCreateRequestBody(
+            name: name,
+            subscriptionTierSlug: subscriptionTierSlug,
+            region: region
+        )
+
+        return try await (sdkRequest(
+            "POST",
+            "/v2/registries",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "registries_create",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
+    }
+
+    /// To get information about any container registry in your account, send a GET request to
+    /// `/v2/registries/{registry_name}`.
+    ///
+    /// - Parameters:
+    /// - registryName: The name of a container registry.
+    static func registriesGet(
+        config: ClientConfig,
+        registryName: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> MultiregistryInfo {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/registries/", sdkEncodePathSegment(sdkWireString(registryName))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "registries_get",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
+    }
+}

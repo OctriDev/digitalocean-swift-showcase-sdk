@@ -7,3 +7,91 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum ReservedIpsMethods {}
+
+public extension ReservedIpsMethods {
+    /// To list all of the reserved IPs available on your account, send a GET request to `/v2/reserved_ips`.
+    ///
+    /// - Parameters:
+    /// - perPage: Number of items returned per page
+    /// - page: Which 'page' of paginated results to return.
+    static func reservedIpsList(
+        config: ClientConfig,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ReservedIpList {
+        if let perPage {
+            try validateRange("per_page", Double(perPage), min: 1, max: 200)
+        }
+
+        if let page {
+            try validateRange("page", Double(page), min: 1)
+        }
+
+        return try await (sdkRequest(
+            "GET",
+            "/v2/reserved_ips",
+            config: config,
+            query: [
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("page", value: page),
+            ],
+            decoder: .json,
+            operationId: "reservedIPs_list",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
+    }
+
+    /// Creates a reserved IP and either assigns it to a Droplet or reserves it to a region. Provide `droplet_id` for a
+    /// Droplet assignment, or `region` to reserve the address to a region; `project_id` can optionally associate it
+    /// with a project. When you assign the address during creation, the response includes links to the Droplet and the
+    /// assignment action.
+    ///
+    /// On creation, a reserved IP must be either assigned to a Droplet or reserved to a region. * To create a new
+    /// reserved IP assigned to a Droplet, send a POST request to `/v2/reserved_ips` with the `droplet_id` attribute. *
+    /// To create a new reserved IP reserved to a region, send a POST request to `/v2/reserved_ips` with the `region`
+    /// attribute.
+    static func reservedIpsCreate(
+        config: ClientConfig,
+        body: ReservedIpCreate,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ReservedIpCreated {
+        try await (sdkRequest(
+            "POST",
+            "/v2/reserved_ips",
+            config: config,
+            rawBody: sdkEncodeBody(body, contentType: "application/json"),
+            decoder: .json,
+            operationId: "reservedIPs_create",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
+    }
+
+    /// To show information about a reserved IP, send a GET request to `/v2/reserved_ips/$RESERVED_IP_ADDR`.
+    ///
+    /// - Parameters:
+    /// - reservedIp: A reserved IP address.
+    static func reservedIpsGet(
+        config: ClientConfig,
+        reservedIp: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ReservedIpResponse {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/reserved_ips/", sdkEncodePathSegment(sdkWireString(reservedIp))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "reservedIPs_get",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
+    }
+}

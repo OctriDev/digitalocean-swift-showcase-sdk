@@ -5,7 +5,7 @@ import Foundation
 @testable import OctriDevDigitalOcean
 import XCTest
 
-let sdkMethodFixture534Expected = String(
+let sdkMethodFixture532Expected = String(
     data: Data(base64Encoded: [
         "eyJyZXF1ZXN0X2lkIjoiMTIzZTQ1NjctZTg5Yi0xMmQzLWE0NTYtNDI2NjE0MTc0MDAwIiwidXBsb2Fk",
         "cyI6W3siZXhwaXJlc19hdCI6IjIwMjMtMDEtMDFUMDA6MDA6MDBaIiwib2JqZWN0X2tleSI6ImV4YW1w",
@@ -15,7 +15,7 @@ let sdkMethodFixture534Expected = String(
     encoding: .utf8
 )!
 
-let sdkMethodFixture535Expected = String(
+let sdkMethodFixture533Expected = String(
     data: Data(base64Encoded: [
         "eyJpZCI6InVuYXV0aG9yaXplZCIsIm1lc3NhZ2UiOiJVbmFibGUgdG8gYXV0aGVudGljYXRlIHlvdS4i",
         "fQ==",
@@ -23,7 +23,7 @@ let sdkMethodFixture535Expected = String(
     encoding: .utf8
 )!
 
-let sdkMethodFixture536Expected = String(
+let sdkMethodFixture534Expected = String(
     data: Data(base64Encoded: [
         "eyJpbmRleGluZ19pbmZvIjp7ImNyZWF0ZWRfYXQiOiIyMDIzLTAxLTAxVDAwOjAwOjAwWiIsImRheXMi",
         "OlsxMjNdLCJkZWxldGVkX2F0IjoiMjAyMy0wMS0wMVQwMDowMDowMFoiLCJpc19hY3RpdmUiOnRydWUs",
@@ -36,7 +36,7 @@ let sdkMethodFixture536Expected = String(
     encoding: .utf8
 )!
 
-let sdkMethodFixture537Expected = String(
+let sdkMethodFixture535Expected = String(
     data: Data(base64Encoded: [
         "eyJpZCI6InVuYXV0aG9yaXplZCIsIm1lc3NhZ2UiOiJVbmFibGUgdG8gYXV0aGVudGljYXRlIHlvdS4i",
         "fQ==",
@@ -44,7 +44,7 @@ let sdkMethodFixture537Expected = String(
     encoding: .utf8
 )!
 
-let sdkMethodFixture538Value1 = String(
+let sdkMethodFixture536Value1 = String(
     data: Data(base64Encoded: [
         "eyJhZ2VudF9kZXBsb3ltZW50X3V1aWQiOiIxMjNlNDU2Ny1lODliLTEyZDMtYTQ1Ni00MjY2MTQxNzQw",
         "MDAiLCJhZ2VudF91dWlkIjoiMTIzZTQ1NjctZTg5Yi0xMmQzLWE0NTYtNDI2NjE0MTc0MDAwIiwibmFt",
@@ -53,7 +53,7 @@ let sdkMethodFixture538Value1 = String(
     encoding: .utf8
 )!
 
-let sdkMethodFixture538Value2 = String(
+let sdkMethodFixture536Value2 = String(
     data: Data(base64Encoded: [
         "eyJtZXRyaWNfdXVpZHMiOlsiZXhhbXBsZSBzdHJpbmciXSwic3Rhcl9tZXRyaWMiOnsibWV0cmljX3V1",
         "aWQiOiIxMjNlNDU2Ny1lODliLTEyZDMtYTQ1Ni00MjY2MTQxNzQwMDAiLCJuYW1lIjoiZXhhbXBsZSBu",
@@ -62,7 +62,7 @@ let sdkMethodFixture538Value2 = String(
     encoding: .utf8
 )!
 
-let sdkMethodFixture538Expected = String(
+let sdkMethodFixture536Expected = String(
     data: Data(base64Encoded: [
         "eyJzaW11bGF0aW9uX3J1biI6eyJhZ2VudF9jb25maWciOnsiYWdlbnRfZGVwbG95bWVudF91dWlkIjoi",
         "MTIzZTQ1NjctZTg5Yi0xMmQzLWE0NTYtNDI2NjE0MTc0MDAwIiwiYWdlbnRfdXVpZCI6IjEyM2U0NTY3",
@@ -90,7 +90,7 @@ let sdkMethodFixture538Expected = String(
     encoding: .utf8
 )!
 
-let sdkMethodFixture539Value1 = String(
+let sdkMethodFixture537Value1 = String(
     data: Data(base64Encoded: [
         "eyJhZ2VudF9kZXBsb3ltZW50X3V1aWQiOiIxMjNlNDU2Ny1lODliLTEyZDMtYTQ1Ni00MjY2MTQxNzQw",
         "MDAiLCJhZ2VudF91dWlkIjoiMTIzZTQ1NjctZTg5Yi0xMmQzLWE0NTYtNDI2NjE0MTc0MDAwIiwibmFt",
@@ -99,7 +99,7 @@ let sdkMethodFixture539Value1 = String(
     encoding: .utf8
 )!
 
-let sdkMethodFixture539Value2 = String(
+let sdkMethodFixture537Value2 = String(
     data: Data(base64Encoded: [
         "eyJtZXRyaWNfdXVpZHMiOlsiZXhhbXBsZSBzdHJpbmciXSwic3Rhcl9tZXRyaWMiOnsibWV0cmljX3V1",
         "aWQiOiIxMjNlNDU2Ny1lODliLTEyZDMtYTQ1Ni00MjY2MTQxNzQwMDAiLCJuYW1lIjoiZXhhbXBsZSBu",
@@ -108,7 +108,7 @@ let sdkMethodFixture539Value2 = String(
     encoding: .utf8
 )!
 
-let sdkMethodFixture539Expected = String(
+let sdkMethodFixture537Expected = String(
     data: Data(base64Encoded: [
         "eyJpZCI6InVuYXV0aG9yaXplZCIsIm1lc3NhZ2UiOiJVbmFibGUgdG8gYXV0aGVudGljYXRlIHlvdS4i",
         "fQ==",

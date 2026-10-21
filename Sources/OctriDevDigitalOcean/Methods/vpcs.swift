@@ -7,3 +7,94 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum VpcsMethods {}
+
+public extension VpcsMethods {
+    /// To list all of the VPCs on your account, send a GET request to `/v2/vpcs`.
+    ///
+    /// - Parameters:
+    /// - perPage: Number of items returned per page
+    /// - page: Which 'page' of paginated results to return.
+    static func vpcsList(
+        config: ClientConfig,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AllVpcs {
+        if let perPage {
+            try validateRange("per_page", Double(perPage), min: 1, max: 200)
+        }
+
+        if let page {
+            try validateRange("page", Double(page), min: 1)
+        }
+
+        return try await (sdkRequest(
+            "GET",
+            "/v2/vpcs",
+            config: config,
+            query: [
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("page", value: page),
+            ],
+            decoder: .json,
+            operationId: "vpcs_list",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
+    }
+
+    /// To create a VPC, send a POST request to `/v2/vpcs` specifying the attributes in the table below in the JSON
+    /// body. **Note:** If you do not currently have a VPC network in a specific datacenter region, the first one that
+    /// you create will be set as the default for that region. The default VPC for a region cannot be changed or
+    /// deleted.
+    static func vpcsCreate(
+        config: ClientConfig,
+        body: [String: JSONValue],
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExistingVpc {
+        try await (sdkRequest(
+            "POST",
+            "/v2/vpcs",
+            config: config,
+            rawBody: sdkEncodeBody(body, contentType: "application/json"),
+            decoder: .json,
+            operationId: "vpcs_create",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
+    }
+
+    /// To show information about an existing VPC, send a GET request to `/v2/vpcs/$VPC_ID`.
+    ///
+    /// - Parameters:
+    /// - vpcId: A unique identifier for a VPC.
+    static func vpcsGet(
+        config: ClientConfig,
+        vpcId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExistingVpc {
+        try sdkValidateUuid("vpc_id", vpcId)
+
+        return try await (sdkRequest(
+            "GET",
+            ["/v2/vpcs/", sdkEncodePathSegment(sdkWireString(vpcId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "vpcs_get",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
+    }
+}

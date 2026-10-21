@@ -7,3 +7,70 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum ImageActionsMethods {}
+
+public extension ImageActionsMethods {
+    /// To retrieve all actions that have been executed on an image, send a GET request to
+    /// `/v2/images/$IMAGE_ID/actions`.
+    ///
+    /// - Parameters:
+    /// - imageId: A unique number that can be used to identify and reference a
+    ///   specific image.
+    static func imageActionsList(
+        config: ClientConfig,
+        imageId: Int,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetImageActionsResponse {
+        try await (sdkRequest(
+            "GET",
+            ["/v2/images/", sdkEncodePathSegment(sdkWireString(imageId)), "/actions"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "imageActions_list",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
+    }
+
+    /// Triggers an action on an image to convert it to a snapshot or transfer it to another region. Set `type` to
+    /// `convert` or `transfer`, and provide `region` when transferring. The 201 response includes an action object you
+    /// can use to track the action's status.
+    ///
+    /// The following actions are available on an Image. ## Convert an Image to a Snapshot To convert an image, for
+    /// example, a backup to a snapshot, send a POST request to `/v2/images/$IMAGE_ID/actions`. Set the `type` attribute
+    /// to `convert`. ## Transfer an Image To transfer an image to another region, send a POST request to
+    /// `/v2/images/$IMAGE_ID/actions`. Set the `type` attribute to `transfer` and set `region` attribute to the slug
+    /// identifier of the region you wish to transfer to.
+    ///
+    /// - Parameters:
+    /// - imageId: A unique number that can be used to identify and reference a
+    ///   specific image.
+    static func imageActionsPost(
+        config: ClientConfig,
+        imageId: Int,
+        body: ImageActionsPostRequestBody? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Action {
+        try await (sdkRequest(
+            "POST",
+            ["/v2/images/", sdkEncodePathSegment(sdkWireString(imageId)), "/actions"].joined(),
+            config: config,
+            rawBody: (body.map { try sdkEncodeBody($0, contentType: "application/json") }),
+            decoder: .json,
+            operationId: "imageActions_post",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
+    }
+}

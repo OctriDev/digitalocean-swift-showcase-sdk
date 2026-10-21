@@ -7,3 +7,53 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum VpcNatGatewaysMethods {}
+
+public extension VpcNatGatewaysMethods {
+    /// To list all VPC NAT gateways in your team, send a GET request to `/v2/vpc_nat_gateways`. The response body will
+    /// be a JSON object with a key of `vpc_nat_gateways` containing an array of VPC NAT gateway objects. These each
+    /// contain the standard VPC NAT gateway attributes.
+    ///
+    /// - Parameters:
+    /// - perPage: Number of items returned per page
+    /// - page: Which 'page' of paginated results to return.
+    /// - state: The current state of the VPC NAT gateway.
+    /// - region: The region where the VPC NAT gateway is located.
+    /// - type: The type of the VPC NAT gateway.
+    /// - name: The name of the VPC NAT gateway.
+    static func vpcnatgatewaysList(
+        config: ClientConfig,
+        perPage: Int? = nil,
+        page: Int? = nil,
+        state: VpcnatgatewaysListParameterX809b2ffa? = nil,
+        region: VpcnatgatewaysListParameter? = nil,
+        type: VpcnatgatewaysListParameterXe9124a5b? = nil,
+        name: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> VpcNatGateways {
+        if let perPage {
+            try validateRange("per_page", Double(perPage), min: 1, max: 200)
+        }
+
+        if let page {
+            try validateRange("page", Double(page), min: 1)
+        }
+
+        return try await (sdkRequest(
+            "GET",
+            "/v2/vpc_nat_gateways",
+            config: config,
+            query: [
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("page", value: page),
+                SdkQueryParameter("state", value: state),
+                SdkQueryParameter("region", value: region),
+                SdkQueryParameter("type", value: type),
+                SdkQueryParameter("name", value: name),
+            ],
+            decoder: .json,
+            operationId: "vpcnatgateways_list",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
+    }
+}
