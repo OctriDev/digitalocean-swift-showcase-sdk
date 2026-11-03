@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiKnowledge domain models
+/// AgentPlatformAPIApiKnowledge domain models
 /// Knowledgebase Description
 public struct ApiKnowledgeBase: Codable {
     /// Time when the knowledge base was added to the agent
@@ -65,43 +65,58 @@ public struct ApiKnowledgeBase: Codable {
     }
 
     init() {
-        (self.addedToAgentAt, self.createdAt, self.databaseId, self.embeddingModelUuid, self.isPublic) = (nil, nil, nil, nil, nil)
-        (self.lastIndexingJob, self.name, self.projectId, self.region, self.rerankingConfig) = (nil, nil, nil, nil, nil)
-        (self.tags, self.updatedAt, self.userId, self.uuid) = (nil, nil, nil, nil)
+        (addedToAgentAt, createdAt, databaseId, embeddingModelUuid, isPublic) = (nil, nil, nil, nil, nil)
+        (lastIndexingJob, name, projectId, region, rerankingConfig) = (nil, nil, nil, nil, nil)
+        (tags, updatedAt, userId, uuid) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiKnowledgeBase {
-    public init(from decoder: Decoder) throws {
+public extension ApiKnowledgeBase {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.addedToAgentAt = try container.sdkDecodeIfPresent(.addedToAgentAt)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.databaseId = try container.sdkDecodeIfPresent(.databaseId)
-        self.embeddingModelUuid = try container.sdkDecodeIfPresent(.embeddingModelUuid)
-        self.isPublic = try container.sdkDecodeIfPresent(.isPublic)
-        self.lastIndexingJob = try container.sdkDecodeIfPresent(.lastIndexingJob)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.projectId = try container.sdkDecodeIfPresent(.projectId)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.rerankingConfig = try container.sdkDecodeIfPresent(.rerankingConfig)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
-        if let value = self.addedToAgentAt {
+        addedToAgentAt = try container.sdkDecodeIfPresent(.addedToAgentAt)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        databaseId = try container.sdkDecodeIfPresent(.databaseId)
+        embeddingModelUuid = try container.sdkDecodeIfPresent(.embeddingModelUuid)
+        isPublic = try container.sdkDecodeIfPresent(.isPublic)
+        lastIndexingJob = try container.sdkDecodeIfPresent(.lastIndexingJob)
+        name = try container.sdkDecodeIfPresent(.name)
+        projectId = try container.sdkDecodeIfPresent(.projectId)
+        region = try container.sdkDecodeIfPresent(.region)
+        rerankingConfig = try container.sdkDecodeIfPresent(.rerankingConfig)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        userId = try container.sdkDecodeIfPresent(.userId)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
+        if let value = addedToAgentAt {
             try sdkValidateDateTime("added_to_agent_at", sdkWireString(value))
         }
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiKnowledgeBase {
-    public init(addedToAgentAt: Date? = nil, createdAt: Date? = nil, databaseId: String? = nil, embeddingModelUuid: String? = nil, isPublic: Bool? = nil, lastIndexingJob: ApiIndexingJob? = nil, name: String? = nil, projectId: String? = nil, region: String? = nil, rerankingConfig: ApiRerankingConfiguration? = nil, tags: [String]? = nil, updatedAt: Date? = nil, userId: String? = nil, uuid: String? = nil) throws {
+public extension ApiKnowledgeBase {
+    init(
+        addedToAgentAt: Date? = nil,
+        createdAt: Date? = nil,
+        databaseId: String? = nil,
+        embeddingModelUuid: String? = nil,
+        isPublic: Bool? = nil,
+        lastIndexingJob: ApiIndexingJob? = nil,
+        name: String? = nil,
+        projectId: String? = nil,
+        region: String? = nil,
+        rerankingConfig: ApiRerankingConfiguration? = nil,
+        tags: [String]? = nil,
+        updatedAt: Date? = nil,
+        userId: String? = nil,
+        uuid: String? = nil
+    ) throws {
         self.init()
         (self.addedToAgentAt, self.createdAt) = (addedToAgentAt, createdAt)
         (self.databaseId, self.embeddingModelUuid) = (databaseId, embeddingModelUuid)
@@ -181,41 +196,63 @@ public struct ApiKnowledgeBaseDataSource: Codable {
     }
 
     init() {
-        (self.awsDataSource, self.bucketName, self.chunkingAlgorithm, self.chunkingOptions, self.createdAt) = (nil, nil, nil, nil, nil)
-        (self.dropboxDataSource, self.fileUploadDataSource, self.googleDriveDataSource, self.itemPath, self.lastDatasourceIndexingJob) = (nil, nil, nil, nil, nil)
-        (self.region, self.spacesDataSource, self.updatedAt, self.uuid, self.webCrawlerDataSource) = (nil, nil, nil, nil, nil)
+        (awsDataSource, bucketName, chunkingAlgorithm, chunkingOptions, createdAt) = (nil, nil, nil, nil, nil)
+        (dropboxDataSource, fileUploadDataSource, googleDriveDataSource, itemPath, lastDatasourceIndexingJob) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (region, spacesDataSource, updatedAt, uuid, webCrawlerDataSource) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiKnowledgeBaseDataSource {
-    public init(from decoder: Decoder) throws {
+public extension ApiKnowledgeBaseDataSource {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.awsDataSource = try container.sdkDecodeIfPresent(.awsDataSource)
-        self.bucketName = try container.sdkDecodeIfPresent(.bucketName)
-        self.chunkingAlgorithm = try container.sdkDecodeIfPresent(.chunkingAlgorithm)
-        self.chunkingOptions = try container.sdkDecodeIfPresent(.chunkingOptions)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.dropboxDataSource = try container.sdkDecodeIfPresent(.dropboxDataSource)
-        self.fileUploadDataSource = try container.sdkDecodeIfPresent(.fileUploadDataSource)
-        self.googleDriveDataSource = try container.sdkDecodeIfPresent(.googleDriveDataSource)
-        self.itemPath = try container.sdkDecodeIfPresent(.itemPath)
-        self.lastDatasourceIndexingJob = try container.sdkDecodeIfPresent(.lastDatasourceIndexingJob)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.spacesDataSource = try container.sdkDecodeIfPresent(.spacesDataSource)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
-        self.webCrawlerDataSource = try container.sdkDecodeIfPresent(.webCrawlerDataSource)
-        if let value = self.createdAt {
+        awsDataSource = try container.sdkDecodeIfPresent(.awsDataSource)
+        bucketName = try container.sdkDecodeIfPresent(.bucketName)
+        chunkingAlgorithm = try container.sdkDecodeIfPresent(.chunkingAlgorithm)
+        chunkingOptions = try container.sdkDecodeIfPresent(.chunkingOptions)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        dropboxDataSource = try container.sdkDecodeIfPresent(.dropboxDataSource)
+        fileUploadDataSource = try container.sdkDecodeIfPresent(.fileUploadDataSource)
+        googleDriveDataSource = try container.sdkDecodeIfPresent(.googleDriveDataSource)
+        itemPath = try container.sdkDecodeIfPresent(.itemPath)
+        lastDatasourceIndexingJob = try container.sdkDecodeIfPresent(.lastDatasourceIndexingJob)
+        region = try container.sdkDecodeIfPresent(.region)
+        spacesDataSource = try container.sdkDecodeIfPresent(.spacesDataSource)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
+        webCrawlerDataSource = try container.sdkDecodeIfPresent(.webCrawlerDataSource)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiKnowledgeBaseDataSource {
-    public init(awsDataSource: ApiAWSDataSourceDisplay? = nil, bucketName: String? = nil, chunkingAlgorithm: ApiChunkingAlgorithm? = nil, chunkingOptions: ApiChunkingOptions? = nil, createdAt: Date? = nil, dropboxDataSource: ApiDropboxDataSourceDisplay? = nil, fileUploadDataSource: ApiFileUploadDataSource? = nil, googleDriveDataSource: ApiGoogleDriveDataSourceDisplay? = nil, itemPath: String? = nil, lastDatasourceIndexingJob: ApiIndexedDataSource? = nil, region: String? = nil, spacesDataSource: ApiSpacesDataSource? = nil, updatedAt: Date? = nil, uuid: String? = nil, webCrawlerDataSource: ApiWebCrawlerDataSource? = nil) throws {
+public extension ApiKnowledgeBaseDataSource {
+    init(
+        awsDataSource: ApiAWSDataSourceDisplay? = nil,
+        bucketName: String? = nil,
+        chunkingAlgorithm: ApiChunkingAlgorithm? = nil,
+        chunkingOptions: ApiChunkingOptions? = nil,
+        createdAt: Date? = nil,
+        dropboxDataSource: ApiDropboxDataSourceDisplay? = nil,
+        fileUploadDataSource: ApiFileUploadDataSource? = nil,
+        googleDriveDataSource: ApiGoogleDriveDataSourceDisplay? = nil,
+        itemPath: String? = nil,
+        lastDatasourceIndexingJob: ApiIndexedDataSource? = nil,
+        region: String? = nil,
+        spacesDataSource: ApiSpacesDataSource? = nil,
+        updatedAt: Date? = nil,
+        uuid: String? = nil,
+        webCrawlerDataSource: ApiWebCrawlerDataSource? = nil
+    ) throws {
         self.init()
         (self.awsDataSource, self.bucketName) = (awsDataSource, bucketName)
         (self.chunkingAlgorithm, self.chunkingOptions) = (chunkingAlgorithm, chunkingOptions)

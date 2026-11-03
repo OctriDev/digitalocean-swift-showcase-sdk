@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApi domain models
+/// AgentPlatformAPIApi domain models
 /// Resource Usage Description
 public struct ApiResourceUsage: Codable {
     /// Optional array value serialized in the `measurements` wire field.
@@ -26,28 +26,33 @@ public struct ApiResourceUsage: Codable {
     }
 
     init() {
-        (self.measurements, self.resourceUuid, self.start, self.stop) = (nil, nil, nil, nil)
+        (measurements, resourceUuid, start, stop) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiResourceUsage {
-    public init(from decoder: Decoder) throws {
+public extension ApiResourceUsage {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.measurements = try container.sdkDecodeIfPresent(.measurements)
-        self.resourceUuid = try container.sdkDecodeIfPresent(.resourceUuid)
-        self.start = try container.sdkDecodeIfPresent(.start)
-        self.stop = try container.sdkDecodeIfPresent(.stop)
-        if let value = self.start {
+        measurements = try container.sdkDecodeIfPresent(.measurements)
+        resourceUuid = try container.sdkDecodeIfPresent(.resourceUuid)
+        start = try container.sdkDecodeIfPresent(.start)
+        stop = try container.sdkDecodeIfPresent(.stop)
+        if let value = start {
             try sdkValidateDateTime("start", sdkWireString(value))
         }
-        if let value = self.stop {
+        if let value = stop {
             try sdkValidateDateTime("stop", sdkWireString(value))
         }
     }
 }
 
-extension ApiResourceUsage {
-    public init(measurements: [ApiUsageMeasurement]? = nil, resourceUuid: String? = nil, start: Date? = nil, stop: Date? = nil) throws {
+public extension ApiResourceUsage {
+    init(
+        measurements: [ApiUsageMeasurement]? = nil,
+        resourceUuid: String? = nil,
+        start: Date? = nil,
+        stop: Date? = nil
+    ) throws {
         self.init()
         (self.measurements, self.resourceUuid) = (measurements, resourceUuid)
         (self.start, self.stop) = (start, stop)
@@ -75,20 +80,20 @@ public struct ApiUsageMeasurement: Codable {
     }
 
     init() {
-        (self.tokens, self.usageType) = (nil, nil)
+        (tokens, usageType) = (nil, nil)
     }
 }
 
-extension ApiUsageMeasurement {
-    public init(from decoder: Decoder) throws {
+public extension ApiUsageMeasurement {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.tokens = try container.sdkDecodeIfPresent(.tokens)
-        self.usageType = try container.sdkDecodeIfPresent(.usageType)
+        tokens = try container.sdkDecodeIfPresent(.tokens)
+        usageType = try container.sdkDecodeIfPresent(.usageType)
     }
 }
 
-extension ApiUsageMeasurement {
-    public init(tokens: Int? = nil, usageType: String? = nil) {
+public extension ApiUsageMeasurement {
+    init(tokens: Int? = nil, usageType: String? = nil) {
         self.init()
         (self.tokens, self.usageType) = (tokens, usageType)
     }

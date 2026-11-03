@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DatabasesDatabase domain models
+/// DatabasesDatabase domain models
 /// Typed representation of the `DatabaseClusterResize` API schema.
 public struct DatabaseClusterResize: Codable {
     /// A slug identifier representing desired the size of the nodes in the database cluster.
@@ -24,26 +24,36 @@ public struct DatabaseClusterResize: Codable {
         case storageSizeMib = "storage_size_mib"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DatabaseClusterResize {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.size) else {
-            throw SdkValidationError(field: "size", code: "required", message: "Validation failed for 'size': value is required")
-        }
-        guard container.contains(.numNodes) else {
-            throw SdkValidationError(field: "num_nodes", code: "required", message: "Validation failed for 'num_nodes': value is required")
-        }
-        self.size = try container.sdkDecodeRequired(.size)
-        self.numNodes = try container.sdkDecodeRequired(.numNodes)
-        self.storageSizeMib = try container.sdkDecodeIfPresent(.storageSizeMib)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DatabaseClusterResize {
-    public init(size: String, numNodes: Int, storageSizeMib: Int? = nil) {
+public extension DatabaseClusterResize {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.size) else {
+            throw SdkValidationError(
+                field: "size",
+                code: "required",
+                message: "Validation failed for 'size': value is required"
+            )
+        }
+        guard container.contains(.numNodes) else {
+            throw SdkValidationError(
+                field: "num_nodes",
+                code: "required",
+                message: "Validation failed for 'num_nodes': value is required"
+            )
+        }
+        size = try container.sdkDecodeRequired(.size)
+        numNodes = try container.sdkDecodeRequired(.numNodes)
+        storageSizeMib = try container.sdkDecodeIfPresent(.storageSizeMib)
+    }
+}
+
+public extension DatabaseClusterResize {
+    init(size: String, numNodes: Int, storageSizeMib: Int? = nil) {
         (self.size, self.numNodes) = (size, numNodes)
         self.storageSizeMib = storageSizeMib
     }

@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AgentInferenceMethods {
-    public struct AgentInferenceCreateChatCompletionOptions: Codable {
+public extension AgentInferenceMethods {
+    struct AgentInferenceCreateChatCompletionOptions: Codable {
         public var agent: Bool
         public var messages: [ChatMessage]
         public var model: String
@@ -108,7 +108,11 @@ extension AgentInferenceMethods {
     ///   temperature but not both.
     /// - user: A unique identifier representing your end-user, which can help
     ///   DigitalOcean to monitor and detect abuse.
-    public static func agentInferenceCreateChatCompletion(config: ClientConfig, options: AgentInferenceCreateChatCompletionOptions, requestOptions: RequestOptions? = nil) async throws -> ChatCompletionResponse {
+    static func agentInferenceCreateChatCompletion(
+        config: ClientConfig,
+        options: AgentInferenceCreateChatCompletionOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ChatCompletionResponse {
         try validateItems("messages", options.messages, min: 1)
 
         if let maxTokens = options.maxTokens?.valueOrNil {
@@ -145,8 +149,18 @@ extension AgentInferenceMethods {
 
         let requestBody = AgentInferenceCreateChatCompletionRequestBody(options: options)
 
-        return try (await sdkRequest("POST", "/api/v1/chat/completions", config: config, query: [
-            SdkQueryParameter("agent", value: options.agent),
-        ], body: requestBody, decoder: .json, operationId: "agentInference_create_chat_completion", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/api/v1/chat/completions",
+            config: config,
+            query: [
+                SdkQueryParameter("agent", value: options.agent),
+            ],
+            body: requestBody,
+            decoder: .json,
+            operationId: "agentInference_create_chat_completion",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).data
     }
 }

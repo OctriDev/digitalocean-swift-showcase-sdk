@@ -6,16 +6,37 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension NfsMethods {
-    /// To delete an NFS snapshot, send a DELETE request to `/v2/nfs/snapshots/{nfs_snapshot_id}?region=${region}`. A successful request will return a `204 No Content` status code.
+public extension NfsMethods {
+    /// To delete an NFS snapshot, send a DELETE request to `/v2/nfs/snapshots/{nfs_snapshot_id}?region=${region}`. A
+    /// successful request will return a `204 No Content` status code.
     ///
     /// - Parameters:
     /// - nfsSnapshotId: The unique ID of the NFS snapshot
     /// - region: The DigitalOcean region slug (e.g., nyc2, atl1) where the NFS
     ///   share resides.
-    public static func nfsDeleteSnapshot(config: ClientConfig, nfsSnapshotId: String, region: String? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try (await sdkRequest("DELETE", ["/v2/nfs/snapshots/", sdkEncodePathSegment(sdkWireString(nfsSnapshotId))].joined(), config: config, query: [
-            SdkQueryParameter("region", value: region),
-        ], decoder: .empty, operationId: "nfs_delete_snapshot", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func nfsDeleteSnapshot(
+        config: ClientConfig,
+        nfsSnapshotId: String,
+        region: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await (sdkRequest(
+            "DELETE",
+            ["/v2/nfs/snapshots/", sdkEncodePathSegment(sdkWireString(nfsSnapshotId))].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("region", value: region),
+            ],
+            decoder: .empty,
+            operationId: "nfs_delete_snapshot",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

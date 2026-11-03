@@ -3,7 +3,7 @@
 
 import Foundation
 
-// KubernetesAmd domain models
+/// KubernetesAmd domain models
 /// An object specifying whether the AMD GPU DRA Driver should be enabled in the Kubernetes cluster. Mutually
 /// exclusive with `amd_gpu_device_plugin`.
 public struct AmdGpuDraDriver: Codable {
@@ -16,19 +16,19 @@ public struct AmdGpuDraDriver: Codable {
     }
 
     init() {
-        self.enabled = nil
+        enabled = nil
     }
 }
 
-extension AmdGpuDraDriver {
-    public init(from decoder: Decoder) throws {
+public extension AmdGpuDraDriver {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
     }
 }
 
-extension AmdGpuDraDriver {
-    public init(enabled: Bool? = nil) {
+public extension AmdGpuDraDriver {
+    init(enabled: Bool? = nil) {
         self.init()
         self.enabled = enabled
     }
@@ -45,19 +45,19 @@ public struct AmdGpuDeviceMetricsExporterPlugin: Codable {
     }
 
     init() {
-        self.enabled = nil
+        enabled = nil
     }
 }
 
-extension AmdGpuDeviceMetricsExporterPlugin {
-    public init(from decoder: Decoder) throws {
+public extension AmdGpuDeviceMetricsExporterPlugin {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
     }
 }
 
-extension AmdGpuDeviceMetricsExporterPlugin {
-    public init(enabled: Bool? = nil) {
+public extension AmdGpuDeviceMetricsExporterPlugin {
+    init(enabled: Bool? = nil) {
         self.init()
         self.enabled = enabled
     }
@@ -75,19 +75,19 @@ public struct AmdGpuDevicePlugin: Codable {
     }
 
     init() {
-        self.enabled = nil
+        enabled = nil
     }
 }
 
-extension AmdGpuDevicePlugin {
-    public init(from decoder: Decoder) throws {
+public extension AmdGpuDevicePlugin {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
     }
 }
 
-extension AmdGpuDevicePlugin {
-    public init(enabled: Bool? = nil) {
+public extension AmdGpuDevicePlugin {
+    init(enabled: Bool? = nil) {
         self.init()
         self.enabled = enabled
     }

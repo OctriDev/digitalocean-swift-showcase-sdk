@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ActionGatewayTool domain models
+/// ActionGatewayTool domain models
 /// Per-minute call limits by category.
 public struct ToolQuotas: Codable {
     /// Calls per minute to the `exa_web_search` tool.
@@ -27,22 +27,32 @@ public struct ToolQuotas: Codable {
     }
 
     init() {
-        (self.webSearchRequestsPerMinute, self.webFetchRequestsPerMinute, self.nativeToolCallsRequestsPerMinute, self.nonNativeToolCallsRequestsPerMinute) = (nil, nil, nil, nil)
+        (
+            webSearchRequestsPerMinute,
+            webFetchRequestsPerMinute,
+            nativeToolCallsRequestsPerMinute,
+            nonNativeToolCallsRequestsPerMinute
+        ) = (nil, nil, nil, nil)
     }
 }
 
-extension ToolQuotas {
-    public init(from decoder: Decoder) throws {
+public extension ToolQuotas {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.webSearchRequestsPerMinute = try container.sdkDecodeIfPresent(.webSearchRequestsPerMinute)
-        self.webFetchRequestsPerMinute = try container.sdkDecodeIfPresent(.webFetchRequestsPerMinute)
-        self.nativeToolCallsRequestsPerMinute = try container.sdkDecodeIfPresent(.nativeToolCallsRequestsPerMinute)
-        self.nonNativeToolCallsRequestsPerMinute = try container.sdkDecodeIfPresent(.nonNativeToolCallsRequestsPerMinute)
+        webSearchRequestsPerMinute = try container.sdkDecodeIfPresent(.webSearchRequestsPerMinute)
+        webFetchRequestsPerMinute = try container.sdkDecodeIfPresent(.webFetchRequestsPerMinute)
+        nativeToolCallsRequestsPerMinute = try container.sdkDecodeIfPresent(.nativeToolCallsRequestsPerMinute)
+        nonNativeToolCallsRequestsPerMinute = try container.sdkDecodeIfPresent(.nonNativeToolCallsRequestsPerMinute)
     }
 }
 
-extension ToolQuotas {
-    public init(webSearchRequestsPerMinute: String? = nil, webFetchRequestsPerMinute: String? = nil, nativeToolCallsRequestsPerMinute: String? = nil, nonNativeToolCallsRequestsPerMinute: String? = nil) {
+public extension ToolQuotas {
+    init(
+        webSearchRequestsPerMinute: String? = nil,
+        webFetchRequestsPerMinute: String? = nil,
+        nativeToolCallsRequestsPerMinute: String? = nil,
+        nonNativeToolCallsRequestsPerMinute: String? = nil
+    ) {
         self.init()
         self.webSearchRequestsPerMinute = webSearchRequestsPerMinute
         self.webFetchRequestsPerMinute = webFetchRequestsPerMinute
@@ -71,21 +81,21 @@ public struct ToolDefinitionAuth: Codable {
     }
 
     init() {
-        (self.modes, self.provider, self.scopes) = (nil, nil, nil)
+        (modes, provider, scopes) = (nil, nil, nil)
     }
 }
 
-extension ToolDefinitionAuth {
-    public init(from decoder: Decoder) throws {
+public extension ToolDefinitionAuth {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.modes = try container.sdkDecodeIfPresent(.modes)
-        self.provider = try container.sdkDecodeIfPresent(.provider)
-        self.scopes = try container.sdkDecodeIfPresent(.scopes)
+        modes = try container.sdkDecodeIfPresent(.modes)
+        provider = try container.sdkDecodeIfPresent(.provider)
+        scopes = try container.sdkDecodeIfPresent(.scopes)
     }
 }
 
-extension ToolDefinitionAuth {
-    public init(modes: [String]? = nil, provider: String? = nil, scopes: [String]? = nil) {
+public extension ToolDefinitionAuth {
+    init(modes: [String]? = nil, provider: String? = nil, scopes: [String]? = nil) {
         self.init()
         (self.modes, self.provider) = (modes, provider)
         self.scopes = scopes
@@ -150,31 +160,43 @@ public struct Tool: Codable {
     }
 
     init() {
-        (self.name, self.toolkitId, self.toolSlug, self.title, self.description) = (nil, nil, nil, nil, nil)
-        (self.version, self.inputSchema, self.outputSchema, self.annotations, self.parallelizable) = (nil, nil, nil, nil, nil)
-        self.streamingSafe = nil
+        (name, toolkitId, toolSlug, title, description) = (nil, nil, nil, nil, nil)
+        (version, inputSchema, outputSchema, annotations, parallelizable) = (nil, nil, nil, nil, nil)
+        streamingSafe = nil
     }
 }
 
-extension Tool {
-    public init(from decoder: Decoder) throws {
+public extension Tool {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.toolkitId = try container.sdkDecodeIfPresent(.toolkitId)
-        self.toolSlug = try container.sdkDecodeIfPresent(.toolSlug)
-        self.title = try container.sdkDecodeIfPresent(.title)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.version = try container.sdkDecodeIfPresent(.version)
-        self.inputSchema = try container.sdkDecodeIfPresent(.inputSchema)
-        self.outputSchema = try container.sdkDecodeIfPresent(.outputSchema)
-        self.annotations = try container.sdkDecodeIfPresent(.annotations)
-        self.parallelizable = try container.sdkDecodeIfPresent(.parallelizable)
-        self.streamingSafe = try container.sdkDecodeIfPresent(.streamingSafe)
+        name = try container.sdkDecodeIfPresent(.name)
+        toolkitId = try container.sdkDecodeIfPresent(.toolkitId)
+        toolSlug = try container.sdkDecodeIfPresent(.toolSlug)
+        title = try container.sdkDecodeIfPresent(.title)
+        description = try container.sdkDecodeIfPresent(.description)
+        version = try container.sdkDecodeIfPresent(.version)
+        inputSchema = try container.sdkDecodeIfPresent(.inputSchema)
+        outputSchema = try container.sdkDecodeIfPresent(.outputSchema)
+        annotations = try container.sdkDecodeIfPresent(.annotations)
+        parallelizable = try container.sdkDecodeIfPresent(.parallelizable)
+        streamingSafe = try container.sdkDecodeIfPresent(.streamingSafe)
     }
 }
 
-extension Tool {
-    public init(name: String? = nil, toolkitId: String? = nil, toolSlug: String? = nil, title: String? = nil, description: String? = nil, version: String? = nil, inputSchema: [String: JSONValue]? = nil, outputSchema: [String: JSONValue]? = nil, annotations: ToolAnnotations? = nil, parallelizable: Bool? = nil, streamingSafe: Bool? = nil) {
+public extension Tool {
+    init(
+        name: String? = nil,
+        toolkitId: String? = nil,
+        toolSlug: String? = nil,
+        title: String? = nil,
+        description: String? = nil,
+        version: String? = nil,
+        inputSchema: [String: JSONValue]? = nil,
+        outputSchema: [String: JSONValue]? = nil,
+        annotations: ToolAnnotations? = nil,
+        parallelizable: Bool? = nil,
+        streamingSafe: Bool? = nil
+    ) {
         self.init()
         (self.name, self.toolkitId) = (name, toolkitId)
         (self.toolSlug, self.title) = (toolSlug, title)
@@ -223,26 +245,34 @@ public struct ToolSearchResult: Codable {
     }
 
     init() {
-        (self.toolSlug, self.name, self.title, self.description, self.provider) = (nil, nil, nil, nil, nil)
-        (self.category, self.version) = (nil, nil)
+        (toolSlug, name, title, description, provider) = (nil, nil, nil, nil, nil)
+        (category, version) = (nil, nil)
     }
 }
 
-extension ToolSearchResult {
-    public init(from decoder: Decoder) throws {
+public extension ToolSearchResult {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.toolSlug = try container.sdkDecodeIfPresent(.toolSlug)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.title = try container.sdkDecodeIfPresent(.title)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.provider = try container.sdkDecodeIfPresent(.provider)
-        self.category = try container.sdkDecodeIfPresent(.category)
-        self.version = try container.sdkDecodeIfPresent(.version)
+        toolSlug = try container.sdkDecodeIfPresent(.toolSlug)
+        name = try container.sdkDecodeIfPresent(.name)
+        title = try container.sdkDecodeIfPresent(.title)
+        description = try container.sdkDecodeIfPresent(.description)
+        provider = try container.sdkDecodeIfPresent(.provider)
+        category = try container.sdkDecodeIfPresent(.category)
+        version = try container.sdkDecodeIfPresent(.version)
     }
 }
 
-extension ToolSearchResult {
-    public init(toolSlug: String? = nil, name: String? = nil, title: String? = nil, description: String? = nil, provider: String? = nil, category: String? = nil, version: Int? = nil) {
+public extension ToolSearchResult {
+    init(
+        toolSlug: String? = nil,
+        name: String? = nil,
+        title: String? = nil,
+        description: String? = nil,
+        provider: String? = nil,
+        category: String? = nil,
+        version: Int? = nil
+    ) {
         self.init()
         (self.toolSlug, self.name) = (toolSlug, name)
         (self.title, self.description) = (title, description)
@@ -269,21 +299,21 @@ public struct ToolHealth: Codable {
     }
 
     init() {
-        (self.toolSlug, self.provider, self.health) = (nil, nil, nil)
+        (toolSlug, provider, health) = (nil, nil, nil)
     }
 }
 
-extension ToolHealth {
-    public init(from decoder: Decoder) throws {
+public extension ToolHealth {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.toolSlug = try container.sdkDecodeIfPresent(.toolSlug)
-        self.provider = try container.sdkDecodeIfPresent(.provider)
-        self.health = try container.sdkDecodeIfPresent(.health)
+        toolSlug = try container.sdkDecodeIfPresent(.toolSlug)
+        provider = try container.sdkDecodeIfPresent(.provider)
+        health = try container.sdkDecodeIfPresent(.health)
     }
 }
 
-extension ToolHealth {
-    public init(toolSlug: String? = nil, provider: String? = nil, health: HealthMetrics? = nil) {
+public extension ToolHealth {
+    init(toolSlug: String? = nil, provider: String? = nil, health: HealthMetrics? = nil) {
         self.init()
         (self.toolSlug, self.provider) = (toolSlug, provider)
         self.health = health
@@ -345,32 +375,45 @@ public struct ToolDefinition: Codable {
     }
 
     init() {
-        (self.toolId, self.name, self.toolkitId, self.toolSlug, self.title) = (nil, nil, nil, nil, nil)
-        (self.description, self.inputSchema, self.outputSchema, self.annotations, self.version) = (nil, nil, nil, nil, nil)
-        (self.auth, self.providerKind) = (nil, nil)
+        (toolId, name, toolkitId, toolSlug, title) = (nil, nil, nil, nil, nil)
+        (description, inputSchema, outputSchema, annotations, version) = (nil, nil, nil, nil, nil)
+        (auth, providerKind) = (nil, nil)
     }
 }
 
-extension ToolDefinition {
-    public init(from decoder: Decoder) throws {
+public extension ToolDefinition {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.toolId = try container.sdkDecodeIfPresent(.toolId)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.toolkitId = try container.sdkDecodeIfPresent(.toolkitId)
-        self.toolSlug = try container.sdkDecodeIfPresent(.toolSlug)
-        self.title = try container.sdkDecodeIfPresent(.title)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.inputSchema = try container.sdkDecodeIfPresent(.inputSchema)
-        self.outputSchema = try container.sdkDecodeIfPresent(.outputSchema)
-        self.annotations = try container.sdkDecodeIfPresent(.annotations)
-        self.version = try container.sdkDecodeIfPresent(.version)
-        self.auth = try container.sdkDecodeIfPresent(.auth)
-        self.providerKind = try container.sdkDecodeIfPresent(.providerKind)
+        toolId = try container.sdkDecodeIfPresent(.toolId)
+        name = try container.sdkDecodeIfPresent(.name)
+        toolkitId = try container.sdkDecodeIfPresent(.toolkitId)
+        toolSlug = try container.sdkDecodeIfPresent(.toolSlug)
+        title = try container.sdkDecodeIfPresent(.title)
+        description = try container.sdkDecodeIfPresent(.description)
+        inputSchema = try container.sdkDecodeIfPresent(.inputSchema)
+        outputSchema = try container.sdkDecodeIfPresent(.outputSchema)
+        annotations = try container.sdkDecodeIfPresent(.annotations)
+        version = try container.sdkDecodeIfPresent(.version)
+        auth = try container.sdkDecodeIfPresent(.auth)
+        providerKind = try container.sdkDecodeIfPresent(.providerKind)
     }
 }
 
-extension ToolDefinition {
-    public init(toolId: String? = nil, name: String? = nil, toolkitId: String? = nil, toolSlug: String? = nil, title: String? = nil, description: String? = nil, inputSchema: [String: JSONValue]? = nil, outputSchema: [String: JSONValue]? = nil, annotations: ToolAnnotations? = nil, version: String? = nil, auth: ToolDefinitionAuth? = nil, providerKind: String? = nil) {
+public extension ToolDefinition {
+    init(
+        toolId: String? = nil,
+        name: String? = nil,
+        toolkitId: String? = nil,
+        toolSlug: String? = nil,
+        title: String? = nil,
+        description: String? = nil,
+        inputSchema: [String: JSONValue]? = nil,
+        outputSchema: [String: JSONValue]? = nil,
+        annotations: ToolAnnotations? = nil,
+        version: String? = nil,
+        auth: ToolDefinitionAuth? = nil,
+        providerKind: String? = nil
+    ) {
         self.init()
         (self.toolId, self.name) = (toolId, name)
         (self.toolkitId, self.toolSlug) = (toolkitId, toolSlug)

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// SharedSnapshots domain models
+/// SharedSnapshots domain models
 /// Typed representation of the `SnapshotsBase` API schema.
 public struct SnapshotsBase: Codable {
     /// A human-readable name for the snapshot.
@@ -31,42 +31,64 @@ public struct SnapshotsBase: Codable {
         case sizeGigabytes = "size_gigabytes"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SnapshotsBase {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.createdAt) else {
-            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
-        }
-        guard container.contains(.regions) else {
-            throw SdkValidationError(field: "regions", code: "required", message: "Validation failed for 'regions': value is required")
-        }
-        guard container.contains(.minDiskSize) else {
-            throw SdkValidationError(field: "min_disk_size", code: "required", message: "Validation failed for 'min_disk_size': value is required")
-        }
-        guard container.contains(.sizeGigabytes) else {
-            throw SdkValidationError(field: "size_gigabytes", code: "required", message: "Validation failed for 'size_gigabytes': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.regions = try container.sdkDecodeRequired(.regions)
-        self.minDiskSize = try container.sdkDecodeRequired(.minDiskSize)
-        self.sizeGigabytes = try container.sdkDecodeRequired(.sizeGigabytes)
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SnapshotsBase {
-    public init(name: String, createdAt: Date, regions: [String], minDiskSize: Int, sizeGigabytes: Double) throws {
+public extension SnapshotsBase {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.createdAt) else {
+            throw SdkValidationError(
+                field: "created_at",
+                code: "required",
+                message: "Validation failed for 'created_at': value is required"
+            )
+        }
+        guard container.contains(.regions) else {
+            throw SdkValidationError(
+                field: "regions",
+                code: "required",
+                message: "Validation failed for 'regions': value is required"
+            )
+        }
+        guard container.contains(.minDiskSize) else {
+            throw SdkValidationError(
+                field: "min_disk_size",
+                code: "required",
+                message: "Validation failed for 'min_disk_size': value is required"
+            )
+        }
+        guard container.contains(.sizeGigabytes) else {
+            throw SdkValidationError(
+                field: "size_gigabytes",
+                code: "required",
+                message: "Validation failed for 'size_gigabytes': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        regions = try container.sdkDecodeRequired(.regions)
+        minDiskSize = try container.sdkDecodeRequired(.minDiskSize)
+        sizeGigabytes = try container.sdkDecodeRequired(.sizeGigabytes)
+        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+    }
+}
+
+public extension SnapshotsBase {
+    init(name: String, createdAt: Date, regions: [String], minDiskSize: Int, sizeGigabytes: Double) throws {
         (self.name, self.createdAt) = (name, createdAt)
         (self.regions, self.minDiskSize) = (regions, minDiskSize)
         self.sizeGigabytes = sizeGigabytes
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -113,33 +135,45 @@ public struct Snapshots: Codable {
         case tags
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension Snapshots {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeRequired(.id)
-        self.name = try container.sdkDecodeRequired(.name)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.regions = try container.sdkDecodeRequired(.regions)
-        self.minDiskSize = try container.sdkDecodeRequired(.minDiskSize)
-        self.sizeGigabytes = try container.sdkDecodeRequired(.sizeGigabytes)
-        self.resourceId = try container.sdkDecodeRequired(.resourceId)
-        self.resourceType = try container.sdkDecodeRequired(.resourceType)
-        self.tags = try container.sdkDecodeNullable(.tags)
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension Snapshots {
-    public init(id: String, name: String, createdAt: Date, regions: [String], minDiskSize: Int, sizeGigabytes: Double, resourceId: String, resourceType: SnapshotsVariant2ResourceType, tags: [String]?) throws {
+public extension Snapshots {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.sdkDecodeRequired(.id)
+        name = try container.sdkDecodeRequired(.name)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        regions = try container.sdkDecodeRequired(.regions)
+        minDiskSize = try container.sdkDecodeRequired(.minDiskSize)
+        sizeGigabytes = try container.sdkDecodeRequired(.sizeGigabytes)
+        resourceId = try container.sdkDecodeRequired(.resourceId)
+        resourceType = try container.sdkDecodeRequired(.resourceType)
+        tags = try container.sdkDecodeNullable(.tags)
+        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+    }
+}
+
+public extension Snapshots {
+    init(
+        id: String,
+        name: String,
+        createdAt: Date,
+        regions: [String],
+        minDiskSize: Int,
+        sizeGigabytes: Double,
+        resourceId: String,
+        resourceType: SnapshotsVariant2ResourceType,
+        tags: [String]?
+    ) throws {
         (self.id, self.name) = (id, name)
         (self.createdAt, self.regions) = (createdAt, regions)
         (self.minDiskSize, self.sizeGigabytes) = (minDiskSize, sizeGigabytes)
         (self.resourceId, self.resourceType) = (resourceId, resourceType)
         self.tags = tags
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -153,21 +187,27 @@ public struct SnapshotsVariant0: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SnapshotsVariant0 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SnapshotsVariant0 {
-    public init(id: String) {
+public extension SnapshotsVariant0 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+    }
+}
+
+public extension SnapshotsVariant0 {
+    init(id: String) {
         self.id = id
     }
 }
@@ -190,29 +230,43 @@ public struct SnapshotsVariant2: Codable {
         case tags
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SnapshotsVariant2 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.resourceId) else {
-            throw SdkValidationError(field: "resource_id", code: "required", message: "Validation failed for 'resource_id': value is required")
-        }
-        guard container.contains(.resourceType) else {
-            throw SdkValidationError(field: "resource_type", code: "required", message: "Validation failed for 'resource_type': value is required")
-        }
-        guard container.contains(.tags) else {
-            throw SdkValidationError(field: "tags", code: "required", message: "Validation failed for 'tags': value is required")
-        }
-        self.resourceId = try container.sdkDecodeRequired(.resourceId)
-        self.resourceType = try container.sdkDecodeRequired(.resourceType)
-        self.tags = try container.sdkDecodeNullable(.tags)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SnapshotsVariant2 {
-    public init(resourceId: String, resourceType: SnapshotsVariant2ResourceType, tags: [String]?) {
+public extension SnapshotsVariant2 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.resourceId) else {
+            throw SdkValidationError(
+                field: "resource_id",
+                code: "required",
+                message: "Validation failed for 'resource_id': value is required"
+            )
+        }
+        guard container.contains(.resourceType) else {
+            throw SdkValidationError(
+                field: "resource_type",
+                code: "required",
+                message: "Validation failed for 'resource_type': value is required"
+            )
+        }
+        guard container.contains(.tags) else {
+            throw SdkValidationError(
+                field: "tags",
+                code: "required",
+                message: "Validation failed for 'tags': value is required"
+            )
+        }
+        resourceId = try container.sdkDecodeRequired(.resourceId)
+        resourceType = try container.sdkDecodeRequired(.resourceType)
+        tags = try container.sdkDecodeNullable(.tags)
+    }
+}
+
+public extension SnapshotsVariant2 {
+    init(resourceId: String, resourceType: SnapshotsVariant2ResourceType, tags: [String]?) {
         (self.resourceId, self.resourceType) = (resourceId, resourceType)
         self.tags = tags
     }
@@ -222,13 +276,16 @@ extension SnapshotsVariant2 {
 public struct SnapshotsVariant2ResourceType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let droplet = SnapshotsVariant2ResourceType(rawValue: "droplet")
     public static let volume = SnapshotsVariant2ResourceType(rawValue: "volume")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

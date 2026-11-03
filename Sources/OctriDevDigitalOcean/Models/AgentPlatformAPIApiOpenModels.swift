@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiOpen domain models
+/// AgentPlatformAPIApiOpen domain models
 /// OpenAI API Key Info
 public struct ApiOpenAIAPIKeyInfo: Codable {
     /// Key creation date
@@ -38,35 +38,43 @@ public struct ApiOpenAIAPIKeyInfo: Codable {
     }
 
     init() {
-        (self.createdAt, self.createdBy, self.deletedAt, self.models, self.name) = (nil, nil, nil, nil, nil)
-        (self.updatedAt, self.uuid) = (nil, nil)
+        (createdAt, createdBy, deletedAt, models, name) = (nil, nil, nil, nil, nil)
+        (updatedAt, uuid) = (nil, nil)
     }
 }
 
-extension ApiOpenAIAPIKeyInfo {
-    public init(from decoder: Decoder) throws {
+public extension ApiOpenAIAPIKeyInfo {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.createdBy = try container.sdkDecodeIfPresent(.createdBy)
-        self.deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
-        self.models = try container.sdkDecodeIfPresent(.models)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
-        if let value = self.createdAt {
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        createdBy = try container.sdkDecodeIfPresent(.createdBy)
+        deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
+        models = try container.sdkDecodeIfPresent(.models)
+        name = try container.sdkDecodeIfPresent(.name)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.deletedAt {
+        if let value = deletedAt {
             try sdkValidateDateTime("deleted_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiOpenAIAPIKeyInfo {
-    public init(createdAt: Date? = nil, createdBy: String? = nil, deletedAt: Date? = nil, models: [ApiModel]? = nil, name: String? = nil, updatedAt: Date? = nil, uuid: String? = nil) throws {
+public extension ApiOpenAIAPIKeyInfo {
+    init(
+        createdAt: Date? = nil,
+        createdBy: String? = nil,
+        deletedAt: Date? = nil,
+        models: [ApiModel]? = nil,
+        name: String? = nil,
+        updatedAt: Date? = nil,
+        uuid: String? = nil
+    ) throws {
         self.init()
         (self.createdAt, self.createdBy) = (createdAt, createdBy)
         (self.deletedAt, self.models) = (deletedAt, models)
@@ -88,16 +96,21 @@ extension ApiOpenAIAPIKeyInfo {
 public struct ApiOpenSearchPlanSize: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
-    public static let openSearchPlanSizeUnspecified = ApiOpenSearchPlanSize(rawValue: "OPEN_SEARCH_PLAN_SIZE_UNSPECIFIED")
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let openSearchPlanSizeUnspecified =
+        ApiOpenSearchPlanSize(rawValue: "OPEN_SEARCH_PLAN_SIZE_UNSPECIFIED")
     public static let openSearchPlanSizeSmall = ApiOpenSearchPlanSize(rawValue: "OPEN_SEARCH_PLAN_SIZE_SMALL")
     public static let openSearchPlanSizeMedium = ApiOpenSearchPlanSize(rawValue: "OPEN_SEARCH_PLAN_SIZE_MEDIUM")
     public static let openSearchPlanSizeLarge = ApiOpenSearchPlanSize(rawValue: "OPEN_SEARCH_PLAN_SIZE_LARGE")
-    public static let openSearchPlanSizeExtraLarge = ApiOpenSearchPlanSize(rawValue: "OPEN_SEARCH_PLAN_SIZE_EXTRA_LARGE")
+    public static let openSearchPlanSizeExtraLarge =
+        ApiOpenSearchPlanSize(rawValue: "OPEN_SEARCH_PLAN_SIZE_EXTRA_LARGE")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

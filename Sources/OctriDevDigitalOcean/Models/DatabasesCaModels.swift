@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DatabasesCa domain models
+/// DatabasesCa domain models
 /// Typed representation of the `CaResponse` API schema.
 public struct CaResponse: Codable, SdkResource {
     /// Required object value serialized in the `ca` wire field.
@@ -14,21 +14,27 @@ public struct CaResponse: Codable, SdkResource {
         case ca
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CaResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.ca) else {
-            throw SdkValidationError(field: "ca", code: "required", message: "Validation failed for 'ca': value is required")
-        }
-        self.ca = try container.sdkDecodeRequired(.ca)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CaResponse {
-    public init(ca: Ca) {
+public extension CaResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.ca) else {
+            throw SdkValidationError(
+                field: "ca",
+                code: "required",
+                message: "Validation failed for 'ca': value is required"
+            )
+        }
+        ca = try container.sdkDecodeRequired(.ca)
+    }
+}
+
+public extension CaResponse {
+    init(ca: Ca) {
         self.ca = ca
     }
 }
@@ -63,21 +69,27 @@ public struct Ca: Codable {
         case certificate
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension Ca {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.certificate) else {
-            throw SdkValidationError(field: "certificate", code: "required", message: "Validation failed for 'certificate': value is required")
-        }
-        self.certificate = try container.sdkDecodeRequired(.certificate)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension Ca {
-    public init(certificate: String) {
+public extension Ca {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.certificate) else {
+            throw SdkValidationError(
+                field: "certificate",
+                code: "required",
+                message: "Validation failed for 'certificate': value is required"
+            )
+        }
+        certificate = try container.sdkDecodeRequired(.certificate)
+    }
+}
+
+public extension Ca {
+    init(certificate: String) {
         self.certificate = certificate
     }
 }

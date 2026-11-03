@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Databases domain models
+/// Databases domain models
 public typealias Version = String
 
 /// Typed representation of the `Version2` API schema.
@@ -17,19 +17,19 @@ public struct Version2: Codable {
     }
 
     init() {
-        self.version = nil
+        version = nil
     }
 }
 
-extension Version2 {
-    public init(from decoder: Decoder) throws {
+public extension Version2 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.version = try container.sdkDecodeIfPresent(.version)
+        version = try container.sdkDecodeIfPresent(.version)
     }
 }
 
-extension Version2 {
-    public init(version: Version? = nil) {
+public extension Version2 {
+    init(version: Version? = nil) {
         self.init()
         self.version = version
     }

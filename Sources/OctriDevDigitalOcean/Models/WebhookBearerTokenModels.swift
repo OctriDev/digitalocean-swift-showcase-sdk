@@ -3,15 +3,15 @@
 
 import Foundation
 
-// WebhookBearerToken domain models
+/// WebhookBearerToken domain models
 /// Bearer token authentication for a webhook create or update request. `token` is write-only: send the full value
 /// to set or rotate. Omit `token` on update to keep the existing token.
 public struct WebhookBearerToken: Codable {
-
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension WebhookBearerToken {
-    public init() {
-    }
+public extension WebhookBearerToken {
+    init() {}
 }

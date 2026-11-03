@@ -17,9 +17,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.getLogsink(
-            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-            logsinkId: decoded("\"50484ec3-19d6-4cd3-b56f-3b0381c289a6\"")
-        )
+                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+                logsinkId: decoded("\"50484ec3-19d6-4cd3-b56f-3b0381c289a6\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -64,8 +64,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.getMigrationStatus(
-            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
-        )
+                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -111,9 +111,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.getReplica(
-            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-            replicaName: decoded("\"read-nyc3-01\"")
-        )
+                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+                replicaName: decoded("\"read-nyc3-01\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -158,8 +158,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.getSqlMode(
-            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
-        )
+                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -205,9 +205,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.getUser(
-            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
-            username: decoded("\"app-01\"")
-        )
+                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\""),
+                username: decoded("\"app-01\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -245,8 +245,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.installUpdate(
-            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
-        )
+                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -291,8 +291,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.list(
-            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
-        )
+                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -337,8 +337,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.listBackups(
-            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
-        )
+                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -383,8 +383,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.listClusters(
-            tagName: decoded("\"production\"")
-        )
+                tagName: decoded("\"production\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -429,8 +429,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.listConnectionPools(
-            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
-        )
+                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -475,8 +475,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.listEventsLogs(
-            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
-        )
+                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -521,8 +521,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.databases.listFirewallRules(
-            databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
-        )
+                databaseClusterUuid: decoded("\"9cc10173-e9ea-4176-9dbc-a4cee4c4ff30\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

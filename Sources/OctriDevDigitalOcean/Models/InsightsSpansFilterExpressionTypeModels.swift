@@ -3,12 +3,15 @@
 
 import Foundation
 
-// InsightsSpans domain models
+/// InsightsSpans domain models
 /// The node kind.
 public struct SpansFilterExpressionType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let condition = SpansFilterExpressionType(rawValue: "condition")
     public static let and = SpansFilterExpressionType(rawValue: "and")
     public static let or = SpansFilterExpressionType(rawValue: "or")
@@ -17,7 +20,7 @@ public struct SpansFilterExpressionType: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -30,7 +33,10 @@ public struct SpansFilterExpressionType: RawRepresentable, Hashable, Codable, Se
 public struct SpansFilterExpressionOperator: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let eq = SpansFilterExpressionOperator(rawValue: "eq")
     public static let neq = SpansFilterExpressionOperator(rawValue: "neq")
     public static let gt = SpansFilterExpressionOperator(rawValue: "gt")
@@ -42,7 +48,7 @@ public struct SpansFilterExpressionOperator: RawRepresentable, Hashable, Codable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -55,13 +61,16 @@ public struct SpansFilterExpressionOperator: RawRepresentable, Hashable, Codable
 public struct SpansOrderByDirection: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let asc = SpansOrderByDirection(rawValue: "asc")
     public static let desc = SpansOrderByDirection(rawValue: "desc")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

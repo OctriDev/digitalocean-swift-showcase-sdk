@@ -3,7 +3,7 @@
 
 import Foundation
 
-// KubernetesKubernetes domain models
+/// KubernetesKubernetes domain models
 /// Typed representation of the `KubernetesNodePoolUpdateRequest` API schema.
 public struct KubernetesNodePoolUpdateRequest: Codable {
     /// A human-readable name for the node pool.
@@ -47,31 +47,50 @@ public struct KubernetesNodePoolUpdateRequest: Codable {
         case maxNodes = "max_nodes"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension KubernetesNodePoolUpdateRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.count) else {
-            throw SdkValidationError(field: "count", code: "required", message: "Validation failed for 'count': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.count = try container.sdkDecodeRequired(.count)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.labels = try container.sdkDecodeIfPresent(.labels)
-        self.taints = try container.sdkDecodeIfPresent(.taints)
-        self.autoScale = try container.sdkDecodeIfPresent(.autoScale)
-        self.minNodes = try container.sdkDecodeIfPresent(.minNodes)
-        self.maxNodes = try container.sdkDecodeIfPresent(.maxNodes)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension KubernetesNodePoolUpdateRequest {
-    public init(name: String, count: Int, tags: [String]? = nil, labels: [String: JSONValue]? = nil, taints: [KubernetesNodePoolTaint]? = nil, autoScale: Bool? = nil, minNodes: Int? = nil, maxNodes: Int? = nil) {
+public extension KubernetesNodePoolUpdateRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.count) else {
+            throw SdkValidationError(
+                field: "count",
+                code: "required",
+                message: "Validation failed for 'count': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        count = try container.sdkDecodeRequired(.count)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        labels = try container.sdkDecodeIfPresent(.labels)
+        taints = try container.sdkDecodeIfPresent(.taints)
+        autoScale = try container.sdkDecodeIfPresent(.autoScale)
+        minNodes = try container.sdkDecodeIfPresent(.minNodes)
+        maxNodes = try container.sdkDecodeIfPresent(.maxNodes)
+    }
+}
+
+public extension KubernetesNodePoolUpdateRequest {
+    init(
+        name: String,
+        count: Int,
+        tags: [String]? = nil,
+        labels: [String: JSONValue]? = nil,
+        taints: [KubernetesNodePoolTaint]? = nil,
+        autoScale: Bool? = nil,
+        minNodes: Int? = nil,
+        maxNodes: Int? = nil
+    ) {
         (self.name, self.count) = (name, count)
         (self.tags, self.labels) = (tags, labels)
         (self.taints, self.autoScale) = (taints, autoScale)

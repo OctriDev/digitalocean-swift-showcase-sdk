@@ -3,32 +3,40 @@
 
 import Foundation
 
-// SharedChat domain models
+/// SharedChat domain models
 public indirect enum ChatCompletionRequestToolChoice {
     case stringValue(String)
     case chatCompletionRequestToolChoiceVariant1(ChatCompletionRequestToolChoiceVariant1)
 }
 
 extension ChatCompletionRequestToolChoice: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ChatCompletionRequestToolChoice")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for ChatCompletionRequestToolChoice"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension ChatCompletionRequestToolChoice {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
         if let value = try? container.decode(
             ChatCompletionRequestToolChoiceVariant1.self
         ) {
-            return             .chatCompletionRequestToolChoiceVariant1(value)
+            return .chatCompletionRequestToolChoiceVariant1(value)
         }
         return nil
     }
@@ -58,25 +66,35 @@ public struct ChatCompletionToolCallFunction: Codable {
         case arguments
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ChatCompletionToolCallFunction {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.arguments) else {
-            throw SdkValidationError(field: "arguments", code: "required", message: "Validation failed for 'arguments': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.arguments = try container.sdkDecodeRequired(.arguments)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ChatCompletionToolCallFunction {
-    public init(name: String, arguments: String) {
+public extension ChatCompletionToolCallFunction {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.arguments) else {
+            throw SdkValidationError(
+                field: "arguments",
+                code: "required",
+                message: "Validation failed for 'arguments': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        arguments = try container.sdkDecodeRequired(.arguments)
+    }
+}
+
+public extension ChatCompletionToolCallFunction {
+    init(name: String, arguments: String) {
         (self.name, self.arguments) = (name, arguments)
     }
 }
@@ -96,20 +114,20 @@ public struct ChatCompletionToolCallChunkFunction: Codable {
     }
 
     init() {
-        (self.name, self.arguments) = (nil, nil)
+        (name, arguments) = (nil, nil)
     }
 }
 
-extension ChatCompletionToolCallChunkFunction {
-    public init(from decoder: Decoder) throws {
+public extension ChatCompletionToolCallChunkFunction {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.arguments = try container.sdkDecodeIfPresent(.arguments)
+        name = try container.sdkDecodeIfPresent(.name)
+        arguments = try container.sdkDecodeIfPresent(.arguments)
     }
 }
 
-extension ChatCompletionToolCallChunkFunction {
-    public init(name: String? = nil, arguments: String? = nil) {
+public extension ChatCompletionToolCallChunkFunction {
+    init(name: String? = nil, arguments: String? = nil) {
         self.init()
         (self.name, self.arguments) = (name, arguments)
     }
@@ -127,25 +145,35 @@ public struct ChatCompletionChunkChoicesItemLogprobs: Codable {
         case refusal
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ChatCompletionChunkChoicesItemLogprobs {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.content) else {
-            throw SdkValidationError(field: "content", code: "required", message: "Validation failed for 'content': value is required")
-        }
-        guard container.contains(.refusal) else {
-            throw SdkValidationError(field: "refusal", code: "required", message: "Validation failed for 'refusal': value is required")
-        }
-        self.content = try container.sdkDecodeNullable(.content)
-        self.refusal = try container.sdkDecodeNullable(.refusal)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ChatCompletionChunkChoicesItemLogprobs {
-    public init(content: [ChatCompletionTokenLogprob]?, refusal: [ChatCompletionTokenLogprob]?) {
+public extension ChatCompletionChunkChoicesItemLogprobs {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.content) else {
+            throw SdkValidationError(
+                field: "content",
+                code: "required",
+                message: "Validation failed for 'content': value is required"
+            )
+        }
+        guard container.contains(.refusal) else {
+            throw SdkValidationError(
+                field: "refusal",
+                code: "required",
+                message: "Validation failed for 'refusal': value is required"
+            )
+        }
+        content = try container.sdkDecodeNullable(.content)
+        refusal = try container.sdkDecodeNullable(.refusal)
+    }
+}
+
+public extension ChatCompletionChunkChoicesItemLogprobs {
+    init(content: [ChatCompletionTokenLogprob]?, refusal: [ChatCompletionTokenLogprob]?) {
         (self.content, self.refusal) = (content, refusal)
     }
 }
@@ -167,29 +195,43 @@ public struct ChatCompletionToolCall: Codable {
         case function
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ChatCompletionToolCall {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.function) else {
-            throw SdkValidationError(field: "function", code: "required", message: "Validation failed for 'function': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.function = try container.sdkDecodeRequired(.function)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ChatCompletionToolCall {
-    public init(id: String, type: ChatCompletionToolCallType, function: ChatCompletionToolCallFunction) {
+public extension ChatCompletionToolCall {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.function) else {
+            throw SdkValidationError(
+                field: "function",
+                code: "required",
+                message: "Validation failed for 'function': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+        type = try container.sdkDecodeRequired(.type)
+        function = try container.sdkDecodeRequired(.function)
+    }
+}
+
+public extension ChatCompletionToolCall {
+    init(id: String, type: ChatCompletionToolCallType, function: ChatCompletionToolCallFunction) {
         (self.id, self.type) = (id, type)
         self.function = function
     }
@@ -208,25 +250,35 @@ public struct ChatCompletionTool: Codable {
         case function
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ChatCompletionTool {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.function) else {
-            throw SdkValidationError(field: "function", code: "required", message: "Validation failed for 'function': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.function = try container.sdkDecodeRequired(.function)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ChatCompletionTool {
-    public init(type: ChatCompletionToolType, function: FunctionObject) {
+public extension ChatCompletionTool {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.function) else {
+            throw SdkValidationError(
+                field: "function",
+                code: "required",
+                message: "Validation failed for 'function': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        function = try container.sdkDecodeRequired(.function)
+    }
+}
+
+public extension ChatCompletionTool {
+    init(type: ChatCompletionToolType, function: FunctionObject) {
         (self.type, self.function) = (type, function)
     }
 }
@@ -243,19 +295,19 @@ public struct ChatCompletionRequestStreamOptions: Codable {
     }
 
     init() {
-        self.includeUsage = nil
+        includeUsage = nil
     }
 }
 
-extension ChatCompletionRequestStreamOptions {
-    public init(from decoder: Decoder) throws {
+public extension ChatCompletionRequestStreamOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.includeUsage = try container.sdkDecodeIfPresent(.includeUsage)
+        includeUsage = try container.sdkDecodeIfPresent(.includeUsage)
     }
 }
 
-extension ChatCompletionRequestStreamOptions {
-    public init(includeUsage: Bool? = nil) {
+public extension ChatCompletionRequestStreamOptions {
+    init(includeUsage: Bool? = nil) {
         self.init()
         self.includeUsage = includeUsage
     }
@@ -360,45 +412,77 @@ public struct ChatCompletionRequest: Codable {
         case user
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension ChatCompletionRequest {
-    public init(from decoder: Decoder) throws {
+public extension ChatCompletionRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.messages) else {
-            throw SdkValidationError(field: "messages", code: "required", message: "Validation failed for 'messages': value is required")
+            throw SdkValidationError(
+                field: "messages",
+                code: "required",
+                message: "Validation failed for 'messages': value is required"
+            )
         }
         guard container.contains(.model) else {
-            throw SdkValidationError(field: "model", code: "required", message: "Validation failed for 'model': value is required")
+            throw SdkValidationError(
+                field: "model",
+                code: "required",
+                message: "Validation failed for 'model': value is required"
+            )
         }
-        self.messages = try container.sdkDecodeRequired(.messages)
-        self.model = try container.sdkDecodeRequired(.model)
-        self.maxTokens = try container.sdkDecodeIfPresent(.maxTokens)
-        self.maxCompletionTokens = try container.sdkDecodeIfPresent(.maxCompletionTokens)
-        self.frequencyPenalty = try container.sdkDecodeIfPresent(.frequencyPenalty)
-        self.presencePenalty = try container.sdkDecodeIfPresent(.presencePenalty)
-        self.topLogprobs = try container.sdkDecodeIfPresent(.topLogprobs)
-        self.tools = try container.sdkDecodeIfPresent(.tools)
-        self.toolChoice = try container.sdkDecodeIfPresent(.toolChoice)
-        self.stream = try container.sdkDecodeIfPresent(.stream)
-        self.stop = try container.sdkDecodeIfPresent(.stop)
-        self.logitBias = try container.sdkDecodeIfPresent(.logitBias)
-        self.logprobs = try container.sdkDecodeIfPresent(.logprobs)
-        self.n = try container.sdkDecodeIfPresent(.n)
-        self.streamOptions = try container.sdkDecodeIfPresent(.streamOptions)
-        self.reasoningEffort = try container.sdkDecodeIfPresent(.reasoningEffort)
-        self.seed = try container.sdkDecodeIfPresent(.seed)
-        self.metadata = try container.sdkDecodeIfPresent(.metadata)
-        self.temperature = try container.sdkDecodeIfPresent(.temperature)
-        self.topP = try container.sdkDecodeIfPresent(.topP)
-        self.user = try container.sdkDecodeIfPresent(.user)
+        messages = try container.sdkDecodeRequired(.messages)
+        model = try container.sdkDecodeRequired(.model)
+        maxTokens = try container.sdkDecodeIfPresent(.maxTokens)
+        maxCompletionTokens = try container.sdkDecodeIfPresent(.maxCompletionTokens)
+        frequencyPenalty = try container.sdkDecodeIfPresent(.frequencyPenalty)
+        presencePenalty = try container.sdkDecodeIfPresent(.presencePenalty)
+        topLogprobs = try container.sdkDecodeIfPresent(.topLogprobs)
+        tools = try container.sdkDecodeIfPresent(.tools)
+        toolChoice = try container.sdkDecodeIfPresent(.toolChoice)
+        stream = try container.sdkDecodeIfPresent(.stream)
+        stop = try container.sdkDecodeIfPresent(.stop)
+        logitBias = try container.sdkDecodeIfPresent(.logitBias)
+        logprobs = try container.sdkDecodeIfPresent(.logprobs)
+        n = try container.sdkDecodeIfPresent(.n)
+        streamOptions = try container.sdkDecodeIfPresent(.streamOptions)
+        reasoningEffort = try container.sdkDecodeIfPresent(.reasoningEffort)
+        seed = try container.sdkDecodeIfPresent(.seed)
+        metadata = try container.sdkDecodeIfPresent(.metadata)
+        temperature = try container.sdkDecodeIfPresent(.temperature)
+        topP = try container.sdkDecodeIfPresent(.topP)
+        user = try container.sdkDecodeIfPresent(.user)
         try sdkValidateConstraints()
     }
 }
 
-extension ChatCompletionRequest {
-    public init(messages: [ChatMessage], model: String, maxTokens: Int? = nil, maxCompletionTokens: Int? = nil, frequencyPenalty: Double? = nil, presencePenalty: Double? = nil, topLogprobs: Int? = nil, tools: [ChatCompletionTool]? = nil, toolChoice: ChatCompletionRequestToolChoice? = nil, stream: Bool? = nil, stop: ChatCompletionRequestStop? = nil, logitBias: [String: Int]? = nil, logprobs: Bool? = nil, n: Int? = nil, streamOptions: ChatCompletionRequestStreamOptions? = nil, reasoningEffort: ChatCompletionRequestReasoningEffort? = nil, seed: Int? = nil, metadata: [String: String]? = nil, temperature: Double? = nil, topP: Double? = nil, user: String? = nil) throws {
+public extension ChatCompletionRequest {
+    init(
+        messages: [ChatMessage],
+        model: String,
+        maxTokens: Int? = nil,
+        maxCompletionTokens: Int? = nil,
+        frequencyPenalty: Double? = nil,
+        presencePenalty: Double? = nil,
+        topLogprobs: Int? = nil,
+        tools: [ChatCompletionTool]? = nil,
+        toolChoice: ChatCompletionRequestToolChoice? = nil,
+        stream: Bool? = nil,
+        stop: ChatCompletionRequestStop? = nil,
+        logitBias: [String: Int]? = nil,
+        logprobs: Bool? = nil,
+        n: Int? = nil,
+        streamOptions: ChatCompletionRequestStreamOptions? = nil,
+        reasoningEffort: ChatCompletionRequestReasoningEffort? = nil,
+        seed: Int? = nil,
+        metadata: [String: String]? = nil,
+        temperature: Double? = nil,
+        topP: Double? = nil,
+        user: String? = nil
+    ) throws {
         (self.messages, self.model) = (messages, model)
         (self.maxTokens, self.maxCompletionTokens) = (maxTokens, maxCompletionTokens)
         (self.frequencyPenalty, self.presencePenalty) = (frequencyPenalty, presencePenalty)
@@ -416,30 +500,94 @@ extension ChatCompletionRequest {
 
 extension ChatCompletionRequest {
     func sdkValidateConstraints() throws {
-            try validateItems("messages", self.messages, min: 1, max: nil)
-        if let value = self.maxTokens {
-            try validateRange("max_tokens", Double(value), min: 0, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        try validateItems("messages", messages, min: 1, max: nil)
+        if let value = maxTokens {
+            try validateRange(
+                "max_tokens",
+                Double(value),
+                min: 0,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.maxCompletionTokens {
-            try validateRange("max_completion_tokens", Double(value), min: 256, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = maxCompletionTokens {
+            try validateRange(
+                "max_completion_tokens",
+                Double(value),
+                min: 256,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.frequencyPenalty {
-            try validateRange("frequency_penalty", Double(value), min: -2, max: 2, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = frequencyPenalty {
+            try validateRange(
+                "frequency_penalty",
+                Double(value),
+                min: -2,
+                max: 2,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.presencePenalty {
-            try validateRange("presence_penalty", Double(value), min: -2, max: 2, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = presencePenalty {
+            try validateRange(
+                "presence_penalty",
+                Double(value),
+                min: -2,
+                max: 2,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.topLogprobs {
-            try validateRange("top_logprobs", Double(value), min: 0, max: 20, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = topLogprobs {
+            try validateRange(
+                "top_logprobs",
+                Double(value),
+                min: 0,
+                max: 20,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.n {
-            try validateRange("n", Double(value), min: 1, max: 128, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = n {
+            try validateRange(
+                "n",
+                Double(value),
+                min: 1,
+                max: 128,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.temperature {
-            try validateRange("temperature", Double(value), min: 0, max: 2, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = temperature {
+            try validateRange(
+                "temperature",
+                Double(value),
+                min: 0,
+                max: 2,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.topP {
-            try validateRange("top_p", Double(value), min: 0, max: 1, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = topP {
+            try validateRange(
+                "top_p",
+                Double(value),
+                min: 0,
+                max: 1,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
@@ -475,5 +623,7 @@ public struct ChatCompletionChunk: Codable {
         case usage
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }

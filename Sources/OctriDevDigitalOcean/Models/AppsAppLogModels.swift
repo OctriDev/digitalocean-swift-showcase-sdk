@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AppsAppLog domain models
+/// AppsAppLog domain models
 /// Typed representation of the `AppLogDestinationDefinition` API schema.
 public struct AppLogDestinationDefinition: Codable {
     /// Required `string` value serialized in the `name` wire field.
@@ -26,32 +26,44 @@ public struct AppLogDestinationDefinition: Codable {
         case openSearch = "open_search"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AppLogDestinationDefinition {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.papertrail = try container.sdkDecodeIfPresent(.papertrail)
-        self.datadog = try container.sdkDecodeIfPresent(.datadog)
-        self.logtail = try container.sdkDecodeIfPresent(.logtail)
-        self.openSearch = try container.sdkDecodeIfPresent(.openSearch)
-            try validateLength("name", self.name, min: 2, max: 42)
-            try sdkValidatePattern("name", self.name, sdkPattern6e9e0e864cb3)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AppLogDestinationDefinition {
-    public init(name: String, papertrail: AppLogDestinationPapertrailSpec? = nil, datadog: AppLogDestinationDatadogSpec? = nil, logtail: AppLogDestinationLogtailSpec? = nil, openSearch: AppLogDestinationOpenSearchSpec? = nil) throws {
+public extension AppLogDestinationDefinition {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        papertrail = try container.sdkDecodeIfPresent(.papertrail)
+        datadog = try container.sdkDecodeIfPresent(.datadog)
+        logtail = try container.sdkDecodeIfPresent(.logtail)
+        openSearch = try container.sdkDecodeIfPresent(.openSearch)
+        try validateLength("name", name, min: 2, max: 42)
+        try sdkValidatePattern("name", name, sdkPattern6e9e0e864cb3)
+    }
+}
+
+public extension AppLogDestinationDefinition {
+    init(
+        name: String,
+        papertrail: AppLogDestinationPapertrailSpec? = nil,
+        datadog: AppLogDestinationDatadogSpec? = nil,
+        logtail: AppLogDestinationLogtailSpec? = nil,
+        openSearch: AppLogDestinationOpenSearchSpec? = nil
+    ) throws {
         (self.name, self.papertrail) = (name, papertrail)
         (self.datadog, self.logtail) = (datadog, logtail)
         self.openSearch = openSearch
-            try validateLength("name", self.name, min: 2, max: 42)
-            try sdkValidatePattern("name", self.name, sdkPattern6e9e0e864cb3)
+        try validateLength("name", self.name, min: 2, max: 42)
+        try sdkValidatePattern("name", self.name, sdkPattern6e9e0e864cb3)
     }
 }
 
@@ -69,22 +81,28 @@ public struct AppLogDestinationDatadogSpec: Codable {
         case endpoint
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AppLogDestinationDatadogSpec {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.apiKey) else {
-            throw SdkValidationError(field: "api_key", code: "required", message: "Validation failed for 'api_key': value is required")
-        }
-        self.apiKey = try container.sdkDecodeRequired(.apiKey)
-        self.endpoint = try container.sdkDecodeIfPresent(.endpoint)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AppLogDestinationDatadogSpec {
-    public init(apiKey: String, endpoint: String? = nil) {
+public extension AppLogDestinationDatadogSpec {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.apiKey) else {
+            throw SdkValidationError(
+                field: "api_key",
+                code: "required",
+                message: "Validation failed for 'api_key': value is required"
+            )
+        }
+        apiKey = try container.sdkDecodeRequired(.apiKey)
+        endpoint = try container.sdkDecodeIfPresent(.endpoint)
+    }
+}
+
+public extension AppLogDestinationDatadogSpec {
+    init(apiKey: String, endpoint: String? = nil) {
         (self.apiKey, self.endpoint) = (apiKey, endpoint)
     }
 }
@@ -113,22 +131,27 @@ public struct AppLogDestinationOpenSearchSpec: Codable {
     }
 
     init() {
-        (self.endpoint, self.basicAuth, self.indexName, self.clusterName) = (nil, nil, nil, nil)
+        (endpoint, basicAuth, indexName, clusterName) = (nil, nil, nil, nil)
     }
 }
 
-extension AppLogDestinationOpenSearchSpec {
-    public init(from decoder: Decoder) throws {
+public extension AppLogDestinationOpenSearchSpec {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.endpoint = try container.sdkDecodeIfPresent(.endpoint)
-        self.basicAuth = try container.sdkDecodeIfPresent(.basicAuth)
-        self.indexName = try container.sdkDecodeIfPresent(.indexName)
-        self.clusterName = try container.sdkDecodeIfPresent(.clusterName)
+        endpoint = try container.sdkDecodeIfPresent(.endpoint)
+        basicAuth = try container.sdkDecodeIfPresent(.basicAuth)
+        indexName = try container.sdkDecodeIfPresent(.indexName)
+        clusterName = try container.sdkDecodeIfPresent(.clusterName)
     }
 }
 
-extension AppLogDestinationOpenSearchSpec {
-    public init(endpoint: String? = nil, basicAuth: AppLogDestinationOpenSearchSpecBasicAuth? = nil, indexName: String? = nil, clusterName: String? = nil) {
+public extension AppLogDestinationOpenSearchSpec {
+    init(
+        endpoint: String? = nil,
+        basicAuth: AppLogDestinationOpenSearchSpecBasicAuth? = nil,
+        indexName: String? = nil,
+        clusterName: String? = nil
+    ) {
         self.init()
         (self.endpoint, self.basicAuth) = (endpoint, basicAuth)
         (self.indexName, self.clusterName) = (indexName, clusterName)
@@ -146,19 +169,19 @@ public struct AppLogDestinationLogtailSpec: Codable {
     }
 
     init() {
-        self.token = nil
+        token = nil
     }
 }
 
-extension AppLogDestinationLogtailSpec {
-    public init(from decoder: Decoder) throws {
+public extension AppLogDestinationLogtailSpec {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.token = try container.sdkDecodeIfPresent(.token)
+        token = try container.sdkDecodeIfPresent(.token)
     }
 }
 
-extension AppLogDestinationLogtailSpec {
-    public init(token: String? = nil) {
+public extension AppLogDestinationLogtailSpec {
+    init(token: String? = nil) {
         self.init()
         self.token = token
     }
@@ -181,20 +204,20 @@ public struct AppLogDestinationOpenSearchSpecBasicAuth: Codable {
     }
 
     init() {
-        (self.user, self.password) = (nil, nil)
+        (user, password) = (nil, nil)
     }
 }
 
-extension AppLogDestinationOpenSearchSpecBasicAuth {
-    public init(from decoder: Decoder) throws {
+public extension AppLogDestinationOpenSearchSpecBasicAuth {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.user = try container.sdkDecodeIfPresent(.user)
-        self.password = try container.sdkDecodeIfPresent(.password)
+        user = try container.sdkDecodeIfPresent(.user)
+        password = try container.sdkDecodeIfPresent(.password)
     }
 }
 
-extension AppLogDestinationOpenSearchSpecBasicAuth {
-    public init(user: String? = nil, password: String? = nil) {
+public extension AppLogDestinationOpenSearchSpecBasicAuth {
+    init(user: String? = nil, password: String? = nil) {
         self.init()
         (self.user, self.password) = (user, password)
     }
@@ -210,21 +233,27 @@ public struct AppLogDestinationPapertrailSpec: Codable {
         case endpoint
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AppLogDestinationPapertrailSpec {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.endpoint) else {
-            throw SdkValidationError(field: "endpoint", code: "required", message: "Validation failed for 'endpoint': value is required")
-        }
-        self.endpoint = try container.sdkDecodeRequired(.endpoint)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AppLogDestinationPapertrailSpec {
-    public init(endpoint: String) {
+public extension AppLogDestinationPapertrailSpec {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.endpoint) else {
+            throw SdkValidationError(
+                field: "endpoint",
+                code: "required",
+                message: "Validation failed for 'endpoint': value is required"
+            )
+        }
+        endpoint = try container.sdkDecodeRequired(.endpoint)
+    }
+}
+
+public extension AppLogDestinationPapertrailSpec {
+    init(endpoint: String) {
         self.endpoint = endpoint
     }
 }

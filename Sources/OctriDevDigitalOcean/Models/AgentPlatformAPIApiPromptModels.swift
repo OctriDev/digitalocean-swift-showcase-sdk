@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiPrompt domain models
+/// AgentPlatformAPIApiPrompt domain models
 /// Typed representation of the `ApiPromptChunk` API schema.
 public struct ApiPromptChunk: Codable {
     /// The usage percentage of the chunk.
@@ -31,23 +31,29 @@ public struct ApiPromptChunk: Codable {
     }
 
     init() {
-        (self.chunkUsagePct, self.chunkUsed, self.indexUuid, self.sourceName, self.text) = (nil, nil, nil, nil, nil)
+        (chunkUsagePct, chunkUsed, indexUuid, sourceName, text) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiPromptChunk {
-    public init(from decoder: Decoder) throws {
+public extension ApiPromptChunk {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.chunkUsagePct = try container.sdkDecodeIfPresent(.chunkUsagePct)
-        self.chunkUsed = try container.sdkDecodeIfPresent(.chunkUsed)
-        self.indexUuid = try container.sdkDecodeIfPresent(.indexUuid)
-        self.sourceName = try container.sdkDecodeIfPresent(.sourceName)
-        self.text = try container.sdkDecodeIfPresent(.text)
+        chunkUsagePct = try container.sdkDecodeIfPresent(.chunkUsagePct)
+        chunkUsed = try container.sdkDecodeIfPresent(.chunkUsed)
+        indexUuid = try container.sdkDecodeIfPresent(.indexUuid)
+        sourceName = try container.sdkDecodeIfPresent(.sourceName)
+        text = try container.sdkDecodeIfPresent(.text)
     }
 }
 
-extension ApiPromptChunk {
-    public init(chunkUsagePct: Double? = nil, chunkUsed: Bool? = nil, indexUuid: String? = nil, sourceName: String? = nil, text: String? = nil) {
+public extension ApiPromptChunk {
+    init(
+        chunkUsagePct: Double? = nil,
+        chunkUsed: Bool? = nil,
+        indexUuid: String? = nil,
+        sourceName: String? = nil,
+        text: String? = nil
+    ) {
         self.init()
         (self.chunkUsagePct, self.chunkUsed) = (chunkUsagePct, chunkUsed)
         (self.indexUuid, self.sourceName) = (indexUuid, sourceName)
@@ -99,29 +105,40 @@ public struct ApiPrompt: Codable {
     }
 
     init() {
-        (self.evaluationTraceSpans, self.groundTruth, self.input, self.inputTokens, self.output) = (nil, nil, nil, nil, nil)
-        (self.outputTokens, self.promptChunks, self.promptId, self.promptLevelMetricResults, self.traceId) = (nil, nil, nil, nil, nil)
+        (evaluationTraceSpans, groundTruth, input, inputTokens, output) = (nil, nil, nil, nil, nil)
+        (outputTokens, promptChunks, promptId, promptLevelMetricResults, traceId) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiPrompt {
-    public init(from decoder: Decoder) throws {
+public extension ApiPrompt {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.evaluationTraceSpans = try container.sdkDecodeIfPresent(.evaluationTraceSpans)
-        self.groundTruth = try container.sdkDecodeIfPresent(.groundTruth)
-        self.input = try container.sdkDecodeIfPresent(.input)
-        self.inputTokens = try container.sdkDecodeIfPresent(.inputTokens)
-        self.output = try container.sdkDecodeIfPresent(.output)
-        self.outputTokens = try container.sdkDecodeIfPresent(.outputTokens)
-        self.promptChunks = try container.sdkDecodeIfPresent(.promptChunks)
-        self.promptId = try container.sdkDecodeIfPresent(.promptId)
-        self.promptLevelMetricResults = try container.sdkDecodeIfPresent(.promptLevelMetricResults)
-        self.traceId = try container.sdkDecodeIfPresent(.traceId)
+        evaluationTraceSpans = try container.sdkDecodeIfPresent(.evaluationTraceSpans)
+        groundTruth = try container.sdkDecodeIfPresent(.groundTruth)
+        input = try container.sdkDecodeIfPresent(.input)
+        inputTokens = try container.sdkDecodeIfPresent(.inputTokens)
+        output = try container.sdkDecodeIfPresent(.output)
+        outputTokens = try container.sdkDecodeIfPresent(.outputTokens)
+        promptChunks = try container.sdkDecodeIfPresent(.promptChunks)
+        promptId = try container.sdkDecodeIfPresent(.promptId)
+        promptLevelMetricResults = try container.sdkDecodeIfPresent(.promptLevelMetricResults)
+        traceId = try container.sdkDecodeIfPresent(.traceId)
     }
 }
 
-extension ApiPrompt {
-    public init(evaluationTraceSpans: [ApiEvaluationTraceSpan]? = nil, groundTruth: String? = nil, input: String? = nil, inputTokens: String? = nil, output: String? = nil, outputTokens: String? = nil, promptChunks: [ApiPromptChunk]? = nil, promptId: Int? = nil, promptLevelMetricResults: [ApiEvaluationMetricResult]? = nil, traceId: String? = nil) {
+public extension ApiPrompt {
+    init(
+        evaluationTraceSpans: [ApiEvaluationTraceSpan]? = nil,
+        groundTruth: String? = nil,
+        input: String? = nil,
+        inputTokens: String? = nil,
+        output: String? = nil,
+        outputTokens: String? = nil,
+        promptChunks: [ApiPromptChunk]? = nil,
+        promptId: Int? = nil,
+        promptLevelMetricResults: [ApiEvaluationMetricResult]? = nil,
+        traceId: String? = nil
+    ) {
         self.init()
         (self.evaluationTraceSpans, self.groundTruth) = (evaluationTraceSpans, groundTruth)
         (self.input, self.inputTokens) = (input, inputTokens)

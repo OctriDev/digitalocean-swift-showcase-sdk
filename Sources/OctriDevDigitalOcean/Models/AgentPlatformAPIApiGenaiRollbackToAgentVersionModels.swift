@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApi domain models
+/// AgentPlatformAPIApi domain models
 /// An alternative way to provide auth information. for internal use only.
 public struct ApiAuditHeader: Codable {
     /// Optional `uint64`-formatted value serialized in the `actor_id` wire field.
@@ -39,26 +39,34 @@ public struct ApiAuditHeader: Codable {
     }
 
     init() {
-        (self.actorId, self.actorIp, self.actorUuid, self.contextUrn, self.originApplication) = (nil, nil, nil, nil, nil)
-        (self.userId, self.userUuid) = (nil, nil)
+        (actorId, actorIp, actorUuid, contextUrn, originApplication) = (nil, nil, nil, nil, nil)
+        (userId, userUuid) = (nil, nil)
     }
 }
 
-extension ApiAuditHeader {
-    public init(from decoder: Decoder) throws {
+public extension ApiAuditHeader {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.actorId = try container.sdkDecodeIfPresent(.actorId)
-        self.actorIp = try container.sdkDecodeIfPresent(.actorIp)
-        self.actorUuid = try container.sdkDecodeIfPresent(.actorUuid)
-        self.contextUrn = try container.sdkDecodeIfPresent(.contextUrn)
-        self.originApplication = try container.sdkDecodeIfPresent(.originApplication)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
-        self.userUuid = try container.sdkDecodeIfPresent(.userUuid)
+        actorId = try container.sdkDecodeIfPresent(.actorId)
+        actorIp = try container.sdkDecodeIfPresent(.actorIp)
+        actorUuid = try container.sdkDecodeIfPresent(.actorUuid)
+        contextUrn = try container.sdkDecodeIfPresent(.contextUrn)
+        originApplication = try container.sdkDecodeIfPresent(.originApplication)
+        userId = try container.sdkDecodeIfPresent(.userId)
+        userUuid = try container.sdkDecodeIfPresent(.userUuid)
     }
 }
 
-extension ApiAuditHeader {
-    public init(actorId: String? = nil, actorIp: String? = nil, actorUuid: String? = nil, contextUrn: String? = nil, originApplication: String? = nil, userId: String? = nil, userUuid: String? = nil) {
+public extension ApiAuditHeader {
+    init(
+        actorId: String? = nil,
+        actorIp: String? = nil,
+        actorUuid: String? = nil,
+        contextUrn: String? = nil,
+        originApplication: String? = nil,
+        userId: String? = nil,
+        userUuid: String? = nil
+    ) {
         self.init()
         (self.actorId, self.actorIp) = (actorId, actorIp)
         (self.actorUuid, self.contextUrn) = (actorUuid, contextUrn)

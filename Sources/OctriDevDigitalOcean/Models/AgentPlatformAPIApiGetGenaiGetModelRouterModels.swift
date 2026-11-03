@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiGet domain models
+/// AgentPlatformAPIApiGet domain models
 /// The model router
 public struct ApiGetModelRouterOutput: Codable, SdkResource {
     /// Model router
@@ -15,19 +15,19 @@ public struct ApiGetModelRouterOutput: Codable, SdkResource {
     }
 
     init() {
-        self.modelRouter = nil
+        modelRouter = nil
     }
 }
 
-extension ApiGetModelRouterOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetModelRouterOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.modelRouter = try container.sdkDecodeIfPresent(.modelRouter)
+        modelRouter = try container.sdkDecodeIfPresent(.modelRouter)
     }
 }
 
-extension ApiGetModelRouterOutput {
-    public init(modelRouter: ApiModelRouter? = nil) {
+public extension ApiGetModelRouterOutput {
+    init(modelRouter: ApiModelRouter? = nil) {
         self.init()
         self.modelRouter = modelRouter
     }

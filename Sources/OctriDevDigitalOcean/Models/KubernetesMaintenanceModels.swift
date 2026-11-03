@@ -3,7 +3,7 @@
 
 import Foundation
 
-// KubernetesMaintenance domain models
+/// KubernetesMaintenance domain models
 /// An object specifying the maintenance window policy for the Kubernetes cluster.
 public struct MaintenancePolicyRequest: Codable {
     /// The start time in UTC of the maintenance window policy in 24-hour clock format / HH:MM notation (e.g.,
@@ -21,20 +21,20 @@ public struct MaintenancePolicyRequest: Codable {
     }
 
     init() {
-        (self.startTime, self.day) = (nil, nil)
+        (startTime, day) = (nil, nil)
     }
 }
 
-extension MaintenancePolicyRequest {
-    public init(from decoder: Decoder) throws {
+public extension MaintenancePolicyRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.startTime = try container.sdkDecodeIfPresent(.startTime)
-        self.day = try container.sdkDecodeIfPresent(.day)
+        startTime = try container.sdkDecodeIfPresent(.startTime)
+        day = try container.sdkDecodeIfPresent(.day)
     }
 }
 
-extension MaintenancePolicyRequest {
-    public init(startTime: String? = nil, day: MaintenancePolicyRequestDay? = nil) {
+public extension MaintenancePolicyRequest {
+    init(startTime: String? = nil, day: MaintenancePolicyRequestDay? = nil) {
         self.init()
         (self.startTime, self.day) = (startTime, day)
     }
@@ -61,21 +61,21 @@ public struct MaintenancePolicy: Codable {
     }
 
     init() {
-        (self.startTime, self.duration, self.day) = (nil, nil, nil)
+        (startTime, duration, day) = (nil, nil, nil)
     }
 }
 
-extension MaintenancePolicy {
-    public init(from decoder: Decoder) throws {
+public extension MaintenancePolicy {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.startTime = try container.sdkDecodeIfPresent(.startTime)
-        self.duration = try container.sdkDecodeIfPresent(.duration)
-        self.day = try container.sdkDecodeIfPresent(.day)
+        startTime = try container.sdkDecodeIfPresent(.startTime)
+        duration = try container.sdkDecodeIfPresent(.duration)
+        day = try container.sdkDecodeIfPresent(.day)
     }
 }
 
-extension MaintenancePolicy {
-    public init(startTime: String? = nil, duration: String? = nil, day: MaintenancePolicyDay? = nil) {
+public extension MaintenancePolicy {
+    init(startTime: String? = nil, duration: String? = nil, day: MaintenancePolicyDay? = nil) {
         self.init()
         (self.startTime, self.duration) = (startTime, duration)
         self.day = day
@@ -87,7 +87,10 @@ extension MaintenancePolicy {
 public struct MaintenancePolicyDay: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let any = MaintenancePolicyDay(rawValue: "any")
     public static let monday = MaintenancePolicyDay(rawValue: "monday")
     public static let tuesday = MaintenancePolicyDay(rawValue: "tuesday")
@@ -99,7 +102,7 @@ public struct MaintenancePolicyDay: RawRepresentable, Hashable, Codable, Sendabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -113,7 +116,10 @@ public struct MaintenancePolicyDay: RawRepresentable, Hashable, Codable, Sendabl
 public struct MaintenancePolicyRequestDay: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let any = MaintenancePolicyRequestDay(rawValue: "any")
     public static let monday = MaintenancePolicyRequestDay(rawValue: "monday")
     public static let tuesday = MaintenancePolicyRequestDay(rawValue: "tuesday")
@@ -125,7 +131,7 @@ public struct MaintenancePolicyRequestDay: RawRepresentable, Hashable, Codable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

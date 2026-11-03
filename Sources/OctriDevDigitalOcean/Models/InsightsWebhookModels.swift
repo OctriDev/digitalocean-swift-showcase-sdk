@@ -3,7 +3,7 @@
 
 import Foundation
 
-// InsightsWebhook domain models
+/// InsightsWebhook domain models
 /// Generic HTTPS webhook notification channel configuration for create and update requests. The URL must use HTTPS
 /// and must not include userinfo. Optionally configure either `basic_auth` or `bearer_token` (not both), custom
 /// headers, and a signing secret. `url` is not a secret and is returned in full on read. Credential fields
@@ -35,30 +35,42 @@ public struct WebhookNotificationConfigRequest: Codable {
         case signature
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension WebhookNotificationConfigRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.url) else {
-            throw SdkValidationError(field: "url", code: "required", message: "Validation failed for 'url': value is required")
-        }
-        self.url = try container.sdkDecodeRequired(.url)
-        self.basicAuth = try container.sdkDecodeIfPresent(.basicAuth)
-        self.bearerToken = try container.sdkDecodeIfPresent(.bearerToken)
-        self.headers = try container.sdkDecodeIfPresent(.headers)
-        self.signature = try container.sdkDecodeIfPresent(.signature)
-            try sdkValidateUri("url", self.url)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension WebhookNotificationConfigRequest {
-    public init(url: String, basicAuth: WebhookBasicAuthRequest? = nil, bearerToken: WebhookBearerTokenRequest? = nil, headers: [String: String]? = nil, signature: WebhookSignatureConfigRequest? = nil) throws {
+public extension WebhookNotificationConfigRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.url) else {
+            throw SdkValidationError(
+                field: "url",
+                code: "required",
+                message: "Validation failed for 'url': value is required"
+            )
+        }
+        url = try container.sdkDecodeRequired(.url)
+        basicAuth = try container.sdkDecodeIfPresent(.basicAuth)
+        bearerToken = try container.sdkDecodeIfPresent(.bearerToken)
+        headers = try container.sdkDecodeIfPresent(.headers)
+        signature = try container.sdkDecodeIfPresent(.signature)
+        try sdkValidateUri("url", url)
+    }
+}
+
+public extension WebhookNotificationConfigRequest {
+    init(
+        url: String,
+        basicAuth: WebhookBasicAuthRequest? = nil,
+        bearerToken: WebhookBearerTokenRequest? = nil,
+        headers: [String: String]? = nil,
+        signature: WebhookSignatureConfigRequest? = nil
+    ) throws {
         (self.url, self.basicAuth) = (url, basicAuth)
         (self.bearerToken, self.headers) = (bearerToken, headers)
         self.signature = signature
-            try sdkValidateUri("url", self.url)
+        try sdkValidateUri("url", self.url)
     }
 }
 
@@ -75,19 +87,19 @@ public struct WebhookSignatureConfigRequest: Codable {
     }
 
     init() {
-        self.secret = nil
+        secret = nil
     }
 }
 
-extension WebhookSignatureConfigRequest {
-    public init(from decoder: Decoder) throws {
+public extension WebhookSignatureConfigRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.secret = try container.sdkDecodeIfPresent(.secret)
+        secret = try container.sdkDecodeIfPresent(.secret)
     }
 }
 
-extension WebhookSignatureConfigRequest {
-    public init(secret: String? = nil) {
+public extension WebhookSignatureConfigRequest {
+    init(secret: String? = nil) {
         self.init()
         self.secret = secret
     }
@@ -104,19 +116,19 @@ public struct WebhookBearerTokenResponse: Codable {
     }
 
     init() {
-        self.tokenStatus = nil
+        tokenStatus = nil
     }
 }
 
-extension WebhookBearerTokenResponse {
-    public init(from decoder: Decoder) throws {
+public extension WebhookBearerTokenResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.tokenStatus = try container.sdkDecodeIfPresent(.tokenStatus)
+        tokenStatus = try container.sdkDecodeIfPresent(.tokenStatus)
     }
 }
 
-extension WebhookBearerTokenResponse {
-    public init(tokenStatus: SecretStatus? = nil) {
+public extension WebhookBearerTokenResponse {
+    init(tokenStatus: SecretStatus? = nil) {
         self.init()
         self.tokenStatus = tokenStatus
     }
@@ -133,19 +145,19 @@ public struct WebhookSignatureConfigResponse: Codable {
     }
 
     init() {
-        self.secretStatus = nil
+        secretStatus = nil
     }
 }
 
-extension WebhookSignatureConfigResponse {
-    public init(from decoder: Decoder) throws {
+public extension WebhookSignatureConfigResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.secretStatus = try container.sdkDecodeIfPresent(.secretStatus)
+        secretStatus = try container.sdkDecodeIfPresent(.secretStatus)
     }
 }
 
-extension WebhookSignatureConfigResponse {
-    public init(secretStatus: SecretStatus? = nil) {
+public extension WebhookSignatureConfigResponse {
+    init(secretStatus: SecretStatus? = nil) {
         self.init()
         self.secretStatus = secretStatus
     }
@@ -179,30 +191,42 @@ public struct WebhookNotificationConfigResponse: Codable {
         case signature
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension WebhookNotificationConfigResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.url) else {
-            throw SdkValidationError(field: "url", code: "required", message: "Validation failed for 'url': value is required")
-        }
-        self.url = try container.sdkDecodeRequired(.url)
-        self.basicAuth = try container.sdkDecodeIfPresent(.basicAuth)
-        self.bearerToken = try container.sdkDecodeIfPresent(.bearerToken)
-        self.headers = try container.sdkDecodeIfPresent(.headers)
-        self.signature = try container.sdkDecodeIfPresent(.signature)
-            try sdkValidateUri("url", self.url)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension WebhookNotificationConfigResponse {
-    public init(url: String, basicAuth: WebhookBasicAuthResponse? = nil, bearerToken: WebhookBearerTokenResponse? = nil, headers: [String: String]? = nil, signature: WebhookSignatureConfigResponse? = nil) throws {
+public extension WebhookNotificationConfigResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.url) else {
+            throw SdkValidationError(
+                field: "url",
+                code: "required",
+                message: "Validation failed for 'url': value is required"
+            )
+        }
+        url = try container.sdkDecodeRequired(.url)
+        basicAuth = try container.sdkDecodeIfPresent(.basicAuth)
+        bearerToken = try container.sdkDecodeIfPresent(.bearerToken)
+        headers = try container.sdkDecodeIfPresent(.headers)
+        signature = try container.sdkDecodeIfPresent(.signature)
+        try sdkValidateUri("url", url)
+    }
+}
+
+public extension WebhookNotificationConfigResponse {
+    init(
+        url: String,
+        basicAuth: WebhookBasicAuthResponse? = nil,
+        bearerToken: WebhookBearerTokenResponse? = nil,
+        headers: [String: String]? = nil,
+        signature: WebhookSignatureConfigResponse? = nil
+    ) throws {
         (self.url, self.basicAuth) = (url, basicAuth)
         (self.bearerToken, self.headers) = (bearerToken, headers)
         self.signature = signature
-            try sdkValidateUri("url", self.url)
+        try sdkValidateUri("url", self.url)
     }
 }
 
@@ -219,19 +243,19 @@ public struct WebhookBearerTokenRequest: Codable {
     }
 
     init() {
-        self.token = nil
+        token = nil
     }
 }
 
-extension WebhookBearerTokenRequest {
-    public init(from decoder: Decoder) throws {
+public extension WebhookBearerTokenRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.token = try container.sdkDecodeIfPresent(.token)
+        token = try container.sdkDecodeIfPresent(.token)
     }
 }
 
-extension WebhookBearerTokenRequest {
-    public init(token: String? = nil) {
+public extension WebhookBearerTokenRequest {
+    init(token: String? = nil) {
         self.init()
         self.token = token
     }
@@ -251,22 +275,28 @@ public struct WebhookBasicAuthResponse: Codable {
         case passwordStatus = "password_status"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension WebhookBasicAuthResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.username) else {
-            throw SdkValidationError(field: "username", code: "required", message: "Validation failed for 'username': value is required")
-        }
-        self.username = try container.sdkDecodeRequired(.username)
-        self.passwordStatus = try container.sdkDecodeIfPresent(.passwordStatus)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension WebhookBasicAuthResponse {
-    public init(username: String, passwordStatus: SecretStatus? = nil) {
+public extension WebhookBasicAuthResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.username) else {
+            throw SdkValidationError(
+                field: "username",
+                code: "required",
+                message: "Validation failed for 'username': value is required"
+            )
+        }
+        username = try container.sdkDecodeRequired(.username)
+        passwordStatus = try container.sdkDecodeIfPresent(.passwordStatus)
+    }
+}
+
+public extension WebhookBasicAuthResponse {
+    init(username: String, passwordStatus: SecretStatus? = nil) {
         (self.username, self.passwordStatus) = (username, passwordStatus)
     }
 }
@@ -287,22 +317,28 @@ public struct WebhookBasicAuthRequest: Codable {
         case password
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension WebhookBasicAuthRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.username) else {
-            throw SdkValidationError(field: "username", code: "required", message: "Validation failed for 'username': value is required")
-        }
-        self.username = try container.sdkDecodeRequired(.username)
-        self.password = try container.sdkDecodeIfPresent(.password)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension WebhookBasicAuthRequest {
-    public init(username: String, password: String? = nil) {
+public extension WebhookBasicAuthRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.username) else {
+            throw SdkValidationError(
+                field: "username",
+                code: "required",
+                message: "Validation failed for 'username': value is required"
+            )
+        }
+        username = try container.sdkDecodeRequired(.username)
+        password = try container.sdkDecodeIfPresent(.password)
+    }
+}
+
+public extension WebhookBasicAuthRequest {
+    init(username: String, password: String? = nil) {
         (self.username, self.password) = (username, password)
     }
 }

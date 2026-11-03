@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Monitoring domain models
+/// Monitoring domain models
 /// Typed representation of the `Sinks` API schema.
 public struct Sinks: Codable, SdkResource {
     /// Optional object value serialized in the `sink` wire field.
@@ -15,19 +15,19 @@ public struct Sinks: Codable, SdkResource {
     }
 
     init() {
-        self.sink = nil
+        sink = nil
     }
 }
 
-extension Sinks {
-    public init(from decoder: Decoder) throws {
+public extension Sinks {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.sink = try container.sdkDecodeIfPresent(.sink)
+        sink = try container.sdkDecodeIfPresent(.sink)
     }
 }
 
-extension Sinks {
-    public init(sink: SinksResponse? = nil) {
+public extension Sinks {
+    init(sink: SinksResponse? = nil) {
         self.init()
         self.sink = sink
     }

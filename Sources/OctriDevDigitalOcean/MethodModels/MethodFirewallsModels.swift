@@ -7,29 +7,39 @@ import Foundation
     import FoundationNetworking
 #endif
 
-// Canonical firewalls operation model declarations
+/// Canonical firewalls operation model declarations
 public indirect enum FirewallsDeleteRulesRequestBodyVariant1 {
     case jsonValue(JSONValue)
     case jsonValue1(JSONValue)
 }
 
 extension FirewallsDeleteRulesRequestBodyVariant1: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for FirewallsDeleteRulesRequestBodyVariant1")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for FirewallsDeleteRulesRequestBodyVariant1"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension FirewallsDeleteRulesRequestBodyVariant1 {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue1(value) }
+        if let value = try? container.decode(JSONValue.self) {
+            return .jsonValue(value)
+        }
+        if let value = try? container.decode(JSONValue.self) {
+            return .jsonValue1(value)
+        }
         return nil
     }
 }
@@ -56,20 +66,20 @@ public struct FirewallsDeleteRulesRequestBody: Codable {
     }
 
     init() {
-        (self.inboundRules, self.outboundRules) = (nil, nil)
+        (inboundRules, outboundRules) = (nil, nil)
     }
 }
 
-extension FirewallsDeleteRulesRequestBody {
-    public init(from decoder: Decoder) throws {
+public extension FirewallsDeleteRulesRequestBody {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.inboundRules = try container.sdkDecodeIfPresent(.inboundRules)
-        self.outboundRules = try container.sdkDecodeIfPresent(.outboundRules)
+        inboundRules = try container.sdkDecodeIfPresent(.inboundRules)
+        outboundRules = try container.sdkDecodeIfPresent(.outboundRules)
     }
 }
 
-extension FirewallsDeleteRulesRequestBody {
-    public init(inboundRules: [FirewallRulesInboundRulesItem]? = nil, outboundRules: [FirewallRulesOutboundRulesItem]? = nil) {
+public extension FirewallsDeleteRulesRequestBody {
+    init(inboundRules: [FirewallRulesInboundRulesItem]? = nil, outboundRules: [FirewallRulesOutboundRulesItem]? = nil) {
         self.init()
         (self.inboundRules, self.outboundRules) = (inboundRules, outboundRules)
     }
@@ -95,30 +105,42 @@ public struct FirewallsUpdateRequestBody: Codable {
         case outboundRules = "outbound_rules"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension FirewallsUpdateRequestBody {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.inboundRules = try container.sdkDecodeIfPresent(.inboundRules)
-        self.outboundRules = try container.sdkDecodeIfPresent(.outboundRules)
-            try sdkValidatePattern("name", self.name, sdkPattern5867542e1667)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension FirewallsUpdateRequestBody {
-    public init(name: String, dropletIds: [Int]? = nil, tags: ExistingTagsArray? = nil, inboundRules: [FirewallRulesInboundRulesItem]? = nil, outboundRules: [FirewallRulesOutboundRulesItem]? = nil) throws {
+public extension FirewallsUpdateRequestBody {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        inboundRules = try container.sdkDecodeIfPresent(.inboundRules)
+        outboundRules = try container.sdkDecodeIfPresent(.outboundRules)
+        try sdkValidatePattern("name", name, sdkPattern5867542e1667)
+    }
+}
+
+public extension FirewallsUpdateRequestBody {
+    init(
+        name: String,
+        dropletIds: [Int]? = nil,
+        tags: ExistingTagsArray? = nil,
+        inboundRules: [FirewallRulesInboundRulesItem]? = nil,
+        outboundRules: [FirewallRulesOutboundRulesItem]? = nil
+    ) throws {
         (self.name, self.dropletIds) = (name, dropletIds)
         (self.tags, self.inboundRules) = (tags, inboundRules)
         self.outboundRules = outboundRules
-            try sdkValidatePattern("name", self.name, sdkPattern5867542e1667)
+        try sdkValidatePattern("name", self.name, sdkPattern5867542e1667)
     }
 }
 
@@ -134,20 +156,20 @@ public struct FirewallsAddRulesRequestBody: Codable {
     }
 
     init() {
-        (self.inboundRules, self.outboundRules) = (nil, nil)
+        (inboundRules, outboundRules) = (nil, nil)
     }
 }
 
-extension FirewallsAddRulesRequestBody {
-    public init(from decoder: Decoder) throws {
+public extension FirewallsAddRulesRequestBody {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.inboundRules = try container.sdkDecodeIfPresent(.inboundRules)
-        self.outboundRules = try container.sdkDecodeIfPresent(.outboundRules)
+        inboundRules = try container.sdkDecodeIfPresent(.inboundRules)
+        outboundRules = try container.sdkDecodeIfPresent(.outboundRules)
     }
 }
 
-extension FirewallsAddRulesRequestBody {
-    public init(inboundRules: [FirewallRulesInboundRulesItem]? = nil, outboundRules: [FirewallRulesOutboundRulesItem]? = nil) {
+public extension FirewallsAddRulesRequestBody {
+    init(inboundRules: [FirewallRulesInboundRulesItem]? = nil, outboundRules: [FirewallRulesOutboundRulesItem]? = nil) {
         self.init()
         (self.inboundRules, self.outboundRules) = (inboundRules, outboundRules)
     }
@@ -159,22 +181,32 @@ public indirect enum FirewallsAddRulesRequestBodyVariant1 {
 }
 
 extension FirewallsAddRulesRequestBodyVariant1: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for FirewallsAddRulesRequestBodyVariant1")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for FirewallsAddRulesRequestBodyVariant1"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension FirewallsAddRulesRequestBodyVariant1 {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue1(value) }
+        if let value = try? container.decode(JSONValue.self) {
+            return .jsonValue(value)
+        }
+        if let value = try? container.decode(JSONValue.self) {
+            return .jsonValue1(value)
+        }
         return nil
     }
 }
@@ -195,22 +227,32 @@ public indirect enum FirewallsCreateRequestBodyVariant2 {
 }
 
 extension FirewallsCreateRequestBodyVariant2: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for FirewallsCreateRequestBodyVariant2")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for FirewallsCreateRequestBodyVariant2"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension FirewallsCreateRequestBodyVariant2 {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue1(value) }
+        if let value = try? container.decode(JSONValue.self) {
+            return .jsonValue(value)
+        }
+        if let value = try? container.decode(JSONValue.self) {
+            return .jsonValue1(value)
+        }
         return nil
     }
 }
@@ -231,22 +273,32 @@ public indirect enum FirewallsUpdateRequestBodyVariant1 {
 }
 
 extension FirewallsUpdateRequestBodyVariant1: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for FirewallsUpdateRequestBodyVariant1")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for FirewallsUpdateRequestBodyVariant1"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension FirewallsUpdateRequestBodyVariant1 {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue1(value) }
+        if let value = try? container.decode(JSONValue.self) {
+            return .jsonValue(value)
+        }
+        if let value = try? container.decode(JSONValue.self) {
+            return .jsonValue1(value)
+        }
         return nil
     }
 }
@@ -282,26 +334,32 @@ public struct FirewallsCreateRequestBody: Codable {
     }
 
     init() {
-        (self.name, self.dropletIds, self.tags, self.inboundRules, self.outboundRules) = (nil, nil, nil, nil, nil)
+        (name, dropletIds, tags, inboundRules, outboundRules) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension FirewallsCreateRequestBody {
-    public init(from decoder: Decoder) throws {
+public extension FirewallsCreateRequestBody {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.inboundRules = try container.sdkDecodeIfPresent(.inboundRules)
-        self.outboundRules = try container.sdkDecodeIfPresent(.outboundRules)
-        if let value = self.name {
+        name = try container.sdkDecodeIfPresent(.name)
+        dropletIds = try container.sdkDecodeIfPresent(.dropletIds)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        inboundRules = try container.sdkDecodeIfPresent(.inboundRules)
+        outboundRules = try container.sdkDecodeIfPresent(.outboundRules)
+        if let value = name {
             try sdkValidatePattern("name", value, sdkPattern5867542e1667)
         }
     }
 }
 
-extension FirewallsCreateRequestBody {
-    public init(name: String? = nil, dropletIds: [Int]? = nil, tags: ExistingTagsArray? = nil, inboundRules: [FirewallRulesInboundRulesItem]? = nil, outboundRules: [FirewallRulesOutboundRulesItem]? = nil) throws {
+public extension FirewallsCreateRequestBody {
+    init(
+        name: String? = nil,
+        dropletIds: [Int]? = nil,
+        tags: ExistingTagsArray? = nil,
+        inboundRules: [FirewallRulesInboundRulesItem]? = nil,
+        outboundRules: [FirewallRulesOutboundRulesItem]? = nil
+    ) throws {
         self.init()
         (self.name, self.dropletIds) = (name, dropletIds)
         (self.tags, self.inboundRules) = (tags, inboundRules)

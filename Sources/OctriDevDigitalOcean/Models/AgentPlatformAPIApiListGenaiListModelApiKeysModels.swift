@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiList domain models
+/// AgentPlatformAPIApiList domain models
 /// Typed representation of the `ApiListModelAPIKeysOutput` API schema.
 public struct ApiListModelAPIKeysOutput: Codable, SdkResource {
     /// Api key infos
@@ -21,21 +21,21 @@ public struct ApiListModelAPIKeysOutput: Codable, SdkResource {
     }
 
     init() {
-        (self.apiKeyInfos, self.links, self.meta) = (nil, nil, nil)
+        (apiKeyInfos, links, meta) = (nil, nil, nil)
     }
 }
 
-extension ApiListModelAPIKeysOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiListModelAPIKeysOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKeyInfos = try container.sdkDecodeIfPresent(.apiKeyInfos)
-        self.links = try container.sdkDecodeIfPresent(.links)
-        self.meta = try container.sdkDecodeIfPresent(.meta)
+        apiKeyInfos = try container.sdkDecodeIfPresent(.apiKeyInfos)
+        links = try container.sdkDecodeIfPresent(.links)
+        meta = try container.sdkDecodeIfPresent(.meta)
     }
 }
 
-extension ApiListModelAPIKeysOutput {
-    public init(apiKeyInfos: [ApiModelAPIKeyInfo]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
+public extension ApiListModelAPIKeysOutput {
+    init(apiKeyInfos: [ApiModelAPIKeyInfo]? = nil, links: ApiLinks? = nil, meta: ApiMeta? = nil) {
         self.init()
         (self.apiKeyInfos, self.links) = (apiKeyInfos, links)
         self.meta = meta

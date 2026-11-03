@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Kafka domain models
+/// Kafka domain models
 /// Typed representation of the `KafkaSchemaVersionVerbose` API schema.
 public struct KafkaSchemaVersionVerbose: Codable {
     /// The id for schema.
@@ -32,23 +32,29 @@ public struct KafkaSchemaVersionVerbose: Codable {
     }
 
     init() {
-        (self.schemaId, self.version, self.subjectName, self.schemaType, self.schema) = (nil, nil, nil, nil, nil)
+        (schemaId, version, subjectName, schemaType, schema) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension KafkaSchemaVersionVerbose {
-    public init(from decoder: Decoder) throws {
+public extension KafkaSchemaVersionVerbose {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.schemaId = try container.sdkDecodeIfPresent(.schemaId)
-        self.version = try container.sdkDecodeIfPresent(.version)
-        self.subjectName = try container.sdkDecodeIfPresent(.subjectName)
-        self.schemaType = try container.sdkDecodeIfPresent(.schemaType)
-        self.schema = try container.sdkDecodeIfPresent(.schema)
+        schemaId = try container.sdkDecodeIfPresent(.schemaId)
+        version = try container.sdkDecodeIfPresent(.version)
+        subjectName = try container.sdkDecodeIfPresent(.subjectName)
+        schemaType = try container.sdkDecodeIfPresent(.schemaType)
+        schema = try container.sdkDecodeIfPresent(.schema)
     }
 }
 
-extension KafkaSchemaVersionVerbose {
-    public init(schemaId: Int? = nil, version: String? = nil, subjectName: String? = nil, schemaType: KafkaSchemaVersionVerboseSchemaType? = nil, schema: String? = nil) {
+public extension KafkaSchemaVersionVerbose {
+    init(
+        schemaId: Int? = nil,
+        version: String? = nil,
+        subjectName: String? = nil,
+        schemaType: KafkaSchemaVersionVerboseSchemaType? = nil,
+        schema: String? = nil
+    ) {
         self.init()
         (self.schemaId, self.version) = (schemaId, version)
         (self.subjectName, self.schemaType) = (subjectName, schemaType)
@@ -64,19 +70,19 @@ public struct KafkaTopicCreateVariant1: Codable {
     }
 
     init() {
-        self.config = nil
+        config = nil
     }
 }
 
-extension KafkaTopicCreateVariant1 {
-    public init(from decoder: Decoder) throws {
+public extension KafkaTopicCreateVariant1 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.config = try container.sdkDecodeIfPresent(.config)
+        config = try container.sdkDecodeIfPresent(.config)
     }
 }
 
-extension KafkaTopicCreateVariant1 {
-    public init(config: KafkaTopicConfig? = nil) {
+public extension KafkaTopicCreateVariant1 {
+    init(config: KafkaTopicConfig? = nil) {
         self.init()
         self.config = config
     }
@@ -103,22 +109,27 @@ public struct KafkaTopicCreate: Codable {
     }
 
     init() {
-        (self.name, self.replicationFactor, self.partitionCount, self.config) = (nil, nil, nil, nil)
+        (name, replicationFactor, partitionCount, config) = (nil, nil, nil, nil)
     }
 }
 
-extension KafkaTopicCreate {
-    public init(from decoder: Decoder) throws {
+public extension KafkaTopicCreate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.replicationFactor = try container.sdkDecodeIfPresent(.replicationFactor)
-        self.partitionCount = try container.sdkDecodeIfPresent(.partitionCount)
-        self.config = try container.sdkDecodeIfPresent(.config)
+        name = try container.sdkDecodeIfPresent(.name)
+        replicationFactor = try container.sdkDecodeIfPresent(.replicationFactor)
+        partitionCount = try container.sdkDecodeIfPresent(.partitionCount)
+        config = try container.sdkDecodeIfPresent(.config)
     }
 }
 
-extension KafkaTopicCreate {
-    public init(name: String? = nil, replicationFactor: Int? = nil, partitionCount: Int? = nil, config: KafkaTopicConfig? = nil) {
+public extension KafkaTopicCreate {
+    init(
+        name: String? = nil,
+        replicationFactor: Int? = nil,
+        partitionCount: Int? = nil,
+        config: KafkaTopicConfig? = nil
+    ) {
         self.init()
         (self.name, self.replicationFactor) = (name, replicationFactor)
         (self.partitionCount, self.config) = (partitionCount, config)
@@ -129,14 +140,17 @@ extension KafkaTopicCreate {
 public struct KafkaSchemaVersionVerboseSchemaType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let avro = KafkaSchemaVersionVerboseSchemaType(rawValue: "AVRO")
     public static let json = KafkaSchemaVersionVerboseSchemaType(rawValue: "JSON")
     public static let protobuf = KafkaSchemaVersionVerboseSchemaType(rawValue: "PROTOBUF")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

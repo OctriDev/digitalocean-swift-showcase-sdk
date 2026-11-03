@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Projects domain models
+/// Projects domain models
 public struct ProjectsListVariant0: Codable {
     public var projects: [Project]?
 
@@ -12,19 +12,19 @@ public struct ProjectsListVariant0: Codable {
     }
 
     init() {
-        self.projects = nil
+        projects = nil
     }
 }
 
-extension ProjectsListVariant0 {
-    public init(from decoder: Decoder) throws {
+public extension ProjectsListVariant0 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.projects = try container.sdkDecodeIfPresent(.projects)
+        projects = try container.sdkDecodeIfPresent(.projects)
     }
 }
 
-extension ProjectsListVariant0 {
-    public init(projects: [Project]? = nil) {
+public extension ProjectsListVariant0 {
+    init(projects: [Project]? = nil) {
         self.init()
         self.projects = projects
     }
@@ -45,23 +45,29 @@ public struct ProjectsList: Codable, SdkResource {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ProjectsList {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.meta) else {
-            throw SdkValidationError(field: "meta", code: "required", message: "Validation failed for 'meta': value is required")
-        }
-        self.meta = try container.sdkDecodeRequired(.meta)
-        self.projects = try container.sdkDecodeIfPresent(.projects)
-        self.links = try container.sdkDecodeIfPresent(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ProjectsList {
-    public init(meta: MetaMeta, projects: [Project]? = nil, links: PageLinks? = nil) {
+public extension ProjectsList {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.meta) else {
+            throw SdkValidationError(
+                field: "meta",
+                code: "required",
+                message: "Validation failed for 'meta': value is required"
+            )
+        }
+        meta = try container.sdkDecodeRequired(.meta)
+        projects = try container.sdkDecodeIfPresent(.projects)
+        links = try container.sdkDecodeIfPresent(.links)
+    }
+}
+
+public extension ProjectsList {
+    init(meta: MetaMeta, projects: [Project]? = nil, links: PageLinks? = nil) {
         (self.meta, self.projects) = (meta, projects)
         self.links = links
     }

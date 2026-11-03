@@ -11,7 +11,7 @@ struct AddonsPatchPlanRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.planSlug, forKey: SdkCodingKey("plan_slug"))
+        try keyedContainer.encode(planSlug, forKey: SdkCodingKey("plan_slug"))
     }
 }
 
@@ -22,9 +22,9 @@ struct HarnessCreateConfigRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(self.manifestYaml, forKey: SdkCodingKey("manifest_yaml"))
-        try keyedContainer.encodeIfPresent(self.insights, forKey: SdkCodingKey("insights"))
+        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(manifestYaml, forKey: SdkCodingKey("manifest_yaml"))
+        try keyedContainer.encodeIfPresent(insights, forKey: SdkCodingKey("insights"))
     }
 }
 
@@ -35,9 +35,9 @@ struct HarnessCreateConfigCloneRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(self.secrets, forKey: SdkCodingKey("secrets"))
-        try keyedContainer.encodeIfPresent(self.oauthAssignments, forKey: SdkCodingKey("oauth_assignments"))
+        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(secrets, forKey: SdkCodingKey("secrets"))
+        try keyedContainer.encodeIfPresent(oauthAssignments, forKey: SdkCodingKey("oauth_assignments"))
     }
 }
 
@@ -48,9 +48,9 @@ struct HarnessCreateSessionRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(self.configId, forKey: SdkCodingKey("config_id"))
-        try keyedContainer.encodeIfPresent(self.resumeOnTopoff2, forKey: SdkCodingKey("resume_on_topoff"))
+        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(configId, forKey: SdkCodingKey("config_id"))
+        try keyedContainer.encodeIfPresent(resumeOnTopoff2, forKey: SdkCodingKey("resume_on_topoff"))
     }
 }
 
@@ -62,10 +62,10 @@ struct HarnessValidateSessionPolicyRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.apiVersion, forKey: SdkCodingKey("apiVersion"))
-        try keyedContainer.encodeIfPresent(self.kind, forKey: SdkCodingKey("kind"))
-        try keyedContainer.encodeIfPresent(self.metadata, forKey: SdkCodingKey("metadata"))
-        try keyedContainer.encodeIfPresent(self.spec, forKey: SdkCodingKey("spec"))
+        try keyedContainer.encodeIfPresent(apiVersion, forKey: SdkCodingKey("apiVersion"))
+        try keyedContainer.encodeIfPresent(kind, forKey: SdkCodingKey("kind"))
+        try keyedContainer.encodeIfPresent(metadata, forKey: SdkCodingKey("metadata"))
+        try keyedContainer.encodeIfPresent(spec, forKey: SdkCodingKey("spec"))
     }
 }
 
@@ -74,7 +74,7 @@ struct HarnessUpdateSessionRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.resumeOnTopoff, forKey: SdkCodingKey("resume_on_topoff"))
+        try keyedContainer.encodeIfPresent(resumeOnTopoff, forKey: SdkCodingKey("resume_on_topoff"))
     }
 }
 
@@ -83,7 +83,7 @@ struct HarnessCreateSessionCheckpointRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.label, forKey: SdkCodingKey("label"))
+        try keyedContainer.encodeIfPresent(label, forKey: SdkCodingKey("label"))
     }
 }
 
@@ -93,8 +93,8 @@ struct HarnessCreateSessionForkRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.fromCheckpointId, forKey: SdkCodingKey("from_checkpoint_id"))
-        try keyedContainer.encodeIfPresent(self.count, forKey: SdkCodingKey("count"))
+        try keyedContainer.encodeIfPresent(fromCheckpointId, forKey: SdkCodingKey("from_checkpoint_id"))
+        try keyedContainer.encodeIfPresent(count, forKey: SdkCodingKey("count"))
     }
 }
 
@@ -105,9 +105,9 @@ struct HarnessPostSessionHitlRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.outcome, forKey: SdkCodingKey("outcome"))
-        try keyedContainer.encodeIfPresent(self.reason, forKey: SdkCodingKey("reason"))
-        try keyedContainer.encodeIfPresent(self.source, forKey: SdkCodingKey("source"))
+        try keyedContainer.encode(outcome, forKey: SdkCodingKey("outcome"))
+        try keyedContainer.encodeIfPresent(reason, forKey: SdkCodingKey("reason"))
+        try keyedContainer.encodeIfPresent(source, forKey: SdkCodingKey("source"))
     }
 }
 
@@ -116,7 +116,7 @@ struct HarnessCreateSessionInputRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.text, forKey: SdkCodingKey("text"))
+        try keyedContainer.encode(text, forKey: SdkCodingKey("text"))
     }
 }
 
@@ -128,10 +128,10 @@ struct HarnessPostSessionSandboxExecRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.argv, forKey: SdkCodingKey("argv"))
-        try keyedContainer.encodeIfPresent(self.workdir, forKey: SdkCodingKey("workdir"))
-        try keyedContainer.encodeIfPresent(self.stdin, forKey: SdkCodingKey("stdin"))
-        try keyedContainer.encodeIfPresent(self.timeoutSeconds, forKey: SdkCodingKey("timeout_seconds"))
+        try keyedContainer.encode(argv, forKey: SdkCodingKey("argv"))
+        try keyedContainer.encodeIfPresent(workdir, forKey: SdkCodingKey("workdir"))
+        try keyedContainer.encodeIfPresent(stdin, forKey: SdkCodingKey("stdin"))
+        try keyedContainer.encodeIfPresent(timeoutSeconds, forKey: SdkCodingKey("timeout_seconds"))
     }
 }
 
@@ -145,12 +145,12 @@ struct HarnessCreateSessionWorkspaceTransferRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.direction, forKey: SdkCodingKey("direction"))
-        try keyedContainer.encode(self.path, forKey: SdkCodingKey("path"))
-        try keyedContainer.encodeIfPresent(self.isArchive, forKey: SdkCodingKey("is_archive"))
-        try keyedContainer.encodeIfPresent(self.asArchive, forKey: SdkCodingKey("as_archive"))
-        try keyedContainer.encodeIfPresent(self.sizeBytes, forKey: SdkCodingKey("size_bytes"))
-        try keyedContainer.encodeIfPresent(self.sha256, forKey: SdkCodingKey("sha256"))
+        try keyedContainer.encode(direction, forKey: SdkCodingKey("direction"))
+        try keyedContainer.encode(path, forKey: SdkCodingKey("path"))
+        try keyedContainer.encodeIfPresent(isArchive, forKey: SdkCodingKey("is_archive"))
+        try keyedContainer.encodeIfPresent(asArchive, forKey: SdkCodingKey("as_archive"))
+        try keyedContainer.encodeIfPresent(sizeBytes, forKey: SdkCodingKey("size_bytes"))
+        try keyedContainer.encodeIfPresent(sha256, forKey: SdkCodingKey("sha256"))
     }
 }
 
@@ -159,7 +159,7 @@ struct HarnessCancelSessionWorkspaceTransferRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.reason, forKey: SdkCodingKey("reason"))
+        try keyedContainer.encodeIfPresent(reason, forKey: SdkCodingKey("reason"))
     }
 }
 
@@ -168,7 +168,7 @@ struct HarnessCommitSessionWorkspaceTransferRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.sha256, forKey: SdkCodingKey("sha256"))
+        try keyedContainer.encodeIfPresent(sha256, forKey: SdkCodingKey("sha256"))
     }
 }
 
@@ -177,7 +177,7 @@ struct HarnessCreateSessionWorkspacePartUploadUrlsRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.partNumbers, forKey: SdkCodingKey("part_numbers"))
+        try keyedContainer.encode(partNumbers, forKey: SdkCodingKey("part_numbers"))
     }
 }
 
@@ -188,9 +188,9 @@ struct HarnessCreateTemplateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(self.baseTemplate, forKey: SdkCodingKey("base_template"))
-        try keyedContainer.encode(self.sourceOciRef, forKey: SdkCodingKey("source_oci_ref"))
+        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(baseTemplate, forKey: SdkCodingKey("base_template"))
+        try keyedContainer.encode(sourceOciRef, forKey: SdkCodingKey("source_oci_ref"))
     }
 }
 
@@ -200,7 +200,7 @@ struct HarnessUpdateTemplateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.sourceOciRef, forKey: SdkCodingKey("source_oci_ref"))
-        try keyedContainer.encodeIfPresent(self.baseTemplate, forKey: SdkCodingKey("base_template"))
+        try keyedContainer.encodeIfPresent(sourceOciRef, forKey: SdkCodingKey("source_oci_ref"))
+        try keyedContainer.encodeIfPresent(baseTemplate, forKey: SdkCodingKey("base_template"))
     }
 }

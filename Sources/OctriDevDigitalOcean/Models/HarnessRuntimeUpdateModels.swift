@@ -3,7 +3,7 @@
 
 import Foundation
 
-// HarnessRuntimeUpdate domain models
+/// HarnessRuntimeUpdate domain models
 /// Typed representation of the `UpdateTemplateRequest` API schema.
 public struct UpdateTemplateRequest: Codable {
     /// Optional `string` value serialized in the `source_oci_ref` wire field.
@@ -17,20 +17,20 @@ public struct UpdateTemplateRequest: Codable {
     }
 
     init() {
-        (self.sourceOciRef, self.baseTemplate) = (nil, nil)
+        (sourceOciRef, baseTemplate) = (nil, nil)
     }
 }
 
-extension UpdateTemplateRequest {
-    public init(from decoder: Decoder) throws {
+public extension UpdateTemplateRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.sourceOciRef = try container.sdkDecodeIfPresent(.sourceOciRef)
-        self.baseTemplate = try container.sdkDecodeIfPresent(.baseTemplate)
+        sourceOciRef = try container.sdkDecodeIfPresent(.sourceOciRef)
+        baseTemplate = try container.sdkDecodeIfPresent(.baseTemplate)
     }
 }
 
-extension UpdateTemplateRequest {
-    public init(sourceOciRef: String? = nil, baseTemplate: String? = nil) {
+public extension UpdateTemplateRequest {
+    init(sourceOciRef: String? = nil, baseTemplate: String? = nil) {
         self.init()
         (self.sourceOciRef, self.baseTemplate) = (sourceOciRef, baseTemplate)
     }
@@ -71,33 +71,41 @@ public struct UpdateTriggerRequest: Codable {
     }
 
     init() {
-        (self.name, self.status, self.promptTemplate, self.output, self.sessionTemplate) = (nil, nil, nil, nil, nil)
-        (self.boundSessionId, self.cron) = (nil, nil)
+        (name, status, promptTemplate, output, sessionTemplate) = (nil, nil, nil, nil, nil)
+        (boundSessionId, cron) = (nil, nil)
     }
 }
 
-extension UpdateTriggerRequest {
-    public init(from decoder: Decoder) throws {
+public extension UpdateTriggerRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.promptTemplate = try container.sdkDecodeIfPresent(.promptTemplate)
-        self.output = try container.sdkDecodeIfPresent(.output)
-        self.sessionTemplate = try container.sdkDecodeIfPresent(.sessionTemplate)
-        self.boundSessionId = try container.sdkDecodeIfPresent(.boundSessionId)
-        self.cron = try container.sdkDecodeIfPresent(.cron)
-        if let value = self.name {
+        name = try container.sdkDecodeIfPresent(.name)
+        status = try container.sdkDecodeIfPresent(.status)
+        promptTemplate = try container.sdkDecodeIfPresent(.promptTemplate)
+        output = try container.sdkDecodeIfPresent(.output)
+        sessionTemplate = try container.sdkDecodeIfPresent(.sessionTemplate)
+        boundSessionId = try container.sdkDecodeIfPresent(.boundSessionId)
+        cron = try container.sdkDecodeIfPresent(.cron)
+        if let value = name {
             try validateLength("name", value, min: 1, max: 64)
             try sdkValidatePattern("name", value, sdkPatternd6415432f58a)
         }
-        if let value = self.boundSessionId {
+        if let value = boundSessionId {
             try sdkValidateUuid("bound_session_id", value)
         }
     }
 }
 
-extension UpdateTriggerRequest {
-    public init(name: String? = nil, status: TriggerStatus? = nil, promptTemplate: String? = nil, output: TriggerOutputWrite? = nil, sessionTemplate: String? = nil, boundSessionId: String? = nil, cron: CreateCronConfig? = nil) throws {
+public extension UpdateTriggerRequest {
+    init(
+        name: String? = nil,
+        status: TriggerStatus? = nil,
+        promptTemplate: String? = nil,
+        output: TriggerOutputWrite? = nil,
+        sessionTemplate: String? = nil,
+        boundSessionId: String? = nil,
+        cron: CreateCronConfig? = nil
+    ) throws {
         self.init()
         (self.name, self.status) = (name, status)
         (self.promptTemplate, self.output) = (promptTemplate, output)

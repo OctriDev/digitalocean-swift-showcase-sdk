@@ -6,7 +6,8 @@ import Foundation
 import XCTest
 
 extension SdkMethodTests {
-    func testMonitoringGetLbFrontendFirewallDroppedPacketsMonitoringGetLbFXbfa20b1fd6ReachesMockAndDecodesResponse() async throws {
+    func testMonitoringGetLbFrontendFirewallDroppedPacketsMonitoringGetLbFXbfa20b1fd6ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -17,10 +18,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getLbFrontendFirewallDroppedPackets(
-            lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            start: decoded("\"1620683817\""),
-            end: decoded("\"1620705417\"")
-        )
+                lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+                start: decoded("\"1620683817\""),
+                end: decoded("\"1620705417\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -36,7 +37,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetLbFrontendHttpRequestsPerSecondMonitoringGetLbFrXcf67b4428cReachesMockAndDecodesResponse() async throws {
+    func testMonitoringGetLbFrontendHttpRequestsPerSecondMonitoringGetLbFrXcf67b4428cReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -56,7 +58,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetLbFrontendHttpRequestsPerSecondMonitoringGetLbFrXe1604671b4ReachesMockAndDecodesResponse() async throws {
+    func testMonitoringGetLbFrontendHttpRequestsPerSecondMonitoringGetLbFrXe1604671b4ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -67,10 +70,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getLbFrontendHttpRequestsPerSecond(
-            lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            start: decoded("\"1620683817\""),
-            end: decoded("\"1620705417\"")
-        )
+                lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+                start: decoded("\"1620683817\""),
+                end: decoded("\"1620705417\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -86,7 +89,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetLbFrontendHttpResponsesMonitoringGetLbFrontendHttpResponsesReachesMockAndDecodesResponse() async throws {
+    func testMonitoringGetLbFrontendHttpResponsesMonitoringGetLbFrontendHttpResponsesReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -106,7 +110,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetLbFrontendHttpResponsesMonitoringGetLbFrontendHtX4d723a844fReachesMockAndDecodesResponse() async throws {
+    func testMonitoringGetLbFrontendHttpResponsesMonitoringGetLbFrontendHtX4d723a844fReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -117,10 +122,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getLbFrontendHttpResponses(
-            lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            start: decoded("\"1620683817\""),
-            end: decoded("\"1620705417\"")
-        )
+                lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+                start: decoded("\"1620683817\""),
+                end: decoded("\"1620705417\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -136,7 +141,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetLbFrontendNetworkThroughputHttpMonitoringGetLbFrX6aef2e3673ReachesMockAndDecodesResponse() async throws {
+    func testMonitoringGetLbFrontendNetworkThroughputHttpMonitoringGetLbFrX6aef2e3673ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -156,7 +162,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetLbFrontendNetworkThroughputHttpMonitoringGetLbFrX050dcbb778ReachesMockAndDecodesResponse() async throws {
+    func testMonitoringGetLbFrontendNetworkThroughputHttpMonitoringGetLbFrX050dcbb778ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -167,10 +174,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getLbFrontendNetworkThroughputHttp(
-            lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            start: decoded("\"1620683817\""),
-            end: decoded("\"1620705417\"")
-        )
+                lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+                start: decoded("\"1620683817\""),
+                end: decoded("\"1620705417\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -186,7 +193,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetLbFrontendNetworkThroughputTcpMonitoringGetLbFroXb8d57256b8ReachesMockAndDecodesResponse() async throws {
+    func testMonitoringGetLbFrontendNetworkThroughputTcpMonitoringGetLbFroXb8d57256b8ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -206,7 +214,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetLbFrontendNetworkThroughputTcpMonitoringGetLbFroXa4ab5a8f06ReachesMockAndDecodesResponse() async throws {
+    func testMonitoringGetLbFrontendNetworkThroughputTcpMonitoringGetLbFroXa4ab5a8f06ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -217,10 +226,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getLbFrontendNetworkThroughputTcp(
-            lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            start: decoded("\"1620683817\""),
-            end: decoded("\"1620705417\"")
-        )
+                lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+                start: decoded("\"1620683817\""),
+                end: decoded("\"1620705417\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -236,7 +245,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetLbFrontendNetworkThroughputUdpMonitoringGetLbFroX7ac6040543ReachesMockAndDecodesResponse() async throws {
+    func testMonitoringGetLbFrontendNetworkThroughputUdpMonitoringGetLbFroX7ac6040543ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -256,7 +266,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetLbFrontendNetworkThroughputUdpMonitoringGetLbFroX189d21570cReachesMockAndDecodesResponse() async throws {
+    func testMonitoringGetLbFrontendNetworkThroughputUdpMonitoringGetLbFroX189d21570cReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -267,10 +278,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getLbFrontendNetworkThroughputUdp(
-            lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            start: decoded("\"1620683817\""),
-            end: decoded("\"1620705417\"")
-        )
+                lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+                start: decoded("\"1620683817\""),
+                end: decoded("\"1620705417\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -286,7 +297,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetLbFrontendNlbTcpNetworkThroughputMonitoringGetLbX4158293035ReachesMockAndDecodesResponse() async throws {
+    func testMonitoringGetLbFrontendNlbTcpNetworkThroughputMonitoringGetLbX4158293035ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -306,7 +318,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetLbFrontendNlbTcpNetworkThroughputMonitoringGetLbX1cad587da5ReachesMockAndDecodesResponse() async throws {
+    func testMonitoringGetLbFrontendNlbTcpNetworkThroughputMonitoringGetLbX1cad587da5ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -317,10 +330,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getLbFrontendNlbTcpNetworkThroughput(
-            lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            start: decoded("\"1620683817\""),
-            end: decoded("\"1620705417\"")
-        )
+                lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+                start: decoded("\"1620683817\""),
+                end: decoded("\"1620705417\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -336,7 +349,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetLbFrontendNlbUdpNetworkThroughputMonitoringGetLbX4f2c0f0f35ReachesMockAndDecodesResponse() async throws {
+    func testMonitoringGetLbFrontendNlbUdpNetworkThroughputMonitoringGetLbX4f2c0f0f35ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -356,7 +370,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetLbFrontendNlbUdpNetworkThroughputMonitoringGetLbXa66918b8c9ReachesMockAndDecodesResponse() async throws {
+    func testMonitoringGetLbFrontendNlbUdpNetworkThroughputMonitoringGetLbXa66918b8c9ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -367,10 +382,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getLbFrontendNlbUdpNetworkThroughput(
-            lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            start: decoded("\"1620683817\""),
-            end: decoded("\"1620705417\"")
-        )
+                lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+                start: decoded("\"1620683817\""),
+                end: decoded("\"1620705417\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -386,7 +401,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetLbFrontendTlsConnectionsCurrentMonitoringGetLbFrX1bcb63e5efReachesMockAndDecodesResponse() async throws {
+    func testMonitoringGetLbFrontendTlsConnectionsCurrentMonitoringGetLbFrX1bcb63e5efReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -406,7 +422,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetLbFrontendTlsConnectionsCurrentMonitoringGetLbFrX2da5ab9d8bReachesMockAndDecodesResponse() async throws {
+    func testMonitoringGetLbFrontendTlsConnectionsCurrentMonitoringGetLbFrX2da5ab9d8bReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -417,10 +434,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getLbFrontendTlsConnectionsCurrent(
-            lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            start: decoded("\"1620683817\""),
-            end: decoded("\"1620705417\"")
-        )
+                lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+                start: decoded("\"1620683817\""),
+                end: decoded("\"1620705417\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -436,7 +453,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetLbFrontendTlsConnectionsExceedingRateLimitMonitoX7fa45e0782ReachesMockAndDecodesResponse() async throws {
+    func testMonitoringGetLbFrontendTlsConnectionsExceedingRateLimitMonitoX7fa45e0782ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -456,7 +474,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testMonitoringGetLbFrontendTlsConnectionsExceedingRateLimitMonitoX0d2dddd413ReachesMockAndDecodesResponse() async throws {
+    func testMonitoringGetLbFrontendTlsConnectionsExceedingRateLimitMonitoX0d2dddd413ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -467,10 +486,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.monitoring.getLbFrontendTlsConnectionsExceedingRateLimit(
-            lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
-            start: decoded("\"1620683817\""),
-            end: decoded("\"1620705417\"")
-        )
+                lbId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\""),
+                start: decoded("\"1620683817\""),
+                end: decoded("\"1620705417\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -486,7 +505,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testMonitoringGetLbFrontendTlsConnectionsLimitMonitoringGetLbFronXc88b401841ReachesMockAndDecodesResponse() async throws {
+    func testMonitoringGetLbFrontendTlsConnectionsLimitMonitoringGetLbFronXc88b401841ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }

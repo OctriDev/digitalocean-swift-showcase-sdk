@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DatabasesMysql domain models
+/// DatabasesMysql domain models
 /// Typed representation of the `MysqlSettings` API schema.
 public struct MysqlSettings: Codable {
     /// A string specifying the authentication method to be used for connections to the MySQL user account. The
@@ -17,21 +17,27 @@ public struct MysqlSettings: Codable {
         case authPlugin = "auth_plugin"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension MysqlSettings {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.authPlugin) else {
-            throw SdkValidationError(field: "auth_plugin", code: "required", message: "Validation failed for 'auth_plugin': value is required")
-        }
-        self.authPlugin = try container.sdkDecodeRequired(.authPlugin)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension MysqlSettings {
-    public init(authPlugin: MysqlSettingsAuthPlugin) {
+public extension MysqlSettings {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.authPlugin) else {
+            throw SdkValidationError(
+                field: "auth_plugin",
+                code: "required",
+                message: "Validation failed for 'auth_plugin': value is required"
+            )
+        }
+        authPlugin = try container.sdkDecodeRequired(.authPlugin)
+    }
+}
+
+public extension MysqlSettings {
+    init(authPlugin: MysqlSettingsAuthPlugin) {
         self.authPlugin = authPlugin
     }
 }
@@ -54,20 +60,20 @@ public struct MysqlIncrementalBackup: Codable {
     }
 
     init() {
-        (self.enabled, self.fullBackupWeekSchedule) = (nil, nil)
+        (enabled, fullBackupWeekSchedule) = (nil, nil)
     }
 }
 
-extension MysqlIncrementalBackup {
-    public init(from decoder: Decoder) throws {
+public extension MysqlIncrementalBackup {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
-        self.fullBackupWeekSchedule = try container.sdkDecodeIfPresent(.fullBackupWeekSchedule)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
+        fullBackupWeekSchedule = try container.sdkDecodeIfPresent(.fullBackupWeekSchedule)
     }
 }
 
-extension MysqlIncrementalBackup {
-    public init(enabled: Bool? = nil, fullBackupWeekSchedule: String? = nil) {
+public extension MysqlIncrementalBackup {
+    init(enabled: Bool? = nil, fullBackupWeekSchedule: String? = nil) {
         self.init()
         (self.enabled, self.fullBackupWeekSchedule) = (enabled, fullBackupWeekSchedule)
     }
@@ -316,8 +322,8 @@ extension MysqlAdvancedConfig {
     }
 }
 
-extension MysqlAdvancedConfig {
-    public init(from decoder: Decoder) throws {
+public extension MysqlAdvancedConfig {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init(sdkDefaults: ())
         try sdkDecodeFieldsPart1(container)
@@ -332,8 +338,60 @@ extension MysqlAdvancedConfig {
     }
 }
 
-extension MysqlAdvancedConfig {
-    public init(backupHour: Int? = nil, backupMinute: Int? = nil, automaticSpPrivileges: Bool? = nil, sqlMode: String? = nil, connectTimeout: Int? = nil, defaultTimeZone: String? = nil, divPrecisionIncrement: Int? = nil, endMarkersInJson: Bool? = nil, eqRangeIndexDiveLimit: Int? = nil, groupConcatMaxLen: Int? = nil, informationSchemaStatsExpiry: Int? = nil, innodbFtEnableStopword: Bool? = nil, innodbFtMaxTokenSize: Int? = nil, innodbFtMinTokenSize: Int? = nil, innodbFtNumWordOptimize: Int? = nil, innodbFtResultCacheLimit: Int? = nil, innodbFtServerStopwordTable: String? = nil, innodbFtUserStopwordTable: String? = nil, innodbLockWaitTimeout: Int? = nil, innodbLogBufferSize: Int? = nil, innodbOnlineAlterLogMaxSize: Int? = nil, innodbOptimizeFulltextOnly: Bool? = nil, innodbPrintAllDeadlocks: Bool? = nil, innodbRollbackOnTimeout: Bool? = nil, interactiveTimeout: Int? = nil, internalTmpMemStorageEngine: MysqlAdvancedConfigInternalTmpMemStorageEngine? = nil, netReadTimeout: Int? = nil, netWriteTimeout: Int? = nil, sqlRequirePrimaryKey: Bool? = nil, waitTimeout: Int? = nil, windowingUseHighPrecision: Bool? = nil, maxAllowedPacket: Int? = nil, maxExecutionTime: Int? = nil, maxHeapTableSize: Int? = nil, maxSeeksForKey: Int? = nil, optimizerPruneLevel: Int? = nil, optimizerSearchDepth: Int? = nil, optimizerSwitch: String? = nil, sortBufferSize: Int? = nil, tmpTableSize: Int? = nil, slowQueryLog: Bool? = nil, longQueryTime: Double? = nil, binlogRetentionPeriod: Double? = nil, innodbChangeBufferMaxSize: Int? = nil, innodbFlushNeighbors: Int? = nil, innodbReadIoThreads: Int? = nil, innodbWriteIoThreads: Int? = nil, innodbThreadConcurrency: Int? = nil, netBufferLength: Int? = nil, logOutput: MysqlAdvancedConfigLogOutput? = nil, mysqlIncrementalBackup: MysqlIncrementalBackup? = nil) throws {
+public extension MysqlAdvancedConfig {
+    init(
+        backupHour: Int? = nil,
+        backupMinute: Int? = nil,
+        automaticSpPrivileges: Bool? = nil,
+        sqlMode: String? = nil,
+        connectTimeout: Int? = nil,
+        defaultTimeZone: String? = nil,
+        divPrecisionIncrement: Int? = nil,
+        endMarkersInJson: Bool? = nil,
+        eqRangeIndexDiveLimit: Int? = nil,
+        groupConcatMaxLen: Int? = nil,
+        informationSchemaStatsExpiry: Int? = nil,
+        innodbFtEnableStopword: Bool? = nil,
+        innodbFtMaxTokenSize: Int? = nil,
+        innodbFtMinTokenSize: Int? = nil,
+        innodbFtNumWordOptimize: Int? = nil,
+        innodbFtResultCacheLimit: Int? = nil,
+        innodbFtServerStopwordTable: String? = nil,
+        innodbFtUserStopwordTable: String? = nil,
+        innodbLockWaitTimeout: Int? = nil,
+        innodbLogBufferSize: Int? = nil,
+        innodbOnlineAlterLogMaxSize: Int? = nil,
+        innodbOptimizeFulltextOnly: Bool? = nil,
+        innodbPrintAllDeadlocks: Bool? = nil,
+        innodbRollbackOnTimeout: Bool? = nil,
+        interactiveTimeout: Int? = nil,
+        internalTmpMemStorageEngine: MysqlAdvancedConfigInternalTmpMemStorageEngine? = nil,
+        netReadTimeout: Int? = nil,
+        netWriteTimeout: Int? = nil,
+        sqlRequirePrimaryKey: Bool? = nil,
+        waitTimeout: Int? = nil,
+        windowingUseHighPrecision: Bool? = nil,
+        maxAllowedPacket: Int? = nil,
+        maxExecutionTime: Int? = nil,
+        maxHeapTableSize: Int? = nil,
+        maxSeeksForKey: Int? = nil,
+        optimizerPruneLevel: Int? = nil,
+        optimizerSearchDepth: Int? = nil,
+        optimizerSwitch: String? = nil,
+        sortBufferSize: Int? = nil,
+        tmpTableSize: Int? = nil,
+        slowQueryLog: Bool? = nil,
+        longQueryTime: Double? = nil,
+        binlogRetentionPeriod: Double? = nil,
+        innodbChangeBufferMaxSize: Int? = nil,
+        innodbFlushNeighbors: Int? = nil,
+        innodbReadIoThreads: Int? = nil,
+        innodbWriteIoThreads: Int? = nil,
+        innodbThreadConcurrency: Int? = nil,
+        netBufferLength: Int? = nil,
+        logOutput: MysqlAdvancedConfigLogOutput? = nil,
+        mysqlIncrementalBackup: MysqlIncrementalBackup? = nil
+    ) throws {
         self.init(sdkDefaults: ())
         sdkSet1(backupHour, backupMinute, automaticSpPrivileges, sqlMode, connectTimeout)
         sdkSet2(defaultTimeZone, divPrecisionIncrement, endMarkersInJson, eqRangeIndexDiveLimit, groupConcatMaxLen)
@@ -355,7 +413,13 @@ extension MysqlAdvancedConfig {
 }
 
 extension MysqlAdvancedConfig {
-    mutating func sdkSet1(_ backupHour: Int?, _ backupMinute: Int?, _ automaticSpPrivileges: Bool?, _ sqlMode: String?, _ connectTimeout: Int?) {
+    mutating func sdkSet1(
+        _ backupHour: Int?,
+        _ backupMinute: Int?,
+        _ automaticSpPrivileges: Bool?,
+        _ sqlMode: String?,
+        _ connectTimeout: Int?
+    ) {
         self.backupHour = backupHour
         self.backupMinute = backupMinute
         self.automaticSpPrivileges = automaticSpPrivileges
@@ -365,7 +429,13 @@ extension MysqlAdvancedConfig {
 }
 
 extension MysqlAdvancedConfig {
-    mutating func sdkSet2(_ defaultTimeZone: String?, _ divPrecisionIncrement: Int?, _ endMarkersInJson: Bool?, _ eqRangeIndexDiveLimit: Int?, _ groupConcatMaxLen: Int?) {
+    mutating func sdkSet2(
+        _ defaultTimeZone: String?,
+        _ divPrecisionIncrement: Int?,
+        _ endMarkersInJson: Bool?,
+        _ eqRangeIndexDiveLimit: Int?,
+        _ groupConcatMaxLen: Int?
+    ) {
         self.defaultTimeZone = defaultTimeZone
         self.divPrecisionIncrement = divPrecisionIncrement
         self.endMarkersInJson = endMarkersInJson
@@ -375,7 +445,12 @@ extension MysqlAdvancedConfig {
 }
 
 extension MysqlAdvancedConfig {
-    mutating func sdkSet3(_ informationSchemaStatsExpiry: Int?, _ innodbFtEnableStopword: Bool?, _ innodbFtMaxTokenSize: Int?, _ innodbFtMinTokenSize: Int?) {
+    mutating func sdkSet3(
+        _ informationSchemaStatsExpiry: Int?,
+        _ innodbFtEnableStopword: Bool?,
+        _ innodbFtMaxTokenSize: Int?,
+        _ innodbFtMinTokenSize: Int?
+    ) {
         self.informationSchemaStatsExpiry = informationSchemaStatsExpiry
         self.innodbFtEnableStopword = innodbFtEnableStopword
         self.innodbFtMaxTokenSize = innodbFtMaxTokenSize
@@ -384,7 +459,11 @@ extension MysqlAdvancedConfig {
 }
 
 extension MysqlAdvancedConfig {
-    mutating func sdkSet4(_ innodbFtNumWordOptimize: Int?, _ innodbFtResultCacheLimit: Int?, _ innodbFtServerStopwordTable: String?) {
+    mutating func sdkSet4(
+        _ innodbFtNumWordOptimize: Int?,
+        _ innodbFtResultCacheLimit: Int?,
+        _ innodbFtServerStopwordTable: String?
+    ) {
         self.innodbFtNumWordOptimize = innodbFtNumWordOptimize
         self.innodbFtResultCacheLimit = innodbFtResultCacheLimit
         self.innodbFtServerStopwordTable = innodbFtServerStopwordTable
@@ -392,7 +471,12 @@ extension MysqlAdvancedConfig {
 }
 
 extension MysqlAdvancedConfig {
-    mutating func sdkSet5(_ innodbFtUserStopwordTable: String?, _ innodbLockWaitTimeout: Int?, _ innodbLogBufferSize: Int?, _ innodbOnlineAlterLogMaxSize: Int?) {
+    mutating func sdkSet5(
+        _ innodbFtUserStopwordTable: String?,
+        _ innodbLockWaitTimeout: Int?,
+        _ innodbLogBufferSize: Int?,
+        _ innodbOnlineAlterLogMaxSize: Int?
+    ) {
         self.innodbFtUserStopwordTable = innodbFtUserStopwordTable
         self.innodbLockWaitTimeout = innodbLockWaitTimeout
         self.innodbLogBufferSize = innodbLogBufferSize
@@ -401,7 +485,12 @@ extension MysqlAdvancedConfig {
 }
 
 extension MysqlAdvancedConfig {
-    mutating func sdkSet6(_ innodbOptimizeFulltextOnly: Bool?, _ innodbPrintAllDeadlocks: Bool?, _ innodbRollbackOnTimeout: Bool?, _ interactiveTimeout: Int?) {
+    mutating func sdkSet6(
+        _ innodbOptimizeFulltextOnly: Bool?,
+        _ innodbPrintAllDeadlocks: Bool?,
+        _ innodbRollbackOnTimeout: Bool?,
+        _ interactiveTimeout: Int?
+    ) {
         self.innodbOptimizeFulltextOnly = innodbOptimizeFulltextOnly
         self.innodbPrintAllDeadlocks = innodbPrintAllDeadlocks
         self.innodbRollbackOnTimeout = innodbRollbackOnTimeout
@@ -410,7 +499,13 @@ extension MysqlAdvancedConfig {
 }
 
 extension MysqlAdvancedConfig {
-    mutating func sdkSet7(_ internalTmpMemStorageEngine: MysqlAdvancedConfigInternalTmpMemStorageEngine?, _ netReadTimeout: Int?, _ netWriteTimeout: Int?, _ sqlRequirePrimaryKey: Bool?, _ waitTimeout: Int?) {
+    mutating func sdkSet7(
+        _ internalTmpMemStorageEngine: MysqlAdvancedConfigInternalTmpMemStorageEngine?,
+        _ netReadTimeout: Int?,
+        _ netWriteTimeout: Int?,
+        _ sqlRequirePrimaryKey: Bool?,
+        _ waitTimeout: Int?
+    ) {
         self.internalTmpMemStorageEngine = internalTmpMemStorageEngine
         self.netReadTimeout = netReadTimeout
         self.netWriteTimeout = netWriteTimeout
@@ -420,7 +515,13 @@ extension MysqlAdvancedConfig {
 }
 
 extension MysqlAdvancedConfig {
-    mutating func sdkSet8(_ windowingUseHighPrecision: Bool?, _ maxAllowedPacket: Int?, _ maxExecutionTime: Int?, _ maxHeapTableSize: Int?, _ maxSeeksForKey: Int?) {
+    mutating func sdkSet8(
+        _ windowingUseHighPrecision: Bool?,
+        _ maxAllowedPacket: Int?,
+        _ maxExecutionTime: Int?,
+        _ maxHeapTableSize: Int?,
+        _ maxSeeksForKey: Int?
+    ) {
         self.windowingUseHighPrecision = windowingUseHighPrecision
         self.maxAllowedPacket = maxAllowedPacket
         self.maxExecutionTime = maxExecutionTime
@@ -430,7 +531,13 @@ extension MysqlAdvancedConfig {
 }
 
 extension MysqlAdvancedConfig {
-    mutating func sdkSet9(_ optimizerPruneLevel: Int?, _ optimizerSearchDepth: Int?, _ optimizerSwitch: String?, _ sortBufferSize: Int?, _ tmpTableSize: Int?) {
+    mutating func sdkSet9(
+        _ optimizerPruneLevel: Int?,
+        _ optimizerSearchDepth: Int?,
+        _ optimizerSwitch: String?,
+        _ sortBufferSize: Int?,
+        _ tmpTableSize: Int?
+    ) {
         self.optimizerPruneLevel = optimizerPruneLevel
         self.optimizerSearchDepth = optimizerSearchDepth
         self.optimizerSwitch = optimizerSwitch
@@ -440,7 +547,13 @@ extension MysqlAdvancedConfig {
 }
 
 extension MysqlAdvancedConfig {
-    mutating func sdkSet10(_ slowQueryLog: Bool?, _ longQueryTime: Double?, _ binlogRetentionPeriod: Double?, _ innodbChangeBufferMaxSize: Int?, _ innodbFlushNeighbors: Int?) {
+    mutating func sdkSet10(
+        _ slowQueryLog: Bool?,
+        _ longQueryTime: Double?,
+        _ binlogRetentionPeriod: Double?,
+        _ innodbChangeBufferMaxSize: Int?,
+        _ innodbFlushNeighbors: Int?
+    ) {
         self.slowQueryLog = slowQueryLog
         self.longQueryTime = longQueryTime
         self.binlogRetentionPeriod = binlogRetentionPeriod
@@ -450,7 +563,13 @@ extension MysqlAdvancedConfig {
 }
 
 extension MysqlAdvancedConfig {
-    mutating func sdkSet11(_ innodbReadIoThreads: Int?, _ innodbWriteIoThreads: Int?, _ innodbThreadConcurrency: Int?, _ netBufferLength: Int?, _ logOutput: MysqlAdvancedConfigLogOutput?) {
+    mutating func sdkSet11(
+        _ innodbReadIoThreads: Int?,
+        _ innodbWriteIoThreads: Int?,
+        _ innodbThreadConcurrency: Int?,
+        _ netBufferLength: Int?,
+        _ logOutput: MysqlAdvancedConfigLogOutput?
+    ) {
         self.innodbReadIoThreads = innodbReadIoThreads
         self.innodbWriteIoThreads = innodbWriteIoThreads
         self.innodbThreadConcurrency = innodbThreadConcurrency
@@ -467,34 +586,34 @@ extension MysqlAdvancedConfig {
 
 extension MysqlAdvancedConfig {
     mutating func sdkDecodeFieldsPart1(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        self.backupHour = try container.sdkDecodeIfPresent(.backupHour)
-        self.backupMinute = try container.sdkDecodeIfPresent(.backupMinute)
-        self.automaticSpPrivileges = try container.sdkDecodeIfPresent(.automaticSpPrivileges)
-        self.sqlMode = try container.sdkDecodeIfPresent(.sqlMode)
-        self.connectTimeout = try container.sdkDecodeIfPresent(.connectTimeout)
-        self.defaultTimeZone = try container.sdkDecodeIfPresent(.defaultTimeZone)
-        self.divPrecisionIncrement = try container.sdkDecodeIfPresent(.divPrecisionIncrement)
-        self.endMarkersInJson = try container.sdkDecodeIfPresent(.endMarkersInJson)
-        self.eqRangeIndexDiveLimit = try container.sdkDecodeIfPresent(.eqRangeIndexDiveLimit)
-        self.groupConcatMaxLen = try container.sdkDecodeIfPresent(.groupConcatMaxLen)
-        self.informationSchemaStatsExpiry = try container.sdkDecodeIfPresent(.informationSchemaStatsExpiry)
-        self.innodbFtEnableStopword = try container.sdkDecodeIfPresent(.innodbFtEnableStopword)
+        backupHour = try container.sdkDecodeIfPresent(.backupHour)
+        backupMinute = try container.sdkDecodeIfPresent(.backupMinute)
+        automaticSpPrivileges = try container.sdkDecodeIfPresent(.automaticSpPrivileges)
+        sqlMode = try container.sdkDecodeIfPresent(.sqlMode)
+        connectTimeout = try container.sdkDecodeIfPresent(.connectTimeout)
+        defaultTimeZone = try container.sdkDecodeIfPresent(.defaultTimeZone)
+        divPrecisionIncrement = try container.sdkDecodeIfPresent(.divPrecisionIncrement)
+        endMarkersInJson = try container.sdkDecodeIfPresent(.endMarkersInJson)
+        eqRangeIndexDiveLimit = try container.sdkDecodeIfPresent(.eqRangeIndexDiveLimit)
+        groupConcatMaxLen = try container.sdkDecodeIfPresent(.groupConcatMaxLen)
+        informationSchemaStatsExpiry = try container.sdkDecodeIfPresent(.informationSchemaStatsExpiry)
+        innodbFtEnableStopword = try container.sdkDecodeIfPresent(.innodbFtEnableStopword)
     }
 }
 
 extension MysqlAdvancedConfig {
     mutating func sdkDecodeFieldsPart2(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        self.innodbFtMaxTokenSize = try container.sdkDecodeIfPresent(.innodbFtMaxTokenSize)
-        self.innodbFtMinTokenSize = try container.sdkDecodeIfPresent(.innodbFtMinTokenSize)
-        self.innodbFtNumWordOptimize = try container.sdkDecodeIfPresent(.innodbFtNumWordOptimize)
-        self.innodbFtResultCacheLimit = try container.sdkDecodeIfPresent(.innodbFtResultCacheLimit)
-        self.innodbFtServerStopwordTable = try container.sdkDecodeIfPresent(.innodbFtServerStopwordTable)
-        self.innodbFtUserStopwordTable = try container.sdkDecodeIfPresent(.innodbFtUserStopwordTable)
-        self.innodbLockWaitTimeout = try container.sdkDecodeIfPresent(.innodbLockWaitTimeout)
-        self.innodbLogBufferSize = try container.sdkDecodeIfPresent(.innodbLogBufferSize)
-        self.innodbOnlineAlterLogMaxSize = try container.sdkDecodeIfPresent(.innodbOnlineAlterLogMaxSize)
-        self.innodbOptimizeFulltextOnly = try container.sdkDecodeIfPresent(.innodbOptimizeFulltextOnly)
-        self.innodbPrintAllDeadlocks = try container.sdkDecodeIfPresent(.innodbPrintAllDeadlocks)
-        self.innodbRollbackOnTimeout = try container.sdkDecodeIfPresent(.innodbRollbackOnTimeout)
+        innodbFtMaxTokenSize = try container.sdkDecodeIfPresent(.innodbFtMaxTokenSize)
+        innodbFtMinTokenSize = try container.sdkDecodeIfPresent(.innodbFtMinTokenSize)
+        innodbFtNumWordOptimize = try container.sdkDecodeIfPresent(.innodbFtNumWordOptimize)
+        innodbFtResultCacheLimit = try container.sdkDecodeIfPresent(.innodbFtResultCacheLimit)
+        innodbFtServerStopwordTable = try container.sdkDecodeIfPresent(.innodbFtServerStopwordTable)
+        innodbFtUserStopwordTable = try container.sdkDecodeIfPresent(.innodbFtUserStopwordTable)
+        innodbLockWaitTimeout = try container.sdkDecodeIfPresent(.innodbLockWaitTimeout)
+        innodbLogBufferSize = try container.sdkDecodeIfPresent(.innodbLogBufferSize)
+        innodbOnlineAlterLogMaxSize = try container.sdkDecodeIfPresent(.innodbOnlineAlterLogMaxSize)
+        innodbOptimizeFulltextOnly = try container.sdkDecodeIfPresent(.innodbOptimizeFulltextOnly)
+        innodbPrintAllDeadlocks = try container.sdkDecodeIfPresent(.innodbPrintAllDeadlocks)
+        innodbRollbackOnTimeout = try container.sdkDecodeIfPresent(.innodbRollbackOnTimeout)
     }
 }

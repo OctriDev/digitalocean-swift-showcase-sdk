@@ -6,12 +6,33 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension PartnerNetworkConnectMethods {
-    /// This operation generates a new service key for the specified partner attachment. The operation is asynchronous, and the response is an empty JSON object returned with a 202 status code. To poll for the new service key, send a `GET` request to `/v2/partner_network_connect/attachments/{pa_id}/service_key`.
+public extension PartnerNetworkConnectMethods {
+    /// This operation generates a new service key for the specified partner attachment. The operation is asynchronous,
+    /// and the response is an empty JSON object returned with a 202 status code. To poll for the new service key, send
+    /// a `GET` request to `/v2/partner_network_connect/attachments/{pa_id}/service_key`.
     ///
     /// - Parameters:
     /// - paId: A unique identifier for a partner attachment.
-    public static func partnerAttachmentsCreateServiceKey(config: ClientConfig, paId: String, requestOptions: RequestOptions? = nil) async throws -> [String: JSONValue] {
-        return try (await sdkRequest("POST", ["/v2/partner_network_connect/attachments/", sdkEncodePathSegment(sdkWireString(paId)), "/service_key"].joined(), config: config, decoder: .json, operationId: "partnerAttachments_create_service_key", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+    static func partnerAttachmentsCreateServiceKey(
+        config: ClientConfig,
+        paId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> [String: JSONValue] {
+        try await (sdkRequest(
+            "POST",
+            ["/v2/partner_network_connect/attachments/", sdkEncodePathSegment(sdkWireString(paId)), "/service_key"]
+                .joined(),
+            config: config,
+            decoder: .json,
+            operationId: "partnerAttachments_create_service_key",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

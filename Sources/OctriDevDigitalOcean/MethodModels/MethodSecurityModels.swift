@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-// Canonical security operation model declarations
+/// Canonical security operation model declarations
 public struct SecurityUpdateSettingsPlanRequestBodyTierCoverageValue: Codable {
     /// The URNs of resources to scan for the tier.
     /// - Example: ["do:droplet:fe3a2fd7-903d-46e6-ada3-3e4f285fb89d"]
@@ -22,20 +22,20 @@ public struct SecurityUpdateSettingsPlanRequestBodyTierCoverageValue: Codable {
     }
 
     init() {
-        (self.resources, self.tags) = (nil, nil)
+        (resources, tags) = (nil, nil)
     }
 }
 
-extension SecurityUpdateSettingsPlanRequestBodyTierCoverageValue {
-    public init(from decoder: Decoder) throws {
+public extension SecurityUpdateSettingsPlanRequestBodyTierCoverageValue {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.resources = try container.sdkDecodeIfPresent(.resources)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
+        resources = try container.sdkDecodeIfPresent(.resources)
+        tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-extension SecurityUpdateSettingsPlanRequestBodyTierCoverageValue {
-    public init(resources: [String]? = nil, tags: [String]? = nil) {
+public extension SecurityUpdateSettingsPlanRequestBodyTierCoverageValue {
+    init(resources: [String]? = nil, tags: [String]? = nil) {
         self.init()
         (self.resources, self.tags) = (resources, tags)
     }

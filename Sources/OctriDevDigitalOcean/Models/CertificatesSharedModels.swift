@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Certificates domain models
+/// Certificates domain models
 /// Typed representation of the `Certificate` API schema.
 public struct Certificate: Codable {
     /// A unique ID that can be used to identify and reference a certificate.
@@ -46,36 +46,45 @@ public struct Certificate: Codable {
     }
 
     init() {
-        (self.id, self.name, self.notAfter, self.sha1Fingerprint, self.createdAt) = (nil, nil, nil, nil, nil)
-        (self.dnsNames, self.state, self.type) = (nil, nil, nil)
+        (id, name, notAfter, sha1Fingerprint, createdAt) = (nil, nil, nil, nil, nil)
+        (dnsNames, state, type) = (nil, nil, nil)
     }
 }
 
-extension Certificate {
-    public init(from decoder: Decoder) throws {
+public extension Certificate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.notAfter = try container.sdkDecodeIfPresent(.notAfter)
-        self.sha1Fingerprint = try container.sdkDecodeIfPresent(.sha1Fingerprint)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.dnsNames = try container.sdkDecodeIfPresent(.dnsNames)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        notAfter = try container.sdkDecodeIfPresent(.notAfter)
+        sha1Fingerprint = try container.sdkDecodeIfPresent(.sha1Fingerprint)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        dnsNames = try container.sdkDecodeIfPresent(.dnsNames)
+        state = try container.sdkDecodeIfPresent(.state)
+        type = try container.sdkDecodeIfPresent(.type)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
-        if let value = self.notAfter {
+        if let value = notAfter {
             try sdkValidateDateTime("not_after", sdkWireString(value))
         }
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-extension Certificate {
-    public init(id: String? = nil, name: String? = nil, notAfter: Date? = nil, sha1Fingerprint: String? = nil, createdAt: Date? = nil, dnsNames: [String]? = nil, state: CertificateState? = nil, type: CertificateType? = nil) throws {
+public extension Certificate {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        notAfter: Date? = nil,
+        sha1Fingerprint: String? = nil,
+        createdAt: Date? = nil,
+        dnsNames: [String]? = nil,
+        state: CertificateState? = nil,
+        type: CertificateType? = nil
+    ) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.notAfter, self.sha1Fingerprint) = (notAfter, sha1Fingerprint)
@@ -98,13 +107,16 @@ extension Certificate {
 public struct CertificateType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let custom = CertificateType(rawValue: "custom")
     public static let letsEncrypt = CertificateType(rawValue: "lets_encrypt")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -117,14 +129,17 @@ public struct CertificateType: RawRepresentable, Hashable, Codable, Sendable, Sd
 public struct CertificateState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pending = CertificateState(rawValue: "pending")
     public static let verified = CertificateState(rawValue: "verified")
     public static let error = CertificateState(rawValue: "error")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

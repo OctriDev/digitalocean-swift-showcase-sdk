@@ -37,10 +37,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dropletAutoscalePools.autoscalepoolsList(
-            perPage: decoded("2"),
-            page: decoded("1"),
-            name: decoded("\"my-autoscale-pool\"")
-        )
+                perPage: decoded("2"),
+                page: decoded("1"),
+                name: decoded("\"my-autoscale-pool\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -87,10 +87,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dropletAutoscalePools.autoscalepoolsListHistory(
-            autoscalePoolId: decoded("\"0d3db13e-a604-4944-9827-7ec2642d32ac\""),
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                autoscalePoolId: decoded("\"0d3db13e-a604-4944-9827-7ec2642d32ac\""),
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -137,10 +137,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dropletAutoscalePools.autoscalepoolsListMembers(
-            autoscalePoolId: decoded("\"0d3db13e-a604-4944-9827-7ec2642d32ac\""),
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                autoscalePoolId: decoded("\"0d3db13e-a604-4944-9827-7ec2642d32ac\""),
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -188,11 +188,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dropletAutoscalePools.autoscalepoolsUpdate(
-            autoscalePoolId: decoded("\"0d3db13e-a604-4944-9827-7ec2642d32ac\""),
-            name: decoded("\"my-autoscale-pool\""),
-            config: decoded("{\"target_number_instances\":2}"),
-            dropletTemplate: decoded(sdkMethodFixture123Value1)
-        )
+                autoscalePoolId: decoded("\"0d3db13e-a604-4944-9827-7ec2642d32ac\""),
+                name: decoded("\"my-autoscale-pool\""),
+                config: decoded("{\"target_number_instances\":2}"),
+                dropletTemplate: decoded(sdkMethodFixture123Value1)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -325,12 +325,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.billing.insightsList(
-            accountUrn: decoded("\"do:team:12345678-1234-1234-1234-123456789012\""),
-            startDate: decoded("\"2025-01-01\""),
-            endDate: decoded("\"2025-01-31\""),
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                accountUrn: decoded("\"do:team:12345678-1234-1234-1234-123456789012\""),
+                startDate: decoded("\"2025-01-01\""),
+                endDate: decoded("\"2025-01-31\""),
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -377,10 +377,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.byoipPrefixes.create(
-            prefix: decoded("\"203.11.13.0/24\""),
-            region: decoded("\"nyc3\""),
-            signature: decoded("\"<sample-signature>\"")
-        )
+                prefix: decoded("\"203.11.13.0/24\""),
+                region: decoded("\"nyc3\""),
+                signature: decoded("\"<sample-signature>\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -418,8 +418,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.byoipPrefixes.delete(
-            byoipPrefixUuid: decoded("\"f47ac10b-58cc-4372-a567-0e02b2c3d479\"")
-        )
+                byoipPrefixUuid: decoded("\"f47ac10b-58cc-4372-a567-0e02b2c3d479\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -464,8 +464,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.byoipPrefixes.get(
-            byoipPrefixUuid: decoded("\"f47ac10b-58cc-4372-a567-0e02b2c3d479\"")
-        )
+                byoipPrefixUuid: decoded("\"f47ac10b-58cc-4372-a567-0e02b2c3d479\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -511,9 +511,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.byoipPrefixes.list(
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -560,10 +560,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.byoipPrefixes.listResources(
-            byoipPrefixUuid: decoded("\"f47ac10b-58cc-4372-a567-0e02b2c3d479\""),
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                byoipPrefixUuid: decoded("\"f47ac10b-58cc-4372-a567-0e02b2c3d479\""),
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

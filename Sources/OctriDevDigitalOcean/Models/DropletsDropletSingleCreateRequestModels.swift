@@ -3,43 +3,73 @@
 
 import Foundation
 
-// Droplets domain models
-extension DropletSingleCreateRequest {
-    public init(from decoder: Decoder) throws {
+/// Droplets domain models
+public extension DropletSingleCreateRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
         }
         guard container.contains(.size) else {
-            throw SdkValidationError(field: "size", code: "required", message: "Validation failed for 'size': value is required")
+            throw SdkValidationError(
+                field: "size",
+                code: "required",
+                message: "Validation failed for 'size': value is required"
+            )
         }
         guard container.contains(.image) else {
-            throw SdkValidationError(field: "image", code: "required", message: "Validation failed for 'image': value is required")
+            throw SdkValidationError(
+                field: "image",
+                code: "required",
+                message: "Validation failed for 'image': value is required"
+            )
         }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.size = try container.sdkDecodeRequired(.size)
-        self.image = try container.sdkDecodeRequired(.image)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.sshKeys = try container.sdkDecodeIfPresent(.sshKeys)
-        self.backups = try container.sdkDecodeIfPresent(.backups)
-        self.backupPolicy = try container.sdkDecodeIfPresent(.backupPolicy)
-        self.ipv6 = try container.sdkDecodeIfPresent(.ipv6)
-        self.monitoring = try container.sdkDecodeIfPresent(.monitoring)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.userData = try container.sdkDecodeIfPresent(.userData)
-        self.privateNetworking = try container.sdkDecodeIfPresent(.privateNetworking)
-        self.volumes = try container.sdkDecodeIfPresent(.volumes)
-        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        self.subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
-        self.withDropletAgent = try container.sdkDecodeIfPresent(.withDropletAgent)
-        self.publicNetworking = try container.sdkDecodeIfPresent(.publicNetworking)
-            try validateLength("name", self.name, min: nil, max: 255)
-            try sdkValidatePattern("name", self.name, sdkPattern4a69a19e3eb8)
+        name = try container.sdkDecodeRequired(.name)
+        size = try container.sdkDecodeRequired(.size)
+        image = try container.sdkDecodeRequired(.image)
+        region = try container.sdkDecodeIfPresent(.region)
+        sshKeys = try container.sdkDecodeIfPresent(.sshKeys)
+        backups = try container.sdkDecodeIfPresent(.backups)
+        backupPolicy = try container.sdkDecodeIfPresent(.backupPolicy)
+        ipv6 = try container.sdkDecodeIfPresent(.ipv6)
+        monitoring = try container.sdkDecodeIfPresent(.monitoring)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        userData = try container.sdkDecodeIfPresent(.userData)
+        privateNetworking = try container.sdkDecodeIfPresent(.privateNetworking)
+        volumes = try container.sdkDecodeIfPresent(.volumes)
+        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
+        withDropletAgent = try container.sdkDecodeIfPresent(.withDropletAgent)
+        publicNetworking = try container.sdkDecodeIfPresent(.publicNetworking)
+        try validateLength("name", name, min: nil, max: 255)
+        try sdkValidatePattern("name", name, sdkPattern4a69a19e3eb8)
     }
 }
 
-extension DropletSingleCreateRequest {
-    public init(name: String, size: String, image: DropletCreateRequestImage, region: String? = nil, sshKeys: [DropletCreateRequestSshKeysItem]? = nil, backups: Bool? = nil, backupPolicy: DropletBackupPolicyRequest? = nil, ipv6: Bool? = nil, monitoring: Bool? = nil, tags: [String]? = nil, userData: String? = nil, privateNetworking: Bool? = nil, volumes: [String]? = nil, vpcUuid: String? = nil, subnetUuid: String? = nil, withDropletAgent: Bool? = nil, publicNetworking: Bool? = nil) throws {
+public extension DropletSingleCreateRequest {
+    init(
+        name: String,
+        size: String,
+        image: DropletCreateRequestImage,
+        region: String? = nil,
+        sshKeys: [DropletCreateRequestSshKeysItem]? = nil,
+        backups: Bool? = nil,
+        backupPolicy: DropletBackupPolicyRequest? = nil,
+        ipv6: Bool? = nil,
+        monitoring: Bool? = nil,
+        tags: [String]? = nil,
+        userData: String? = nil,
+        privateNetworking: Bool? = nil,
+        volumes: [String]? = nil,
+        vpcUuid: String? = nil,
+        subnetUuid: String? = nil,
+        withDropletAgent: Bool? = nil,
+        publicNetworking: Bool? = nil
+    ) throws {
         (self.name, self.size) = (name, size)
         (self.image, self.region) = (image, region)
         (self.sshKeys, self.backups) = (sshKeys, backups)
@@ -49,8 +79,8 @@ extension DropletSingleCreateRequest {
         (self.volumes, self.vpcUuid) = (volumes, vpcUuid)
         (self.subnetUuid, self.withDropletAgent) = (subnetUuid, withDropletAgent)
         self.publicNetworking = publicNetworking
-            try validateLength("name", self.name, min: nil, max: 255)
-            try sdkValidatePattern("name", self.name, sdkPattern4a69a19e3eb8)
+        try validateLength("name", self.name, min: nil, max: 255)
+        try sdkValidatePattern("name", self.name, sdkPattern4a69a19e3eb8)
     }
 }
 
@@ -150,43 +180,75 @@ public struct DropletMultiCreate: Codable {
         case publicNetworking = "public_networking"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DropletMultiCreate {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.names) else {
-            throw SdkValidationError(field: "names", code: "required", message: "Validation failed for 'names': value is required")
-        }
-        guard container.contains(.size) else {
-            throw SdkValidationError(field: "size", code: "required", message: "Validation failed for 'size': value is required")
-        }
-        guard container.contains(.image) else {
-            throw SdkValidationError(field: "image", code: "required", message: "Validation failed for 'image': value is required")
-        }
-        self.names = try container.sdkDecodeRequired(.names)
-        self.size = try container.sdkDecodeRequired(.size)
-        self.image = try container.sdkDecodeRequired(.image)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.sshKeys = try container.sdkDecodeIfPresent(.sshKeys)
-        self.backups = try container.sdkDecodeIfPresent(.backups)
-        self.backupPolicy = try container.sdkDecodeIfPresent(.backupPolicy)
-        self.ipv6 = try container.sdkDecodeIfPresent(.ipv6)
-        self.monitoring = try container.sdkDecodeIfPresent(.monitoring)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.userData = try container.sdkDecodeIfPresent(.userData)
-        self.privateNetworking = try container.sdkDecodeIfPresent(.privateNetworking)
-        self.volumes = try container.sdkDecodeIfPresent(.volumes)
-        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        self.subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
-        self.withDropletAgent = try container.sdkDecodeIfPresent(.withDropletAgent)
-        self.publicNetworking = try container.sdkDecodeIfPresent(.publicNetworking)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DropletMultiCreate {
-    public init(names: [String], size: String, image: DropletCreateImage, region: String? = nil, sshKeys: [DropletCreateSshKeysItem]? = nil, backups: Bool? = nil, backupPolicy: DropletBackupPolicy? = nil, ipv6: Bool? = nil, monitoring: Bool? = nil, tags: [String]? = nil, userData: String? = nil, privateNetworking: Bool? = nil, volumes: [String]? = nil, vpcUuid: String? = nil, subnetUuid: String? = nil, withDropletAgent: Bool? = nil, publicNetworking: Bool? = nil) {
+public extension DropletMultiCreate {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.names) else {
+            throw SdkValidationError(
+                field: "names",
+                code: "required",
+                message: "Validation failed for 'names': value is required"
+            )
+        }
+        guard container.contains(.size) else {
+            throw SdkValidationError(
+                field: "size",
+                code: "required",
+                message: "Validation failed for 'size': value is required"
+            )
+        }
+        guard container.contains(.image) else {
+            throw SdkValidationError(
+                field: "image",
+                code: "required",
+                message: "Validation failed for 'image': value is required"
+            )
+        }
+        names = try container.sdkDecodeRequired(.names)
+        size = try container.sdkDecodeRequired(.size)
+        image = try container.sdkDecodeRequired(.image)
+        region = try container.sdkDecodeIfPresent(.region)
+        sshKeys = try container.sdkDecodeIfPresent(.sshKeys)
+        backups = try container.sdkDecodeIfPresent(.backups)
+        backupPolicy = try container.sdkDecodeIfPresent(.backupPolicy)
+        ipv6 = try container.sdkDecodeIfPresent(.ipv6)
+        monitoring = try container.sdkDecodeIfPresent(.monitoring)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        userData = try container.sdkDecodeIfPresent(.userData)
+        privateNetworking = try container.sdkDecodeIfPresent(.privateNetworking)
+        volumes = try container.sdkDecodeIfPresent(.volumes)
+        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
+        withDropletAgent = try container.sdkDecodeIfPresent(.withDropletAgent)
+        publicNetworking = try container.sdkDecodeIfPresent(.publicNetworking)
+    }
+}
+
+public extension DropletMultiCreate {
+    init(
+        names: [String],
+        size: String,
+        image: DropletCreateImage,
+        region: String? = nil,
+        sshKeys: [DropletCreateSshKeysItem]? = nil,
+        backups: Bool? = nil,
+        backupPolicy: DropletBackupPolicy? = nil,
+        ipv6: Bool? = nil,
+        monitoring: Bool? = nil,
+        tags: [String]? = nil,
+        userData: String? = nil,
+        privateNetworking: Bool? = nil,
+        volumes: [String]? = nil,
+        vpcUuid: String? = nil,
+        subnetUuid: String? = nil,
+        withDropletAgent: Bool? = nil,
+        publicNetworking: Bool? = nil
+    ) {
         (self.names, self.size) = (names, size)
         (self.image, self.region) = (image, region)
         (self.sshKeys, self.backups) = (sshKeys, backups)
@@ -205,22 +267,32 @@ public indirect enum DropletCreateRequestSshKeysItem {
 }
 
 extension DropletCreateRequestSshKeysItem: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for DropletCreateRequestSshKeysItem")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for DropletCreateRequestSshKeysItem"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension DropletCreateRequestSshKeysItem {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode(Int.self) { return .intValue(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode(Int.self) {
+            return .intValue(value)
+        }
         return nil
     }
 }
@@ -252,19 +324,19 @@ public struct DropletsCreateResponseVariant1Links: Codable {
     }
 
     init() {
-        self.actions = nil
+        actions = nil
     }
 }
 
-extension DropletsCreateResponseVariant1Links {
-    public init(from decoder: Decoder) throws {
+public extension DropletsCreateResponseVariant1Links {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.actions = try container.sdkDecodeIfPresent(.actions)
+        actions = try container.sdkDecodeIfPresent(.actions)
     }
 }
 
-extension DropletsCreateResponseVariant1Links {
-    public init(actions: [ActionLink]? = nil) {
+public extension DropletsCreateResponseVariant1Links {
+    init(actions: [ActionLink]? = nil) {
         self.init()
         self.actions = actions
     }
@@ -359,39 +431,66 @@ public struct DropletCreate: Codable {
         case publicNetworking = "public_networking"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DropletCreate {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.size) else {
-            throw SdkValidationError(field: "size", code: "required", message: "Validation failed for 'size': value is required")
-        }
-        guard container.contains(.image) else {
-            throw SdkValidationError(field: "image", code: "required", message: "Validation failed for 'image': value is required")
-        }
-        self.size = try container.sdkDecodeRequired(.size)
-        self.image = try container.sdkDecodeRequired(.image)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.sshKeys = try container.sdkDecodeIfPresent(.sshKeys)
-        self.backups = try container.sdkDecodeIfPresent(.backups)
-        self.backupPolicy = try container.sdkDecodeIfPresent(.backupPolicy)
-        self.ipv6 = try container.sdkDecodeIfPresent(.ipv6)
-        self.monitoring = try container.sdkDecodeIfPresent(.monitoring)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.userData = try container.sdkDecodeIfPresent(.userData)
-        self.privateNetworking = try container.sdkDecodeIfPresent(.privateNetworking)
-        self.volumes = try container.sdkDecodeIfPresent(.volumes)
-        self.vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
-        self.subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
-        self.withDropletAgent = try container.sdkDecodeIfPresent(.withDropletAgent)
-        self.publicNetworking = try container.sdkDecodeIfPresent(.publicNetworking)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DropletCreate {
-    public init(size: String, image: DropletCreateImage, region: String? = nil, sshKeys: [DropletCreateSshKeysItem]? = nil, backups: Bool? = nil, backupPolicy: DropletBackupPolicy? = nil, ipv6: Bool? = nil, monitoring: Bool? = nil, tags: [String]? = nil, userData: String? = nil, privateNetworking: Bool? = nil, volumes: [String]? = nil, vpcUuid: String? = nil, subnetUuid: String? = nil, withDropletAgent: Bool? = nil, publicNetworking: Bool? = nil) {
+public extension DropletCreate {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.size) else {
+            throw SdkValidationError(
+                field: "size",
+                code: "required",
+                message: "Validation failed for 'size': value is required"
+            )
+        }
+        guard container.contains(.image) else {
+            throw SdkValidationError(
+                field: "image",
+                code: "required",
+                message: "Validation failed for 'image': value is required"
+            )
+        }
+        size = try container.sdkDecodeRequired(.size)
+        image = try container.sdkDecodeRequired(.image)
+        region = try container.sdkDecodeIfPresent(.region)
+        sshKeys = try container.sdkDecodeIfPresent(.sshKeys)
+        backups = try container.sdkDecodeIfPresent(.backups)
+        backupPolicy = try container.sdkDecodeIfPresent(.backupPolicy)
+        ipv6 = try container.sdkDecodeIfPresent(.ipv6)
+        monitoring = try container.sdkDecodeIfPresent(.monitoring)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        userData = try container.sdkDecodeIfPresent(.userData)
+        privateNetworking = try container.sdkDecodeIfPresent(.privateNetworking)
+        volumes = try container.sdkDecodeIfPresent(.volumes)
+        vpcUuid = try container.sdkDecodeIfPresent(.vpcUuid)
+        subnetUuid = try container.sdkDecodeIfPresent(.subnetUuid)
+        withDropletAgent = try container.sdkDecodeIfPresent(.withDropletAgent)
+        publicNetworking = try container.sdkDecodeIfPresent(.publicNetworking)
+    }
+}
+
+public extension DropletCreate {
+    init(
+        size: String,
+        image: DropletCreateImage,
+        region: String? = nil,
+        sshKeys: [DropletCreateSshKeysItem]? = nil,
+        backups: Bool? = nil,
+        backupPolicy: DropletBackupPolicy? = nil,
+        ipv6: Bool? = nil,
+        monitoring: Bool? = nil,
+        tags: [String]? = nil,
+        userData: String? = nil,
+        privateNetworking: Bool? = nil,
+        volumes: [String]? = nil,
+        vpcUuid: String? = nil,
+        subnetUuid: String? = nil,
+        withDropletAgent: Bool? = nil,
+        publicNetworking: Bool? = nil
+    ) {
         (self.size, self.image) = (size, image)
         (self.region, self.sshKeys) = (region, sshKeys)
         (self.backups, self.backupPolicy) = (backups, backupPolicy)
@@ -412,25 +511,35 @@ public struct DropletsCreateResponseVariant1: Codable {
         case links
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DropletsCreateResponseVariant1 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.droplets) else {
-            throw SdkValidationError(field: "droplets", code: "required", message: "Validation failed for 'droplets': value is required")
-        }
-        guard container.contains(.links) else {
-            throw SdkValidationError(field: "links", code: "required", message: "Validation failed for 'links': value is required")
-        }
-        self.droplets = try container.sdkDecodeRequired(.droplets)
-        self.links = try container.sdkDecodeRequired(.links)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DropletsCreateResponseVariant1 {
-    public init(droplets: [Droplet], links: DropletsCreateResponseVariant1Links) {
+public extension DropletsCreateResponseVariant1 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.droplets) else {
+            throw SdkValidationError(
+                field: "droplets",
+                code: "required",
+                message: "Validation failed for 'droplets': value is required"
+            )
+        }
+        guard container.contains(.links) else {
+            throw SdkValidationError(
+                field: "links",
+                code: "required",
+                message: "Validation failed for 'links': value is required"
+            )
+        }
+        droplets = try container.sdkDecodeRequired(.droplets)
+        links = try container.sdkDecodeRequired(.links)
+    }
+}
+
+public extension DropletsCreateResponseVariant1 {
+    init(droplets: [Droplet], links: DropletsCreateResponseVariant1Links) {
         (self.droplets, self.links) = (droplets, links)
     }
 }
@@ -443,19 +552,19 @@ public struct DropletsCreateResponseVariant0Links: Codable {
     }
 
     init() {
-        self.actions = nil
+        actions = nil
     }
 }
 
-extension DropletsCreateResponseVariant0Links {
-    public init(from decoder: Decoder) throws {
+public extension DropletsCreateResponseVariant0Links {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.actions = try container.sdkDecodeIfPresent(.actions)
+        actions = try container.sdkDecodeIfPresent(.actions)
     }
 }
 
-extension DropletsCreateResponseVariant0Links {
-    public init(actions: [ActionLink]? = nil) {
+public extension DropletsCreateResponseVariant0Links {
+    init(actions: [ActionLink]? = nil) {
         self.init()
         self.actions = actions
     }

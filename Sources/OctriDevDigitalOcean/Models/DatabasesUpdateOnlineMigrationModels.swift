@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Databases domain models
+/// Databases domain models
 /// Typed representation of the `SourceDatabase` API schema.
 public struct SourceDatabase: Codable {
     /// Required object value serialized in the `source` wire field.
@@ -20,23 +20,29 @@ public struct SourceDatabase: Codable {
         case ignoreDbs = "ignore_dbs"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SourceDatabase {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.source) else {
-            throw SdkValidationError(field: "source", code: "required", message: "Validation failed for 'source': value is required")
-        }
-        self.source = try container.sdkDecodeRequired(.source)
-        self.disableSsl = try container.sdkDecodeIfPresent(.disableSsl)
-        self.ignoreDbs = try container.sdkDecodeIfPresent(.ignoreDbs)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SourceDatabase {
-    public init(source: SourceDatabaseSource, disableSsl: Bool? = nil, ignoreDbs: [String]? = nil) {
+public extension SourceDatabase {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.source) else {
+            throw SdkValidationError(
+                field: "source",
+                code: "required",
+                message: "Validation failed for 'source': value is required"
+            )
+        }
+        source = try container.sdkDecodeRequired(.source)
+        disableSsl = try container.sdkDecodeIfPresent(.disableSsl)
+        ignoreDbs = try container.sdkDecodeIfPresent(.ignoreDbs)
+    }
+}
+
+public extension SourceDatabase {
+    init(source: SourceDatabaseSource, disableSsl: Bool? = nil, ignoreDbs: [String]? = nil) {
         (self.source, self.disableSsl) = (source, disableSsl)
         self.ignoreDbs = ignoreDbs
     }
@@ -69,23 +75,29 @@ public struct SourceDatabaseSource: Codable {
     }
 
     init() {
-        (self.host, self.port, self.dbname, self.username, self.password) = (nil, nil, nil, nil, nil)
+        (host, port, dbname, username, password) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension SourceDatabaseSource {
-    public init(from decoder: Decoder) throws {
+public extension SourceDatabaseSource {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.host = try container.sdkDecodeIfPresent(.host)
-        self.port = try container.sdkDecodeIfPresent(.port)
-        self.dbname = try container.sdkDecodeIfPresent(.dbname)
-        self.username = try container.sdkDecodeIfPresent(.username)
-        self.password = try container.sdkDecodeIfPresent(.password)
+        host = try container.sdkDecodeIfPresent(.host)
+        port = try container.sdkDecodeIfPresent(.port)
+        dbname = try container.sdkDecodeIfPresent(.dbname)
+        username = try container.sdkDecodeIfPresent(.username)
+        password = try container.sdkDecodeIfPresent(.password)
     }
 }
 
-extension SourceDatabaseSource {
-    public init(host: String? = nil, port: Int? = nil, dbname: String? = nil, username: String? = nil, password: String? = nil) {
+public extension SourceDatabaseSource {
+    init(
+        host: String? = nil,
+        port: Int? = nil,
+        dbname: String? = nil,
+        username: String? = nil,
+        password: String? = nil
+    ) {
         self.init()
         (self.host, self.port) = (host, port)
         (self.dbname, self.username) = (dbname, username)

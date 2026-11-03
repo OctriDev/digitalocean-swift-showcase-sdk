@@ -6,16 +6,43 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension HarnessRuntimeMethods {
-    /// Only valid for microvm-substrate sessions; dewdrop/docker sessions return 501 Not Implemented. Implicit resume also occurs when SendInput or ResolveHITL is called on a paused session. Returns synchronously once the sandbox is ready.
+public extension HarnessRuntimeMethods {
+    /// Only valid for microvm-substrate sessions; dewdrop/docker sessions return 501 Not Implemented. Implicit resume
+    /// also occurs when SendInput or ResolveHITL is called on a paused session. Returns synchronously once the sandbox
+    /// is ready.
     ///
     /// - Parameters:
     /// - sessionId: The session UUID.
     /// - xDeviceUuid: Optional hardware device id forwarded by doctl. Recorded for
     ///   audit.
-    public static func harnessPostSessionResume(config: ClientConfig, sessionId: String, xDeviceUuid: String? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try (await sdkRequest("POST", ["/v2/agents/sessions/", sdkEncodePathSegment(sdkWireString(sessionId)), "/resume"].joined(), config: config, decoder: .empty, operationId: "harness_post_session_resume", extraHeaders: sdkHeaders([
-            ("X-Device-UUID", sdkHeaderValue(xDeviceUuid)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "402": Error2.self, "403": Error2.self, "404": Error2.self, "409": Error2.self, "423": Error2.self, "429": Error2.self, "500": Error2.self, "501": Error2.self, "default": Error2.self])).data
+    static func harnessPostSessionResume(
+        config: ClientConfig,
+        sessionId: String,
+        xDeviceUuid: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await (sdkRequest(
+            "POST",
+            ["/v2/agents/sessions/", sdkEncodePathSegment(sdkWireString(sessionId)), "/resume"].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "harness_post_session_resume",
+            extraHeaders: sdkHeaders([
+                ("X-Device-UUID", sdkHeaderValue(xDeviceUuid)),
+            ]),
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "402": Error2.self,
+                "403": Error2.self,
+                "404": Error2.self,
+                "409": Error2.self,
+                "423": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "501": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

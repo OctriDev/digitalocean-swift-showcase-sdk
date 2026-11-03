@@ -3,7 +3,7 @@
 
 import Foundation
 
-// HarnessRuntimeTrigger domain models
+/// HarnessRuntimeTrigger domain models
 /// Output-delivery configuration on create/update. Exactly one of email / slack is required for the matching mode
 /// and forbidden otherwise; destinations are stored encrypted and never returned.
 public struct TriggerOutputWrite: Codable {
@@ -25,23 +25,29 @@ public struct TriggerOutputWrite: Codable {
         case slack
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension TriggerOutputWrite {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.mode) else {
-            throw SdkValidationError(field: "mode", code: "required", message: "Validation failed for 'mode': value is required")
-        }
-        self.mode = try container.sdkDecodeRequired(.mode)
-        self.email = try container.sdkDecodeIfPresent(.email)
-        self.slack = try container.sdkDecodeIfPresent(.slack)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension TriggerOutputWrite {
-    public init(mode: TriggerOutputMode, email: String? = nil, slack: SlackOutputWrite? = nil) {
+public extension TriggerOutputWrite {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.mode) else {
+            throw SdkValidationError(
+                field: "mode",
+                code: "required",
+                message: "Validation failed for 'mode': value is required"
+            )
+        }
+        mode = try container.sdkDecodeRequired(.mode)
+        email = try container.sdkDecodeIfPresent(.email)
+        slack = try container.sdkDecodeIfPresent(.slack)
+    }
+}
+
+public extension TriggerOutputWrite {
+    init(mode: TriggerOutputMode, email: String? = nil, slack: SlackOutputWrite? = nil) {
         (self.mode, self.email) = (mode, email)
         self.slack = slack
     }
@@ -68,21 +74,21 @@ public struct TriggerOutputRead: Codable {
     }
 
     init() {
-        (self.mode, self.emailConfigured, self.slackConfigured) = (nil, nil, nil)
+        (mode, emailConfigured, slackConfigured) = (nil, nil, nil)
     }
 }
 
-extension TriggerOutputRead {
-    public init(from decoder: Decoder) throws {
+public extension TriggerOutputRead {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.mode = try container.sdkDecodeIfPresent(.mode)
-        self.emailConfigured = try container.sdkDecodeIfPresent(.emailConfigured)
-        self.slackConfigured = try container.sdkDecodeIfPresent(.slackConfigured)
+        mode = try container.sdkDecodeIfPresent(.mode)
+        emailConfigured = try container.sdkDecodeIfPresent(.emailConfigured)
+        slackConfigured = try container.sdkDecodeIfPresent(.slackConfigured)
     }
 }
 
-extension TriggerOutputRead {
-    public init(mode: TriggerOutputMode? = nil, emailConfigured: Bool? = nil, slackConfigured: Bool? = nil) {
+public extension TriggerOutputRead {
+    init(mode: TriggerOutputMode? = nil, emailConfigured: Bool? = nil, slackConfigured: Bool? = nil) {
         self.init()
         (self.mode, self.emailConfigured) = (mode, emailConfigured)
         self.slackConfigured = slackConfigured
@@ -138,37 +144,49 @@ public struct TriggerExecution: Codable {
     }
 
     init() {
-        (self.executionId, self.triggerId, self.status, self.sessionId, self.runId) = (nil, nil, nil, nil, nil)
-        (self.failureReason, self.createdAt, self.updatedAt, self.payload, self.outputText) = (nil, nil, nil, nil, nil)
-        self.outputTruncated = nil
+        (executionId, triggerId, status, sessionId, runId) = (nil, nil, nil, nil, nil)
+        (failureReason, createdAt, updatedAt, payload, outputText) = (nil, nil, nil, nil, nil)
+        outputTruncated = nil
     }
 }
 
-extension TriggerExecution {
-    public init(from decoder: Decoder) throws {
+public extension TriggerExecution {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.executionId = try container.sdkDecodeIfPresent(.executionId)
-        self.triggerId = try container.sdkDecodeIfPresent(.triggerId)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.sessionId = try container.sdkDecodeIfPresent(.sessionId)
-        self.runId = try container.sdkDecodeIfPresent(.runId)
-        self.failureReason = try container.sdkDecodeIfPresent(.failureReason)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.payload = try container.sdkDecodeIfPresent(.payload)
-        self.outputText = try container.sdkDecodeIfPresent(.outputText)
-        self.outputTruncated = try container.sdkDecodeIfPresent(.outputTruncated)
-        if let value = self.createdAt {
+        executionId = try container.sdkDecodeIfPresent(.executionId)
+        triggerId = try container.sdkDecodeIfPresent(.triggerId)
+        status = try container.sdkDecodeIfPresent(.status)
+        sessionId = try container.sdkDecodeIfPresent(.sessionId)
+        runId = try container.sdkDecodeIfPresent(.runId)
+        failureReason = try container.sdkDecodeIfPresent(.failureReason)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        payload = try container.sdkDecodeIfPresent(.payload)
+        outputText = try container.sdkDecodeIfPresent(.outputText)
+        outputTruncated = try container.sdkDecodeIfPresent(.outputTruncated)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension TriggerExecution {
-    public init(executionId: String? = nil, triggerId: String? = nil, status: TriggerExecutionStatus? = nil, sessionId: String? = nil, runId: String? = nil, failureReason: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, payload: String? = nil, outputText: String? = nil, outputTruncated: Bool? = nil) throws {
+public extension TriggerExecution {
+    init(
+        executionId: String? = nil,
+        triggerId: String? = nil,
+        status: TriggerExecutionStatus? = nil,
+        sessionId: String? = nil,
+        runId: String? = nil,
+        failureReason: String? = nil,
+        createdAt: Date? = nil,
+        updatedAt: Date? = nil,
+        payload: String? = nil,
+        outputText: String? = nil,
+        outputTruncated: Bool? = nil
+    ) throws {
         self.init()
         (self.executionId, self.triggerId) = (executionId, triggerId)
         (self.status, self.sessionId) = (status, sessionId)
@@ -258,47 +276,62 @@ public struct Trigger: Codable {
     }
 
     init() {
-        (self.triggerId, self.kind, self.name, self.status, self.sessionMode) = (nil, nil, nil, nil, nil)
-        (self.agentKind, self.promptTemplate, self.output, self.sessionTemplate, self.boundSessionId) = (nil, nil, nil, nil, nil)
-        (self.webhook, self.cron, self.createdAt, self.updatedAt) = (nil, nil, nil, nil)
+        (triggerId, kind, name, status, sessionMode) = (nil, nil, nil, nil, nil)
+        (agentKind, promptTemplate, output, sessionTemplate, boundSessionId) = (nil, nil, nil, nil, nil)
+        (webhook, cron, createdAt, updatedAt) = (nil, nil, nil, nil)
     }
 }
 
-extension Trigger {
-    public init(from decoder: Decoder) throws {
+public extension Trigger {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.triggerId = try container.sdkDecodeIfPresent(.triggerId)
-        self.kind = try container.sdkDecodeIfPresent(.kind)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.sessionMode = try container.sdkDecodeIfPresent(.sessionMode)
-        self.agentKind = try container.sdkDecodeIfPresent(.agentKind)
-        self.promptTemplate = try container.sdkDecodeIfPresent(.promptTemplate)
-        self.output = try container.sdkDecodeIfPresent(.output)
-        self.sessionTemplate = try container.sdkDecodeIfPresent(.sessionTemplate)
-        self.boundSessionId = try container.sdkDecodeIfPresent(.boundSessionId)
-        self.webhook = try container.sdkDecodeIfPresent(.webhook)
-        self.cron = try container.sdkDecodeIfPresent(.cron)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = self.name {
+        triggerId = try container.sdkDecodeIfPresent(.triggerId)
+        kind = try container.sdkDecodeIfPresent(.kind)
+        name = try container.sdkDecodeIfPresent(.name)
+        status = try container.sdkDecodeIfPresent(.status)
+        sessionMode = try container.sdkDecodeIfPresent(.sessionMode)
+        agentKind = try container.sdkDecodeIfPresent(.agentKind)
+        promptTemplate = try container.sdkDecodeIfPresent(.promptTemplate)
+        output = try container.sdkDecodeIfPresent(.output)
+        sessionTemplate = try container.sdkDecodeIfPresent(.sessionTemplate)
+        boundSessionId = try container.sdkDecodeIfPresent(.boundSessionId)
+        webhook = try container.sdkDecodeIfPresent(.webhook)
+        cron = try container.sdkDecodeIfPresent(.cron)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = name {
             try validateLength("name", value, min: 1, max: 64)
             try sdkValidatePattern("name", value, sdkPatternd6415432f58a)
         }
-        if let value = self.boundSessionId {
+        if let value = boundSessionId {
             try sdkValidateUuid("bound_session_id", value)
         }
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension Trigger {
-    public init(triggerId: String? = nil, kind: TriggerKind? = nil, name: String? = nil, status: TriggerStatus? = nil, sessionMode: TriggerSessionMode? = nil, agentKind: AgentKind? = nil, promptTemplate: String? = nil, output: TriggerOutputRead? = nil, sessionTemplate: String? = nil, boundSessionId: String? = nil, webhook: WebhookConfig? = nil, cron: CronConfig? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) throws {
+public extension Trigger {
+    init(
+        triggerId: String? = nil,
+        kind: TriggerKind? = nil,
+        name: String? = nil,
+        status: TriggerStatus? = nil,
+        sessionMode: TriggerSessionMode? = nil,
+        agentKind: AgentKind? = nil,
+        promptTemplate: String? = nil,
+        output: TriggerOutputRead? = nil,
+        sessionTemplate: String? = nil,
+        boundSessionId: String? = nil,
+        webhook: WebhookConfig? = nil,
+        cron: CronConfig? = nil,
+        createdAt: Date? = nil,
+        updatedAt: Date? = nil
+    ) throws {
         self.init()
         (self.triggerId, self.kind) = (triggerId, kind)
         (self.name, self.status) = (name, status)
@@ -329,14 +362,17 @@ extension Trigger {
 public struct TriggerOutputMode: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let none = TriggerOutputMode(rawValue: "none")
     public static let email = TriggerOutputMode(rawValue: "email")
     public static let slack = TriggerOutputMode(rawValue: "slack")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -349,13 +385,16 @@ public struct TriggerOutputMode: RawRepresentable, Hashable, Codable, Sendable, 
 public struct TriggerStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let active = TriggerStatus(rawValue: "active")
     public static let paused = TriggerStatus(rawValue: "paused")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -368,7 +407,10 @@ public struct TriggerStatus: RawRepresentable, Hashable, Codable, Sendable, SdkW
 public struct TriggerExecutionStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pending = TriggerExecutionStatus(rawValue: "pending")
     public static let running = TriggerExecutionStatus(rawValue: "running")
     public static let succeeded = TriggerExecutionStatus(rawValue: "succeeded")
@@ -376,7 +418,7 @@ public struct TriggerExecutionStatus: RawRepresentable, Hashable, Codable, Senda
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -389,13 +431,16 @@ public struct TriggerExecutionStatus: RawRepresentable, Hashable, Codable, Senda
 public struct TriggerKind: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let webhook = TriggerKind(rawValue: "webhook")
     public static let cron = TriggerKind(rawValue: "cron")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -410,13 +455,16 @@ public struct TriggerKind: RawRepresentable, Hashable, Codable, Sendable, SdkWir
 public struct TriggerSessionMode: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let fresh = TriggerSessionMode(rawValue: "fresh")
     public static let reuse = TriggerSessionMode(rawValue: "reuse")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

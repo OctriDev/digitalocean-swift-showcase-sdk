@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ActionGateway domain models
+/// ActionGateway domain models
 /// Sets an actor's overrides.
 public struct SetActorLimits: Codable {
     /// Required. Limits to set, at most one per category.
@@ -13,23 +13,29 @@ public struct SetActorLimits: Codable {
         case overrides
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SetActorLimits {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.overrides) else {
-            throw SdkValidationError(field: "overrides", code: "required", message: "Validation failed for 'overrides': value is required")
-        }
-        self.overrides = try container.sdkDecodeRequired(.overrides)
-            try validateItems("overrides", self.overrides, min: 1, max: nil)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SetActorLimits {
-    public init(overrides: [LimitOverride]) throws {
+public extension SetActorLimits {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.overrides) else {
+            throw SdkValidationError(
+                field: "overrides",
+                code: "required",
+                message: "Validation failed for 'overrides': value is required"
+            )
+        }
+        overrides = try container.sdkDecodeRequired(.overrides)
+        try validateItems("overrides", overrides, min: 1, max: nil)
+    }
+}
+
+public extension SetActorLimits {
+    init(overrides: [LimitOverride]) throws {
         self.overrides = overrides
-            try validateItems("overrides", self.overrides, min: 1, max: nil)
+        try validateItems("overrides", self.overrides, min: 1, max: nil)
     }
 }

@@ -3,23 +3,31 @@
 
 import Foundation
 
-// SharedChat domain models
-extension ChatCompletionRequestToolChoiceVariant1 {
-    public init(from decoder: Decoder) throws {
+/// SharedChat domain models
+public extension ChatCompletionRequestToolChoiceVariant1 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
         }
         guard container.contains(.function) else {
-            throw SdkValidationError(field: "function", code: "required", message: "Validation failed for 'function': value is required")
+            throw SdkValidationError(
+                field: "function",
+                code: "required",
+                message: "Validation failed for 'function': value is required"
+            )
         }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.function = try container.sdkDecodeRequired(.function)
+        type = try container.sdkDecodeRequired(.type)
+        function = try container.sdkDecodeRequired(.function)
     }
 }
 
-extension ChatCompletionRequestToolChoiceVariant1 {
-    public init(type: ChatCompletionRequestToolChoiceVariant1Type, function: ChatCompletionRequestToolChoiceVariant1Function) {
+public extension ChatCompletionRequestToolChoiceVariant1 {
+    init(type: ChatCompletionRequestToolChoiceVariant1Type, function: ChatCompletionRequestToolChoiceVariant1Function) {
         (self.type, self.function) = (type, function)
     }
 }
@@ -34,21 +42,27 @@ public struct ChatCompletionRequestToolChoiceVariant1Function: Codable {
         case name
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ChatCompletionRequestToolChoiceVariant1Function {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ChatCompletionRequestToolChoiceVariant1Function {
-    public init(name: String) {
+public extension ChatCompletionRequestToolChoiceVariant1Function {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+    }
+}
+
+public extension ChatCompletionRequestToolChoiceVariant1Function {
+    init(name: String) {
         self.name = name
     }
 }
@@ -67,25 +81,35 @@ public struct ChatCompletionResponseChoicesItemMessageToolCallsItemFunction: Cod
         case arguments
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ChatCompletionResponseChoicesItemMessageToolCallsItemFunction {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.arguments) else {
-            throw SdkValidationError(field: "arguments", code: "required", message: "Validation failed for 'arguments': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.arguments = try container.sdkDecodeRequired(.arguments)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ChatCompletionResponseChoicesItemMessageToolCallsItemFunction {
-    public init(name: String, arguments: String) {
+public extension ChatCompletionResponseChoicesItemMessageToolCallsItemFunction {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.arguments) else {
+            throw SdkValidationError(
+                field: "arguments",
+                code: "required",
+                message: "Validation failed for 'arguments': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        arguments = try container.sdkDecodeRequired(.arguments)
+    }
+}
+
+public extension ChatCompletionResponseChoicesItemMessageToolCallsItemFunction {
+    init(name: String, arguments: String) {
         (self.name, self.arguments) = (name, arguments)
     }
 }
@@ -111,33 +135,56 @@ public struct ChatCompletionResponseChoicesItem: Codable {
         case logprobs
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ChatCompletionResponseChoicesItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.finishReason) else {
-            throw SdkValidationError(field: "finish_reason", code: "required", message: "Validation failed for 'finish_reason': value is required")
-        }
-        guard container.contains(.index) else {
-            throw SdkValidationError(field: "index", code: "required", message: "Validation failed for 'index': value is required")
-        }
-        guard container.contains(.message) else {
-            throw SdkValidationError(field: "message", code: "required", message: "Validation failed for 'message': value is required")
-        }
-        guard container.contains(.logprobs) else {
-            throw SdkValidationError(field: "logprobs", code: "required", message: "Validation failed for 'logprobs': value is required")
-        }
-        self.finishReason = try container.sdkDecodeRequired(.finishReason)
-        self.index = try container.sdkDecodeRequired(.index)
-        self.message = try container.sdkDecodeRequired(.message)
-        self.logprobs = try container.sdkDecodeNullable(.logprobs)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ChatCompletionResponseChoicesItem {
-    public init(finishReason: ChatCompletionResponseChoicesItemFinishReason, index: Int, message: ChatCompletionResponseChoicesItemMessage, logprobs: ChatCompletionResponseChoicesItemLogprobs?) {
+public extension ChatCompletionResponseChoicesItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.finishReason) else {
+            throw SdkValidationError(
+                field: "finish_reason",
+                code: "required",
+                message: "Validation failed for 'finish_reason': value is required"
+            )
+        }
+        guard container.contains(.index) else {
+            throw SdkValidationError(
+                field: "index",
+                code: "required",
+                message: "Validation failed for 'index': value is required"
+            )
+        }
+        guard container.contains(.message) else {
+            throw SdkValidationError(
+                field: "message",
+                code: "required",
+                message: "Validation failed for 'message': value is required"
+            )
+        }
+        guard container.contains(.logprobs) else {
+            throw SdkValidationError(
+                field: "logprobs",
+                code: "required",
+                message: "Validation failed for 'logprobs': value is required"
+            )
+        }
+        finishReason = try container.sdkDecodeRequired(.finishReason)
+        index = try container.sdkDecodeRequired(.index)
+        message = try container.sdkDecodeRequired(.message)
+        logprobs = try container.sdkDecodeNullable(.logprobs)
+    }
+}
+
+public extension ChatCompletionResponseChoicesItem {
+    init(
+        finishReason: ChatCompletionResponseChoicesItemFinishReason,
+        index: Int,
+        message: ChatCompletionResponseChoicesItemMessage,
+        logprobs: ChatCompletionResponseChoicesItemLogprobs?
+    ) {
         (self.finishReason, self.index) = (finishReason, index)
         (self.message, self.logprobs) = (message, logprobs)
     }
@@ -149,22 +196,32 @@ public indirect enum ChatCompletionRequestStop {
 }
 
 extension ChatCompletionRequestStop: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ChatCompletionRequestStop")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for ChatCompletionRequestStop"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension ChatCompletionRequestStop {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode([String].self) { return .stringList(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode([String].self) {
+            return .stringList(value)
+        }
         return nil
     }
 }
@@ -207,38 +264,67 @@ public struct ChatCompletionResponse: Codable {
         case usage
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ChatCompletionResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        guard container.contains(.choices) else {
-            throw SdkValidationError(field: "choices", code: "required", message: "Validation failed for 'choices': value is required")
-        }
-        guard container.contains(.created) else {
-            throw SdkValidationError(field: "created", code: "required", message: "Validation failed for 'created': value is required")
-        }
-        guard container.contains(.model) else {
-            throw SdkValidationError(field: "model", code: "required", message: "Validation failed for 'model': value is required")
-        }
-        guard container.contains(.object) else {
-            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
-        self.choices = try container.sdkDecodeRequired(.choices)
-        self.created = try container.sdkDecodeRequired(.created)
-        self.model = try container.sdkDecodeRequired(.model)
-        self.object = try container.sdkDecodeRequired(.object)
-        self.usage = try container.sdkDecodeIfPresent(.usage)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ChatCompletionResponse {
-    public init(id: String, choices: [ChatCompletionResponseChoicesItem], created: Int, model: String, object: ChatCompletionResponseObject, usage: CompletionUsage? = nil) {
+public extension ChatCompletionResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        guard container.contains(.choices) else {
+            throw SdkValidationError(
+                field: "choices",
+                code: "required",
+                message: "Validation failed for 'choices': value is required"
+            )
+        }
+        guard container.contains(.created) else {
+            throw SdkValidationError(
+                field: "created",
+                code: "required",
+                message: "Validation failed for 'created': value is required"
+            )
+        }
+        guard container.contains(.model) else {
+            throw SdkValidationError(
+                field: "model",
+                code: "required",
+                message: "Validation failed for 'model': value is required"
+            )
+        }
+        guard container.contains(.object) else {
+            throw SdkValidationError(
+                field: "object",
+                code: "required",
+                message: "Validation failed for 'object': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+        choices = try container.sdkDecodeRequired(.choices)
+        created = try container.sdkDecodeRequired(.created)
+        model = try container.sdkDecodeRequired(.model)
+        object = try container.sdkDecodeRequired(.object)
+        usage = try container.sdkDecodeIfPresent(.usage)
+    }
+}
+
+public extension ChatCompletionResponse {
+    init(
+        id: String,
+        choices: [ChatCompletionResponseChoicesItem],
+        created: Int,
+        model: String,
+        object: ChatCompletionResponseObject,
+        usage: CompletionUsage? = nil
+    ) {
         (self.id, self.choices) = (id, choices)
         (self.created, self.model) = (created, model)
         (self.object, self.usage) = (object, usage)
@@ -249,14 +335,17 @@ extension ChatCompletionResponse {
 public struct ChatCompletionStreamResponseDeltaRole: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let developer = ChatCompletionStreamResponseDeltaRole(rawValue: "developer")
     public static let user = ChatCompletionStreamResponseDeltaRole(rawValue: "user")
     public static let assistant = ChatCompletionStreamResponseDeltaRole(rawValue: "assistant")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -269,12 +358,15 @@ public struct ChatCompletionStreamResponseDeltaRole: RawRepresentable, Hashable,
 public struct ChatCompletionResponseObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let chatCompletion = ChatCompletionResponseObject(rawValue: "chat.completion")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -287,12 +379,15 @@ public struct ChatCompletionResponseObject: RawRepresentable, Hashable, Codable,
 public struct ChatCompletionToolType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let function = ChatCompletionToolType(rawValue: "function")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -304,10 +399,14 @@ public struct ChatCompletionToolType: RawRepresentable, Hashable, Codable, Senda
 /// The reason the model stopped generating tokens. stop if the model hit a natural stop point or a provided
 /// stop sequence, length if the maximum number of tokens specified in the request was reached, tool_calls if
 /// the model called a tool.
-public struct ChatCompletionResponseChoicesItemFinishReason: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ChatCompletionResponseChoicesItemFinishReason: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let stop = ChatCompletionResponseChoicesItemFinishReason(rawValue: "stop")
     public static let length = ChatCompletionResponseChoicesItemFinishReason(rawValue: "length")
     public static let toolCalls = ChatCompletionResponseChoicesItemFinishReason(rawValue: "tool_calls")
@@ -315,7 +414,7 @@ public struct ChatCompletionResponseChoicesItemFinishReason: RawRepresentable, H
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -328,12 +427,15 @@ public struct ChatCompletionResponseChoicesItemFinishReason: RawRepresentable, H
 public struct ChatCompletionChunkObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let chatCompletionChunk = ChatCompletionChunkObject(rawValue: "chat.completion.chunk")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -343,15 +445,19 @@ public struct ChatCompletionChunkObject: RawRepresentable, Hashable, Codable, Se
 }
 
 /// The role of the author of this message.
-public struct ChatCompletionResponseChoicesItemMessageRole: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ChatCompletionResponseChoicesItemMessageRole: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let assistant = ChatCompletionResponseChoicesItemMessageRole(rawValue: "assistant")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -364,12 +470,15 @@ public struct ChatCompletionResponseChoicesItemMessageRole: RawRepresentable, Ha
 public struct ChatCompletionToolCallType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let function = ChatCompletionToolCallType(rawValue: "function")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -382,7 +491,10 @@ public struct ChatCompletionToolCallType: RawRepresentable, Hashable, Codable, S
 public struct ChatMessageRole: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let system = ChatMessageRole(rawValue: "system")
     public static let developer = ChatMessageRole(rawValue: "developer")
     public static let user = ChatMessageRole(rawValue: "user")
@@ -391,7 +503,7 @@ public struct ChatMessageRole: RawRepresentable, Hashable, Codable, Sendable, Sd
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -401,17 +513,21 @@ public struct ChatMessageRole: RawRepresentable, Hashable, Codable, Sendable, Sd
 }
 
 /// Optional enumerated value serialized in the `tool_choice` wire field.
-public struct ChatCompletionRequestToolChoiceVariant0: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ChatCompletionRequestToolChoiceVariant0: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let none = ChatCompletionRequestToolChoiceVariant0(rawValue: "none")
     public static let auto = ChatCompletionRequestToolChoiceVariant0(rawValue: "auto")
     public static let required = ChatCompletionRequestToolChoiceVariant0(rawValue: "required")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -421,15 +537,19 @@ public struct ChatCompletionRequestToolChoiceVariant0: RawRepresentable, Hashabl
 }
 
 /// Required enumerated value serialized in the `type` wire field.
-public struct ChatCompletionRequestToolChoiceVariant1Type: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ChatCompletionRequestToolChoiceVariant1Type: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let function = ChatCompletionRequestToolChoiceVariant1Type(rawValue: "function")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -441,10 +561,14 @@ public struct ChatCompletionRequestToolChoiceVariant1Type: RawRepresentable, Has
 /// The reason the model stopped generating tokens. stop if the model hit a natural stop point or a provided
 /// stop sequence, length if the maximum number of tokens specified in the request was reached, tool_calls if
 /// the model called a tool.
-public struct ChatCompletionChunkChoicesItemFinishReason: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ChatCompletionChunkChoicesItemFinishReason: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let stop = ChatCompletionChunkChoicesItemFinishReason(rawValue: "stop")
     public static let length = ChatCompletionChunkChoicesItemFinishReason(rawValue: "length")
     public static let toolCalls = ChatCompletionChunkChoicesItemFinishReason(rawValue: "tool_calls")
@@ -452,7 +576,7 @@ public struct ChatCompletionChunkChoicesItemFinishReason: RawRepresentable, Hash
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -465,12 +589,15 @@ public struct ChatCompletionChunkChoicesItemFinishReason: RawRepresentable, Hash
 public struct ChatCompletionToolCallChunkType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let function = ChatCompletionToolCallChunkType(rawValue: "function")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -480,15 +607,19 @@ public struct ChatCompletionToolCallChunkType: RawRepresentable, Hashable, Codab
 }
 
 /// The type of the tool.
-public struct ChatCompletionResponseChoicesItemMessageToolCallsItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ChatCompletionResponseChoicesItemMessageToolCallsItemType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let function = ChatCompletionResponseChoicesItemMessageToolCallsItemType(rawValue: "function")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Projects domain models
+/// Projects domain models
 /// Typed representation of the `DefaultProject` API schema.
 public struct DefaultProject: Codable, SdkResource {
     /// Optional API value serialized in the `project` wire field.
@@ -15,19 +15,19 @@ public struct DefaultProject: Codable, SdkResource {
     }
 
     init() {
-        self.project = nil
+        project = nil
     }
 }
 
-extension DefaultProject {
-    public init(from decoder: Decoder) throws {
+public extension DefaultProject {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.project = try container.sdkDecodeIfPresent(.project)
+        project = try container.sdkDecodeIfPresent(.project)
     }
 }
 
-extension DefaultProject {
-    public init(project: Project? = nil) {
+public extension DefaultProject {
+    init(project: Project? = nil) {
         self.init()
         self.project = project
     }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiAgent domain models
+/// AgentPlatformAPIApiAgent domain models
 /// Typed representation of the `ApiAgentKnowledgeBaseVersion` API schema.
 public struct ApiAgentKnowledgeBaseVersion: Codable {
     /// Deletet at date / time
@@ -23,21 +23,21 @@ public struct ApiAgentKnowledgeBaseVersion: Codable {
     }
 
     init() {
-        (self.isDeleted, self.name, self.uuid) = (nil, nil, nil)
+        (isDeleted, name, uuid) = (nil, nil, nil)
     }
 }
 
-extension ApiAgentKnowledgeBaseVersion {
-    public init(from decoder: Decoder) throws {
+public extension ApiAgentKnowledgeBaseVersion {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.isDeleted = try container.sdkDecodeIfPresent(.isDeleted)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        isDeleted = try container.sdkDecodeIfPresent(.isDeleted)
+        name = try container.sdkDecodeIfPresent(.name)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
     }
 }
 
-extension ApiAgentKnowledgeBaseVersion {
-    public init(isDeleted: Bool? = nil, name: String? = nil, uuid: String? = nil) {
+public extension ApiAgentKnowledgeBaseVersion {
+    init(isDeleted: Bool? = nil, name: String? = nil, uuid: String? = nil) {
         self.init()
         (self.isDeleted, self.name) = (isDeleted, name)
         self.uuid = uuid
@@ -67,22 +67,22 @@ public struct ApiAgentGuardrailVersion: Codable {
     }
 
     init() {
-        (self.isDeleted, self.name, self.priority, self.uuid) = (nil, nil, nil, nil)
+        (isDeleted, name, priority, uuid) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiAgentGuardrailVersion {
-    public init(from decoder: Decoder) throws {
+public extension ApiAgentGuardrailVersion {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.isDeleted = try container.sdkDecodeIfPresent(.isDeleted)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.priority = try container.sdkDecodeIfPresent(.priority)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        isDeleted = try container.sdkDecodeIfPresent(.isDeleted)
+        name = try container.sdkDecodeIfPresent(.name)
+        priority = try container.sdkDecodeIfPresent(.priority)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
     }
 }
 
-extension ApiAgentGuardrailVersion {
-    public init(isDeleted: Bool? = nil, name: String? = nil, priority: Int? = nil, uuid: String? = nil) {
+public extension ApiAgentGuardrailVersion {
+    init(isDeleted: Bool? = nil, name: String? = nil, priority: Int? = nil, uuid: String? = nil) {
         self.init()
         (self.isDeleted, self.name) = (isDeleted, name)
         (self.priority, self.uuid) = (priority, uuid)
@@ -116,23 +116,29 @@ public struct ApiAgentFunctionVersion: Codable {
     }
 
     init() {
-        (self.description, self.faasName, self.faasNamespace, self.isDeleted, self.name) = (nil, nil, nil, nil, nil)
+        (description, faasName, faasNamespace, isDeleted, name) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiAgentFunctionVersion {
-    public init(from decoder: Decoder) throws {
+public extension ApiAgentFunctionVersion {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.faasName = try container.sdkDecodeIfPresent(.faasName)
-        self.faasNamespace = try container.sdkDecodeIfPresent(.faasNamespace)
-        self.isDeleted = try container.sdkDecodeIfPresent(.isDeleted)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        description = try container.sdkDecodeIfPresent(.description)
+        faasName = try container.sdkDecodeIfPresent(.faasName)
+        faasNamespace = try container.sdkDecodeIfPresent(.faasNamespace)
+        isDeleted = try container.sdkDecodeIfPresent(.isDeleted)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ApiAgentFunctionVersion {
-    public init(description: String? = nil, faasName: String? = nil, faasNamespace: String? = nil, isDeleted: Bool? = nil, name: String? = nil) {
+public extension ApiAgentFunctionVersion {
+    init(
+        description: String? = nil,
+        faasName: String? = nil,
+        faasNamespace: String? = nil,
+        isDeleted: Bool? = nil,
+        name: String? = nil
+    ) {
         self.init()
         (self.description, self.faasName) = (description, faasName)
         (self.faasNamespace, self.isDeleted) = (faasNamespace, isDeleted)
@@ -237,48 +243,78 @@ public struct ApiAgentVersion: Codable {
     }
 
     init() {
-        (self.agentUuid, self.attachedChildAgents, self.attachedFunctions, self.attachedGuardrails, self.attachedKnowledgebases) = (nil, nil, nil, nil, nil)
-        (self.canRollback, self.createdAt, self.createdByEmail, self.currentlyApplied, self.description) = (nil, nil, nil, nil, nil)
-        (self.id, self.instruction, self.k, self.maxTokens, self.modelName) = (nil, nil, nil, nil, nil)
-        (self.name, self.provideCitations, self.retrievalMethod, self.tags, self.temperature) = (nil, nil, nil, nil, nil)
-        (self.topP, self.triggerAction, self.versionHash) = (nil, nil, nil)
+        (agentUuid, attachedChildAgents, attachedFunctions, attachedGuardrails, attachedKnowledgebases) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (canRollback, createdAt, createdByEmail, currentlyApplied, description) = (nil, nil, nil, nil, nil)
+        (id, instruction, k, maxTokens, modelName) = (nil, nil, nil, nil, nil)
+        (name, provideCitations, retrievalMethod, tags, temperature) = (nil, nil, nil, nil, nil)
+        (topP, triggerAction, versionHash) = (nil, nil, nil)
     }
 }
 
-extension ApiAgentVersion {
-    public init(from decoder: Decoder) throws {
+public extension ApiAgentVersion {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
-        self.attachedChildAgents = try container.sdkDecodeIfPresent(.attachedChildAgents)
-        self.attachedFunctions = try container.sdkDecodeIfPresent(.attachedFunctions)
-        self.attachedGuardrails = try container.sdkDecodeIfPresent(.attachedGuardrails)
-        self.attachedKnowledgebases = try container.sdkDecodeIfPresent(.attachedKnowledgebases)
-        self.canRollback = try container.sdkDecodeIfPresent(.canRollback)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.createdByEmail = try container.sdkDecodeIfPresent(.createdByEmail)
-        self.currentlyApplied = try container.sdkDecodeIfPresent(.currentlyApplied)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.instruction = try container.sdkDecodeIfPresent(.instruction)
-        self.k = try container.sdkDecodeIfPresent(.k)
-        self.maxTokens = try container.sdkDecodeIfPresent(.maxTokens)
-        self.modelName = try container.sdkDecodeIfPresent(.modelName)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.provideCitations = try container.sdkDecodeIfPresent(.provideCitations)
-        self.retrievalMethod = try container.sdkDecodeIfPresent(.retrievalMethod)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.temperature = try container.sdkDecodeIfPresent(.temperature)
-        self.topP = try container.sdkDecodeIfPresent(.topP)
-        self.triggerAction = try container.sdkDecodeIfPresent(.triggerAction)
-        self.versionHash = try container.sdkDecodeIfPresent(.versionHash)
-        if let value = self.createdAt {
+        agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
+        attachedChildAgents = try container.sdkDecodeIfPresent(.attachedChildAgents)
+        attachedFunctions = try container.sdkDecodeIfPresent(.attachedFunctions)
+        attachedGuardrails = try container.sdkDecodeIfPresent(.attachedGuardrails)
+        attachedKnowledgebases = try container.sdkDecodeIfPresent(.attachedKnowledgebases)
+        canRollback = try container.sdkDecodeIfPresent(.canRollback)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        createdByEmail = try container.sdkDecodeIfPresent(.createdByEmail)
+        currentlyApplied = try container.sdkDecodeIfPresent(.currentlyApplied)
+        description = try container.sdkDecodeIfPresent(.description)
+        id = try container.sdkDecodeIfPresent(.id)
+        instruction = try container.sdkDecodeIfPresent(.instruction)
+        k = try container.sdkDecodeIfPresent(.k)
+        maxTokens = try container.sdkDecodeIfPresent(.maxTokens)
+        modelName = try container.sdkDecodeIfPresent(.modelName)
+        name = try container.sdkDecodeIfPresent(.name)
+        provideCitations = try container.sdkDecodeIfPresent(.provideCitations)
+        retrievalMethod = try container.sdkDecodeIfPresent(.retrievalMethod)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        temperature = try container.sdkDecodeIfPresent(.temperature)
+        topP = try container.sdkDecodeIfPresent(.topP)
+        triggerAction = try container.sdkDecodeIfPresent(.triggerAction)
+        versionHash = try container.sdkDecodeIfPresent(.versionHash)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiAgentVersion {
-    public init(agentUuid: String? = nil, attachedChildAgents: [ApiAgentChildRelationshipVerion]? = nil, attachedFunctions: [ApiAgentFunctionVersion]? = nil, attachedGuardrails: [ApiAgentGuardrailVersion]? = nil, attachedKnowledgebases: [ApiAgentKnowledgeBaseVersion]? = nil, canRollback: Bool? = nil, createdAt: Date? = nil, createdByEmail: String? = nil, currentlyApplied: Bool? = nil, description: String? = nil, id: String? = nil, instruction: String? = nil, k: Int? = nil, maxTokens: Int? = nil, modelName: String? = nil, name: String? = nil, provideCitations: Bool? = nil, retrievalMethod: ApiRetrievalMethod? = nil, tags: [String]? = nil, temperature: Double? = nil, topP: Double? = nil, triggerAction: String? = nil, versionHash: String? = nil) throws {
+public extension ApiAgentVersion {
+    init(
+        agentUuid: String? = nil,
+        attachedChildAgents: [ApiAgentChildRelationshipVerion]? = nil,
+        attachedFunctions: [ApiAgentFunctionVersion]? = nil,
+        attachedGuardrails: [ApiAgentGuardrailVersion]? = nil,
+        attachedKnowledgebases: [ApiAgentKnowledgeBaseVersion]? = nil,
+        canRollback: Bool? = nil,
+        createdAt: Date? = nil,
+        createdByEmail: String? = nil,
+        currentlyApplied: Bool? = nil,
+        description: String? = nil,
+        id: String? = nil,
+        instruction: String? = nil,
+        k: Int? = nil,
+        maxTokens: Int? = nil,
+        modelName: String? = nil,
+        name: String? = nil,
+        provideCitations: Bool? = nil,
+        retrievalMethod: ApiRetrievalMethod? = nil,
+        tags: [String]? = nil,
+        temperature: Double? = nil,
+        topP: Double? = nil,
+        triggerAction: String? = nil,
+        versionHash: String? = nil
+    ) throws {
         self.init()
         (self.agentUuid, self.attachedChildAgents) = (agentUuid, attachedChildAgents)
         (self.attachedFunctions, self.attachedGuardrails) = (attachedFunctions, attachedGuardrails)
@@ -325,23 +361,29 @@ public struct ApiAgentChildRelationshipVerion: Codable {
     }
 
     init() {
-        (self.agentName, self.childAgentUuid, self.ifCase, self.isDeleted, self.routeName) = (nil, nil, nil, nil, nil)
+        (agentName, childAgentUuid, ifCase, isDeleted, routeName) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiAgentChildRelationshipVerion {
-    public init(from decoder: Decoder) throws {
+public extension ApiAgentChildRelationshipVerion {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agentName = try container.sdkDecodeIfPresent(.agentName)
-        self.childAgentUuid = try container.sdkDecodeIfPresent(.childAgentUuid)
-        self.ifCase = try container.sdkDecodeIfPresent(.ifCase)
-        self.isDeleted = try container.sdkDecodeIfPresent(.isDeleted)
-        self.routeName = try container.sdkDecodeIfPresent(.routeName)
+        agentName = try container.sdkDecodeIfPresent(.agentName)
+        childAgentUuid = try container.sdkDecodeIfPresent(.childAgentUuid)
+        ifCase = try container.sdkDecodeIfPresent(.ifCase)
+        isDeleted = try container.sdkDecodeIfPresent(.isDeleted)
+        routeName = try container.sdkDecodeIfPresent(.routeName)
     }
 }
 
-extension ApiAgentChildRelationshipVerion {
-    public init(agentName: String? = nil, childAgentUuid: String? = nil, ifCase: String? = nil, isDeleted: Bool? = nil, routeName: String? = nil) {
+public extension ApiAgentChildRelationshipVerion {
+    init(
+        agentName: String? = nil,
+        childAgentUuid: String? = nil,
+        ifCase: String? = nil,
+        isDeleted: Bool? = nil,
+        routeName: String? = nil
+    ) {
         self.init()
         (self.agentName, self.childAgentUuid) = (agentName, childAgentUuid)
         (self.ifCase, self.isDeleted) = (ifCase, isDeleted)

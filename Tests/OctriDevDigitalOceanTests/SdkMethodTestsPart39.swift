@@ -17,8 +17,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.images.createCustom(
-            body: decoded(sdkMethodFixture874Value1)
-        )
+                body: decoded(sdkMethodFixture874Value1)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -56,8 +56,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.images.delete(
-            imageId: decoded("62137902")
-        )
+                imageId: decoded("62137902")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -102,8 +102,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.images.get(
-            imageId: decoded("62137902")
-        )
+                imageId: decoded("62137902")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -152,12 +152,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.images.list(
-            type: decoded("\"distribution\""),
-            private: decoded("true"),
-            tagName: decoded("\"base-image\""),
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                type: decoded("\"distribution\""),
+                private: decoded("true"),
+                tagName: decoded("\"base-image\""),
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -185,7 +185,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testImagesPostAccountTransferAcceptImagesPostAccountTransferAccept400ReachesMockAndDecodesResponse() async throws {
+    func testImagesPostAccountTransferAcceptImagesPostAccountTransferAccept400ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/400") else {
             return
         }
@@ -196,9 +197,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.images.postAccountTransferAccept(
-            imageId: decoded("62137902"),
-            body: decoded(sdkMethodFixture882Value1)
-        )
+                imageId: decoded("62137902"),
+                body: decoded(sdkMethodFixture882Value1)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -226,7 +227,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testImagesPostAccountTransferCancelImagesPostAccountTransferCancel400ReachesMockAndDecodesResponse() async throws {
+    func testImagesPostAccountTransferCancelImagesPostAccountTransferCancel400ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/400") else {
             return
         }
@@ -237,9 +239,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.images.postAccountTransferCancel(
-            imageId: decoded("62137902"),
-            transferId: decoded("3164444")
-        )
+                imageId: decoded("62137902"),
+                transferId: decoded("3164444")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -274,7 +276,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testImagesPostAccountTransferCreateImagesPostAccountTransferCreate400ReachesMockAndDecodesResponse() async throws {
+    func testImagesPostAccountTransferCreateImagesPostAccountTransferCreate400ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/400") else {
             return
         }
@@ -285,9 +288,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.images.postAccountTransferCreate(
-            imageId: decoded("62137902"),
-            body: decoded("{\"recipient_email\":\"alice@example.com\"}")
-        )
+                imageId: decoded("62137902"),
+                body: decoded("{\"recipient_email\":\"alice@example.com\"}")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -303,7 +306,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testImagesPostAccountTransferDeclineImagesPostAccountTransferDeclineReachesMockAndDecodesResponse() async throws {
+    func testImagesPostAccountTransferDeclineImagesPostAccountTransferDeclineReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -315,7 +319,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testImagesPostAccountTransferDeclineImagesPostAccountTransferDecline400ReachesMockAndDecodesResponse() async throws {
+    func testImagesPostAccountTransferDeclineImagesPostAccountTransferDecline400ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/400") else {
             return
         }
@@ -326,9 +331,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.images.postAccountTransferDecline(
-            imageId: decoded("62137902"),
-            transferId: decoded("3164444")
-        )
+                imageId: decoded("62137902"),
+                transferId: decoded("3164444")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -376,11 +381,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.images.update(
-            imageId: decoded("62137902"),
-            name: decoded("\"Nifty New Snapshot\""),
-            distribution: decoded("\"Ubuntu\""),
-            description: decoded("\" \"")
-        )
+                imageId: decoded("62137902"),
+                name: decoded("\"Nifty New Snapshot\""),
+                distribution: decoded("\"Ubuntu\""),
+                description: decoded("\" \"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -425,8 +430,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.batchInference.inferenceCancelBatch(
-            batchId: decoded("\"0e9d1d35-3d1e-4d66-9a2f-8c7e0f6b3e21\"")
-        )
+                batchId: decoded("\"0e9d1d35-3d1e-4d66-9a2f-8c7e0f6b3e21\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -473,10 +478,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.serverlessInference.inferenceCreateAsyncInvoke(
-            modelId: decoded("\"fal-ai/flux/schnell\""),
-            input: decoded("{\"prompt\":\"A futuristic city at sunset\"}"),
-            tags: decoded("null")
-        )
+                modelId: decoded("\"fal-ai/flux/schnell\""),
+                input: decoded("{\"prompt\":\"A futuristic city at sunset\"}"),
+                tags: decoded("null")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -526,13 +531,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.batchInference.inferenceCreateBatch(
-            fileId: decoded("\"a1b2c3d4-e5f6-4789-90ab-cdef12345678\""),
-            provider: decoded("\"openai\""),
-            completionWindow: decoded("\"24h\""),
-            requestId: decoded("\"c7e3ad1e-20c3-4e47-9bf2-6f2a4d6a2f11\""),
-            endpoint: decoded("\"/v1/chat/completions\""),
-            metadata: decoded("null")
-        )
+                fileId: decoded("\"a1b2c3d4-e5f6-4789-90ab-cdef12345678\""),
+                provider: decoded("\"openai\""),
+                completionWindow: decoded("\"24h\""),
+                requestId: decoded("\"c7e3ad1e-20c3-4e47-9bf2-6f2a4d6a2f11\""),
+                endpoint: decoded("\"/v1/chat/completions\""),
+                metadata: decoded("null")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)

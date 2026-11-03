@@ -3,7 +3,7 @@
 
 import Foundation
 
-// PartnerNetworkConnect domain models
+/// PartnerNetworkConnect domain models
 /// Typed representation of the `PartnerAttachmentWritable` API schema.
 public struct PartnerAttachmentWritable: Codable {
     /// The name of the partner attachment. Must be unique and may only contain alphanumeric characters, dashes, and
@@ -42,48 +42,79 @@ public struct PartnerAttachmentWritable: Codable {
         case redundancyZone = "redundancy_zone"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension PartnerAttachmentWritable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.connectionBandwidthInMbps) else {
-            throw SdkValidationError(field: "connection_bandwidth_in_mbps", code: "required", message: "Validation failed for 'connection_bandwidth_in_mbps': value is required")
-        }
-        guard container.contains(.region) else {
-            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
-        }
-        guard container.contains(.naasProvider) else {
-            throw SdkValidationError(field: "naas_provider", code: "required", message: "Validation failed for 'naas_provider': value is required")
-        }
-        guard container.contains(.vpcIds) else {
-            throw SdkValidationError(field: "vpc_ids", code: "required", message: "Validation failed for 'vpc_ids': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.connectionBandwidthInMbps = try container.sdkDecodeRequired(.connectionBandwidthInMbps)
-        self.region = try container.sdkDecodeRequired(.region)
-        self.naasProvider = try container.sdkDecodeRequired(.naasProvider)
-        self.vpcIds = try container.sdkDecodeRequired(.vpcIds)
-        self.parentUuid = try container.sdkDecodeIfPresent(.parentUuid)
-        self.bgp = try container.sdkDecodeIfPresent(.bgp)
-        self.redundancyZone = try container.sdkDecodeIfPresent(.redundancyZone)
-            try sdkValidatePattern("name", self.name, sdkPatternef0a913b6e4d)
-            try validateItems("vpc_ids", self.vpcIds, min: 1, max: nil)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension PartnerAttachmentWritable {
-    public init(name: String, connectionBandwidthInMbps: Int, region: PartnerAttachmentWritableRegion, naasProvider: String, vpcIds: [String], parentUuid: String? = nil, bgp: PartnerAttachmentWritableBgp? = nil, redundancyZone: PartnerAttachmentWritableRedundancyZone? = nil) throws {
+public extension PartnerAttachmentWritable {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.connectionBandwidthInMbps) else {
+            throw SdkValidationError(
+                field: "connection_bandwidth_in_mbps",
+                code: "required",
+                message: "Validation failed for 'connection_bandwidth_in_mbps': value is required"
+            )
+        }
+        guard container.contains(.region) else {
+            throw SdkValidationError(
+                field: "region",
+                code: "required",
+                message: "Validation failed for 'region': value is required"
+            )
+        }
+        guard container.contains(.naasProvider) else {
+            throw SdkValidationError(
+                field: "naas_provider",
+                code: "required",
+                message: "Validation failed for 'naas_provider': value is required"
+            )
+        }
+        guard container.contains(.vpcIds) else {
+            throw SdkValidationError(
+                field: "vpc_ids",
+                code: "required",
+                message: "Validation failed for 'vpc_ids': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        connectionBandwidthInMbps = try container.sdkDecodeRequired(.connectionBandwidthInMbps)
+        region = try container.sdkDecodeRequired(.region)
+        naasProvider = try container.sdkDecodeRequired(.naasProvider)
+        vpcIds = try container.sdkDecodeRequired(.vpcIds)
+        parentUuid = try container.sdkDecodeIfPresent(.parentUuid)
+        bgp = try container.sdkDecodeIfPresent(.bgp)
+        redundancyZone = try container.sdkDecodeIfPresent(.redundancyZone)
+        try sdkValidatePattern("name", name, sdkPatternef0a913b6e4d)
+        try validateItems("vpc_ids", vpcIds, min: 1, max: nil)
+    }
+}
+
+public extension PartnerAttachmentWritable {
+    init(
+        name: String,
+        connectionBandwidthInMbps: Int,
+        region: PartnerAttachmentWritableRegion,
+        naasProvider: String,
+        vpcIds: [String],
+        parentUuid: String? = nil,
+        bgp: PartnerAttachmentWritableBgp? = nil,
+        redundancyZone: PartnerAttachmentWritableRedundancyZone? = nil
+    ) throws {
         (self.name, self.connectionBandwidthInMbps) = (name, connectionBandwidthInMbps)
         (self.region, self.naasProvider) = (region, naasProvider)
         (self.vpcIds, self.parentUuid) = (vpcIds, parentUuid)
         (self.bgp, self.redundancyZone) = (bgp, redundancyZone)
-            try sdkValidatePattern("name", self.name, sdkPatternef0a913b6e4d)
-            try validateItems("vpc_ids", self.vpcIds, min: 1, max: nil)
+        try sdkValidatePattern("name", self.name, sdkPatternef0a913b6e4d)
+        try validateItems("vpc_ids", self.vpcIds, min: 1, max: nil)
     }
 }
 
@@ -109,49 +140,71 @@ public struct PartnerAttachmentWritableBgp: Codable {
         case authKey = "auth_key"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension PartnerAttachmentWritableBgp {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.localRouterIp) else {
-            throw SdkValidationError(field: "local_router_ip", code: "required", message: "Validation failed for 'local_router_ip': value is required")
-        }
-        guard container.contains(.peerRouterIp) else {
-            throw SdkValidationError(field: "peer_router_ip", code: "required", message: "Validation failed for 'peer_router_ip': value is required")
-        }
-        guard container.contains(.peerRouterAsn) else {
-            throw SdkValidationError(field: "peer_router_asn", code: "required", message: "Validation failed for 'peer_router_asn': value is required")
-        }
-        guard container.contains(.authKey) else {
-            throw SdkValidationError(field: "auth_key", code: "required", message: "Validation failed for 'auth_key': value is required")
-        }
-        self.localRouterIp = try container.sdkDecodeRequired(.localRouterIp)
-        self.peerRouterIp = try container.sdkDecodeRequired(.peerRouterIp)
-        self.peerRouterAsn = try container.sdkDecodeRequired(.peerRouterAsn)
-        self.authKey = try container.sdkDecodeRequired(.authKey)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension PartnerAttachmentWritableBgp {
-    public init(localRouterIp: String, peerRouterIp: String, peerRouterAsn: Int, authKey: String) {
+public extension PartnerAttachmentWritableBgp {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.localRouterIp) else {
+            throw SdkValidationError(
+                field: "local_router_ip",
+                code: "required",
+                message: "Validation failed for 'local_router_ip': value is required"
+            )
+        }
+        guard container.contains(.peerRouterIp) else {
+            throw SdkValidationError(
+                field: "peer_router_ip",
+                code: "required",
+                message: "Validation failed for 'peer_router_ip': value is required"
+            )
+        }
+        guard container.contains(.peerRouterAsn) else {
+            throw SdkValidationError(
+                field: "peer_router_asn",
+                code: "required",
+                message: "Validation failed for 'peer_router_asn': value is required"
+            )
+        }
+        guard container.contains(.authKey) else {
+            throw SdkValidationError(
+                field: "auth_key",
+                code: "required",
+                message: "Validation failed for 'auth_key': value is required"
+            )
+        }
+        localRouterIp = try container.sdkDecodeRequired(.localRouterIp)
+        peerRouterIp = try container.sdkDecodeRequired(.peerRouterIp)
+        peerRouterAsn = try container.sdkDecodeRequired(.peerRouterAsn)
+        authKey = try container.sdkDecodeRequired(.authKey)
+    }
+}
+
+public extension PartnerAttachmentWritableBgp {
+    init(localRouterIp: String, peerRouterIp: String, peerRouterAsn: Int, authKey: String) {
         (self.localRouterIp, self.peerRouterIp) = (localRouterIp, peerRouterIp)
         (self.peerRouterAsn, self.authKey) = (peerRouterAsn, authKey)
     }
 }
 
 /// Optional redundancy zone for the partner attachment.
-public struct PartnerAttachmentWritableRedundancyZone: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct PartnerAttachmentWritableRedundancyZone: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let megaportBlue = PartnerAttachmentWritableRedundancyZone(rawValue: "MEGAPORT_BLUE")
     public static let megaportRed = PartnerAttachmentWritableRedundancyZone(rawValue: "MEGAPORT_RED")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -164,7 +217,10 @@ public struct PartnerAttachmentWritableRedundancyZone: RawRepresentable, Hashabl
 public struct PartnerAttachmentWritableRegion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let nyc = PartnerAttachmentWritableRegion(rawValue: "nyc")
     public static let sfo = PartnerAttachmentWritableRegion(rawValue: "sfo")
     public static let fra = PartnerAttachmentWritableRegion(rawValue: "fra")
@@ -173,7 +229,7 @@ public struct PartnerAttachmentWritableRegion: RawRepresentable, Hashable, Codab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

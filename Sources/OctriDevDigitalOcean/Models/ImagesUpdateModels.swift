@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Images domain models
+/// Images domain models
 /// Typed representation of the `UpdatedImage` API schema.
 public struct UpdatedImage: Codable, SdkResource {
     /// Required object value serialized in the `image` wire field.
@@ -14,21 +14,27 @@ public struct UpdatedImage: Codable, SdkResource {
         case image
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension UpdatedImage {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.image) else {
-            throw SdkValidationError(field: "image", code: "required", message: "Validation failed for 'image': value is required")
-        }
-        self.image = try container.sdkDecodeRequired(.image)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension UpdatedImage {
-    public init(image: Image) {
+public extension UpdatedImage {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.image) else {
+            throw SdkValidationError(
+                field: "image",
+                code: "required",
+                message: "Validation failed for 'image': value is required"
+            )
+        }
+        image = try container.sdkDecodeRequired(.image)
+    }
+}
+
+public extension UpdatedImage {
+    init(image: Image) {
         self.image = image
     }
 }

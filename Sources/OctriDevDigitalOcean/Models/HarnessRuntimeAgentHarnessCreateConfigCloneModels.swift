@@ -3,7 +3,7 @@
 
 import Foundation
 
-// HarnessRuntimeAgent domain models
+/// HarnessRuntimeAgent domain models
 /// Clone body: required new name plus write-only credentials for any declared slots. No lineage field.
 public struct AgentConfigCloneRequest: Codable {
     /// New config name, unique among the team's active configs.
@@ -21,28 +21,34 @@ public struct AgentConfigCloneRequest: Codable {
         case oauthAssignments = "oauth_assignments"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AgentConfigCloneRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.secrets = try container.sdkDecodeIfPresent(.secrets)
-        self.oauthAssignments = try container.sdkDecodeIfPresent(.oauthAssignments)
-            try validateLength("name", self.name, min: 1, max: 64)
-            try sdkValidatePattern("name", self.name, sdkPatternd6415432f58a)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AgentConfigCloneRequest {
-    public init(name: String, secrets: [String: String]? = nil, oauthAssignments: [String: String]? = nil) throws {
+public extension AgentConfigCloneRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        secrets = try container.sdkDecodeIfPresent(.secrets)
+        oauthAssignments = try container.sdkDecodeIfPresent(.oauthAssignments)
+        try validateLength("name", name, min: 1, max: 64)
+        try sdkValidatePattern("name", name, sdkPatternd6415432f58a)
+    }
+}
+
+public extension AgentConfigCloneRequest {
+    init(name: String, secrets: [String: String]? = nil, oauthAssignments: [String: String]? = nil) throws {
         (self.name, self.secrets) = (name, secrets)
         self.oauthAssignments = oauthAssignments
-            try validateLength("name", self.name, min: 1, max: 64)
-            try sdkValidatePattern("name", self.name, sdkPatternd6415432f58a)
+        try validateLength("name", self.name, min: 1, max: 64)
+        try sdkValidatePattern("name", self.name, sdkPatternd6415432f58a)
     }
 }

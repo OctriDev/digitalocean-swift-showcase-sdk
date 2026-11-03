@@ -3,7 +3,7 @@
 
 import Foundation
 
-// HarnessRuntimeCheckpoint domain models
+/// HarnessRuntimeCheckpoint domain models
 /// Checkpoint is a durable capture of a session's live sandbox machine state bound to the event-log cursor at the
 /// cut. READY checkpoints seed forks (ForkSession) and rollback. Internal fields (team_id, the substrate checkpoint
 /// id, event_seq) are never serialized.
@@ -52,31 +52,41 @@ public struct Checkpoint: Codable {
     }
 
     init() {
-        (self.checkpointId, self.sessionId, self.status, self.kind, self.label) = (nil, nil, nil, nil, nil)
-        (self.eventId, self.sizeBytes, self.createdAt, self.errorMessage) = (nil, nil, nil, nil)
+        (checkpointId, sessionId, status, kind, label) = (nil, nil, nil, nil, nil)
+        (eventId, sizeBytes, createdAt, errorMessage) = (nil, nil, nil, nil)
     }
 }
 
-extension Checkpoint {
-    public init(from decoder: Decoder) throws {
+public extension Checkpoint {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.checkpointId = try container.sdkDecodeIfPresent(.checkpointId)
-        self.sessionId = try container.sdkDecodeIfPresent(.sessionId)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.kind = try container.sdkDecodeIfPresent(.kind)
-        self.label = try container.sdkDecodeIfPresent(.label)
-        self.eventId = try container.sdkDecodeIfPresent(.eventId)
-        self.sizeBytes = try container.sdkDecodeIfPresent(.sizeBytes)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.errorMessage = try container.sdkDecodeIfPresent(.errorMessage)
-        if let value = self.createdAt {
+        checkpointId = try container.sdkDecodeIfPresent(.checkpointId)
+        sessionId = try container.sdkDecodeIfPresent(.sessionId)
+        status = try container.sdkDecodeIfPresent(.status)
+        kind = try container.sdkDecodeIfPresent(.kind)
+        label = try container.sdkDecodeIfPresent(.label)
+        eventId = try container.sdkDecodeIfPresent(.eventId)
+        sizeBytes = try container.sdkDecodeIfPresent(.sizeBytes)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        errorMessage = try container.sdkDecodeIfPresent(.errorMessage)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-extension Checkpoint {
-    public init(checkpointId: String? = nil, sessionId: String? = nil, status: CheckpointStatus? = nil, kind: CheckpointKind? = nil, label: String? = nil, eventId: String? = nil, sizeBytes: Int? = nil, createdAt: Date? = nil, errorMessage: String? = nil) throws {
+public extension Checkpoint {
+    init(
+        checkpointId: String? = nil,
+        sessionId: String? = nil,
+        status: CheckpointStatus? = nil,
+        kind: CheckpointKind? = nil,
+        label: String? = nil,
+        eventId: String? = nil,
+        sizeBytes: Int? = nil,
+        createdAt: Date? = nil,
+        errorMessage: String? = nil
+    ) throws {
         self.init()
         (self.checkpointId, self.sessionId) = (checkpointId, sessionId)
         (self.status, self.kind) = (status, kind)
@@ -94,13 +104,16 @@ extension Checkpoint {
 public struct CheckpointKind: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let explicit = CheckpointKind(rawValue: "explicit")
     public static let implicit = CheckpointKind(rawValue: "implicit")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -115,14 +128,17 @@ public struct CheckpointKind: RawRepresentable, Hashable, Codable, Sendable, Sdk
 public struct CheckpointStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pending = CheckpointStatus(rawValue: "PENDING")
     public static let ready = CheckpointStatus(rawValue: "READY")
     public static let failed = CheckpointStatus(rawValue: "FAILED")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

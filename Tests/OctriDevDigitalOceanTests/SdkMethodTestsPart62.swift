@@ -28,8 +28,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.containerRegistries.registriesValidateName(
-            name: decoded("\"example\"")
-        )
+                name: decoded("\"example\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -76,10 +76,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.containerRegistry.registryCreate(
-            name: decoded("\"example\""),
-            subscriptionTierSlug: decoded("\"basic\""),
-            region: decoded("\"fra1\"")
-        )
+                name: decoded("\"example\""),
+                subscriptionTierSlug: decoded("\"basic\""),
+                region: decoded("\"fra1\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -130,7 +130,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testRegistryDeleteRepositoryManifestRegistryDeleteRepositoryManifestReachesMockAndDecodesResponse() async throws {
+    func testRegistryDeleteRepositoryManifestRegistryDeleteRepositoryManifestReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -143,7 +144,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testRegistryDeleteRepositoryManifestRegistryDeleteRepositoryManifest401ReachesMockAndDecodesResponse() async throws {
+    func testRegistryDeleteRepositoryManifestRegistryDeleteRepositoryManifest401ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -154,10 +156,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.containerRegistry.registryDeleteRepositoryManifest(
-            registryName: decoded("\"example\""),
-            repositoryName: decoded("\"repo-1\""),
-            manifestDigest: decoded(sdkMethodFixture1392Value1)
-        )
+                registryName: decoded("\"example\""),
+                repositoryName: decoded("\"repo-1\""),
+                manifestDigest: decoded(sdkMethodFixture1392Value1)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -197,10 +199,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.containerRegistry.registryDeleteRepositoryTag(
-            registryName: decoded("\"example\""),
-            repositoryName: decoded("\"repo-1\""),
-            repositoryTag: decoded("\"06a447a\"")
-        )
+                registryName: decoded("\"example\""),
+                repositoryName: decoded("\"repo-1\""),
+                repositoryTag: decoded("\"06a447a\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -288,9 +290,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.containerRegistry.registryGetDockerCredentials(
-            expirySeconds: decoded("3600"),
-            readWrite: decoded("true")
-        )
+                expirySeconds: decoded("3600"),
+                readWrite: decoded("true")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -335,8 +337,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.containerRegistry.registryGetGarbageCollection(
-            registryName: decoded("\"example\"")
-        )
+                registryName: decoded("\"example\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -456,7 +458,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testRegistryListGarbageCollectionsRegistryListGarbageCollections401ReachesMockAndDecodesResponse() async throws {
+    func testRegistryListGarbageCollectionsRegistryListGarbageCollections401ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -467,10 +470,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.containerRegistry.registryListGarbageCollections(
-            registryName: decoded("\"example\""),
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                registryName: decoded("\"example\""),
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -517,10 +520,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.containerRegistry.registryListRepositories(
-            registryName: decoded("\"example\""),
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                registryName: decoded("\"example\""),
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

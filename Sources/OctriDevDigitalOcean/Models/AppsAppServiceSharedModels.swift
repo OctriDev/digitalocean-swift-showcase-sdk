@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AppsAppService domain models
+/// AppsAppService domain models
 /// Required object value serialized in the `services[]` wire field.
 public struct AppServiceSpecVariant2: Codable {
     /// Optional API value serialized in the `autoscaling` wire field.
@@ -45,39 +45,65 @@ public struct AppServiceSpecVariant2: Codable {
     }
 
     init() {
-        (self.autoscaling, self.cors, self.healthCheck, self.livenessHealthCheck, self.`protocol`) = (nil, nil, nil, nil, nil)
-        (self.httpPort, self.internalPorts, self.routes, self.termination) = (nil, nil, nil, nil)
+        (autoscaling, cors, healthCheck, livenessHealthCheck, self.protocol) = (nil, nil, nil, nil, nil)
+        (httpPort, internalPorts, routes, termination) = (nil, nil, nil, nil)
     }
 }
 
-extension AppServiceSpecVariant2 {
-    public init(from decoder: Decoder) throws {
+public extension AppServiceSpecVariant2 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.autoscaling = try container.sdkDecodeIfPresent(.autoscaling)
-        self.cors = try container.sdkDecodeIfPresent(.cors)
-        self.healthCheck = try container.sdkDecodeIfPresent(.healthCheck)
-        self.livenessHealthCheck = try container.sdkDecodeIfPresent(.livenessHealthCheck)
-        self.`protocol` = try container.sdkDecodeIfPresent(.`protocol`)
-        self.httpPort = try container.sdkDecodeIfPresent(.httpPort)
-        self.internalPorts = try container.sdkDecodeIfPresent(.internalPorts)
-        self.routes = try container.sdkDecodeIfPresent(.routes)
-        self.termination = try container.sdkDecodeIfPresent(.termination)
-        if let value = self.httpPort {
-            try validateRange("http_port", Double(value), min: 1, max: 65535, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        autoscaling = try container.sdkDecodeIfPresent(.autoscaling)
+        cors = try container.sdkDecodeIfPresent(.cors)
+        healthCheck = try container.sdkDecodeIfPresent(.healthCheck)
+        livenessHealthCheck = try container.sdkDecodeIfPresent(.livenessHealthCheck)
+        self.protocol = try container.sdkDecodeIfPresent(.protocol)
+        httpPort = try container.sdkDecodeIfPresent(.httpPort)
+        internalPorts = try container.sdkDecodeIfPresent(.internalPorts)
+        routes = try container.sdkDecodeIfPresent(.routes)
+        termination = try container.sdkDecodeIfPresent(.termination)
+        if let value = httpPort {
+            try validateRange(
+                "http_port",
+                Double(value),
+                min: 1,
+                max: 65535,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
-extension AppServiceSpecVariant2 {
-    public init(autoscaling: AppAutoscalingSpecService? = nil, cors: AppServiceSpecVariant2Cors? = nil, healthCheck: AppServiceSpecHealthCheck? = nil, livenessHealthCheck: AppHealthCheckSpec? = nil, `protocol`: AppServiceSpecVariant2Protocol? = nil, httpPort: Int? = nil, internalPorts: [Int]? = nil, routes: [AppRouteSpec]? = nil, termination: AppServiceSpecTermination? = nil) throws {
+public extension AppServiceSpecVariant2 {
+    init(
+        autoscaling: AppAutoscalingSpecService? = nil,
+        cors: AppServiceSpecVariant2Cors? = nil,
+        healthCheck: AppServiceSpecHealthCheck? = nil,
+        livenessHealthCheck: AppHealthCheckSpec? = nil,
+        protocol: AppServiceSpecVariant2Protocol? = nil,
+        httpPort: Int? = nil,
+        internalPorts: [Int]? = nil,
+        routes: [AppRouteSpec]? = nil,
+        termination: AppServiceSpecTermination? = nil
+    ) throws {
         self.init()
         (self.autoscaling, self.cors) = (autoscaling, cors)
         (self.healthCheck, self.livenessHealthCheck) = (healthCheck, livenessHealthCheck)
-        (self.`protocol`, self.httpPort) = (`protocol`, httpPort)
+        (self.protocol, self.httpPort) = (`protocol`, httpPort)
         (self.internalPorts, self.routes) = (internalPorts, routes)
         self.termination = termination
         if let value = self.httpPort {
-            try validateRange("http_port", Double(value), min: 1, max: 65535, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "http_port",
+                Double(value),
+                min: 1,
+                max: 65535,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
@@ -179,52 +205,99 @@ public struct AppServiceSpec: Codable {
         case termination
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension AppServiceSpec {
-    public init(from decoder: Decoder) throws {
+public extension AppServiceSpec {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
         }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.git = try container.sdkDecodeIfPresent(.git)
-        self.github = try container.sdkDecodeIfPresent(.github)
-        self.gitlab = try container.sdkDecodeIfPresent(.gitlab)
-        self.bitbucket = try container.sdkDecodeIfPresent(.bitbucket)
-        self.image = try container.sdkDecodeIfPresent(.image)
-        self.dockerfilePath = try container.sdkDecodeIfPresent(.dockerfilePath)
-        self.buildCommand = try container.sdkDecodeIfPresent(.buildCommand)
-        self.runCommand = try container.sdkDecodeIfPresent(.runCommand)
-        self.sourceDir = try container.sdkDecodeIfPresent(.sourceDir)
-        self.envs = try container.sdkDecodeIfPresent(.envs)
-        self.environmentSlug = try container.sdkDecodeIfPresent(.environmentSlug)
-        self.logDestinations = try container.sdkDecodeIfPresent(.logDestinations)
-        self.instanceCount = try container.sdkDecodeIfPresent(.instanceCount)
-        self.instanceSizeSlug = try container.sdkDecodeIfPresent(.instanceSizeSlug)
-        self.autoscaling = try container.sdkDecodeIfPresent(.autoscaling)
-        self.cors = try container.sdkDecodeIfPresent(.cors)
-        self.healthCheck = try container.sdkDecodeIfPresent(.healthCheck)
-        self.livenessHealthCheck = try container.sdkDecodeIfPresent(.livenessHealthCheck)
-        self.`protocol` = try container.sdkDecodeIfPresent(.`protocol`)
-        self.httpPort = try container.sdkDecodeIfPresent(.httpPort)
-        self.internalPorts = try container.sdkDecodeIfPresent(.internalPorts)
-        self.routes = try container.sdkDecodeIfPresent(.routes)
-        self.termination = try container.sdkDecodeIfPresent(.termination)
-            try validateLength("name", self.name, min: 2, max: 32)
-            try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
-        if let value = self.instanceCount {
-            try validateRange("instance_count", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        name = try container.sdkDecodeRequired(.name)
+        git = try container.sdkDecodeIfPresent(.git)
+        github = try container.sdkDecodeIfPresent(.github)
+        gitlab = try container.sdkDecodeIfPresent(.gitlab)
+        bitbucket = try container.sdkDecodeIfPresent(.bitbucket)
+        image = try container.sdkDecodeIfPresent(.image)
+        dockerfilePath = try container.sdkDecodeIfPresent(.dockerfilePath)
+        buildCommand = try container.sdkDecodeIfPresent(.buildCommand)
+        runCommand = try container.sdkDecodeIfPresent(.runCommand)
+        sourceDir = try container.sdkDecodeIfPresent(.sourceDir)
+        envs = try container.sdkDecodeIfPresent(.envs)
+        environmentSlug = try container.sdkDecodeIfPresent(.environmentSlug)
+        logDestinations = try container.sdkDecodeIfPresent(.logDestinations)
+        instanceCount = try container.sdkDecodeIfPresent(.instanceCount)
+        instanceSizeSlug = try container.sdkDecodeIfPresent(.instanceSizeSlug)
+        autoscaling = try container.sdkDecodeIfPresent(.autoscaling)
+        cors = try container.sdkDecodeIfPresent(.cors)
+        healthCheck = try container.sdkDecodeIfPresent(.healthCheck)
+        livenessHealthCheck = try container.sdkDecodeIfPresent(.livenessHealthCheck)
+        self.protocol = try container.sdkDecodeIfPresent(.protocol)
+        httpPort = try container.sdkDecodeIfPresent(.httpPort)
+        internalPorts = try container.sdkDecodeIfPresent(.internalPorts)
+        routes = try container.sdkDecodeIfPresent(.routes)
+        termination = try container.sdkDecodeIfPresent(.termination)
+        try validateLength("name", name, min: 2, max: 32)
+        try sdkValidatePattern("name", name, sdkPattern3c600f7d20be)
+        if let value = instanceCount {
+            try validateRange(
+                "instance_count",
+                Double(value),
+                min: 1,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.httpPort {
-            try validateRange("http_port", Double(value), min: 1, max: 65535, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = httpPort {
+            try validateRange(
+                "http_port",
+                Double(value),
+                min: 1,
+                max: 65535,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
-extension AppServiceSpec {
-    public init(name: String, git: AppsGitSourceSpec? = nil, github: AppsGithubSourceSpec? = nil, gitlab: AppsGitlabSourceSpec? = nil, bitbucket: AppsBitbucketSourceSpec? = nil, image: AppsImageSourceSpec? = nil, dockerfilePath: String? = nil, buildCommand: String? = nil, runCommand: String? = nil, sourceDir: String? = nil, envs: [AppVariableDefinition]? = nil, environmentSlug: String? = nil, logDestinations: [AppLogDestinationDefinition]? = nil, instanceCount: Int? = nil, instanceSizeSlug: AppComponentInstanceBaseInstanceSizeSlug? = nil, autoscaling: AppAutoscalingSpecService? = nil, cors: AppServiceSpecVariant2Cors? = nil, healthCheck: AppServiceSpecHealthCheck? = nil, livenessHealthCheck: AppHealthCheckSpec? = nil, `protocol`: AppServiceSpecVariant2Protocol? = nil, httpPort: Int? = nil, internalPorts: [Int]? = nil, routes: [AppRouteSpec]? = nil, termination: AppServiceSpecTermination? = nil) throws {
+public extension AppServiceSpec {
+    init(
+        name: String,
+        git: AppsGitSourceSpec? = nil,
+        github: AppsGithubSourceSpec? = nil,
+        gitlab: AppsGitlabSourceSpec? = nil,
+        bitbucket: AppsBitbucketSourceSpec? = nil,
+        image: AppsImageSourceSpec? = nil,
+        dockerfilePath: String? = nil,
+        buildCommand: String? = nil,
+        runCommand: String? = nil,
+        sourceDir: String? = nil,
+        envs: [AppVariableDefinition]? = nil,
+        environmentSlug: String? = nil,
+        logDestinations: [AppLogDestinationDefinition]? = nil,
+        instanceCount: Int? = nil,
+        instanceSizeSlug: AppComponentInstanceBaseInstanceSizeSlug? = nil,
+        autoscaling: AppAutoscalingSpecService? = nil,
+        cors: AppServiceSpecVariant2Cors? = nil,
+        healthCheck: AppServiceSpecHealthCheck? = nil,
+        livenessHealthCheck: AppHealthCheckSpec? = nil,
+        protocol: AppServiceSpecVariant2Protocol? = nil,
+        httpPort: Int? = nil,
+        internalPorts: [Int]? = nil,
+        routes: [AppRouteSpec]? = nil,
+        termination: AppServiceSpecTermination? = nil
+    ) throws {
         (self.name, self.git) = (name, git)
         (self.github, self.gitlab) = (github, gitlab)
         (self.bitbucket, self.image) = (bitbucket, image)
@@ -234,16 +307,32 @@ extension AppServiceSpec {
         (self.logDestinations, self.instanceCount) = (logDestinations, instanceCount)
         (self.instanceSizeSlug, self.autoscaling) = (instanceSizeSlug, autoscaling)
         (self.cors, self.healthCheck) = (cors, healthCheck)
-        (self.livenessHealthCheck, self.`protocol`) = (livenessHealthCheck, `protocol`)
+        (self.livenessHealthCheck, self.protocol) = (livenessHealthCheck, `protocol`)
         (self.httpPort, self.internalPorts) = (httpPort, internalPorts)
         (self.routes, self.termination) = (routes, termination)
-            try validateLength("name", self.name, min: 2, max: 32)
-            try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
+        try validateLength("name", self.name, min: 2, max: 32)
+        try sdkValidatePattern("name", self.name, sdkPattern3c600f7d20be)
         if let value = self.instanceCount {
-            try validateRange("instance_count", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "instance_count",
+                Double(value),
+                min: 1,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
         if let value = self.httpPort {
-            try validateRange("http_port", Double(value), min: 1, max: 65535, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "http_port",
+                Double(value),
+                min: 1,
+                max: 65535,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
@@ -281,25 +370,32 @@ public struct AppServiceSpecVariant2Cors: Codable {
     }
 
     init() {
-        (self.allowOrigins, self.allowMethods, self.allowHeaders, self.exposeHeaders, self.maxAge) = (nil, nil, nil, nil, nil)
-        self.allowCredentials = nil
+        (allowOrigins, allowMethods, allowHeaders, exposeHeaders, maxAge) = (nil, nil, nil, nil, nil)
+        allowCredentials = nil
     }
 }
 
-extension AppServiceSpecVariant2Cors {
-    public init(from decoder: Decoder) throws {
+public extension AppServiceSpecVariant2Cors {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.allowOrigins = try container.sdkDecodeIfPresent(.allowOrigins)
-        self.allowMethods = try container.sdkDecodeIfPresent(.allowMethods)
-        self.allowHeaders = try container.sdkDecodeIfPresent(.allowHeaders)
-        self.exposeHeaders = try container.sdkDecodeIfPresent(.exposeHeaders)
-        self.maxAge = try container.sdkDecodeIfPresent(.maxAge)
-        self.allowCredentials = try container.sdkDecodeIfPresent(.allowCredentials)
+        allowOrigins = try container.sdkDecodeIfPresent(.allowOrigins)
+        allowMethods = try container.sdkDecodeIfPresent(.allowMethods)
+        allowHeaders = try container.sdkDecodeIfPresent(.allowHeaders)
+        exposeHeaders = try container.sdkDecodeIfPresent(.exposeHeaders)
+        maxAge = try container.sdkDecodeIfPresent(.maxAge)
+        allowCredentials = try container.sdkDecodeIfPresent(.allowCredentials)
     }
 }
 
-extension AppServiceSpecVariant2Cors {
-    public init(allowOrigins: [AppsStringMatch]? = nil, allowMethods: [String]? = nil, allowHeaders: [String]? = nil, exposeHeaders: [String]? = nil, maxAge: String? = nil, allowCredentials: Bool? = nil) {
+public extension AppServiceSpecVariant2Cors {
+    init(
+        allowOrigins: [AppsStringMatch]? = nil,
+        allowMethods: [String]? = nil,
+        allowHeaders: [String]? = nil,
+        exposeHeaders: [String]? = nil,
+        maxAge: String? = nil,
+        allowCredentials: Bool? = nil
+    ) {
         self.init()
         (self.allowOrigins, self.allowMethods) = (allowOrigins, allowMethods)
         (self.allowHeaders, self.exposeHeaders) = (allowHeaders, exposeHeaders)
@@ -325,33 +421,65 @@ public struct AppServiceSpecTermination: Codable {
     }
 
     init() {
-        (self.drainSeconds, self.gracePeriodSeconds) = (nil, nil)
+        (drainSeconds, gracePeriodSeconds) = (nil, nil)
     }
 }
 
-extension AppServiceSpecTermination {
-    public init(from decoder: Decoder) throws {
+public extension AppServiceSpecTermination {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.drainSeconds = try container.sdkDecodeIfPresent(.drainSeconds)
-        self.gracePeriodSeconds = try container.sdkDecodeIfPresent(.gracePeriodSeconds)
-        if let value = self.drainSeconds {
-            try validateRange("drain_seconds", Double(value), min: 1, max: 110, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        drainSeconds = try container.sdkDecodeIfPresent(.drainSeconds)
+        gracePeriodSeconds = try container.sdkDecodeIfPresent(.gracePeriodSeconds)
+        if let value = drainSeconds {
+            try validateRange(
+                "drain_seconds",
+                Double(value),
+                min: 1,
+                max: 110,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.gracePeriodSeconds {
-            try validateRange("grace_period_seconds", Double(value), min: 1, max: 600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = gracePeriodSeconds {
+            try validateRange(
+                "grace_period_seconds",
+                Double(value),
+                min: 1,
+                max: 600,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
-extension AppServiceSpecTermination {
-    public init(drainSeconds: Int? = nil, gracePeriodSeconds: Int? = nil) throws {
+public extension AppServiceSpecTermination {
+    init(drainSeconds: Int? = nil, gracePeriodSeconds: Int? = nil) throws {
         self.init()
         (self.drainSeconds, self.gracePeriodSeconds) = (drainSeconds, gracePeriodSeconds)
         if let value = self.drainSeconds {
-            try validateRange("drain_seconds", Double(value), min: 1, max: 110, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "drain_seconds",
+                Double(value),
+                min: 1,
+                max: 110,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
         if let value = self.gracePeriodSeconds {
-            try validateRange("grace_period_seconds", Double(value), min: 1, max: 600, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "grace_period_seconds",
+                Double(value),
+                min: 1,
+                max: 600,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
@@ -393,36 +521,60 @@ public struct AppServiceSpecHealthCheck: Codable {
     }
 
     init() {
-        (self.failureThreshold, self.port, self.httpPath, self.initialDelaySeconds, self.periodSeconds) = (nil, nil, nil, nil, nil)
-        (self.successThreshold, self.timeoutSeconds) = (nil, nil)
+        (failureThreshold, port, httpPath, initialDelaySeconds, periodSeconds) = (nil, nil, nil, nil, nil)
+        (successThreshold, timeoutSeconds) = (nil, nil)
     }
 }
 
-extension AppServiceSpecHealthCheck {
-    public init(from decoder: Decoder) throws {
+public extension AppServiceSpecHealthCheck {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.failureThreshold = try container.sdkDecodeIfPresent(.failureThreshold)
-        self.port = try container.sdkDecodeIfPresent(.port)
-        self.httpPath = try container.sdkDecodeIfPresent(.httpPath)
-        self.initialDelaySeconds = try container.sdkDecodeIfPresent(.initialDelaySeconds)
-        self.periodSeconds = try container.sdkDecodeIfPresent(.periodSeconds)
-        self.successThreshold = try container.sdkDecodeIfPresent(.successThreshold)
-        self.timeoutSeconds = try container.sdkDecodeIfPresent(.timeoutSeconds)
-        if let value = self.port {
-            try validateRange("port", Double(value), min: 1, max: 65535, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        failureThreshold = try container.sdkDecodeIfPresent(.failureThreshold)
+        port = try container.sdkDecodeIfPresent(.port)
+        httpPath = try container.sdkDecodeIfPresent(.httpPath)
+        initialDelaySeconds = try container.sdkDecodeIfPresent(.initialDelaySeconds)
+        periodSeconds = try container.sdkDecodeIfPresent(.periodSeconds)
+        successThreshold = try container.sdkDecodeIfPresent(.successThreshold)
+        timeoutSeconds = try container.sdkDecodeIfPresent(.timeoutSeconds)
+        if let value = port {
+            try validateRange(
+                "port",
+                Double(value),
+                min: 1,
+                max: 65535,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
-extension AppServiceSpecHealthCheck {
-    public init(failureThreshold: Int? = nil, port: Int? = nil, httpPath: String? = nil, initialDelaySeconds: Int? = nil, periodSeconds: Int? = nil, successThreshold: Int? = nil, timeoutSeconds: Int? = nil) throws {
+public extension AppServiceSpecHealthCheck {
+    init(
+        failureThreshold: Int? = nil,
+        port: Int? = nil,
+        httpPath: String? = nil,
+        initialDelaySeconds: Int? = nil,
+        periodSeconds: Int? = nil,
+        successThreshold: Int? = nil,
+        timeoutSeconds: Int? = nil
+    ) throws {
         self.init()
         (self.failureThreshold, self.port) = (failureThreshold, port)
         (self.httpPath, self.initialDelaySeconds) = (httpPath, initialDelaySeconds)
         (self.periodSeconds, self.successThreshold) = (periodSeconds, successThreshold)
         self.timeoutSeconds = timeoutSeconds
         if let value = self.port {
-            try validateRange("port", Double(value), min: 1, max: 65535, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "port",
+                Double(value),
+                min: 1,
+                max: 65535,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }

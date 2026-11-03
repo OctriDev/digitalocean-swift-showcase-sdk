@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AppsApp domain models
+/// AppsApp domain models
 /// Typed representation of the `AppRollbackValidationCondition` API schema.
 public struct AppRollbackValidationCondition: Codable {
     /// A code identifier that represents the failing condition. Failing conditions: - `incompatible_phase` -
@@ -27,21 +27,21 @@ public struct AppRollbackValidationCondition: Codable {
     }
 
     init() {
-        (self.code, self.message, self.components) = (nil, nil, nil)
+        (code, message, components) = (nil, nil, nil)
     }
 }
 
-extension AppRollbackValidationCondition {
-    public init(from decoder: Decoder) throws {
+public extension AppRollbackValidationCondition {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.code = try container.sdkDecodeIfPresent(.code)
-        self.message = try container.sdkDecodeIfPresent(.message)
-        self.components = try container.sdkDecodeIfPresent(.components)
+        code = try container.sdkDecodeIfPresent(.code)
+        message = try container.sdkDecodeIfPresent(.message)
+        components = try container.sdkDecodeIfPresent(.components)
     }
 }
 
-extension AppRollbackValidationCondition {
-    public init(code: AppRollbackValidationConditionCode? = nil, message: String? = nil, components: [String]? = nil) {
+public extension AppRollbackValidationCondition {
+    init(code: AppRollbackValidationConditionCode? = nil, message: String? = nil, components: [String]? = nil) {
         self.init()
         (self.code, self.message) = (code, message)
         self.components = components
@@ -56,19 +56,24 @@ extension AppRollbackValidationCondition {
 public struct AppRollbackValidationConditionCode: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let incompatiblePhase = AppRollbackValidationConditionCode(rawValue: "incompatible_phase")
     public static let incompatibleResult = AppRollbackValidationConditionCode(rawValue: "incompatible_result")
     public static let exceededRevisionLimit = AppRollbackValidationConditionCode(rawValue: "exceeded_revision_limit")
     public static let appPinned = AppRollbackValidationConditionCode(rawValue: "app_pinned")
     public static let databaseConfigConflict = AppRollbackValidationConditionCode(rawValue: "database_config_conflict")
     public static let regionConflict = AppRollbackValidationConditionCode(rawValue: "region_conflict")
-    public static let staticSiteRequiresRebuild = AppRollbackValidationConditionCode(rawValue: "static_site_requires_rebuild")
-    public static let imageSourceMissingDigest = AppRollbackValidationConditionCode(rawValue: "image_source_missing_digest")
+    public static let staticSiteRequiresRebuild =
+        AppRollbackValidationConditionCode(rawValue: "static_site_requires_rebuild")
+    public static let imageSourceMissingDigest =
+        AppRollbackValidationConditionCode(rawValue: "image_source_missing_digest")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

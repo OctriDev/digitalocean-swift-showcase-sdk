@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiSimulation domain models
+/// AgentPlatformAPIApiSimulation domain models
 /// Optional configuration that opts a simulation run into an evaluation. When included on the create-run request,
 /// the platform reserves a model_evaluation_run linked to this simulation run and dispatches the evaluation
 /// automatically after the simulation finishes. The evaluation reuses the simulation run's judge_model_uuid.
@@ -21,20 +21,20 @@ public struct ApiSimulationEvaluationConfig: Codable {
     }
 
     init() {
-        (self.metricUuids, self.starMetric) = (nil, nil)
+        (metricUuids, starMetric) = (nil, nil)
     }
 }
 
-extension ApiSimulationEvaluationConfig {
-    public init(from decoder: Decoder) throws {
+public extension ApiSimulationEvaluationConfig {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.metricUuids = try container.sdkDecodeIfPresent(.metricUuids)
-        self.starMetric = try container.sdkDecodeIfPresent(.starMetric)
+        metricUuids = try container.sdkDecodeIfPresent(.metricUuids)
+        starMetric = try container.sdkDecodeIfPresent(.starMetric)
     }
 }
 
-extension ApiSimulationEvaluationConfig {
-    public init(metricUuids: [String]? = nil, starMetric: ApiStarMetric? = nil) {
+public extension ApiSimulationEvaluationConfig {
+    init(metricUuids: [String]? = nil, starMetric: ApiStarMetric? = nil) {
         self.init()
         (self.metricUuids, self.starMetric) = (metricUuids, starMetric)
     }

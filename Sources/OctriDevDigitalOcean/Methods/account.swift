@@ -8,7 +8,18 @@ import Foundation
 #endif
 public enum AccountMethods {
     /// To show information about the current user account, send a GET request to `/v2/account`.
-    public static func accountGet(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> AccountResponse {
-        return try (await sdkRequest("GET", "/v2/account", config: config, decoder: .json, operationId: "account_get", options: requestOptions, errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).sdkResource()
+    public static func accountGet(
+        config: ClientConfig,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AccountResponse {
+        try await (sdkRequest(
+            "GET",
+            "/v2/account",
+            config: config,
+            decoder: .json,
+            operationId: "account_get",
+            options: requestOptions,
+            errors: ["401": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self]
+        )).sdkResource()
     }
 }

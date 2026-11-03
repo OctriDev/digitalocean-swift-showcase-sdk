@@ -37,10 +37,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.blockStorage.volumeSnapshotsCreate(
-            volumeId: decoded("\"7724db7c-e098-11e5-b522-000f53304e51\""),
-            name: decoded("\"big-data-snapshot1475261774\""),
-            tags: decoded("null")
-        )
+                volumeId: decoded("\"7724db7c-e098-11e5-b522-000f53304e51\""),
+                name: decoded("\"big-data-snapshot1475261774\""),
+                tags: decoded("null")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -78,8 +78,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.blockStorage.volumeSnapshotsDeleteById(
-            snapshotId: decoded("\"fbe805e8-866b-11e6-96bf-000f53315a41\"")
-        )
+                snapshotId: decoded("\"fbe805e8-866b-11e6-96bf-000f53315a41\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -124,8 +124,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.blockStorage.volumeSnapshotsGetById(
-            snapshotId: decoded("\"fbe805e8-866b-11e6-96bf-000f53315a41\"")
-        )
+                snapshotId: decoded("\"fbe805e8-866b-11e6-96bf-000f53315a41\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -172,10 +172,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.blockStorage.volumeSnapshotsList(
-            volumeId: decoded("\"7724db7c-e098-11e5-b522-000f53304e51\""),
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                volumeId: decoded("\"7724db7c-e098-11e5-b522-000f53304e51\""),
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -196,7 +196,13 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try VpcNatGatewaysMethods.VpcnatgatewaysCreateOptions(name: decoded("\"test-vpc-nat-gateways\""), type: decoded("\"PUBLIC\""), region: decoded("\"tor1\""), size: decoded("1"), vpcs: decoded(sdkMethodFixture1653Value1))
+        var options = try VpcNatGatewaysMethods.VpcnatgatewaysCreateOptions(
+            name: decoded("\"test-vpc-nat-gateways\""),
+            type: decoded("\"PUBLIC\""),
+            region: decoded("\"tor1\""),
+            size: decoded("1"),
+            vpcs: decoded(sdkMethodFixture1653Value1)
+        )
         options.udpTimeoutSeconds = try decoded("30")
         options.icmpTimeoutSeconds = try decoded("30")
         options.tcpTimeoutSeconds = try decoded("30")
@@ -219,7 +225,13 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try VpcNatGatewaysMethods.VpcnatgatewaysCreateOptions(name: decoded("\"test-vpc-nat-gateways\""), type: decoded("\"PUBLIC\""), region: decoded("\"tor1\""), size: decoded("1"), vpcs: decoded(sdkMethodFixture1654Value1))
+        var options = try VpcNatGatewaysMethods.VpcnatgatewaysCreateOptions(
+            name: decoded("\"test-vpc-nat-gateways\""),
+            type: decoded("\"PUBLIC\""),
+            region: decoded("\"tor1\""),
+            size: decoded("1"),
+            vpcs: decoded(sdkMethodFixture1654Value1)
+        )
         options.udpTimeoutSeconds = try decoded("30")
         options.icmpTimeoutSeconds = try decoded("30")
         options.tcpTimeoutSeconds = try decoded("30")
@@ -230,8 +242,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vpcNatGateways.create(
-            options: options
-        )
+                options: options
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -269,8 +281,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vpcNatGateways.delete(
-            id: decoded("\"70e1b58d-cdec-4e95-b3ee-2d4d95feff51\"")
-        )
+                id: decoded("\"70e1b58d-cdec-4e95-b3ee-2d4d95feff51\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -315,8 +327,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vpcNatGateways.get(
-            id: decoded("\"70e1b58d-cdec-4e95-b3ee-2d4d95feff51\"")
-        )
+                id: decoded("\"70e1b58d-cdec-4e95-b3ee-2d4d95feff51\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -366,13 +378,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vpcNatGateways.list(
-            perPage: decoded("2"),
-            page: decoded("1"),
-            state: decoded("\"active\""),
-            region: decoded("\"tor1\""),
-            type: decoded("\"public\""),
-            name: decoded("\"my-vpc-nat-gateway\"")
-        )
+                perPage: decoded("2"),
+                page: decoded("1"),
+                state: decoded("\"active\""),
+                region: decoded("\"tor1\""),
+                type: decoded("\"public\""),
+                name: decoded("\"my-vpc-nat-gateway\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -423,14 +435,14 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vpcNatGateways.update(
-            id: decoded("\"70e1b58d-cdec-4e95-b3ee-2d4d95feff51\""),
-            name: decoded("\"test-vpc-nat-gateways-updated\""),
-            size: decoded("2"),
-            vpcs: decoded(sdkMethodFixture1662Value1),
-            udpTimeoutSeconds: decoded("60"),
-            icmpTimeoutSeconds: decoded("60"),
-            tcpTimeoutSeconds: decoded("60")
-        )
+                id: decoded("\"70e1b58d-cdec-4e95-b3ee-2d4d95feff51\""),
+                name: decoded("\"test-vpc-nat-gateways-updated\""),
+                size: decoded("2"),
+                vpcs: decoded(sdkMethodFixture1662Value1),
+                udpTimeoutSeconds: decoded("60"),
+                icmpTimeoutSeconds: decoded("60"),
+                tcpTimeoutSeconds: decoded("60")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -475,8 +487,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vpcPeerings.create(
-            body: decoded(sdkMethodFixture1664Value1)
-        )
+                body: decoded(sdkMethodFixture1664Value1)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -521,8 +533,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vpcPeerings.delete(
-            vpcPeeringId: decoded("\"5a4981aa-9653-4bd1-bef5-d6bff52042e4\"")
-        )
+                vpcPeeringId: decoded("\"5a4981aa-9653-4bd1-bef5-d6bff52042e4\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

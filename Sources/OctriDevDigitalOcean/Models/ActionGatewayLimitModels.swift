@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ActionGatewayLimit domain models
+/// ActionGatewayLimit domain models
 /// Actor's limit for one category.
 public struct LimitOverride: Codable {
     /// The category the limit applies to.
@@ -17,25 +17,35 @@ public struct LimitOverride: Codable {
         case requestsPerMinute = "requests_per_minute"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension LimitOverride {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.category) else {
-            throw SdkValidationError(field: "category", code: "required", message: "Validation failed for 'category': value is required")
-        }
-        guard container.contains(.requestsPerMinute) else {
-            throw SdkValidationError(field: "requests_per_minute", code: "required", message: "Validation failed for 'requests_per_minute': value is required")
-        }
-        self.category = try container.sdkDecodeRequired(.category)
-        self.requestsPerMinute = try container.sdkDecodeRequired(.requestsPerMinute)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension LimitOverride {
-    public init(category: LimitCategory, requestsPerMinute: String) {
+public extension LimitOverride {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.category) else {
+            throw SdkValidationError(
+                field: "category",
+                code: "required",
+                message: "Validation failed for 'category': value is required"
+            )
+        }
+        guard container.contains(.requestsPerMinute) else {
+            throw SdkValidationError(
+                field: "requests_per_minute",
+                code: "required",
+                message: "Validation failed for 'requests_per_minute': value is required"
+            )
+        }
+        category = try container.sdkDecodeRequired(.category)
+        requestsPerMinute = try container.sdkDecodeRequired(.requestsPerMinute)
+    }
+}
+
+public extension LimitOverride {
+    init(category: LimitCategory, requestsPerMinute: String) {
         (self.category, self.requestsPerMinute) = (category, requestsPerMinute)
     }
 }
@@ -44,15 +54,22 @@ extension LimitOverride {
 public struct LimitCategory: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
-    public static let limitCategoryWebSearchRequestsPerMinute = LimitCategory(rawValue: "LIMIT_CATEGORY_WEB_SEARCH_REQUESTS_PER_MINUTE")
-    public static let limitCategoryWebFetchRequestsPerMinute = LimitCategory(rawValue: "LIMIT_CATEGORY_WEB_FETCH_REQUESTS_PER_MINUTE")
-    public static let limitCategoryNativeToolCallsRequestsPerMinute = LimitCategory(rawValue: "LIMIT_CATEGORY_NATIVE_TOOL_CALLS_REQUESTS_PER_MINUTE")
-    public static let limitCategoryNonNativeToolCallsRequestsPerMinute = LimitCategory(rawValue: "LIMIT_CATEGORY_NON_NATIVE_TOOL_CALLS_REQUESTS_PER_MINUTE")
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let limitCategoryWebSearchRequestsPerMinute =
+        LimitCategory(rawValue: "LIMIT_CATEGORY_WEB_SEARCH_REQUESTS_PER_MINUTE")
+    public static let limitCategoryWebFetchRequestsPerMinute =
+        LimitCategory(rawValue: "LIMIT_CATEGORY_WEB_FETCH_REQUESTS_PER_MINUTE")
+    public static let limitCategoryNativeToolCallsRequestsPerMinute =
+        LimitCategory(rawValue: "LIMIT_CATEGORY_NATIVE_TOOL_CALLS_REQUESTS_PER_MINUTE")
+    public static let limitCategoryNonNativeToolCallsRequestsPerMinute =
+        LimitCategory(rawValue: "LIMIT_CATEGORY_NON_NATIVE_TOOL_CALLS_REQUESTS_PER_MINUTE")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

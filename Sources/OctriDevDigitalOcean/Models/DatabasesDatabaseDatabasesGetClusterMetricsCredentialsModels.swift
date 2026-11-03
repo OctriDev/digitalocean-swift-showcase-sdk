@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DatabasesDatabase domain models
+/// DatabasesDatabase domain models
 /// Typed representation of the `DatabaseMetricsAuth` API schema.
 public struct DatabaseMetricsAuth: Codable, SdkResource {
     /// Optional object value serialized in the `credentials` wire field.
@@ -15,19 +15,19 @@ public struct DatabaseMetricsAuth: Codable, SdkResource {
     }
 
     init() {
-        self.credentials = nil
+        credentials = nil
     }
 }
 
-extension DatabaseMetricsAuth {
-    public init(from decoder: Decoder) throws {
+public extension DatabaseMetricsAuth {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.credentials = try container.sdkDecodeIfPresent(.credentials)
+        credentials = try container.sdkDecodeIfPresent(.credentials)
     }
 }
 
-extension DatabaseMetricsAuth {
-    public init(credentials: DatabaseMetricsCredentials? = nil) {
+public extension DatabaseMetricsAuth {
+    init(credentials: DatabaseMetricsCredentials? = nil) {
         self.init()
         self.credentials = credentials
     }

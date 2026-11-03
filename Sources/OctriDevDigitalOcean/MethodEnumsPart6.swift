@@ -9,7 +9,10 @@ import Foundation
 public struct InferenceListBatchesParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let validating = InferenceListBatchesParameter(rawValue: "validating")
     public static let inProgress = InferenceListBatchesParameter(rawValue: "in_progress")
     public static let finalizing = InferenceListBatchesParameter(rawValue: "finalizing")
@@ -21,7 +24,7 @@ public struct InferenceListBatchesParameter: RawRepresentable, Hashable, Codable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -33,13 +36,16 @@ public struct InferenceListBatchesParameter: RawRepresentable, Hashable, Codable
 public struct ImagesListParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let application = ImagesListParameter(rawValue: "application")
     public static let distribution = ImagesListParameter(rawValue: "distribution")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -51,14 +57,17 @@ public struct ImagesListParameter: RawRepresentable, Hashable, Codable, Sendable
 public struct AppsListEventsParameterItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let unknown = AppsListEventsParameterItem(rawValue: "UNKNOWN")
     public static let deployment = AppsListEventsParameterItem(rawValue: "DEPLOYMENT")
     public static let autoscaling = AppsListEventsParameterItem(rawValue: "AUTOSCALING")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -70,16 +79,23 @@ public struct AppsListEventsParameterItem: RawRepresentable, Hashable, Codable, 
 public struct GenaiListScenarioSetsParameterItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
-    public static let scenarioSetStatusUnspecified = GenaiListScenarioSetsParameterItem(rawValue: "SCENARIO_SET_STATUS_UNSPECIFIED")
-    public static let scenarioSetStatusGenerating = GenaiListScenarioSetsParameterItem(rawValue: "SCENARIO_SET_STATUS_GENERATING")
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let scenarioSetStatusUnspecified =
+        GenaiListScenarioSetsParameterItem(rawValue: "SCENARIO_SET_STATUS_UNSPECIFIED")
+    public static let scenarioSetStatusGenerating =
+        GenaiListScenarioSetsParameterItem(rawValue: "SCENARIO_SET_STATUS_GENERATING")
     public static let scenarioSetStatusReady = GenaiListScenarioSetsParameterItem(rawValue: "SCENARIO_SET_STATUS_READY")
-    public static let scenarioSetStatusFailed = GenaiListScenarioSetsParameterItem(rawValue: "SCENARIO_SET_STATUS_FAILED")
-    public static let scenarioSetStatusCancelled = GenaiListScenarioSetsParameterItem(rawValue: "SCENARIO_SET_STATUS_CANCELLED")
+    public static let scenarioSetStatusFailed =
+        GenaiListScenarioSetsParameterItem(rawValue: "SCENARIO_SET_STATUS_FAILED")
+    public static let scenarioSetStatusCancelled =
+        GenaiListScenarioSetsParameterItem(rawValue: "SCENARIO_SET_STATUS_CANCELLED")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -91,12 +107,15 @@ public struct GenaiListScenarioSetsParameterItem: RawRepresentable, Hashable, Co
 public struct VpcnatgatewaysListParameterXe9124a5b: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let `public` = VpcnatgatewaysListParameterXe9124a5b(rawValue: "public")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -106,17 +125,21 @@ public struct VpcnatgatewaysListParameterXe9124a5b: RawRepresentable, Hashable, 
 }
 
 /// The slug of the subscription tier to sign up for.
-public struct RegistryUpdateSubscriptionRequestBodyTierSlug: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct RegistryUpdateSubscriptionRequestBodyTierSlug: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let starter = RegistryUpdateSubscriptionRequestBodyTierSlug(rawValue: "starter")
     public static let basic = RegistryUpdateSubscriptionRequestBodyTierSlug(rawValue: "basic")
     public static let professional = RegistryUpdateSubscriptionRequestBodyTierSlug(rawValue: "professional")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -126,21 +149,28 @@ public struct RegistryUpdateSubscriptionRequestBodyTierSlug: RawRepresentable, H
 }
 
 /// The compatibility level of the schema registry.
-public struct DatabasesUpdateKafkaSchemaConfigRequestBodyCompatibilityLevel: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct DatabasesUpdateKafkaSchemaConfigRequestBodyCompatibilityLevel: RawRepresentable, Hashable, Codable,
+    Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let none = DatabasesUpdateKafkaSchemaConfigRequestBodyCompatibilityLevel(rawValue: "NONE")
     public static let backward = DatabasesUpdateKafkaSchemaConfigRequestBodyCompatibilityLevel(rawValue: "BACKWARD")
-    public static let backwardTransitive = DatabasesUpdateKafkaSchemaConfigRequestBodyCompatibilityLevel(rawValue: "BACKWARD_TRANSITIVE")
+    public static let backwardTransitive =
+        DatabasesUpdateKafkaSchemaConfigRequestBodyCompatibilityLevel(rawValue: "BACKWARD_TRANSITIVE")
     public static let forward = DatabasesUpdateKafkaSchemaConfigRequestBodyCompatibilityLevel(rawValue: "FORWARD")
-    public static let forwardTransitive = DatabasesUpdateKafkaSchemaConfigRequestBodyCompatibilityLevel(rawValue: "FORWARD_TRANSITIVE")
+    public static let forwardTransitive =
+        DatabasesUpdateKafkaSchemaConfigRequestBodyCompatibilityLevel(rawValue: "FORWARD_TRANSITIVE")
     public static let full = DatabasesUpdateKafkaSchemaConfigRequestBodyCompatibilityLevel(rawValue: "FULL")
-    public static let fullTransitive = DatabasesUpdateKafkaSchemaConfigRequestBodyCompatibilityLevel(rawValue: "FULL_TRANSITIVE")
+    public static let fullTransitive =
+        DatabasesUpdateKafkaSchemaConfigRequestBodyCompatibilityLevel(rawValue: "FULL_TRANSITIVE")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -149,16 +179,20 @@ public struct DatabasesUpdateKafkaSchemaConfigRequestBodyCompatibilityLevel: Raw
     }
 }
 
-public struct MonitoringGetDropletBandwidthMetricsParameterX74de6e38: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct MonitoringGetDropletBandwidthMetricsParameterX74de6e38: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let `private` = MonitoringGetDropletBandwidthMetricsParameterX74de6e38(rawValue: "private")
     public static let `public` = MonitoringGetDropletBandwidthMetricsParameterX74de6e38(rawValue: "public")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -167,10 +201,14 @@ public struct MonitoringGetDropletBandwidthMetricsParameterX74de6e38: RawReprese
     }
 }
 
-public struct MonitoringGetDatabaseMysqlSchemaLatencyParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct MonitoringGetDatabaseMysqlSchemaLatencyParameter: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let insert = MonitoringGetDatabaseMysqlSchemaLatencyParameter(rawValue: "insert")
     public static let fetch = MonitoringGetDatabaseMysqlSchemaLatencyParameter(rawValue: "fetch")
     public static let update = MonitoringGetDatabaseMysqlSchemaLatencyParameter(rawValue: "update")
@@ -178,7 +216,7 @@ public struct MonitoringGetDatabaseMysqlSchemaLatencyParameter: RawRepresentable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -190,7 +228,10 @@ public struct MonitoringGetDatabaseMysqlSchemaLatencyParameter: RawRepresentable
 public struct AppsGetLogsActiveDeploymentParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let unspecified = AppsGetLogsActiveDeploymentParameter(rawValue: "UNSPECIFIED")
     public static let build = AppsGetLogsActiveDeploymentParameter(rawValue: "BUILD")
     public static let deploy = AppsGetLogsActiveDeploymentParameter(rawValue: "DEPLOY")
@@ -200,7 +241,7 @@ public struct AppsGetLogsActiveDeploymentParameter: RawRepresentable, Hashable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiSimulation domain models
+/// AgentPlatformAPIApiSimulation domain models
 /// Sortable fields for listing simulation runs. - SIMULATION_RUN_SORT_FIELD_CREATED_AT: Sort by creation date.
 /// Default. - SIMULATION_RUN_SORT_FIELD_NAME: Sort by customer-supplied run name (case-insensitive). -
 /// SIMULATION_RUN_SORT_FIELD_STATUS: Sort by status using lifecycle order (pending → running → terminal). -
@@ -11,16 +11,23 @@ import Foundation
 public struct ApiSimulationRunSortField: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
-    public static let simulationRunSortFieldUnspecified = ApiSimulationRunSortField(rawValue: "SIMULATION_RUN_SORT_FIELD_UNSPECIFIED")
-    public static let simulationRunSortFieldCreatedAt = ApiSimulationRunSortField(rawValue: "SIMULATION_RUN_SORT_FIELD_CREATED_AT")
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let simulationRunSortFieldUnspecified =
+        ApiSimulationRunSortField(rawValue: "SIMULATION_RUN_SORT_FIELD_UNSPECIFIED")
+    public static let simulationRunSortFieldCreatedAt =
+        ApiSimulationRunSortField(rawValue: "SIMULATION_RUN_SORT_FIELD_CREATED_AT")
     public static let simulationRunSortFieldName = ApiSimulationRunSortField(rawValue: "SIMULATION_RUN_SORT_FIELD_NAME")
-    public static let simulationRunSortFieldStatus = ApiSimulationRunSortField(rawValue: "SIMULATION_RUN_SORT_FIELD_STATUS")
-    public static let simulationRunSortFieldUpdatedAt = ApiSimulationRunSortField(rawValue: "SIMULATION_RUN_SORT_FIELD_UPDATED_AT")
+    public static let simulationRunSortFieldStatus =
+        ApiSimulationRunSortField(rawValue: "SIMULATION_RUN_SORT_FIELD_STATUS")
+    public static let simulationRunSortFieldUpdatedAt =
+        ApiSimulationRunSortField(rawValue: "SIMULATION_RUN_SORT_FIELD_UPDATED_AT")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

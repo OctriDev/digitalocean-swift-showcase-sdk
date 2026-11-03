@@ -3,12 +3,15 @@
 
 import Foundation
 
-// AddOns domain models
+/// AddOns domain models
 /// Unit of measurement for the feature, if applicable. Units apply to allowance features.
 public struct AddonsFeatureUnit: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let unitUnknown = AddonsFeatureUnit(rawValue: "unit_unknown")
     public static let gb = AddonsFeatureUnit(rawValue: "GB")
     public static let gib = AddonsFeatureUnit(rawValue: "GIB")
@@ -18,7 +21,7 @@ public struct AddonsFeatureUnit: RawRepresentable, Hashable, Codable, Sendable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

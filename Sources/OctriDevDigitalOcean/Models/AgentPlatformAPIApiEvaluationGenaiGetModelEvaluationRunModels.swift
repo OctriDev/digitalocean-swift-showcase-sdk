@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiEvaluation domain models
+/// AgentPlatformAPIApiEvaluation domain models
 /// Pricing breakdown for an evaluation run.
 public struct ApiEvaluationPricing: Codable {
     /// Currency code (e.g., "USD").
@@ -25,22 +25,27 @@ public struct ApiEvaluationPricing: Codable {
     }
 
     init() {
-        (self.currency, self.judgeModelPricing, self.perCandidateModelPricing, self.totalCost) = (nil, nil, nil, nil)
+        (currency, judgeModelPricing, perCandidateModelPricing, totalCost) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiEvaluationPricing {
-    public init(from decoder: Decoder) throws {
+public extension ApiEvaluationPricing {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.currency = try container.sdkDecodeIfPresent(.currency)
-        self.judgeModelPricing = try container.sdkDecodeIfPresent(.judgeModelPricing)
-        self.perCandidateModelPricing = try container.sdkDecodeIfPresent(.perCandidateModelPricing)
-        self.totalCost = try container.sdkDecodeIfPresent(.totalCost)
+        currency = try container.sdkDecodeIfPresent(.currency)
+        judgeModelPricing = try container.sdkDecodeIfPresent(.judgeModelPricing)
+        perCandidateModelPricing = try container.sdkDecodeIfPresent(.perCandidateModelPricing)
+        totalCost = try container.sdkDecodeIfPresent(.totalCost)
     }
 }
 
-extension ApiEvaluationPricing {
-    public init(currency: String? = nil, judgeModelPricing: ApiTokenPricing? = nil, perCandidateModelPricing: [ApiModelPricingEntry]? = nil, totalCost: Double? = nil) {
+public extension ApiEvaluationPricing {
+    init(
+        currency: String? = nil,
+        judgeModelPricing: ApiTokenPricing? = nil,
+        perCandidateModelPricing: [ApiModelPricingEntry]? = nil,
+        totalCost: Double? = nil
+    ) {
         self.init()
         (self.currency, self.judgeModelPricing) = (currency, judgeModelPricing)
         (self.perCandidateModelPricing, self.totalCost) = (perCandidateModelPricing, totalCost)

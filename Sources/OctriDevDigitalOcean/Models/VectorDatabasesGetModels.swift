@@ -3,7 +3,7 @@
 
 import Foundation
 
-// VectorDatabases domain models
+/// VectorDatabases domain models
 /// Typed representation of the `VectordbGetVectorDBResponse` API schema.
 public struct VectordbGetVectorDBResponse: Codable, SdkResource {
     /// VectorDB represents a provisioned vector database instance.
@@ -15,19 +15,19 @@ public struct VectordbGetVectorDBResponse: Codable, SdkResource {
     }
 
     init() {
-        self.vectorDb = nil
+        vectorDb = nil
     }
 }
 
-extension VectordbGetVectorDBResponse {
-    public init(from decoder: Decoder) throws {
+public extension VectordbGetVectorDBResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.vectorDb = try container.sdkDecodeIfPresent(.vectorDb)
+        vectorDb = try container.sdkDecodeIfPresent(.vectorDb)
     }
 }
 
-extension VectordbGetVectorDBResponse {
-    public init(vectorDb: VectordbVectorDB? = nil) {
+public extension VectordbGetVectorDBResponse {
+    init(vectorDb: VectordbVectorDB? = nil) {
         self.init()
         self.vectorDb = vectorDb
     }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Apps domain models
+/// Apps domain models
 public typealias Schema = String
 
 /// Typed representation of the `GetEvent` API schema.
@@ -17,19 +17,19 @@ public struct GetEvent: Codable, SdkResource {
     }
 
     init() {
-        self.event = nil
+        event = nil
     }
 }
 
-extension GetEvent {
-    public init(from decoder: Decoder) throws {
+public extension GetEvent {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.event = try container.sdkDecodeIfPresent(.event)
+        event = try container.sdkDecodeIfPresent(.event)
     }
 }
 
-extension GetEvent {
-    public init(event: AppEvent? = nil) {
+public extension GetEvent {
+    init(event: AppEvent? = nil) {
         self.init()
         self.event = event
     }
@@ -46,19 +46,19 @@ public struct CancelEvent: Codable, SdkResource {
     }
 
     init() {
-        self.event = nil
+        event = nil
     }
 }
 
-extension CancelEvent {
-    public init(from decoder: Decoder) throws {
+public extension CancelEvent {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.event = try container.sdkDecodeIfPresent(.event)
+        event = try container.sdkDecodeIfPresent(.event)
     }
 }
 
-extension CancelEvent {
-    public init(event: AppEvent? = nil) {
+public extension CancelEvent {
+    init(event: AppEvent? = nil) {
         self.init()
         self.event = event
     }
@@ -68,14 +68,17 @@ extension CancelEvent {
 public struct InstanceSizeCpuType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let unspecified = InstanceSizeCpuType(rawValue: "UNSPECIFIED")
     public static let shared = InstanceSizeCpuType(rawValue: "SHARED")
     public static let dedicated = InstanceSizeCpuType(rawValue: "DEDICATED")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

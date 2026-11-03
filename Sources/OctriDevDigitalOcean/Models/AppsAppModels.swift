@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AppsApp domain models
+/// AppsApp domain models
 /// An application's configuration and status.
 public struct App: Codable {
     /// The desired configuration of an application.
@@ -82,49 +82,76 @@ public struct App: Codable {
         case vpc
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension App {
-    public init(from decoder: Decoder) throws {
+public extension App {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.spec) else {
-            throw SdkValidationError(field: "spec", code: "required", message: "Validation failed for 'spec': value is required")
+            throw SdkValidationError(
+                field: "spec",
+                code: "required",
+                message: "Validation failed for 'spec': value is required"
+            )
         }
-        self.spec = try container.sdkDecodeRequired(.spec)
-        self.activeDeployment = try container.sdkDecodeIfPresent(.activeDeployment)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.defaultIngress = try container.sdkDecodeIfPresent(.defaultIngress)
-        self.domains = try container.sdkDecodeIfPresent(.domains)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.inProgressDeployment = try container.sdkDecodeIfPresent(.inProgressDeployment)
-        self.lastDeploymentCreatedAt = try container.sdkDecodeIfPresent(.lastDeploymentCreatedAt)
-        self.liveDomain = try container.sdkDecodeIfPresent(.liveDomain)
-        self.liveUrl = try container.sdkDecodeIfPresent(.liveUrl)
-        self.liveUrlBase = try container.sdkDecodeIfPresent(.liveUrlBase)
-        self.ownerUuid = try container.sdkDecodeIfPresent(.ownerUuid)
-        self.pendingDeployment = try container.sdkDecodeIfPresent(.pendingDeployment)
-        self.projectId = try container.sdkDecodeIfPresent(.projectId)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.tierSlug = try container.sdkDecodeIfPresent(.tierSlug)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.pinnedDeployment = try container.sdkDecodeIfPresent(.pinnedDeployment)
-        self.dedicatedIps = try container.sdkDecodeIfPresent(.dedicatedIps)
-        self.vpc = try container.sdkDecodeIfPresent(.vpc)
-        if let value = self.createdAt {
+        spec = try container.sdkDecodeRequired(.spec)
+        activeDeployment = try container.sdkDecodeIfPresent(.activeDeployment)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        defaultIngress = try container.sdkDecodeIfPresent(.defaultIngress)
+        domains = try container.sdkDecodeIfPresent(.domains)
+        id = try container.sdkDecodeIfPresent(.id)
+        inProgressDeployment = try container.sdkDecodeIfPresent(.inProgressDeployment)
+        lastDeploymentCreatedAt = try container.sdkDecodeIfPresent(.lastDeploymentCreatedAt)
+        liveDomain = try container.sdkDecodeIfPresent(.liveDomain)
+        liveUrl = try container.sdkDecodeIfPresent(.liveUrl)
+        liveUrlBase = try container.sdkDecodeIfPresent(.liveUrlBase)
+        ownerUuid = try container.sdkDecodeIfPresent(.ownerUuid)
+        pendingDeployment = try container.sdkDecodeIfPresent(.pendingDeployment)
+        projectId = try container.sdkDecodeIfPresent(.projectId)
+        region = try container.sdkDecodeIfPresent(.region)
+        tierSlug = try container.sdkDecodeIfPresent(.tierSlug)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        pinnedDeployment = try container.sdkDecodeIfPresent(.pinnedDeployment)
+        dedicatedIps = try container.sdkDecodeIfPresent(.dedicatedIps)
+        vpc = try container.sdkDecodeIfPresent(.vpc)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.lastDeploymentCreatedAt {
+        if let value = lastDeploymentCreatedAt {
             try sdkValidateDateTime("last_deployment_created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension App {
-    public init(spec: AppSpec, activeDeployment: AppsDeployment? = nil, createdAt: Date? = nil, defaultIngress: String? = nil, domains: [AppsDomain]? = nil, id: String? = nil, inProgressDeployment: AppsDeployment? = nil, lastDeploymentCreatedAt: Date? = nil, liveDomain: String? = nil, liveUrl: String? = nil, liveUrlBase: String? = nil, ownerUuid: String? = nil, pendingDeployment: AppsDeployment? = nil, projectId: String? = nil, region: AppsRegion? = nil, tierSlug: String? = nil, updatedAt: Date? = nil, pinnedDeployment: AppsDeployment? = nil, dedicatedIps: [AppsDedicatedEgressIp]? = nil, vpc: AppsVpc? = nil) throws {
+public extension App {
+    init(
+        spec: AppSpec,
+        activeDeployment: AppsDeployment? = nil,
+        createdAt: Date? = nil,
+        defaultIngress: String? = nil,
+        domains: [AppsDomain]? = nil,
+        id: String? = nil,
+        inProgressDeployment: AppsDeployment? = nil,
+        lastDeploymentCreatedAt: Date? = nil,
+        liveDomain: String? = nil,
+        liveUrl: String? = nil,
+        liveUrlBase: String? = nil,
+        ownerUuid: String? = nil,
+        pendingDeployment: AppsDeployment? = nil,
+        projectId: String? = nil,
+        region: AppsRegion? = nil,
+        tierSlug: String? = nil,
+        updatedAt: Date? = nil,
+        pinnedDeployment: AppsDeployment? = nil,
+        dedicatedIps: [AppsDedicatedEgressIp]? = nil,
+        vpc: AppsVpc? = nil
+    ) throws {
         (self.spec, self.activeDeployment) = (spec, activeDeployment)
         (self.createdAt, self.defaultIngress) = (createdAt, defaultIngress)
         (self.domains, self.id) = (domains, id)
@@ -167,21 +194,21 @@ public struct AppMaintenanceSpec: Codable {
     }
 
     init() {
-        (self.enabled, self.archive, self.offlinePageUrl) = (nil, nil, nil)
+        (enabled, archive, offlinePageUrl) = (nil, nil, nil)
     }
 }
 
-extension AppMaintenanceSpec {
-    public init(from decoder: Decoder) throws {
+public extension AppMaintenanceSpec {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
-        self.archive = try container.sdkDecodeIfPresent(.archive)
-        self.offlinePageUrl = try container.sdkDecodeIfPresent(.offlinePageUrl)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
+        archive = try container.sdkDecodeIfPresent(.archive)
+        offlinePageUrl = try container.sdkDecodeIfPresent(.offlinePageUrl)
     }
 }
 
-extension AppMaintenanceSpec {
-    public init(enabled: Bool? = nil, archive: Bool? = nil, offlinePageUrl: String? = nil) {
+public extension AppMaintenanceSpec {
+    init(enabled: Bool? = nil, archive: Bool? = nil, offlinePageUrl: String? = nil) {
         self.init()
         (self.enabled, self.archive) = (enabled, archive)
         self.offlinePageUrl = offlinePageUrl
@@ -207,21 +234,21 @@ public struct AppEventAutoscalingComponentsValue: Codable {
     }
 
     init() {
-        (self.from, self.to, self.triggeringMetric) = (nil, nil, nil)
+        (from, to, triggeringMetric) = (nil, nil, nil)
     }
 }
 
-extension AppEventAutoscalingComponentsValue {
-    public init(from decoder: Decoder) throws {
+public extension AppEventAutoscalingComponentsValue {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.from = try container.sdkDecodeIfPresent(.from)
-        self.to = try container.sdkDecodeIfPresent(.to)
-        self.triggeringMetric = try container.sdkDecodeIfPresent(.triggeringMetric)
+        from = try container.sdkDecodeIfPresent(.from)
+        to = try container.sdkDecodeIfPresent(.to)
+        triggeringMetric = try container.sdkDecodeIfPresent(.triggeringMetric)
     }
 }
 
-extension AppEventAutoscalingComponentsValue {
-    public init(from: Int? = nil, to: Int? = nil, triggeringMetric: String? = nil) {
+public extension AppEventAutoscalingComponentsValue {
+    init(from: Int? = nil, to: Int? = nil, triggeringMetric: String? = nil) {
         self.init()
         (self.from, self.to) = (from, to)
         self.triggeringMetric = triggeringMetric
@@ -242,20 +269,20 @@ public struct AppEventAutoscaling: Codable {
     }
 
     init() {
-        (self.phase, self.components) = (nil, nil)
+        (phase, components) = (nil, nil)
     }
 }
 
-extension AppEventAutoscaling {
-    public init(from decoder: Decoder) throws {
+public extension AppEventAutoscaling {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.phase = try container.sdkDecodeIfPresent(.phase)
-        self.components = try container.sdkDecodeIfPresent(.components)
+        phase = try container.sdkDecodeIfPresent(.phase)
+        components = try container.sdkDecodeIfPresent(.components)
     }
 }
 
-extension AppEventAutoscaling {
-    public init(phase: AppEventAutoscalingPhase? = nil, components: [String: AppEventAutoscalingComponentsValue]? = nil) {
+public extension AppEventAutoscaling {
+    init(phase: AppEventAutoscalingPhase? = nil, components: [String: AppEventAutoscalingComponentsValue]? = nil) {
         self.init()
         (self.phase, self.components) = (phase, components)
     }
@@ -280,20 +307,20 @@ public struct AppRouteSpec: Codable {
     }
 
     init() {
-        (self.path, self.preservePathPrefix) = (nil, nil)
+        (path, preservePathPrefix) = (nil, nil)
     }
 }
 
-extension AppRouteSpec {
-    public init(from decoder: Decoder) throws {
+public extension AppRouteSpec {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.path = try container.sdkDecodeIfPresent(.path)
-        self.preservePathPrefix = try container.sdkDecodeIfPresent(.preservePathPrefix)
+        path = try container.sdkDecodeIfPresent(.path)
+        preservePathPrefix = try container.sdkDecodeIfPresent(.preservePathPrefix)
     }
 }
 
-extension AppRouteSpec {
-    public init(path: String? = nil, preservePathPrefix: Bool? = nil) {
+public extension AppRouteSpec {
+    init(path: String? = nil, preservePathPrefix: Bool? = nil) {
         self.init()
         (self.path, self.preservePathPrefix) = (path, preservePathPrefix)
     }
@@ -304,7 +331,10 @@ extension AppRouteSpec {
 public struct AppVariableDefinitionScope: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let unset = AppVariableDefinitionScope(rawValue: "UNSET")
     public static let runTime = AppVariableDefinitionScope(rawValue: "RUN_TIME")
     public static let buildTime = AppVariableDefinitionScope(rawValue: "BUILD_TIME")
@@ -312,7 +342,7 @@ public struct AppVariableDefinitionScope: RawRepresentable, Hashable, Codable, S
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -326,7 +356,10 @@ public struct AppVariableDefinitionScope: RawRepresentable, Hashable, Codable, S
 public struct AppDatabaseSpecEngine: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let unset = AppDatabaseSpecEngine(rawValue: "UNSET")
     public static let mysql = AppDatabaseSpecEngine(rawValue: "MYSQL")
     public static let pg = AppDatabaseSpecEngine(rawValue: "PG")
@@ -338,7 +371,7 @@ public struct AppDatabaseSpecEngine: RawRepresentable, Hashable, Codable, Sendab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -351,13 +384,16 @@ public struct AppDatabaseSpecEngine: RawRepresentable, Hashable, Codable, Sendab
 public struct AppVariableDefinitionType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let general = AppVariableDefinitionType(rawValue: "GENERAL")
     public static let secret = AppVariableDefinitionType(rawValue: "SECRET")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -370,14 +406,17 @@ public struct AppVariableDefinitionType: RawRepresentable, Hashable, Codable, Se
 public struct AppEventType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let unknown = AppEventType(rawValue: "UNKNOWN")
     public static let deployment = AppEventType(rawValue: "DEPLOYMENT")
     public static let autoscaling = AppEventType(rawValue: "AUTOSCALING")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -390,7 +429,10 @@ public struct AppEventType: RawRepresentable, Hashable, Codable, Sendable, SdkWi
 public struct AppEventAutoscalingPhase: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let unknown = AppEventAutoscalingPhase(rawValue: "UNKNOWN")
     public static let pending = AppEventAutoscalingPhase(rawValue: "PENDING")
     public static let inProgress = AppEventAutoscalingPhase(rawValue: "IN_PROGRESS")
@@ -400,7 +442,7 @@ public struct AppEventAutoscalingPhase: RawRepresentable, Hashable, Codable, Sen
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

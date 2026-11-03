@@ -18,25 +18,25 @@ struct KubernetesUpdateNodePoolRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(self.count, forKey: SdkCodingKey("count"))
-        try keyedContainer.encodeIfPresent(self.tags, forKey: SdkCodingKey("tags"))
-        try keyedContainer.encodeIfPresent(self.labels, forKey: SdkCodingKey("labels"))
-        try keyedContainer.encodeIfPresent(self.taints, forKey: SdkCodingKey("taints"))
-        try keyedContainer.encodeIfPresent(self.autoScale, forKey: SdkCodingKey("auto_scale"))
-        try keyedContainer.encodeIfPresent(self.minNodes, forKey: SdkCodingKey("min_nodes"))
-        try keyedContainer.encodeIfPresent(self.maxNodes, forKey: SdkCodingKey("max_nodes"))
+        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(count, forKey: SdkCodingKey("count"))
+        try keyedContainer.encodeIfPresent(tags, forKey: SdkCodingKey("tags"))
+        try keyedContainer.encodeIfPresent(labels, forKey: SdkCodingKey("labels"))
+        try keyedContainer.encodeIfPresent(taints, forKey: SdkCodingKey("taints"))
+        try keyedContainer.encodeIfPresent(autoScale, forKey: SdkCodingKey("auto_scale"))
+        try keyedContainer.encodeIfPresent(minNodes, forKey: SdkCodingKey("min_nodes"))
+        try keyedContainer.encodeIfPresent(maxNodes, forKey: SdkCodingKey("max_nodes"))
     }
 
     init(options: KubernetesMethods.KubernetesUpdateNodePoolOptions) {
-        self.name = options.name
-        self.count = options.count
-        self.tags = options.tags
-        self.labels = options.labels
-        self.taints = options.taints
-        self.autoScale = options.autoScale
-        self.minNodes = options.minNodes
-        self.maxNodes = options.maxNodes
+        name = options.name
+        count = options.count
+        tags = options.tags
+        labels = options.labels
+        taints = options.taints
+        autoScale = options.autoScale
+        minNodes = options.minNodes
+        maxNodes = options.maxNodes
     }
 }
 
@@ -45,7 +45,7 @@ struct KubernetesRecycleNodePoolRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.nodes, forKey: SdkCodingKey("nodes"))
+        try keyedContainer.encodeIfPresent(nodes, forKey: SdkCodingKey("nodes"))
     }
 }
 
@@ -57,10 +57,10 @@ struct KubernetesRunClusterLintRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.includeGroups, forKey: SdkCodingKey("include_groups"))
-        try keyedContainer.encodeIfPresent(self.includeChecks, forKey: SdkCodingKey("include_checks"))
-        try keyedContainer.encodeIfPresent(self.excludeGroups, forKey: SdkCodingKey("exclude_groups"))
-        try keyedContainer.encodeIfPresent(self.excludeChecks, forKey: SdkCodingKey("exclude_checks"))
+        try keyedContainer.encodeIfPresent(includeGroups, forKey: SdkCodingKey("include_groups"))
+        try keyedContainer.encodeIfPresent(includeChecks, forKey: SdkCodingKey("include_checks"))
+        try keyedContainer.encodeIfPresent(excludeGroups, forKey: SdkCodingKey("exclude_groups"))
+        try keyedContainer.encodeIfPresent(excludeChecks, forKey: SdkCodingKey("exclude_checks"))
     }
 }
 
@@ -69,7 +69,7 @@ struct KubernetesAddRegistryRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.clusterUuids, forKey: SdkCodingKey("cluster_uuids"))
+        try keyedContainer.encodeIfPresent(clusterUuids, forKey: SdkCodingKey("cluster_uuids"))
     }
 }
 
@@ -78,7 +78,7 @@ struct KubernetesRemoveRegistryRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.clusterUuids, forKey: SdkCodingKey("cluster_uuids"))
+        try keyedContainer.encodeIfPresent(clusterUuids, forKey: SdkCodingKey("cluster_uuids"))
     }
 }
 
@@ -88,8 +88,8 @@ struct KubernetesAddRegistriesRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.clusterUuids, forKey: SdkCodingKey("cluster_uuids"))
-        try keyedContainer.encodeIfPresent(self.registries, forKey: SdkCodingKey("registries"))
+        try keyedContainer.encodeIfPresent(clusterUuids, forKey: SdkCodingKey("cluster_uuids"))
+        try keyedContainer.encodeIfPresent(registries, forKey: SdkCodingKey("registries"))
     }
 }
 
@@ -99,8 +99,8 @@ struct KubernetesRemoveRegistriesRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.clusterUuids, forKey: SdkCodingKey("cluster_uuids"))
-        try keyedContainer.encodeIfPresent(self.registries, forKey: SdkCodingKey("registries"))
+        try keyedContainer.encodeIfPresent(clusterUuids, forKey: SdkCodingKey("cluster_uuids"))
+        try keyedContainer.encodeIfPresent(registries, forKey: SdkCodingKey("registries"))
     }
 }
 
@@ -109,7 +109,7 @@ struct LoadBalancersAddForwardingRulesRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.forwardingRules, forKey: SdkCodingKey("forwarding_rules"))
+        try keyedContainer.encode(forwardingRules, forKey: SdkCodingKey("forwarding_rules"))
     }
 }
 
@@ -118,7 +118,7 @@ struct LoadBalancersRemoveForwardingRulesRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.forwardingRules, forKey: SdkCodingKey("forwarding_rules"))
+        try keyedContainer.encode(forwardingRules, forKey: SdkCodingKey("forwarding_rules"))
     }
 }
 
@@ -139,35 +139,35 @@ struct MicrovmsCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(self.source, forKey: SdkCodingKey("source"))
-        try keyedContainer.encodeIfPresent(self.region, forKey: SdkCodingKey("region"))
-        try keyedContainer.encodeIfPresent(self.size, forKey: SdkCodingKey("size"))
-        try keyedContainer.encodeIfPresent(self.networking, forKey: SdkCodingKey("networking"))
-        try keyedContainer.encodeIfPresent(self.vpcUuid, forKey: SdkCodingKey("vpc_uuid"))
-        try keyedContainer.encodeIfPresent(self.autoPause, forKey: SdkCodingKey("auto_pause"))
-        try keyedContainer.encodeIfPresent(self.autoResume, forKey: SdkCodingKey("auto_resume"))
-        try keyedContainer.encodeIfPresent(self.httpPort, forKey: SdkCodingKey("http_port"))
-        try keyedContainer.encodeIfPresent(self.httpProtocol, forKey: SdkCodingKey("http_protocol"))
-        try keyedContainer.encodeIfPresent(self.ports, forKey: SdkCodingKey("ports"))
-        try keyedContainer.encodeIfPresent(self.environment, forKey: SdkCodingKey("environment"))
-        try keyedContainer.encodeIfPresent(self.tags, forKey: SdkCodingKey("tags"))
+        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(source, forKey: SdkCodingKey("source"))
+        try keyedContainer.encodeIfPresent(region, forKey: SdkCodingKey("region"))
+        try keyedContainer.encodeIfPresent(size, forKey: SdkCodingKey("size"))
+        try keyedContainer.encodeIfPresent(networking, forKey: SdkCodingKey("networking"))
+        try keyedContainer.encodeIfPresent(vpcUuid, forKey: SdkCodingKey("vpc_uuid"))
+        try keyedContainer.encodeIfPresent(autoPause, forKey: SdkCodingKey("auto_pause"))
+        try keyedContainer.encodeIfPresent(autoResume, forKey: SdkCodingKey("auto_resume"))
+        try keyedContainer.encodeIfPresent(httpPort, forKey: SdkCodingKey("http_port"))
+        try keyedContainer.encodeIfPresent(httpProtocol, forKey: SdkCodingKey("http_protocol"))
+        try keyedContainer.encodeIfPresent(ports, forKey: SdkCodingKey("ports"))
+        try keyedContainer.encodeIfPresent(environment, forKey: SdkCodingKey("environment"))
+        try keyedContainer.encodeIfPresent(tags, forKey: SdkCodingKey("tags"))
     }
 
     init(options: MicroVmsPublicPreviewMethods.MicrovmsCreateOptions) {
-        self.name = options.name
-        self.source = options.source
-        self.region = options.region
-        self.size = options.size
-        self.networking = options.networking
-        self.vpcUuid = options.vpcUuid
-        self.autoPause = options.autoPause
-        self.autoResume = options.autoResume
-        self.httpPort = options.httpPort
-        self.httpProtocol = options.httpProtocol
-        self.ports = options.ports
-        self.environment = options.environment
-        self.tags = options.tags
+        name = options.name
+        source = options.source
+        region = options.region
+        size = options.size
+        networking = options.networking
+        vpcUuid = options.vpcUuid
+        autoPause = options.autoPause
+        autoResume = options.autoResume
+        httpPort = options.httpPort
+        httpProtocol = options.httpProtocol
+        ports = options.ports
+        environment = options.environment
+        tags = options.tags
     }
 }
 
@@ -177,8 +177,8 @@ struct MicrovmsRunCommandRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.argv, forKey: SdkCodingKey("argv"))
-        try keyedContainer.encodeIfPresent(self.cwd, forKey: SdkCodingKey("cwd"))
+        try keyedContainer.encode(argv, forKey: SdkCodingKey("argv"))
+        try keyedContainer.encodeIfPresent(cwd, forKey: SdkCodingKey("cwd"))
     }
 }
 
@@ -187,7 +187,7 @@ struct MicrovmCheckpointsCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
     }
 }
 
@@ -200,7 +200,15 @@ public struct MonitoringCreateAlertPolicyOptionsRequired1: Codable {
     public let tags: [String]
     public let type: AlertPolicyRequestType
 
-    public init(alerts: Alerts, compare: AlertPolicyRequestCompare, description: String, enabled: Bool, entities: [String], tags: [String], type: AlertPolicyRequestType) {
+    public init(
+        alerts: Alerts,
+        compare: AlertPolicyRequestCompare,
+        description: String,
+        enabled: Bool,
+        entities: [String],
+        tags: [String],
+        type: AlertPolicyRequestType
+    ) {
         self.alerts = alerts
         self.compare = compare
         self.description = description

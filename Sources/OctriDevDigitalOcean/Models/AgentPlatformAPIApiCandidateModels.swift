@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiCandidate domain models
+/// AgentPlatformAPIApiCandidate domain models
 /// Inference configuration for the candidate model during evaluation.
 public struct ApiCandidateInferenceConfig: Codable {
     /// Optional `int64`-formatted value serialized in the `max_tokens` wire field.
@@ -32,23 +32,29 @@ public struct ApiCandidateInferenceConfig: Codable {
     }
 
     init() {
-        (self.maxTokens, self.reasoningEffort, self.stopToken, self.systemPrompt, self.temperature) = (nil, nil, nil, nil, nil)
+        (maxTokens, reasoningEffort, stopToken, systemPrompt, temperature) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ApiCandidateInferenceConfig {
-    public init(from decoder: Decoder) throws {
+public extension ApiCandidateInferenceConfig {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.maxTokens = try container.sdkDecodeIfPresent(.maxTokens)
-        self.reasoningEffort = try container.sdkDecodeIfPresent(.reasoningEffort)
-        self.stopToken = try container.sdkDecodeIfPresent(.stopToken)
-        self.systemPrompt = try container.sdkDecodeIfPresent(.systemPrompt)
-        self.temperature = try container.sdkDecodeIfPresent(.temperature)
+        maxTokens = try container.sdkDecodeIfPresent(.maxTokens)
+        reasoningEffort = try container.sdkDecodeIfPresent(.reasoningEffort)
+        stopToken = try container.sdkDecodeIfPresent(.stopToken)
+        systemPrompt = try container.sdkDecodeIfPresent(.systemPrompt)
+        temperature = try container.sdkDecodeIfPresent(.temperature)
     }
 }
 
-extension ApiCandidateInferenceConfig {
-    public init(maxTokens: Int? = nil, reasoningEffort: String? = nil, stopToken: String? = nil, systemPrompt: String? = nil, temperature: Double? = nil) {
+public extension ApiCandidateInferenceConfig {
+    init(
+        maxTokens: Int? = nil,
+        reasoningEffort: String? = nil,
+        stopToken: String? = nil,
+        systemPrompt: String? = nil,
+        temperature: Double? = nil
+    ) {
         self.init()
         (self.maxTokens, self.reasoningEffort) = (maxTokens, reasoningEffort)
         (self.stopToken, self.systemPrompt) = (stopToken, systemPrompt)
@@ -75,21 +81,21 @@ public struct ApiCandidateAgentConfig: Codable {
     }
 
     init() {
-        (self.agentDeploymentUuid, self.agentUuid, self.name) = (nil, nil, nil)
+        (agentDeploymentUuid, agentUuid, name) = (nil, nil, nil)
     }
 }
 
-extension ApiCandidateAgentConfig {
-    public init(from decoder: Decoder) throws {
+public extension ApiCandidateAgentConfig {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agentDeploymentUuid = try container.sdkDecodeIfPresent(.agentDeploymentUuid)
-        self.agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        agentDeploymentUuid = try container.sdkDecodeIfPresent(.agentDeploymentUuid)
+        agentUuid = try container.sdkDecodeIfPresent(.agentUuid)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ApiCandidateAgentConfig {
-    public init(agentDeploymentUuid: String? = nil, agentUuid: String? = nil, name: String? = nil) {
+public extension ApiCandidateAgentConfig {
+    init(agentDeploymentUuid: String? = nil, agentUuid: String? = nil, name: String? = nil) {
         self.init()
         (self.agentDeploymentUuid, self.agentUuid) = (agentDeploymentUuid, agentUuid)
         self.name = name
@@ -101,15 +107,20 @@ extension ApiCandidateAgentConfig {
 public struct ApiCandidateModelSource: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
-    public static let candidateModelSourceServerless = ApiCandidateModelSource(rawValue: "CANDIDATE_MODEL_SOURCE_SERVERLESS")
-    public static let candidateModelSourceDedicated = ApiCandidateModelSource(rawValue: "CANDIDATE_MODEL_SOURCE_DEDICATED")
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let candidateModelSourceServerless =
+        ApiCandidateModelSource(rawValue: "CANDIDATE_MODEL_SOURCE_SERVERLESS")
+    public static let candidateModelSourceDedicated =
+        ApiCandidateModelSource(rawValue: "CANDIDATE_MODEL_SOURCE_DEDICATED")
     public static let candidateModelSourceRouter = ApiCandidateModelSource(rawValue: "CANDIDATE_MODEL_SOURCE_ROUTER")
     public static let candidateModelSourceAgent = ApiCandidateModelSource(rawValue: "CANDIDATE_MODEL_SOURCE_AGENT")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

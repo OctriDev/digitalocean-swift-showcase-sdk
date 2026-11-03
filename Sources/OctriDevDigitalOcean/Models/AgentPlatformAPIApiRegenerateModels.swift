@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiRegenerate domain models
+/// AgentPlatformAPIApiRegenerate domain models
 /// Typed representation of the `ApiRegenerateModelAPIKeyOutput` API schema.
 public struct ApiRegenerateModelAPIKeyOutput: Codable, SdkResource {
     /// Model API Key Info
@@ -15,19 +15,19 @@ public struct ApiRegenerateModelAPIKeyOutput: Codable, SdkResource {
     }
 
     init() {
-        self.apiKeyInfo = nil
+        apiKeyInfo = nil
     }
 }
 
-extension ApiRegenerateModelAPIKeyOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiRegenerateModelAPIKeyOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-extension ApiRegenerateModelAPIKeyOutput {
-    public init(apiKeyInfo: ApiModelAPIKeyInfo? = nil) {
+public extension ApiRegenerateModelAPIKeyOutput {
+    init(apiKeyInfo: ApiModelAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }
@@ -44,19 +44,19 @@ public struct ApiRegenerateAgentAPIKeyOutput: Codable, SdkResource {
     }
 
     init() {
-        self.apiKeyInfo = nil
+        apiKeyInfo = nil
     }
 }
 
-extension ApiRegenerateAgentAPIKeyOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiRegenerateAgentAPIKeyOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-extension ApiRegenerateAgentAPIKeyOutput {
-    public init(apiKeyInfo: ApiAgentAPIKeyInfo? = nil) {
+public extension ApiRegenerateAgentAPIKeyOutput {
+    init(apiKeyInfo: ApiAgentAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }

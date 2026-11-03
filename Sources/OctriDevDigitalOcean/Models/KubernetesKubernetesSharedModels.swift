@@ -3,7 +3,7 @@
 
 import Foundation
 
-// KubernetesKubernetes domain models
+/// KubernetesKubernetes domain models
 /// Typed representation of the `KubernetesNodePoolUpdate` API schema.
 public struct KubernetesNodePoolUpdate: Codable {
     /// A human-readable name for the node pool.
@@ -54,36 +54,57 @@ public struct KubernetesNodePoolUpdate: Codable {
         case nodes
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension KubernetesNodePoolUpdate {
-    public init(from decoder: Decoder) throws {
+public extension KubernetesNodePoolUpdate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
         }
         guard container.contains(.count) else {
-            throw SdkValidationError(field: "count", code: "required", message: "Validation failed for 'count': value is required")
+            throw SdkValidationError(
+                field: "count",
+                code: "required",
+                message: "Validation failed for 'count': value is required"
+            )
         }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.count = try container.sdkDecodeRequired(.count)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.labels = try container.sdkDecodeIfPresent(.labels)
-        self.taints = try container.sdkDecodeIfPresent(.taints)
-        self.autoScale = try container.sdkDecodeIfPresent(.autoScale)
-        self.minNodes = try container.sdkDecodeIfPresent(.minNodes)
-        self.maxNodes = try container.sdkDecodeIfPresent(.maxNodes)
-        self.nodes = try container.sdkDecodeIfPresent(.nodes)
-        if let value = self.id {
+        name = try container.sdkDecodeRequired(.name)
+        count = try container.sdkDecodeRequired(.count)
+        id = try container.sdkDecodeIfPresent(.id)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        labels = try container.sdkDecodeIfPresent(.labels)
+        taints = try container.sdkDecodeIfPresent(.taints)
+        autoScale = try container.sdkDecodeIfPresent(.autoScale)
+        minNodes = try container.sdkDecodeIfPresent(.minNodes)
+        maxNodes = try container.sdkDecodeIfPresent(.maxNodes)
+        nodes = try container.sdkDecodeIfPresent(.nodes)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension KubernetesNodePoolUpdate {
-    public init(name: String, count: Int, id: String? = nil, tags: [String]? = nil, labels: [String: JSONValue]? = nil, taints: [KubernetesNodePoolTaint]? = nil, autoScale: Bool? = nil, minNodes: Int? = nil, maxNodes: Int? = nil, nodes: [Node]? = nil) throws {
+public extension KubernetesNodePoolUpdate {
+    init(
+        name: String,
+        count: Int,
+        id: String? = nil,
+        tags: [String]? = nil,
+        labels: [String: JSONValue]? = nil,
+        taints: [KubernetesNodePoolTaint]? = nil,
+        autoScale: Bool? = nil,
+        minNodes: Int? = nil,
+        maxNodes: Int? = nil,
+        nodes: [Node]? = nil
+    ) throws {
         (self.name, self.count) = (name, count)
         (self.id, self.tags) = (id, tags)
         (self.labels, self.taints) = (labels, taints)
@@ -147,36 +168,61 @@ public struct KubernetesNodePoolRequest: Codable {
         case gpuPartitionMode = "gpu_partition_mode"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension KubernetesNodePoolRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.size) else {
-            throw SdkValidationError(field: "size", code: "required", message: "Validation failed for 'size': value is required")
-        }
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.count) else {
-            throw SdkValidationError(field: "count", code: "required", message: "Validation failed for 'count': value is required")
-        }
-        self.size = try container.sdkDecodeRequired(.size)
-        self.name = try container.sdkDecodeRequired(.name)
-        self.count = try container.sdkDecodeRequired(.count)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.labels = try container.sdkDecodeIfPresent(.labels)
-        self.taints = try container.sdkDecodeIfPresent(.taints)
-        self.autoScale = try container.sdkDecodeIfPresent(.autoScale)
-        self.minNodes = try container.sdkDecodeIfPresent(.minNodes)
-        self.maxNodes = try container.sdkDecodeIfPresent(.maxNodes)
-        self.gpuPartitionMode = try container.sdkDecodeIfPresent(.gpuPartitionMode)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension KubernetesNodePoolRequest {
-    public init(size: String, name: String, count: Int, tags: [String]? = nil, labels: [String: JSONValue]? = nil, taints: [KubernetesNodePoolTaint]? = nil, autoScale: Bool? = nil, minNodes: Int? = nil, maxNodes: Int? = nil, gpuPartitionMode: KubernetesNodePoolGpuPartitionGpuPartitionMode? = nil) {
+public extension KubernetesNodePoolRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.size) else {
+            throw SdkValidationError(
+                field: "size",
+                code: "required",
+                message: "Validation failed for 'size': value is required"
+            )
+        }
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.count) else {
+            throw SdkValidationError(
+                field: "count",
+                code: "required",
+                message: "Validation failed for 'count': value is required"
+            )
+        }
+        size = try container.sdkDecodeRequired(.size)
+        name = try container.sdkDecodeRequired(.name)
+        count = try container.sdkDecodeRequired(.count)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        labels = try container.sdkDecodeIfPresent(.labels)
+        taints = try container.sdkDecodeIfPresent(.taints)
+        autoScale = try container.sdkDecodeIfPresent(.autoScale)
+        minNodes = try container.sdkDecodeIfPresent(.minNodes)
+        maxNodes = try container.sdkDecodeIfPresent(.maxNodes)
+        gpuPartitionMode = try container.sdkDecodeIfPresent(.gpuPartitionMode)
+    }
+}
+
+public extension KubernetesNodePoolRequest {
+    init(
+        size: String,
+        name: String,
+        count: Int,
+        tags: [String]? = nil,
+        labels: [String: JSONValue]? = nil,
+        taints: [KubernetesNodePoolTaint]? = nil,
+        autoScale: Bool? = nil,
+        minNodes: Int? = nil,
+        maxNodes: Int? = nil,
+        gpuPartitionMode: KubernetesNodePoolGpuPartitionGpuPartitionMode? = nil
+    ) {
         (self.size, self.name) = (size, name)
         (self.count, self.tags) = (count, tags)
         (self.labels, self.taints) = (labels, taints)
@@ -229,27 +275,36 @@ public struct KubernetesNodePoolBaseRequest: Codable {
     }
 
     init() {
-        (self.name, self.count, self.tags, self.labels, self.taints) = (nil, nil, nil, nil, nil)
-        (self.autoScale, self.minNodes, self.maxNodes) = (nil, nil, nil)
+        (name, count, tags, labels, taints) = (nil, nil, nil, nil, nil)
+        (autoScale, minNodes, maxNodes) = (nil, nil, nil)
     }
 }
 
-extension KubernetesNodePoolBaseRequest {
-    public init(from decoder: Decoder) throws {
+public extension KubernetesNodePoolBaseRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.count = try container.sdkDecodeIfPresent(.count)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.labels = try container.sdkDecodeIfPresent(.labels)
-        self.taints = try container.sdkDecodeIfPresent(.taints)
-        self.autoScale = try container.sdkDecodeIfPresent(.autoScale)
-        self.minNodes = try container.sdkDecodeIfPresent(.minNodes)
-        self.maxNodes = try container.sdkDecodeIfPresent(.maxNodes)
+        name = try container.sdkDecodeIfPresent(.name)
+        count = try container.sdkDecodeIfPresent(.count)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        labels = try container.sdkDecodeIfPresent(.labels)
+        taints = try container.sdkDecodeIfPresent(.taints)
+        autoScale = try container.sdkDecodeIfPresent(.autoScale)
+        minNodes = try container.sdkDecodeIfPresent(.minNodes)
+        maxNodes = try container.sdkDecodeIfPresent(.maxNodes)
     }
 }
 
-extension KubernetesNodePoolBaseRequest {
-    public init(name: String? = nil, count: Int? = nil, tags: [String]? = nil, labels: [String: JSONValue]? = nil, taints: [KubernetesNodePoolTaint]? = nil, autoScale: Bool? = nil, minNodes: Int? = nil, maxNodes: Int? = nil) {
+public extension KubernetesNodePoolBaseRequest {
+    init(
+        name: String? = nil,
+        count: Int? = nil,
+        tags: [String]? = nil,
+        labels: [String: JSONValue]? = nil,
+        taints: [KubernetesNodePoolTaint]? = nil,
+        autoScale: Bool? = nil,
+        minNodes: Int? = nil,
+        maxNodes: Int? = nil
+    ) {
         self.init()
         (self.name, self.count) = (name, count)
         (self.tags, self.labels) = (tags, labels)
@@ -270,19 +325,19 @@ public struct KubernetesNodePoolGpuPartition: Codable {
     }
 
     init() {
-        self.gpuPartitionMode = nil
+        gpuPartitionMode = nil
     }
 }
 
-extension KubernetesNodePoolGpuPartition {
-    public init(from decoder: Decoder) throws {
+public extension KubernetesNodePoolGpuPartition {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.gpuPartitionMode = try container.sdkDecodeIfPresent(.gpuPartitionMode)
+        gpuPartitionMode = try container.sdkDecodeIfPresent(.gpuPartitionMode)
     }
 }
 
-extension KubernetesNodePoolGpuPartition {
-    public init(gpuPartitionMode: KubernetesNodePoolGpuPartitionGpuPartitionMode? = nil) {
+public extension KubernetesNodePoolGpuPartition {
+    init(gpuPartitionMode: KubernetesNodePoolGpuPartitionGpuPartitionMode? = nil) {
         self.init()
         self.gpuPartitionMode = gpuPartitionMode
     }
@@ -339,32 +394,43 @@ public struct KubernetesNodePoolBase: Codable {
     }
 
     init() {
-        (self.id, self.name, self.count, self.tags, self.labels) = (nil, nil, nil, nil, nil)
-        (self.taints, self.autoScale, self.minNodes, self.maxNodes, self.nodes) = (nil, nil, nil, nil, nil)
+        (id, name, count, tags, labels) = (nil, nil, nil, nil, nil)
+        (taints, autoScale, minNodes, maxNodes, nodes) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension KubernetesNodePoolBase {
-    public init(from decoder: Decoder) throws {
+public extension KubernetesNodePoolBase {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.count = try container.sdkDecodeIfPresent(.count)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.labels = try container.sdkDecodeIfPresent(.labels)
-        self.taints = try container.sdkDecodeIfPresent(.taints)
-        self.autoScale = try container.sdkDecodeIfPresent(.autoScale)
-        self.minNodes = try container.sdkDecodeIfPresent(.minNodes)
-        self.maxNodes = try container.sdkDecodeIfPresent(.maxNodes)
-        self.nodes = try container.sdkDecodeIfPresent(.nodes)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        count = try container.sdkDecodeIfPresent(.count)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        labels = try container.sdkDecodeIfPresent(.labels)
+        taints = try container.sdkDecodeIfPresent(.taints)
+        autoScale = try container.sdkDecodeIfPresent(.autoScale)
+        minNodes = try container.sdkDecodeIfPresent(.minNodes)
+        maxNodes = try container.sdkDecodeIfPresent(.maxNodes)
+        nodes = try container.sdkDecodeIfPresent(.nodes)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension KubernetesNodePoolBase {
-    public init(id: String? = nil, name: String? = nil, count: Int? = nil, tags: [String]? = nil, labels: [String: JSONValue]? = nil, taints: [KubernetesNodePoolTaint]? = nil, autoScale: Bool? = nil, minNodes: Int? = nil, maxNodes: Int? = nil, nodes: [Node]? = nil) throws {
+public extension KubernetesNodePoolBase {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        count: Int? = nil,
+        tags: [String]? = nil,
+        labels: [String: JSONValue]? = nil,
+        taints: [KubernetesNodePoolTaint]? = nil,
+        autoScale: Bool? = nil,
+        minNodes: Int? = nil,
+        maxNodes: Int? = nil,
+        nodes: [Node]? = nil
+    ) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.count, self.tags) = (count, tags)
@@ -401,21 +467,21 @@ public struct KubernetesNodePoolTaint: Codable {
     }
 
     init() {
-        (self.key, self.value, self.effect) = (nil, nil, nil)
+        (key, value, effect) = (nil, nil, nil)
     }
 }
 
-extension KubernetesNodePoolTaint {
-    public init(from decoder: Decoder) throws {
+public extension KubernetesNodePoolTaint {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.key = try container.sdkDecodeIfPresent(.key)
-        self.value = try container.sdkDecodeIfPresent(.value)
-        self.effect = try container.sdkDecodeIfPresent(.effect)
+        key = try container.sdkDecodeIfPresent(.key)
+        value = try container.sdkDecodeIfPresent(.value)
+        effect = try container.sdkDecodeIfPresent(.effect)
     }
 }
 
-extension KubernetesNodePoolTaint {
-    public init(key: String? = nil, value: String? = nil, effect: KubernetesNodePoolTaintEffect? = nil) {
+public extension KubernetesNodePoolTaint {
+    init(key: String? = nil, value: String? = nil, effect: KubernetesNodePoolTaintEffect? = nil) {
         self.init()
         (self.key, self.value) = (key, value)
         self.effect = effect
@@ -433,19 +499,19 @@ public struct KubernetesNodePoolSize: Codable {
     }
 
     init() {
-        self.size = nil
+        size = nil
     }
 }
 
-extension KubernetesNodePoolSize {
-    public init(from decoder: Decoder) throws {
+public extension KubernetesNodePoolSize {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.size = try container.sdkDecodeIfPresent(.size)
+        size = try container.sdkDecodeIfPresent(.size)
     }
 }
 
-extension KubernetesNodePoolSize {
-    public init(size: String? = nil) {
+public extension KubernetesNodePoolSize {
+    init(size: String? = nil) {
         self.init()
         self.size = size
     }
@@ -510,34 +576,48 @@ public struct KubernetesNodePool: Codable {
         case gpuPartitionMode = "gpu_partition_mode"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension KubernetesNodePool {
-    public init(from decoder: Decoder) throws {
+public extension KubernetesNodePool {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.size) else {
-            throw SdkValidationError(field: "size", code: "required", message: "Validation failed for 'size': value is required")
+            throw SdkValidationError(
+                field: "size",
+                code: "required",
+                message: "Validation failed for 'size': value is required"
+            )
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
         }
         guard container.contains(.count) else {
-            throw SdkValidationError(field: "count", code: "required", message: "Validation failed for 'count': value is required")
+            throw SdkValidationError(
+                field: "count",
+                code: "required",
+                message: "Validation failed for 'count': value is required"
+            )
         }
-        self.size = try container.sdkDecodeRequired(.size)
-        self.name = try container.sdkDecodeRequired(.name)
-        self.count = try container.sdkDecodeRequired(.count)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.labels = try container.sdkDecodeIfPresent(.labels)
-        self.taints = try container.sdkDecodeIfPresent(.taints)
-        self.autoScale = try container.sdkDecodeIfPresent(.autoScale)
-        self.minNodes = try container.sdkDecodeIfPresent(.minNodes)
-        self.maxNodes = try container.sdkDecodeIfPresent(.maxNodes)
-        self.nodes = try container.sdkDecodeIfPresent(.nodes)
-        self.gpuPartitionMode = try container.sdkDecodeIfPresent(.gpuPartitionMode)
-        if let value = self.id {
+        size = try container.sdkDecodeRequired(.size)
+        name = try container.sdkDecodeRequired(.name)
+        count = try container.sdkDecodeRequired(.count)
+        id = try container.sdkDecodeIfPresent(.id)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        labels = try container.sdkDecodeIfPresent(.labels)
+        taints = try container.sdkDecodeIfPresent(.taints)
+        autoScale = try container.sdkDecodeIfPresent(.autoScale)
+        minNodes = try container.sdkDecodeIfPresent(.minNodes)
+        maxNodes = try container.sdkDecodeIfPresent(.maxNodes)
+        nodes = try container.sdkDecodeIfPresent(.nodes)
+        gpuPartitionMode = try container.sdkDecodeIfPresent(.gpuPartitionMode)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DatabasesConnection domain models
+/// DatabasesConnection domain models
 /// Optional API value serialized in the `standby_private_connection` wire field.
 public struct ConnectionPoolRequestStandbyPrivateConnection: Codable {
     /// A connection string in the format accepted by the `psql` command. This is provided as a convenience and
@@ -40,26 +40,34 @@ public struct ConnectionPoolRequestStandbyPrivateConnection: Codable {
     }
 
     init() {
-        (self.uri, self.database, self.host, self.port, self.user) = (nil, nil, nil, nil, nil)
-        (self.password, self.ssl) = (nil, nil)
+        (uri, database, host, port, user) = (nil, nil, nil, nil, nil)
+        (password, ssl) = (nil, nil)
     }
 }
 
-extension ConnectionPoolRequestStandbyPrivateConnection {
-    public init(from decoder: Decoder) throws {
+public extension ConnectionPoolRequestStandbyPrivateConnection {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.uri = try container.sdkDecodeIfPresent(.uri)
-        self.database = try container.sdkDecodeIfPresent(.database)
-        self.host = try container.sdkDecodeIfPresent(.host)
-        self.port = try container.sdkDecodeIfPresent(.port)
-        self.user = try container.sdkDecodeIfPresent(.user)
-        self.password = try container.sdkDecodeIfPresent(.password)
-        self.ssl = try container.sdkDecodeIfPresent(.ssl)
+        uri = try container.sdkDecodeIfPresent(.uri)
+        database = try container.sdkDecodeIfPresent(.database)
+        host = try container.sdkDecodeIfPresent(.host)
+        port = try container.sdkDecodeIfPresent(.port)
+        user = try container.sdkDecodeIfPresent(.user)
+        password = try container.sdkDecodeIfPresent(.password)
+        ssl = try container.sdkDecodeIfPresent(.ssl)
     }
 }
 
-extension ConnectionPoolRequestStandbyPrivateConnection {
-    public init(uri: String? = nil, database: String? = nil, host: String? = nil, port: Int? = nil, user: String? = nil, password: String? = nil, ssl: Bool? = nil) {
+public extension ConnectionPoolRequestStandbyPrivateConnection {
+    init(
+        uri: String? = nil,
+        database: String? = nil,
+        host: String? = nil,
+        port: Int? = nil,
+        user: String? = nil,
+        password: String? = nil,
+        ssl: Bool? = nil
+    ) {
         self.init()
         (self.uri, self.database) = (uri, database)
         (self.host, self.port) = (host, port)
@@ -104,26 +112,34 @@ public struct ConnectionPoolRequestPrivateConnection: Codable {
     }
 
     init() {
-        (self.uri, self.database, self.host, self.port, self.user) = (nil, nil, nil, nil, nil)
-        (self.password, self.ssl) = (nil, nil)
+        (uri, database, host, port, user) = (nil, nil, nil, nil, nil)
+        (password, ssl) = (nil, nil)
     }
 }
 
-extension ConnectionPoolRequestPrivateConnection {
-    public init(from decoder: Decoder) throws {
+public extension ConnectionPoolRequestPrivateConnection {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.uri = try container.sdkDecodeIfPresent(.uri)
-        self.database = try container.sdkDecodeIfPresent(.database)
-        self.host = try container.sdkDecodeIfPresent(.host)
-        self.port = try container.sdkDecodeIfPresent(.port)
-        self.user = try container.sdkDecodeIfPresent(.user)
-        self.password = try container.sdkDecodeIfPresent(.password)
-        self.ssl = try container.sdkDecodeIfPresent(.ssl)
+        uri = try container.sdkDecodeIfPresent(.uri)
+        database = try container.sdkDecodeIfPresent(.database)
+        host = try container.sdkDecodeIfPresent(.host)
+        port = try container.sdkDecodeIfPresent(.port)
+        user = try container.sdkDecodeIfPresent(.user)
+        password = try container.sdkDecodeIfPresent(.password)
+        ssl = try container.sdkDecodeIfPresent(.ssl)
     }
 }
 
-extension ConnectionPoolRequestPrivateConnection {
-    public init(uri: String? = nil, database: String? = nil, host: String? = nil, port: Int? = nil, user: String? = nil, password: String? = nil, ssl: Bool? = nil) {
+public extension ConnectionPoolRequestPrivateConnection {
+    init(
+        uri: String? = nil,
+        database: String? = nil,
+        host: String? = nil,
+        port: Int? = nil,
+        user: String? = nil,
+        password: String? = nil,
+        ssl: Bool? = nil
+    ) {
         self.init()
         (self.uri, self.database) = (uri, database)
         (self.host, self.port) = (host, port)
@@ -168,26 +184,34 @@ public struct ConnectionPoolRequestStandbyConnection: Codable {
     }
 
     init() {
-        (self.uri, self.database, self.host, self.port, self.user) = (nil, nil, nil, nil, nil)
-        (self.password, self.ssl) = (nil, nil)
+        (uri, database, host, port, user) = (nil, nil, nil, nil, nil)
+        (password, ssl) = (nil, nil)
     }
 }
 
-extension ConnectionPoolRequestStandbyConnection {
-    public init(from decoder: Decoder) throws {
+public extension ConnectionPoolRequestStandbyConnection {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.uri = try container.sdkDecodeIfPresent(.uri)
-        self.database = try container.sdkDecodeIfPresent(.database)
-        self.host = try container.sdkDecodeIfPresent(.host)
-        self.port = try container.sdkDecodeIfPresent(.port)
-        self.user = try container.sdkDecodeIfPresent(.user)
-        self.password = try container.sdkDecodeIfPresent(.password)
-        self.ssl = try container.sdkDecodeIfPresent(.ssl)
+        uri = try container.sdkDecodeIfPresent(.uri)
+        database = try container.sdkDecodeIfPresent(.database)
+        host = try container.sdkDecodeIfPresent(.host)
+        port = try container.sdkDecodeIfPresent(.port)
+        user = try container.sdkDecodeIfPresent(.user)
+        password = try container.sdkDecodeIfPresent(.password)
+        ssl = try container.sdkDecodeIfPresent(.ssl)
     }
 }
 
-extension ConnectionPoolRequestStandbyConnection {
-    public init(uri: String? = nil, database: String? = nil, host: String? = nil, port: Int? = nil, user: String? = nil, password: String? = nil, ssl: Bool? = nil) {
+public extension ConnectionPoolRequestStandbyConnection {
+    init(
+        uri: String? = nil,
+        database: String? = nil,
+        host: String? = nil,
+        port: Int? = nil,
+        user: String? = nil,
+        password: String? = nil,
+        ssl: Bool? = nil
+    ) {
         self.init()
         (self.uri, self.database) = (uri, database)
         (self.host, self.port) = (host, port)
@@ -240,38 +264,66 @@ public struct ConnectionPoolRequest: Codable {
         case standbyPrivateConnection = "standby_private_connection"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ConnectionPoolRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.mode) else {
-            throw SdkValidationError(field: "mode", code: "required", message: "Validation failed for 'mode': value is required")
-        }
-        guard container.contains(.size) else {
-            throw SdkValidationError(field: "size", code: "required", message: "Validation failed for 'size': value is required")
-        }
-        guard container.contains(.db) else {
-            throw SdkValidationError(field: "db", code: "required", message: "Validation failed for 'db': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.mode = try container.sdkDecodeRequired(.mode)
-        self.size = try container.sdkDecodeRequired(.size)
-        self.db = try container.sdkDecodeRequired(.db)
-        self.user = try container.sdkDecodeIfPresent(.user)
-        self.connection = try container.sdkDecodeIfPresent(.connection)
-        self.privateConnection = try container.sdkDecodeIfPresent(.privateConnection)
-        self.standbyConnection = try container.sdkDecodeIfPresent(.standbyConnection)
-        self.standbyPrivateConnection = try container.sdkDecodeIfPresent(.standbyPrivateConnection)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ConnectionPoolRequest {
-    public init(name: String, mode: String, size: Int, db: String, user: String? = nil, connection: ConnectionPoolRequestConnection? = nil, privateConnection: ConnectionPoolRequestPrivateConnection? = nil, standbyConnection: ConnectionPoolRequestStandbyConnection? = nil, standbyPrivateConnection: ConnectionPoolRequestStandbyPrivateConnection? = nil) {
+public extension ConnectionPoolRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.mode) else {
+            throw SdkValidationError(
+                field: "mode",
+                code: "required",
+                message: "Validation failed for 'mode': value is required"
+            )
+        }
+        guard container.contains(.size) else {
+            throw SdkValidationError(
+                field: "size",
+                code: "required",
+                message: "Validation failed for 'size': value is required"
+            )
+        }
+        guard container.contains(.db) else {
+            throw SdkValidationError(
+                field: "db",
+                code: "required",
+                message: "Validation failed for 'db': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        mode = try container.sdkDecodeRequired(.mode)
+        size = try container.sdkDecodeRequired(.size)
+        db = try container.sdkDecodeRequired(.db)
+        user = try container.sdkDecodeIfPresent(.user)
+        connection = try container.sdkDecodeIfPresent(.connection)
+        privateConnection = try container.sdkDecodeIfPresent(.privateConnection)
+        standbyConnection = try container.sdkDecodeIfPresent(.standbyConnection)
+        standbyPrivateConnection = try container.sdkDecodeIfPresent(.standbyPrivateConnection)
+    }
+}
+
+public extension ConnectionPoolRequest {
+    init(
+        name: String,
+        mode: String,
+        size: Int,
+        db: String,
+        user: String? = nil,
+        connection: ConnectionPoolRequestConnection? = nil,
+        privateConnection: ConnectionPoolRequestPrivateConnection? = nil,
+        standbyConnection: ConnectionPoolRequestStandbyConnection? = nil,
+        standbyPrivateConnection: ConnectionPoolRequestStandbyPrivateConnection? = nil
+    ) {
         (self.name, self.mode) = (name, mode)
         (self.size, self.db) = (size, db)
         (self.user, self.connection) = (user, connection)
@@ -282,11 +334,11 @@ extension ConnectionPoolRequest {
 
 /// Optional API value serialized in the `connection` wire field.
 public struct ConnectionPoolRequestConnection: Codable {
-
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension ConnectionPoolRequestConnection {
-    public init() {
-    }
+public extension ConnectionPoolRequestConnection {
+    init() {}
 }

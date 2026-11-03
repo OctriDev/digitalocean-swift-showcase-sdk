@@ -35,8 +35,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.outputViewsDelete(
-            viewId: decoded("\"ov_4f0c2a9d8e1b47c6a3d5f7e9b1c3a5d7\"")
-        )
+                viewId: decoded("\"ov_4f0c2a9d8e1b47c6a3d5f7e9b1c3a5d7\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -81,8 +81,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.outputViewsGet(
-            viewId: decoded("\"ov_4f0c2a9d8e1b47c6a3d5f7e9b1c3a5d7\"")
-        )
+                viewId: decoded("\"ov_4f0c2a9d8e1b47c6a3d5f7e9b1c3a5d7\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -130,11 +130,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.outputViewsList(
-            tool: decoded("\"exa_web_search\""),
-            toolId: decoded("\"tul_exa_web_search\""),
-            pageSize: decoded("20"),
-            pageToken: decoded("\"ZXhhX3dlYl9zZWFyY2hAMQ\"")
-        )
+                tool: decoded("\"exa_web_search\""),
+                toolId: decoded("\"tul_exa_web_search\""),
+                pageSize: decoded("20"),
+                pageToken: decoded("\"ZXhhX3dlYl9zZWFyY2hAMQ\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -183,12 +183,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.actionGateway.outputViewsValidate(
-            fields: decoded("[\"results.title\",\"results.url\"]"),
-            tool: decoded("\"exa_web_search\""),
-            toolId: decoded("null"),
-            name: decoded("null"),
-            description: decoded("null")
-        )
+                fields: decoded("[\"results.title\",\"results.url\"]"),
+                tool: decoded("\"exa_web_search\""),
+                toolId: decoded("null"),
+                name: decoded("null"),
+                description: decoded("null")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -209,7 +209,13 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try PartnerNetworkConnectMethods.PartnerAttachmentsCreateOptions(name: decoded("\"env.prod-partner-network-connect\""), connectionBandwidthInMbps: decoded("1000"), region: decoded("\"nyc\""), naasProvider: decoded("\"megaport\""), vpcIds: decoded(sdkMethodFixture1299Value1))
+        var options = try PartnerNetworkConnectMethods.PartnerAttachmentsCreateOptions(
+            name: decoded("\"env.prod-partner-network-connect\""),
+            connectionBandwidthInMbps: decoded("1000"),
+            region: decoded("\"nyc\""),
+            naasProvider: decoded("\"megaport\""),
+            vpcIds: decoded(sdkMethodFixture1299Value1)
+        )
         options.parentUuid = try decoded("\"d594cf8d-8c79-4bc5-aec1-6f9b211506b3\"")
         options.bgp = try decoded(sdkMethodFixture1299Value2)
         options.redundancyZone = try decoded("\"MEGAPORT_BLUE\"")
@@ -231,7 +237,13 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try PartnerNetworkConnectMethods.PartnerAttachmentsCreateOptions(name: decoded("\"env.prod-partner-network-connect\""), connectionBandwidthInMbps: decoded("1000"), region: decoded("\"nyc\""), naasProvider: decoded("\"megaport\""), vpcIds: decoded(sdkMethodFixture1300Value1))
+        var options = try PartnerNetworkConnectMethods.PartnerAttachmentsCreateOptions(
+            name: decoded("\"env.prod-partner-network-connect\""),
+            connectionBandwidthInMbps: decoded("1000"),
+            region: decoded("\"nyc\""),
+            naasProvider: decoded("\"megaport\""),
+            vpcIds: decoded(sdkMethodFixture1300Value1)
+        )
         options.parentUuid = try decoded("\"d594cf8d-8c79-4bc5-aec1-6f9b211506b3\"")
         options.bgp = try decoded(sdkMethodFixture1300Value2)
         options.redundancyZone = try decoded("\"MEGAPORT_BLUE\"")
@@ -241,8 +253,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.partnerNetworkConnect.partnerAttachmentsCreate(
-            options: options
-        )
+                options: options
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -258,7 +270,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testPartnerAttachmentsCreateServiceKeyPartnerAttachmentsCreateServiceKeyReachesMockAndDecodesResponse() async throws {
+    func testPartnerAttachmentsCreateServiceKeyPartnerAttachmentsCreateServiceKeyReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -276,7 +289,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testPartnerAttachmentsCreateServiceKeyPartnerAttachmentsCreateServiceKey401ReachesMockAndDecodesResponse() async throws {
+    func testPartnerAttachmentsCreateServiceKeyPartnerAttachmentsCreateServiceKey401ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -287,8 +301,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.partnerNetworkConnect.partnerAttachmentsCreateServiceKey(
-            paId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
-        )
+                paId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -333,8 +347,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.partnerNetworkConnect.partnerAttachmentsDelete(
-            paId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
-        )
+                paId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -379,8 +393,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.partnerNetworkConnect.partnerAttachmentsGet(
-            paId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
-        )
+                paId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -414,7 +428,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testPartnerAttachmentsGetBgpAuthKeyPartnerAttachmentsGetBgpAuthKey401ReachesMockAndDecodesResponse() async throws {
+    func testPartnerAttachmentsGetBgpAuthKeyPartnerAttachmentsGetBgpAuthKey401ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -425,8 +440,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.partnerNetworkConnect.partnerAttachmentsGetBgpAuthKey(
-            paId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
-        )
+                paId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -460,7 +475,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testPartnerAttachmentsGetServiceKeyPartnerAttachmentsGetServiceKey401ReachesMockAndDecodesResponse() async throws {
+    func testPartnerAttachmentsGetServiceKeyPartnerAttachmentsGetServiceKey401ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -471,8 +487,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.partnerNetworkConnect.partnerAttachmentsGetServiceKey(
-            paId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
-        )
+                paId: decoded("\"4de7ac8b-495b-4884-9a69-1050c6793cd6\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -518,9 +534,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.partnerNetworkConnect.partnerAttachmentsList(
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -536,7 +552,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testPartnerAttachmentsListRemoteRoutesPartnerAttachmentsListRemoteRoutesReachesMockAndDecodesResponse() async throws {
+    func testPartnerAttachmentsListRemoteRoutesPartnerAttachmentsListRemoteRoutesReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }

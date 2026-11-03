@@ -17,8 +17,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.signals.getDeletion(
-            deletionId: decoded("\"01J9ZX0N5Q7M2K3R4S5T6V7W8X\"")
-        )
+                deletionId: decoded("\"01J9ZX0N5Q7M2K3R4S5T6V7W8X\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -63,8 +63,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.signals.getExport(
-            exportId: decoded("\"9f13c09c-c877-436b-9863-dcc39c9dd737\"")
-        )
+                exportId: decoded("\"9f13c09c-c877-436b-9863-dcc39c9dd737\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -109,8 +109,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.signals.getExportDownload(
-            exportId: decoded("\"9f13c09c-c877-436b-9863-dcc39c9dd737\"")
-        )
+                exportId: decoded("\"9f13c09c-c877-436b-9863-dcc39c9dd737\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -202,13 +202,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.signals.listAgentSessions(
-            agentId: decoded("\"019fb3d2-8a56-72cc-8bf9-9d21510b2a99\""),
-            limit: decoded("20"),
-            after: decoded("\"eyJ0ZWFtX2lkIjozOTQ0OTk0Nn0=\""),
-            startTime: decoded("\"2026-09-01T00:00:00Z\""),
-            endTime: decoded("\"2026-10-01T00:00:00Z\""),
-            signalType: decoded("\"DisengagementEscalation\"")
-        )
+                agentId: decoded("\"019fb3d2-8a56-72cc-8bf9-9d21510b2a99\""),
+                limit: decoded("20"),
+                after: decoded("\"eyJ0ZWFtX2lkIjozOTQ0OTk0Nn0=\""),
+                startTime: decoded("\"2026-09-01T00:00:00Z\""),
+                endTime: decoded("\"2026-10-01T00:00:00Z\""),
+                signalType: decoded("\"DisengagementEscalation\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -253,8 +253,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.signals.listConsents(
-            source: decoded("\"inference\"")
-        )
+                source: decoded("\"inference\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -300,9 +300,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.signals.listDeletions(
-            limit: decoded("20"),
-            after: decoded("\"eyJ0ZWFtX2lkIjozOTQ0OTk0Nn0=\"")
-        )
+                limit: decoded("20"),
+                after: decoded("\"eyJ0ZWFtX2lkIjozOTQ0OTk0Nn0=\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -348,9 +348,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.signals.listExports(
-            limit: decoded("20"),
-            after: decoded("\"eyJ0ZWFtX2lkIjozOTQ0OTk0Nn0=\"")
-        )
+                limit: decoded("20"),
+                after: decoded("\"eyJ0ZWFtX2lkIjozOTQ0OTk0Nn0=\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -400,13 +400,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.signals.listSessionDialogues(
-            sessionId: decoded("\"01a0f3d5-d5f1-798a-9352-2cd8f8b81e78\""),
-            limit: decoded("20"),
-            after: decoded("\"eyJ0ZWFtX2lkIjozOTQ0OTk0Nn0=\""),
-            startTime: decoded("\"2026-09-01T00:00:00Z\""),
-            endTime: decoded("\"2026-10-01T00:00:00Z\""),
-            signalType: decoded("\"DisengagementEscalation\"")
-        )
+                sessionId: decoded("\"01a0f3d5-d5f1-798a-9352-2cd8f8b81e78\""),
+                limit: decoded("20"),
+                after: decoded("\"eyJ0ZWFtX2lkIjozOTQ0OTk0Nn0=\""),
+                startTime: decoded("\"2026-09-01T00:00:00Z\""),
+                endTime: decoded("\"2026-10-01T00:00:00Z\""),
+                signalType: decoded("\"DisengagementEscalation\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -452,9 +452,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.signals.updateConsent(
-            agentId: decoded("\"019fb3d2-8a56-72cc-8bf9-9d21510b2a99\""),
-            enabled: decoded("true")
-        )
+                agentId: decoded("\"019fb3d2-8a56-72cc-8bf9-9d21510b2a99\""),
+                enabled: decoded("true")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -500,9 +500,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.signals.updateTeamConsent(
-            source: decoded("\"inference\""),
-            enabled: decoded("true")
-        )
+                source: decoded("\"inference\""),
+                enabled: decoded("true")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -548,9 +548,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.sizes.list(
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

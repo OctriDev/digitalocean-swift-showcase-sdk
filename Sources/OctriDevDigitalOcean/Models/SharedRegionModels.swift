@@ -3,7 +3,7 @@
 
 import Foundation
 
-// SharedRegion domain models
+/// SharedRegion domain models
 /// Typed representation of the `Region` API schema.
 public struct Region: Codable {
     /// The display name of the region. This will be a full name that is used in the control panel and other
@@ -34,37 +34,59 @@ public struct Region: Codable {
         case sizes
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension Region {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.slug) else {
-            throw SdkValidationError(field: "slug", code: "required", message: "Validation failed for 'slug': value is required")
-        }
-        guard container.contains(.features) else {
-            throw SdkValidationError(field: "features", code: "required", message: "Validation failed for 'features': value is required")
-        }
-        guard container.contains(.available) else {
-            throw SdkValidationError(field: "available", code: "required", message: "Validation failed for 'available': value is required")
-        }
-        guard container.contains(.sizes) else {
-            throw SdkValidationError(field: "sizes", code: "required", message: "Validation failed for 'sizes': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.slug = try container.sdkDecodeRequired(.slug)
-        self.features = try container.sdkDecodeRequired(.features)
-        self.available = try container.sdkDecodeRequired(.available)
-        self.sizes = try container.sdkDecodeRequired(.sizes)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension Region {
-    public init(name: String, slug: String, features: [String], available: Bool, sizes: [String]) {
+public extension Region {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.slug) else {
+            throw SdkValidationError(
+                field: "slug",
+                code: "required",
+                message: "Validation failed for 'slug': value is required"
+            )
+        }
+        guard container.contains(.features) else {
+            throw SdkValidationError(
+                field: "features",
+                code: "required",
+                message: "Validation failed for 'features': value is required"
+            )
+        }
+        guard container.contains(.available) else {
+            throw SdkValidationError(
+                field: "available",
+                code: "required",
+                message: "Validation failed for 'available': value is required"
+            )
+        }
+        guard container.contains(.sizes) else {
+            throw SdkValidationError(
+                field: "sizes",
+                code: "required",
+                message: "Validation failed for 'sizes': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        slug = try container.sdkDecodeRequired(.slug)
+        features = try container.sdkDecodeRequired(.features)
+        available = try container.sdkDecodeRequired(.available)
+        sizes = try container.sdkDecodeRequired(.sizes)
+    }
+}
+
+public extension Region {
+    init(name: String, slug: String, features: [String], available: Bool, sizes: [String]) {
         (self.name, self.slug) = (name, slug)
         (self.features, self.available) = (features, available)
         self.sizes = sizes
@@ -75,7 +97,10 @@ extension Region {
 public struct RegionSlug: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let ams1 = RegionSlug(rawValue: "ams1")
     public static let ams2 = RegionSlug(rawValue: "ams2")
     public static let ams3 = RegionSlug(rawValue: "ams3")
@@ -94,7 +119,7 @@ public struct RegionSlug: RawRepresentable, Hashable, Codable, Sendable, SdkWire
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

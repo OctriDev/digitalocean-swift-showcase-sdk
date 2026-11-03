@@ -6,12 +6,14 @@ import Foundation
 import XCTest
 
 extension SdkMethodTests {
-    func testGenaiUpdateCustomModelMetadataGenaiUpdateCustomModelMetadata401ReachesMockAndDecodesResponse() async throws {
+    func testGenaiUpdateCustomModelMetadataGenaiUpdateCustomModelMetadata401ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
         _ = client
-        var options = try AgentPlatformApiMethods.GenaiUpdateCustomModelMetadataOptions(uuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""))
+        var options = try AgentPlatformApiMethods
+            .GenaiUpdateCustomModelMetadataOptions(uuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""))
         options.description = try decoded("\"example string\"")
         options.inputModalities = try decoded("[\"example string\"]")
         options.license = try decoded("\"example string\"")
@@ -26,8 +28,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiUpdateCustomModelMetadata(
-            options: options
-        )
+                options: options
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -78,14 +80,14 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiUpdateEvaluationTestCase(
-            testCaseUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
-            datasetUuid: decoded("\"123e4567-e89b-12d3-a456-426614174000\""),
-            description: decoded("\"example string\""),
-            metrics: decoded("{\"metric_uuids\":[\"example string\"]}"),
-            name: decoded("\"example name\""),
-            starMetric: decoded(sdkMethodFixture741Value1),
-            testCaseUuid2: decoded("\"123e4567-e89b-12d3-a456-426614174000\"")
-        )
+                testCaseUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
+                datasetUuid: decoded("\"123e4567-e89b-12d3-a456-426614174000\""),
+                description: decoded("\"example string\""),
+                metrics: decoded("{\"metric_uuids\":[\"example string\"]}"),
+                name: decoded("\"example name\""),
+                starMetric: decoded(sdkMethodFixture741Value1),
+                testCaseUuid2: decoded("\"123e4567-e89b-12d3-a456-426614174000\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -136,14 +138,14 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiUpdateKnowledgeBase(
-            uuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
-            databaseId: decoded("\"\\\"12345678-1234-1234-1234-123456789012\\\"\""),
-            name: decoded("\"\\\"My Knowledge Base\\\"\""),
-            projectId: decoded("\"\\\"12345678-1234-1234-1234-123456789012\\\"\""),
-            rerankingConfig: decoded("{\"enabled\":true,\"model\":\"\\\"bge-reranker-v2-m3\\\"\"}"),
-            tags: decoded("[\"example string\"]"),
-            uuid2: decoded("\"\\\"12345678-1234-1234-1234-123456789012\\\"\"")
-        )
+                uuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
+                databaseId: decoded("\"\\\"12345678-1234-1234-1234-123456789012\\\"\""),
+                name: decoded("\"\\\"My Knowledge Base\\\"\""),
+                projectId: decoded("\"\\\"12345678-1234-1234-1234-123456789012\\\"\""),
+                rerankingConfig: decoded("{\"enabled\":true,\"model\":\"\\\"bge-reranker-v2-m3\\\"\"}"),
+                tags: decoded("[\"example string\"]"),
+                uuid2: decoded("\"\\\"12345678-1234-1234-1234-123456789012\\\"\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -159,7 +161,8 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testGenaiUpdateKnowledgeBaseDataSourceGenaiUpdateKnowledgeBaseDataSourceReachesMockAndDecodesResponse() async throws {
+    func testGenaiUpdateKnowledgeBaseDataSourceGenaiUpdateKnowledgeBaseDataSourceReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -182,7 +185,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testGenaiUpdateKnowledgeBaseDataSourceGenaiUpdateKnowledgeBaseDataSource401ReachesMockAndDecodesResponse() async throws {
+    func testGenaiUpdateKnowledgeBaseDataSourceGenaiUpdateKnowledgeBaseDataSource401ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -193,13 +197,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiUpdateKnowledgeBaseDataSource(
-            knowledgeBaseUuid: decoded("\"123e4567-e89b-12d3-a456-426614174000\""),
-            dataSourceUuid: decoded("\"123e4567-e89b-12d3-a456-426614174000\""),
-            chunkingAlgorithm: decoded("\"CHUNKING_ALGORITHM_UNKNOWN\""),
-            chunkingOptions: decoded(sdkMethodFixture745Value1),
-            dataSourceUuid2: decoded("\"\\\"98765432-1234-1234-1234-123456789012\\\"\""),
-            knowledgeBaseUuid2: decoded("\"\\\"12345678-1234-1234-1234-123456789012\\\"\"")
-        )
+                knowledgeBaseUuid: decoded("\"123e4567-e89b-12d3-a456-426614174000\""),
+                dataSourceUuid: decoded("\"123e4567-e89b-12d3-a456-426614174000\""),
+                chunkingAlgorithm: decoded("\"CHUNKING_ALGORITHM_UNKNOWN\""),
+                chunkingOptions: decoded(sdkMethodFixture745Value1),
+                dataSourceUuid2: decoded("\"\\\"98765432-1234-1234-1234-123456789012\\\"\""),
+                knowledgeBaseUuid2: decoded("\"\\\"12345678-1234-1234-1234-123456789012\\\"\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -246,10 +250,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiUpdateModelApiKey(
-            apiKeyUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
-            apiKeyUuid2: decoded("\"\\\"12345678-1234-1234-1234-123456789012\\\"\""),
-            name: decoded("\"\\\"Production Key\\\"\"")
-        )
+                apiKeyUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
+                apiKeyUuid2: decoded("\"\\\"12345678-1234-1234-1234-123456789012\\\"\""),
+                name: decoded("\"\\\"Production Key\\\"\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -296,10 +300,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiUpdateModelEvaluationRun(
-            evalRunUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
-            evalRunUuid2: decoded("\"\\\"12345678-1234-1234-1234-123456789012\\\"\""),
-            name: decoded("\"My evaluation run\"")
-        )
+                evalRunUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
+                evalRunUuid2: decoded("\"\\\"12345678-1234-1234-1234-123456789012\\\"\""),
+                name: decoded("\"My evaluation run\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -350,14 +354,14 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiUpdateModelRouter(
-            uuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
-            description: decoded("\"\\\"My Model Router Description\\\"\""),
-            fallbackModels: decoded("[{}]"),
-            name: decoded("\"\\\"my-model-router\\\"\""),
-            policies: decoded(sdkMethodFixture751Value1),
-            regions: decoded("[\"example string\"]"),
-            uuid2: decoded("\"\\\"12345678-1234-1234-1234-123456789012\\\"\"")
-        )
+                uuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
+                description: decoded("\"\\\"My Model Router Description\\\"\""),
+                fallbackModels: decoded("[{}]"),
+                name: decoded("\"\\\"my-model-router\\\"\""),
+                policies: decoded(sdkMethodFixture751Value1),
+                regions: decoded("[\"example string\"]"),
+                uuid2: decoded("\"\\\"12345678-1234-1234-1234-123456789012\\\"\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -405,11 +409,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiUpdateOpenaiApiKey(
-            apiKeyUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
-            apiKey: decoded("\"\\\"sk-ant-12345678901234567890123456789012\\\"\""),
-            apiKeyUuid2: decoded("\"\\\"12345678-1234-1234-1234-123456789012\\\"\""),
-            name: decoded("\"\\\"Production Key\\\"\"")
-        )
+                apiKeyUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
+                apiKey: decoded("\"\\\"sk-ant-12345678901234567890123456789012\\\"\""),
+                apiKeyUuid2: decoded("\"\\\"12345678-1234-1234-1234-123456789012\\\"\""),
+                name: decoded("\"\\\"Production Key\\\"\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -457,11 +461,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiUpdateScenarioSet(
-            scenarioSetUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
-            name: decoded("\"example name\""),
-            scenarioSetUuid2: decoded("\"123e4567-e89b-12d3-a456-426614174000\""),
-            scenarios: decoded(sdkMethodFixture755Value1)
-        )
+                scenarioSetUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
+                name: decoded("\"example name\""),
+                scenarioSetUuid2: decoded("\"123e4567-e89b-12d3-a456-426614174000\""),
+                scenarios: decoded(sdkMethodFixture755Value1)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -508,10 +512,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiUpdateSimulationRun(
-            runUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
-            name: decoded("\"example name\""),
-            runUuid2: decoded("\"123e4567-e89b-12d3-a456-426614174000\"")
-        )
+                runUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
+                name: decoded("\"example name\""),
+                runUuid2: decoded("\"123e4567-e89b-12d3-a456-426614174000\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -559,11 +563,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.agentPlatformApi.genaiUpdateWorkspace(
-            workspaceUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
-            description: decoded("\"example string\""),
-            name: decoded("\"example name\""),
-            workspaceUuid2: decoded("\"123e4567-e89b-12d3-a456-426614174000\"")
-        )
+                workspaceUuid: decoded("\"\\\"123e4567-e89b-12d3-a456-426614174000\\\"\""),
+                description: decoded("\"example string\""),
+                name: decoded("\"example name\""),
+                workspaceUuid2: decoded("\"123e4567-e89b-12d3-a456-426614174000\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

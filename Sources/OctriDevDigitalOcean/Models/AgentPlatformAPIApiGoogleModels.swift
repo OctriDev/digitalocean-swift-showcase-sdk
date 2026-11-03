@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiGoogle domain models
+/// AgentPlatformAPIApiGoogle domain models
 /// Google Drive Data Source for Display
 public struct ApiGoogleDriveDataSourceDisplay: Codable {
     /// Optional `string` value serialized in the `folder_id` wire field.
@@ -19,20 +19,20 @@ public struct ApiGoogleDriveDataSourceDisplay: Codable {
     }
 
     init() {
-        (self.folderId, self.folderName) = (nil, nil)
+        (folderId, folderName) = (nil, nil)
     }
 }
 
-extension ApiGoogleDriveDataSourceDisplay {
-    public init(from decoder: Decoder) throws {
+public extension ApiGoogleDriveDataSourceDisplay {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.folderId = try container.sdkDecodeIfPresent(.folderId)
-        self.folderName = try container.sdkDecodeIfPresent(.folderName)
+        folderId = try container.sdkDecodeIfPresent(.folderId)
+        folderName = try container.sdkDecodeIfPresent(.folderName)
     }
 }
 
-extension ApiGoogleDriveDataSourceDisplay {
-    public init(folderId: String? = nil, folderName: String? = nil) {
+public extension ApiGoogleDriveDataSourceDisplay {
+    init(folderId: String? = nil, folderName: String? = nil) {
         self.init()
         (self.folderId, self.folderName) = (folderId, folderName)
     }
@@ -54,20 +54,20 @@ public struct ApiGoogleDriveDataSource: Codable {
     }
 
     init() {
-        (self.folderId, self.refreshToken) = (nil, nil)
+        (folderId, refreshToken) = (nil, nil)
     }
 }
 
-extension ApiGoogleDriveDataSource {
-    public init(from decoder: Decoder) throws {
+public extension ApiGoogleDriveDataSource {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.folderId = try container.sdkDecodeIfPresent(.folderId)
-        self.refreshToken = try container.sdkDecodeIfPresent(.refreshToken)
+        folderId = try container.sdkDecodeIfPresent(.folderId)
+        refreshToken = try container.sdkDecodeIfPresent(.refreshToken)
     }
 }
 
-extension ApiGoogleDriveDataSource {
-    public init(folderId: String? = nil, refreshToken: String? = nil) {
+public extension ApiGoogleDriveDataSource {
+    init(folderId: String? = nil, refreshToken: String? = nil) {
         self.init()
         (self.folderId, self.refreshToken) = (folderId, refreshToken)
     }

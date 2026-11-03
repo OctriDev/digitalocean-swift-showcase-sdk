@@ -6,7 +6,8 @@ import Foundation
 import XCTest
 
 extension SdkMethodTests {
-    func testVectorDatabasesPostRestoreBackupVectorDatabasesPostRestoreBackup401ReachesMockAndDecodesResponse() async throws {
+    func testVectorDatabasesPostRestoreBackupVectorDatabasesPostRestoreBackup401ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -17,11 +18,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vectorDatabases.postRestoreBackup(
-            id: decoded("\"\\\"example string\\\"\""),
-            backupId: decoded("\"\\\"example string\\\"\""),
-            backupId2: decoded("\"123e4567-e89b-12d3-a456-426614174000\""),
-            id2: decoded("\"example string\"")
-        )
+                id: decoded("\"\\\"example string\\\"\""),
+                backupId: decoded("\"\\\"example string\\\"\""),
+                backupId2: decoded("\"123e4567-e89b-12d3-a456-426614174000\""),
+                id2: decoded("\"example string\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -69,11 +70,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vectorDatabases.update(
-            id: decoded("\"\\\"example string\\\"\""),
-            config: decoded(sdkMethodFixture1624Value1),
-            id2: decoded("\"example string\""),
-            projectId: decoded("\"123e4567-e89b-12d3-a456-426614174000\"")
-        )
+                id: decoded("\"\\\"example string\\\"\""),
+                config: decoded(sdkMethodFixture1624Value1),
+                id2: decoded("\"example string\""),
+                projectId: decoded("\"123e4567-e89b-12d3-a456-426614174000\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -120,10 +121,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.vectorDatabases.updateTags(
-            id: decoded("\"\\\"example string\\\"\""),
-            id2: decoded("\"example string\""),
-            tags: decoded("[\"example string\"]")
-        )
+                id: decoded("\"\\\"example string\\\"\""),
+                id2: decoded("\"example string\""),
+                tags: decoded("[\"example string\"]")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -171,11 +172,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.blockStorageActions.volumeActionsGet(
-            volumeId: decoded("\"7724db7c-e098-11e5-b522-000f53304e51\""),
-            actionId: decoded("36804636"),
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                volumeId: decoded("\"7724db7c-e098-11e5-b522-000f53304e51\""),
+                actionId: decoded("36804636"),
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -222,10 +223,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.blockStorageActions.volumeActionsList(
-            volumeId: decoded("\"7724db7c-e098-11e5-b522-000f53304e51\""),
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                volumeId: decoded("\"7724db7c-e098-11e5-b522-000f53304e51\""),
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -272,10 +273,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.blockStorageActions.volumeActionsPost(
-            body: decoded(sdkMethodFixture1632Value1),
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                body: decoded(sdkMethodFixture1632Value1),
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -323,11 +324,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.blockStorageActions.volumeActionsPostById(
-            volumeId: decoded("\"7724db7c-e098-11e5-b522-000f53304e51\""),
-            body: decoded(sdkMethodFixture1634Value1),
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                volumeId: decoded("\"7724db7c-e098-11e5-b522-000f53304e51\""),
+                body: decoded(sdkMethodFixture1634Value1),
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -372,8 +373,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.blockStorage.volumesCreate(
-            body: decoded(sdkMethodFixture1636Value1)
-        )
+                body: decoded(sdkMethodFixture1636Value1)
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -411,8 +412,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.blockStorage.volumesDelete(
-            volumeId: decoded("\"7724db7c-e098-11e5-b522-000f53304e51\"")
-        )
+                volumeId: decoded("\"7724db7c-e098-11e5-b522-000f53304e51\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -451,9 +452,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.blockStorage.volumesDeleteByName(
-            name: decoded("\"example\""),
-            region: decoded("\"nyc3\"")
-        )
+                name: decoded("\"example\""),
+                region: decoded("\"nyc3\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -498,8 +499,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.blockStorage.volumesGet(
-            volumeId: decoded("\"7724db7c-e098-11e5-b522-000f53304e51\"")
-        )
+                volumeId: decoded("\"7724db7c-e098-11e5-b522-000f53304e51\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -547,11 +548,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.blockStorage.volumesList(
-            name: decoded("\"example\""),
-            region: decoded("\"nyc3\""),
-            perPage: decoded("2"),
-            page: decoded("1")
-        )
+                name: decoded("\"example\""),
+                region: decoded("\"nyc3\""),
+                perPage: decoded("2"),
+                page: decoded("1")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

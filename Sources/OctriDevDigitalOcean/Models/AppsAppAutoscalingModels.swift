@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AppsAppAutoscaling domain models
+/// AppsAppAutoscaling domain models
 /// Settings for scaling the component based on CPU utilization.
 public struct AppAutoscalingSpecMetricsCpu: Codable {
     /// The average target CPU utilization for the component.
@@ -15,26 +15,42 @@ public struct AppAutoscalingSpecMetricsCpu: Codable {
     }
 
     init() {
-        self.percent = nil
+        percent = nil
     }
 }
 
-extension AppAutoscalingSpecMetricsCpu {
-    public init(from decoder: Decoder) throws {
+public extension AppAutoscalingSpecMetricsCpu {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.percent = try container.sdkDecodeIfPresent(.percent)
-        if let value = self.percent {
-            try validateRange("percent", Double(value), min: 1, max: 100, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        percent = try container.sdkDecodeIfPresent(.percent)
+        if let value = percent {
+            try validateRange(
+                "percent",
+                Double(value),
+                min: 1,
+                max: 100,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
-extension AppAutoscalingSpecMetricsCpu {
-    public init(percent: Int? = nil) throws {
+public extension AppAutoscalingSpecMetricsCpu {
+    init(percent: Int? = nil) throws {
         self.init()
         self.percent = percent
         if let value = self.percent {
-            try validateRange("percent", Double(value), min: 1, max: 100, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "percent",
+                Double(value),
+                min: 1,
+                max: 100,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
@@ -50,26 +66,42 @@ public struct AppAutoscalingSpecServiceVariant1MetricsRequestDuration: Codable {
     }
 
     init() {
-        self.p95Milliseconds = nil
+        p95Milliseconds = nil
     }
 }
 
-extension AppAutoscalingSpecServiceVariant1MetricsRequestDuration {
-    public init(from decoder: Decoder) throws {
+public extension AppAutoscalingSpecServiceVariant1MetricsRequestDuration {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.p95Milliseconds = try container.sdkDecodeIfPresent(.p95Milliseconds)
-        if let value = self.p95Milliseconds {
-            try validateRange("p95_milliseconds", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        p95Milliseconds = try container.sdkDecodeIfPresent(.p95Milliseconds)
+        if let value = p95Milliseconds {
+            try validateRange(
+                "p95_milliseconds",
+                Double(value),
+                min: 1,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
-extension AppAutoscalingSpecServiceVariant1MetricsRequestDuration {
-    public init(p95Milliseconds: Int? = nil) throws {
+public extension AppAutoscalingSpecServiceVariant1MetricsRequestDuration {
+    init(p95Milliseconds: Int? = nil) throws {
         self.init()
         self.p95Milliseconds = p95Milliseconds
         if let value = self.p95Milliseconds {
-            try validateRange("p95_milliseconds", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "p95_milliseconds",
+                Double(value),
+                min: 1,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
@@ -93,35 +125,71 @@ public struct AppAutoscalingSpecService: Codable {
     }
 
     init() {
-        (self.minInstanceCount, self.maxInstanceCount, self.metrics) = (nil, nil, nil)
+        (minInstanceCount, maxInstanceCount, metrics) = (nil, nil, nil)
     }
 }
 
-extension AppAutoscalingSpecService {
-    public init(from decoder: Decoder) throws {
+public extension AppAutoscalingSpecService {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.minInstanceCount = try container.sdkDecodeIfPresent(.minInstanceCount)
-        self.maxInstanceCount = try container.sdkDecodeIfPresent(.maxInstanceCount)
-        self.metrics = try container.sdkDecodeIfPresent(.metrics)
-        if let value = self.minInstanceCount {
-            try validateRange("min_instance_count", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        minInstanceCount = try container.sdkDecodeIfPresent(.minInstanceCount)
+        maxInstanceCount = try container.sdkDecodeIfPresent(.maxInstanceCount)
+        metrics = try container.sdkDecodeIfPresent(.metrics)
+        if let value = minInstanceCount {
+            try validateRange(
+                "min_instance_count",
+                Double(value),
+                min: 1,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.maxInstanceCount {
-            try validateRange("max_instance_count", Double(value), min: 1, max: 250, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = maxInstanceCount {
+            try validateRange(
+                "max_instance_count",
+                Double(value),
+                min: 1,
+                max: 250,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
-extension AppAutoscalingSpecService {
-    public init(minInstanceCount: Int? = nil, maxInstanceCount: Int? = nil, metrics: AppAutoscalingSpecServiceVariant1Metrics? = nil) throws {
+public extension AppAutoscalingSpecService {
+    init(
+        minInstanceCount: Int? = nil,
+        maxInstanceCount: Int? = nil,
+        metrics: AppAutoscalingSpecServiceVariant1Metrics? = nil
+    ) throws {
         self.init()
         (self.minInstanceCount, self.maxInstanceCount) = (minInstanceCount, maxInstanceCount)
         self.metrics = metrics
         if let value = self.minInstanceCount {
-            try validateRange("min_instance_count", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "min_instance_count",
+                Double(value),
+                min: 1,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
         if let value = self.maxInstanceCount {
-            try validateRange("max_instance_count", Double(value), min: 1, max: 250, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "max_instance_count",
+                Double(value),
+                min: 1,
+                max: 250,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
@@ -137,26 +205,42 @@ public struct AppAutoscalingSpecServiceVariant1MetricsRequestsPerSecond: Codable
     }
 
     init() {
-        self.perInstance = nil
+        perInstance = nil
     }
 }
 
-extension AppAutoscalingSpecServiceVariant1MetricsRequestsPerSecond {
-    public init(from decoder: Decoder) throws {
+public extension AppAutoscalingSpecServiceVariant1MetricsRequestsPerSecond {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.perInstance = try container.sdkDecodeIfPresent(.perInstance)
-        if let value = self.perInstance {
-            try validateRange("per_instance", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        perInstance = try container.sdkDecodeIfPresent(.perInstance)
+        if let value = perInstance {
+            try validateRange(
+                "per_instance",
+                Double(value),
+                min: 1,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
-extension AppAutoscalingSpecServiceVariant1MetricsRequestsPerSecond {
-    public init(perInstance: Int? = nil) throws {
+public extension AppAutoscalingSpecServiceVariant1MetricsRequestsPerSecond {
+    init(perInstance: Int? = nil) throws {
         self.init()
         self.perInstance = perInstance
         if let value = self.perInstance {
-            try validateRange("per_instance", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "per_instance",
+                Double(value),
+                min: 1,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
@@ -180,35 +264,67 @@ public struct AppAutoscalingSpec: Codable {
     }
 
     init() {
-        (self.minInstanceCount, self.maxInstanceCount, self.metrics) = (nil, nil, nil)
+        (minInstanceCount, maxInstanceCount, metrics) = (nil, nil, nil)
     }
 }
 
-extension AppAutoscalingSpec {
-    public init(from decoder: Decoder) throws {
+public extension AppAutoscalingSpec {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.minInstanceCount = try container.sdkDecodeIfPresent(.minInstanceCount)
-        self.maxInstanceCount = try container.sdkDecodeIfPresent(.maxInstanceCount)
-        self.metrics = try container.sdkDecodeIfPresent(.metrics)
-        if let value = self.minInstanceCount {
-            try validateRange("min_instance_count", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        minInstanceCount = try container.sdkDecodeIfPresent(.minInstanceCount)
+        maxInstanceCount = try container.sdkDecodeIfPresent(.maxInstanceCount)
+        metrics = try container.sdkDecodeIfPresent(.metrics)
+        if let value = minInstanceCount {
+            try validateRange(
+                "min_instance_count",
+                Double(value),
+                min: 1,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.maxInstanceCount {
-            try validateRange("max_instance_count", Double(value), min: 1, max: 250, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = maxInstanceCount {
+            try validateRange(
+                "max_instance_count",
+                Double(value),
+                min: 1,
+                max: 250,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
 
-extension AppAutoscalingSpec {
-    public init(minInstanceCount: Int? = nil, maxInstanceCount: Int? = nil, metrics: AppAutoscalingSpecMetrics? = nil) throws {
+public extension AppAutoscalingSpec {
+    init(minInstanceCount: Int? = nil, maxInstanceCount: Int? = nil, metrics: AppAutoscalingSpecMetrics? = nil) throws {
         self.init()
         (self.minInstanceCount, self.maxInstanceCount) = (minInstanceCount, maxInstanceCount)
         self.metrics = metrics
         if let value = self.minInstanceCount {
-            try validateRange("min_instance_count", Double(value), min: 1, max: nil, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "min_instance_count",
+                Double(value),
+                min: 1,
+                max: nil,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
         if let value = self.maxInstanceCount {
-            try validateRange("max_instance_count", Double(value), min: 1, max: 250, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+            try validateRange(
+                "max_instance_count",
+                Double(value),
+                min: 1,
+                max: 250,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
     }
 }
@@ -223,19 +339,19 @@ public struct AppAutoscalingSpecMetrics: Codable {
     }
 
     init() {
-        self.cpu = nil
+        cpu = nil
     }
 }
 
-extension AppAutoscalingSpecMetrics {
-    public init(from decoder: Decoder) throws {
+public extension AppAutoscalingSpecMetrics {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.cpu = try container.sdkDecodeIfPresent(.cpu)
+        cpu = try container.sdkDecodeIfPresent(.cpu)
     }
 }
 
-extension AppAutoscalingSpecMetrics {
-    public init(cpu: AppAutoscalingSpecMetricsCpu? = nil) {
+public extension AppAutoscalingSpecMetrics {
+    init(cpu: AppAutoscalingSpecMetricsCpu? = nil) {
         self.init()
         self.cpu = cpu
     }
@@ -254,20 +370,23 @@ public struct AppAutoscalingSpecServiceVariant1Metrics: Codable {
     }
 
     init() {
-        (self.requestsPerSecond, self.requestDuration) = (nil, nil)
+        (requestsPerSecond, requestDuration) = (nil, nil)
     }
 }
 
-extension AppAutoscalingSpecServiceVariant1Metrics {
-    public init(from decoder: Decoder) throws {
+public extension AppAutoscalingSpecServiceVariant1Metrics {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.requestsPerSecond = try container.sdkDecodeIfPresent(.requestsPerSecond)
-        self.requestDuration = try container.sdkDecodeIfPresent(.requestDuration)
+        requestsPerSecond = try container.sdkDecodeIfPresent(.requestsPerSecond)
+        requestDuration = try container.sdkDecodeIfPresent(.requestDuration)
     }
 }
 
-extension AppAutoscalingSpecServiceVariant1Metrics {
-    public init(requestsPerSecond: AppAutoscalingSpecServiceVariant1MetricsRequestsPerSecond? = nil, requestDuration: AppAutoscalingSpecServiceVariant1MetricsRequestDuration? = nil) {
+public extension AppAutoscalingSpecServiceVariant1Metrics {
+    init(
+        requestsPerSecond: AppAutoscalingSpecServiceVariant1MetricsRequestsPerSecond? = nil,
+        requestDuration: AppAutoscalingSpecServiceVariant1MetricsRequestDuration? = nil
+    ) {
         self.init()
         (self.requestsPerSecond, self.requestDuration) = (requestsPerSecond, requestDuration)
     }
@@ -283,19 +402,19 @@ public struct AppAutoscalingSpecServiceVariant1: Codable {
     }
 
     init() {
-        self.metrics = nil
+        metrics = nil
     }
 }
 
-extension AppAutoscalingSpecServiceVariant1 {
-    public init(from decoder: Decoder) throws {
+public extension AppAutoscalingSpecServiceVariant1 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.metrics = try container.sdkDecodeIfPresent(.metrics)
+        metrics = try container.sdkDecodeIfPresent(.metrics)
     }
 }
 
-extension AppAutoscalingSpecServiceVariant1 {
-    public init(metrics: AppAutoscalingSpecServiceVariant1Metrics? = nil) {
+public extension AppAutoscalingSpecServiceVariant1 {
+    init(metrics: AppAutoscalingSpecServiceVariant1Metrics? = nil) {
         self.init()
         self.metrics = metrics
     }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiUnlink domain models
+/// AgentPlatformAPIApiUnlink domain models
 /// Information about a removed linkage
 public struct ApiUnlinkAgentOutput: Codable, SdkResource {
     /// Routed agent id
@@ -20,20 +20,20 @@ public struct ApiUnlinkAgentOutput: Codable, SdkResource {
     }
 
     init() {
-        (self.childAgentUuid, self.parentAgentUuid) = (nil, nil)
+        (childAgentUuid, parentAgentUuid) = (nil, nil)
     }
 }
 
-extension ApiUnlinkAgentOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUnlinkAgentOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.childAgentUuid = try container.sdkDecodeIfPresent(.childAgentUuid)
-        self.parentAgentUuid = try container.sdkDecodeIfPresent(.parentAgentUuid)
+        childAgentUuid = try container.sdkDecodeIfPresent(.childAgentUuid)
+        parentAgentUuid = try container.sdkDecodeIfPresent(.parentAgentUuid)
     }
 }
 
-extension ApiUnlinkAgentOutput {
-    public init(childAgentUuid: String? = nil, parentAgentUuid: String? = nil) {
+public extension ApiUnlinkAgentOutput {
+    init(childAgentUuid: String? = nil, parentAgentUuid: String? = nil) {
         self.init()
         (self.childAgentUuid, self.parentAgentUuid) = (childAgentUuid, parentAgentUuid)
     }
@@ -50,19 +50,19 @@ public struct ApiUnlinkKnowledgeBaseOutput: Codable, SdkResource {
     }
 
     init() {
-        self.agent = nil
+        agent = nil
     }
 }
 
-extension ApiUnlinkKnowledgeBaseOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUnlinkKnowledgeBaseOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agent = try container.sdkDecodeIfPresent(.agent)
+        agent = try container.sdkDecodeIfPresent(.agent)
     }
 }
 
-extension ApiUnlinkKnowledgeBaseOutput {
-    public init(agent: ApiAgent? = nil) {
+public extension ApiUnlinkKnowledgeBaseOutput {
+    init(agent: ApiAgent? = nil) {
         self.init()
         self.agent = agent
     }
@@ -79,19 +79,19 @@ public struct ApiUnlinkAgentFunctionOutput: Codable, SdkResource {
     }
 
     init() {
-        self.agent = nil
+        agent = nil
     }
 }
 
-extension ApiUnlinkAgentFunctionOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUnlinkAgentFunctionOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agent = try container.sdkDecodeIfPresent(.agent)
+        agent = try container.sdkDecodeIfPresent(.agent)
     }
 }
 
-extension ApiUnlinkAgentFunctionOutput {
-    public init(agent: ApiAgent? = nil) {
+public extension ApiUnlinkAgentFunctionOutput {
+    init(agent: ApiAgent? = nil) {
         self.init()
         self.agent = agent
     }
@@ -108,19 +108,19 @@ public struct ApiUnlinkAgentGuardrailOutput: Codable, SdkResource {
     }
 
     init() {
-        self.agent = nil
+        agent = nil
     }
 }
 
-extension ApiUnlinkAgentGuardrailOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiUnlinkAgentGuardrailOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agent = try container.sdkDecodeIfPresent(.agent)
+        agent = try container.sdkDecodeIfPresent(.agent)
     }
 }
 
-extension ApiUnlinkAgentGuardrailOutput {
-    public init(agent: ApiAgent? = nil) {
+public extension ApiUnlinkAgentGuardrailOutput {
+    init(agent: ApiAgent? = nil) {
         self.init()
         self.agent = agent
     }

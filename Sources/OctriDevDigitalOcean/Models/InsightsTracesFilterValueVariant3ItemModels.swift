@@ -3,25 +3,37 @@
 
 import Foundation
 
-// InsightsTraces domain models
+/// InsightsTraces domain models
 extension TracesFilterValueVariant3Item: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for TracesFilterValueVariant3Item")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for TracesFilterValueVariant3Item"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension TracesFilterValueVariant3Item {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode(Double.self) { return .doubleValue(value) }
-        if let value = try? container.decode(Bool.self) { return .boolValue(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode(Double.self) {
+            return .doubleValue(value)
+        }
+        if let value = try? container.decode(Bool.self) {
+            return .boolValue(value)
+        }
         return nil
     }
 }
@@ -55,21 +67,27 @@ public struct TracesPaginationResponse: Codable {
         case hasMore
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension TracesPaginationResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.hasMore) else {
-            throw SdkValidationError(field: "hasMore", code: "required", message: "Validation failed for 'hasMore': value is required")
-        }
-        self.hasMore = try container.sdkDecodeRequired(.hasMore)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension TracesPaginationResponse {
-    public init(hasMore: Bool) {
+public extension TracesPaginationResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.hasMore) else {
+            throw SdkValidationError(
+                field: "hasMore",
+                code: "required",
+                message: "Validation failed for 'hasMore': value is required"
+            )
+        }
+        hasMore = try container.sdkDecodeRequired(.hasMore)
+    }
+}
+
+public extension TracesPaginationResponse {
+    init(hasMore: Bool) {
         self.hasMore = hasMore
     }
 }
@@ -101,24 +119,35 @@ public struct TracesSearchRequest: Codable {
         case pagination
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension TracesSearchRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.timeRange) else {
-            throw SdkValidationError(field: "timeRange", code: "required", message: "Validation failed for 'timeRange': value is required")
-        }
-        self.timeRange = try container.sdkDecodeRequired(.timeRange)
-        self.filter = try container.sdkDecodeIfPresent(.filter)
-        self.orderBy = try container.sdkDecodeIfPresent(.orderBy)
-        self.pagination = try container.sdkDecodeIfPresent(.pagination)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension TracesSearchRequest {
-    public init(timeRange: TracesTimeRange, filter: TracesFilterExpression? = nil, orderBy: [TracesOrderBy]? = nil, pagination: TracesPaginationRequest? = nil) {
+public extension TracesSearchRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.timeRange) else {
+            throw SdkValidationError(
+                field: "timeRange",
+                code: "required",
+                message: "Validation failed for 'timeRange': value is required"
+            )
+        }
+        timeRange = try container.sdkDecodeRequired(.timeRange)
+        filter = try container.sdkDecodeIfPresent(.filter)
+        orderBy = try container.sdkDecodeIfPresent(.orderBy)
+        pagination = try container.sdkDecodeIfPresent(.pagination)
+    }
+}
+
+public extension TracesSearchRequest {
+    init(
+        timeRange: TracesTimeRange,
+        filter: TracesFilterExpression? = nil,
+        orderBy: [TracesOrderBy]? = nil,
+        pagination: TracesPaginationRequest? = nil
+    ) {
         (self.timeRange, self.filter) = (timeRange, filter)
         (self.orderBy, self.pagination) = (orderBy, pagination)
     }
@@ -141,22 +170,28 @@ public struct TracesOrderBy: Codable {
         case direction
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension TracesOrderBy {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.field) else {
-            throw SdkValidationError(field: "field", code: "required", message: "Validation failed for 'field': value is required")
-        }
-        self.field = try container.sdkDecodeRequired(.field)
-        self.direction = try container.sdkDecodeIfPresent(.direction)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension TracesOrderBy {
-    public init(field: TracesFieldRef, direction: TracesOrderByDirection? = nil) {
+public extension TracesOrderBy {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.field) else {
+            throw SdkValidationError(
+                field: "field",
+                code: "required",
+                message: "Validation failed for 'field': value is required"
+            )
+        }
+        field = try container.sdkDecodeRequired(.field)
+        direction = try container.sdkDecodeIfPresent(.direction)
+    }
+}
+
+public extension TracesOrderBy {
+    init(field: TracesFieldRef, direction: TracesOrderByDirection? = nil) {
         (self.field, self.direction) = (field, direction)
     }
 }
@@ -174,25 +209,35 @@ public struct TracesTimeRange: Codable {
         case to
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension TracesTimeRange {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.from) else {
-            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
-        }
-        guard container.contains(.to) else {
-            throw SdkValidationError(field: "to", code: "required", message: "Validation failed for 'to': value is required")
-        }
-        self.from = try container.sdkDecodeRequired(.from)
-        self.to = try container.sdkDecodeRequired(.to)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension TracesTimeRange {
-    public init(from: TracesTimeInstant, to: TracesTimeInstant) {
+public extension TracesTimeRange {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.from) else {
+            throw SdkValidationError(
+                field: "from",
+                code: "required",
+                message: "Validation failed for 'from': value is required"
+            )
+        }
+        guard container.contains(.to) else {
+            throw SdkValidationError(
+                field: "to",
+                code: "required",
+                message: "Validation failed for 'to': value is required"
+            )
+        }
+        from = try container.sdkDecodeRequired(.from)
+        to = try container.sdkDecodeRequired(.to)
+    }
+}
+
+public extension TracesTimeRange {
+    init(from: TracesTimeInstant, to: TracesTimeInstant) {
         (self.from, self.to) = (from, to)
     }
 }
@@ -201,13 +246,16 @@ extension TracesTimeRange {
 public struct TracesOrderByDirection: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let asc = TracesOrderByDirection(rawValue: "asc")
     public static let desc = TracesOrderByDirection(rawValue: "desc")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -220,14 +268,17 @@ public struct TracesOrderByDirection: RawRepresentable, Hashable, Codable, Senda
 public struct TracesFilterValueVariant4Type: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let string = TracesFilterValueVariant4Type(rawValue: "string")
     public static let number = TracesFilterValueVariant4Type(rawValue: "number")
     public static let bool = TracesFilterValueVariant4Type(rawValue: "bool")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -240,13 +291,16 @@ public struct TracesFilterValueVariant4Type: RawRepresentable, Hashable, Codable
 public struct TracesTraceSummaryStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let ok = TracesTraceSummaryStatus(rawValue: "Ok")
     public static let error = TracesTraceSummaryStatus(rawValue: "Error")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -259,12 +313,15 @@ public struct TracesTraceSummaryStatus: RawRepresentable, Hashable, Codable, Sen
 public struct TracesFilterValueVariant5Type: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let stringArray = TracesFilterValueVariant5Type(rawValue: "string_array")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -279,7 +336,10 @@ public struct TracesFilterValueVariant5Type: RawRepresentable, Hashable, Codable
 public struct TracesFieldRefScope: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let resource = TracesFieldRefScope(rawValue: "resource")
     public static let resourceAttributes = TracesFieldRefScope(rawValue: "resource.attributes")
     public static let attribute = TracesFieldRefScope(rawValue: "attribute")
@@ -288,7 +348,7 @@ public struct TracesFieldRefScope: RawRepresentable, Hashable, Codable, Sendable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -304,7 +364,10 @@ public struct TracesFieldRefScope: RawRepresentable, Hashable, Codable, Sendable
 public struct TracesFilterExpressionOperator: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let eq = TracesFilterExpressionOperator(rawValue: "eq")
     public static let neq = TracesFilterExpressionOperator(rawValue: "neq")
     public static let `in` = TracesFilterExpressionOperator(rawValue: "in")
@@ -316,7 +379,7 @@ public struct TracesFilterExpressionOperator: RawRepresentable, Hashable, Codabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -329,7 +392,10 @@ public struct TracesFilterExpressionOperator: RawRepresentable, Hashable, Codabl
 public struct TracesFilterExpressionType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let condition = TracesFilterExpressionType(rawValue: "condition")
     public static let and = TracesFilterExpressionType(rawValue: "and")
     public static let or = TracesFilterExpressionType(rawValue: "or")
@@ -338,7 +404,7 @@ public struct TracesFilterExpressionType: RawRepresentable, Hashable, Codable, S
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

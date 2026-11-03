@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiModel domain models
+/// AgentPlatformAPIApiModel domain models
 /// List item for ListModelCatalog
 public struct ApiModelCatalogEntry: Codable {
     /// Optional array value serialized in the `availability` wire field.
@@ -83,42 +83,61 @@ public struct ApiModelCatalogEntry: Codable {
     }
 
     init() {
-        (self.availability, self.badges, self.benchmarkScore, self.capabilities, self.contextWindow) = (nil, nil, nil, nil, nil)
-        (self.createdAt, self.creator, self.huggingFaceId, self.id, self.maxOutputTokens) = (nil, nil, nil, nil, nil)
-        (self.modelId, self.name, self.parameterCount, self.pricing, self.provider) = (nil, nil, nil, nil, nil)
-        (self.scaledPricingEnabled, self.shortDescription, self.type) = (nil, nil, nil)
+        (availability, badges, benchmarkScore, capabilities, contextWindow) = (nil, nil, nil, nil, nil)
+        (createdAt, creator, huggingFaceId, id, maxOutputTokens) = (nil, nil, nil, nil, nil)
+        (modelId, name, parameterCount, pricing, provider) = (nil, nil, nil, nil, nil)
+        (scaledPricingEnabled, shortDescription, type) = (nil, nil, nil)
     }
 }
 
-extension ApiModelCatalogEntry {
-    public init(from decoder: Decoder) throws {
+public extension ApiModelCatalogEntry {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.availability = try container.sdkDecodeIfPresent(.availability)
-        self.badges = try container.sdkDecodeIfPresent(.badges)
-        self.benchmarkScore = try container.sdkDecodeIfPresent(.benchmarkScore)
-        self.capabilities = try container.sdkDecodeIfPresent(.capabilities)
-        self.contextWindow = try container.sdkDecodeIfPresent(.contextWindow)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.creator = try container.sdkDecodeIfPresent(.creator)
-        self.huggingFaceId = try container.sdkDecodeIfPresent(.huggingFaceId)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.maxOutputTokens = try container.sdkDecodeIfPresent(.maxOutputTokens)
-        self.modelId = try container.sdkDecodeIfPresent(.modelId)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.parameterCount = try container.sdkDecodeIfPresent(.parameterCount)
-        self.pricing = try container.sdkDecodeIfPresent(.pricing)
-        self.provider = try container.sdkDecodeIfPresent(.provider)
-        self.scaledPricingEnabled = try container.sdkDecodeIfPresent(.scaledPricingEnabled)
-        self.shortDescription = try container.sdkDecodeIfPresent(.shortDescription)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        if let value = self.createdAt {
+        availability = try container.sdkDecodeIfPresent(.availability)
+        badges = try container.sdkDecodeIfPresent(.badges)
+        benchmarkScore = try container.sdkDecodeIfPresent(.benchmarkScore)
+        capabilities = try container.sdkDecodeIfPresent(.capabilities)
+        contextWindow = try container.sdkDecodeIfPresent(.contextWindow)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        creator = try container.sdkDecodeIfPresent(.creator)
+        huggingFaceId = try container.sdkDecodeIfPresent(.huggingFaceId)
+        id = try container.sdkDecodeIfPresent(.id)
+        maxOutputTokens = try container.sdkDecodeIfPresent(.maxOutputTokens)
+        modelId = try container.sdkDecodeIfPresent(.modelId)
+        name = try container.sdkDecodeIfPresent(.name)
+        parameterCount = try container.sdkDecodeIfPresent(.parameterCount)
+        pricing = try container.sdkDecodeIfPresent(.pricing)
+        provider = try container.sdkDecodeIfPresent(.provider)
+        scaledPricingEnabled = try container.sdkDecodeIfPresent(.scaledPricingEnabled)
+        shortDescription = try container.sdkDecodeIfPresent(.shortDescription)
+        type = try container.sdkDecodeIfPresent(.type)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiModelCatalogEntry {
-    public init(availability: [String]? = nil, badges: [String]? = nil, benchmarkScore: [String: JSONValue]? = nil, capabilities: [String]? = nil, contextWindow: String? = nil, createdAt: Date? = nil, creator: String? = nil, huggingFaceId: String? = nil, id: String? = nil, maxOutputTokens: String? = nil, modelId: String? = nil, name: String? = nil, parameterCount: Double? = nil, pricing: ApiModelPricing? = nil, provider: ApiModelProvider? = nil, scaledPricingEnabled: Bool? = nil, shortDescription: String? = nil, type: String? = nil) throws {
+public extension ApiModelCatalogEntry {
+    init(
+        availability: [String]? = nil,
+        badges: [String]? = nil,
+        benchmarkScore: [String: JSONValue]? = nil,
+        capabilities: [String]? = nil,
+        contextWindow: String? = nil,
+        createdAt: Date? = nil,
+        creator: String? = nil,
+        huggingFaceId: String? = nil,
+        id: String? = nil,
+        maxOutputTokens: String? = nil,
+        modelId: String? = nil,
+        name: String? = nil,
+        parameterCount: Double? = nil,
+        pricing: ApiModelPricing? = nil,
+        provider: ApiModelProvider? = nil,
+        scaledPricingEnabled: Bool? = nil,
+        shortDescription: String? = nil,
+        type: String? = nil
+    ) throws {
         self.init()
         (self.availability, self.badges) = (availability, badges)
         (self.benchmarkScore, self.capabilities) = (benchmarkScore, capabilities)
@@ -141,14 +160,17 @@ extension ApiModelCatalogEntry {
 public struct ApiModelCatalogSortBy: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let modelCatalogSortByCreatedAt = ApiModelCatalogSortBy(rawValue: "MODEL_CATALOG_SORT_BY_CREATED_AT")
     public static let modelCatalogSortByName = ApiModelCatalogSortBy(rawValue: "MODEL_CATALOG_SORT_BY_NAME")
     public static let modelCatalogSortByPrice = ApiModelCatalogSortBy(rawValue: "MODEL_CATALOG_SORT_BY_PRICE")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

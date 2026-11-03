@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiGet domain models
+/// AgentPlatformAPIApiGet domain models
 /// Typed representation of the `ApiGetWorkspaceOutput` API schema.
 public struct ApiGetWorkspaceOutput: Codable, SdkResource {
     /// Optional object value serialized in the `workspace` wire field.
@@ -15,19 +15,19 @@ public struct ApiGetWorkspaceOutput: Codable, SdkResource {
     }
 
     init() {
-        self.workspace = nil
+        workspace = nil
     }
 }
 
-extension ApiGetWorkspaceOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetWorkspaceOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.workspace = try container.sdkDecodeIfPresent(.workspace)
+        workspace = try container.sdkDecodeIfPresent(.workspace)
     }
 }
 
-extension ApiGetWorkspaceOutput {
-    public init(workspace: ApiWorkspace? = nil) {
+public extension ApiGetWorkspaceOutput {
+    init(workspace: ApiWorkspace? = nil) {
         self.init()
         self.workspace = workspace
     }

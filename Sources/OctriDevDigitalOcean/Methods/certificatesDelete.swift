@@ -6,14 +6,32 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension CertificatesMethods {
+public extension CertificatesMethods {
     /// To delete a specific certificate, send a DELETE request to `/v2/certificates/$CERTIFICATE_ID`.
     ///
     /// - Parameters:
     /// - certificateId: A unique identifier for a certificate.
-    public static func certificatesDelete(config: ClientConfig, certificateId: String, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func certificatesDelete(
+        config: ClientConfig,
+        certificateId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         try sdkValidateUuid("certificate_id", certificateId)
 
-        return try (await sdkRequest("DELETE", ["/v2/certificates/", sdkEncodePathSegment(sdkWireString(certificateId))].joined(), config: config, decoder: .empty, operationId: "certificates_delete", options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "429": Error2.self, "500": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "DELETE",
+            ["/v2/certificates/", sdkEncodePathSegment(sdkWireString(certificateId))].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "certificates_delete",
+            options: requestOptions,
+            errors: [
+                "401": Error2.self,
+                "404": Error2.self,
+                "429": Error2.self,
+                "500": Error2.self,
+                "default": Error2.self,
+            ]
+        )).data
     }
 }

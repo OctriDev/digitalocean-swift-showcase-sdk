@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AddOns domain models
+/// AddOns domain models
 /// Typed representation of the `AddonsCreate` API schema.
 public struct AddonsCreate: Codable, SdkResource {
     /// Optional object value serialized in the `resource` wire field.
@@ -15,19 +15,19 @@ public struct AddonsCreate: Codable, SdkResource {
     }
 
     init() {
-        self.resource = nil
+        resource = nil
     }
 }
 
-extension AddonsCreate {
-    public init(from decoder: Decoder) throws {
+public extension AddonsCreate {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.resource = try container.sdkDecodeIfPresent(.resource)
+        resource = try container.sdkDecodeIfPresent(.resource)
     }
 }
 
-extension AddonsCreate {
-    public init(resource: AddonsResource? = nil) {
+public extension AddonsCreate {
+    init(resource: AddonsResource? = nil) {
         self.init()
         self.resource = resource
     }

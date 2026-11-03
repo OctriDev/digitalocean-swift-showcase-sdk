@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiGet domain models
+/// AgentPlatformAPIApiGet domain models
 /// GetKnowledgeBaseIndexingJobOutput description
 public struct ApiGetKnowledgeBaseIndexingJobOutput: Codable, SdkResource {
     /// IndexingJob description
@@ -15,19 +15,19 @@ public struct ApiGetKnowledgeBaseIndexingJobOutput: Codable, SdkResource {
     }
 
     init() {
-        self.job = nil
+        job = nil
     }
 }
 
-extension ApiGetKnowledgeBaseIndexingJobOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetKnowledgeBaseIndexingJobOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.job = try container.sdkDecodeIfPresent(.job)
+        job = try container.sdkDecodeIfPresent(.job)
     }
 }
 
-extension ApiGetKnowledgeBaseIndexingJobOutput {
-    public init(job: ApiIndexingJob? = nil) {
+public extension ApiGetKnowledgeBaseIndexingJobOutput {
+    init(job: ApiIndexingJob? = nil) {
         self.init()
         self.job = job
     }

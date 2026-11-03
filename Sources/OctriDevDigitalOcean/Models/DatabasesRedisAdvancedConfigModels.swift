@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Databases domain models
+/// Databases domain models
 /// Typed representation of the `RedisAdvancedConfig` API schema.
 public struct RedisAdvancedConfig: Codable {
     /// A string specifying the desired eviction policy for the Caching cluster. - `noeviction`: Don't evict any
@@ -71,32 +71,56 @@ public struct RedisAdvancedConfig: Codable {
     }
 
     init() {
-        (self.redisMaxmemoryPolicy, self.redisPubsubClientOutputBufferLimit, self.redisNumberOfDatabases, self.redisIoThreads, self.redisLfuLogFactor) = (nil, nil, nil, nil, nil)
-        (self.redisLfuDecayTime, self.redisSsl, self.redisTimeout, self.redisNotifyKeyspaceEvents, self.redisPersistence) = (nil, nil, nil, nil, nil)
-        self.redisAclChannelsDefault = nil
+        (
+            redisMaxmemoryPolicy,
+            redisPubsubClientOutputBufferLimit,
+            redisNumberOfDatabases,
+            redisIoThreads,
+            redisLfuLogFactor
+        ) = (nil, nil, nil, nil, nil)
+        (redisLfuDecayTime, redisSsl, redisTimeout, redisNotifyKeyspaceEvents, redisPersistence) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        redisAclChannelsDefault = nil
     }
 }
 
-extension RedisAdvancedConfig {
-    public init(from decoder: Decoder) throws {
+public extension RedisAdvancedConfig {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.redisMaxmemoryPolicy = try container.sdkDecodeIfPresent(.redisMaxmemoryPolicy)
-        self.redisPubsubClientOutputBufferLimit = try container.sdkDecodeIfPresent(.redisPubsubClientOutputBufferLimit)
-        self.redisNumberOfDatabases = try container.sdkDecodeIfPresent(.redisNumberOfDatabases)
-        self.redisIoThreads = try container.sdkDecodeIfPresent(.redisIoThreads)
-        self.redisLfuLogFactor = try container.sdkDecodeIfPresent(.redisLfuLogFactor)
-        self.redisLfuDecayTime = try container.sdkDecodeIfPresent(.redisLfuDecayTime)
-        self.redisSsl = try container.sdkDecodeIfPresent(.redisSsl)
-        self.redisTimeout = try container.sdkDecodeIfPresent(.redisTimeout)
-        self.redisNotifyKeyspaceEvents = try container.sdkDecodeIfPresent(.redisNotifyKeyspaceEvents)
-        self.redisPersistence = try container.sdkDecodeIfPresent(.redisPersistence)
-        self.redisAclChannelsDefault = try container.sdkDecodeIfPresent(.redisAclChannelsDefault)
+        redisMaxmemoryPolicy = try container.sdkDecodeIfPresent(.redisMaxmemoryPolicy)
+        redisPubsubClientOutputBufferLimit = try container.sdkDecodeIfPresent(.redisPubsubClientOutputBufferLimit)
+        redisNumberOfDatabases = try container.sdkDecodeIfPresent(.redisNumberOfDatabases)
+        redisIoThreads = try container.sdkDecodeIfPresent(.redisIoThreads)
+        redisLfuLogFactor = try container.sdkDecodeIfPresent(.redisLfuLogFactor)
+        redisLfuDecayTime = try container.sdkDecodeIfPresent(.redisLfuDecayTime)
+        redisSsl = try container.sdkDecodeIfPresent(.redisSsl)
+        redisTimeout = try container.sdkDecodeIfPresent(.redisTimeout)
+        redisNotifyKeyspaceEvents = try container.sdkDecodeIfPresent(.redisNotifyKeyspaceEvents)
+        redisPersistence = try container.sdkDecodeIfPresent(.redisPersistence)
+        redisAclChannelsDefault = try container.sdkDecodeIfPresent(.redisAclChannelsDefault)
         try sdkValidateConstraints()
     }
 }
 
-extension RedisAdvancedConfig {
-    public init(redisMaxmemoryPolicy: RedisAdvancedConfigRedisMaxmemoryPolicy? = nil, redisPubsubClientOutputBufferLimit: Int? = nil, redisNumberOfDatabases: Int? = nil, redisIoThreads: Int? = nil, redisLfuLogFactor: Int? = nil, redisLfuDecayTime: Int? = nil, redisSsl: Bool? = nil, redisTimeout: Int? = nil, redisNotifyKeyspaceEvents: String? = nil, redisPersistence: RedisAdvancedConfigRedisPersistence? = nil, redisAclChannelsDefault: RedisAdvancedConfigRedisAclChannelsDefault? = nil) throws {
+public extension RedisAdvancedConfig {
+    init(
+        redisMaxmemoryPolicy: RedisAdvancedConfigRedisMaxmemoryPolicy? = nil,
+        redisPubsubClientOutputBufferLimit: Int? = nil,
+        redisNumberOfDatabases: Int? = nil,
+        redisIoThreads: Int? = nil,
+        redisLfuLogFactor: Int? = nil,
+        redisLfuDecayTime: Int? = nil,
+        redisSsl: Bool? = nil,
+        redisTimeout: Int? = nil,
+        redisNotifyKeyspaceEvents: String? = nil,
+        redisPersistence: RedisAdvancedConfigRedisPersistence? = nil,
+        redisAclChannelsDefault: RedisAdvancedConfigRedisAclChannelsDefault? = nil
+    ) throws {
         self.init()
         self.redisMaxmemoryPolicy = redisMaxmemoryPolicy
         self.redisPubsubClientOutputBufferLimit = redisPubsubClientOutputBufferLimit
@@ -111,25 +135,73 @@ extension RedisAdvancedConfig {
 
 extension RedisAdvancedConfig {
     func sdkValidateConstraints() throws {
-        if let value = self.redisPubsubClientOutputBufferLimit {
-            try validateRange("redis_pubsub_client_output_buffer_limit", Double(value), min: 32, max: 512, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = redisPubsubClientOutputBufferLimit {
+            try validateRange(
+                "redis_pubsub_client_output_buffer_limit",
+                Double(value),
+                min: 32,
+                max: 512,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.redisNumberOfDatabases {
-            try validateRange("redis_number_of_databases", Double(value), min: 1, max: 128, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = redisNumberOfDatabases {
+            try validateRange(
+                "redis_number_of_databases",
+                Double(value),
+                min: 1,
+                max: 128,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.redisIoThreads {
-            try validateRange("redis_io_threads", Double(value), min: 1, max: 32, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = redisIoThreads {
+            try validateRange(
+                "redis_io_threads",
+                Double(value),
+                min: 1,
+                max: 32,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.redisLfuLogFactor {
-            try validateRange("redis_lfu_log_factor", Double(value), min: 0, max: 100, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = redisLfuLogFactor {
+            try validateRange(
+                "redis_lfu_log_factor",
+                Double(value),
+                min: 0,
+                max: 100,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.redisLfuDecayTime {
-            try validateRange("redis_lfu_decay_time", Double(value), min: 1, max: 120, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = redisLfuDecayTime {
+            try validateRange(
+                "redis_lfu_decay_time",
+                Double(value),
+                min: 1,
+                max: 120,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.redisTimeout {
-            try validateRange("redis_timeout", Double(value), min: 0, max: 31536000, exclusiveMin: nil, exclusiveMax: nil, multipleOf: nil)
+        if let value = redisTimeout {
+            try validateRange(
+                "redis_timeout",
+                Double(value),
+                min: 0,
+                max: 31_536_000,
+                exclusiveMin: nil,
+                exclusiveMax: nil,
+                multipleOf: nil
+            )
         }
-        if let value = self.redisNotifyKeyspaceEvents {
+        if let value = redisNotifyKeyspaceEvents {
             try validateLength("redis_notify_keyspace_events", value, min: nil, max: 32)
             try sdkValidatePattern("redis_notify_keyspace_events", value, sdkPatterna2b5ab460d71)
         }
@@ -139,16 +211,20 @@ extension RedisAdvancedConfig {
 /// Determines default pub/sub channels' ACL for new users if ACL is not supplied. When this option is not
 /// defined, all_channels is assumed to keep backward compatibility. This option doesn't affect Caching
 /// configuration acl-pubsub-default.
-public struct RedisAdvancedConfigRedisAclChannelsDefault: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct RedisAdvancedConfigRedisAclChannelsDefault: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let allchannels = RedisAdvancedConfigRedisAclChannelsDefault(rawValue: "allchannels")
     public static let resetchannels = RedisAdvancedConfigRedisAclChannelsDefault(rawValue: "resetchannels")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -161,7 +237,10 @@ public struct RedisAdvancedConfigRedisAclChannelsDefault: RawRepresentable, Hash
 public struct PostgresAdvancedConfigPgauditLogItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let read = PostgresAdvancedConfigPgauditLogItem(rawValue: "read")
     public static let write = PostgresAdvancedConfigPgauditLogItem(rawValue: "write")
     public static let function = PostgresAdvancedConfigPgauditLogItem(rawValue: "function")
@@ -173,7 +252,7 @@ public struct PostgresAdvancedConfigPgauditLogItem: RawRepresentable, Hashable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -183,17 +262,21 @@ public struct PostgresAdvancedConfigPgauditLogItem: RawRepresentable, Hashable, 
 }
 
 /// Controls the amount of detail written in the server log for each message that is logged.
-public struct PostgresAdvancedConfigLogErrorVerbosity: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct PostgresAdvancedConfigLogErrorVerbosity: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let terse = PostgresAdvancedConfigLogErrorVerbosity(rawValue: "TERSE")
     public static let `default` = PostgresAdvancedConfigLogErrorVerbosity(rawValue: "DEFAULT")
     public static let verbose = PostgresAdvancedConfigLogErrorVerbosity(rawValue: "VERBOSE")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -205,17 +288,21 @@ public struct PostgresAdvancedConfigLogErrorVerbosity: RawRepresentable, Hashabl
 /// Controls which statements are counted. Specify 'top' to track top-level statements (those issued directly by
 /// clients), 'all' to also track nested statements (such as statements invoked within functions), or 'none' to
 /// disable statement statistics collection. The default value is top.
-public struct PostgresAdvancedConfigPgStatStatementsTrack: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct PostgresAdvancedConfigPgStatStatementsTrack: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let all = PostgresAdvancedConfigPgStatStatementsTrack(rawValue: "all")
     public static let top = PostgresAdvancedConfigPgStatStatementsTrack(rawValue: "top")
     public static let none = PostgresAdvancedConfigPgStatStatementsTrack(rawValue: "none")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -229,14 +316,17 @@ public struct PostgresAdvancedConfigPgStatStatementsTrack: RawRepresentable, Has
 public struct RsyslogLogsinkFormat: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let rfc5424 = RsyslogLogsinkFormat(rawValue: "rfc5424")
     public static let rfc3164 = RsyslogLogsinkFormat(rawValue: "rfc3164")
     public static let custom = RsyslogLogsinkFormat(rawValue: "custom")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -249,14 +339,17 @@ public struct RsyslogLogsinkFormat: RawRepresentable, Hashable, Codable, Sendabl
 public struct PgbouncerAdvancedConfigAutodbPoolMode: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let session = PgbouncerAdvancedConfigAutodbPoolMode(rawValue: "session")
     public static let transaction = PgbouncerAdvancedConfigAutodbPoolMode(rawValue: "transaction")
     public static let statement = PgbouncerAdvancedConfigAutodbPoolMode(rawValue: "statement")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -269,14 +362,17 @@ public struct PgbouncerAdvancedConfigAutodbPoolMode: RawRepresentable, Hashable,
 public struct PostgresAdvancedConfigTrackFunctions: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let all = PostgresAdvancedConfigTrackFunctions(rawValue: "all")
     public static let pl = PostgresAdvancedConfigTrackFunctions(rawValue: "pl")
     public static let none = PostgresAdvancedConfigTrackFunctions(rawValue: "none")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -286,16 +382,21 @@ public struct PostgresAdvancedConfigTrackFunctions: RawRepresentable, Hashable, 
 }
 
 /// Enum of parameters to ignore when given in startup packet.
-public struct PgbouncerAdvancedConfigIgnoreStartupParametersItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct PgbouncerAdvancedConfigIgnoreStartupParametersItem: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
-    public static let extraFloatDigits = PgbouncerAdvancedConfigIgnoreStartupParametersItem(rawValue: "extra_float_digits")
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let extraFloatDigits =
+        PgbouncerAdvancedConfigIgnoreStartupParametersItem(rawValue: "extra_float_digits")
     public static let searchPath = PgbouncerAdvancedConfigIgnoreStartupParametersItem(rawValue: "search_path")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -305,16 +406,20 @@ public struct PgbouncerAdvancedConfigIgnoreStartupParametersItem: RawRepresentab
 }
 
 /// Record commit time of transactions.
-public struct PostgresAdvancedConfigTrackCommitTimestamp: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct PostgresAdvancedConfigTrackCommitTimestamp: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let off = PostgresAdvancedConfigTrackCommitTimestamp(rawValue: "off")
     public static let on = PostgresAdvancedConfigTrackCommitTimestamp(rawValue: "on")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -330,13 +435,16 @@ public struct PostgresAdvancedConfigTrackCommitTimestamp: RawRepresentable, Hash
 public struct RedisAdvancedConfigRedisPersistence: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let off = RedisAdvancedConfigRedisPersistence(rawValue: "off")
     public static let rdb = RedisAdvancedConfigRedisPersistence(rawValue: "rdb")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -352,13 +460,16 @@ public struct RedisAdvancedConfigRedisPersistence: RawRepresentable, Hashable, C
 public struct ValkeyAdvancedConfigValkeyPersistence: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let off = ValkeyAdvancedConfigValkeyPersistence(rawValue: "off")
     public static let rdb = ValkeyAdvancedConfigValkeyPersistence(rawValue: "rdb")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -372,14 +483,20 @@ public struct ValkeyAdvancedConfigValkeyPersistence: RawRepresentable, Hashable,
 public struct PostgresAdvancedConfigLogLinePrefix: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
-    public static let pidPUserUDbDAppAClientH = PostgresAdvancedConfigLogLinePrefix(rawValue: "pid=%p,user=%u,db=%d,app=%a,client=%h")
-    public static let mPQUserUDbDAppA = PostgresAdvancedConfigLogLinePrefix(rawValue: "%m [%p] %q[user=%u,db=%d,app=%a]")
-    public static let tPL1UserUDbDAppAClientH = PostgresAdvancedConfigLogLinePrefix(rawValue: "%t [%p]: [%l-1] user=%u,db=%d,app=%a,client=%h")
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let pidPUserUDbDAppAClientH =
+        PostgresAdvancedConfigLogLinePrefix(rawValue: "pid=%p,user=%u,db=%d,app=%a,client=%h")
+    public static let mPQUserUDbDAppA =
+        PostgresAdvancedConfigLogLinePrefix(rawValue: "%m [%p] %q[user=%u,db=%d,app=%a]")
+    public static let tPL1UserUDbDAppAClientH =
+        PostgresAdvancedConfigLogLinePrefix(rawValue: "%t [%p]: [%l-1] user=%u,db=%d,app=%a,client=%h")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -393,10 +510,14 @@ public struct PostgresAdvancedConfigLogLinePrefix: RawRepresentable, Hashable, C
 /// first. - `allkeys-random`: Evict keys in a random order. - `volatile-lru`: Evict keys with expiration only,
 /// least recently used (LRU) first. - `volatile-random`: Evict keys with expiration only in a random order. -
 /// `volatile-ttl`: Evict keys with expiration only,…
-public struct RedisAdvancedConfigRedisMaxmemoryPolicy: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct RedisAdvancedConfigRedisMaxmemoryPolicy: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let noeviction = RedisAdvancedConfigRedisMaxmemoryPolicy(rawValue: "noeviction")
     public static let allkeysLru = RedisAdvancedConfigRedisMaxmemoryPolicy(rawValue: "allkeys-lru")
     public static let allkeysRandom = RedisAdvancedConfigRedisMaxmemoryPolicy(rawValue: "allkeys-random")
@@ -406,7 +527,7 @@ public struct RedisAdvancedConfigRedisMaxmemoryPolicy: RawRepresentable, Hashabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -416,16 +537,20 @@ public struct RedisAdvancedConfigRedisMaxmemoryPolicy: RawRepresentable, Hashabl
 }
 
 /// Specifies the default TOAST compression method for values of compressible columns (the default is lz4).
-public struct PostgresAdvancedConfigDefaultToastCompression: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct PostgresAdvancedConfigDefaultToastCompression: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let lz4 = PostgresAdvancedConfigDefaultToastCompression(rawValue: "lz4")
     public static let pglz = PostgresAdvancedConfigDefaultToastCompression(rawValue: "pglz")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -437,16 +562,20 @@ public struct PostgresAdvancedConfigDefaultToastCompression: RawRepresentable, H
 /// Determines default pub/sub channels' ACL for new users if ACL is not supplied. When this option is not
 /// defined, all_channels is assumed to keep backward compatibility. This option doesn't affect Valkey
 /// configuration acl-pubsub-default.
-public struct ValkeyAdvancedConfigValkeyAclChannelsDefault: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ValkeyAdvancedConfigValkeyAclChannelsDefault: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let allchannels = ValkeyAdvancedConfigValkeyAclChannelsDefault(rawValue: "allchannels")
     public static let resetchannels = ValkeyAdvancedConfigValkeyAclChannelsDefault(rawValue: "resetchannels")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -460,13 +589,16 @@ public struct ValkeyAdvancedConfigValkeyAclChannelsDefault: RawRepresentable, Ha
 public struct PostgresAdvancedConfigTrackIoTiming: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let off = PostgresAdvancedConfigTrackIoTiming(rawValue: "off")
     public static let on = PostgresAdvancedConfigTrackIoTiming(rawValue: "on")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

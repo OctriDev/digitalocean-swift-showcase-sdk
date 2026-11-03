@@ -3,7 +3,7 @@
 
 import Foundation
 
-// WebhookNotificationConfig domain models
+/// WebhookNotificationConfig domain models
 /// Generic HTTPS webhook notification channel configuration for create and update requests. The URL must use HTTPS
 /// and must not include userinfo. Optionally configure either `basic_auth` or `bearer_token` (not both), custom
 /// headers, and a signing secret. `url` is not a secret and is returned in full on read. Credential fields
@@ -35,29 +35,41 @@ public struct WebhookNotificationConfig: Codable {
         case signature
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension WebhookNotificationConfig {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.url) else {
-            throw SdkValidationError(field: "url", code: "required", message: "Validation failed for 'url': value is required")
-        }
-        self.url = try container.sdkDecodeRequired(.url)
-        self.basicAuth = try container.sdkDecodeIfPresent(.basicAuth)
-        self.bearerToken = try container.sdkDecodeIfPresent(.bearerToken)
-        self.headers = try container.sdkDecodeIfPresent(.headers)
-        self.signature = try container.sdkDecodeIfPresent(.signature)
-            try sdkValidateUri("url", self.url)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension WebhookNotificationConfig {
-    public init(url: String, basicAuth: WebhookBasicAuth? = nil, bearerToken: WebhookBearerToken? = nil, headers: [String: String]? = nil, signature: WebhookSignatureConfig? = nil) throws {
+public extension WebhookNotificationConfig {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.url) else {
+            throw SdkValidationError(
+                field: "url",
+                code: "required",
+                message: "Validation failed for 'url': value is required"
+            )
+        }
+        url = try container.sdkDecodeRequired(.url)
+        basicAuth = try container.sdkDecodeIfPresent(.basicAuth)
+        bearerToken = try container.sdkDecodeIfPresent(.bearerToken)
+        headers = try container.sdkDecodeIfPresent(.headers)
+        signature = try container.sdkDecodeIfPresent(.signature)
+        try sdkValidateUri("url", url)
+    }
+}
+
+public extension WebhookNotificationConfig {
+    init(
+        url: String,
+        basicAuth: WebhookBasicAuth? = nil,
+        bearerToken: WebhookBearerToken? = nil,
+        headers: [String: String]? = nil,
+        signature: WebhookSignatureConfig? = nil
+    ) throws {
         (self.url, self.basicAuth) = (url, basicAuth)
         (self.bearerToken, self.headers) = (bearerToken, headers)
         self.signature = signature
-            try sdkValidateUri("url", self.url)
+        try sdkValidateUri("url", self.url)
     }
 }

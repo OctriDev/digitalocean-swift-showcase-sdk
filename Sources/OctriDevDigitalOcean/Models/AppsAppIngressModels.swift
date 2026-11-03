@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AppsAppIngress domain models
+/// AppsAppIngress domain models
 /// The redirect configuration for the rule. Only one of `component` or `redirect` may be set.
 public struct AppIngressSpecRuleRoutingRedirect: Codable {
     /// An optional URI path to redirect to. Note: if this is specified the whole URI of the original request will
@@ -32,23 +32,29 @@ public struct AppIngressSpecRuleRoutingRedirect: Codable {
     }
 
     init() {
-        (self.uri, self.authority, self.port, self.scheme, self.redirectCode) = (nil, nil, nil, nil, nil)
+        (uri, authority, port, scheme, redirectCode) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension AppIngressSpecRuleRoutingRedirect {
-    public init(from decoder: Decoder) throws {
+public extension AppIngressSpecRuleRoutingRedirect {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.uri = try container.sdkDecodeIfPresent(.uri)
-        self.authority = try container.sdkDecodeIfPresent(.authority)
-        self.port = try container.sdkDecodeIfPresent(.port)
-        self.scheme = try container.sdkDecodeIfPresent(.scheme)
-        self.redirectCode = try container.sdkDecodeIfPresent(.redirectCode)
+        uri = try container.sdkDecodeIfPresent(.uri)
+        authority = try container.sdkDecodeIfPresent(.authority)
+        port = try container.sdkDecodeIfPresent(.port)
+        scheme = try container.sdkDecodeIfPresent(.scheme)
+        redirectCode = try container.sdkDecodeIfPresent(.redirectCode)
     }
 }
 
-extension AppIngressSpecRuleRoutingRedirect {
-    public init(uri: String? = nil, authority: String? = nil, port: Int? = nil, scheme: String? = nil, redirectCode: Int? = nil) {
+public extension AppIngressSpecRuleRoutingRedirect {
+    init(
+        uri: String? = nil,
+        authority: String? = nil,
+        port: Int? = nil,
+        scheme: String? = nil,
+        redirectCode: Int? = nil
+    ) {
         self.init()
         (self.uri, self.authority) = (uri, authority)
         (self.port, self.scheme) = (port, scheme)
@@ -73,24 +79,24 @@ public struct AppIngressSpec: Codable {
     }
 
     init() {
-        (self.rules, self.customErrorPageUrl) = (nil, nil)
+        (rules, customErrorPageUrl) = (nil, nil)
     }
 }
 
-extension AppIngressSpec {
-    public init(from decoder: Decoder) throws {
+public extension AppIngressSpec {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.rules = try container.sdkDecodeIfPresent(.rules)
-        self.customErrorPageUrl = try container.sdkDecodeIfPresent(.customErrorPageUrl)
-        if let value = self.customErrorPageUrl {
+        rules = try container.sdkDecodeIfPresent(.rules)
+        customErrorPageUrl = try container.sdkDecodeIfPresent(.customErrorPageUrl)
+        if let value = customErrorPageUrl {
             try sdkValidatePattern("custom_error_page_url", value, sdkPattern5e721644673b)
             try sdkValidateUri("custom_error_page_url", value)
         }
     }
 }
 
-extension AppIngressSpec {
-    public init(rules: [AppIngressSpecRule]? = nil, customErrorPageUrl: String? = nil) throws {
+public extension AppIngressSpec {
+    init(rules: [AppIngressSpecRule]? = nil, customErrorPageUrl: String? = nil) throws {
         self.init()
         (self.rules, self.customErrorPageUrl) = (rules, customErrorPageUrl)
         if let value = self.customErrorPageUrl {
@@ -111,24 +117,30 @@ public struct AppIngressSpecRuleStringMatchPrefix: Codable {
         case prefix
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension AppIngressSpecRuleStringMatchPrefix {
-    public init(from decoder: Decoder) throws {
+public extension AppIngressSpecRuleStringMatchPrefix {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.prefix) else {
-            throw SdkValidationError(field: "prefix", code: "required", message: "Validation failed for 'prefix': value is required")
+            throw SdkValidationError(
+                field: "prefix",
+                code: "required",
+                message: "Validation failed for 'prefix': value is required"
+            )
         }
-        self.prefix = try container.sdkDecodeNullable(.prefix)
-        if let value = self.prefix {
+        prefix = try container.sdkDecodeNullable(.prefix)
+        if let value = prefix {
             try validateLength("prefix", value, min: nil, max: 256)
         }
     }
 }
 
-extension AppIngressSpecRuleStringMatchPrefix {
-    public init(prefix: String?) throws {
+public extension AppIngressSpecRuleStringMatchPrefix {
+    init(prefix: String?) throws {
         self.prefix = prefix
         if let value = self.prefix {
             try validateLength("prefix", value, min: nil, max: 256)
@@ -162,23 +174,29 @@ public struct AppIngressSpecRuleRoutingComponent: Codable {
         case rewrite
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AppIngressSpecRuleRoutingComponent {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.preservePathPrefix = try container.sdkDecodeIfPresent(.preservePathPrefix)
-        self.rewrite = try container.sdkDecodeIfPresent(.rewrite)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AppIngressSpecRuleRoutingComponent {
-    public init(name: String, preservePathPrefix: String? = nil, rewrite: String? = nil) {
+public extension AppIngressSpecRuleRoutingComponent {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        preservePathPrefix = try container.sdkDecodeIfPresent(.preservePathPrefix)
+        rewrite = try container.sdkDecodeIfPresent(.rewrite)
+    }
+}
+
+public extension AppIngressSpecRuleRoutingComponent {
+    init(name: String, preservePathPrefix: String? = nil, rewrite: String? = nil) {
         (self.name, self.preservePathPrefix) = (name, preservePathPrefix)
         self.rewrite = rewrite
     }
@@ -197,20 +215,20 @@ public struct AppIngressSpecRuleMatch: Codable {
     }
 
     init() {
-        (self.path, self.authority) = (nil, nil)
+        (path, authority) = (nil, nil)
     }
 }
 
-extension AppIngressSpecRuleMatch {
-    public init(from decoder: Decoder) throws {
+public extension AppIngressSpecRuleMatch {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.path = try container.sdkDecodeIfPresent(.path)
-        self.authority = try container.sdkDecodeIfPresent(.authority)
+        path = try container.sdkDecodeIfPresent(.path)
+        authority = try container.sdkDecodeIfPresent(.authority)
     }
 }
 
-extension AppIngressSpecRuleMatch {
-    public init(path: AppIngressSpecRuleStringMatchPrefix? = nil, authority: AppIngressSpecRuleStringMatchExact? = nil) {
+public extension AppIngressSpecRuleMatch {
+    init(path: AppIngressSpecRuleStringMatchPrefix? = nil, authority: AppIngressSpecRuleStringMatchExact? = nil) {
         self.init()
         (self.path, self.authority) = (path, authority)
     }
@@ -227,24 +245,30 @@ public struct AppIngressSpecRuleStringMatchExact: Codable {
         case exact
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension AppIngressSpecRuleStringMatchExact {
-    public init(from decoder: Decoder) throws {
+public extension AppIngressSpecRuleStringMatchExact {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.exact) else {
-            throw SdkValidationError(field: "exact", code: "required", message: "Validation failed for 'exact': value is required")
+            throw SdkValidationError(
+                field: "exact",
+                code: "required",
+                message: "Validation failed for 'exact': value is required"
+            )
         }
-        self.exact = try container.sdkDecodeNullable(.exact)
-        if let value = self.exact {
+        exact = try container.sdkDecodeNullable(.exact)
+        if let value = exact {
             try validateLength("exact", value, min: nil, max: 256)
         }
     }
 }
 
-extension AppIngressSpecRuleStringMatchExact {
-    public init(exact: String?) throws {
+public extension AppIngressSpecRuleStringMatchExact {
+    init(exact: String?) throws {
         self.exact = exact
         if let value = self.exact {
             try validateLength("exact", value, min: nil, max: 256)
@@ -271,22 +295,27 @@ public struct AppIngressSpecRule: Codable {
     }
 
     init() {
-        (self.match, self.cors, self.component, self.redirect) = (nil, nil, nil, nil)
+        (match, cors, component, redirect) = (nil, nil, nil, nil)
     }
 }
 
-extension AppIngressSpecRule {
-    public init(from decoder: Decoder) throws {
+public extension AppIngressSpecRule {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.match = try container.sdkDecodeIfPresent(.match)
-        self.cors = try container.sdkDecodeIfPresent(.cors)
-        self.component = try container.sdkDecodeIfPresent(.component)
-        self.redirect = try container.sdkDecodeIfPresent(.redirect)
+        match = try container.sdkDecodeIfPresent(.match)
+        cors = try container.sdkDecodeIfPresent(.cors)
+        component = try container.sdkDecodeIfPresent(.component)
+        redirect = try container.sdkDecodeIfPresent(.redirect)
     }
 }
 
-extension AppIngressSpecRule {
-    public init(match: AppIngressSpecRuleMatch? = nil, cors: AppsCorsPolicy? = nil, component: AppIngressSpecRuleRoutingComponent? = nil, redirect: AppIngressSpecRuleRoutingRedirect? = nil) {
+public extension AppIngressSpecRule {
+    init(
+        match: AppIngressSpecRuleMatch? = nil,
+        cors: AppsCorsPolicy? = nil,
+        component: AppIngressSpecRuleRoutingComponent? = nil,
+        redirect: AppIngressSpecRuleRoutingRedirect? = nil
+    ) {
         self.init()
         (self.match, self.cors) = (match, cors)
         (self.component, self.redirect) = (component, redirect)

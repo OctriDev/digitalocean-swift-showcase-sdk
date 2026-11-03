@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiDelete domain models
+/// AgentPlatformAPIApiDelete domain models
 public typealias ApiDeleteCustomEvaluationMetricOutput = [String: JSONValue]
 
 public typealias ApiDeleteEvaluationDatasetOutput = [String: JSONValue]
@@ -22,19 +22,19 @@ public struct ApiDeleteSimulationRunOutput: Codable, SdkResource {
     }
 
     init() {
-        self.runUuid = nil
+        runUuid = nil
     }
 }
 
-extension ApiDeleteSimulationRunOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiDeleteSimulationRunOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.runUuid = try container.sdkDecodeIfPresent(.runUuid)
+        runUuid = try container.sdkDecodeIfPresent(.runUuid)
     }
 }
 
-extension ApiDeleteSimulationRunOutput {
-    public init(runUuid: String? = nil) {
+public extension ApiDeleteSimulationRunOutput {
+    init(runUuid: String? = nil) {
         self.init()
         self.runUuid = runUuid
     }
@@ -51,19 +51,19 @@ public struct ApiDeleteModelAPIKeyOutput: Codable, SdkResource {
     }
 
     init() {
-        self.apiKeyInfo = nil
+        apiKeyInfo = nil
     }
 }
 
-extension ApiDeleteModelAPIKeyOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiDeleteModelAPIKeyOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-extension ApiDeleteModelAPIKeyOutput {
-    public init(apiKeyInfo: ApiModelAPIKeyInfo? = nil) {
+public extension ApiDeleteModelAPIKeyOutput {
+    init(apiKeyInfo: ApiModelAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }
@@ -80,19 +80,19 @@ public struct ApiDeleteOpenAIAPIKeyOutput: Codable, SdkResource {
     }
 
     init() {
-        self.apiKeyInfo = nil
+        apiKeyInfo = nil
     }
 }
 
-extension ApiDeleteOpenAIAPIKeyOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiDeleteOpenAIAPIKeyOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-extension ApiDeleteOpenAIAPIKeyOutput {
-    public init(apiKeyInfo: ApiOpenAIAPIKeyInfo? = nil) {
+public extension ApiDeleteOpenAIAPIKeyOutput {
+    init(apiKeyInfo: ApiOpenAIAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }
@@ -109,19 +109,19 @@ public struct ApiDeleteScheduledIndexingOutput: Codable, SdkResource {
     }
 
     init() {
-        self.indexingInfo = nil
+        indexingInfo = nil
     }
 }
 
-extension ApiDeleteScheduledIndexingOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiDeleteScheduledIndexingOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.indexingInfo = try container.sdkDecodeIfPresent(.indexingInfo)
+        indexingInfo = try container.sdkDecodeIfPresent(.indexingInfo)
     }
 }
 
-extension ApiDeleteScheduledIndexingOutput {
-    public init(indexingInfo: ApiScheduledIndexingInfo? = nil) {
+public extension ApiDeleteScheduledIndexingOutput {
+    init(indexingInfo: ApiScheduledIndexingInfo? = nil) {
         self.init()
         self.indexingInfo = indexingInfo
     }
@@ -139,19 +139,19 @@ public struct ApiDeleteModelRouterOutput: Codable, SdkResource {
     }
 
     init() {
-        self.uuid = nil
+        uuid = nil
     }
 }
 
-extension ApiDeleteModelRouterOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiDeleteModelRouterOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
     }
 }
 
-extension ApiDeleteModelRouterOutput {
-    public init(uuid: String? = nil) {
+public extension ApiDeleteModelRouterOutput {
+    init(uuid: String? = nil) {
         self.init()
         self.uuid = uuid
     }
@@ -169,19 +169,19 @@ public struct ApiDeleteKnowledgeBaseOutput: Codable, SdkResource {
     }
 
     init() {
-        self.uuid = nil
+        uuid = nil
     }
 }
 
-extension ApiDeleteKnowledgeBaseOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiDeleteKnowledgeBaseOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
     }
 }
 
-extension ApiDeleteKnowledgeBaseOutput {
-    public init(uuid: String? = nil) {
+public extension ApiDeleteKnowledgeBaseOutput {
+    init(uuid: String? = nil) {
         self.init()
         self.uuid = uuid
     }
@@ -203,20 +203,20 @@ public struct ApiDeleteKnowledgeBaseDataSourceOutput: Codable, SdkResource {
     }
 
     init() {
-        (self.dataSourceUuid, self.knowledgeBaseUuid) = (nil, nil)
+        (dataSourceUuid, knowledgeBaseUuid) = (nil, nil)
     }
 }
 
-extension ApiDeleteKnowledgeBaseDataSourceOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiDeleteKnowledgeBaseDataSourceOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.dataSourceUuid = try container.sdkDecodeIfPresent(.dataSourceUuid)
-        self.knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
+        dataSourceUuid = try container.sdkDecodeIfPresent(.dataSourceUuid)
+        knowledgeBaseUuid = try container.sdkDecodeIfPresent(.knowledgeBaseUuid)
     }
 }
 
-extension ApiDeleteKnowledgeBaseDataSourceOutput {
-    public init(dataSourceUuid: String? = nil, knowledgeBaseUuid: String? = nil) {
+public extension ApiDeleteKnowledgeBaseDataSourceOutput {
+    init(dataSourceUuid: String? = nil, knowledgeBaseUuid: String? = nil) {
         self.init()
         (self.dataSourceUuid, self.knowledgeBaseUuid) = (dataSourceUuid, knowledgeBaseUuid)
     }
@@ -238,20 +238,20 @@ public struct ApiDeleteModelEvaluationRunOutputPublic: Codable, SdkResource {
     }
 
     init() {
-        (self.error, self.status) = (nil, nil)
+        (error, status) = (nil, nil)
     }
 }
 
-extension ApiDeleteModelEvaluationRunOutputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiDeleteModelEvaluationRunOutputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.error = try container.sdkDecodeIfPresent(.error)
-        self.status = try container.sdkDecodeIfPresent(.status)
+        error = try container.sdkDecodeIfPresent(.error)
+        status = try container.sdkDecodeIfPresent(.status)
     }
 }
 
-extension ApiDeleteModelEvaluationRunOutputPublic {
-    public init(error: String? = nil, status: ApiDeleteModelEvaluationRunStatus? = nil) {
+public extension ApiDeleteModelEvaluationRunOutputPublic {
+    init(error: String? = nil, status: ApiDeleteModelEvaluationRunStatus? = nil) {
         self.init()
         (self.error, self.status) = (error, status)
     }
@@ -268,19 +268,19 @@ public struct ApiDeleteAnthropicAPIKeyOutput: Codable, SdkResource {
     }
 
     init() {
-        self.apiKeyInfo = nil
+        apiKeyInfo = nil
     }
 }
 
-extension ApiDeleteAnthropicAPIKeyOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiDeleteAnthropicAPIKeyOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-extension ApiDeleteAnthropicAPIKeyOutput {
-    public init(apiKeyInfo: ApiAnthropicAPIKeyInfo? = nil) {
+public extension ApiDeleteAnthropicAPIKeyOutput {
+    init(apiKeyInfo: ApiAnthropicAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }
@@ -298,19 +298,19 @@ public struct ApiDeleteWorkspaceOutput: Codable, SdkResource {
     }
 
     init() {
-        self.workspaceUuid = nil
+        workspaceUuid = nil
     }
 }
 
-extension ApiDeleteWorkspaceOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiDeleteWorkspaceOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.workspaceUuid = try container.sdkDecodeIfPresent(.workspaceUuid)
+        workspaceUuid = try container.sdkDecodeIfPresent(.workspaceUuid)
     }
 }
 
-extension ApiDeleteWorkspaceOutput {
-    public init(workspaceUuid: String? = nil) {
+public extension ApiDeleteWorkspaceOutput {
+    init(workspaceUuid: String? = nil) {
         self.init()
         self.workspaceUuid = workspaceUuid
     }
@@ -328,19 +328,19 @@ public struct ApiDeleteScenarioSetOutput: Codable, SdkResource {
     }
 
     init() {
-        self.scenarioSetUuid = nil
+        scenarioSetUuid = nil
     }
 }
 
-extension ApiDeleteScenarioSetOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiDeleteScenarioSetOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.scenarioSetUuid = try container.sdkDecodeIfPresent(.scenarioSetUuid)
+        scenarioSetUuid = try container.sdkDecodeIfPresent(.scenarioSetUuid)
     }
 }
 
-extension ApiDeleteScenarioSetOutput {
-    public init(scenarioSetUuid: String? = nil) {
+public extension ApiDeleteScenarioSetOutput {
+    init(scenarioSetUuid: String? = nil) {
         self.init()
         self.scenarioSetUuid = scenarioSetUuid
     }
@@ -357,19 +357,19 @@ public struct ApiDeleteAgentAPIKeyOutput: Codable, SdkResource {
     }
 
     init() {
-        self.apiKeyInfo = nil
+        apiKeyInfo = nil
     }
 }
 
-extension ApiDeleteAgentAPIKeyOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiDeleteAgentAPIKeyOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
+        apiKeyInfo = try container.sdkDecodeIfPresent(.apiKeyInfo)
     }
 }
 
-extension ApiDeleteAgentAPIKeyOutput {
-    public init(apiKeyInfo: ApiAgentAPIKeyInfo? = nil) {
+public extension ApiDeleteAgentAPIKeyOutput {
+    init(apiKeyInfo: ApiAgentAPIKeyInfo? = nil) {
         self.init()
         self.apiKeyInfo = apiKeyInfo
     }
@@ -391,20 +391,20 @@ public struct ApiDeleteCustomModelOutputPublic: Codable, SdkResource {
     }
 
     init() {
-        (self.error, self.status) = (nil, nil)
+        (error, status) = (nil, nil)
     }
 }
 
-extension ApiDeleteCustomModelOutputPublic {
-    public init(from decoder: Decoder) throws {
+public extension ApiDeleteCustomModelOutputPublic {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.error = try container.sdkDecodeIfPresent(.error)
-        self.status = try container.sdkDecodeIfPresent(.status)
+        error = try container.sdkDecodeIfPresent(.error)
+        status = try container.sdkDecodeIfPresent(.status)
     }
 }
 
-extension ApiDeleteCustomModelOutputPublic {
-    public init(error: String? = nil, status: ApiDeleteCustomModelStatus? = nil) {
+public extension ApiDeleteCustomModelOutputPublic {
+    init(error: String? = nil, status: ApiDeleteCustomModelStatus? = nil) {
         self.init()
         (self.error, self.status) = (error, status)
     }
@@ -421,19 +421,19 @@ public struct ApiDeleteAgentOutput: Codable, SdkResource {
     }
 
     init() {
-        self.agent = nil
+        agent = nil
     }
 }
 
-extension ApiDeleteAgentOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiDeleteAgentOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.agent = try container.sdkDecodeIfPresent(.agent)
+        agent = try container.sdkDecodeIfPresent(.agent)
     }
 }
 
-extension ApiDeleteAgentOutput {
-    public init(agent: ApiAgent? = nil) {
+public extension ApiDeleteAgentOutput {
+    init(agent: ApiAgent? = nil) {
         self.init()
         self.agent = agent
     }
@@ -443,14 +443,20 @@ extension ApiDeleteAgentOutput {
 public struct ApiDeleteCustomModelStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
-    public static let deleteCustomModelStatusUnspecified = ApiDeleteCustomModelStatus(rawValue: "DELETE_CUSTOM_MODEL_STATUS_UNSPECIFIED")
-    public static let deleteCustomModelStatusSuccess = ApiDeleteCustomModelStatus(rawValue: "DELETE_CUSTOM_MODEL_STATUS_SUCCESS")
-    public static let deleteCustomModelStatusFail = ApiDeleteCustomModelStatus(rawValue: "DELETE_CUSTOM_MODEL_STATUS_FAIL")
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let deleteCustomModelStatusUnspecified =
+        ApiDeleteCustomModelStatus(rawValue: "DELETE_CUSTOM_MODEL_STATUS_UNSPECIFIED")
+    public static let deleteCustomModelStatusSuccess =
+        ApiDeleteCustomModelStatus(rawValue: "DELETE_CUSTOM_MODEL_STATUS_SUCCESS")
+    public static let deleteCustomModelStatusFail =
+        ApiDeleteCustomModelStatus(rawValue: "DELETE_CUSTOM_MODEL_STATUS_FAIL")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -463,14 +469,20 @@ public struct ApiDeleteCustomModelStatus: RawRepresentable, Hashable, Codable, S
 public struct ApiDeleteModelEvaluationRunStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
-    public static let deleteModelEvaluationRunStatusUnspecified = ApiDeleteModelEvaluationRunStatus(rawValue: "DELETE_MODEL_EVALUATION_RUN_STATUS_UNSPECIFIED")
-    public static let deleteModelEvaluationRunStatusSuccess = ApiDeleteModelEvaluationRunStatus(rawValue: "DELETE_MODEL_EVALUATION_RUN_STATUS_SUCCESS")
-    public static let deleteModelEvaluationRunStatusFail = ApiDeleteModelEvaluationRunStatus(rawValue: "DELETE_MODEL_EVALUATION_RUN_STATUS_FAIL")
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let deleteModelEvaluationRunStatusUnspecified =
+        ApiDeleteModelEvaluationRunStatus(rawValue: "DELETE_MODEL_EVALUATION_RUN_STATUS_UNSPECIFIED")
+    public static let deleteModelEvaluationRunStatusSuccess =
+        ApiDeleteModelEvaluationRunStatus(rawValue: "DELETE_MODEL_EVALUATION_RUN_STATUS_SUCCESS")
+    public static let deleteModelEvaluationRunStatusFail =
+        ApiDeleteModelEvaluationRunStatus(rawValue: "DELETE_MODEL_EVALUATION_RUN_STATUS_FAIL")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

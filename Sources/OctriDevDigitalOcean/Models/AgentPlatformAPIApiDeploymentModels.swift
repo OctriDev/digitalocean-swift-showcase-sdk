@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiDeployment domain models
+/// AgentPlatformAPIApiDeployment domain models
 /// Description of deployment
 public struct ApiDeployment: Codable {
     /// Creation date / time
@@ -43,32 +43,40 @@ public struct ApiDeployment: Codable {
     }
 
     init() {
-        (self.createdAt, self.name, self.status, self.updatedAt, self.url) = (nil, nil, nil, nil, nil)
-        (self.uuid, self.visibility) = (nil, nil)
+        (createdAt, name, status, updatedAt, url) = (nil, nil, nil, nil, nil)
+        (uuid, visibility) = (nil, nil)
     }
 }
 
-extension ApiDeployment {
-    public init(from decoder: Decoder) throws {
+public extension ApiDeployment {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.url = try container.sdkDecodeIfPresent(.url)
-        self.uuid = try container.sdkDecodeIfPresent(.uuid)
-        self.visibility = try container.sdkDecodeIfPresent(.visibility)
-        if let value = self.createdAt {
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        name = try container.sdkDecodeIfPresent(.name)
+        status = try container.sdkDecodeIfPresent(.status)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        url = try container.sdkDecodeIfPresent(.url)
+        uuid = try container.sdkDecodeIfPresent(.uuid)
+        visibility = try container.sdkDecodeIfPresent(.visibility)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiDeployment {
-    public init(createdAt: Date? = nil, name: String? = nil, status: ApiDeploymentStatus? = nil, updatedAt: Date? = nil, url: String? = nil, uuid: String? = nil, visibility: ApiDeploymentVisibility? = nil) throws {
+public extension ApiDeployment {
+    init(
+        createdAt: Date? = nil,
+        name: String? = nil,
+        status: ApiDeploymentStatus? = nil,
+        updatedAt: Date? = nil,
+        url: String? = nil,
+        uuid: String? = nil,
+        visibility: ApiDeploymentVisibility? = nil
+    ) throws {
         self.init()
         (self.createdAt, self.name) = (createdAt, name)
         (self.status, self.updatedAt) = (status, updatedAt)
@@ -87,7 +95,10 @@ extension ApiDeployment {
 public struct ApiDeploymentStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let statusUnknown = ApiDeploymentStatus(rawValue: "STATUS_UNKNOWN")
     public static let statusWaitingForDeployment = ApiDeploymentStatus(rawValue: "STATUS_WAITING_FOR_DEPLOYMENT")
     public static let statusDeploying = ApiDeploymentStatus(rawValue: "STATUS_DEPLOYING")
@@ -101,7 +112,7 @@ public struct ApiDeploymentStatus: RawRepresentable, Hashable, Codable, Sendable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -118,7 +129,10 @@ public struct ApiDeploymentStatus: RawRepresentable, Hashable, Codable, Sendable
 public struct ApiDeploymentVisibility: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let visibilityUnknown = ApiDeploymentVisibility(rawValue: "VISIBILITY_UNKNOWN")
     public static let visibilityDisabled = ApiDeploymentVisibility(rawValue: "VISIBILITY_DISABLED")
     public static let visibilityPlayground = ApiDeploymentVisibility(rawValue: "VISIBILITY_PLAYGROUND")
@@ -127,7 +141,7 @@ public struct ApiDeploymentVisibility: RawRepresentable, Hashable, Codable, Send
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

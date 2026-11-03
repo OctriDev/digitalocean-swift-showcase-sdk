@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiFile domain models
+/// AgentPlatformAPIApiFile domain models
 /// Detailed info about each presigned URL returned to the client.
 public struct ApiFilePresignedUrlResponse: Codable {
     /// The time the url expires at.
@@ -27,25 +27,30 @@ public struct ApiFilePresignedUrlResponse: Codable {
     }
 
     init() {
-        (self.expiresAt, self.objectKey, self.originalFileName, self.presignedUrl) = (nil, nil, nil, nil)
+        (expiresAt, objectKey, originalFileName, presignedUrl) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiFilePresignedUrlResponse {
-    public init(from decoder: Decoder) throws {
+public extension ApiFilePresignedUrlResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
-        self.objectKey = try container.sdkDecodeIfPresent(.objectKey)
-        self.originalFileName = try container.sdkDecodeIfPresent(.originalFileName)
-        self.presignedUrl = try container.sdkDecodeIfPresent(.presignedUrl)
-        if let value = self.expiresAt {
+        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+        objectKey = try container.sdkDecodeIfPresent(.objectKey)
+        originalFileName = try container.sdkDecodeIfPresent(.originalFileName)
+        presignedUrl = try container.sdkDecodeIfPresent(.presignedUrl)
+        if let value = expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
     }
 }
 
-extension ApiFilePresignedUrlResponse {
-    public init(expiresAt: Date? = nil, objectKey: String? = nil, originalFileName: String? = nil, presignedUrl: String? = nil) throws {
+public extension ApiFilePresignedUrlResponse {
+    init(
+        expiresAt: Date? = nil,
+        objectKey: String? = nil,
+        originalFileName: String? = nil,
+        presignedUrl: String? = nil
+    ) throws {
         self.init()
         (self.expiresAt, self.objectKey) = (expiresAt, objectKey)
         (self.originalFileName, self.presignedUrl) = (originalFileName, presignedUrl)
@@ -74,21 +79,21 @@ public struct ApiFileUploadDataSource: Codable {
     }
 
     init() {
-        (self.originalFileName, self.sizeInBytes, self.storedObjectKey) = (nil, nil, nil)
+        (originalFileName, sizeInBytes, storedObjectKey) = (nil, nil, nil)
     }
 }
 
-extension ApiFileUploadDataSource {
-    public init(from decoder: Decoder) throws {
+public extension ApiFileUploadDataSource {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.originalFileName = try container.sdkDecodeIfPresent(.originalFileName)
-        self.sizeInBytes = try container.sdkDecodeIfPresent(.sizeInBytes)
-        self.storedObjectKey = try container.sdkDecodeIfPresent(.storedObjectKey)
+        originalFileName = try container.sdkDecodeIfPresent(.originalFileName)
+        sizeInBytes = try container.sdkDecodeIfPresent(.sizeInBytes)
+        storedObjectKey = try container.sdkDecodeIfPresent(.storedObjectKey)
     }
 }
 
-extension ApiFileUploadDataSource {
-    public init(originalFileName: String? = nil, sizeInBytes: String? = nil, storedObjectKey: String? = nil) {
+public extension ApiFileUploadDataSource {
+    init(originalFileName: String? = nil, sizeInBytes: String? = nil, storedObjectKey: String? = nil) {
         self.init()
         (self.originalFileName, self.sizeInBytes) = (originalFileName, sizeInBytes)
         self.storedObjectKey = storedObjectKey

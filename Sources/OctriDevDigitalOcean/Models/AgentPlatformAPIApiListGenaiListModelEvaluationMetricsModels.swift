@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiList domain models
+/// AgentPlatformAPIApiList domain models
 /// Typed representation of the `ApiListModelEvaluationMetricsOutput` API schema.
 public struct ApiListModelEvaluationMetricsOutput: Codable, SdkResource {
     /// List of model evaluation metrics
@@ -15,19 +15,19 @@ public struct ApiListModelEvaluationMetricsOutput: Codable, SdkResource {
     }
 
     init() {
-        self.metrics = nil
+        metrics = nil
     }
 }
 
-extension ApiListModelEvaluationMetricsOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiListModelEvaluationMetricsOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.metrics = try container.sdkDecodeIfPresent(.metrics)
+        metrics = try container.sdkDecodeIfPresent(.metrics)
     }
 }
 
-extension ApiListModelEvaluationMetricsOutput {
-    public init(metrics: [ApiEvaluationMetric]? = nil) {
+public extension ApiListModelEvaluationMetricsOutput {
+    init(metrics: [ApiEvaluationMetric]? = nil) {
         self.init()
         self.metrics = metrics
     }

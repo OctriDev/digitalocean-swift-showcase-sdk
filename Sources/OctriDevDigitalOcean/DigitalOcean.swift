@@ -9,171 +9,548 @@ public class ActionGatewayNamespace {
         self.config = config
     }
 
-/// Returns the per-minute limits set for the actor and the limits in effect, each the lower of your team's limit and the actor's override. Returns 404 when the actor has no sessions, connections, or limit overrides.
-    public func actorLimitsGet(actorId: String, requestOptions: RequestOptions? = nil) async throws -> GetActorLimitsResponse {
-        return try await ActionGatewayMethods.actorLimitsGet(config: config, actorId: actorId, requestOptions: requestOptions)
+    /// Returns the per-minute limits set for the actor and the limits in effect, each the lower of your team's limit
+    /// and the actor's override. Returns 404 when the actor has no sessions, connections, or limit overrides.
+    public func actorLimitsGet(
+        actorId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetActorLimitsResponse {
+        try await ActionGatewayMethods.actorLimitsGet(config: config, actorId: actorId, requestOptions: requestOptions)
     }
 
-/// Removes the actor's overrides for the listed categories, which then follow your team's limits again. Clearing a category without an override succeeds.
-    public func actorLimitsDelete(actorId: String, categories: [LimitCategory], requestOptions: RequestOptions? = nil) async throws -> EmptyResponse {
-        return try await ActionGatewayMethods.actorLimitsDelete(config: config, actorId: actorId, categories: categories, requestOptions: requestOptions)
+    /// Removes the actor's overrides for the listed categories, which then follow your team's limits again. Clearing a
+    /// category without an override succeeds.
+    public func actorLimitsDelete(
+        actorId: String,
+        categories: [LimitCategory],
+        requestOptions: RequestOptions? = nil
+    ) async throws -> EmptyResponse {
+        try await ActionGatewayMethods.actorLimitsDelete(
+            config: config,
+            actorId: actorId,
+            categories: categories,
+            requestOptions: requestOptions
+        )
     }
 
-/// Sets per-minute limits for the listed categories and leaves the others unchanged. A limit may not exceed your team's current limit for the category (400 otherwise), and 0 blocks every call in the category. The actor does not need to exist yet.
-    public func actorLimitsUpdate(actorId: String, overrides: [LimitOverride], requestOptions: RequestOptions? = nil) async throws -> EmptyResponse {
-        return try await ActionGatewayMethods.actorLimitsUpdate(config: config, actorId: actorId, overrides: overrides, requestOptions: requestOptions)
+    /// Sets per-minute limits for the listed categories and leaves the others unchanged. A limit may not exceed your
+    /// team's current limit for the category (400 otherwise), and 0 blocks every call in the category. The actor does
+    /// not need to exist yet.
+    public func actorLimitsUpdate(
+        actorId: String,
+        overrides: [LimitOverride],
+        requestOptions: RequestOptions? = nil
+    ) async throws -> EmptyResponse {
+        try await ActionGatewayMethods.actorLimitsUpdate(
+            config: config,
+            actorId: actorId,
+            overrides: overrides,
+            requestOptions: requestOptions
+        )
     }
 
-/// Connects one of your users, identified by `user_id`, to a provider so tools can act on their account. An OAuth connection starts pending, and authorization carries the URL to send the user to; read the connection until it is active or expired. A connection through a team API-key credential is active immediately. There is one connection per provider and `user_id` for each DigitalOcean user who creates connections. Repeating the request returns the existing connection when its scopes cover the request, reusing a pending connection's link, and restarts an expired or revoked connection under the same ID. Requesting scopes beyond an existing connection's, or a different credential, returns 400 until that connection is deleted.
-    public func connectionsCreate(provider: String, userId: String, scopes: [String]? = nil, connectionParameters: [String: JSONValue]? = nil, credential: ConnectionCreateCredential? = nil, network: ConnectionCreateNetwork? = nil, requestOptions: RequestOptions? = nil) async throws -> ConnectionResponse {
-        return try await ActionGatewayMethods.connectionsCreate(config: config, provider: provider, userId: userId, scopes: scopes, connectionParameters: connectionParameters, credential: credential, network: network, requestOptions: requestOptions)
+    /// Connects one of your users, identified by `user_id`, to a provider so tools can act on their account. An OAuth
+    /// connection starts pending, and authorization carries the URL to send the user to; read the connection until it
+    /// is active or expired. A connection through a team API-key credential is active immediately. There is one
+    /// connection per provider and `user_id` for each DigitalOcean user who creates connections. Repeating the request
+    /// returns the existing connection when its scopes cover the request, reusing a pending connection's link, and
+    /// restarts an expired or revoked connection under the same ID. Requesting scopes beyond an existing connection's,
+    /// or a different credential, returns 400 until that connection is deleted.
+    public func connectionsCreate(
+        provider: String,
+        userId: String,
+        scopes: [String]? = nil,
+        connectionParameters: [String: JSONValue]? = nil,
+        credential: ConnectionCreateCredential? = nil,
+        network: ConnectionCreateNetwork? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ConnectionResponse {
+        try await ActionGatewayMethods.connectionsCreate(
+            config: config,
+            provider: provider,
+            userId: userId,
+            scopes: scopes,
+            connectionParameters: connectionParameters,
+            credential: credential,
+            network: network,
+            requestOptions: requestOptions
+        )
     }
 
-/// Returns the connections you can see, excluding revoked ones. Offset-paged with page and `per_page`; filter by provider, `user_id`, and status.
-    public func connectionsList(provider: String? = nil, userId: String? = nil, status: ConnectionsListParameterX0feec021? = nil, sort: ConnectionsListParameter? = nil, sortDirection: ConnectionsListParameterXb8008b58? = nil, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ListConnectionsResponse {
-        return try await ActionGatewayMethods.connectionsList(config: config, provider: provider, userId: userId, status: status, sort: sort, sortDirection: sortDirection, page: page, perPage: perPage, requestOptions: requestOptions)
+    /// Returns the connections you can see, excluding revoked ones. Offset-paged with page and `per_page`; filter by
+    /// provider, `user_id`, and status.
+    public func connectionsList(
+        provider: String? = nil,
+        userId: String? = nil,
+        status: ConnectionsListParameterX0feec021? = nil,
+        sort: ConnectionsListParameter? = nil,
+        sortDirection: ConnectionsListParameterXb8008b58? = nil,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListConnectionsResponse {
+        try await ActionGatewayMethods.connectionsList(
+            config: config,
+            provider: provider,
+            userId: userId,
+            status: status,
+            sort: sort,
+            sortDirection: sortDirection,
+            page: page,
+            perPage: perPage,
+            requestOptions: requestOptions
+        )
     }
 
-/// Returns the connection and, while it is pending, the authorization the user still has to complete. Reading a pending connection picks up a completed authorization, and marks the connection expired once its link has lapsed. Returns 404 for an unknown connection or one you cannot see.
-    public func connectionsGet(id: String, requestOptions: RequestOptions? = nil) async throws -> GetConnectionResponse {
-        return try await ActionGatewayMethods.connectionsGet(config: config, id: id, requestOptions: requestOptions)
+    /// Returns the connection and, while it is pending, the authorization the user still has to complete. Reading a
+    /// pending connection picks up a completed authorization, and marks the connection expired once its link has
+    /// lapsed. Returns 404 for an unknown connection or one you cannot see.
+    public func connectionsGet(
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetConnectionResponse {
+        try await ActionGatewayMethods.connectionsGet(config: config, id: id, requestOptions: requestOptions)
     }
 
-/// Marks the connection revoked and returns it; for an OAuth connection, its stored tokens are deleted first. Creating a connection for the same provider and `user_id` later reuses the same ID. Only the user who created the connection can delete it; for anyone else it is 404.
-    public func connectionsDelete(id: String, requestOptions: RequestOptions? = nil) async throws -> DeleteConnectionResponse {
-        return try await ActionGatewayMethods.connectionsDelete(config: config, id: id, requestOptions: requestOptions)
+    /// Marks the connection revoked and returns it; for an OAuth connection, its stored tokens are deleted first.
+    /// Creating a connection for the same provider and `user_id` later reuses the same ID. Only the user who created
+    /// the connection can delete it; for anyone else it is 404.
+    public func connectionsDelete(
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DeleteConnectionResponse {
+        try await ActionGatewayMethods.connectionsDelete(config: config, id: id, requestOptions: requestOptions)
     }
 
-/// Registers a remote MCP server for your team, using the streamable HTTP transport. The server starts with `syncStatus` pending and no tools: discover its tools with `POST .../mcp-servers/{server_ref}/resync`, then choose which to enable with `PUT .../mcp-servers/{server_ref}/tools`. The endpoint must be HTTPS and resolve only to public IP addresses. The number of servers per team is limited (10 by default); registering beyond it returns 429. Returns 409 when `serverRef` is already in use.
-    public func mcpServersCreate(options: ActionGatewayMethods.McpServersCreateOptions, requestOptions: RequestOptions? = nil) async throws -> McpServerResponse {
-        return try await ActionGatewayMethods.mcpServersCreate(config: config, options: options, requestOptions: requestOptions)
+    /// Registers a remote MCP server for your team, using the streamable HTTP transport. The server starts with
+    /// `syncStatus` pending and no tools: discover its tools with `POST .../mcp-servers/{server_ref}/resync`, then
+    /// choose which to enable with `PUT .../mcp-servers/{server_ref}/tools`. The endpoint must be HTTPS and resolve
+    /// only to public IP addresses. The number of servers per team is limited (10 by default); registering beyond it
+    /// returns 429. Returns 409 when `serverRef` is already in use.
+    public func mcpServersCreate(
+        options: ActionGatewayMethods.McpServersCreateOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> McpServerResponse {
+        try await ActionGatewayMethods.mcpServersCreate(
+            config: config,
+            options: options,
+            requestOptions: requestOptions
+        )
     }
 }
 
-extension ActionGatewayNamespace {
-/// Returns every MCP server your team has registered, sorted by `serverRef`.
-    public func mcpServersList(requestOptions: RequestOptions? = nil) async throws -> ListMcpServersResponse {
-        return try await ActionGatewayMethods.mcpServersList(config: config, requestOptions: requestOptions)
+public extension ActionGatewayNamespace {
+    /// Returns every MCP server your team has registered, sorted by `serverRef`.
+    func mcpServersList(requestOptions: RequestOptions? = nil) async throws -> ListMcpServersResponse {
+        try await ActionGatewayMethods.mcpServersList(config: config, requestOptions: requestOptions)
     }
 
-/// Returns one of your team's MCP servers, or 404 when your team has none with this `serverRef`.
-    public func mcpServersGet(serverRef: String, requestOptions: RequestOptions? = nil) async throws -> McpServerResponse {
-        return try await ActionGatewayMethods.mcpServersGet(config: config, serverRef: serverRef, requestOptions: requestOptions)
+    /// Returns one of your team's MCP servers, or 404 when your team has none with this `serverRef`.
+    func mcpServersGet(serverRef: String, requestOptions: RequestOptions? = nil) async throws -> McpServerResponse {
+        try await ActionGatewayMethods.mcpServersGet(
+            config: config,
+            serverRef: serverRef,
+            requestOptions: requestOptions
+        )
     }
 
-/// Updates the description of a registered MCP server, which appears on its catalog card immediately. Supply `description` to replace the stored text, or an empty value to clear it; the description can contain at most 1024 characters. You cannot change the server endpoint or credentials with this operation; delete the server and register it again to change them.
+    /// Updates the description of a registered MCP server, which appears on its catalog card immediately. Supply
+    /// `description` to replace the stored text, or an empty value to clear it; the description can contain at most
+    /// 1024 characters. You cannot change the server endpoint or credentials with this operation; delete the server and
+    /// register it again to change them.
     ///
-    /// Changes the server's description, which is shown on its catalog card immediately. The endpoint and credentials cannot be changed; to change them, delete the server and register it again.
-    public func mcpServersPatch(serverRef: String, description: String? = nil, requestOptions: RequestOptions? = nil) async throws -> McpServerResponse {
-        return try await ActionGatewayMethods.mcpServersPatch(config: config, serverRef: serverRef, description: description, requestOptions: requestOptions)
+    /// Changes the server's description, which is shown on its catalog card immediately. The endpoint and credentials
+    /// cannot be changed; to change them, delete the server and register it again.
+    func mcpServersPatch(
+        serverRef: String,
+        description: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> McpServerResponse {
+        try await ActionGatewayMethods.mcpServersPatch(
+            config: config,
+            serverRef: serverRef,
+            description: description,
+            requestOptions: requestOptions
+        )
     }
 
-/// Disables all of the server's tools, removes them from your team's catalog, and deletes the server. An `api_key` supplied at registration is deleted; a `credentialRef` you supplied is left untouched. For a server registered with `credentialRefSource` connection, every user connection made through its OAuth client is revoked. Returns the deleted server, or 404 when it does not exist.
-    public func mcpServersDelete(serverRef: String, requestOptions: RequestOptions? = nil) async throws -> McpServerResponse {
-        return try await ActionGatewayMethods.mcpServersDelete(config: config, serverRef: serverRef, requestOptions: requestOptions)
+    /// Disables all of the server's tools, removes them from your team's catalog, and deletes the server. An `api_key`
+    /// supplied at registration is deleted; a `credentialRef` you supplied is left untouched. For a server registered
+    /// with `credentialRefSource` connection, every user connection made through its OAuth client is revoked. Returns
+    /// the deleted server, or 404 when it does not exist.
+    func mcpServersDelete(serverRef: String, requestOptions: RequestOptions? = nil) async throws -> McpServerResponse {
+        try await ActionGatewayMethods.mcpServersDelete(
+            config: config,
+            serverRef: serverRef,
+            requestOptions: requestOptions
+        )
     }
 
-/// Connects to the server, lists its tools, and records them. Discovered tools are not callable until you enable them. When discovery finishes in time, returns 200 with the server and its tools; a discovery failure is reported in `syncStatus` and `syncError` rather than as an error. Otherwise returns 202 with pending set while discovery continues: poll `GET .../mcp-servers/{server_ref}` until `lastSyncedAt` or `syncError` changes (`syncStatus` is not reset while discovery runs). For a server registered with `credentialRefSource` connection, `user_id` is required; if that user has not authorized the server yet, the response carries authorization with the URL to send them to. Resyncs are rate limited per team, and a team can run only a few discoveries at once; either limit returns 429.
-    public func mcpServersRunResync(serverRef: String, userId: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ResyncMcpServerResponse {
-        return try await ActionGatewayMethods.mcpServersRunResync(config: config, serverRef: serverRef, userId: userId, requestOptions: requestOptions)
+    /// Connects to the server, lists its tools, and records them. Discovered tools are not callable until you enable
+    /// them. When discovery finishes in time, returns 200 with the server and its tools; a discovery failure is
+    /// reported in `syncStatus` and `syncError` rather than as an error. Otherwise returns 202 with pending set while
+    /// discovery continues: poll `GET .../mcp-servers/{server_ref}` until `lastSyncedAt` or `syncError` changes
+    /// (`syncStatus` is not reset while discovery runs). For a server registered with `credentialRefSource` connection,
+    /// `user_id` is required; if that user has not authorized the server yet, the response carries authorization with
+    /// the URL to send them to. Resyncs are rate limited per team, and a team can run only a few discoveries at once;
+    /// either limit returns 429.
+    func mcpServersRunResync(
+        serverRef: String,
+        userId: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ResyncMcpServerResponse {
+        try await ActionGatewayMethods.mcpServersRunResync(
+            config: config,
+            serverRef: serverRef,
+            userId: userId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Returns every tool discovered on the server, sorted by name, with whether each is enabled. Tools that have since disappeared from the server stay listed.
-    public func mcpServersListTools(serverRef: String, requestOptions: RequestOptions? = nil) async throws -> ListMcpServerToolsResponse {
-        return try await ActionGatewayMethods.mcpServersListTools(config: config, serverRef: serverRef, requestOptions: requestOptions)
+    /// Returns every tool discovered on the server, sorted by name, with whether each is enabled. Tools that have since
+    /// disappeared from the server stay listed.
+    func mcpServersListTools(
+        serverRef: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListMcpServerToolsResponse {
+        try await ActionGatewayMethods.mcpServersListTools(
+            config: config,
+            serverRef: serverRef,
+            requestOptions: requestOptions
+        )
     }
 
-/// `enabledToolSlugs` is the complete set to enable; every other tool of the server is disabled. An enabled tool is added to your team's catalog at its latest discovered version, and a disabled one is removed from it. Repeating the same set changes nothing. Before changing anything, each tool being enabled, re-enabled, or moved to a newer discovered version is verified against the live server: it must still be listed there, with the same input schema as when it was discovered. If any check fails or the server cannot be reached, the request fails with 400 and nothing changes; resync and try again. An unknown tool slug is also rejected with 400. A request that needs verification counts against the resync rate limit (429). Returns the server's full tool list.
-    public func mcpServersUpdateTools(serverRef: String, enabledToolSlugs: [String], userId: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListMcpServerToolsResponse {
-        return try await ActionGatewayMethods.mcpServersUpdateTools(config: config, serverRef: serverRef, enabledToolSlugs: enabledToolSlugs, userId: userId, requestOptions: requestOptions)
+    /// `enabledToolSlugs` is the complete set to enable; every other tool of the server is disabled. An enabled tool is
+    /// added to your team's catalog at its latest discovered version, and a disabled one is removed from it. Repeating
+    /// the same set changes nothing. Before changing anything, each tool being enabled, re-enabled, or moved to a newer
+    /// discovered version is verified against the live server: it must still be listed there, with the same input
+    /// schema as when it was discovered. If any check fails or the server cannot be reached, the request fails with 400
+    /// and nothing changes; resync and try again. An unknown tool slug is also rejected with 400. A request that needs
+    /// verification counts against the resync rate limit (429). Returns the server's full tool list.
+    func mcpServersUpdateTools(
+        serverRef: String,
+        enabledToolSlugs: [String],
+        userId: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListMcpServerToolsResponse {
+        try await ActionGatewayMethods.mcpServersUpdateTools(
+            config: config,
+            serverRef: serverRef,
+            enabledToolSlugs: enabledToolSlugs,
+            userId: userId,
+            requestOptions: requestOptions
+        )
     }
 
-/// An output view is a named projection of one tool version's output: tool calls that use it return only the listed fields, and its `output_schema` describes the result. The view is bound to the tool version your catalog currently releases. Returns 409 when your team already has a view with this name on the tool version, and 429 when your team already has the maximum of 20 views on it.
-    public func outputViewsCreate(name: String, fields: [String], tool: String? = nil, toolId: String? = nil, description: String? = nil, requestOptions: RequestOptions? = nil) async throws -> OutputViewResponse {
-        return try await ActionGatewayMethods.outputViewsCreate(config: config, name: name, fields: fields, tool: tool, toolId: toolId, description: description, requestOptions: requestOptions)
+    /// An output view is a named projection of one tool version's output: tool calls that use it return only the listed
+    /// fields, and its `output_schema` describes the result. The view is bound to the tool version your catalog
+    /// currently releases. Returns 409 when your team already has a view with this name on the tool version, and 429
+    /// when your team already has the maximum of 20 views on it.
+    func outputViewsCreate(
+        name: String,
+        fields: [String],
+        tool: String? = nil,
+        toolId: String? = nil,
+        description: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> OutputViewResponse {
+        try await ActionGatewayMethods.outputViewsCreate(
+            config: config,
+            name: name,
+            fields: fields,
+            tool: tool,
+            toolId: toolId,
+            description: description,
+            requestOptions: requestOptions
+        )
     }
 }
 
-extension ActionGatewayNamespace {
-/// Returns the output views your team can use: views DigitalOcean publishes to every team, plus your team's own. Cursor-paged with `page_size` and `page_token`; no total is reported.
-    public func outputViewsList(tool: String? = nil, toolId: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListOutputViewsResponse {
-        return try await ActionGatewayMethods.outputViewsList(config: config, tool: tool, toolId: toolId, pageSize: pageSize, pageToken: pageToken, requestOptions: requestOptions)
+public extension ActionGatewayNamespace {
+    /// Returns the output views your team can use: views DigitalOcean publishes to every team, plus your team's own.
+    /// Cursor-paged with `page_size` and `page_token`; no total is reported.
+    func outputViewsList(
+        tool: String? = nil,
+        toolId: String? = nil,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListOutputViewsResponse {
+        try await ActionGatewayMethods.outputViewsList(
+            config: config,
+            tool: tool,
+            toolId: toolId,
+            pageSize: pageSize,
+            pageToken: pageToken,
+            requestOptions: requestOptions
+        )
     }
 
-/// Returns the output views your team can use: views DigitalOcean publishes to every team, plus your team's own. Cursor-paged with `page_size` and `page_token`; no total is reported.
-    public func outputViewsListPaginated(tool: String? = nil, toolId: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<OutputView, Swift.Error> {
-        return ActionGatewayMethods.outputViewsListPaginated(config: config, tool: tool, toolId: toolId, pageSize: pageSize, pageToken: pageToken, requestOptions: requestOptions)
+    /// Returns the output views your team can use: views DigitalOcean publishes to every team, plus your team's own.
+    /// Cursor-paged with `page_size` and `page_token`; no total is reported.
+    func outputViewsListPaginated(
+        tool: String? = nil,
+        toolId: String? = nil,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<OutputView, Swift.Error> {
+        ActionGatewayMethods.outputViewsListPaginated(
+            config: config,
+            tool: tool,
+            toolId: toolId,
+            pageSize: pageSize,
+            pageToken: pageToken,
+            requestOptions: requestOptions
+        )
     }
 
-/// Validates a projection exactly as create does and returns the view it would produce, including `output_schema`, without storing anything. name and description are optional here; name uniqueness and the per-tool-version limit are not checked.
-    public func outputViewsValidate(fields: [String], tool: String? = nil, toolId: String? = nil, name: String? = nil, description: String? = nil, requestOptions: RequestOptions? = nil) async throws -> OutputViewResponse {
-        return try await ActionGatewayMethods.outputViewsValidate(config: config, fields: fields, tool: tool, toolId: toolId, name: name, description: description, requestOptions: requestOptions)
+    /// Validates a projection exactly as create does and returns the view it would produce, including `output_schema`,
+    /// without storing anything. name and description are optional here; name uniqueness and the per-tool-version limit
+    /// are not checked.
+    func outputViewsValidate(
+        fields: [String],
+        tool: String? = nil,
+        toolId: String? = nil,
+        name: String? = nil,
+        description: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> OutputViewResponse {
+        try await ActionGatewayMethods.outputViewsValidate(
+            config: config,
+            fields: fields,
+            tool: tool,
+            toolId: toolId,
+            name: name,
+            description: description,
+            requestOptions: requestOptions
+        )
     }
 
-/// Returns one of your team's views, or a published view on a tool version your catalog exposes. Returns 404 when the view does not exist, was deleted, or belongs to another team.
-    public func outputViewsGet(viewId: String, requestOptions: RequestOptions? = nil) async throws -> OutputViewResponse {
-        return try await ActionGatewayMethods.outputViewsGet(config: config, viewId: viewId, requestOptions: requestOptions)
+    /// Returns one of your team's views, or a published view on a tool version your catalog exposes. Returns 404 when
+    /// the view does not exist, was deleted, or belongs to another team.
+    func outputViewsGet(viewId: String, requestOptions: RequestOptions? = nil) async throws -> OutputViewResponse {
+        try await ActionGatewayMethods.outputViewsGet(config: config, viewId: viewId, requestOptions: requestOptions)
     }
 
-/// Deletes one of your team's views and returns it with audit.deleted_at set; it can no longer be used. Published views cannot be deleted. Returns 404 when the view does not exist, is already deleted, or is not your team's.
-    public func outputViewsDelete(viewId: String, requestOptions: RequestOptions? = nil) async throws -> OutputViewResponse {
-        return try await ActionGatewayMethods.outputViewsDelete(config: config, viewId: viewId, requestOptions: requestOptions)
+    /// Deletes one of your team's views and returns it with audit.deleted_at set; it can no longer be used. Published
+    /// views cannot be deleted. Returns 404 when the view does not exist, is already deleted, or is not your team's.
+    func outputViewsDelete(viewId: String, requestOptions: RequestOptions? = nil) async throws -> OutputViewResponse {
+        try await ActionGatewayMethods.outputViewsDelete(config: config, viewId: viewId, requestOptions: requestOptions)
     }
 
-/// Creates a session owned by your team, with a new session URN, and returns the MCP URL an agent connects to. tools selects the tools and toolbelts the session exposes, and policy decides which calls run, need approval, or are refused.
-    public func sessionsCreate(name: String, actorId: String? = nil, policy: SdkOptional<SessionPolicy>? = nil, tools: [String]? = nil, config: [String: JSONValue]? = nil, network: SessionNetwork? = nil, insights: SessionInsights? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateSessionResponse {
-        return try await ActionGatewayMethods.sessionsCreate(config: self.config, name: name, actorId: actorId, policy: policy, tools: tools, config2: config, network: network, insights: insights, requestOptions: requestOptions)
+    /// Creates a session owned by your team, with a new session URN, and returns the MCP URL an agent connects to.
+    /// tools selects the tools and toolbelts the session exposes, and policy decides which calls run, need approval, or
+    /// are refused.
+    func sessionsCreate(
+        name: String,
+        actorId: String? = nil,
+        policy: SdkOptional<SessionPolicy>? = nil,
+        tools: [String]? = nil,
+        config: [String: JSONValue]? = nil,
+        network: SessionNetwork? = nil,
+        insights: SessionInsights? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateSessionResponse {
+        try await ActionGatewayMethods.sessionsCreate(
+            config: self.config,
+            name: name,
+            actorId: actorId,
+            policy: policy,
+            tools: tools,
+            config2: config,
+            network: network,
+            insights: insights,
+            requestOptions: requestOptions
+        )
     }
 
-/// Returns the sessions you can see, newest first. Offset-paged with page and `per_page`; `end_user_id` filters to one actor.
-    public func sessionsList(endUserId: String? = nil, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ListSessionsResponse {
-        return try await ActionGatewayMethods.sessionsList(config: config, endUserId: endUserId, page: page, perPage: perPage, requestOptions: requestOptions)
+    /// Returns the sessions you can see, newest first. Offset-paged with page and `per_page`; `end_user_id` filters to
+    /// one actor.
+    func sessionsList(
+        endUserId: String? = nil,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListSessionsResponse {
+        try await ActionGatewayMethods.sessionsList(
+            config: config,
+            endUserId: endUserId,
+            page: page,
+            perPage: perPage,
+            requestOptions: requestOptions
+        )
     }
 
-/// Returns the sessions you can see whose name, `actor_id`, `session_urn`, or `agentName` contains query, case-insensitively, ranked across the whole result set. Cursor-paged with `page_size` and `page_token`; no total is reported.
-    public func sessionsListSearch(query: String? = nil, endUserId: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) async throws -> SearchSessionsResponse {
-        return try await ActionGatewayMethods.sessionsListSearch(config: config, query: query, endUserId: endUserId, pageSize: pageSize, pageToken: pageToken, requestOptions: requestOptions)
+    /// Returns the sessions you can see whose name, `actor_id`, `session_urn`, or `agentName` contains query,
+    /// case-insensitively, ranked across the whole result set. Cursor-paged with `page_size` and `page_token`; no total
+    /// is reported.
+    func sessionsListSearch(
+        query: String? = nil,
+        endUserId: String? = nil,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SearchSessionsResponse {
+        try await ActionGatewayMethods.sessionsListSearch(
+            config: config,
+            query: query,
+            endUserId: endUserId,
+            pageSize: pageSize,
+            pageToken: pageToken,
+            requestOptions: requestOptions
+        )
     }
 }
 
-extension ActionGatewayNamespace {
-/// Returns the sessions you can see whose name, `actor_id`, `session_urn`, or `agentName` contains query, case-insensitively, ranked across the whole result set. Cursor-paged with `page_size` and `page_token`; no total is reported.
-    public func sessionsListSearchPaginated(query: String? = nil, endUserId: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<Session, Swift.Error> {
-        return ActionGatewayMethods.sessionsListSearchPaginated(config: config, query: query, endUserId: endUserId, pageSize: pageSize, pageToken: pageToken, requestOptions: requestOptions)
+public extension ActionGatewayNamespace {
+    /// Returns the sessions you can see whose name, `actor_id`, `session_urn`, or `agentName` contains query,
+    /// case-insensitively, ranked across the whole result set. Cursor-paged with `page_size` and `page_token`; no total
+    /// is reported.
+    func sessionsListSearchPaginated(
+        query: String? = nil,
+        endUserId: String? = nil,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<Session, Swift.Error> {
+        ActionGatewayMethods.sessionsListSearchPaginated(
+            config: config,
+            query: query,
+            endUserId: endUserId,
+            pageSize: pageSize,
+            pageToken: pageToken,
+            requestOptions: requestOptions
+        )
     }
 
-/// Deletes the session and its policy. Succeeds without deleting anything when the session does not exist or you cannot delete it, so repeating a delete also succeeds. A malformed `session_urn` is rejected with 400.
-    public func sessionsDelete(sessionUrn: String, requestOptions: RequestOptions? = nil) async throws -> EmptyResponse {
-        return try await ActionGatewayMethods.sessionsDelete(config: config, sessionUrn: sessionUrn, requestOptions: requestOptions)
+    /// Deletes the session and its policy. Succeeds without deleting anything when the session does not exist or you
+    /// cannot delete it, so repeating a delete also succeeds. A malformed `session_urn` is rejected with 400.
+    func sessionsDelete(sessionUrn: String, requestOptions: RequestOptions? = nil) async throws -> EmptyResponse {
+        try await ActionGatewayMethods.sessionsDelete(
+            config: config,
+            sessionUrn: sessionUrn,
+            requestOptions: requestOptions
+        )
     }
 
-/// A toolbelt is a named set of tools, each pinned to a version, that your team can attach to sessions as `toolbelt:<name>@<version>`. The first version is 1 unless version is set. Returns 409 if an active toolbelt with the same name exists. The name of a deleted toolbelt can be reused; its versions start again from the initial version.
-    public func toolbeltsCreate(name: String, version: String? = nil, displayName: String? = nil, description: String? = nil, tools: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> ToolbeltResponse {
-        return try await ActionGatewayMethods.toolbeltsCreate(config: config, name: name, version: version, displayName: displayName, description: description, tools: tools, requestOptions: requestOptions)
+    /// A toolbelt is a named set of tools, each pinned to a version, that your team can attach to sessions as
+    /// `toolbelt:<name>@<version>`. The first version is 1 unless version is set. Returns 409 if an active toolbelt
+    /// with the same name exists. The name of a deleted toolbelt can be reused; its versions start again from the
+    /// initial version.
+    func toolbeltsCreate(
+        name: String,
+        version: String? = nil,
+        displayName: String? = nil,
+        description: String? = nil,
+        tools: [String]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ToolbeltResponse {
+        try await ActionGatewayMethods.toolbeltsCreate(
+            config: config,
+            name: name,
+            version: version,
+            displayName: displayName,
+            description: description,
+            tools: tools,
+            requestOptions: requestOptions
+        )
     }
 
-/// Returns your team's toolbelts, one entry per name describing its latest version, sorted by name. Offset-paged with page and `per_page`; pagination reports the total.
-    public func toolbeltsList(status: ToolbeltsListParameter? = nil, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ToolbeltsResponse {
-        return try await ActionGatewayMethods.toolbeltsList(config: config, status: status, page: page, perPage: perPage, requestOptions: requestOptions)
+    /// Returns your team's toolbelts, one entry per name describing its latest version, sorted by name. Offset-paged
+    /// with page and `per_page`; pagination reports the total.
+    func toolbeltsList(
+        status: ToolbeltsListParameter? = nil,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ToolbeltsResponse {
+        try await ActionGatewayMethods.toolbeltsList(
+            config: config,
+            status: status,
+            page: page,
+            perPage: perPage,
+            requestOptions: requestOptions
+        )
     }
 
-/// Returns your team's toolbelts whose name, display name, or description contains query, case-insensitively, sorted by name. Cursor-paged with `page_size` and `page_token`; no total is reported.
-    public func toolbeltsListSearch(query: String? = nil, status: ToolbeltsListParameter? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) async throws -> SearchToolbeltsResponse {
-        return try await ActionGatewayMethods.toolbeltsListSearch(config: config, query: query, status: status, pageSize: pageSize, pageToken: pageToken, requestOptions: requestOptions)
+    /// Returns your team's toolbelts whose name, display name, or description contains query, case-insensitively,
+    /// sorted by name. Cursor-paged with `page_size` and `page_token`; no total is reported.
+    func toolbeltsListSearch(
+        query: String? = nil,
+        status: ToolbeltsListParameter? = nil,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SearchToolbeltsResponse {
+        try await ActionGatewayMethods.toolbeltsListSearch(
+            config: config,
+            query: query,
+            status: status,
+            pageSize: pageSize,
+            pageToken: pageToken,
+            requestOptions: requestOptions
+        )
     }
 
-/// Returns your team's toolbelts whose name, display name, or description contains query, case-insensitively, sorted by name. Cursor-paged with `page_size` and `page_token`; no total is reported.
-    public func toolbeltsListSearchPaginated(query: String? = nil, status: ToolbeltsListParameter? = nil, pageSize: Int? = nil, pageToken: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<ToolbeltSummary, Swift.Error> {
-        return ActionGatewayMethods.toolbeltsListSearchPaginated(config: config, query: query, status: status, pageSize: pageSize, pageToken: pageToken, requestOptions: requestOptions)
+    /// Returns your team's toolbelts whose name, display name, or description contains query, case-insensitively,
+    /// sorted by name. Cursor-paged with `page_size` and `page_token`; no total is reported.
+    func toolbeltsListSearchPaginated(
+        query: String? = nil,
+        status: ToolbeltsListParameter? = nil,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<ToolbeltSummary, Swift.Error> {
+        ActionGatewayMethods.toolbeltsListSearchPaginated(
+            config: config,
+            query: query,
+            status: status,
+            pageSize: pageSize,
+            pageToken: pageToken,
+            requestOptions: requestOptions
+        )
     }
 
-/// Returns the latest version of the named toolbelt, or the version requested, with catalog metadata for one page of its members in `tool_details`. A deleted toolbelt returns 404 unless a version is requested.
-    public func toolbeltsGet(name: String, version: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, search: String? = nil, requestOptions: RequestOptions? = nil) async throws -> GetToolbeltResponse {
-        return try await ActionGatewayMethods.toolbeltsGet(config: config, name: name, version: version, pageSize: pageSize, pageToken: pageToken, search: search, requestOptions: requestOptions)
+    /// Returns the latest version of the named toolbelt, or the version requested, with catalog metadata for one page
+    /// of its members in `tool_details`. A deleted toolbelt returns 404 unless a version is requested.
+    func toolbeltsGet(
+        name: String,
+        version: String? = nil,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        search: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetToolbeltResponse {
+        try await ActionGatewayMethods.toolbeltsGet(
+            config: config,
+            name: name,
+            version: version,
+            pageSize: pageSize,
+            pageToken: pageToken,
+            search: search,
+            requestOptions: requestOptions
+        )
     }
 
-/// Returns the latest version of the named toolbelt, or the version requested, with catalog metadata for one page of its members in `tool_details`. A deleted toolbelt returns 404 unless a version is requested.
-    public func toolbeltsGetPaginated(name: String, version: String? = nil, pageSize: Int? = nil, pageToken: String? = nil, search: String? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<ToolbeltToolDetail, Swift.Error> {
-        return ActionGatewayMethods.toolbeltsGetPaginated(config: config, name: name, version: version, pageSize: pageSize, pageToken: pageToken, search: search, requestOptions: requestOptions)
+    /// Returns the latest version of the named toolbelt, or the version requested, with catalog metadata for one page
+    /// of its members in `tool_details`. A deleted toolbelt returns 404 unless a version is requested.
+    func toolbeltsGetPaginated(
+        name: String,
+        version: String? = nil,
+        pageSize: Int? = nil,
+        pageToken: String? = nil,
+        search: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<ToolbeltToolDetail, Swift.Error> {
+        ActionGatewayMethods.toolbeltsGetPaginated(
+            config: config,
+            name: name,
+            version: version,
+            pageSize: pageSize,
+            pageToken: pageToken,
+            search: search,
+            requestOptions: requestOptions
+        )
     }
 }

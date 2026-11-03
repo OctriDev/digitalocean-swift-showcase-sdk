@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-// Canonical blockStorageActions operation model declarations
+/// Canonical blockStorageActions operation model declarations
 public indirect enum VolumeActionsPostRequestBody {
     case volumeActionPostAttach(VolumeActionPostAttach)
     case volumeActionPostDetach(VolumeActionPostDetach)
@@ -16,7 +16,6 @@ public indirect enum VolumeActionsPostRequestBody {
 }
 
 extension VolumeActionsPostRequestBody: Codable {
-
     private enum CodingKeys: String, CodingKey {
         case discriminator = "type"
     }
@@ -24,12 +23,16 @@ extension VolumeActionsPostRequestBody: Codable {
     public init(from decoder: Decoder) throws {
         let tagged = try decoder.container(keyedBy: CodingKeys.self)
         let discriminator = try tagged.decode(String.self, forKey: .discriminator)
-        if let value = try Self.decodeGroup1(discriminator, from: decoder) { self = value; return }
+        if let value = try Self.decodeGroup1(discriminator, from: decoder) {
+            self = value; return
+        }
         self = try .unknown(tag: discriminator, raw: JSONValue(from: decoder))
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
         if case let .unknown(_, raw) = self {
             var container = encoder.singleValueContainer()
             try container.encode(raw)
@@ -40,9 +43,9 @@ extension VolumeActionsPostRequestBody: Codable {
 extension VolumeActionsPostRequestBody {
     static func decodeGroup1(_ discriminator: String, from decoder: Decoder) throws -> Self? {
         switch discriminator {
-        case "attach": return .volumeActionPostAttach(try VolumeActionPostAttach(from: decoder))
-        case "detach": return .volumeActionPostDetach(try VolumeActionPostDetach(from: decoder))
-        default: return nil
+        case "attach": try .volumeActionPostAttach(VolumeActionPostAttach(from: decoder))
+        case "detach": try .volumeActionPostDetach(VolumeActionPostDetach(from: decoder))
+        default: nil
         }
     }
 }
@@ -67,7 +70,6 @@ public indirect enum VolumeActionsPostByIdRequestBody {
 }
 
 extension VolumeActionsPostByIdRequestBody: Codable {
-
     private enum CodingKeys: String, CodingKey {
         case discriminator = "type"
     }
@@ -75,12 +77,16 @@ extension VolumeActionsPostByIdRequestBody: Codable {
     public init(from decoder: Decoder) throws {
         let tagged = try decoder.container(keyedBy: CodingKeys.self)
         let discriminator = try tagged.decode(String.self, forKey: .discriminator)
-        if let value = try Self.decodeGroup1(discriminator, from: decoder) { self = value; return }
+        if let value = try Self.decodeGroup1(discriminator, from: decoder) {
+            self = value; return
+        }
         self = try .unknown(tag: discriminator, raw: JSONValue(from: decoder))
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
         if case let .unknown(_, raw) = self {
             var container = encoder.singleValueContainer()
             try container.encode(raw)
@@ -91,10 +97,10 @@ extension VolumeActionsPostByIdRequestBody: Codable {
 extension VolumeActionsPostByIdRequestBody {
     static func decodeGroup1(_ discriminator: String, from decoder: Decoder) throws -> Self? {
         switch discriminator {
-        case "attach": return .volumeActionPostAttach(try VolumeActionPostAttach(from: decoder))
-        case "detach": return .volumeActionPostDetach(try VolumeActionPostDetach(from: decoder))
-        case "resize": return .volumeActionPostResize(try VolumeActionPostResize(from: decoder))
-        default: return nil
+        case "attach": try .volumeActionPostAttach(VolumeActionPostAttach(from: decoder))
+        case "detach": try .volumeActionPostDetach(VolumeActionPostDetach(from: decoder))
+        case "resize": try .volumeActionPostResize(VolumeActionPostResize(from: decoder))
+        default: nil
         }
     }
 }

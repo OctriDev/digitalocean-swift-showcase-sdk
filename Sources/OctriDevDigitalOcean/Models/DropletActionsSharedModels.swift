@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DropletActions domain models
+/// DropletActions domain models
 public struct DropletActionSnapshotVariant1: Codable {
     /// The name to give the new snapshot of the Droplet.
     /// - Example: "Nifty New Snapshot"
@@ -14,19 +14,19 @@ public struct DropletActionSnapshotVariant1: Codable {
     }
 
     init() {
-        self.name = nil
+        name = nil
     }
 }
 
-extension DropletActionSnapshotVariant1 {
-    public init(from decoder: Decoder) throws {
+public extension DropletActionSnapshotVariant1 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension DropletActionSnapshotVariant1 {
-    public init(name: String? = nil) {
+public extension DropletActionSnapshotVariant1 {
+    init(name: String? = nil) {
         self.init()
         self.name = name
     }
@@ -42,24 +42,30 @@ public struct DropletAction: Codable {
         case type
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DropletAction {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-            try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DropletAction {
-    public init(type: DropletActionType) throws {
+public extension DropletAction {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        try sdkValidateRawEnum("type", type, DropletActionType.allCases.map(\.rawValue))
+    }
+}
+
+public extension DropletAction {
+    init(type: DropletActionType) throws {
         self.type = type
-            try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
     }
 }
 
@@ -77,25 +83,31 @@ public struct DropletActionSnapshot: Codable {
         case name
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DropletActionSnapshot {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.name = try container.sdkDecodeIfPresent(.name)
-            try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DropletActionSnapshot {
-    public init(type: DropletActionType, name: String? = nil) throws {
+public extension DropletActionSnapshot {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        name = try container.sdkDecodeIfPresent(.name)
+        try sdkValidateRawEnum("type", type, DropletActionType.allCases.map(\.rawValue))
+    }
+}
+
+public extension DropletActionSnapshot {
+    init(type: DropletActionType, name: String? = nil) throws {
         (self.type, self.name) = (type, name)
-            try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, DropletActionType.allCases.map(\.rawValue))
     }
 }
 

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DatabasesOpensearch domain models
+/// DatabasesOpensearch domain models
 /// Typed representation of the `OpensearchAdvancedConfig` API schema.
 public struct OpensearchAdvancedConfig: Codable {
     /// Maximum content length for HTTP requests to the OpenSearch HTTP API, in bytes.
@@ -197,8 +197,8 @@ extension OpensearchAdvancedConfig {
     }
 }
 
-extension OpensearchAdvancedConfig {
-    public init(from decoder: Decoder) throws {
+public extension OpensearchAdvancedConfig {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init(sdkDefaults: ())
         try sdkDecodeFieldsPart1(container)
@@ -211,8 +211,50 @@ extension OpensearchAdvancedConfig {
     }
 }
 
-extension OpensearchAdvancedConfig {
-    public init(httpMaxContentLengthBytes: Int? = nil, httpMaxHeaderSizeBytes: Int? = nil, httpMaxInitialLineLengthBytes: Int? = nil, indicesQueryBoolMaxClauseCount: Int? = nil, indicesFielddataCacheSizePercentage: Int? = nil, indicesMemoryIndexBufferSizePercentage: Int? = nil, indicesMemoryMinIndexBufferSizeMb: Int? = nil, indicesMemoryMaxIndexBufferSizeMb: Int? = nil, indicesQueriesCacheSizePercentage: Int? = nil, indicesRecoveryMaxMbPerSec: Int? = nil, indicesRecoveryMaxConcurrentFileChunks: Int? = nil, threadPoolSearchSize: Int? = nil, threadPoolSearchThrottledSize: Int? = nil, threadPoolGetSize: Int? = nil, threadPoolAnalyzeSize: Int? = nil, threadPoolWriteSize: Int? = nil, threadPoolForceMergeSize: Int? = nil, threadPoolSearchQueueSize: Int? = nil, threadPoolSearchThrottledQueueSize: Int? = nil, threadPoolGetQueueSize: Int? = nil, threadPoolAnalyzeQueueSize: Int? = nil, threadPoolWriteQueueSize: Int? = nil, ismEnabled: Bool? = nil, ismHistoryEnabled: Bool? = nil, ismHistoryMaxAgeHours: Int? = nil, ismHistoryMaxDocs: Int? = nil, ismHistoryRolloverCheckPeriodHours: Int? = nil, ismHistoryRolloverRetentionPeriodDays: Int? = nil, searchMaxBuckets: Int? = nil, actionAutoCreateIndexEnabled: Bool? = nil, enableSecurityAudit: Bool? = nil, actionDestructiveRequiresName: Bool? = nil, clusterMaxShardsPerNode: Int? = nil, overrideMainResponseVersion: Bool? = nil, scriptMaxCompilationsRate: String? = nil, clusterRoutingAllocationNodeConcurrentRecoveries: Int? = nil, reindexRemoteAllowlist: [String]? = nil, pluginsAlertingFilterByBackendRolesEnabled: Bool? = nil, knnMemoryCircuitBreakerEnabled: Bool? = nil, knnMemoryCircuitBreakerLimit: Int? = nil, keepIndexRefreshInterval: Bool? = nil) throws {
+public extension OpensearchAdvancedConfig {
+    init(
+        httpMaxContentLengthBytes: Int? = nil,
+        httpMaxHeaderSizeBytes: Int? = nil,
+        httpMaxInitialLineLengthBytes: Int? = nil,
+        indicesQueryBoolMaxClauseCount: Int? = nil,
+        indicesFielddataCacheSizePercentage: Int? = nil,
+        indicesMemoryIndexBufferSizePercentage: Int? = nil,
+        indicesMemoryMinIndexBufferSizeMb: Int? = nil,
+        indicesMemoryMaxIndexBufferSizeMb: Int? = nil,
+        indicesQueriesCacheSizePercentage: Int? = nil,
+        indicesRecoveryMaxMbPerSec: Int? = nil,
+        indicesRecoveryMaxConcurrentFileChunks: Int? = nil,
+        threadPoolSearchSize: Int? = nil,
+        threadPoolSearchThrottledSize: Int? = nil,
+        threadPoolGetSize: Int? = nil,
+        threadPoolAnalyzeSize: Int? = nil,
+        threadPoolWriteSize: Int? = nil,
+        threadPoolForceMergeSize: Int? = nil,
+        threadPoolSearchQueueSize: Int? = nil,
+        threadPoolSearchThrottledQueueSize: Int? = nil,
+        threadPoolGetQueueSize: Int? = nil,
+        threadPoolAnalyzeQueueSize: Int? = nil,
+        threadPoolWriteQueueSize: Int? = nil,
+        ismEnabled: Bool? = nil,
+        ismHistoryEnabled: Bool? = nil,
+        ismHistoryMaxAgeHours: Int? = nil,
+        ismHistoryMaxDocs: Int? = nil,
+        ismHistoryRolloverCheckPeriodHours: Int? = nil,
+        ismHistoryRolloverRetentionPeriodDays: Int? = nil,
+        searchMaxBuckets: Int? = nil,
+        actionAutoCreateIndexEnabled: Bool? = nil,
+        enableSecurityAudit: Bool? = nil,
+        actionDestructiveRequiresName: Bool? = nil,
+        clusterMaxShardsPerNode: Int? = nil,
+        overrideMainResponseVersion: Bool? = nil,
+        scriptMaxCompilationsRate: String? = nil,
+        clusterRoutingAllocationNodeConcurrentRecoveries: Int? = nil,
+        reindexRemoteAllowlist: [String]? = nil,
+        pluginsAlertingFilterByBackendRolesEnabled: Bool? = nil,
+        knnMemoryCircuitBreakerEnabled: Bool? = nil,
+        knnMemoryCircuitBreakerLimit: Int? = nil,
+        keepIndexRefreshInterval: Bool? = nil
+    ) throws {
         self.init(sdkDefaults: ())
         sdkSet1(httpMaxContentLengthBytes, httpMaxHeaderSizeBytes, httpMaxInitialLineLengthBytes)
         sdkSet2(indicesQueryBoolMaxClauseCount, indicesFielddataCacheSizePercentage)
@@ -236,7 +278,11 @@ extension OpensearchAdvancedConfig {
 }
 
 extension OpensearchAdvancedConfig {
-    mutating func sdkSet1(_ httpMaxContentLengthBytes: Int?, _ httpMaxHeaderSizeBytes: Int?, _ httpMaxInitialLineLengthBytes: Int?) {
+    mutating func sdkSet1(
+        _ httpMaxContentLengthBytes: Int?,
+        _ httpMaxHeaderSizeBytes: Int?,
+        _ httpMaxInitialLineLengthBytes: Int?
+    ) {
         self.httpMaxContentLengthBytes = httpMaxContentLengthBytes
         self.httpMaxHeaderSizeBytes = httpMaxHeaderSizeBytes
         self.httpMaxInitialLineLengthBytes = httpMaxInitialLineLengthBytes
@@ -258,7 +304,11 @@ extension OpensearchAdvancedConfig {
 }
 
 extension OpensearchAdvancedConfig {
-    mutating func sdkSet4(_ indicesMemoryMaxIndexBufferSizeMb: Int?, _ indicesQueriesCacheSizePercentage: Int?, _ indicesRecoveryMaxMbPerSec: Int?) {
+    mutating func sdkSet4(
+        _ indicesMemoryMaxIndexBufferSizeMb: Int?,
+        _ indicesQueriesCacheSizePercentage: Int?,
+        _ indicesRecoveryMaxMbPerSec: Int?
+    ) {
         self.indicesMemoryMaxIndexBufferSizeMb = indicesMemoryMaxIndexBufferSizeMb
         self.indicesQueriesCacheSizePercentage = indicesQueriesCacheSizePercentage
         self.indicesRecoveryMaxMbPerSec = indicesRecoveryMaxMbPerSec
@@ -266,7 +316,11 @@ extension OpensearchAdvancedConfig {
 }
 
 extension OpensearchAdvancedConfig {
-    mutating func sdkSet5(_ indicesRecoveryMaxConcurrentFileChunks: Int?, _ threadPoolSearchSize: Int?, _ threadPoolSearchThrottledSize: Int?) {
+    mutating func sdkSet5(
+        _ indicesRecoveryMaxConcurrentFileChunks: Int?,
+        _ threadPoolSearchSize: Int?,
+        _ threadPoolSearchThrottledSize: Int?
+    ) {
         self.indicesRecoveryMaxConcurrentFileChunks = indicesRecoveryMaxConcurrentFileChunks
         self.threadPoolSearchSize = threadPoolSearchSize
         self.threadPoolSearchThrottledSize = threadPoolSearchThrottledSize
@@ -274,7 +328,12 @@ extension OpensearchAdvancedConfig {
 }
 
 extension OpensearchAdvancedConfig {
-    mutating func sdkSet6(_ threadPoolGetSize: Int?, _ threadPoolAnalyzeSize: Int?, _ threadPoolWriteSize: Int?, _ threadPoolForceMergeSize: Int?) {
+    mutating func sdkSet6(
+        _ threadPoolGetSize: Int?,
+        _ threadPoolAnalyzeSize: Int?,
+        _ threadPoolWriteSize: Int?,
+        _ threadPoolForceMergeSize: Int?
+    ) {
         self.threadPoolGetSize = threadPoolGetSize
         self.threadPoolAnalyzeSize = threadPoolAnalyzeSize
         self.threadPoolWriteSize = threadPoolWriteSize
@@ -283,7 +342,11 @@ extension OpensearchAdvancedConfig {
 }
 
 extension OpensearchAdvancedConfig {
-    mutating func sdkSet7(_ threadPoolSearchQueueSize: Int?, _ threadPoolSearchThrottledQueueSize: Int?, _ threadPoolGetQueueSize: Int?) {
+    mutating func sdkSet7(
+        _ threadPoolSearchQueueSize: Int?,
+        _ threadPoolSearchThrottledQueueSize: Int?,
+        _ threadPoolGetQueueSize: Int?
+    ) {
         self.threadPoolSearchQueueSize = threadPoolSearchQueueSize
         self.threadPoolSearchThrottledQueueSize = threadPoolSearchThrottledQueueSize
         self.threadPoolGetQueueSize = threadPoolGetQueueSize
@@ -291,7 +354,12 @@ extension OpensearchAdvancedConfig {
 }
 
 extension OpensearchAdvancedConfig {
-    mutating func sdkSet8(_ threadPoolAnalyzeQueueSize: Int?, _ threadPoolWriteQueueSize: Int?, _ ismEnabled: Bool?, _ ismHistoryEnabled: Bool?) {
+    mutating func sdkSet8(
+        _ threadPoolAnalyzeQueueSize: Int?,
+        _ threadPoolWriteQueueSize: Int?,
+        _ ismEnabled: Bool?,
+        _ ismHistoryEnabled: Bool?
+    ) {
         self.threadPoolAnalyzeQueueSize = threadPoolAnalyzeQueueSize
         self.threadPoolWriteQueueSize = threadPoolWriteQueueSize
         self.ismEnabled = ismEnabled
@@ -300,7 +368,11 @@ extension OpensearchAdvancedConfig {
 }
 
 extension OpensearchAdvancedConfig {
-    mutating func sdkSet9(_ ismHistoryMaxAgeHours: Int?, _ ismHistoryMaxDocs: Int?, _ ismHistoryRolloverCheckPeriodHours: Int?) {
+    mutating func sdkSet9(
+        _ ismHistoryMaxAgeHours: Int?,
+        _ ismHistoryMaxDocs: Int?,
+        _ ismHistoryRolloverCheckPeriodHours: Int?
+    ) {
         self.ismHistoryMaxAgeHours = ismHistoryMaxAgeHours
         self.ismHistoryMaxDocs = ismHistoryMaxDocs
         self.ismHistoryRolloverCheckPeriodHours = ismHistoryRolloverCheckPeriodHours
@@ -308,7 +380,11 @@ extension OpensearchAdvancedConfig {
 }
 
 extension OpensearchAdvancedConfig {
-    mutating func sdkSet10(_ ismHistoryRolloverRetentionPeriodDays: Int?, _ searchMaxBuckets: Int?, _ actionAutoCreateIndexEnabled: Bool?) {
+    mutating func sdkSet10(
+        _ ismHistoryRolloverRetentionPeriodDays: Int?,
+        _ searchMaxBuckets: Int?,
+        _ actionAutoCreateIndexEnabled: Bool?
+    ) {
         self.ismHistoryRolloverRetentionPeriodDays = ismHistoryRolloverRetentionPeriodDays
         self.searchMaxBuckets = searchMaxBuckets
         self.actionAutoCreateIndexEnabled = actionAutoCreateIndexEnabled
@@ -316,7 +392,11 @@ extension OpensearchAdvancedConfig {
 }
 
 extension OpensearchAdvancedConfig {
-    mutating func sdkSet11(_ enableSecurityAudit: Bool?, _ actionDestructiveRequiresName: Bool?, _ clusterMaxShardsPerNode: Int?) {
+    mutating func sdkSet11(
+        _ enableSecurityAudit: Bool?,
+        _ actionDestructiveRequiresName: Bool?,
+        _ clusterMaxShardsPerNode: Int?
+    ) {
         self.enableSecurityAudit = enableSecurityAudit
         self.actionDestructiveRequiresName = actionDestructiveRequiresName
         self.clusterMaxShardsPerNode = clusterMaxShardsPerNode
@@ -331,14 +411,20 @@ extension OpensearchAdvancedConfig {
 }
 
 extension OpensearchAdvancedConfig {
-    mutating func sdkSet13(_ clusterRoutingAllocationNodeConcurrentRecoveries: Int?, _ reindexRemoteAllowlist: [String]?) {
+    mutating func sdkSet13(
+        _ clusterRoutingAllocationNodeConcurrentRecoveries: Int?,
+        _ reindexRemoteAllowlist: [String]?
+    ) {
         self.clusterRoutingAllocationNodeConcurrentRecoveries = clusterRoutingAllocationNodeConcurrentRecoveries
         self.reindexRemoteAllowlist = reindexRemoteAllowlist
     }
 }
 
 extension OpensearchAdvancedConfig {
-    mutating func sdkSet14(_ pluginsAlertingFilterByBackendRolesEnabled: Bool?, _ knnMemoryCircuitBreakerEnabled: Bool?) {
+    mutating func sdkSet14(
+        _ pluginsAlertingFilterByBackendRolesEnabled: Bool?,
+        _ knnMemoryCircuitBreakerEnabled: Bool?
+    ) {
         self.pluginsAlertingFilterByBackendRolesEnabled = pluginsAlertingFilterByBackendRolesEnabled
         self.knnMemoryCircuitBreakerEnabled = knnMemoryCircuitBreakerEnabled
     }
@@ -353,61 +439,65 @@ extension OpensearchAdvancedConfig {
 
 extension OpensearchAdvancedConfig {
     mutating func sdkDecodeFieldsPart1(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        self.httpMaxContentLengthBytes = try container.sdkDecodeIfPresent(.httpMaxContentLengthBytes)
-        self.httpMaxHeaderSizeBytes = try container.sdkDecodeIfPresent(.httpMaxHeaderSizeBytes)
-        self.httpMaxInitialLineLengthBytes = try container.sdkDecodeIfPresent(.httpMaxInitialLineLengthBytes)
-        self.indicesQueryBoolMaxClauseCount = try container.sdkDecodeIfPresent(.indicesQueryBoolMaxClauseCount)
-        self.indicesFielddataCacheSizePercentage = try container.sdkDecodeIfPresent(.indicesFielddataCacheSizePercentage)
-        self.indicesMemoryIndexBufferSizePercentage = try container.sdkDecodeIfPresent(.indicesMemoryIndexBufferSizePercentage)
-        self.indicesMemoryMinIndexBufferSizeMb = try container.sdkDecodeIfPresent(.indicesMemoryMinIndexBufferSizeMb)
-        self.indicesMemoryMaxIndexBufferSizeMb = try container.sdkDecodeIfPresent(.indicesMemoryMaxIndexBufferSizeMb)
-        self.indicesQueriesCacheSizePercentage = try container.sdkDecodeIfPresent(.indicesQueriesCacheSizePercentage)
-        self.indicesRecoveryMaxMbPerSec = try container.sdkDecodeIfPresent(.indicesRecoveryMaxMbPerSec)
-        self.indicesRecoveryMaxConcurrentFileChunks = try container.sdkDecodeIfPresent(.indicesRecoveryMaxConcurrentFileChunks)
-        self.threadPoolSearchSize = try container.sdkDecodeIfPresent(.threadPoolSearchSize)
+        httpMaxContentLengthBytes = try container.sdkDecodeIfPresent(.httpMaxContentLengthBytes)
+        httpMaxHeaderSizeBytes = try container.sdkDecodeIfPresent(.httpMaxHeaderSizeBytes)
+        httpMaxInitialLineLengthBytes = try container.sdkDecodeIfPresent(.httpMaxInitialLineLengthBytes)
+        indicesQueryBoolMaxClauseCount = try container.sdkDecodeIfPresent(.indicesQueryBoolMaxClauseCount)
+        indicesFielddataCacheSizePercentage = try container.sdkDecodeIfPresent(.indicesFielddataCacheSizePercentage)
+        indicesMemoryIndexBufferSizePercentage = try container
+            .sdkDecodeIfPresent(.indicesMemoryIndexBufferSizePercentage)
+        indicesMemoryMinIndexBufferSizeMb = try container.sdkDecodeIfPresent(.indicesMemoryMinIndexBufferSizeMb)
+        indicesMemoryMaxIndexBufferSizeMb = try container.sdkDecodeIfPresent(.indicesMemoryMaxIndexBufferSizeMb)
+        indicesQueriesCacheSizePercentage = try container.sdkDecodeIfPresent(.indicesQueriesCacheSizePercentage)
+        indicesRecoveryMaxMbPerSec = try container.sdkDecodeIfPresent(.indicesRecoveryMaxMbPerSec)
+        indicesRecoveryMaxConcurrentFileChunks = try container
+            .sdkDecodeIfPresent(.indicesRecoveryMaxConcurrentFileChunks)
+        threadPoolSearchSize = try container.sdkDecodeIfPresent(.threadPoolSearchSize)
     }
 }
 
 extension OpensearchAdvancedConfig {
     mutating func sdkDecodeFieldsPart2(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        self.threadPoolSearchThrottledSize = try container.sdkDecodeIfPresent(.threadPoolSearchThrottledSize)
-        self.threadPoolGetSize = try container.sdkDecodeIfPresent(.threadPoolGetSize)
-        self.threadPoolAnalyzeSize = try container.sdkDecodeIfPresent(.threadPoolAnalyzeSize)
-        self.threadPoolWriteSize = try container.sdkDecodeIfPresent(.threadPoolWriteSize)
-        self.threadPoolForceMergeSize = try container.sdkDecodeIfPresent(.threadPoolForceMergeSize)
-        self.threadPoolSearchQueueSize = try container.sdkDecodeIfPresent(.threadPoolSearchQueueSize)
-        self.threadPoolSearchThrottledQueueSize = try container.sdkDecodeIfPresent(.threadPoolSearchThrottledQueueSize)
-        self.threadPoolGetQueueSize = try container.sdkDecodeIfPresent(.threadPoolGetQueueSize)
-        self.threadPoolAnalyzeQueueSize = try container.sdkDecodeIfPresent(.threadPoolAnalyzeQueueSize)
-        self.threadPoolWriteQueueSize = try container.sdkDecodeIfPresent(.threadPoolWriteQueueSize)
-        self.ismEnabled = try container.sdkDecodeIfPresent(.ismEnabled)
-        self.ismHistoryEnabled = try container.sdkDecodeIfPresent(.ismHistoryEnabled)
+        threadPoolSearchThrottledSize = try container.sdkDecodeIfPresent(.threadPoolSearchThrottledSize)
+        threadPoolGetSize = try container.sdkDecodeIfPresent(.threadPoolGetSize)
+        threadPoolAnalyzeSize = try container.sdkDecodeIfPresent(.threadPoolAnalyzeSize)
+        threadPoolWriteSize = try container.sdkDecodeIfPresent(.threadPoolWriteSize)
+        threadPoolForceMergeSize = try container.sdkDecodeIfPresent(.threadPoolForceMergeSize)
+        threadPoolSearchQueueSize = try container.sdkDecodeIfPresent(.threadPoolSearchQueueSize)
+        threadPoolSearchThrottledQueueSize = try container.sdkDecodeIfPresent(.threadPoolSearchThrottledQueueSize)
+        threadPoolGetQueueSize = try container.sdkDecodeIfPresent(.threadPoolGetQueueSize)
+        threadPoolAnalyzeQueueSize = try container.sdkDecodeIfPresent(.threadPoolAnalyzeQueueSize)
+        threadPoolWriteQueueSize = try container.sdkDecodeIfPresent(.threadPoolWriteQueueSize)
+        ismEnabled = try container.sdkDecodeIfPresent(.ismEnabled)
+        ismHistoryEnabled = try container.sdkDecodeIfPresent(.ismHistoryEnabled)
     }
 }
 
 extension OpensearchAdvancedConfig {
     mutating func sdkDecodeFieldsPart3(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        self.ismHistoryMaxAgeHours = try container.sdkDecodeIfPresent(.ismHistoryMaxAgeHours)
-        self.ismHistoryMaxDocs = try container.sdkDecodeIfPresent(.ismHistoryMaxDocs)
-        self.ismHistoryRolloverCheckPeriodHours = try container.sdkDecodeIfPresent(.ismHistoryRolloverCheckPeriodHours)
-        self.ismHistoryRolloverRetentionPeriodDays = try container.sdkDecodeIfPresent(.ismHistoryRolloverRetentionPeriodDays)
-        self.searchMaxBuckets = try container.sdkDecodeIfPresent(.searchMaxBuckets)
-        self.actionAutoCreateIndexEnabled = try container.sdkDecodeIfPresent(.actionAutoCreateIndexEnabled)
-        self.enableSecurityAudit = try container.sdkDecodeIfPresent(.enableSecurityAudit)
-        self.actionDestructiveRequiresName = try container.sdkDecodeIfPresent(.actionDestructiveRequiresName)
-        self.clusterMaxShardsPerNode = try container.sdkDecodeIfPresent(.clusterMaxShardsPerNode)
-        self.overrideMainResponseVersion = try container.sdkDecodeIfPresent(.overrideMainResponseVersion)
-        self.scriptMaxCompilationsRate = try container.sdkDecodeIfPresent(.scriptMaxCompilationsRate)
-        self.clusterRoutingAllocationNodeConcurrentRecoveries = try container.sdkDecodeIfPresent(.clusterRoutingAllocationNodeConcurrentRecoveries)
+        ismHistoryMaxAgeHours = try container.sdkDecodeIfPresent(.ismHistoryMaxAgeHours)
+        ismHistoryMaxDocs = try container.sdkDecodeIfPresent(.ismHistoryMaxDocs)
+        ismHistoryRolloverCheckPeriodHours = try container.sdkDecodeIfPresent(.ismHistoryRolloverCheckPeriodHours)
+        ismHistoryRolloverRetentionPeriodDays = try container.sdkDecodeIfPresent(.ismHistoryRolloverRetentionPeriodDays)
+        searchMaxBuckets = try container.sdkDecodeIfPresent(.searchMaxBuckets)
+        actionAutoCreateIndexEnabled = try container.sdkDecodeIfPresent(.actionAutoCreateIndexEnabled)
+        enableSecurityAudit = try container.sdkDecodeIfPresent(.enableSecurityAudit)
+        actionDestructiveRequiresName = try container.sdkDecodeIfPresent(.actionDestructiveRequiresName)
+        clusterMaxShardsPerNode = try container.sdkDecodeIfPresent(.clusterMaxShardsPerNode)
+        overrideMainResponseVersion = try container.sdkDecodeIfPresent(.overrideMainResponseVersion)
+        scriptMaxCompilationsRate = try container.sdkDecodeIfPresent(.scriptMaxCompilationsRate)
+        clusterRoutingAllocationNodeConcurrentRecoveries = try container
+            .sdkDecodeIfPresent(.clusterRoutingAllocationNodeConcurrentRecoveries)
     }
 }
 
 extension OpensearchAdvancedConfig {
     mutating func sdkDecodeFieldsPart4(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        self.reindexRemoteAllowlist = try container.sdkDecodeIfPresent(.reindexRemoteAllowlist)
-        self.pluginsAlertingFilterByBackendRolesEnabled = try container.sdkDecodeIfPresent(.pluginsAlertingFilterByBackendRolesEnabled)
-        self.knnMemoryCircuitBreakerEnabled = try container.sdkDecodeIfPresent(.knnMemoryCircuitBreakerEnabled)
-        self.knnMemoryCircuitBreakerLimit = try container.sdkDecodeIfPresent(.knnMemoryCircuitBreakerLimit)
-        self.keepIndexRefreshInterval = try container.sdkDecodeIfPresent(.keepIndexRefreshInterval)
+        reindexRemoteAllowlist = try container.sdkDecodeIfPresent(.reindexRemoteAllowlist)
+        pluginsAlertingFilterByBackendRolesEnabled = try container
+            .sdkDecodeIfPresent(.pluginsAlertingFilterByBackendRolesEnabled)
+        knnMemoryCircuitBreakerEnabled = try container.sdkDecodeIfPresent(.knnMemoryCircuitBreakerEnabled)
+        knnMemoryCircuitBreakerLimit = try container.sdkDecodeIfPresent(.knnMemoryCircuitBreakerLimit)
+        keepIndexRefreshInterval = try container.sdkDecodeIfPresent(.keepIndexRefreshInterval)
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// AgentPlatformAPIApiGet domain models
+/// AgentPlatformAPIApiGet domain models
 /// Typed representation of the `ApiGetEvaluationTestCaseOutput` API schema.
 public struct ApiGetEvaluationTestCaseOutput: Codable, SdkResource {
     /// Optional object value serialized in the `evaluation_test_case` wire field.
@@ -15,19 +15,19 @@ public struct ApiGetEvaluationTestCaseOutput: Codable, SdkResource {
     }
 
     init() {
-        self.evaluationTestCase = nil
+        evaluationTestCase = nil
     }
 }
 
-extension ApiGetEvaluationTestCaseOutput {
-    public init(from decoder: Decoder) throws {
+public extension ApiGetEvaluationTestCaseOutput {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.evaluationTestCase = try container.sdkDecodeIfPresent(.evaluationTestCase)
+        evaluationTestCase = try container.sdkDecodeIfPresent(.evaluationTestCase)
     }
 }
 
-extension ApiGetEvaluationTestCaseOutput {
-    public init(evaluationTestCase: ApiEvaluationTestCase? = nil) {
+public extension ApiGetEvaluationTestCaseOutput {
+    init(evaluationTestCase: ApiEvaluationTestCase? = nil) {
         self.init()
         self.evaluationTestCase = evaluationTestCase
     }
